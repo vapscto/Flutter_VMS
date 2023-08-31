@@ -31,7 +31,7 @@ class EditArrayTADADataValues {
   double? vTADACMAccommodationAmt;
   double? vTADACMTransportAmt;
   double? vTADACMFoodAmt;
-  Null? vTADACMTravelHour;
+  double? vTADACMTravelHour;
   int? vTADAAAId;
   int? hRMEId;
   String? vTADAAAToAddress;
@@ -56,8 +56,8 @@ class EditArrayTADADataValues {
   double? vTADAAADAmount;
   double? vTADAAAAHSactionedAmount;
   String? vTADAAADRemarks;
-  Null? vTADAAADSlots;
-  Null? vTADAAADTotalSlots;
+  double? vTADAAADSlots;
+  double? vTADAAADTotalSlots;
   int? hCNT;
   String? vTADAAAAHStatusFlg;
 

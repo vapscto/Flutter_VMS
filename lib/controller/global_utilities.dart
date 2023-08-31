@@ -72,10 +72,6 @@ RxBool isPageLoading = false.obs;
 RxString mobileNumber = "".obs;
 RxString passWord = "".obs;
 RxInt currentAuthTab = 0.obs;
-RxString selectedValue = ''.obs;
-Rx<TextEditingController> sanctionController = TextEditingController().obs;
-Rx<TextEditingController> remarkController = TextEditingController().obs;
-
 Dio? dio;
 
 Dio getGlobalDio() {

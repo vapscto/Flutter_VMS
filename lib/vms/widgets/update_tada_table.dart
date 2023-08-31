@@ -27,7 +27,7 @@ class UpdateTADATable extends StatefulWidget {
 
 class _UpdateTADATableState extends State<UpdateTADATable> {
   final remarkController = TextEditingController();
-  final sanctionController = TextEditingController();
+  // final sanctionController = TextEditingController();
   final sanctionController2 = TextEditingController();
   final parcentageController = TextEditingController();
   String fromDate = '';
@@ -38,11 +38,11 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
   var days;
   _getData() async {
     widget.tadaController.updateIsLoading(true);
-    TADADetailsAPI.instance.showApplyList(
+    TADADetailsAPI.instance.tadaDetails(
         base: '',
-        userId: '',
+        userId: widget.values.userId!,
         tadaController: widget.tadaController,
-        vtaDaaaId: '');
+        vtaDaaaId: widget.values.vTADAAAId!);
     Future.delayed(const Duration(seconds: 3)).then((value) {
       widget.tadaController.updateIsLoading(false);
     });
@@ -70,19 +70,13 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
     for (int index = 0;
         index < widget.tadaController.tadaEditValues.length;
         index++) {
-      sanctionController.text = widget
-          .tadaController.tadaEditValues[index].vTADAAAAHSactionedAmount
-          .toString();
       sanctionController2.text = widget
-          .tadaController.tadaEditValues[index].vTADAAAAHSactionedAmount
+          .tadaController.tadaEditValues[index].vTADAAAASactionedAmount
           .toString();
       remarkController.text =
           widget.tadaController.tadaEditValues[index].vTADAAADRemarks ?? "";
       if (widget.tadaController.tadaEditValues[index].vTADAAAAHStatusFlg!
-          .isNotEmpty) {
-        selectedValue.value =
-            widget.tadaController.tadaEditValues[index].vTADAAAAHStatusFlg!;
-      }
+          .isNotEmpty) {}
 
       // setState(() {
       //   parcentageController.text = (widget.tadaController.tadaEditValues[index]
@@ -125,63 +119,79 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 25),
-                CustomContainer(
-                    child: TextFormField(
-                  style: Get.textTheme.titleSmall,
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.phone,
-                  controller: sanctionController2,
-                  readOnly: true,
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 12),
-                    border: const OutlineInputBorder(),
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                      ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Total Sanction Amount:",
+                      style: Get.textTheme.titleSmall,
                     ),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                      ),
+                    Text(
+                      sanctionController2.text,
+                      style: Get.textTheme.titleSmall!
+                          .copyWith(fontWeight: FontWeight.w600),
                     ),
-                    hintText: "Total Sanction Amount",
-                    label: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFDFFBFE),
-                        borderRadius: BorderRadius.circular(24.0),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0, vertical: 8.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SvgPicture.asset(
-                            'assets/svg/noteicon.svg',
-                            color: const Color.fromRGBO(40, 182, 200, 1),
-                            height: 24,
-                          ),
-                          const SizedBox(
-                            width: 6.0,
-                          ),
-                          Text(
-                            "Sanction Amount",
-                            style:
-                                Theme.of(context).textTheme.labelMedium!.merge(
-                                      const TextStyle(
-                                        fontSize: 20.0,
-                                        color: Color.fromRGBO(40, 182, 200, 1),
-                                      ),
-                                    ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )),
+                  ],
+                ),
+
+                // const SizedBox(height: 25),
+                // CustomContainer(
+                //     child: TextFormField(
+                //   style: Get.textTheme.titleSmall,
+                //   textInputAction: TextInputAction.next,
+                //   keyboardType: TextInputType.phone,
+                //   controller: sanctionController2,
+                //   readOnly: true,
+                //   decoration: InputDecoration(
+                //     floatingLabelBehavior: FloatingLabelBehavior.always,
+                //     contentPadding: const EdgeInsets.symmetric(
+                //         vertical: 20, horizontal: 12),
+                //     border: const OutlineInputBorder(),
+                //     focusedBorder: const OutlineInputBorder(
+                //       borderSide: BorderSide(
+                //         color: Colors.transparent,
+                //       ),
+                //     ),
+                //     enabledBorder: const OutlineInputBorder(
+                //       borderSide: BorderSide(
+                //         color: Colors.transparent,
+                //       ),
+                //     ),
+                //     hintText: "Total Sanction Amount",
+                //     label: Container(
+                //       decoration: BoxDecoration(
+                //         color: const Color(0xFFDFFBFE),
+                //         borderRadius: BorderRadius.circular(24.0),
+                //       ),
+                //       padding: const EdgeInsets.symmetric(
+                //           horizontal: 8.0, vertical: 8.0),
+                //       child: Row(
+                //         mainAxisSize: MainAxisSize.min,
+                //         children: [
+                //           SvgPicture.asset(
+                //             'assets/svg/noteicon.svg',
+                //             color: const Color.fromRGBO(40, 182, 200, 1),
+                //             height: 24,
+                //           ),
+                //           const SizedBox(
+                //             width: 6.0,
+                //           ),
+                //           Text(
+                //             "Sanction Amount",
+                //             style:
+                //                 Theme.of(context).textTheme.labelMedium!.merge(
+                //                       const TextStyle(
+                //                         fontSize: 20.0,
+                //                         color: Color.fromRGBO(40, 182, 200, 1),
+                //                       ),
+                //                     ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // )),
                 const SizedBox(height: 25),
                 CustomContainer(
                     child: TextFormField(
@@ -258,29 +268,36 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                       ),
                       minimumSize: Size(Get.width * 0.25, 40)),
                   onPressed: () {
-                    if (selectedValue.value == '') {
-                      Fluttertoast.showToast(msg: "Please Select Status");
-                    } else if (sanctionController.text.isEmpty) {
-                      Fluttertoast.showToast(
-                          msg: "Please Enter sanction amount");
-                    } else if (widget.values.vTADAAATotalAppliedAmount! <
-                        num.parse(sanctionController.text)) {
-                      Fluttertoast.showToast(
-                          msg:
-                              "sanction amount should be lessthen applied amount");
-                    } else {
+                    logger.i("======");
+                    // if (widget.tadaController.selectedValue.isEmpty) {
+                    //   Fluttertoast.showToast(msg: "Please Select Status");
+                    // } else if (widget
+                    //     .tadaController.textEditingControllerList.isEmpty) {
+                    //   Fluttertoast.showToast(
+                    //       msg: "Please Enter sanction amount");
+                    // } else if (widget.values.vTADAAATotalAppliedAmount! <
+                    //     num.parse(widget
+                    //         .tadaController.textEditingControllerList.length
+                    //         .toString())) {
+                    //   Fluttertoast.showToast(
+                    //       msg:
+                    //           "sanction amount should be lessthen applied amount");
+                    // } else {
+                    setState(() {
                       headArray.addAll({
                         'VTADAAAD_Id': widget.values.vTADAAAId,
-                        "VTADAAAAH_SactionedAmount": sanctionController.text,
-                        'VTADAAAAH_Remarks': '',
-                        // remarkController.value.text,
-                        'flag': selectedValue.value,
+                        "VTADAAAAH_SactionedAmount":
+                            widget.tadaController.textEditingControllerList,
+                        'VTADAAAAH_Remarks': widget
+                            .tadaController.approvalTextEditingControllerList,
+                        'flag': widget.tadaController.selectedValue,
                       });
 
                       SaveTADAAPI.instance.saveTADA(body: {
                         'VTADAAA_Remarks': remarkController.text,
-                        'VTADAAA_TotalSactionedAmount': sanctionController.text,
-                        'headarray': [headArray],
+                        'VTADAAA_TotalSactionedAmount':
+                            sanctionController2.text,
+                        'headarray': headArray,
                         'VTADAAA_Id': widget.values.vTADAAAId,
                         "MI_Id": widget.values.mIId,
                         "approvecnt": 0,
@@ -289,9 +306,12 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                         'UserId': widget.values.userId
                       }).then((v) {
                         logger.i("success");
+                        _getData();
                         Get.back();
                       });
-                    }
+                    });
+
+                    // }
                   },
                   child: Center(
                     child: Text(
@@ -356,11 +376,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
       DataColumn(label: Text("Amount")),
       DataColumn(label: Text("Percentage")),
       DataColumn(label: Text("Sanction Amount")),
-      // DataColumn(
-      //     label: Text(
-      //   "Approval Remarks",
-      //   style: Get.textTheme.bodySmall!.copyWith(color: Colors.white),
-      // )),
+      DataColumn(label: Text("Approval Remarks")),
     ];
   }
 
@@ -373,31 +389,37 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
         DataCell(Radio(
           fillColor: MaterialStateColor.resolveWith(
               (states) => Theme.of(context).primaryColor),
-          groupValue: selectedValue.value,
+          groupValue: widget.tadaController.selectedValue[index],
           value: 'Approved',
           onChanged: (value) {
             setState(() {
-              selectedValue.value = value!;
+              widget.tadaController.selectedValue[index] = value!;
+              logger.e(widget.tadaController.selectedValue);
             });
           },
         )),
         DataCell(Radio(
           fillColor: MaterialStateColor.resolveWith(
               (states) => Theme.of(context).primaryColor),
-          groupValue: selectedValue.value,
+          groupValue: widget.tadaController.selectedValue[index],
           value: 'Rejected',
-          onChanged: (value) {
+          onChanged: (dynamic value) {
             setState(() {
-              selectedValue.value = value!;
+              widget.tadaController.selectedValue[index] = value;
+              logger.e(widget.tadaController.selectedValue);
             });
           },
         )),
         DataCell(Text(widget
                 .tadaController.tadaEditValues[index].vTADAAADExpenditureHead ??
             "")),
-        const DataCell(Text(" ")),
-        const DataCell(Text(" ")),
-        DataCell(Text(widget.amount.toString())),
+        DataCell(Text(widget
+            .tadaController.tadaEditValues[index].vTADAAADTotalSlots
+            .toString())),
+        DataCell(Text(widget.tadaController.tadaEditValues[index].vTADAAADSlots
+            .toString())),
+        DataCell(Text(widget.tadaController.tadaEditValues[index].vTADAAADAmount
+            .toString())),
         DataCell(Padding(
           padding: const EdgeInsets.only(bottom: 4.0),
           child: TextFormField(
@@ -413,8 +435,10 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
         DataCell(Padding(
           padding: const EdgeInsets.only(bottom: 4.0),
           child: TextFormField(
+            readOnly: false,
             style: Get.textTheme.titleSmall,
-            controller: sanctionController,
+            controller: widget.tadaController.textEditingControllerList
+                .elementAt(index),
             keyboardType: TextInputType.phone,
             decoration: const InputDecoration(
               hintText: "Enter amount",
@@ -422,7 +446,19 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
             ),
           ),
         )),
-        // DataCell(Text(tableData[index].data1.toString()))
+        DataCell(Padding(
+          padding: const EdgeInsets.only(bottom: 4.0),
+          child: TextFormField(
+            style: Get.textTheme.titleSmall,
+            controller: widget.tadaController.approvalTextEditingControllerList
+                .elementAt(index),
+            keyboardType: TextInputType.text,
+            decoration: const InputDecoration(
+              hintText: "Enter remark",
+              contentPadding: EdgeInsets.symmetric(horizontal: 4),
+            ),
+          ),
+        )),
       ]);
     });
   }

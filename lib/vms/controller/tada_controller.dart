@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/model/edit_array_tada.dart';
 import 'package:m_skool_flutter/vms/model/tada_apply_list.dart';
@@ -11,6 +12,11 @@ class TADAController {
       <TimeArrayTADADataValues>[].obs;
   RxList<EditArrayTADADataValues> tadaEditValues =
       <EditArrayTADADataValues>[].obs;
+  RxList<TextEditingController> textEditingControllerList =
+      <TextEditingController>[].obs;
+  RxList<TextEditingController> approvalTextEditingControllerList =
+      <TextEditingController>[].obs;
+  List<String> selectedValue = [];
 
   void updateIsLoading(bool b) {
     isLoading.value = b;
@@ -34,10 +40,32 @@ class TADAController {
     newTimeArray.addAll(timeArray);
   }
 
+  void addToSelectedValueList(List<String> value) {
+    selectedValue.add(value.toString());
+  }
+
+  void addToTextEditingList(TextEditingController textEditingController) {
+    textEditingControllerList.add(textEditingController);
+  }
+
+  void addApprovalTextEditingList(TextEditingController textEditingController) {
+    approvalTextEditingControllerList.add(textEditingController);
+  }
+
   void getEditArray(List<EditArrayTADADataValues> editArray) async {
     if (tadaEditValues.isNotEmpty) {
       tadaEditValues.clear();
+      selectedValue.clear();
+      textEditingControllerList.clear();
+      approvalTextEditingControllerList.clear();
     }
     tadaEditValues.addAll(editArray);
+    for (int i = 0; i < editArray.length; i++) {
+      textEditingControllerList.add(TextEditingController(
+          text: editArray[i].vTADAAAAHSactionedAmount.toString()));
+      selectedValue.add(editArray[i].vTADAAAAHStatusFlg.toString());
+      approvalTextEditingControllerList.add(
+          TextEditingController(text: editArray[i].vTADAAADRemarks.toString()));
+    }
   }
 }

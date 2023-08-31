@@ -40,11 +40,11 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
   var day;
   _getData() async {
     widget.tadaController.updateIsLoading(true);
-    TADADetailsAPI.instance.showApplyList(
+    TADADetailsAPI.instance.tadaDetails(
         base: '',
-        userId: '',
+        userId: widget.values.userId!,
         tadaController: widget.tadaController,
-        vtaDaaaId: '');
+        vtaDaaaId: widget.vtadaaaId);
     Future.delayed(const Duration(seconds: 3)).then((value) {
       widget.tadaController.updateIsLoading(false);
     });
@@ -212,9 +212,7 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
                                       fontWeight: FontWeight.w600,
                                       color: Theme.of(context).primaryColor)),
                               TextSpan(
-                                  text: widget.tadaController.newTimeArray.first
-                                          .vtadaaAClientMultiple ??
-                                      "N/a",
+                                  text: widget.values.clientName ?? "N/a",
                                   style: Get.textTheme.titleSmall!
                                       .copyWith(fontWeight: FontWeight.w400)),
                             ]),
@@ -314,16 +312,32 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
   List<DataRow> createRow() {
     return List.generate(widget.tadaController.newTimeArray.length, (index) {
       var value = index + 1;
+      TimeOfDay startTime = TimeOfDay(
+          hour: int.parse(widget
+              .tadaController.newTimeArray[index].vtadaaADepartureTime!
+              .split(":")[0]),
+          minute: int.parse(widget
+              .tadaController.newTimeArray[index].vtadaaADepartureTime!
+              .split(":")[1]));
+      var dTime =
+          '${startTime.hourOfPeriod}:${startTime.minute} ${startTime.period.name.toUpperCase()}';
+      TimeOfDay endTime0 = TimeOfDay(
+          hour: int.parse(widget
+              .tadaController.newTimeArray[index].vtadaaAArrivalTime!
+              .split(":")[0]),
+          minute: int.parse(widget
+              .tadaController.newTimeArray[index].vtadaaAArrivalTime!
+              .split(":")[1]));
+      var endTime =
+          '${endTime0.hourOfPeriod}:${endTime0.minute} ${endTime0.period.name.toUpperCase()}';
       return DataRow(cells: [
         DataCell(Text(value.toString())),
         DataCell(Text(widget.values.cityName ?? "")),
         DataCell(Text(widget.values.sanctionLevelNo.toString())),
         DataCell(Text(fromDate)),
-        DataCell(Text(
-            widget.tadaController.newTimeArray[index].vtadaaADepartureTime!)),
+        DataCell(Text(dTime)),
         DataCell(Text(toDate)),
-        DataCell(Text(
-            widget.tadaController.newTimeArray[index].vtadaaAArrivalTime!)),
+        DataCell(Text(endTime)),
       ]);
     });
   }

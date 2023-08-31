@@ -10,11 +10,11 @@ class TADADetailsAPI {
 
   static final TADADetailsAPI instance = TADADetailsAPI.init();
 
-  showApplyList(
+  tadaDetails(
       {required String base,
-      required String userId,
+      required int userId,
       required TADAController tadaController,
-      required String vtaDaaaId}) async {
+      required int vtaDaaaId}) async {
     final dio = Dio();
     var url = base + APIConstant().tadaShow;
     var url2 =
@@ -29,8 +29,8 @@ class TADADetailsAPI {
 
       var response = await dio.post(
         url2,
-        data: {"UserId": 60064, "VTADAAA_Id": 71},
-        //  options: Options(headers: getSession())
+        data: {"UserId": userId, "VTADAAA_Id": vtaDaaaId},
+        //  options: Options(headers: getSession())60064 71
       );
       if (response.statusCode == 200) {
         logger.d(response.data);
