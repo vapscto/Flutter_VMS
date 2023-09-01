@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/apis/save_tada_api.dart';
+import 'package:m_skool_flutter/vms/apis/tada_apply_list_api.dart';
 import 'package:m_skool_flutter/vms/apis/tada_details_api.dart';
 import 'package:m_skool_flutter/vms/controller/tada_controller.dart';
 import 'package:m_skool_flutter/vms/model/tada_apply_list.dart';
@@ -268,36 +269,53 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                       ),
                       minimumSize: Size(Get.width * 0.25, 40)),
                   onPressed: () {
-                    logger.i("======");
-                    // if (widget.tadaController.selectedValue.isEmpty) {
-                    //   Fluttertoast.showToast(msg: "Please Select Status");
-                    // } else if (widget
-                    //     .tadaController.textEditingControllerList.isEmpty) {
-                    //   Fluttertoast.showToast(
-                    //       msg: "Please Enter sanction amount");
-                    // } else if (widget.values.vTADAAATotalAppliedAmount! <
-                    //     num.parse(widget
-                    //         .tadaController.textEditingControllerList.length
-                    //         .toString())) {
-                    //   Fluttertoast.showToast(
-                    //       msg:
-                    //           "sanction amount should be lessthen applied amount");
-                    // } else {
-                    setState(() {
-                      headArray.addAll({
-                        'VTADAAAD_Id': widget.values.vTADAAAId,
-                        "VTADAAAAH_SactionedAmount":
-                            widget.tadaController.textEditingControllerList,
-                        'VTADAAAAH_Remarks': widget
-                            .tadaController.approvalTextEditingControllerList,
-                        'flag': widget.tadaController.selectedValue,
-                      });
+                    if (widget.tadaController.selectedValue.isEmpty) {
+                      Fluttertoast.showToast(msg: "Please Select Status");
+                    } else if (widget
+                        .tadaController.textEditingControllerList.isEmpty) {
+                      Fluttertoast.showToast(
+                          msg: "Please Enter sanction amount");
+                    } else if (widget.values.vTADAAATotalAppliedAmount! <
+                        num.parse(widget
+                            .tadaController.textEditingControllerList.length
+                            .toString())) {
+                      Fluttertoast.showToast(
+                          msg:
+                              "sanction amount should be lessthen applied amount");
+                    } else {
+                      var remark = '';
+                      var amount = '';
+                      for (int i = 0;
+                          i < widget.tadaController.tadaEditValues.length;
+                          i++) {
+                        headArray.addAll({
+                          'VTADAAAD_Id': widget.values.vTADAAAId,
+                          "VTADAAAAH_SactionedAmount": widget
+                              .tadaController.textEditingControllerList
+                              .elementAt(i)
+                              .text,
+                          'VTADAAAAH_Remarks': widget
+                              .tadaController.approvalTextEditingControllerList
+                              .elementAt(i)
+                              .text,
+                          'flag':
+                              widget.tadaController.selectedValue.elementAt(i),
+                        });
+                        remark = widget
+                            .tadaController.approvalTextEditingControllerList
+                            .elementAt(i)
+                            .text;
+                        amount = widget.tadaController.textEditingControllerList
+                            .elementAt(i)
+                            .text;
+                      }
 
+                      logger.i(headArray);
                       SaveTADAAPI.instance.saveTADA(body: {
-                        'VTADAAA_Remarks': remarkController.text,
+                        'VTADAAA_Remarks': remark,
                         'VTADAAA_TotalSactionedAmount':
                             sanctionController2.text,
-                        'headarray': headArray,
+                        'headarray': [headArray],
                         'VTADAAA_Id': widget.values.vTADAAAId,
                         "MI_Id": widget.values.mIId,
                         "approvecnt": 0,
@@ -306,12 +324,14 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                         'UserId': widget.values.userId
                       }).then((v) {
                         logger.i("success");
+                        TADAApplyListAPI.instance.showApplyList(
+                            base: "",
+                            userId: widget.values.userId.toString(),
+                            tadaController: widget.tadaController);
                         _getData();
                         Get.back();
                       });
-                    });
-
-                    // }
+                    }
                   },
                   child: Center(
                     child: Text(
