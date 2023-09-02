@@ -58,7 +58,8 @@ class _TadaShowScreenState extends State<TadaShowScreen> {
             : tadaController.tadaData.isEmpty
                 ? const Center(
                     child: AnimatedProgressWidget(
-                      title: "No Data Found",
+                      title:
+                          "TADA advance request is not availabla for approval",
                       desc: "",
                       animationPath: "assets/json/nodata.json",
                       animatorHeight: 250,
