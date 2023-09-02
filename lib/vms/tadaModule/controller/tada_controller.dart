@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/vms/model/edit_array_tada.dart';
-import 'package:m_skool_flutter/vms/model/tada_apply_list.dart';
-import 'package:m_skool_flutter/vms/model/time_array_tada.dart';
+import 'package:m_skool_flutter/vms/tadaModule/model/edit_array_tada.dart';
+import 'package:m_skool_flutter/vms/tadaModule/model/tada_apply_list.dart';
+import 'package:m_skool_flutter/vms/tadaModule/model/time_array_tada.dart';
 
 class TADAController {
   RxBool isLoading = RxBool(false);

@@ -60,7 +60,7 @@ import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/student/library/screen/library_home.dart';
 import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
-import 'package:m_skool_flutter/vms/screens/tada_show_screen.dart';
+import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
