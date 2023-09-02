@@ -1,9 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/vms/constants/api_constants.dart';
-import 'package:m_skool_flutter/vms/controller/tada_controller.dart';
-import 'package:m_skool_flutter/vms/model/tada_apply_list.dart';
+import 'package:m_skool_flutter/vms/tadaModule/constants/api_constants.dart';
+import 'package:m_skool_flutter/vms/tadaModule/controller/tada_controller.dart';
+import 'package:m_skool_flutter/vms/tadaModule/model/tada_apply_list.dart';
 
 class TADAApplyListAPI {
   TADAApplyListAPI.init();

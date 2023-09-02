@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/controller/global_utilities.dart';
-import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/vms/apis/save_tada_api.dart';
-import 'package:m_skool_flutter/vms/apis/tada_details_api.dart';
-import 'package:m_skool_flutter/vms/controller/tada_controller.dart';
-import 'package:m_skool_flutter/vms/model/tada_apply_list.dart';
-import 'package:m_skool_flutter/vms/widgets/update_tada_table.dart';
+import 'package:m_skool_flutter/vms/tadaModule/apis/tada_details_api.dart';
+import 'package:m_skool_flutter/vms/tadaModule/controller/tada_controller.dart';
+import 'package:m_skool_flutter/vms/tadaModule/model/tada_apply_list.dart';
+import 'package:m_skool_flutter/vms/tadaModule/widgets/update_tada_table.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
