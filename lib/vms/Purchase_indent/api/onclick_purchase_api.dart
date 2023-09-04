@@ -1,11 +1,11 @@
-import 'package:m_skool_flutter/VMS/Fee_collection/controller/purchase_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
-import 'package:m_skool_flutter/vms/Fee_collection/model/get_pi_model.dart';
-import 'package:m_skool_flutter/vms/Fee_collection/model/purchase_request_comment.dart';
-import 'package:m_skool_flutter/vms/Fee_collection/model/view_comment_model.dart';
+import 'package:m_skool_flutter/vms/Purchase_indent/controller/purchase_controller.dart';
+import 'package:m_skool_flutter/vms/Purchase_indent/model/get_pi_model.dart';
+import 'package:m_skool_flutter/vms/Purchase_indent/model/purchase_request_comment.dart';
+import 'package:m_skool_flutter/vms/Purchase_indent/model/view_comment_model.dart';
 
  
 
@@ -47,7 +47,7 @@ const String api2 = "https://vmsstaging.vapssmartecampus.com:40016/api/IndentApp
         controller.updateIsLoadingOnclick(false);
         GetPiModel getPiModelValues =
             GetPiModel.fromJson(response.data['get_pimodel']);
-        controller.getOnclickList.addAll(getPiModelValues.values!);
+        controller.updateOnclickList(getPiModelValues.values!);
 //////////////////////////////////////////////////////////////////////////
         ViewCommentModel viewCommentModel = ViewCommentModel.fromJson(response.data['viewcomments']);
         controller.getcommentList(viewCommentModel.values);

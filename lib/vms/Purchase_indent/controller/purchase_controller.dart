@@ -1,16 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/VMS/Fee_collection/model/purchase_indent_model.dart';
-import 'package:m_skool_flutter/vms/Fee_collection/model/get_pi_model.dart';
-import 'package:m_skool_flutter/vms/Fee_collection/model/purchase_request_comment.dart';
-import 'package:m_skool_flutter/vms/Fee_collection/model/view_comment_model.dart';
+import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/vms/Purchase_indent/model/get_pi_model.dart';
+import 'package:m_skool_flutter/vms/Purchase_indent/model/purchase_indent_model.dart';
+import 'package:m_skool_flutter/vms/Purchase_indent/model/purchase_request_comment.dart';
+import 'package:m_skool_flutter/vms/Purchase_indent/model/view_comment_model.dart';
 
 
 class PurchaseController extends GetxController {
   RxBool isFromDataProvided = RxBool(false);
   RxBool isLoadingApproval = RxBool(false);
 List<String> selectedValue = [];
-
-
+RxList<TextEditingController> unitControllerList =
+      <TextEditingController>[].obs;
+RxList<TextEditingController> remarkControllerList =
+      <TextEditingController>[].obs;
 
 void addToSelectedValueList(List<String> value) {
     selectedValue.add(value.toString());
@@ -57,15 +61,31 @@ void addToSelectedValueList(List<String> value) {
 
 
   RxList<GetPiModelValues> getOnclickList = RxList();
+  void getunitData(TextEditingController controller){
+    unitControllerList.add(controller);
+  }
+  void getRemarkData(TextEditingController remarkController){
+    remarkControllerList.add(remarkController);
+  }
+  void getSelectedData(String selectedData){
+    selectedValue.add(selectedData);
+  }
 
   void updateOnclickList(List<GetPiModelValues> nitin) {
     if (getOnclickList.isNotEmpty) {
       getOnclickList.clear();
       selectedValue.clear();
+      unitControllerList.clear();
+      remarkControllerList.clear();
     }
 
     getOnclickList.addAll(nitin);
-    for(int i=0; i<nitin.length;i++);
+    for(int i=0; i<nitin.length;i++){
+      unitControllerList.add(TextEditingController(text: nitin.elementAt(i).iNVTPIPIUnitRate.toString()));
+      remarkControllerList.add(TextEditingController(text: nitin.elementAt(i).iNVTPIRemarks));
+      selectedValue.add(nitin.elementAt(i).type!);
+    }
+  
   }
 
   RxBool isErrorOccuredOnclick= RxBool(false);
