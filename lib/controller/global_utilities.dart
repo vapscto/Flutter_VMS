@@ -686,10 +686,10 @@ void openMappedPages(
     //       loginSuccessModel: loginSuccessModel,
     //       mskoolController: mskoolController,
     //     ));
-    Get.to(() => TadaShowScreen(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
+    // Get.to(() => TadaShowScreen(
+    //       loginSuccessModel: loginSuccessModel,
+    //       mskoolController: mskoolController,
+    //     ));
   }
   if (pageName == "Mark Entry") {
     // Get.to(
@@ -698,10 +698,10 @@ void openMappedPages(
     //     mskoolController: mskoolController,
     //   ),
     // );
-    Get.to(() => ChequeApproval(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
+    // Get.to(() => ChequeApproval(
+    //       loginSuccessModel: loginSuccessModel,
+    //       mskoolController: mskoolController,
+    //     ));
   }
 
   if (pageName == "Salary Details") {
@@ -717,7 +717,7 @@ void openMappedPages(
     //   );
     // }));
     // return;
-    Get.to(() => PCHome(
+    Get.to(() => PurchaseIndentHome(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
         ));
@@ -769,10 +769,14 @@ void openMappedPages(
     // }));
 
     // Notice Board Staff
-    Get.to(() => NoticeBoardStaffHome(
+    // Get.to(() => NoticeBoardStaffHome(
+    //       loginSuccessModel: loginSuccessModel,
+    //       mskoolController: mskoolController,
+    //       title: pageName,
+    //     ));
+    Get.to(() => ChequeApproval(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
-          title: pageName,
         ));
     return;
   }
@@ -794,10 +798,10 @@ void openMappedPages(
     //   );
     // }));
     // return;
-    Get.to(() => PurchaseIndentHome(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
+    // Get.to(() => PurchaseIndentHome(
+    //       loginSuccessModel: loginSuccessModel,
+    //       mskoolController: mskoolController,
+    //     ));
   }
 
   if (pageName == "Verify Homework") {
@@ -849,49 +853,61 @@ void openMappedPages(
     return;
   }
   if (pageName == "Upload Homework") {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) {
-          return HwCwHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            title: pageName,
-            forHw: true,
-          );
-        },
-      ),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (_) {
+    //       return HwCwHome(
+    //         loginSuccessModel: loginSuccessModel,
+    //         mskoolController: mskoolController,
+    //         title: pageName,
+    //         forHw: true,
+    //       );
+    //     },
+    //   ),
+    // );
+    Get.to(() => PCHome(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
     return;
   }
   if (pageName == "Staff Interaction") {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) {
-          return InteractionHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-          );
-        },
-      ),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (_) {
+    //       return InteractionHome(
+    //         loginSuccessModel: loginSuccessModel,
+    //         mskoolController: mskoolController,
+    //       );
+    //     },
+    //   ),
+    // );
+    Get.to(() => TadaShowScreen(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
     return;
   }
   if (pageName == "Time Table Staff") {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) {
-          return StaffTTHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            title: pageName,
-            //forHw: true,
-          );
-        },
-      ),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (_) {
+    //       return StaffTTHome(
+    //         loginSuccessModel: loginSuccessModel,
+    //         mskoolController: mskoolController,
+    //         title: pageName,
+    //         //forHw: true,
+    //       );
+    //     },
+    //   ),
+    // );
+    Get.to(() => PurchaseIndentHome(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
     return;
   }
   if (pageName.toLowerCase() == "coe report") {
