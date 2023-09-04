@@ -60,6 +60,9 @@ import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/student/library/screen/library_home.dart';
 import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
+import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
+import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
+import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_HOME.dart';
 import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -689,27 +692,35 @@ void openMappedPages(
         ));
   }
   if (pageName == "Mark Entry") {
-    Get.to(
-      () => MarksEntryHome(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-      ),
-    );
+    // Get.to(
+    //   () => MarksEntryHome(
+    //     loginSuccessModel: loginSuccessModel,
+    //     mskoolController: mskoolController,
+    //   ),
+    // );
+    Get.to(() => ChequeApproval(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
   }
 
   if (pageName == "Salary Details") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return
-          // SalarySlipHome(
-          //   loginSuccessModel: loginSuccessModel,
-          //   mskoolController: mskoolController,
-          // );
-          SalaryDetails(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-      );
-    }));
-    return;
+    // Navigator.push(context, MaterialPageRoute(builder: (_) {
+    //   return
+    //       // SalarySlipHome(
+    //       //   loginSuccessModel: loginSuccessModel,
+    //       //   mskoolController: mskoolController,
+    //       // );
+    //       SalaryDetails(
+    //     loginSuccessModel: loginSuccessModel,
+    //     mskoolController: mskoolController,
+    //   );
+    // }));
+    // return;
+    Get.to(() => PCHome(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
   }
   if (pageName == "Salary Slip") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -775,14 +786,18 @@ void openMappedPages(
     }));
   }
   if (pageName == "Punch Report") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return PunchReport(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-        title: pageName,
-      );
-    }));
-    return;
+    // Navigator.push(context, MaterialPageRoute(builder: (_) {
+    //   return PunchReport(
+    //     loginSuccessModel: loginSuccessModel,
+    //     mskoolController: mskoolController,
+    //     title: pageName,
+    //   );
+    // }));
+    // return;
+    Get.to(() => PurchaseIndentHome(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
   }
 
   if (pageName == "Verify Homework") {
