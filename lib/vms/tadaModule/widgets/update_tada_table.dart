@@ -47,12 +47,10 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
       widget.tadaController.updateIsLoading(false);
     });
     setState(() {
-      // for (int i = 0; i <= widget.tadaController.tadaEditValues.length; i++) {
       DateTime dt = DateTime.parse(widget.values.vTADAAAFromDate!);
       fromDate = '${dt.day}-${dt.month}-${dt.year}';
       DateTime toDt = DateTime.parse(widget.values.vTADAAAToDate!);
       toDate = '${toDt.day}-${toDt.month}-${toDt.year}';
-      // }
       DateTime dt1 = DateTime.parse(widget.values.vTADAAAFromDate!);
       DateTime dt2 = DateTime.parse(widget.values.vTADAAAToDate!);
 
@@ -67,24 +65,20 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.tadaController.tadaEditValues;
     });
-    for (int index = 0;
-        index < widget.tadaController.tadaEditValues.length;
-        index++) {
-      sanctionController2.text = widget
-          .tadaController.tadaEditValues[index].vTADAAAASactionedAmount
-          .toString();
-      remarkController.text =
-          widget.tadaController.tadaEditValues[index].vTADAAADRemarks ?? "";
-      if (widget.tadaController.tadaEditValues[index].vTADAAAAHStatusFlg!
-          .isNotEmpty) {}
-
-      // setState(() {
-      //   parcentageController.text = (widget.tadaController.tadaEditValues[index]
-      //               .vTADAAATotalAppliedAmount! -
-      //           double.parse(sanctionController.text) % 100)
-      //       .toString();
-      // });
-    }
+    setState(() {
+      for (int index = 0;
+          index < widget.tadaController.tadaEditValues.length;
+          index++) {
+        sanctionController2.text = widget
+            .tadaController.approvalTextEditingControllerList
+            .elementAt(index)
+            .text;
+        remarkController.text =
+            widget.tadaController.tadaEditValues[index].vTADAAADRemarks ?? "";
+        if (widget.tadaController.tadaEditValues[index].vTADAAAAHStatusFlg!
+            .isNotEmpty) {}
+      }
+    });
     super.initState();
   }
 

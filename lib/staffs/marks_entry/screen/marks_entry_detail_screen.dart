@@ -84,7 +84,6 @@ class _MarksEntryDetailScreenState extends State<MarksEntryDetailScreen> {
         // msg:
         //     'Please provide a valid entry at ${marksEntryController.marksEntryDataTableList.first.marksEnterFor} for S.NO ${i + 1}');
         // }else{
-
         // }
 
         //     if(marksEntryController.textEditingControllerList
