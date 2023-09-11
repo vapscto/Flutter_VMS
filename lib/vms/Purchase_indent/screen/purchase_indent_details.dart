@@ -58,8 +58,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
           .elementAt(i)
           .iNVMPIApproxTotAmount!
           .toInt();
-      remarkController.text =
-          controller.purchaseIndentList.elementAt(i).iNVMPIRemarks!;
+
       invmpiId = controller.purchaseIndentList.elementAt(i).iNVMPIId;
     }
     for (int i = 0; i < transRowEdit.length; i++) {
@@ -90,6 +89,12 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
         controller: controller,
         invmpiId: widget.invmpiId);
     super.initState();
+    setState(() {
+      for (int i = 0; i < controller.getOnclickList.length; i++) {
+        remarkController.text =
+            controller.purchaseIndentList.elementAt(i).iNVMPIRemarks!;
+      }
+    });
   }
 
   @override
