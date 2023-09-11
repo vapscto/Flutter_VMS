@@ -90,7 +90,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
         invmpiId: widget.invmpiId);
     super.initState();
     setState(() {
-      for (int i = 0; i < controller.getOnclickList.length; i++) {
+      for (int i = 0; i < controller.purchaseIndentList.length; i++) {
         remarkController.text =
             controller.purchaseIndentList.elementAt(i).iNVMPIRemarks!;
       }
