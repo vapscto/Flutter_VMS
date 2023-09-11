@@ -12,7 +12,7 @@ import 'package:m_skool_flutter/widget/home_fab.dart';
 class PurchaseIndentHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  PurchaseIndentHome({required this.loginSuccessModel,
+  const PurchaseIndentHome({required this.loginSuccessModel,
   required this.mskoolController});
   @override
   _PurchaseIndentHomeState createState() => _PurchaseIndentHomeState();
