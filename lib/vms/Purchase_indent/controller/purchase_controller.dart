@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/model/get_pi_model.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/model/purchase_indent_model.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/model/purchase_request_comment.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/model/view_comment_model.dart';
 
-
 class PurchaseController extends GetxController {
   RxBool isFromDataProvided = RxBool(false);
   RxBool isLoadingApproval = RxBool(false);
-List<String> selectedValue = [];
-RxList<TextEditingController> unitControllerList =
+  RxBool isSaveLoaeding = RxBool(false);
+  List<String> selectedValue = [];
+  RxList<TextEditingController> unitControllerList =
       <TextEditingController>[].obs;
-RxList<TextEditingController> remarkControllerList =
+  RxList<TextEditingController> remarkControllerList =
+      <TextEditingController>[].obs;
+  RxList<TextEditingController> totalApproxAmountControllerList =
       <TextEditingController>[].obs;
 
-void addToSelectedValueList(List<String> value) {
+  void addToSelectedValueList(List<String> value) {
     selectedValue.add(value.toString());
   }
-
 
   void updateIsFromDataProvided(bool isProvided) {
     isFromDataProvided.value = isProvided;
@@ -29,6 +29,9 @@ void addToSelectedValueList(List<String> value) {
     isLoadingApproval.value = isLoading;
   }
 
+  void saveLoading(bool loading) {
+    isSaveLoaeding.value = loading;
+  }
 
   RxList<PurchaseIndentModelValues> purchaseIndentList = RxList();
 
@@ -47,9 +50,8 @@ void addToSelectedValueList(List<String> value) {
 
 ////////////////////////// ON CLICK ////////////////////////////////////////////////////
 
- RxBool isFromDataOnclick = RxBool(false);
+  RxBool isFromDataOnclick = RxBool(false);
   RxBool isLoadingOnclick = RxBool(false);
-
 
   void updateIsFromDataOnclick(bool isProvided) {
     isFromDataOnclick.value = isProvided;
@@ -59,15 +61,20 @@ void addToSelectedValueList(List<String> value) {
     isLoadingOnclick.value = isLoading;
   }
 
-
   RxList<GetPiModelValues> getOnclickList = RxList();
-  void getunitData(TextEditingController controller){
+  void getunitData(TextEditingController controller) {
     unitControllerList.add(controller);
   }
-  void getRemarkData(TextEditingController remarkController){
+
+  void getRemarkData(TextEditingController remarkController) {
     remarkControllerList.add(remarkController);
   }
-  void getSelectedData(String selectedData){
+
+  void getApproxAmtData(TextEditingController remarkController) {
+    totalApproxAmountControllerList.add(remarkController);
+  }
+
+  void getSelectedData(String selectedData) {
     selectedValue.add(selectedData);
   }
 
@@ -77,29 +84,31 @@ void addToSelectedValueList(List<String> value) {
       selectedValue.clear();
       unitControllerList.clear();
       remarkControllerList.clear();
+      totalApproxAmountControllerList.clear();
     }
 
     getOnclickList.addAll(nitin);
-    for(int i=0; i<nitin.length;i++){
-      unitControllerList.add(TextEditingController(text: nitin.elementAt(i).iNVTPIPIUnitRate.toString()));
-      remarkControllerList.add(TextEditingController(text: nitin.elementAt(i).iNVTPIRemarks));
+    for (int i = 0; i < nitin.length; i++) {
+      unitControllerList.add(TextEditingController(
+          text: nitin.elementAt(i).iNVTPIPIUnitRate.toString()));
+      remarkControllerList
+          .add(TextEditingController(text: nitin.elementAt(i).iNVTPIRemarks));
       selectedValue.add(nitin.elementAt(i).type!);
+      totalApproxAmountControllerList.add(TextEditingController(
+          text: nitin.elementAt(i).iNVTPIApproxAmount.toString()));
     }
-  
   }
 
-  RxBool isErrorOccuredOnclick= RxBool(false);
+  RxBool isErrorOccuredOnclick = RxBool(false);
 
   void updateIsErrorOccuredOnclick(bool error) {
     isErrorOccured.value = error;
   }
 
-
 /////////////////////////////////// VIEW COMMENT ///////////////////////////////////////////////////
 
-RxBool isFromDataComment = RxBool(false);
+  RxBool isFromDataComment = RxBool(false);
   RxBool isLoadingcomment = RxBool(false);
-
 
   void updateIsFromDatacomment(bool isProvided) {
     isFromDataComment.value = isProvided;
@@ -108,7 +117,6 @@ RxBool isFromDataComment = RxBool(false);
   void updateIsLoadingcomment(bool isLoading) {
     isLoadingcomment.value = isLoading;
   }
-
 
   RxList<ViewCommentModelValues> getcommentList = RxList();
 
@@ -119,17 +127,16 @@ RxBool isFromDataComment = RxBool(false);
     getcommentList.addAll(nitin);
   }
 
-  RxBool isErrorOccuredcomment= RxBool(false);
+  RxBool isErrorOccuredcomment = RxBool(false);
 
   void updateIsErrorOccuredcomment(bool error) {
     isErrorOccured.value = error;
-    }
+  }
 
-    ///////////////////////////////////////  PURCHASE REQUEST //////////////////////////////////////////////
-    
-RxBool isFromDataRequest = RxBool(false);
+  ///////////////////////////////////////  PURCHASE REQUEST //////////////////////////////////////////////
+
+  RxBool isFromDataRequest = RxBool(false);
   RxBool isLoadingRequest = RxBool(false);
-
 
   void updateIsFromDataRequest(bool isProvided) {
     isFromDataRequest.value = isProvided;
@@ -138,7 +145,6 @@ RxBool isFromDataRequest = RxBool(false);
   void updateIsLoadingRequest(bool isLoading) {
     isLoadingRequest.value = isLoading;
   }
-
 
   RxList<PurchaseRequestModelValues> getrequestList = RxList();
 
@@ -149,10 +155,9 @@ RxBool isFromDataRequest = RxBool(false);
     getrequestList.addAll(nitin);
   }
 
-  RxBool isErrorOccuredRequest= RxBool(false);
+  RxBool isErrorOccuredRequest = RxBool(false);
 
   void updateIsErrorOccuredRequest(bool error) {
     isErrorOccured.value = error;
-    }
-
+  }
 }

@@ -884,7 +884,7 @@ void openMappedPages(
     //     },
     //   ),
     // );
-    Get.to(() => TadaShowScreen(
+    Get.to(() => TadaListScreen(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
         ));

@@ -446,5 +446,9 @@ class URLS {
 
   static String  sectionlist="api/FEESTodayCollectionFacade/Getsectionpop/";
 
+  static String onclickpurchaseapi = "api/IndentApprovalFacade/getpidetails/";
+
+  static String purchaseindentapi = "api/IndentApprovalFacade/getloaddata/";
+
 
 }
