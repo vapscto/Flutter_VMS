@@ -15,6 +15,8 @@ class PurchaseController extends GetxController {
       <TextEditingController>[].obs;
   RxList<TextEditingController> remarkControllerList =
       <TextEditingController>[].obs;
+  RxList<TextEditingController> totalApproxAmountControllerList =
+      <TextEditingController>[].obs;
 
   void addToSelectedValueList(List<String> value) {
     selectedValue.add(value.toString());
@@ -69,6 +71,10 @@ class PurchaseController extends GetxController {
     remarkControllerList.add(remarkController);
   }
 
+  void getApproxAmtData(TextEditingController remarkController) {
+    totalApproxAmountControllerList.add(remarkController);
+  }
+
   void getSelectedData(String selectedData) {
     selectedValue.add(selectedData);
   }
@@ -79,6 +85,7 @@ class PurchaseController extends GetxController {
       selectedValue.clear();
       unitControllerList.clear();
       remarkControllerList.clear();
+      totalApproxAmountControllerList.clear();
     }
 
     getOnclickList.addAll(nitin);
@@ -88,6 +95,8 @@ class PurchaseController extends GetxController {
       remarkControllerList
           .add(TextEditingController(text: nitin.elementAt(i).iNVTPIRemarks));
       selectedValue.add(nitin.elementAt(i).type!);
+      totalApproxAmountControllerList.add(TextEditingController(
+          text: nitin.elementAt(i).iNVTPIApproxAmount.toString()));
     }
   }
 

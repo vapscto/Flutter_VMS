@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
@@ -31,6 +32,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
   String invmpiRemarks = '';
   var invmpiAmount;
   var invmpiId;
+  num amount = 0;
 
   void saveData() {
     for (int i = 0; i < controller.getOnclickList.length; i++) {
@@ -49,13 +51,15 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
             controller.getOnclickList[i].iNVTPIAPPApprovedQty,
         "INVTPI_Remarks": controller.remarkControllerList.elementAt(i).text,
       });
+      // amount = controller.getOnclickList.elementAt(i).iNVTPIApproxAmount;
     }
     for (int i = 0; i < controller.purchaseIndentList.length; i++) {
       invmpiAmount = controller.purchaseIndentList
           .elementAt(i)
           .iNVMPIApproxTotAmount!
           .toInt();
-      invmpiRemarks = controller.purchaseIndentList.elementAt(i).iNVMPIRemarks!;
+      remarkController.text =
+          controller.purchaseIndentList.elementAt(i).iNVMPIRemarks!;
       invmpiId = controller.purchaseIndentList.elementAt(i).iNVMPIId;
     }
     for (int i = 0; i < transRowEdit.length; i++) {
@@ -68,7 +72,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
     controller.isSaveLoaeding(true);
     PurchaseSave.instance.purchaseSave(
         base: '',
-        invmpiRemarks: invmpiRemarks,
+        invmpiRemarks: remarkController.text,
         invmpiAmount: invmpiAmount,
         arrayList: transRowEdit,
         invmpiId: invmpiId,
@@ -97,8 +101,6 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
   List<Map<String, dynamic>> transRowEdit = [];
 
   final remarkController = TextEditingController();
-  final unitController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -240,7 +242,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 20),
+                          // const SizedBox(height: 20),
                           SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: SingleChildScrollView(
@@ -402,6 +404,17 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                             setState(() {
                                               controller.selectedValue[index] =
                                                   value;
+                                              controller
+                                                  .totalApproxAmountControllerList
+                                                  .add(TextEditingController(
+                                                      text: controller
+                                                          .getOnclickList[index]
+                                                          .iNVTPIApproxAmount
+                                                          .toString()));
+                                              amount += num.parse(controller
+                                                  .totalApproxAmountControllerList
+                                                  .elementAt(index)
+                                                  .text);
                                             });
                                           },
                                         )),
@@ -417,6 +430,17 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                             setState(() {
                                               controller.selectedValue[index] =
                                                   value;
+                                              controller
+                                                  .totalApproxAmountControllerList
+                                                  .add(TextEditingController(
+                                                      text: controller
+                                                          .getOnclickList[index]
+                                                          .iNVTPIApproxAmount
+                                                          .toString()));
+                                              amount -= num.parse(controller
+                                                  .totalApproxAmountControllerList
+                                                  .elementAt(index)
+                                                  .text);
                                             });
                                           },
                                         )),
@@ -496,7 +520,86 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                             ),
                           ),
                           const SizedBox(
-                            height: 90.0,
+                            height: 20.0,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Total Approximate Amount:",
+                                style: Get.textTheme.titleSmall,
+                              ),
+                              Text(
+                                amount.toString(),
+                                style: Get.textTheme.titleSmall,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 25),
+                          CustomContainer(
+                              child: TextFormField(
+                            style: Get.textTheme.titleSmall,
+                            maxLines: 4,
+                            textInputAction: TextInputAction.next,
+                            keyboardType: TextInputType.multiline,
+                            controller: remarkController,
+                            decoration: InputDecoration(
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 20, horizontal: 12),
+                              border: const OutlineInputBorder(),
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                ),
+                              ),
+                              enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                ),
+                              ),
+                              hintText: "Enter Remark",
+                              label: Container(
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFDFFBFE),
+                                  borderRadius: BorderRadius.circular(24.0),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8.0, vertical: 8.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/svg/noteicon.svg',
+                                      color:
+                                          const Color.fromRGBO(40, 182, 200, 1),
+                                      height: 24,
+                                    ),
+                                    const SizedBox(
+                                      width: 6.0,
+                                    ),
+                                    Text(
+                                      "Remark",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
+                                          .merge(
+                                            const TextStyle(
+                                              fontSize: 20.0,
+                                              color: Color.fromRGBO(
+                                                  40, 182, 200, 1),
+                                            ),
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )),
+                          const SizedBox(
+                            height: 16.0,
                           ),
                         ],
                       ),
