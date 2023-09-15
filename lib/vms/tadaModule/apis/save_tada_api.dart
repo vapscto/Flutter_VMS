@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/main.dart';
 
 class SaveTADAAPI {
@@ -8,8 +9,7 @@ class SaveTADAAPI {
 
   saveTADA({required Map<String, dynamic> body}) async {
     var dio = Dio();
-    var url =
-        'https://vmsstaging.vapssmartecampus.com:40015/api/TADAAdvanceApprovalFacade/savedta';
+    var url = 'https://vmsstaging.vapssmartecampus.com:40015/${URLS.tadaSave}';
     try {
       var response = await dio.post(
         url,

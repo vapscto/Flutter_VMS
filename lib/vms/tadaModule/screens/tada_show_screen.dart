@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
@@ -24,13 +25,15 @@ class TadaListScreen extends StatefulWidget {
 class _TadaListScreenState extends State<TadaListScreen> {
   TADAController tadaController = Get.put(TADAController());
 
-  _getAPIData() {
+  _getAPIData() async {
     tadaController.updateIsLoading(true);
-    TADAApplyListAPI.instance
-        .showApplyList(base: "", userId: "", tadaController: tadaController);
-    Future.delayed(const Duration(seconds: 3)).then((value) {
-      tadaController.updateIsLoading(false);
-    });
+    await TADAApplyListAPI.instance.showApplyList(
+        base: baseUrlFromInsCode("login", widget.mskoolController),
+        userId: widget.loginSuccessModel.userId!,
+        tadaController: tadaController);
+    // Future.delayed(const Duration(seconds: 3)).then((value) {
+    tadaController.updateIsLoading(false);
+    // });
   }
 
   String date = '';

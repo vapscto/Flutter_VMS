@@ -262,7 +262,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                         logger.i("success");
                         TADAApplyListAPI.instance.showApplyList(
                             base: "",
-                            userId: widget.values.userId.toString(),
+                            userId: widget.values.userId!,
                             tadaController: widget.tadaController);
                         _getData();
                         Get.back();

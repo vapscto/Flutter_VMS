@@ -449,19 +449,23 @@ class URLS {
 
   static String sectionlist = "api/FEESTodayCollectionFacade/Getsectionpop/";
 
-<<<<<<< HEAD
-  static String designationsListapi="api/ISM_DailyReport_ApprovalFacade/DeptSelectionDetails/";
+  static String designationsListapi =
+      "api/ISM_DailyReport_ApprovalFacade/DeptSelectionDetails/";
 
-  static var employee_model_list="api/ISM_DailyReport_ApprovalFacade/DesgSelectionDetails/";
+  static var employee_model_list =
+      "api/ISM_DailyReport_ApprovalFacade/DesgSelectionDetails/";
 
-  static var drDetailsApprove="api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
-=======
+  static var drDetailsApprove =
+      "api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
   static String onclickpurchaseapi = "api/IndentApprovalFacade/getpidetails/";
 
   static String purchaseindentapi = "api/IndentApprovalFacade/getloaddata/";
->>>>>>> d3ae1b5801c995f33e5855759fb6cdf9841e0c9f
 
   //** TADA Apply APIS* *//
   static String stateList = 'api/TADA_Advance_ApplyFacade/getalldata/';
   static String cityList = 'api/TADA_Advance_ApplyFacade/getstate/';
+  //** TADA Approval APIS **//
+  static String tadaSave = 'api/TADAAdvanceApprovalFacade/savedta';
+  static String tadaList = 'api/TADAAdvanceApprovalFacade/getalldata/';
+  static String tadaDetails = 'api/TADAAdvanceApprovalFacade/edit';
 }
