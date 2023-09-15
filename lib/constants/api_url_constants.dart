@@ -446,5 +446,11 @@ class URLS {
 
   static String  sectionlist="api/FEESTodayCollectionFacade/Getsectionpop/";
 
+  static String designationsListapi="api/ISM_DailyReport_ApprovalFacade/DeptSelectionDetails/";
+
+  static var employee_model_list="api/ISM_DailyReport_ApprovalFacade/DesgSelectionDetails/";
+
+  static var drDetailsApprove="api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
+
 
 }

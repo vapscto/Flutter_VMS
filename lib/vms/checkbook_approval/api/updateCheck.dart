@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+ import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:m_skool_flutter/controller/global_utilities.dart';
