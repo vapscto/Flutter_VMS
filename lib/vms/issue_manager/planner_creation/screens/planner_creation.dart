@@ -3,8 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/create_planner_table_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class PlannerCreationScreen extends StatefulWidget {
   const PlannerCreationScreen({super.key});
@@ -19,11 +22,31 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
   final _startDate = TextEditingController();
   final _endDate = TextEditingController();
   final _key = GlobalKey<FormState>();
+  bool selectAll = false;
+  bool checked = false;
+  List<int> checkList = [];
+  bool isPlan = false;
 
   DateTime? fromDate;
   DateTime? toDate;
+  List<CreatePlannerTable> newTable = [];
   @override
   void initState() {
+    setState(() {
+      newTable.add(CreatePlannerTable(
+          false,
+          'TASK/70466/2022-2023',
+          'Tenant module live implement and remaining should be completed',
+          'Major',
+          'HO',
+          'Softwate Development',
+          'Daily',
+          '18-12-2023',
+          'Name',
+          '22-12-2023 To 28-12-2023',
+          '4:30 HR',
+          ''));
+    });
     super.initState();
   }
 
@@ -180,9 +203,10 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                                     _startDate.text =
                                         "${numberList[fromDate!.day]}-${numberList[fromDate!.month]}-${fromDate!.year}";
                                     DateTime dt =
-                                        fromDate!.add(const Duration(days: 6));
+                                        fromDate!.add(const Duration(days: 5));
                                     _endDate.text =
                                         "${numberList[dt.day]}-${numberList[dt.month]}-${dt.year}";
+                                    isPlan = true;
                                   });
                                 }
                               },
@@ -205,9 +229,11 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                                       setState(() {
                                         _startDate.text =
                                             "${numberList[fromDate!.day]}-${numberList[fromDate!.month]}-${fromDate!.year}";
-                                        _endDate.text = fromDate!
-                                            .add(const Duration(days: 6))
-                                            .toString();
+                                        DateTime dt = fromDate!
+                                            .add(const Duration(days: 5));
+                                        _endDate.text =
+                                            "${numberList[dt.day]}-${numberList[dt.month]}-${dt.year}";
+                                        isPlan = true;
                                       });
                                     }
                                   },
@@ -284,14 +310,21 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                                   toDate = await showDatePicker(
                                     context: context,
                                     helpText: "Select Date",
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime.now(),
+                                    initialDate:
+                                        DateTime(int.parse(_endDate.text)),
+                                    firstDate:
+                                        DateTime(int.parse(_endDate.text)),
                                     lastDate: DateTime(3050),
+                                    selectableDayPredicate: (day) =>
+                                        day.weekday == 7 || day.weekday == 7
+                                            ? false
+                                            : true,
                                   );
                                   if (toDate != null) {
                                     setState(() {
                                       _endDate.text =
                                           "${numberList[toDate!.day]}-${numberList[toDate!.month]}-${toDate!.year}";
+                                      isPlan = true;
                                     });
                                   }
                                 } else {
@@ -312,11 +345,16 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                                         initialDate: DateTime.now(),
                                         firstDate: DateTime.now(),
                                         lastDate: DateTime(3050),
+                                        selectableDayPredicate: (day) =>
+                                            day.weekday == 7 || day.weekday == 7
+                                                ? false
+                                                : true,
                                       );
                                       if (toDate != null) {
                                         setState(() {
                                           _endDate.text =
                                               "${numberList[toDate!.day]}-${numberList[toDate!.month]}-${toDate!.year}";
+                                          isPlan = true;
                                         });
                                       }
                                     } else {
@@ -395,7 +433,343 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                 fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 16),
+          (isPlan != true)
+              ? const SizedBox()
+              : CustomContainer(
+                  child: Container(
+                  margin: const EdgeInsets.all(8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: 'Total Task: ',
+                            style: Get.textTheme.titleSmall!.copyWith(
+                                color: Theme.of(context).primaryColor)),
+                        TextSpan(
+                            text: '25 ',
+                            style: Get.textTheme.titleSmall!.copyWith()),
+                      ])),
+                      const SizedBox(height: 6),
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: 'Total Working Days: ',
+                            style: Get.textTheme.titleSmall!.copyWith(
+                                color: Theme.of(context).primaryColor)),
+                        TextSpan(
+                            text: '7 ',
+                            style: Get.textTheme.titleSmall!.copyWith()),
+                      ])),
+                      const SizedBox(height: 6),
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: 'Minimum Effort Required: ',
+                            style: Get.textTheme.titleSmall!.copyWith(
+                                color: Theme.of(context).primaryColor)),
+                        TextSpan(
+                            text: '25 ',
+                            style: Get.textTheme.titleSmall!.copyWith()),
+                      ])),
+                      const SizedBox(height: 6),
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: 'planned Effort: ',
+                            style: Get.textTheme.titleSmall!.copyWith(
+                                color: Theme.of(context).primaryColor)),
+                        TextSpan(
+                            text: '25 Hrs ',
+                            style: Get.textTheme.titleSmall!.copyWith()),
+                      ])),
+                      const SizedBox(height: 6),
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: 'Total Effort: ',
+                            style: Get.textTheme.titleSmall!.copyWith(
+                                color: Theme.of(context).primaryColor)),
+                        TextSpan(
+                            text: '25 ',
+                            style: Get.textTheme.titleSmall!.copyWith()),
+                      ])),
+                    ],
+                  ),
+                )),
+          (isPlan != true) ? const SizedBox() : const SizedBox(height: 16),
+          (isPlan != true) ? const SizedBox() : _createTable(),
+          (isPlan != true)
+              ? const SizedBox()
+              : Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: MSkollBtn(
+                      title: "Save",
+                      onPress: () {},
+                    ),
+                  ),
+                ),
         ],
+      ),
+    );
+  }
+
+  _createTable() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: DataTable(
+          showCheckboxColumn: true,
+          headingRowColor:
+              MaterialStatePropertyAll(Theme.of(context).primaryColor),
+          dataTextStyle: const TextStyle(
+              fontSize: 12,
+              color: Color.fromRGBO(0, 0, 0, 0.95),
+              fontWeight: FontWeight.w500),
+          dataRowHeight: MediaQuery.of(context).size.height * 0.23,
+          headingRowHeight: MediaQuery.of(context).size.height * 0.08,
+          horizontalMargin: 10,
+          columnSpacing: MediaQuery.of(context).size.width * 0.08,
+          dividerThickness: 1,
+          headingTextStyle:
+              const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+          border: TableBorder.all(
+              borderRadius: BorderRadius.circular(10), width: 0.5),
+          columns: [
+            const DataColumn(
+              numeric: true,
+              label: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'S.No',
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            DataColumn(
+              numeric: true,
+              label: Align(
+                alignment: Alignment.center,
+                child: Checkbox(
+                  checkColor: Colors.indigo,
+                  shape: ContinuousRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  value: selectAll,
+                  onChanged: (newValue) {
+                    setState(() {
+                      selectAll = newValue!;
+                      if (selectAll) {
+                        for (var i = 0; i < newTable.length; i++) {
+                          checkList.add(i);
+                          setState(() {
+                            newTable.elementAt(i).flag = true;
+                          });
+                        }
+                      } else {
+                        for (var i = 0; i < newTable.length; i++) {
+                          checked = newTable[i].flag = false;
+                        }
+                        checkList.clear();
+                        setState(() {});
+                      }
+                    });
+                  },
+                ),
+              ),
+            ),
+            const DataColumn(
+              label: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Issue/Task',
+                  style: TextStyle(fontSize: 14),
+                ),
+              ),
+            ),
+            const DataColumn(
+              label: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Assigned By',
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            const DataColumn(
+              label: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Date',
+                  style: TextStyle(fontSize: 14),
+                ),
+              ),
+            ),
+            const DataColumn(
+              label: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Effort(Hrs)',
+                  style: TextStyle(fontSize: 14),
+                ),
+              ),
+            ),
+            const DataColumn(
+              label: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Remarks',
+                  style: TextStyle(fontSize: 14),
+                ),
+              ),
+            ),
+          ],
+          rows: [
+            ...List.generate(newTable.length, (index) {
+              var i = index + 1;
+              return DataRow(cells: [
+                DataCell(Text(i.toString())),
+                DataCell(
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Checkbox(
+                        checkColor: Colors.indigo,
+                        shape: ContinuousRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        value: newTable.elementAt(index).flag,
+                        onChanged: (val) {
+                          setState(() {
+                            checked = newTable[index].flag = val!;
+                            if (checkList.contains(index)) {
+                              checkList.remove(index);
+                              checked = newTable[index].flag = false;
+                              if (newTable.length != checkList.length) {
+                                selectAll = false;
+                              }
+                              setState(() {});
+                            } else {
+                              checkList.add(index);
+                              if (newTable.length == checkList.length) {
+                                selectAll = true;
+                              }
+                            }
+                            setState(() {});
+                          });
+                        },
+                      )),
+                ),
+                DataCell(Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        newTable[index].taskNo,
+                        style: Get.textTheme.bodySmall!
+                            .copyWith(color: Theme.of(context).primaryColor),
+                      ),
+                      Text(
+                        newTable[index].taskName,
+                        style: Get.textTheme.bodySmall!
+                            .copyWith(color: Theme.of(context).primaryColor),
+                      ),
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: 'Type Task: ',
+                            style: Get.textTheme.titleSmall!.copyWith(
+                                color: Theme.of(context).primaryColor)),
+                        TextSpan(
+                            text: newTable[index].taskType,
+                            style: Get.textTheme.titleSmall!.copyWith()),
+                      ])),
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: 'Clint: ',
+                            style: Get.textTheme.titleSmall!.copyWith(
+                                color: Theme.of(context).primaryColor)),
+                        TextSpan(
+                            text: newTable[index].clint,
+                            style: Get.textTheme.titleSmall!.copyWith()),
+                      ])),
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: 'Category: ',
+                            style: Get.textTheme.titleSmall!.copyWith(
+                                color: Theme.of(context).primaryColor)),
+                        TextSpan(
+                            text: newTable[index].category,
+                            style: Get.textTheme.titleSmall!.copyWith()),
+                      ])),
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: 'Periodicity: ',
+                            style: Get.textTheme.titleSmall!.copyWith(
+                                color: Theme.of(context).primaryColor)),
+                        TextSpan(
+                            text: newTable[index].Periodicity,
+                            style: Get.textTheme.titleSmall!.copyWith()),
+                      ])),
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: 'Assigned Date: ',
+                            style: Get.textTheme.titleSmall!.copyWith(
+                                color: Theme.of(context).primaryColor)),
+                        TextSpan(
+                            text: newTable[index].assignedDate,
+                            style: Get.textTheme.titleSmall!.copyWith()),
+                      ])),
+                    ],
+                  ),
+                )),
+                DataCell(Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6.0),
+                  child: Text(newTable[index].assignedBy),
+                )),
+                DataCell(Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6.0),
+                  child: Text(newTable[index].date),
+                )),
+                DataCell(Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6.0),
+                  child: Text(newTable[index].effort),
+                )),
+                DataCell(TextFormField(
+                  onTap: () {
+                    var checkTxt = checkList.contains(
+                            newTable.indexOf(newTable.elementAt(index)))
+                        ? false
+                        : true;
+                    if (checkTxt) {
+                      Fluttertoast.showToast(msg: "Please select checkbox");
+                    }
+                  },
+                  readOnly: checkList
+                          .contains(newTable.indexOf(newTable.elementAt(index)))
+                      ? false
+                      : true,
+                  style: Get.textTheme.titleSmall,
+                  decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 4, right: 4),
+                      border: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue))),
+                  // controller: widget.remarkEntryController
+                )),
+              ]);
+            })
+          ],
+        ),
       ),
     );
   }
