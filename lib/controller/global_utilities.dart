@@ -65,6 +65,7 @@ import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.da
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_creation.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_HOME.dart';
 import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tadaApply/tada_advance_aplay_home.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -734,7 +735,10 @@ void openMappedPages(
     //   //   mskoolController: mskoolController,
     //   // );
     // }));
-    Get.to(() => const PlannerCreationScreen());
+    // Get.to(() => const PlannerCreationScreen());
+    Get.to(() => TadaAdvanceApplyScreen(
+          loginSuccessModel: loginSuccessModel,
+        ));
     return;
   }
   if (pageName == "Student Birth Day Report") {
