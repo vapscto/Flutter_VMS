@@ -9,19 +9,19 @@ import 'package:m_skool_flutter/vms/tadaModule/screens/tada_details_screen.dart'
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
-class TadaShowScreen extends StatefulWidget {
+class TadaListScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  const TadaShowScreen(
+  const TadaListScreen(
       {super.key,
       required this.loginSuccessModel,
       required this.mskoolController});
 
   @override
-  State<TadaShowScreen> createState() => _TadaShowScreenState();
+  State<TadaListScreen> createState() => _TadaListScreenState();
 }
 
-class _TadaShowScreenState extends State<TadaShowScreen> {
+class _TadaListScreenState extends State<TadaListScreen> {
   TADAController tadaController = Get.put(TADAController());
 
   _getAPIData() {

@@ -62,6 +62,7 @@ import 'package:m_skool_flutter/student/library/screen/library_home.dart';
 import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_creation.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_HOME.dart';
 import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
@@ -724,16 +725,17 @@ void openMappedPages(
         ));
   }
   if (pageName == "Salary Slip") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return SalarySlipHome(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-      );
-      //     SalaryDetails(
-      //   loginSuccessModel: loginSuccessModel,
-      //   mskoolController: mskoolController,
-      // );
-    }));
+    // Navigator.push(context, MaterialPageRoute(builder: (_) {
+    //   return SalarySlipHome(
+    //     loginSuccessModel: loginSuccessModel,
+    //     mskoolController: mskoolController,
+    //   );
+    //   //     SalaryDetails(
+    //   //   loginSuccessModel: loginSuccessModel,
+    //   //   mskoolController: mskoolController,
+    //   // );
+    // }));
+    Get.to(() => const PlannerCreationScreen());
     return;
   }
   if (pageName == "Student Birth Day Report") {
@@ -895,7 +897,7 @@ void openMappedPages(
     //     },
     //   ),
     // );
-    Get.to(() => TadaShowScreen(
+    Get.to(() => TadaListScreen(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
         ));
