@@ -23,6 +23,18 @@ class AuthenticateUserApi {
     final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     String loginApiUrl = loginBaseUrl + URLS.login;
     String mobileUniqueID = "";
+
+    logger.d(loginApiUrl);
+
+    logger.d({
+      "MI_Id": miId,
+      "username": userName,
+      "password": password,
+      "Logintype": "Mobile",
+      "mobiledeviceid": mobiledeviceid,
+    });
+
+
     if (Platform.isAndroid) {
       AndroidDeviceInfo deviceInfo = await deviceInfoPlugin.androidInfo;
       mobileUniqueID = deviceInfo.id;
@@ -37,6 +49,15 @@ class AuthenticateUserApi {
     }
 
     Response response = await ins.post(loginApiUrl, data: {
+      "MI_Id": miId,
+      "username": userName,
+      "password": password,
+      "Logintype": "Mobile",
+      "mobiledeviceid": mobiledeviceid,
+    });
+
+
+    logger.d({
       "MI_Id": miId,
       "username": userName,
       "password": password,

@@ -166,7 +166,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                             mid = s!.mIId;
                             await updateCheque(
                                 userId: 60064,
-                                mi_id: s!.mIId!,
+                                mi_id: s.mIId!,
                                 controller: _controller);
                           },
                         ),

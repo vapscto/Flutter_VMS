@@ -63,6 +63,7 @@ import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_creation.dart';
+import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_HOME.dart';
 import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/tada_advance_aplay_home.dart';
@@ -804,10 +805,10 @@ void openMappedPages(
     //   );
     // }));
     // return;
-    // Get.to(() => PurchaseIndentHome(
-    //       loginSuccessModel: loginSuccessModel,
-    //       mskoolController: mskoolController,
-    //     ));
+    Get.to(() => MakerCheckerHome(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
   }
 
   if (pageName == "Verify Homework") {
@@ -877,6 +878,16 @@ void openMappedPages(
           mskoolController: mskoolController,
         ));
     return;
+  }
+  Widget  hSize( {required double height}){
+    return SizedBox(
+      height: height,
+    );
+  }
+  Widget  wSize( {required double width}){
+    return SizedBox(
+      height: width,
+    );
   }
   if (pageName == "Staff Interaction") {
     // Navigator.push(
