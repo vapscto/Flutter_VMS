@@ -35,14 +35,9 @@ import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
 import 'package:m_skool_flutter/staffs/gallery_upload/screen/gallery_home.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/screen/hw_cw_home.dart';
-import 'package:m_skool_flutter/staffs/interaction/screen/interaction_home.dart';
-import 'package:m_skool_flutter/staffs/marks_entry/screen/marks_entry_home.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
 import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dart';
-import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
-import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
 import 'package:m_skool_flutter/staffs/salary_slip/screen/salary_slip_home.dart';
-import 'package:m_skool_flutter/staffs/staff_tt/screens/staff_tt_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/view_notice/screens/view_notice_home_screen.dart';
@@ -62,9 +57,8 @@ import 'package:m_skool_flutter/student/library/screen/library_home.dart';
 import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
-import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_creation.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
-import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_HOME.dart';
+import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
 import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/tada_advance_aplay_home.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -726,21 +720,35 @@ void openMappedPages(
         ));
   }
   if (pageName == "Salary Slip") {
-    // Navigator.push(context, MaterialPageRoute(builder: (_) {
-    //   return SalarySlipHome(
-    //     loginSuccessModel: loginSuccessModel,
-    //     mskoolController: mskoolController,
-    //   );
-    //   //     SalaryDetails(
-    //   //   loginSuccessModel: loginSuccessModel,
-    //   //   mskoolController: mskoolController,
-    //   // );
-    // }));
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return SalarySlipHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+      //     SalaryDetails(
+      //   loginSuccessModel: loginSuccessModel,
+      //   mskoolController: mskoolController,
+      // );
+    }));
     // Get.to(() => const PlannerCreationScreen());
+    // Get.to(() => TadaAdvanceApplyScreen(
+    //       loginSuccessModel: loginSuccessModel,
+    //     ));
+    return;
+  }
+  if (pageName == "TADA Apply") {
     Get.to(() => TadaAdvanceApplyScreen(
           loginSuccessModel: loginSuccessModel,
         ));
     return;
+  }
+  if (pageName == "Petty Cash Approval") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return PCApprovalHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
   }
   if (pageName == "Student Birth Day Report") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -860,35 +868,37 @@ void openMappedPages(
     return;
   }
   if (pageName == "Upload Homework") {
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (_) {
-    //       return HwCwHome(
-    //         loginSuccessModel: loginSuccessModel,
-    //         mskoolController: mskoolController,
-    //         title: pageName,
-    //         forHw: true,
-    //       );
-    //     },
-    //   ),
-    // );
-    Get.to(() => PCHome(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) {
+          return HwCwHome(
+            loginSuccessModel: loginSuccessModel,
+            mskoolController: mskoolController,
+            title: pageName,
+            forHw: true,
+          );
+        },
+      ),
+    );
+    // Get.to(() => PCHome(
+    //       loginSuccessModel: loginSuccessModel,
+    //       mskoolController: mskoolController,
+    //     ));
     return;
   }
-  Widget  hSize( {required double height}){
+  Widget hSize({required double height}) {
     return SizedBox(
       height: height,
     );
   }
-  Widget  wSize( {required double width}){
+
+  Widget wSize({required double width}) {
     return SizedBox(
       height: width,
     );
   }
+
   if (pageName == "Staff Interaction") {
     // Navigator.push(
     //   context,

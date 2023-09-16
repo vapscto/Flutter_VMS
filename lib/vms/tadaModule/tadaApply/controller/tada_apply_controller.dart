@@ -9,12 +9,7 @@ class TadaApplyController extends GetxController {
   RxBool isStateLoading = RxBool(false);
   RxBool isCityLoading = RxBool(false);
   RxBool isErrorLoading = RxBool(false);
-  RxList<TextEditingController> addressListController =
-      <TextEditingController>[].obs;
-
-  void addAddress(TextEditingController controller) {
-    addressListController.add(controller);
-  }
+  RxList<String> addressListController = <String>[].obs;
 
   void errorLoading(bool loading) {
     isErrorLoading.value = loading;
@@ -42,6 +37,8 @@ class TadaApplyController extends GetxController {
 
   //**Clint List **//
   RxList<ClintListModelValues> clintListValues = <ClintListModelValues>[].obs;
+  RxList<ClintListModelValues> clintSelectedValues =
+      <ClintListModelValues>[].obs;
   void getClintList(List<ClintListModelValues> clintList) {
     if (clintListValues.isNotEmpty) {
       clintListValues.clear();
@@ -49,6 +46,22 @@ class TadaApplyController extends GetxController {
     for (int i = 0; i < clintList.length; i++) {
       clintListValues.add(clintList.elementAt(i));
     }
+  }
+
+  void addSelectedValues(ClintListModelValues value) {
+    clintSelectedValues.add(value);
+  }
+
+  void removeSelectedValues(ClintListModelValues value) {
+    clintSelectedValues.remove(value);
+  }
+
+  void addAddress(String controller) {
+    addressListController.add(controller);
+  }
+
+  void removeAddress(String controller) {
+    addressListController.remove(controller);
   }
 
   //**City List**//

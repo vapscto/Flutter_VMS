@@ -16,13 +16,13 @@ Future<void> getParticularIndentDetails(
     required PettyCashApprovalController controller}) async {
   final Dio ins = getGlobalDio();
   final api =
-      "https://vmsstaging.vapssmartecampus.com:40015/api/PC_Indent_ApprovalFacade/getindentdetails";
+      base + URLS.particularIndentDetails;
   logger.d(api);
   logger.d({
-          "roleid": 2,
-          "Userid": 60145,
-          "MI_Id": 17,
-          "ASMAY_Id": 124,
+          "roleid": roleId,
+          "Userid": userId,
+          "MI_Id": miId,
+          "ASMAY_Id": asmaYId,
           "temp_indentid":[
         {"PCINDENT_Id":tempIndentId},
         ]
@@ -34,12 +34,12 @@ Future<void> getParticularIndentDetails(
     final Response response = await ins.post(api,
         options: Options(headers: getSession()),
         data: {
-          "roleid": 2,
-          "Userid": 60145,
-          "MI_Id": 17,
-          "ASMAY_Id": 124,
+          "roleid": roleId,
+          "Userid": userId,
+          "MI_Id": miId,
+          "ASMAY_Id": asmaYId,
           "temp_indentid":[
-        {"PCINDENT_Id":tempIndentId}
+        {"PCINDENT_Id":tempIndentId},
         ]
         });
 

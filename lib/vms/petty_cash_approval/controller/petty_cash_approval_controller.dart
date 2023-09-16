@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/vms/petty_cash_approval/model/approved_particular_indent_model.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/model/indent_details_model.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/model/onchange_approved_model.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/model/onload_approved_model.dart';
@@ -39,6 +41,21 @@ class PettyCashApprovalController extends GetxController {
     isLoadingIndentApprovedDetails.value = val;
   }
 
+    /// **  APPROVED PARTICULAR INDENT DETAILS CONTROLLER  **  ///
+
+  RxBool isErrorOccuredWhileLoadingApprovedParticularIndent = RxBool(false);
+  RxBool isLoadingApprovedParticularIndent = RxBool(false);
+
+  RxList<ParticularApprovedIndentModelValues> approvedparticular = RxList();
+
+  updateErrorLoadingApprovedParticularIndent(bool val) {
+    isErrorOccuredWhileLoadingApprovedParticularIndent.value = val;
+  }
+
+  updateisLoadingApprovedParticularIndent(bool val) {
+    isLoadingApprovedParticularIndent.value = val;
+  }
+
   /// ** APPROVEL INDENT DETAILS (FROM & TO DATE) CONTROLLER  **  ///
 
   Rx<DateTime> fromSelectedDate = Rx(DateTime.now());
@@ -64,15 +81,13 @@ class PettyCashApprovalController extends GetxController {
   }
 
   RxList<PcApprovalFromtoDateModelValues> pcIndentDetails = RxList();
-  
 
   /// **  PARTICULAR INDENT DETAILS CONTROLLER  **  ///
 
   RxBool isErrorOccuredWhileLoadingParticularIndentDetails = RxBool(false);
   RxBool isLoadingParticularIndentDetails = RxBool(false);
 
-  RxList<ParticularIndentDetailsModelValues> particularIndentDetails = RxList();
-  
+  RxList<ParticularIndentDetailsModelValues>  particularIndentDetails = RxList();
  RxList<bool> checkList = <bool>[].obs;
  RxList<TextEditingController> eTapprovalAmount=<TextEditingController>[].obs;
 
@@ -83,6 +98,13 @@ class PettyCashApprovalController extends GetxController {
   updateisLoadingParticularIndentDetails(bool val) {
     isLoadingParticularIndentDetails.value = val;
   }
+
+
+  ////****  SELECT  DATE  ****////
+
+
+  Rx<DateTime> selectDate = Rx(DateTime.now());
+  
    
   
 }

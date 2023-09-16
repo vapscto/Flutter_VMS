@@ -468,4 +468,21 @@ class URLS {
   static String tadaSave = 'api/TADAAdvanceApprovalFacade/savedta';
   static String tadaList = 'api/TADAAdvanceApprovalFacade/getalldata/';
   static String tadaDetails = 'api/TADAAdvanceApprovalFacade/edit';
+
+  //// PETTY CASH APPROVAL  ////////
+
+  static String onChangeInstitution =
+      "api/PC_Indent_ApprovalFacade/OnChangeInstitution";
+
+  static String onLoadPcApproval = "api/PC_Indent_ApprovalFacade/onloaddata";
+
+  static String particularapprovedIndentPC =
+      "api/PC_Indent_ApprovalFacade/Viewdata";
+
+  static String particularIndentDetails =
+      "api/PC_Indent_ApprovalFacade/getindentdetails";
+
+  static String onChangeDatePC = "api/PC_Indent_ApprovalFacade/onchangedate";
+
+  static String saveRecordPC = "api/PC_Indent_ApprovalFacade/saverecord";
 }
