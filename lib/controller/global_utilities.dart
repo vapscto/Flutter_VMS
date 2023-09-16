@@ -36,12 +36,9 @@ import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_
 import 'package:m_skool_flutter/staffs/gallery_upload/screen/gallery_home.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/screen/hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/interaction/screen/interaction_home.dart';
-import 'package:m_skool_flutter/staffs/marks_entry/screen/marks_entry_home.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
 import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dart';
-import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
-import 'package:m_skool_flutter/staffs/salary_slip/screen/salary_slip_home.dart';
 import 'package:m_skool_flutter/staffs/staff_tt/screens/staff_tt_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
@@ -66,6 +63,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
+import '../vms/Purchase_requisition/screen/purchase_home.dart';
 
 RxInt currentHomeTab = 0.obs;
 RxList<int> previousHomeTab = [0].obs;
@@ -634,6 +632,15 @@ void openMappedPages(
     return;
   }
 
+
+  // if (pageName ==  "Salary Slip") {
+  //   Get.to(() => PurchaserequisitionHome(
+  //         loginSuccessModel: loginSuccessModel,
+  //         mskoolController: mskoolController,
+  //       ));
+  //   return;
+  // }
+
   if (pageName == "Upload Gallery") {
     Get.to(() => GalleryUploadPage(
           loginSuccessModel: loginSuccessModel,
@@ -689,14 +696,14 @@ void openMappedPages(
           mskoolController: mskoolController,
         ));
   }
-  if (pageName == "Mark Entry") {
-    Get.to(
-      () => PurchaseIndentHome(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-      ),
-    );
-  }
+  // if (pageName == "Mark Entry") {
+  //   Get.to(
+  //     () => PurchaseIndentHome(
+  //       loginSuccessModel: loginSuccessModel,
+  //       mskoolController: mskoolController,
+  //     ),
+  //   );
+  // }
 
   if (pageName == "Salary Details") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -714,14 +721,10 @@ void openMappedPages(
   }
   if (pageName == "Salary Slip") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return SalarySlipHome(
+      return PurchaserequisitionHome(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
       );
-      //     SalaryDetails(
-      //   loginSuccessModel: loginSuccessModel,
-      //   mskoolController: mskoolController,
-      // );
     }));
     return;
   }
@@ -777,10 +780,10 @@ void openMappedPages(
   }
   if (pageName == "Punch Report") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return PunchReport(
+      return PurchaseIndentHome(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
-        title: pageName,
+       
       );
     }));
     return;
@@ -896,22 +899,22 @@ void openMappedPages(
     );
     return;
   }
-  if (pageName.toLowerCase() == "coe") {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) {
-          return ManagerCoeHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            title: pageName,
-            formDashboard: true,
-          );
-        },
-      ),
-    );
-    return;
-  }
+  // if (pageName.toLowerCase() == "coe") {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (_) {
+  //         return ManagerCoeHome(
+  //           loginSuccessModel: loginSuccessModel,
+  //           mskoolController: mskoolController,
+  //           title: pageName,
+  //           formDashboard: true,
+  //         );
+  //       },
+  //     ),
+  //   );
+  //   return;
+  // }
   if (pageName == "Student") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return ManagerStudentDetails(
@@ -951,6 +954,15 @@ void openMappedPages(
         ));
   }
 
+ if (pageName == 'COE') {
+    Get.to(() => PurchaseIndentHome(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+         
+        ));
+  }
+
+
   if (pageName == "Overall Fee") {
     Navigator.push(
       context,
@@ -967,18 +979,18 @@ void openMappedPages(
 
     return;
   }
-  if (pageName == "Coe") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return ManagerCoeHome(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-        title: pageName,
-        formDashboard: true,
-      );
-    }));
+  // if (pageName == "Coe") {
+  //   Navigator.push(context, MaterialPageRoute(builder: (_) {
+  //     return ManagerCoeHome(
+  //       loginSuccessModel: loginSuccessModel,
+  //       mskoolController: mskoolController,
+  //       title: pageName,
+  //       formDashboard: true,
+  //     );
+  //   }));
 
-    return;
-  }
+  //   return;
+  // }
 
   if (pageName == "Staff Birthday Report") {
     Get.to(

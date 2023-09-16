@@ -450,5 +450,9 @@ class URLS {
 
   static String purchaseindentapi = "api/IndentApprovalFacade/getloaddata/";
 
+  static String purchaserequisitionapi = "api/INV_PurchaseRequisitionFacade/GetOnchangeData/";
+
+ 
+
 
 }
