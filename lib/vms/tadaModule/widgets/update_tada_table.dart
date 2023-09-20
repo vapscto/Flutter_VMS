@@ -247,7 +247,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                       }
 
                       logger.i(headArray);
-                      SaveTADAAPI.instance.saveTADA(body: {
+                      SaveTADAAPI.instance.saveTADA(base: '', body: {
                         'VTADAAA_Remarks': remark,
                         'VTADAAA_TotalSactionedAmount':
                             sanctionController2.text,

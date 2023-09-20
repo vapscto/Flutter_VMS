@@ -7,7 +7,7 @@ class SaveTADAAPI {
   SaveTADAAPI.init();
   static final SaveTADAAPI instance = SaveTADAAPI.init();
 
-  saveTADA({required Map<String, dynamic> body}) async {
+  saveTADA({required Map<String, dynamic> body, required String base}) async {
     var dio = Dio();
     var url = 'https://vmsstaging.vapssmartecampus.com:40015/${URLS.tadaSave}';
     try {
