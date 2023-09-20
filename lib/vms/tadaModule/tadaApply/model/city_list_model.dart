@@ -69,7 +69,7 @@ class CityListModelValues {
     ivrmmSId = json['ivrmmS_Id'];
     ivrmmcTId = json['ivrmmcT_Id'];
     hrmdeSId = json['hrmdeS_Id'];
-    ivrmmcTName = json['ivrmmcT_Name'];
+    ivrmmcTName = json['ivrmmcT_Name'] ?? " ";
     vtadaaAClientId = json['vtadaaA_ClientId'];
     vtadaaATotalAppliedAmount = json['vtadaaA_TotalAppliedAmount'];
     vtadaaATotalSactionedAmount = json['vtadaaA_TotalSactionedAmount'];

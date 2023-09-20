@@ -72,6 +72,25 @@ class TadaApplyController extends GetxController {
     }
     for (int i = 0; i < cityList.length; i++) {
       cityListValues.add(cityList.elementAt(i));
+      logger.i(cityListValues.toJson());
     }
+  }
+
+  //** Table List **//
+  RxList<TextEditingController> slotController = <TextEditingController>[].obs;
+  void getSlots(TextEditingController slots) {
+    slotController.add(slots);
+  }
+
+  RxList<TextEditingController> totalAmountController =
+      <TextEditingController>[].obs;
+  void getTotalAmount(TextEditingController amount) {
+    totalAmountController.add(amount);
+  }
+
+  RxList<TextEditingController> remarksController =
+      <TextEditingController>[].obs;
+  void getremarks(TextEditingController remarks) {
+    remarksController.add(remarks);
   }
 }

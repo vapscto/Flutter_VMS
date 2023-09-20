@@ -14,6 +14,7 @@ import 'package:m_skool_flutter/vms/tadaModule/tadaApply/controller/tada_apply_c
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/city_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/clint_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/state_list_model.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tadaApply/widgets/tada_apply_table.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -35,7 +36,6 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
   final _key = GlobalKey<FormState>();
   bool selectAll = false;
   bool checked = false;
-  List<int> checkList = [];
   DateTime? fromDate;
   DateTime? toDate;
   TimeOfDay? fromTime;
@@ -48,9 +48,13 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
 
   StateListModelValues? stateLists;
   ClintListModelValues? clintSelectedValue;
-  CityListModelValues? citySelectedValues;
+  CityListModelValues? citySelectedValue;
 
   TadaApplyController tadaApplyController = Get.put(TadaApplyController());
+  bool isSelect = false;
+  List selectedAll = [];
+  List<TADAApplyTable> newTableData = <TADAApplyTable>[];
+  num allAmount = 0;
   getStateList() async {
     tadaApplyController.stateLoading(true);
     tadaApplyController.cityListValues.clear();
@@ -72,13 +76,13 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
     tadaApplyController.cityLoading(true);
     await TadaCityListAPI.instance.tadaCityList(
         miId: widget.loginSuccessModel.mIID!,
-        userId: 60934, //widget.loginSuccessModel.userId!,
+        userId: widget.loginSuccessModel.userId!,
         base: '',
         countryId: countryId,
         stateId: stateId,
         tadaApplyController: tadaApplyController);
     if (tadaApplyController.cityListValues.isNotEmpty) {
-      citySelectedValues = tadaApplyController.cityListValues.first;
+      citySelectedValue = tadaApplyController.cityListValues.last;
     }
     tadaApplyController.cityLoading(false);
   }
@@ -88,7 +92,9 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
     setState(() {
       getStateList();
     });
-
+    newTableData.add(TADAApplyTable(false, 'Food', 250, 1, 3, 750));
+    newTableData
+        .add(TADAApplyTable(false, 'Accomodation Amount', 250, 1, 3, 350));
     super.initState();
   }
 
@@ -252,7 +258,11 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                         dayCount = toDate!
                                             .difference(fromDate!)
                                             .inDays;
-                                        logger.i('===${dayCount}');
+                                        logger.i('===$dayCount');
+                                        var hourCount = toDate!
+                                            .difference(fromDate!)
+                                            .inHours;
+                                        logger.i('=++$hourCount');
                                       });
                                     }
                                   } else {
@@ -281,7 +291,6 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                             dayCount = toDate!
                                                 .difference(fromDate!)
                                                 .inDays;
-                                            logger.i('===${dayCount}');
                                           });
                                         }
                                       } else {
@@ -678,7 +687,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                           ),
                                           child: DropdownButtonFormField<
                                               CityListModelValues>(
-                                            value: citySelectedValues,
+                                            value: citySelectedValue,
                                             decoration: InputDecoration(
                                               focusedBorder:
                                                   const OutlineInputBorder(
@@ -772,7 +781,8 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                   child: Text(
                                                     tadaApplyController
                                                         .cityListValues[index]
-                                                        .ivrmmcTName!,
+                                                        .ivrmmcTName
+                                                        .toString(),
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .labelSmall!
@@ -787,7 +797,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                               );
                                             }),
                                             onChanged: (s) {
-                                              citySelectedValues = s!;
+                                              citySelectedValue = s!;
                                             },
                                           ),
                                         )
@@ -831,69 +841,71 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                 controller: _controller,
                                                 child: Column(
                                                   children: [
-                                                    SizedBox(
-                                                        height: 30,
-                                                        child: Obx(() {
-                                                          return CheckboxListTile(
-                                                            controlAffinity:
-                                                                ListTileControlAffinity
-                                                                    .leading,
-                                                            checkboxShape: RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            6)),
-                                                            dense: true,
-                                                            activeColor: Theme
-                                                                    .of(context)
-                                                                .primaryColor,
-                                                            contentPadding:
-                                                                const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        8),
-                                                            visualDensity:
-                                                                const VisualDensity(
-                                                                    horizontal:
-                                                                        -4.0),
-                                                            title: Text(
-                                                              "Select All",
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .labelSmall!
-                                                                  .merge(const TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400,
-                                                                      fontSize:
-                                                                          14.0,
-                                                                      letterSpacing:
-                                                                          0.3)),
-                                                            ),
-                                                            value:
-                                                                selectAllDepartment
-                                                                    .value,
-                                                            onChanged:
-                                                                (bool? value) {
-                                                              tadaApplyController
-                                                                  .clintSelectedValues
-                                                                  .clear();
-                                                              selectAllDepartment
-                                                                      .value =
-                                                                  !value!;
-                                                              if (value) {
-                                                                tadaApplyController
-                                                                    .clintSelectedValues
-                                                                    .addAll(tadaApplyController
-                                                                        .clintListValues);
-                                                              }
-                                                            },
-                                                          );
-                                                        })),
-                                                    const SizedBox(
-                                                      height: 6.0,
-                                                    ),
+                                                    // SizedBox(
+                                                    //     height: 30,
+                                                    //     child: Obx(() {
+                                                    //       return CheckboxListTile(
+                                                    //         controlAffinity:
+                                                    //             ListTileControlAffinity
+                                                    //                 .leading,
+                                                    //         checkboxShape: RoundedRectangleBorder(
+                                                    //             borderRadius:
+                                                    //                 BorderRadius
+                                                    //                     .circular(
+                                                    //                         6)),
+                                                    //         dense: true,
+                                                    //         activeColor: Theme
+                                                    //                 .of(context)
+                                                    //             .primaryColor,
+                                                    //         contentPadding:
+                                                    //             const EdgeInsets
+                                                    //                     .symmetric(
+                                                    //                 horizontal:
+                                                    //                     8),
+                                                    //         visualDensity:
+                                                    //             const VisualDensity(
+                                                    //                 horizontal:
+                                                    //                     -4.0),
+                                                    //         title: Text(
+                                                    //           "Select All",
+                                                    //           style: Theme.of(
+                                                    //                   context)
+                                                    //               .textTheme
+                                                    //               .labelSmall!
+                                                    //               .merge(const TextStyle(
+                                                    //                   fontWeight:
+                                                    //                       FontWeight
+                                                    //                           .w400,
+                                                    //                   fontSize:
+                                                    //                       14.0,
+                                                    //                   letterSpacing:
+                                                    //                       0.3)),
+                                                    //         ),
+                                                    //         value:
+                                                    //             selectAllDepartment
+                                                    //                 .value,
+                                                    //         onChanged:
+                                                    //             (bool? value) {
+                                                    //           setState(() {
+                                                    //             tadaApplyController
+                                                    //                 .clintSelectedValues
+                                                    //                 .clear();
+                                                    //             selectAllDepartment
+                                                    //                     .value =
+                                                    //                 value!;
+                                                    //             if (value) {
+                                                    //               tadaApplyController
+                                                    //                   .clintSelectedValues
+                                                    //                   .addAll(tadaApplyController
+                                                    //                       .clintListValues);
+                                                    //             }
+                                                    //           });
+                                                    //         },
+                                                    //       );
+                                                    //     })),
+                                                    // const SizedBox(
+                                                    //   height: 6.0,
+                                                    // ),
                                                     ListView.builder(
                                                       itemCount:
                                                           tadaApplyController
@@ -922,8 +934,16 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                             .clintListValues
                                                                             .elementAt(index)
                                                                             .ismmclTAddress!);
-                                                                        _addressController.text +=
-                                                                            ' ${index + 1}) ${tadaApplyController.addressListController.elementAt(index)}';
+                                                                        for (int i =
+                                                                                0;
+                                                                            i < tadaApplyController.addressListController.length;
+                                                                            i++) {
+                                                                          _addressController.text +=
+                                                                              '${tadaApplyController.addressListController[i]}  ';
+                                                                        }
+                                                                        tadaApplyController
+                                                                            .addressListController
+                                                                            .clear();
                                                                       } else {
                                                                         selectAllDepartment.value =
                                                                             false;
@@ -931,19 +951,19 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                             .clintListValues
                                                                             .elementAt(index));
 
-                                                                        Future.delayed(const Duration(milliseconds: 100))
-                                                                            .then((value) {
-                                                                          logger
-                                                                              .i("===${tadaApplyController.addressListController.elementAt(index)}");
-                                                                          setState(
-                                                                              () {
-                                                                            tadaApplyController.removeAddress(
-                                                                              tadaApplyController.addressListController.elementAt(index),
-                                                                            );
-                                                                            _addressController.text =
-                                                                                tadaApplyController.addressListController.elementAt(index);
-                                                                          });
-                                                                        });
+                                                                        for (int i =
+                                                                                0;
+                                                                            i < tadaApplyController.addressListController.length;
+                                                                            i++) {
+                                                                          tadaApplyController
+                                                                              .removeAddress(
+                                                                            tadaApplyController.addressListController.elementAt(i),
+                                                                          );
+                                                                          _addressController.text +=
+                                                                              '${tadaApplyController.addressListController.elementAt(i)} ';
+                                                                        }
+                                                                        _addressController
+                                                                            .clear();
                                                                       }
                                                                     });
                                                                   },
@@ -975,7 +995,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                 255, 255, 236, 235),
                                             image:
                                                 'assets/images/subjectfielicon.png',
-                                            title: 'Select Department',
+                                            title: 'Select Clint',
                                           ),
                                         ],
                                       ),
@@ -1089,6 +1109,153 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                   ),
                                 ),
                               ),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                padding: const EdgeInsets.only(top: 20),
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: DataTable(
+                                      dataRowHeight: 50,
+                                      headingRowHeight: 40,
+                                      columnSpacing: 20,
+                                      headingTextStyle:
+                                          const TextStyle(color: Colors.white),
+                                      border: TableBorder.all(
+                                        color: Colors.black,
+                                        width: 0.6,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      headingRowColor:
+                                          MaterialStateColor.resolveWith(
+                                              (states) => Theme.of(context)
+                                                  .primaryColor),
+                                      columns: const [
+                                        DataColumn(label: Text("Select")),
+                                        DataColumn(label: Text("Particulars")),
+                                        DataColumn(label: Text("Amount")),
+                                        DataColumn(label: Text("Days")),
+                                        DataColumn(label: Text("Total Sots")),
+                                        DataColumn(label: Text("Slots")),
+                                        DataColumn(label: Text("Total Amount")),
+                                        DataColumn(label: Text("Remark")),
+                                      ],
+                                      rows: List.generate(newTableData.length,
+                                          (index) {
+                                        return DataRow(cells: [
+                                          DataCell(Checkbox(
+                                            onChanged: (value) {
+                                              setState(() {
+                                                selectedAll.clear();
+                                                isSelect = value!;
+                                                tadaApplyController
+                                                    .totalAmountController
+                                                    .clear();
+
+                                                if (value) {
+                                                  selectedAll.add(newTableData
+                                                      .elementAt(index));
+                                                  tadaApplyController
+                                                      .totalAmountController
+                                                      .add(
+                                                          TextEditingController(
+                                                              text: newTableData
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .amount
+                                                                  .toString()));
+                                                  allAmount += num.parse(
+                                                      tadaApplyController
+                                                          .totalAmountController
+                                                          .elementAt(index)
+                                                          .text);
+                                                } else {
+                                                  selectedAll.remove(
+                                                      newTableData
+                                                          .elementAt(index));
+                                                  // tadaApplyController
+                                                  //     .totalAmountController
+                                                  //     .removeAt(index);
+                                                  allAmount -= num.parse(
+                                                      tadaApplyController
+                                                          .totalAmountController[
+                                                              index]
+                                                          .text);
+                                                  //  num.parse(
+                                                  //     tadaApplyController
+                                                  //         .totalAmountController
+                                                  //         .elementAt(index)
+                                                  //         .text);
+                                                }
+                                              });
+                                            },
+                                            value: isSelect,
+                                            activeColor:
+                                                Theme.of(context).primaryColor,
+                                          )),
+                                          DataCell(Text(newTableData
+                                              .elementAt(index)
+                                              .particulars)),
+                                          DataCell(Text(newTableData
+                                              .elementAt(index)
+                                              .amount
+                                              .toString())),
+                                          DataCell(Text(newTableData
+                                              .elementAt(index)
+                                              .days
+                                              .toString())),
+                                          DataCell(Text(newTableData
+                                              .elementAt(index)
+                                              .totalSlot
+                                              .toString())),
+                                          DataCell(SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.1,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 8.0),
+                                              child: TextFormField(
+                                                  // controller: tadaApplyController.slotController
+                                                  //     .elementAt(index),
+                                                  ),
+                                            ),
+                                          )),
+                                          DataCell(Text(newTableData
+                                              .elementAt(index)
+                                              .totalAmount
+                                              .toString())),
+                                          DataCell(SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.1,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 8.0),
+                                              child: TextFormField(
+                                                autocorrect: true,
+                                                // controller: tadaApplyController
+                                                //     .remarksController
+                                                //     .elementAt(index),
+                                              ),
+                                            ),
+                                          )),
+                                        ]);
+                                      }),
+                                    )),
+                              ),
+                              const SizedBox(height: 10),
+                              RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                    text: "Total Amount: ",
+                                    style: Get.textTheme.titleSmall!.copyWith(
+                                        color: Theme.of(context).primaryColor)),
+                                TextSpan(
+                                    text: " ₹ $allAmount",
+                                    style: Get.textTheme.titleSmall),
+                              ])),
                               const SizedBox(height: 30),
                               Align(
                                 alignment: Alignment.bottomCenter,

@@ -27,8 +27,8 @@ class TadaStateListAPI {
         data: {"UserId": userId, "MI_Id": miId},
       );
       if (response.statusCode == 200) {
-        logger.i(api);
-        logger.i(response.data['state']);
+        // logger.i(api);
+        // logger.i(response.data['state']);
         StateListModel stateListModel =
             StateListModel.fromJson(response.data['state']);
         tadaApplyController.getStateList(stateListModel.values!);

@@ -57,6 +57,7 @@ import 'package:m_skool_flutter/student/library/screen/library_home.dart';
 import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_creation.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
 import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
@@ -505,6 +506,7 @@ void openMappedPages(
     MskoolController mskoolController,
     BuildContext context,
     HwCwNbController hwCwNbController) {
+  logger.i(pageName);
   if (pageName == "Attendance") {
     Get.to(() => AttendanceHomeScreen(
         loginSuccessModel: loginSuccessModel,
@@ -713,11 +715,8 @@ void openMappedPages(
     //     mskoolController: mskoolController,
     //   );
     // }));
-    // return;
-    Get.to(() => PurchaseIndentHome(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
+    Get.to(() => const PlannerCreationScreen());
+    return;
   }
   if (pageName == "Salary Slip") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -741,6 +740,12 @@ void openMappedPages(
           loginSuccessModel: loginSuccessModel,
         ));
     return;
+  }
+  if (pageName == 'TADA Approval') {
+    Get.to(() => TadaListScreen(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
   }
   if (pageName == "Petty Cash Approval") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -790,6 +795,13 @@ void openMappedPages(
     //       title: pageName,
     //     ));
     Get.to(() => ChequeApproval(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
+    return;
+  }
+  if (pageName == "Purchase Indent Approval") {
+    Get.to(() => PurchaseIndentHome(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
         ));
@@ -931,11 +943,11 @@ void openMappedPages(
     //     },
     //   ),
     // );
-    Get.to(() => PurchaseIndentHome(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
-    return;
+    // Get.to(() => PurchaseIndentHome(
+    //       loginSuccessModel: loginSuccessModel,
+    //       mskoolController: mskoolController,
+    //     ));
+    // return;
   }
   if (pageName.toLowerCase() == "coe report") {
     Navigator.push(

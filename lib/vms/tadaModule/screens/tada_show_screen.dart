@@ -126,11 +126,12 @@ class _TadaListScreenState extends State<TadaListScreen> {
   List<DataRow> createRow() {
     return List.generate(tadaController.tadaData.length, (index) {
       var value = index + 1;
-      DateTime dt =
-          DateTime.parse(tadaController.tadaData[index].vTADAAAAppliedDate!);
-      date = '${dt.day}-${dt.month}-${dt.year}';
-      logger.i(date);
-      logger.i(tadaController.tadaData[index].vTADAAAId!);
+      if (tadaController.tadaData[index].vTADAAAAppliedDate != null) {
+        DateTime dt =
+            DateTime.parse(tadaController.tadaData[index].vTADAAAAppliedDate!);
+        date = '${dt.day}-${dt.month}-${dt.year}';
+      }
+
       return DataRow(cells: [
         DataCell(Text(value.toString())),
         DataCell(Text(tadaController.tadaData[index].mIName ?? "")),
@@ -148,7 +149,10 @@ class _TadaListScreenState extends State<TadaListScreen> {
               Get.to(() => TADADetailsScreen(
                     tadaController: tadaController,
                     date: date,
-                    vtadaaaId: tadaController.tadaData[index].vTADAAAId!,
+                    vtadaaaId:
+                        (tadaController.tadaData[index].vTADAAAId != null)
+                            ? tadaController.tadaData[index].vTADAAAId!
+                            : 0,
                     values: tadaController.tadaData[index],
                   ));
             },
