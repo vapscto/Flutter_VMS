@@ -942,17 +942,21 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                             .clintListValues
                                                                             .elementAt(index)
                                                                             .ismmclTAddress!);
+                                                                        int count =
+                                                                            0;
+                                                                        _addressController
+                                                                            .clear();
                                                                         for (int i =
                                                                                 0;
                                                                             i < tadaApplyController.addressListController.length;
                                                                             i++) {
+                                                                          count++;
                                                                           _addressController.text +=
-                                                                              '${tadaApplyController.addressListController[i]}  ';
+                                                                              ' $count ) ${tadaApplyController.addressListController[i]}  ';
                                                                         }
-                                                                        tadaApplyController
-                                                                            .addressListController
-                                                                            .clear();
                                                                       } else {
+                                                                        _addressController
+                                                                            .clear();
                                                                         selectAllDepartment.value =
                                                                             false;
                                                                         tadaApplyController.removeSelectedValues(tadaApplyController
@@ -963,14 +967,11 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                             i < tadaApplyController.addressListController.length;
                                                                             i++) {
                                                                           tadaApplyController
-                                                                              .removeAddress(
-                                                                            tadaApplyController.addressListController.elementAt(i),
-                                                                          );
+                                                                              .addressListController
+                                                                              .removeAt(i);
                                                                           _addressController.text +=
-                                                                              '${tadaApplyController.addressListController.elementAt(i)} ';
+                                                                              '${i + 1} ) ${tadaApplyController.addressListController.elementAt(i)} ';
                                                                         }
-                                                                        _addressController
-                                                                            .clear();
                                                                       }
                                                                     });
                                                                   },
