@@ -738,6 +738,7 @@ void openMappedPages(
   if (pageName == "TADA Apply") {
     Get.to(() => TadaAdvanceApplyScreen(
           loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
         ));
     return;
   }

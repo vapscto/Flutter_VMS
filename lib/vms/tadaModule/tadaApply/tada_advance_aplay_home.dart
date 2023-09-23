@@ -1,8 +1,11 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
@@ -22,7 +25,11 @@ import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class TadaAdvanceApplyScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
-  const TadaAdvanceApplyScreen({super.key, required this.loginSuccessModel});
+  final MskoolController mskoolController;
+  const TadaAdvanceApplyScreen(
+      {super.key,
+      required this.loginSuccessModel,
+      required this.mskoolController});
 
   @override
   State<TadaAdvanceApplyScreen> createState() => _TadaAdvanceApplyScreenState();
@@ -47,7 +54,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
   final _addressController = TextEditingController();
 
   StateListModelValues? stateLists;
-  ClintListModelValues? clintSelectedValue;
+  // ClintListModelValues? clintSelectedValue;
   CityListModelValues? citySelectedValue;
 
   TadaApplyController tadaApplyController = Get.put(TadaApplyController());
@@ -61,14 +68,15 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
     await TadaStateListAPI.instance.tadastateList(
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!,
-        base: '',
+        base: baseUrlFromInsCode('login', widget.mskoolController),
         tadaApplyController: tadaApplyController);
     if (tadaApplyController.stateList.isNotEmpty) {
       stateLists = tadaApplyController.stateList.first;
       getCity(stateLists!.ivrmmCId!, stateLists!.ivrmmSId!);
-    } else if (tadaApplyController.clintListValues.isNotEmpty) {
-      clintSelectedValue = tadaApplyController.clintListValues.first;
     }
+    //  else if (tadaApplyController.clintListValues.isNotEmpty) {
+    //   clintSelectedValue = tadaApplyController.clintListValues.first;
+    // }
     tadaApplyController.stateLoading(false);
   }
 
@@ -77,7 +85,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
     await TadaCityListAPI.instance.tadaCityList(
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!,
-        base: '',
+        base: baseUrlFromInsCode('login', widget.mskoolController),
         countryId: countryId,
         stateId: stateId,
         tadaApplyController: tadaApplyController);
@@ -950,7 +958,6 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                         tadaApplyController.removeSelectedValues(tadaApplyController
                                                                             .clintListValues
                                                                             .elementAt(index));
-
                                                                         for (int i =
                                                                                 0;
                                                                             i < tadaApplyController.addressListController.length;
