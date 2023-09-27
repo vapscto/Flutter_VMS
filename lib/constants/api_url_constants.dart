@@ -446,17 +446,28 @@ class URLS {
 
   static String  sectionlist="api/FEESTodayCollectionFacade/Getsectionpop/";
 
-<<<<<<< HEAD
-  static String designationsListapi="api/ISM_DailyReport_ApprovalFacade/DeptSelectionDetails/";
-
-  static var employee_model_list="api/ISM_DailyReport_ApprovalFacade/DesgSelectionDetails/";
-
-  static var drDetailsApprove="api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
-=======
   static String onclickpurchaseapi = "api/IndentApprovalFacade/getpidetails/";
 
   static String purchaseindentapi = "api/IndentApprovalFacade/getloaddata/";
->>>>>>> d3ae1b5801c995f33e5855759fb6cdf9841e0c9f
+      // Maker and checker
+  static String designationsListapi="api/ISM_DailyReport_ApprovalFacade/GetDetails/";
 
+  static String drDetailsApprove="api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
+
+  static String employee_model_list="api/ISM_DailyReport_ApprovalFacade/DesgSelectionDetails/";
+
+  static String getDrs="api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
+
+  static String DeptList="api/ISM_DailyReport_ApprovalFacade/DeptSelectionDetails/";
+
+  static String Security="api/ISMDashboardFacade/getdetails";
+
+  static String submit="api/ISM_DailyReport_ApprovalFacade/SaveApprovalDetails/";
+
+  static String updateCheck="api/CheckBookEntryApprovalFacade/ApprovalData/";
+
+  static String getcmpn="api/CheckBookEntryApprovalFacade/getalldata/";
+
+  static String submitCheck="api/CheckBookEntryApprovalFacade/Getdata/";
 
 }

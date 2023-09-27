@@ -13,13 +13,15 @@ import 'package:m_skool_flutter/vms/maker%20and%20checker/model/designation.dart
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/employee_model_list.dart';
 
 Future<int> feachEmpolyee(
-    {required int userId,
+    { required String base,
+      required int userId,
     required int mi_id,
+    required  int ivrmrtId,
     required MakerCheckerController controller,
     required List<Map<String, dynamic>> list}) async {
   final Dio ins = getGlobalDio();
   String apiUrl =
-      "https://vmsissuemanager.azurewebsites.net/${URLS.employee_model_list}";
+      "${base}${URLS.employee_model_list}";
 
   logger.d(apiUrl);
 
@@ -28,9 +30,9 @@ Future<int> feachEmpolyee(
 
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
-      "IVRMRT_Id": 11,
-      "UserId": 60934,
-      "MI_Id": 17,
+      "IVRMRT_Id": ivrmrtId,
+      "UserId": userId,
+      "MI_Id": mi_id,
       "DRApprovalTypeFlag": "DRApproval",
       "designationlist": list
     });

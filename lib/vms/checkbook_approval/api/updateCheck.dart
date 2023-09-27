@@ -1,5 +1,6 @@
  import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
+import 'package:m_skool_flutter/constants/api_url_constants.dart';
 
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -9,15 +10,17 @@ import 'package:m_skool_flutter/vms/checkbook_approval/model/getTaDaModel.dart';
 Future<int> updateCheque({
   required int userId,
   required int mi_id,
+  required String base,
   required GetDetailedToDo controller,
 }) async {
   final Dio ins = getGlobalDio();
   final String apiUrl =
-      "https://vmsstaging.vapssmartecampus.com:40015/api/CheckBookEntryApprovalFacade/ApprovalData/";
-  //  final String apiUrl = base + URLS.staffGalleryClassApi;
+       base+URLS.updateCheck;
 
-  logger.d(apiUrl);
+  
 
+  logger.d("show data${apiUrl}");
+    logger.d(  {"UserId": userId, "MI_Id": mi_id});
   try {
     controller.updateisLoading(true);
 
@@ -25,7 +28,7 @@ Future<int> updateCheque({
         options: Options(headers: getSession()),
         data: {"UserId": userId, "MI_Id": mi_id});
 
-    logger.d(response.data['getadvancetada']);
+    logger.d("show${response.data['getadvancetada']}");
     if (response.data['getadvancetada'] == null) {
       controller.updateisErrorOccuredLoading(true);
       return 0;
@@ -53,7 +56,7 @@ Future<int> updateCheque({
               : "",
         ));
         controller.checkList.add(
-            controller.getTaDaModelList.elementAt(i).hRMBDInterbankTransFlg!);
+          false  );
         controller.radioSelect.add(controller.getTaDaModelList
                     .elementAt(i)
                     .vPAYVOUStatusFlg
@@ -62,6 +65,7 @@ Future<int> updateCheque({
             ? 0
             : 1);
       }
+      
       return response.statusCode!;
     }
 

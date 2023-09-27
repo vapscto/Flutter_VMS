@@ -8,10 +8,11 @@ class DrDetailsCtrlr extends GetxController {
   RxBool drIsLoading = RxBool(false);
   RxBool drErrorLaodig = RxBool(false);
   RxBool tabLoading = RxBool(false);
+   
   void updateIsLoadign(bool val) {
     drIsLoading.value = val;
   }
-
+ 
   void updatempErrorLoading(bool val) {
     drErrorLaodig.value = val;
   }

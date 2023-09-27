@@ -23,7 +23,7 @@ Future<int> getdrLists({
 }) async {
   final Dio ins = getGlobalDio();
   String apiUrl =
-      "https://vmsissuemanager.azurewebsites.net/${URLS.drDetailsApprove}";
+      "https://vmsstaging.vapssmartecampus.com:40015/${URLS.getDrs}";
 
   logger.d(apiUrl);
   logger.d({
@@ -54,10 +54,28 @@ Future<int> getdrLists({
         {"HRME_Id": hrme_Id}
       ]
     });
+   logger.d( {
+      "IVRMRT_Id": 11,
+      "UserId": 60934,
+      "MI_Id": 17,
+      "DRApprovalTypeFlag": "DRApproval",
+      "Fromdate": date,
+      "Todate": date,
+      "reporttype": "undefined",
+      "deptlist": [
+        {"HRMDC_ID": hrmdc_Id}
+      ],
+      "desglist": [
+        {"HRMDES_Id": hrmdes_Id}
+      ],
+      "emplist": [
+        {"HRME_Id": hrme_Id}
+      ]
+    });
     if (response.data['getsaveddetails'] == null) {
       controller.drErrorLaodig(true);
     }
-
+     print(response.data['getsaveddetails']);
     controller.drIsLoading(false);
     DrDetailModel drList =
         DrDetailModel.fromJson(response.data['getsaveddetails']);

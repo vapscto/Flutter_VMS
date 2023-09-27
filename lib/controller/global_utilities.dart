@@ -65,6 +65,7 @@ import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.da
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_creation.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_HOME.dart';
+import 'package:m_skool_flutter/vms/security/screen/Shome_Screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -602,7 +603,27 @@ void openMappedPages(
         ));
     return;
   }
-
+  if (pageName == "Maker and Checker") {
+    Get.to(() => MakerCheckerHome(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+          // hwCwNbController: hwCwNbController,
+          // appBarTitle: pageName,
+        ));
+    return;
+  }
+   if (pageName == "Cheaque Book Approval") {
+   
+    Get.to(() => ChequeApproval(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+          // hwCwNbController: hwCwNbController,
+          // appBarTitle: pageName,
+        ));
+    return;
+  }else{
+     print("show page${pageName}");
+  }
   if (pageName == "Library") {
     Get.to(
       () => LibraryHome(
@@ -725,17 +746,18 @@ void openMappedPages(
         ));
   }
   if (pageName == "Salary Slip") {
-    // Navigator.push(context, MaterialPageRoute(builder: (_) {
-    //   return SalarySlipHome(
-    //     loginSuccessModel: loginSuccessModel,
-    //     mskoolController: mskoolController,
-    //   );
-    //   //     SalaryDetails(
-    //   //   loginSuccessModel: loginSuccessModel,
-    //   //   mskoolController: mskoolController,
-    //   // );
-    // }));
-    Get.to(() => const PlannerCreationScreen());
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return 
+      ChequeApproval(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+       //   SalaryDetails(
+      //   loginSuccessModel: loginSuccessModel,
+      //   mskoolController: mskoolController,
+      // );
+    }));
+   
     return;
   }
   if (pageName == "Student Birth Day Report") {
@@ -772,15 +794,12 @@ void openMappedPages(
     // }));
 
     // Notice Board Staff
-    // Get.to(() => NoticeBoardStaffHome(
-    //       loginSuccessModel: loginSuccessModel,
-    //       mskoolController: mskoolController,
-    //       title: pageName,
-    //     ));
-    Get.to(() => ChequeApproval(
+    Get.to(() => NoticeBoardStaffHome(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
+          title: pageName,
         ));
+     
     return;
   }
   if (pageName == "View Notice") {
@@ -800,8 +819,8 @@ void openMappedPages(
     //     title: pageName,
     //   );
     // }));
-    // return;
-    Get.to(() => MakerCheckerHome(
+   // return
+    Get.to(() => ShomeScreen(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
         ));

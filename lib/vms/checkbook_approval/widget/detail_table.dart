@@ -1,12 +1,8 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
- 
-import 'package:m_skool_flutter/constants/constants.dart';
+
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/controller/detailed_todo_controller.dart';
@@ -15,14 +11,13 @@ class GetTaDa extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final GetDetailedToDo controller;
-   final int mi_id;
-    
-   GetTaDa({
-    required this.loginSuccessModel,
-    required this.mskoolController,
-    required this.controller,
-     required this.mi_id
-  });
+  final int mi_id;
+
+  GetTaDa(
+      {required this.loginSuccessModel,
+      required this.mskoolController,
+      required this.controller,
+      required this.mi_id});
 
   @override
   State<GetTaDa> createState() => _GetTaDaState();
@@ -33,60 +28,58 @@ class _GetTaDaState extends State<GetTaDa> {
   bool allSelect = false;
   List<Map<String, dynamic>> detailsList = [];
   bool isLoding = false;
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-   @override
+  @override
   void initState() {
-  super.initState();
+    super.initState();
   }
-   
+
   load() async {
     detailsList.clear();
-    isLoding=true;
-    
+    isLoding = true;
+
     for (int i = 0; i < selectCheckBox.length; i++) {
-        // if(double.parse(widget.controller.tEControllerListOfSncAmount.elementAt(selectCheckBox[i]).text.toString())<=double.parse(widget.controller.getTaDaModelList.elementAt(selectCheckBox[i]).vPAYVOUAppliedAmount.toString()))
-        // {
-        //  print("shit");
-        //  Fluttertoast.showToast(msg: "Amount is greater");
-
-        // }else{
-       detailsList.add({       
-        "VPAYVOU_Remarks":
-            widget.controller.tEControllerListOfNarration.elementAt(selectCheckBox[i]).text,
-        "VPAYVOUAUT_SanctionedAmount":widget.controller.tEControllerListOfSncAmount.elementAt(selectCheckBox[i]).text,
-      
-        
-        "VPAYVOU_Id": widget.controller.getTaDaModelList.elementAt(selectCheckBox[i]).vPAYVOUId,
+      detailsList.add({
+        "VPAYVOU_Remarks": widget.controller.tEControllerListOfNarration
+            .elementAt(selectCheckBox[i])
+            .text,
+        "VPAYVOUAUT_SanctionedAmount": widget
+            .controller.tEControllerListOfSncAmount
+            .elementAt(selectCheckBox[i])
+            .text,
+        "VPAYVOU_Id": widget.controller.getTaDaModelList
+            .elementAt(selectCheckBox[i])
+            .vPAYVOUId,
         "approvecnt": widget.controller.radioSelect[selectCheckBox[i]],
-        "level":
-            widget.controller.getTaDaModelList.elementAt(selectCheckBox[i]).sanctionLevelNo,
+        "level": widget.controller.getTaDaModelList
+            .elementAt(selectCheckBox[i])
+            .sanctionLevelNo,
         "MI_Id": widget.controller.getTaDaModelList.elementAt(i).mIId,
-        "VTADAAA_Remarks":
-            widget.controller.tEControllerListOfApprovalRemark.elementAt(selectCheckBox[i]).text
+        "VTADAAA_Remarks": widget.controller.tEControllerListOfApprovalRemark
+            .elementAt(selectCheckBox[i])
+            .text
       });
-        
-         isLoding=false;
 
-
+      isLoding = false;
     }
-  // int status =  await approveApi(base: "",
-  // userId: 60064,
-  // mi_id: widget.mi_id,
-  // detailsList: detailsList,otp: 1010) ;
-  // if(status == 200){
-  //  isLoding=false;
-  //  setState(() {
-  //    widget.controller.getTaDaModelList.clear();
-  //  });
-  // }
+    // int status =  await approveApi(base: "",
+    // userId: 60064,
+    // mi_id: widget.mi_id,
+    // detailsList: detailsList,otp: 1010) ;
+    // if(status == 200){
+    //  isLoding=false;
+    //  setState(() {
+    //    widget.controller.getTaDaModelList.clear();
+    //  });
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
     final ScrollController scrollController = ScrollController();
     return Form(
-      key:_formKey,
+      key: _formKey,
       child: Obx(
         () => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
@@ -108,12 +101,13 @@ class _GetTaDaState extends State<GetTaDa> {
                         dataRowHeight: 60,
                         headingRowHeight: 40,
                         horizontalMargin: 10,
-                        columnSpacing: 60,
+                        columnSpacing: 30,
                         dividerThickness: 1,
                         headingTextStyle: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.w700),
                         border: TableBorder.all(
-                            borderRadius: BorderRadius.circular(10), width: 0.5),
+                            borderRadius: BorderRadius.circular(10),
+                            width: 0.5),
                         headingRowColor: MaterialStateProperty.all(
                             Theme.of(context).primaryColor),
                         columns: [
@@ -136,9 +130,11 @@ class _GetTaDaState extends State<GetTaDa> {
                                 alignment: Alignment.center,
                                 child: SizedBox(
                                   child: Checkbox(
-                                    activeColor: Color.fromRGBO(0, 4, 250, 0.898),
+                                    activeColor:
+                                        Color.fromRGBO(0, 4, 250, 0.898),
                                     shape: ContinuousRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10)),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
                                     value: allSelect,
                                     onChanged: (value) {
                                       allSelect = value!;
@@ -162,7 +158,8 @@ class _GetTaDaState extends State<GetTaDa> {
                                                     .length;
                                             i++) {
                                           selectCheckBox.clear();
-                                          widget.controller.checkList[i] = false;
+                                          widget.controller.checkList[i] =
+                                              false;
                                         }
                                       }
                                     },
@@ -180,7 +177,7 @@ class _GetTaDaState extends State<GetTaDa> {
                             ),
                           ),
                           //c13
-    
+
                           // //c12
                           const DataColumn(
                             label: Align(
@@ -338,22 +335,23 @@ class _GetTaDaState extends State<GetTaDa> {
                                                   0, 4, 250, 0.898),
                                               shape: ContinuousRectangleBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(10)),
+                                                      BorderRadius.circular(
+                                                          10)),
                                               onChanged: (value) {
                                                 setState(() {
                                                   widget.controller
-                                                      .checkList[index] = value!;
-                                                  
-                                                    if (selectCheckBox
-                                                        .contains(index)) {
-                                                      selectCheckBox
-                                                          .remove(index);
-                                                      // print("slected: " + selectCheckBox.toString());
-                                                    } else {
-                                                      selectCheckBox.add(index);
-                                                      // print("slected: " + selectCheckBox.toString());
-                                                    }
-                                                  
+                                                          .checkList[index] =
+                                                      value!;
+
+                                                  if (selectCheckBox
+                                                      .contains(index)) {
+                                                    selectCheckBox
+                                                        .remove(index);
+                                                    // print("slected: " + selectCheckBox.toString());
+                                                  } else {
+                                                    selectCheckBox.add(index);
+                                                    // print("slected: " + selectCheckBox.toString());
+                                                  }
                                                 });
                                               },
                                               value: widget.controller.checkList
@@ -363,7 +361,7 @@ class _GetTaDaState extends State<GetTaDa> {
                                   ),
                                 ),
                               ),
-    
+
                               //b12
                               DataCell(
                                 Align(
@@ -375,10 +373,11 @@ class _GetTaDaState extends State<GetTaDa> {
                                       child: Radio(
                                         activeColor:
                                             Theme.of(context).primaryColor,
-                                        visualDensity:
-                                            const VisualDensity(horizontal: -4.0),
+                                        visualDensity: const VisualDensity(
+                                            horizontal: -4.0),
                                         value: 1,
-                                        groupValue: widget.controller.radioSelect
+                                        groupValue: widget
+                                            .controller.radioSelect
                                             .elementAt(index),
                                         onChanged: (value) {
                                           widget.controller.radioSelect[index] =
@@ -403,7 +402,8 @@ class _GetTaDaState extends State<GetTaDa> {
                                         activeColor:
                                             Theme.of(context).primaryColor,
                                         value: 0,
-                                        groupValue: widget.controller.radioSelect
+                                        groupValue: widget
+                                            .controller.radioSelect
                                             .elementAt(index),
                                         onChanged: (value) {
                                           widget.controller.radioSelect[index] =
@@ -429,7 +429,8 @@ class _GetTaDaState extends State<GetTaDa> {
                                 Align(
                                   alignment: Alignment.center,
                                   child: SizedBox(
-                                    child: Text(widget.controller.getTaDaModelList
+                                    child: Text(widget
+                                        .controller.getTaDaModelList
                                         .elementAt(index)
                                         .vPAYVOUPaymentMode
                                         .toString()),
@@ -441,7 +442,8 @@ class _GetTaDaState extends State<GetTaDa> {
                                 Align(
                                   alignment: Alignment.center,
                                   child: SizedBox(
-                                    child: Text(widget.controller.getTaDaModelList
+                                    child: Text(widget
+                                                .controller.getTaDaModelList
                                                 .elementAt(index)
                                                 .vPAYVOUChequeNo ==
                                             null
@@ -458,7 +460,8 @@ class _GetTaDaState extends State<GetTaDa> {
                                 Align(
                                   alignment: Alignment.center,
                                   child: SizedBox(
-                                    child: Text(widget.controller.getTaDaModelList
+                                    child: Text(widget
+                                                .controller.getTaDaModelList
                                                 .elementAt(index)
                                                 .vPAYVOUPaymentTo ==
                                             null
@@ -478,11 +481,11 @@ class _GetTaDaState extends State<GetTaDa> {
                                 Align(
                                   alignment: Alignment.center,
                                   child: SizedBox(
-                                    child: Text(getDateNeed(DateTime.parse(widget
-                                        .controller.getTaDaModelList
-                                        .elementAt(index)
-                                        .vPAYVOUPaymentDate
-                                        .toString()))),
+                                    child: Text(getDateNeed(DateTime.parse(
+                                        widget.controller.getTaDaModelList
+                                            .elementAt(index)
+                                            .vPAYVOUPaymentDate
+                                            .toString()))),
                                   ),
                                 ),
                               ),
@@ -491,7 +494,8 @@ class _GetTaDaState extends State<GetTaDa> {
                                 Align(
                                   alignment: Alignment.center,
                                   child: SizedBox(
-                                    child: Text(widget.controller.getTaDaModelList
+                                    child: Text(widget
+                                        .controller.getTaDaModelList
                                         .elementAt(index)
                                         .vPAYVOUAppliedAmount
                                         .toString()),
@@ -503,7 +507,8 @@ class _GetTaDaState extends State<GetTaDa> {
                                 Align(
                                   alignment: Alignment.center,
                                   child: SizedBox(
-                                    child: Text(widget.controller.getTaDaModelList
+                                    child: Text(widget
+                                        .controller.getTaDaModelList
                                         .elementAt(index)
                                         .vPAYVOUApprovedAmount
                                         .toString()),
@@ -515,7 +520,8 @@ class _GetTaDaState extends State<GetTaDa> {
                                 Align(
                                   alignment: Alignment.center,
                                   child: SizedBox(
-                                    child: Text(widget.controller.getTaDaModelList
+                                    child: Text(widget
+                                        .controller.getTaDaModelList
                                         .elementAt(index)
                                         .vPAYVOUAppliedAmount
                                         .toString()),
@@ -527,29 +533,39 @@ class _GetTaDaState extends State<GetTaDa> {
                                 SizedBox(
                                   width: 100,
                                   child: Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 8.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0),
                                     child: TextFormField(
-                                      
                                       decoration: InputDecoration(
-                                         border: InputBorder.none
-                                      ),
+                                          border: InputBorder.none),
                                       validator: (value) {
-                                        if(selectCheckBox.contains( widget.controller.getTaDaModelList.indexOf( widget.controller.getTaDaModelList.elementAt(index)))){
-                                       if( double.parse(value!)>double.parse(widget.controller.getTaDaModelList
-                                        .elementAt(index)
-                                        .vPAYVOUAppliedAmount
-                                        .toString())){
-                                          return "Amount is greater than";
+                                        if (selectCheckBox.contains(widget
+                                            .controller.getTaDaModelList
+                                            .indexOf(widget
+                                                .controller.getTaDaModelList
+                                                .elementAt(index)))) {
+                                          if (double.parse(value!) >
+                                              double.parse(widget
+                                                  .controller.getTaDaModelList
+                                                  .elementAt(index)
+                                                  .vPAYVOUAppliedAmount
+                                                  .toString())) {
+                                            return "Amount is greater than";
+                                          }
                                         }
-                                        }
-                                        
                                       },
-                                      readOnly:  widget.controller.radioSelect[index] ==1
-                                      && selectCheckBox.contains( widget.controller.getTaDaModelList.indexOf(widget.controller.getTaDaModelList.elementAt(index)))
-                                       ? false : true,
-                                      controller: widget
-                                          .controller.tEControllerListOfSncAmount
+                                      readOnly: widget.controller
+                                                      .radioSelect[index] ==
+                                                  1 &&
+                                              selectCheckBox.contains(widget
+                                                  .controller.getTaDaModelList
+                                                  .indexOf(widget.controller
+                                                      .getTaDaModelList
+                                                      .elementAt(index)))
+                                          ? false
+                                          : true,
+                                      controller: widget.controller
+                                          .tEControllerListOfSncAmount
                                           .elementAt(index),
                                       style: const TextStyle(
                                         fontSize: 14,
@@ -563,17 +579,25 @@ class _GetTaDaState extends State<GetTaDa> {
                               DataCell(
                                 SizedBox(
                                   width: 150,
+                                  height: 150,
                                   child: TextField(
-                                    minLines: null,
-                                    maxLines: null,
-                                    scrollPhysics: const BouncingScrollPhysics(),
-                                    scrollPadding: EdgeInsets.zero,
+                                    
+                                     maxLines: 3,
+                                    decoration: InputDecoration(
+                                        border:  InputBorder.none),
+                                 
                                     controller: widget
                                         .controller.tEControllerListOfNarration
                                         .elementAt(index),
-                                    style: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w100),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(const TextStyle(
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 14.0,
+                                          letterSpacing: 0.3,
+                                          overflow: TextOverflow.clip,
+                                        )),
                                     textAlign: TextAlign.start,
                                   ),
                                 ),
@@ -583,16 +607,22 @@ class _GetTaDaState extends State<GetTaDa> {
                                 SizedBox(
                                   width: 150,
                                   child: TextField(
-                                    minLines: null,
-                                    maxLines: null,
-                                    scrollPhysics: const BouncingScrollPhysics(),
-                                    scrollPadding: EdgeInsets.zero,
+                                 
+                                   // maxLines: 3,
+                                    
+                                  
                                     controller: widget.controller
                                         .tEControllerListOfApprovalRemark
                                         .elementAt(index),
-                                    style: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w100),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(const TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14.0,
+                                          letterSpacing: 0.3,
+                                          overflow: TextOverflow.clip,
+                                        )),
                                     textAlign: TextAlign.start,
                                   ),
                                 ),
@@ -612,25 +642,22 @@ class _GetTaDaState extends State<GetTaDa> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 50, vertical: 14.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50, vertical: 14.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
                   ),
                   onPressed: () {
-                     
                     setState(() {});
-                     if (_formKey.currentState!.validate()) {
-                       load();
-                     }else{
+                    if (_formKey.currentState!.validate()) {
+                      load();
+                    } else {
                       Fluttertoast.showToast(msg: "Amount is greater");
-                     }
-                      
-                      
+                    }
                   },
                   child: isLoding
-                      ?const SizedBox(
+                      ? const SizedBox(
                           height: 18,
                           width: 18,
                           child: CircularProgressIndicator(
@@ -640,11 +667,10 @@ class _GetTaDaState extends State<GetTaDa> {
                         )
                       : Text("Submit"),
                 ),
-              ), 
-                SizedBox(
+              ),
+              SizedBox(
                 height: 28.0,
               ),
-    
             ],
           ),
         ),
