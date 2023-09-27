@@ -1306,8 +1306,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                             accommodationAmount =
                                                                 (tadaApplyController
                                                                             .accomodationAmount
-                                                                            .value /
-                                                                        3 *
+                                                                            .value *
                                                                         num.parse(
                                                                             value))
                                                                     .toInt();
