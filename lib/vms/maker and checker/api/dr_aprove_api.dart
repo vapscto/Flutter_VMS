@@ -13,8 +13,10 @@ import 'package:m_skool_flutter/vms/maker%20and%20checker/model/dr_details_model
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/employee_details.dart';
 
 Future<int> getdrLists({
+  required int roleId,
   required int userId,
   required int mi_id,
+  required String base,
   required int hrmdc_Id,
   required int hrmdes_Id,
   required int hrme_Id,
@@ -23,7 +25,7 @@ Future<int> getdrLists({
 }) async {
   final Dio ins = getGlobalDio();
   String apiUrl =
-      "https://vmsstaging.vapssmartecampus.com:40015/${URLS.getDrs}";
+     base+URLS.getDrs;
 
   logger.d(apiUrl);
   logger.d({
@@ -37,9 +39,9 @@ Future<int> getdrLists({
 
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
-      "IVRMRT_Id": 11,
-      "UserId": 60934,
-      "MI_Id": 17,
+      "IVRMRT_Id": roleId ,
+      "UserId": userId,
+      "MI_Id": mi_id,
       "DRApprovalTypeFlag": "DRApproval",
       "Fromdate": date,
       "Todate": date,
@@ -55,9 +57,9 @@ Future<int> getdrLists({
       ]
     });
    logger.d( {
-      "IVRMRT_Id": 11,
-      "UserId": 60934,
-      "MI_Id": 17,
+      "IVRMRT_Id": roleId,
+      "UserId": userId,
+      "MI_Id": mi_id,
       "DRApprovalTypeFlag": "DRApproval",
       "Fromdate": date,
       "Todate": date,
