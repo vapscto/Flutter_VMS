@@ -59,12 +59,9 @@ import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_creation.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
-<<<<<<< HEAD
-import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_HOME.dart';
-import 'package:m_skool_flutter/vms/security/screen/Shome_Screen.dart';
-=======
+ 
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
->>>>>>> f03f73ea2d623ec030573bda6f23efd0d95e1b28
+import 'package:m_skool_flutter/vms/security/screen/Shome_Screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/screens/tada_advance_aplay_home.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -773,22 +770,7 @@ void openMappedPages(
           mskoolController: mskoolController,
         ));
   }
-<<<<<<< HEAD
-  if (pageName == "Salary Slip") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return 
-      ChequeApproval(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-      );
-       //   SalaryDetails(
-      //   loginSuccessModel: loginSuccessModel,
-      //   mskoolController: mskoolController,
-      // );
-    }));
-   
-    return;
-=======
+ 
   if (pageName == "Petty Cash Approval") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return PCApprovalHome(
@@ -796,8 +778,7 @@ void openMappedPages(
         mskoolController: mskoolController,
       );
     }));
->>>>>>> f03f73ea2d623ec030573bda6f23efd0d95e1b28
-  }
+   }
   if (pageName == "Student Birth Day Report") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return StudentBdayHome(

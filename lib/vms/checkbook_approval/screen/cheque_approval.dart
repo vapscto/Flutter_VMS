@@ -74,7 +74,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
         "approvecnt": _controller.radioSelect[selectCheckBox[i]],
         "level": _controller.getTaDaModelList
             .elementAt(selectCheckBox[i])
-            .sanctionLevelNo! + 1,
+            .sanctionLevelNo!,
         
       });
 
