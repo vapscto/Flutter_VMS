@@ -464,6 +464,7 @@ class URLS {
   //** TADA Apply APIS* *//
   static String stateList = 'api/TADA_Advance_ApplyFacade/getalldata/';
   static String cityList = 'api/TADA_Advance_ApplyFacade/getstate/';
+  static String allowense = 'api/TADA_Advance_ApplyFacade/TadaAllwence/';
   //** TADA Approval APIS **//
   static String tadaSave = 'api/TADAAdvanceApprovalFacade/savedta';
   static String tadaList = 'api/TADAAdvanceApprovalFacade/getalldata/';

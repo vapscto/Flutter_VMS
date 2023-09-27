@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/allowence_table_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/city_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/clint_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/state_list_model.dart';
@@ -9,7 +9,21 @@ class TadaApplyController extends GetxController {
   RxBool isStateLoading = RxBool(false);
   RxBool isCityLoading = RxBool(false);
   RxBool isErrorLoading = RxBool(false);
+  RxBool isAllowenseLoading = RxBool(false);
+  RxBool isSave = RxBool(false);
+  RxBool isEdit = RxBool(false);
+
+  void saveData(bool loading) {
+    isSave.value = loading;
+  }
+
+  void editData(bool loading) {
+    isEdit.value = loading;
+  }
+
   RxList<String> addressListController = <String>[].obs;
+  RxInt foodAmount = 0.obs;
+  RxInt accomodationAmount = 0.obs;
 
   void errorLoading(bool loading) {
     isErrorLoading.value = loading;
@@ -21,6 +35,10 @@ class TadaApplyController extends GetxController {
 
   void cityLoading(bool loading) {
     isCityLoading.value = loading;
+  }
+
+  void allowenseLoading(bool loading) {
+    isAllowenseLoading.value = loading;
   }
 
   //**State List* *//
@@ -72,7 +90,6 @@ class TadaApplyController extends GetxController {
     }
     for (int i = 0; i < cityList.length; i++) {
       cityListValues.add(cityList.elementAt(i));
-      logger.i(cityListValues.toJson());
     }
   }
 
@@ -93,4 +110,23 @@ class TadaApplyController extends GetxController {
   void getremarks(TextEditingController remarks) {
     remarksController.add(remarks);
   }
+
+  //** Allowense Data **//
+
+  RxList<AllowenseTableModelValues> allowenseData =
+      <AllowenseTableModelValues>[].obs;
+  void getAllowense(List<AllowenseTableModelValues> data) {
+    if (allowenseData.isNotEmpty) {
+      allowenseData.clear();
+    }
+    for (int i = 0; i < data.length; i++) {
+      allowenseData.add(data.elementAt(i));
+      foodAmount.value = data.elementAt(i).vtadacMFoodAmt!.toInt();
+      accomodationAmount.value =
+          data.elementAt(i).vtadacMAccommodationAmt!.toInt();
+    }
+  }
+
+  //** Save TA-DA **//
+  //** Edit TA-DA **//
 }
