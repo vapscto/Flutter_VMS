@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/staffs/notice_board_staff/widget/staff_widget.da
 import 'package:m_skool_flutter/student/gallery_view/widget/gallery_checkbox.container.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/api/tada_allowense_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/api/tada_city_list_api.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tadaApply/api/tada_save_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/api/tada_state_list_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/controller/tada_apply_controller.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/city_list_model.dart';
@@ -50,24 +51,30 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
   //others
   final otherAmountController = TextEditingController();
   final otherremarksController = TextEditingController();
+  bool isOthersSelected = false;
+  // clintList
   bool checked = false;
+  String clintId = '';
+  String clintName = '';
+  //Date and time
   DateTime? fromDate;
   DateTime? toDate;
   TimeOfDay? fromTime;
   TimeOfDay? toTime;
+
   final ScrollController _controller = ScrollController();
   final RxBool selectAllDepartment = RxBool(false);
   var dayCount = 0;
+  //
   final _remarkController = TextEditingController();
   final _addressController = TextEditingController();
   bool isTableLoading = false;
-
+  List<Map<String, dynamic>> allowanceData = [];
+//
   StateListModelValues? stateLists;
   CityListModelValues? citySelectedValue;
 
   TadaApplyController tadaApplyController = Get.put(TadaApplyController());
-  bool isSelect = false;
-  List selectedAll = [];
   int allAmount = 0;
   getStateList() async {
     tadaApplyController.stateLoading(true);
@@ -134,6 +141,28 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
     var aSlot = totalHours / 24;
     foodSlot = fSlot.toStringAsFixed(0);
     accommudationSlot = aSlot.toStringAsFixed(0);
+  }
+
+  saveData(
+    int clintId,
+  ) {
+    tadaApplyController.saveData(true);
+    TadaSaveApi.instance.tadaSave(
+        base: baseUrlFromInsCode('login', widget.mskoolController),
+        ctId: citySelectedValue!.ivrmmcTId!,
+        fromDate: fromDate!.toIso8601String(),
+        toDate: toDate!.toIso8601String(),
+        clintId: clintId,
+        totalAppliedAmount: double.parse(allAmount.toString()),
+        toAddress: _addressController.text,
+        remarks: _remarkController.text,
+        vtadaaaId: citySelectedValue!.vtadaaAId!,
+        departureTime: fromTime.toString(),
+        arrivalTime: toTime.toString(),
+        clintMultiple: clintName,
+        allowanceArray: allowanceData,
+        tadaApplyController: tadaApplyController);
+    tadaApplyController.saveData(false);
   }
 
   @override
@@ -894,6 +923,10 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                       .clintListValues
                                                                       .elementAt(
                                                                           index));
+                                                                  clintId +=
+                                                                      ' ${index + 1} ) ${tadaApplyController.clintListValues.elementAt(index).ismmclTId!}';
+                                                                  clintName +=
+                                                                      '${index + 1} ) ${tadaApplyController.clintListValues.elementAt(index).ismmclTClientName} ';
 
                                                                   tadaApplyController.addAddress(tadaApplyController
                                                                       .clintListValues
@@ -1368,8 +1401,13 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                           const VisualDensity(
                                                               horizontal: 0,
                                                               vertical: 0),
-                                                      onChanged: null,
-                                                      value: true,
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                          isAccommodationSelected =
+                                                              value!;
+                                                        });
+                                                      },
+                                                      value: isOthersSelected,
                                                       activeColor:
                                                           Theme.of(context)
                                                               .primaryColor,
@@ -1454,7 +1492,74 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                               alignment: Alignment.bottomCenter,
                               child: MSkollBtn(
                                 title: "Save",
-                                onPress: () {},
+                                onPress: (_remarkController.text.isNotEmpty ||
+                                        _addressController.text.isNotEmpty ||
+                                        _startDate.text.isNotEmpty ||
+                                        _endDate.text.isNotEmpty ||
+                                        _startTime.text.isNotEmpty ||
+                                        _endTime.text.isNotEmpty)
+                                    ? () {
+                                        int foodamountId = 0;
+                                        int accamountId = 0;
+                                        int othersamountId = 0;
+
+                                        if (isFoodSelected == true) {
+                                          foodamountId =
+                                              (foodamountId == null ||
+                                                      foodamountId == "")
+                                                  ? 0
+                                                  : foodamountId;
+                                          allowanceData.add({
+                                            "Type": "Food",
+                                            "Amount": foodAmt,
+                                            "Remarks":
+                                                foodRemarksController.text,
+                                            "VTADAAAD_Id": foodamountId,
+                                            "VTADAAAD_TotalSlots": foodSlot,
+                                            "VTADAAAD_Slots":
+                                                foodTotalSlotController.text,
+                                          });
+                                        }
+
+                                        if (isAccommodationSelected == true) {
+                                          accamountId = (accamountId == null ||
+                                                  accamountId == "")
+                                              ? 0
+                                              : accamountId;
+                                          allowanceData.add({
+                                            "Type": "Accommodation",
+                                            "Amount": accommodationAmount,
+                                            "Remarks":
+                                                accommodationRemarksController
+                                                    .text,
+                                            "VTADAAAD_Id": accamountId,
+                                            "VTADAAAD_TotalSlots":
+                                                accommudationSlot,
+                                            "VTADAAAD_Slots":
+                                                accommodationTotalSlotController
+                                                    .text,
+                                          });
+                                        }
+                                        if (isOthersSelected == true) {
+                                          othersamountId =
+                                              (othersamountId == null ||
+                                                      othersamountId == "")
+                                                  ? 0
+                                                  : othersamountId;
+                                          allowanceData.add({
+                                            "Type": "Other",
+                                            "Amount":
+                                                otherAmountController.text,
+                                            "Remarks":
+                                                otherAmountController.text,
+                                            "VTADAAAD_Id": othersamountId,
+                                          });
+                                        }
+
+                                        saveData(int.parse(clintId));
+                                      }
+                                    : () => Fluttertoast.showToast(
+                                        msg: "Enter all Fields"),
                               ),
                             )
                           ],

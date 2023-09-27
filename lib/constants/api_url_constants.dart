@@ -452,26 +452,31 @@ class URLS {
   static String onclickpurchaseapi = "api/IndentApprovalFacade/getpidetails/";
 
   static String purchaseindentapi = "api/IndentApprovalFacade/getloaddata/";
-      // Maker and checker
-  static String designationsListapi="api/ISM_DailyReport_ApprovalFacade/GetDetails/";
+  // Maker and checker
+  static String designationsListapi =
+      "api/ISM_DailyReport_ApprovalFacade/GetDetails/";
 
-  static String drDetailsApprove="api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
+  static String drDetailsApprove =
+      "api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
 
-  static String employee_model_list="api/ISM_DailyReport_ApprovalFacade/DesgSelectionDetails/";
+  static String employee_model_list =
+      "api/ISM_DailyReport_ApprovalFacade/DesgSelectionDetails/";
 
-  static String getDrs="api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
+  static String getDrs = "api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
 
-  static String DeptList="api/ISM_DailyReport_ApprovalFacade/DeptSelectionDetails/";
+  static String DeptList =
+      "api/ISM_DailyReport_ApprovalFacade/DeptSelectionDetails/";
 
-  static String Security="api/ISMDashboardFacade/getdetails";
+  static String Security = "api/ISMDashboardFacade/getdetails";
 
-  static String submit="api/ISM_DailyReport_ApprovalFacade/SaveApprovalDetails/";
+  static String submit =
+      "api/ISM_DailyReport_ApprovalFacade/SaveApprovalDetails/";
 
-  static String updateCheck="api/CheckBookEntryApprovalFacade/ApprovalData/";
+  static String updateCheck = "api/CheckBookEntryApprovalFacade/ApprovalData/";
 
-  static String getcmpn="api/CheckBookEntryApprovalFacade/getalldata/";
+  static String getcmpn = "api/CheckBookEntryApprovalFacade/getalldata/";
 
-  static String submitCheck="api/CheckBookEntryApprovalFacade/Getdata/";
+  static String submitCheck = "api/CheckBookEntryApprovalFacade/Getdata/";
   // static String designationsListapi =
   //     "api/ISM_DailyReport_ApprovalFacade/DeptSelectionDetails/";
 
@@ -488,11 +493,12 @@ class URLS {
   static String stateList = 'api/TADA_Advance_ApplyFacade/getalldata/';
   static String cityList = 'api/TADA_Advance_ApplyFacade/getstate/';
   static String allowense = 'api/TADA_Advance_ApplyFacade/TadaAllwence/';
+  static String saveTada = 'api/TADA_Advance_ApplyFacade/savedta/';
   //** TADA Approval APIS **//
   static String tadaSave = 'api/TADAAdvanceApprovalFacade/savedta';
   static String tadaList = 'api/TADAAdvanceApprovalFacade/getalldata/';
   static String tadaDetails = 'api/TADAAdvanceApprovalFacade/edit';
- 
+  static String tadaEdit = 'api/TADA_Advance_ApplyFacade/edit/';
 
   static String onChangeInstitution =
       "api/PC_Indent_ApprovalFacade/OnChangeInstitution";
