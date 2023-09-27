@@ -17,23 +17,26 @@ Future<bool> submitDrs({
   final String apiUrl =
       base + URLS.submit;
   logger.d("submit ${apiUrl}");
-  logger.d({
-      "DRApprovalTypeFlag": "DRApproval",
-      "Fromdate": date,
-      "Todate": date,
-       "UserId": userId, 
-       "MI_Id": mi_id,
-     "selectedemployeedetails": selectedemployeedetails
-    });
+  // logger.d({
+  //     "DRApprovalTypeFlag": "DRApproval",
+  //     "Fromdate": date,
+  //     "Todate": date,
+  //      "UserId": userId, 
+  //      "MI_Id": mi_id,
+  //    "selectedemployeedetails": selectedemployeedetails
+  //   });
   
   
   try {
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
-      "DRApprovalTypeFlag": "DRApproval",
-      "Fromdate": date,
+        "MI_Id": mi_id,
+        "UserId": userId, 
+     "DRApprovalTypeFlag": "DRApproval",
+    "selectedemployeedetails": selectedemployeedetails,
+     "Fromdate": date,
       "Todate": date,
-     "selectedemployeedetails": selectedemployeedetails
+       
     });
     
 

@@ -219,7 +219,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                 await feachDesignation(
                                   base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
                                     mi_id: widget.loginSuccessModel.mIID!,
-                                    userId: widget.loginSuccessModel.roleTypeId!,
+                                    userId: widget.loginSuccessModel.userId!,
                                     controller: controller,
                                     ivrmrt: widget.loginSuccessModel.roleTypeId!,
                                     list: departList);
@@ -589,8 +589,10 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
 
                     if (_formKey.currentState!.validate()) {
                       int goto = await getdrLists(
-                        mi_id: 0,
-                        userId: 0,
+                          roleId: widget.loginSuccessModel.roleId!,
+                        mi_id: widget.loginSuccessModel.mIID!,
+                        userId: widget.loginSuccessModel.userId!,
+                       base:baseUrlFromInsCode('issuemanager', widget.mskoolController),
                         hrmdc_Id: hrmdc_Id!,
                         hrmdes_Id: hrmdes_Id!,
                         hrme_Id: hrme_Id!,

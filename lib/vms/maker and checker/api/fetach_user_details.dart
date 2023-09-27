@@ -1,5 +1,6 @@
  import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
+import 'package:m_skool_flutter/constants/api_url_constants.dart';
 
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -20,9 +21,8 @@ Future<int> feacthUserApi({
 }) async {
   final Dio ins = getGlobalDio();
   final String apiUrl =
-      base+"api/ISM_DailyReport_ApprovalFacade/GetDetails/";
-    logger.d("damn ${apiUrl}");
-
+      base+URLS.designationsListapi;
+    
   
 
   try {

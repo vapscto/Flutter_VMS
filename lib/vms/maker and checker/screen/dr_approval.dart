@@ -56,7 +56,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
       getAllDrLists.add({
         "Approvedflag":
             controller.statusET[i].text == "Approved" ? true : false,
-        "Efforts": controller.etHoursList.elementAt(i).text,
+        "Efforts": int.parse(controller.etHoursList.elementAt(i).text),
         "HRME_Id": controller.drdList.elementAt(i).hRMEId,
         "ISMDRPT_Id": controller.drdList.elementAt(i).iSMDRPTId,
         "ISMDRPT_TimeTakenInHrsmin": "Hours",
