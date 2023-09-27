@@ -88,6 +88,8 @@ dependencies:
   flutter_file_downloader: ^1.1.2
   get_ip_address: ^0.0.5
   permission_handler: ^10.3.0
+  intl: ^0.17.0
+  # multiselect_formfield: ^0.1.7
   syncfusion_flutter_pdfviewer:
 
 dev_dependencies:

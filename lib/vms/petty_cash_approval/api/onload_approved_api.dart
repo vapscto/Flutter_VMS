@@ -14,17 +14,23 @@ Future<void> getPcApprovalOnload(
     required PettyCashApprovalController controller}) async {
   final Dio ins = getGlobalDio();
   // final String api = base + URLS.pcApprovalOnload;
-  const api =
-      "https://vmsstaging.vapssmartecampus.com:40015/api/PC_Indent_ApprovalFacade/onloaddata";
-  logger.d(api);
-  logger.d({"roleid": 2, "Userid": 60145, "MI_Id": 17, "ASMAY_Id": 124});
+  final api = base + URLS.onLoadPcApproval;
+  logger.d(base);
+  
+  logger.d(
+      {"roleid": roleId, "Userid": userId, "MI_Id": miId, "ASMAY_Id": asmaYId});
 
   try {
     controller.updateisLoadingOnloadorganization(true);
 
     final Response response = await ins.post(api,
         options: Options(headers: getSession()),
-        data: {"roleid": 2, "Userid": 60145, "MI_Id": 17, "ASMAY_Id": 124});
+        data: {
+          "roleid": roleId,
+          "Userid": userId,
+          "MI_Id": miId,
+          "ASMAY_Id": asmaYId
+        });
     print(response.data['getuserinstitution']);
     logger.d(response.data['getuserinstitution']);
     if (response.data['getuserinstitution'] == null) {
@@ -33,10 +39,11 @@ Future<void> getPcApprovalOnload(
     } else if (response.data['getuserinstitution'] != null) {
       controller.updateErrorLoadingOnloadorganization(false);
       controller.updateisLoadingOnloadorganization(false);
+      PCApprovalOnloadModel organizationListResponse =
+          PCApprovalOnloadModel.fromJson(response.data['getuserinstitution']);
+      controller.organizationList.addAll(organizationListResponse.values!);
     }
-    PCApprovalOnloadModel organizationListResponse =
-        PCApprovalOnloadModel.fromJson(response.data['getuserinstitution']);
-    controller.organizationList.addAll(organizationListResponse.values!);
+
     //  return response.statusCode!;
   } on DioError catch (e) {
     controller.updateErrorLoadingOnloadorganization(true);

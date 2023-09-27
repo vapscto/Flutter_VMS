@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/tadaModule/constants/api_constants.dart';
 import 'package:m_skool_flutter/vms/tadaModule/controller/tada_controller.dart';
@@ -18,7 +19,7 @@ class TADADetailsAPI {
     final dio = Dio();
     var url = base + APIConstant().tadaShow;
     var url2 =
-        'https://vmsstaging.vapssmartecampus.com:40015/api/TADAAdvanceApprovalFacade/edit';
+        'https://vmsstaging.vapssmartecampus.com:40015/${URLS.tadaDetails}';
 
     try {
       if (tadaController.isErrorOccured.value) {

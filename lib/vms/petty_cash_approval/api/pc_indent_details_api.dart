@@ -15,16 +15,16 @@ Future<void> getPcIndentApproval(
     required String toDate,
     required PettyCashApprovalController controller}) async {
   final Dio ins = getGlobalDio();
-  const api =
-      "https://vmsstaging.vapssmartecampus.com:40015//api/PC_Indent_ApprovalFacade/onchangedate";
+  final api =
+      base + URLS.onChangeDatePC;
   logger.d(api);
   logger.d({
-    "MI_Id":17,
+    "MI_Id":miId,
     "PCINDENT_Date_From":fromDate,
     "PCINDENT_Date_To":toDate,
-    "roleid":2,
-    "Userid":60145,
-    "ASMAY_Id":124
+    "roleid":roleId,
+    "Userid":userId,
+    "ASMAY_Id":asmaYId
     
   });
 
@@ -35,12 +35,12 @@ Future<void> getPcIndentApproval(
         await ins.post(api, options: Options(headers: getSession()), data: 
 
       {
-    "MI_Id":17,
+     "MI_Id":miId,
     "PCINDENT_Date_From":fromDate,
     "PCINDENT_Date_To":toDate,
-    "roleid":2,
-    "Userid":60145,
-    "ASMAY_Id":124
+    "roleid":roleId,
+    "Userid":userId,
+    "ASMAY_Id":asmaYId
 }
     );
 

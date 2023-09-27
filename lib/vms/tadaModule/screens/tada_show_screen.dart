@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
@@ -24,13 +25,15 @@ class TadaListScreen extends StatefulWidget {
 class _TadaListScreenState extends State<TadaListScreen> {
   TADAController tadaController = Get.put(TADAController());
 
-  _getAPIData() {
+  _getAPIData() async {
     tadaController.updateIsLoading(true);
-    TADAApplyListAPI.instance
-        .showApplyList(base: "", userId: "", tadaController: tadaController);
-    Future.delayed(const Duration(seconds: 3)).then((value) {
-      tadaController.updateIsLoading(false);
-    });
+    await TADAApplyListAPI.instance.showApplyList(
+        base: baseUrlFromInsCode("login", widget.mskoolController),
+        userId: widget.loginSuccessModel.userId!,
+        tadaController: tadaController);
+    // Future.delayed(const Duration(seconds: 3)).then((value) {
+    tadaController.updateIsLoading(false);
+    // });
   }
 
   String date = '';
@@ -123,11 +126,12 @@ class _TadaListScreenState extends State<TadaListScreen> {
   List<DataRow> createRow() {
     return List.generate(tadaController.tadaData.length, (index) {
       var value = index + 1;
-      DateTime dt =
-          DateTime.parse(tadaController.tadaData[index].vTADAAAAppliedDate!);
-      date = '${dt.day}-${dt.month}-${dt.year}';
-      logger.i(date);
-      logger.i(tadaController.tadaData[index].vTADAAAId!);
+      if (tadaController.tadaData[index].vTADAAAAppliedDate != null) {
+        DateTime dt =
+            DateTime.parse(tadaController.tadaData[index].vTADAAAAppliedDate!);
+        date = '${dt.day}-${dt.month}-${dt.year}';
+      }
+
       return DataRow(cells: [
         DataCell(Text(value.toString())),
         DataCell(Text(tadaController.tadaData[index].mIName ?? "")),
@@ -145,7 +149,10 @@ class _TadaListScreenState extends State<TadaListScreen> {
               Get.to(() => TADADetailsScreen(
                     tadaController: tadaController,
                     date: date,
-                    vtadaaaId: tadaController.tadaData[index].vTADAAAId!,
+                    vtadaaaId:
+                        (tadaController.tadaData[index].vTADAAAId != null)
+                            ? tadaController.tadaData[index].vTADAAAId!
+                            : 0,
                     values: tadaController.tadaData[index],
                   ));
             },

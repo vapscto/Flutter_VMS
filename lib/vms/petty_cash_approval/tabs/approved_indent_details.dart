@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/api/onchange_approved_api.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/api/onload_approved_api.dart';
+import 'package:m_skool_flutter/vms/petty_cash_approval/api/particular_approved_indent_details_api.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/controller/petty_cash_approval_controller.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/model/onload_approved_model.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/widget/approved_particular_indent_details.dart';
@@ -31,7 +32,9 @@ class PcApprovedHome extends StatefulWidget {
 class _PcApprovedHomeState extends State<PcApprovedHome> {
   final PettyCashApprovalController _pcapprovalController =
       Get.put(PettyCashApprovalController());
-  
+
+  // ParticularApprovedIndentModelValues? approvedparticular;
+
   // final ManagerInventoryController inventoryController =
   @override
   void initState() {
@@ -42,7 +45,7 @@ class _PcApprovedHomeState extends State<PcApprovedHome> {
   loadData() async {
     getPcApprovalOnload(
         miId: widget.loginSuccessModel.mIID!,
-        base: baseUrlFromInsCode("", widget.mskoolController),
+        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         roleId: widget.loginSuccessModel.roleId!,
         userId: widget.loginSuccessModel.userId!,
         asmaYId: widget.loginSuccessModel.asmaYId!,
@@ -55,8 +58,6 @@ class _PcApprovedHomeState extends State<PcApprovedHome> {
     //     asmaYId: widget.loginSuccessModel.asmaYId!,
     //     controller: _pcapprovalController);
   }
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -161,10 +162,14 @@ class _PcApprovedHomeState extends State<PcApprovedHome> {
                         onChanged: (selected) {
                           _pcapprovalController.pcApprovedList.clear();
 
+                          // setState(() {
+                          //   approvedparticular = selected ;
+                          // });
+
                           getPcApprovalOnChange(
                               miId: selected!.mIId!,
                               base: baseUrlFromInsCode(
-                                  "", widget.mskoolController),
+                                  "issuemanager", widget.mskoolController),
                               roleId: widget.loginSuccessModel.roleId!,
                               userId: widget.loginSuccessModel.userId!,
                               asmaYId: widget.loginSuccessModel.asmaYId!,
@@ -197,18 +202,16 @@ class _PcApprovedHomeState extends State<PcApprovedHome> {
                                           fontSize: 15,
                                           color: Color.fromRGBO(5, 5, 5, 0.945),
                                           fontWeight: FontWeight.w500),
-                                      dataRowHeight: 40,
+                                      dataRowHeight: 60,
                                       headingRowHeight: 55,
                                       horizontalMargin: 10,
                                       columnSpacing: 40,
                                       dividerThickness: 1,
-                                      border: TableBorder(
-                                          borderRadius: BorderRadius.only(
-                                              bottomRight: Radius.circular(10),
-                                              bottomLeft: Radius.circular(10))),
-                                      headingRowColor:
-                                          MaterialStateProperty.all(
-                                              Theme.of(context).primaryColor),
+                                      border: TableBorder.all(
+                                  borderRadius: const BorderRadius.only(
+                                      bottomRight: Radius.circular(10),
+                                      bottomLeft: Radius.circular(10))),
+                                      headingRowColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
                                       columns: [
                                         DataColumn(
                                             label: Text("S No.",
@@ -247,9 +250,7 @@ class _PcApprovedHomeState extends State<PcApprovedHome> {
                                                     fontWeight:
                                                         FontWeight.w800))),
                                       ],
-                                      rows: List.generate(
-                                          _pcapprovalController
-                                              .pcApprovedList.length, (index) {
+                                      rows: List.generate(_pcapprovalController.pcApprovedList.length, (index) {
                                         var i = index + 1;
                                         return DataRow(cells: [
                                           DataCell(Align(
@@ -261,20 +262,52 @@ class _PcApprovedHomeState extends State<PcApprovedHome> {
                                               "${_pcapprovalController.pcApprovedList.elementAt(index).departmentname}")),
                                           DataCell(Text(
                                               "${_pcapprovalController.pcApprovedList.elementAt(index).employeename}")),
-                                          DataCell(Text(
-                                              "${_pcapprovalController.pcApprovedList.elementAt(index).createdate}")),
+                                          DataCell(Text(getDateNeed(
+                                              DateTime.parse(
+                                                  _pcapprovalController
+                                                      .pcApprovedList
+                                                      .elementAt(index)
+                                                      .createdate!)))),
                                           DataCell(TextButton(
-                                              onPressed: () {
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(
-                                                        builder: (_) {
-                                                  return ApprovedParticularIndentDetails(
-                                                    loginSuccessModel: widget
-                                                        .loginSuccessModel,
-                                                    mskoolController:
-                                                        widget.mskoolController,
-                                                  );
-                                                }));
+                                              onPressed: () async {
+                                                var status = await getPcapprovedIndentParticular(
+                                                    miId: widget.loginSuccessModel.mIID!,
+                                                    base: baseUrlFromInsCode(
+                                                        "issuemanager",
+                                                        widget
+                                                            .mskoolController),
+                                                    roleId: widget.loginSuccessModel.roleId!,
+                                                    userId: widget.loginSuccessModel.userId!,
+                                                    asmaYId: widget
+                                                        .loginSuccessModel
+                                                        .asmaYId!,
+                                                    pcIndentApproved:
+                                                        _pcapprovalController
+                                                            .pcApprovedList
+                                                            .elementAt(index)
+                                                            .pcindentaPId!,
+                                                    pcIndentId:
+                                                        _pcapprovalController
+                                                            .pcApprovedList
+                                                            .elementAt(index)
+                                                            .pcindenTId!,
+                                                    controller:
+                                                        _pcapprovalController);
+                                                if (status == 200) {
+                                                  // ignore: use_build_context_synchronously
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(
+                                                          builder: (_) {
+                                                    return ApprovedParticularIndentDetails(
+                                                      loginSuccessModel: widget
+                                                          .loginSuccessModel,
+                                                      mskoolController: widget
+                                                          .mskoolController,
+                                                      controller:
+                                                          _pcapprovalController,
+                                                    );
+                                                  }));
+                                                }
                                               },
                                               child: Icon(Icons
                                                   .remove_red_eye_rounded))),
@@ -287,12 +320,16 @@ class _PcApprovedHomeState extends State<PcApprovedHome> {
                         ),
                       ),
                     )
-                  : const Center(
-                      child: AnimatedProgressWidget(
-                        animationPath: 'assets/json/nodata.json',
-                        title: 'No Details found',
-                        desc: "Organization has no data to show",
-                        animatorHeight: 250,
+                  : Center(
+                      child: Visibility(
+                        visible: !_pcapprovalController
+                            .isLoadingOnloadorganization.value,
+                        child: AnimatedProgressWidget(
+                          animationPath: 'assets/json/nodata.json',
+                          title: 'Select Organization',
+                          desc: "Select the Organization to show the Data",
+                          animatorHeight: 250,
+                        ),
                       ),
                     )),
         ],
@@ -306,152 +343,12 @@ class _PcApprovedHomeState extends State<PcApprovedHome> {
 
     super.dispose();
   }
+
+  String getDateNeed(DateTime dt) {
+    //.padLeft(2,"0")
+
+    return "${dt.year}-${dt.month.toString().padLeft(2, "0")}-${dt.day.toString().padLeft(2, "0")}";
+  }
 }
 
 
-/* ElevatedButton(
-                                          onPressed: () {
-                                            // GetSpecificStockReportApi.instance
-                                            //     .getStockReportSpecific(
-                                            //   miId: loginSuccessModel.mIID!,
-                                            //   base: baseUrlFromInsCode(
-                                            //       "inventory", mskoolController),
-                                            //   invMID: inventoryController.StockReport
-                                            //           .elementAt(index)
-                                            //       .invMID!,
-                                            //   controller: inventoryController,
-                                            // );
-
-
-
-                                            // SimpleDialog(
-                                            //   title:
-                                            //       const Text('Indent Approved Details'),
-                                            //   children: <Widget>[
-                                            //     DataTable(
-                                            //       dataTextStyle:
-                                            //           const TextStyle(
-                                            //               fontSize: 15,
-                                            //               color: Color.fromRGBO(
-                                            //                   5, 5, 5, 0.945),
-                                            //               fontWeight:
-                                            //                   FontWeight.w500),
-                                            //       dataRowHeight: 40,
-                                            //       headingRowHeight: 55,
-                                            //       horizontalMargin: 10,
-                                            //       columnSpacing: 40,
-                                            //       dividerThickness: 1,
-                                            //       border: TableBorder(
-                                            //           borderRadius:
-                                            //               BorderRadius.only(
-                                            //                   bottomRight:
-                                            //                       Radius
-                                            //                           .circular(
-                                            //                               10),
-                                            //                   bottomLeft: Radius
-                                            //                       .circular(
-                                            //                           10))),
-                                            //       headingRowColor:
-                                            //           MaterialStateProperty.all(
-                                            //               Theme.of(context)
-                                            //                   .primaryColor),
-                                            //       columns: [
-                                            //         DataColumn(
-                                            //             label: Text("S No.",
-                                            //                 style: TextStyle(
-                                            //                     color: Colors
-                                            //                         .white,
-                                            //                     fontWeight:
-                                            //                         FontWeight
-                                            //                             .w800))),
-                                            //         DataColumn(
-                                            //             label: Text(
-                                            //                 "Indent No.",
-                                            //                 style: TextStyle(
-                                            //                     color: Colors
-                                            //                         .white,
-                                            //                     fontWeight:
-                                            //                         FontWeight
-                                            //                             .w800))),
-                                            //         DataColumn(
-                                            //             label: Text(
-                                            //                 "Department",
-                                            //                 style: TextStyle(
-                                            //                     color: Colors
-                                            //                         .white,
-                                            //                     fontWeight:
-                                            //                         FontWeight
-                                            //                             .w800))),
-                                            //         DataColumn(
-                                            //             label: Text(
-                                            //                 "Indent Approved By",
-                                            //                 style: TextStyle(
-                                            //                     color: Colors
-                                            //                         .white,
-                                            //                     fontWeight:
-                                            //                         FontWeight
-                                            //                             .w800))),
-                                            //         DataColumn(
-                                            //             label: Text("Date",
-                                            //                 style: TextStyle(
-                                            //                     color: Colors
-                                            //                         .white,
-                                            //                     fontWeight:
-                                            //                         FontWeight
-                                            //                             .w800))),
-                                            //         DataColumn(
-                                            //             label: Text(
-                                            //                 "Indent Requested Amount",
-                                            //                 style: TextStyle(
-                                            //                     color: Colors
-                                            //                         .white,
-                                            //                     fontWeight:
-                                            //                         FontWeight
-                                            //                             .w800))),
-                                            //         DataColumn(
-                                            //             label: Text(
-                                            //                 "Indent Approved Amount",
-                                            //                 style: TextStyle(
-                                            //                     color: Colors
-                                            //                         .white,
-                                            //                     fontWeight:
-                                            //                         FontWeight
-                                            //                             .w800))),
-                                            //       ],
-                                            //       rows: [
-                                            //         DataRow(
-                                            //           cells: [
-                                            //             DataCell(Align(
-                                            //               alignment:
-                                            //                   Alignment.center,
-                                            //               child: Text('1'),
-                                            //             )),
-                                            //             DataCell(Text(
-                                            //                 "${}")),
-                                            //             DataCell(Text(
-                                            //                 "${}")),
-                                            //             DataCell(Text(
-                                            //                 "${}")),
-                                            //             DataCell(Text(
-                                            //                 "${}")),
-                                            //             DataCell(Text(
-                                            //                 "${}")),
-                                            //             DataCell(Text(
-                                            //                 "${}")),
-                                            //           ],
-                                            //         ),
-                                            //       ],
-                                            //     ),
-                                            //   ],
-                                            // );
-                                          },
-
-
-
-                                          child: Icon(
-                                            Icons.remove_red_eye,
-                                            size: 36.0,
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                          ),
-                                        ) */

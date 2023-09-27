@@ -9,23 +9,23 @@ import 'package:m_skool_flutter/vms/petty_cash_approval/tabs/approval_indent_scr
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 
-class PCHome extends StatefulWidget {
+class PCApprovalHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
 
-  const PCHome({
+  const PCApprovalHome({
     super.key,
     required this.loginSuccessModel,
     required this.mskoolController,
   });
 
   @override
-  State<PCHome> createState() => _PCHomeState();
+  State<PCApprovalHome> createState() => _PCApprovalHomeState();
 }
 
-class _PCHomeState extends State<PCHome> with SingleTickerProviderStateMixin {
-  final PettyCashApprovalController Controller =
-      Get.put<PettyCashApprovalController>(PettyCashApprovalController());
+class _PCApprovalHomeState extends State<PCApprovalHome> with SingleTickerProviderStateMixin {
+  // final PettyCashApprovalController Controller =
+  //     Get.put<PettyCashApprovalController>(PettyCashApprovalController());
 
   TabController? tabController;
 
@@ -62,6 +62,7 @@ class _PCHomeState extends State<PCHome> with SingleTickerProviderStateMixin {
           ),
           Expanded(
             child: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
               controller: tabController,
               children: [
                 PcIndentApprovalScreen(

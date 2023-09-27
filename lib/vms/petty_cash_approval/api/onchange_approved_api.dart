@@ -14,7 +14,7 @@ Future<void> getPcApprovalOnChange(
     required PettyCashApprovalController controller}) async {
   final Dio ins = getGlobalDio();
   final api =
-      "https://vmsstaging.vapssmartecampus.com:40015/api/PC_Indent_ApprovalFacade/OnChangeInstitution";
+      base + URLS.onChangeInstitution;
   logger.d(api);
   logger.d({
           "roleid": roleId,
