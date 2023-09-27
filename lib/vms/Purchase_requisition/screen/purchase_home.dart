@@ -181,7 +181,6 @@ final _dateController = TextEditingController();
                                     FloatingLabelBehavior.always,
                                 label: const CustomDropDownLabel(
                                   icon: 'assets/images/hat.png',
-                                  color: Color.fromARGB(255, 31, 2, 54),
                                   containerColor:
                                       Color.fromRGBO(237, 167, 167, 1),
                                   text: 'Company Name',
@@ -233,103 +232,103 @@ final _dateController = TextEditingController();
                ),
 
                  
-              // Obx(
-              //   () =>
-              //    Container(
-              //               margin: const EdgeInsets.only(
-              //                   top: 20, left: 10, right: 10, bottom: 10),
-              //               decoration: BoxDecoration(
-              //                 color: Theme.of(context).scaffoldBackgroundColor,
-              //                 borderRadius: BorderRadius.circular(16.0),
-              //                 boxShadow: const [
-              //                   BoxShadow(
-              //                     offset: Offset(0, 1),
-              //                     blurRadius: 8,
-              //                     color: Colors.black12,
-              //                   ),
-              //                 ],
-              //               ),
-              //               child: DropdownButtonFormField<PurchaseGetItemModelValues>(
-              //                 value: purchaseRequisitionController.getrequestGetItemList.first,
-              //                 decoration: InputDecoration(
-              //                   focusedBorder: const OutlineInputBorder(
-              //                     borderSide: BorderSide(
-              //                       color: Colors.transparent,
-              //                     ),
-              //                   ),
-              //                   enabledBorder: const OutlineInputBorder(
-              //                     borderSide: BorderSide(
-              //                       color: Colors.transparent,
-              //                     ),
-              //                   ),
-              //                   isDense: true,
-              //                   hintStyle: Theme.of(context)
-              //                       .textTheme
-              //                       .labelSmall!
-              //                       .merge(const TextStyle(
-              //                           fontWeight: FontWeight.w400,
-              //                           fontSize: 14.0,
-              //                           letterSpacing: 0.3)),
-              //                   hintText: purchaseRequisitionController.getrequestGetItemList.isNotEmpty
-              //                       ? 'select company name'
-              //                       : "No data available",
-              //                   floatingLabelBehavior:
-              //                       FloatingLabelBehavior.always,
-              //                   label: const CustomDropDownLabel(
-              //                     icon: 'assets/images/hat.png',
-              //                     containerColor:
-              //                         Color.fromRGBO(223, 251, 254, 1),
-              //                     text: 'Company Name',
-              //                     textColor: Color.fromRGBO(40, 182, 200, 1),
-              //                   ),
-              //                 ),
-              //                 icon: const Padding(
-              //                   padding: EdgeInsets.only(top: 3),
-              //                   child: Icon(
-              //                     Icons.keyboard_arrow_down_rounded,
-              //                     size: 30,
-              //                   ),
-              //                 ),
-              //                 iconSize: 35,
-              //                 items: List.generate(
-              //                    purchaseRequisitionController.getrequestGetItemList.length,
-              //                     (index) {
-              //                   return DropdownMenuItem(
-              //                     value: purchaseRequisitionController.getrequestGetItemList[index],
-              //                     child: Padding(
-              //                       padding:
-              //                           const EdgeInsets.only(top: 13, left: 5),
-              //                       child: SizedBox(
+              Obx(
+                () =>
+                 Container(
+                            margin: const EdgeInsets.only(
+                                top: 20, left: 10, right: 10, bottom: 10),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              borderRadius: BorderRadius.circular(16.0),
+                              boxShadow: const [
+                                BoxShadow(
+                                  offset: Offset(0, 1),
+                                  blurRadius: 8,
+                                  color: Colors.black12,
+                                ),
+                              ],
+                            ),
+                            child: DropdownButtonFormField<PurchaseGetItemModelValues>(
+                              // value: purchaseRequisitionController.getrequestGetItemList.first,
+                              decoration: InputDecoration(
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                isDense: true,
+                                hintStyle: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .merge(const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.3)),
+                                hintText: purchaseRequisitionController.getrequestGetItemList.isNotEmpty
+                                    ? 'select company name'
+                                    : "No data available",
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                label: const CustomDropDownLabel(
+                                  icon: 'assets/images/hat.png',
+                                  containerColor:
+                                      Color.fromRGBO(223, 251, 254, 1),
+                                  text: 'Company Name',
+                                  textColor: Color.fromRGBO(40, 182, 200, 1),
+                                ),
+                              ),
+                              icon: const Padding(
+                                padding: EdgeInsets.only(top: 3),
+                                child: Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  size: 30,
+                                ),
+                              ),
+                              iconSize: 35,
+                              items: List.generate(
+                                 purchaseRequisitionController.getrequestGetItemList.length,
+                                  (index) {
+                                return DropdownMenuItem(
+                                  value: purchaseRequisitionController.getrequestGetItemList[index],
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.only(top: 13, left: 5),
+                                    child: SizedBox(
                                        
                                 
-              //                         child: Text(
-              //                           purchaseRequisitionController.getrequestGetItemList
-              //                               .elementAt(index).invmIItemName!
-              //                               ,
-              //                           style: Theme.of(context)
-              //                               .textTheme
-              //                               .labelSmall!
-              //                               .merge(const TextStyle(
-              //                                   fontWeight: FontWeight.w400,
-              //                                   fontSize: 14.0,
-              //                                   letterSpacing: 0.3)),
-              //                         ),
-              //                       ),
-              //                     ),
-              //                   );
-              //                 }),
-              //                 onChanged: (s) {
+                                      child: Text(
+                                        purchaseRequisitionController.getrequestGetItemList
+                                            .elementAt(index).invmIItemName!
+                                            ,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .merge(const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.0,
+                                                letterSpacing: 0.3)),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }),
+                              onChanged: (s) {
                                 
-              //                 },
-              //               ),
-              //             ),
+                              },
+                            ),
+                          ),
 
-              //  ),
+               ),
           ],
           
         ),
       )
-
+                                      
     );
   }   
   
