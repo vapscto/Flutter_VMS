@@ -29,7 +29,7 @@ const String api2 = "https://vmsinventoryservicehub.azurewebsites.net/api/INV_Pu
     try {
       final Response response =
           await ins.post(api2, options: Options(headers: getSession()), data: {
-     "MI_IdNew": 20
+     "MI_IdNew": miIdnew
         //  options: Options(headers: getSession())
       });
 

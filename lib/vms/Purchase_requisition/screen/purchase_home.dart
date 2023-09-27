@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/vms/Purchase_requisition/api/purchase_dropdownli
 import 'package:m_skool_flutter/vms/Purchase_requisition/controller/purchase_controller.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_Model.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_getitem.dart';
+import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_items_model.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
@@ -29,18 +30,22 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
 
 
 PurchaseRequisitionModelValues? selectedcompanyname;
+PurchaseGetItemModelValues? itemList;
 
 PurchaseRequisitionController purchaseRequisitionController = Get.put(PurchaseRequisitionController());
-
+List<PurchaseItemModel> newWidget = [];
   @override
   void initState() {
-     load();
+     load(widget.loginSuccessModel.mIID!);
+     newWidget.add(const PurchaseItemModel());
     super.initState();
   }
-load()async{
- await getPurchaseRequisitionApi(base: "", miIdnew: 20,controller: purchaseRequisitionController,);
+load(int id)async{
+  purchaseRequisitionController.getrequestGetItemList.clear();
+ await getPurchaseRequisitionApi(base: "", miIdnew: id,controller: purchaseRequisitionController,);
  if(purchaseRequisitionController.getrequestRequisitionList.isNotEmpty){
   selectedcompanyname = purchaseRequisitionController.getrequestRequisitionList.first;
+  itemList = purchaseRequisitionController.getrequestGetItemList.first;
  }
 }
 DateTime? selectedDate;
@@ -184,7 +189,7 @@ final _dateController = TextEditingController();
                                   containerColor:
                                       Color.fromRGBO(237, 167, 167, 1),
                                   text: 'Company Name',
-                                  textColor:  Color.fromRGBO(231, 42, 8, 1),
+                                  textColor:  Color.fromRGBO(21, 3, 0, 1),
                                 ),
                               ),
                               icon: const Padding(
@@ -224,7 +229,9 @@ final _dateController = TextEditingController();
                                 );
                               }),
                               onChanged: (s) {
-                                
+                                selectedcompanyname = s;
+                                purchaseRequisitionController.getrequestGetItemList.clear();
+                                load(s!.mIId!);
                               },
                             ),
                           ),
@@ -232,11 +239,11 @@ final _dateController = TextEditingController();
                ),
 
                  
-              Obx(
+              Obx( 
                 () =>
                  Container(
                             margin: const EdgeInsets.only(
-                                top: 20, left: 10, right: 10, bottom: 10),
+                                top: 20, left: 0, right: 0, bottom: 10),
                             decoration: BoxDecoration(
                               color: Theme.of(context).scaffoldBackgroundColor,
                               borderRadius: BorderRadius.circular(16.0),
@@ -249,7 +256,7 @@ final _dateController = TextEditingController();
                               ],
                             ),
                             child: DropdownButtonFormField<PurchaseGetItemModelValues>(
-                              // value: purchaseRequisitionController.getrequestGetItemList.first,
+                              value: itemList,
                               decoration: InputDecoration(
                                 focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -266,20 +273,20 @@ final _dateController = TextEditingController();
                                     .textTheme
                                     .labelSmall!
                                     .merge(const TextStyle(
-                                        fontWeight: FontWeight.w400,
+                                        fontWeight: FontWeight.w300,
                                         fontSize: 14.0,
                                         letterSpacing: 0.3)),
                                 hintText: purchaseRequisitionController.getrequestGetItemList.isNotEmpty
-                                    ? 'select company name'
+                                    ? 'Select Item'
                                     : "No data available",
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.always,
                                 label: const CustomDropDownLabel(
                                   icon: 'assets/images/hat.png',
                                   containerColor:
-                                      Color.fromRGBO(223, 251, 254, 1),
-                                  text: 'Company Name',
-                                  textColor: Color.fromRGBO(40, 182, 200, 1),
+                                      Color.fromRGBO(10, 4, 182, 1),
+                                  text: 'Item',
+                                  textColor: Color.fromRGBO(223, 234, 3, 1),
                                 ),
                               ),
                               icon: const Padding(
@@ -295,23 +302,26 @@ final _dateController = TextEditingController();
                                   (index) {
                                 return DropdownMenuItem(
                                   value: purchaseRequisitionController.getrequestGetItemList[index],
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 13, left: 5),
-                                    child: SizedBox(
-                                       
-                                
-                                      child: Text(
-                                        purchaseRequisitionController.getrequestGetItemList
-                                            .elementAt(index).invmIItemName!
-                                            ,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall!
-                                            .merge(const TextStyle(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.3)),
+                                  child: SizedBox(
+                                    width: 300,
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(top: 13, left: 5),
+                                      child: SizedBox(
+                                         
+                                                                  
+                                        child: Text(
+                                          purchaseRequisitionController.getrequestGetItemList
+                                              .elementAt(index).invmIItemName!
+                                              ,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall!
+                                              .merge(const TextStyle(
+                                                  fontWeight: FontWeight.w100,
+                                                  fontSize: 14.0,
+                                                  letterSpacing: 0.3)),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -324,7 +334,46 @@ final _dateController = TextEditingController();
                           ),
 
                ),
+                const SizedBox(height: 16),
+                CustomContainer(
+                  child: Column(
+                    children: List.generate(
+                       newWidget. length, (index) {
+                      return Column(
+                        children: [
+                         Padding(
+                           padding: const EdgeInsets.only( right: 10.0,top: 10),
+                           child: Align(
+                              alignment: Alignment.topRight,
+                              child: InkWell(onTap: (){setState(() {
+                               (index ==0)?  newWidget.add(const PurchaseItemModel()): newWidget.removeAt(index);
+                              });}, child:Container(
+                                decoration: BoxDecoration(shape: BoxShape.circle,color: Theme.of(context).primaryColor,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    offset: Offset(1, 2),
+                                    blurRadius: 4,
+                                    spreadRadius: 0,
+                                    color: Colors.black12
+                                  )
+                                ],),
+                                padding: const EdgeInsets.all(4),
+                                child:  (index ==0)?  const Icon(Icons.add,color: Colors.white,size: 30,):const Icon(Icons.remove,color: Colors.white,size: 30,),
+                              )),
+                            ),
+                         ),
+                      
+                          Padding(padding: const EdgeInsets.only(bottom: 10),
+                          child: newWidget[index],
+                          ),
+                        ],
+                      );
+                    })
+                  ),
+
+                ),
           ],
+         
           
         ),
       )
@@ -332,5 +381,12 @@ final _dateController = TextEditingController();
     );
   }   
   
-  
+  @override
+  void dispose() {
+    // TODO: imple
+  purchaseRequisitionController.getrequestRequisitionList.clear();
+ purchaseRequisitionController.getrequestGetItemList.clear();
+
+    super.dispose();
+  }
 }
