@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/create_planner_table_widget.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/planner_status_model.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
@@ -30,6 +31,7 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
   DateTime? fromDate;
   DateTime? toDate;
   List<CreatePlannerTable> newTable = [];
+  List<PlannerStatusModel> statusList = [];
   @override
   void initState() {
     setState(() {
@@ -46,6 +48,8 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
           '22-12-2023 To 28-12-2023',
           '4:30 HR',
           ''));
+      statusList.add(PlannerStatusModel('Sept 4th Week', '25-09-2023',
+          '30-09-2023', '58:00 Hr', 'Approved', 'Name'));
     });
     super.initState();
   }
@@ -188,25 +192,17 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                               onTap: () async {
                                 fromDate = await showDatePicker(
                                   context: context,
-                                  helpText: "Select Data",
+                                  helpText: "Select From Data",
                                   initialDate: DateTime.now(),
-                                  firstDate: DateTime.now(),
+                                  firstDate: DateTime(2022),
                                   lastDate: DateTime(3050),
                                   selectableDayPredicate: (day) =>
-                                      day.weekday == 7 || day.weekday == 7
-                                          ? false
-                                          : true,
+                                      day.weekday == 7 ? false : true,
                                 );
-
                                 if (fromDate != null) {
                                   setState(() {
                                     _startDate.text =
-                                        "${numberList[fromDate!.day]}-${numberList[fromDate!.month]}-${fromDate!.year}";
-                                    DateTime dt =
-                                        fromDate!.add(const Duration(days: 5));
-                                    _endDate.text =
-                                        "${numberList[dt.day]}-${numberList[dt.month]}-${dt.year}";
-                                    isPlan = true;
+                                        "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
                                   });
                                 }
                               },
@@ -214,26 +210,18 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                                 suffixIcon: IconButton(
                                   onPressed: () async {
                                     fromDate = await showDatePicker(
-                                      helpText: "Select Data",
+                                      helpText: "Select From Data",
                                       context: context,
                                       initialDate: DateTime.now(),
-                                      firstDate: DateTime.now(),
+                                      firstDate: DateTime(2022),
                                       lastDate: DateTime(3050),
                                       selectableDayPredicate: (day) =>
-                                          day.weekday == 7 || day.weekday == 7
-                                              ? false
-                                              : true,
+                                          day.weekday == 7 ? false : true,
                                     );
-
                                     if (fromDate != null) {
                                       setState(() {
                                         _startDate.text =
-                                            "${numberList[fromDate!.day]}-${numberList[fromDate!.month]}-${fromDate!.year}";
-                                        DateTime dt = fromDate!
-                                            .add(const Duration(days: 5));
-                                        _endDate.text =
-                                            "${numberList[dt.day]}-${numberList[dt.month]}-${dt.year}";
-                                        isPlan = true;
+                                            "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
                                       });
                                     }
                                   },
@@ -309,7 +297,7 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                                 if (fromDate != null) {
                                   toDate = await showDatePicker(
                                     context: context,
-                                    helpText: "Select Date",
+                                    helpText: "Select To Date",
                                     initialDate:
                                         DateTime(int.parse(_endDate.text)),
                                     firstDate:
@@ -323,7 +311,7 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                                   if (toDate != null) {
                                     setState(() {
                                       _endDate.text =
-                                          "${numberList[toDate!.day]}-${numberList[toDate!.month]}-${toDate!.year}";
+                                          "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                                       isPlan = true;
                                     });
                                   }
@@ -341,10 +329,11 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                                     if (fromDate != null) {
                                       toDate = await showDatePicker(
                                         context: context,
-                                        helpText: "Select Date",
+                                        helpText: "Select To Date",
                                         initialDate: DateTime.now(),
                                         firstDate: DateTime.now(),
                                         lastDate: DateTime(3050),
+                                        fieldHintText: 'Date:Month:Year',
                                         selectableDayPredicate: (day) =>
                                             day.weekday == 7 || day.weekday == 7
                                                 ? false
@@ -353,7 +342,7 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                                       if (toDate != null) {
                                         setState(() {
                                           _endDate.text =
-                                              "${numberList[toDate!.day]}-${numberList[toDate!.month]}-${toDate!.year}";
+                                              "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                                           isPlan = true;
                                         });
                                       }
@@ -425,14 +414,14 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
               ),
             )),
           ),
-          const SizedBox(height: 16),
+          _createTaskListTable(),
           Text(
             "Planner Details",
             style: Get.textTheme.titleSmall!.copyWith(
                 color: Theme.of(context).primaryColor,
                 fontWeight: FontWeight.w600),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           (isPlan != true)
               ? const SizedBox()
               : CustomContainer(
@@ -498,18 +487,14 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                     ],
                   ),
                 )),
-          (isPlan != true) ? const SizedBox() : const SizedBox(height: 16),
-          (isPlan != true) ? const SizedBox() : _createTable(),
+          (isPlan != true) ? const SizedBox() : _createPlannerTable(),
           (isPlan != true)
               ? const SizedBox()
-              : Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: MSkollBtn(
-                      title: "Save",
-                      onPress: () {},
-                    ),
+              : Align(
+                  alignment: Alignment.bottomCenter,
+                  child: MSkollBtn(
+                    title: "Save",
+                    onPress: () {},
                   ),
                 ),
         ],
@@ -517,8 +502,9 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
     );
   }
 
-  _createTable() {
+  _createPlannerTable() {
     return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(vertical: 16),
       scrollDirection: Axis.horizontal,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
@@ -527,9 +513,9 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
           headingRowColor:
               MaterialStatePropertyAll(Theme.of(context).primaryColor),
           dataTextStyle: const TextStyle(
-              fontSize: 12,
+              fontSize: 14,
               color: Color.fromRGBO(0, 0, 0, 0.95),
-              fontWeight: FontWeight.w500),
+              fontWeight: FontWeight.w400),
           dataRowHeight: MediaQuery.of(context).size.height * 0.23,
           headingRowHeight: MediaQuery.of(context).size.height * 0.08,
           horizontalMargin: 10,
@@ -672,12 +658,13 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                     children: [
                       Text(
                         newTable[index].taskNo,
-                        style: Get.textTheme.bodySmall!
+                        style: Get.textTheme.titleSmall!
                             .copyWith(color: Theme.of(context).primaryColor),
                       ),
                       Text(
                         newTable[index].taskName,
-                        style: Get.textTheme.bodySmall!
+                        maxLines: 2,
+                        style: Get.textTheme.titleSmall!
                             .copyWith(color: Theme.of(context).primaryColor),
                       ),
                       RichText(
@@ -739,7 +726,10 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                 )),
                 DataCell(Padding(
                   padding: const EdgeInsets.symmetric(vertical: 6.0),
-                  child: Text(newTable[index].date),
+                  child: Text(
+                    newTable[index].date,
+                    maxLines: 2,
+                  ),
                 )),
                 DataCell(Padding(
                   padding: const EdgeInsets.symmetric(vertical: 6.0),
@@ -768,6 +758,83 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                 )),
               ]);
             })
+          ],
+        ),
+      ),
+    );
+  }
+
+  _createTaskListTable() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      scrollDirection: Axis.horizontal,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: DataTable(
+          headingRowColor:
+              MaterialStatePropertyAll(Theme.of(context).primaryColor),
+          dataTextStyle: const TextStyle(
+              fontSize: 14,
+              color: Color.fromRGBO(0, 0, 0, 0.95),
+              fontWeight: FontWeight.w400),
+          // dataRowHeight: MediaQuery.of(context).size.height * 0.08,
+          // headingRowHeight: MediaQuery.of(context).size.height * 0.08,
+          horizontalMargin: 10,
+          columnSpacing: MediaQuery.of(context).size.width * 0.08,
+          dividerThickness: 1,
+          headingTextStyle:
+              const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+          border: TableBorder.all(
+              borderRadius: BorderRadius.circular(10), width: 0.5),
+          columns: const [
+            DataColumn(
+              label: Text('S.No'),
+            ),
+            DataColumn(
+              label: Text("Planner"),
+            ),
+            DataColumn(
+              label: Text('Start Date'),
+            ),
+            DataColumn(
+              label: Text('End Date'),
+            ),
+            DataColumn(
+              label: Text('Total Effort'),
+            ),
+            DataColumn(
+              label: Text('Status'),
+            ),
+          ],
+          rows: [
+            ...List.generate(statusList.length, (index) {
+              var i = index + 1;
+              return DataRow(cells: [
+                DataCell(Text(i.toString())),
+                DataCell(Text(statusList[index].planner,
+                    style: Get.textTheme.titleMedium!
+                        .copyWith(color: Theme.of(context).primaryColor))),
+                DataCell(Text(statusList[index].startDate)),
+                DataCell(Text(statusList[index].endDate)),
+                DataCell(Text(statusList[index].totalEffort)),
+                DataCell(Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichText(
+                        text: TextSpan(children: [
+                      TextSpan(
+                          text: statusList[index].status,
+                          style: Get.textTheme.titleMedium!
+                              .copyWith(color: Colors.green)),
+                      TextSpan(
+                          text: ' By- ${statusList[index].assignedBy}',
+                          style: Get.textTheme.titleSmall!.copyWith()),
+                    ])),
+                    Text('Remarks: ${statusList[index].status}'),
+                  ],
+                )),
+              ]);
+            }),
           ],
         ),
       ),
