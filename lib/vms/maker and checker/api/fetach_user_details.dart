@@ -12,16 +12,18 @@ import 'package:m_skool_flutter/vms/maker%20and%20checker/model/designation.dart
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/employee_model_list.dart';
 
 Future<int> feacthUserApi({
+  required String base,
+  required int ivrmrtId,
   required int userId,
   required int mi_id,
   required MakerCheckerController controller,
 }) async {
   final Dio ins = getGlobalDio();
   final String apiUrl =
-      "https://vmsissuemanager.azurewebsites.net/api/ISM_DailyReport_ApprovalFacade/GetDetails/";
-  
+      base+"api/ISM_DailyReport_ApprovalFacade/GetDetails/";
+    logger.d("damn ${apiUrl}");
 
-  logger.d(apiUrl);
+  
 
   try {
     controller.updateLoading(true);
@@ -29,9 +31,9 @@ Future<int> feacthUserApi({
     final Response response = await ins.post(apiUrl,
         options: Options(headers: getSession()),
         data: {
-          "IVRMRT_Id":11,
-          "UserId": 60934, 
-           "MI_Id": 17,
+          "IVRMRT_Id":ivrmrtId,
+          "UserId": userId, 
+           "MI_Id": mi_id,
            "DRApprovalTypeFlag":"DRApproval"  });
 
      

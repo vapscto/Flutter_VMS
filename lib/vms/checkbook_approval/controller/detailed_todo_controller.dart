@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/model/getTaDaModel.dart';
 
 class GetDetailedToDo extends GetxController {
+
   RxList<GetTaDaModelValues> getTaDaModelList = RxList();
   RxBool isLoading = RxBool(false);
   RxBool isErrorOccuredLoading = RxBool(false);
@@ -15,6 +16,7 @@ class GetDetailedToDo extends GetxController {
       <TextEditingController>[].obs;
   RxList<bool> checkList = <bool>[].obs;
   RxList<int> radioSelect = <int>[].obs;
+
   void updateisLoading(bool val) {
     isLoading.value = val;
   }

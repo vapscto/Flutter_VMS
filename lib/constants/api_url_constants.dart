@@ -449,17 +449,40 @@ class URLS {
 
   static String sectionlist = "api/FEESTodayCollectionFacade/Getsectionpop/";
 
-  static String designationsListapi =
-      "api/ISM_DailyReport_ApprovalFacade/DeptSelectionDetails/";
-
-  static var employee_model_list =
-      "api/ISM_DailyReport_ApprovalFacade/DesgSelectionDetails/";
-
-  static var drDetailsApprove =
-      "api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
   static String onclickpurchaseapi = "api/IndentApprovalFacade/getpidetails/";
 
   static String purchaseindentapi = "api/IndentApprovalFacade/getloaddata/";
+      // Maker and checker
+  static String designationsListapi="api/ISM_DailyReport_ApprovalFacade/GetDetails/";
+
+  static String drDetailsApprove="api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
+
+  static String employee_model_list="api/ISM_DailyReport_ApprovalFacade/DesgSelectionDetails/";
+
+  static String getDrs="api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
+
+  static String DeptList="api/ISM_DailyReport_ApprovalFacade/DeptSelectionDetails/";
+
+  static String Security="api/ISMDashboardFacade/getdetails";
+
+  static String submit="api/ISM_DailyReport_ApprovalFacade/SaveApprovalDetails/";
+
+  static String updateCheck="api/CheckBookEntryApprovalFacade/ApprovalData/";
+
+  static String getcmpn="api/CheckBookEntryApprovalFacade/getalldata/";
+
+  static String submitCheck="api/CheckBookEntryApprovalFacade/Getdata/";
+  // static String designationsListapi =
+  //     "api/ISM_DailyReport_ApprovalFacade/DeptSelectionDetails/";
+
+  // static var employee_model_list =
+  //     "api/ISM_DailyReport_ApprovalFacade/DesgSelectionDetails/";
+
+  // static var drDetailsApprove =
+  //     "api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
+  // static String onclickpurchaseapi = "api/IndentApprovalFacade/getpidetails/";
+
+  // static String purchaseindentapi = "api/IndentApprovalFacade/getloaddata/";
 
   //** TADA Apply APIS* *//
   static String stateList = 'api/TADA_Advance_ApplyFacade/getalldata/';
@@ -469,8 +492,7 @@ class URLS {
   static String tadaSave = 'api/TADAAdvanceApprovalFacade/savedta';
   static String tadaList = 'api/TADAAdvanceApprovalFacade/getalldata/';
   static String tadaDetails = 'api/TADAAdvanceApprovalFacade/edit';
-
-  //// PETTY CASH APPROVAL  ////////
+ 
 
   static String onChangeInstitution =
       "api/PC_Indent_ApprovalFacade/OnChangeInstitution";

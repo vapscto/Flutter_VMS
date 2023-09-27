@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:m_skool_flutter/constants/api_url_constants.dart';
 
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -6,11 +7,12 @@ import 'package:m_skool_flutter/vms/checkbook_approval/controller/cheque_control
 import 'package:m_skool_flutter/vms/checkbook_approval/model/company_model.dart';
 
 Future<int> getCompaniesList(
-    {required String base, required ChequeController controller}) async {
+    {required String base, required ChequeController controller,
+    required int userId}) async {
   final Dio ins = getGlobalDio();
-  final String apiUrl =
-      "https://vmsstaging.vapssmartecampus.com:40015/api/CheckBookEntryApprovalFacade/getalldata/";
-  //  final String apiUrl = base + URLS.staffGalleryClassApi;
+//  final String apiUrl =
+      //"https://vmsstaging.vapssmartecampus.com:40015/api/CheckBookEntryApprovalFacade/getalldata/";
+    final String apiUrl = base + URLS.getcmpn;
 
   logger.d(apiUrl);
 
@@ -18,7 +20,7 @@ Future<int> getCompaniesList(
     controller.updateisLoading(true);
 
     final Response response = await ins.post(apiUrl,
-        options: Options(headers: getSession()), data: {"UserId": 60064});
+        options: Options(headers: getSession()), data: {"UserId": userId});
 
     logger.d(response.data['allcompany']);
     if (response.data['allcompany'] == null) {

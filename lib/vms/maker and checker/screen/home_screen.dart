@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
@@ -48,7 +49,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
   DateTime? selectedenddate;
   DrDetailsCtrlr drController = Get.put(DrDetailsCtrlr());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
- 
+
   int? hrmdc_Id;
   int? hrmdes_Id;
   int? hrme_Id;
@@ -56,13 +57,14 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
   @override
   void initState() {
     load();
-      todayDate.text = getDateNeed(selecteddate);
+    todayDate.text = getDateNeed(selecteddate);
     super.initState();
   }
 
   load() async {
     int statuscode =
-        await feacthUserApi(userId: 0, mi_id: 0, controller: controller);
+        await feacthUserApi(base:baseUrlFromInsCode('issuemanager', widget.mskoolController),
+        ivrmrtId: widget.loginSuccessModel.roleTypeId!,userId: widget.loginSuccessModel.userId!, mi_id: widget.loginSuccessModel.mIID!, controller: controller);
     if (statuscode == 200) {
       hrmdc_Id = controller.departmentList.first.hRMDCID;
       departList.clear();
@@ -72,7 +74,8 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
         "selected": true
       });
       int statusCode = await feachDesignation(
-          mi_id: 0, userId: 0, controller: controller, list: departList);
+        base:  baseUrlFromInsCode("issuemanager", widget.mskoolController),
+          mi_id: widget.loginSuccessModel.mIID!, userId: widget.loginSuccessModel.userId!,ivrmrt: widget.loginSuccessModel.roleTypeId!, controller: controller, list: departList);
       if (statusCode == 200) {
         controller.employeeList.clear();
         emplist.clear();
@@ -91,7 +94,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key:_formKey,
+      key: _formKey,
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
@@ -214,9 +217,11 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                   "selected": true
                                 });
                                 await feachDesignation(
-                                    mi_id: 0,
-                                    userId: 0,
+                                  base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+                                    mi_id: widget.loginSuccessModel.mIID!,
+                                    userId: widget.loginSuccessModel.roleTypeId!,
                                     controller: controller,
+                                    ivrmrt: widget.loginSuccessModel.roleTypeId!,
                                     list: departList);
                               },
                             ),
@@ -244,7 +249,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                             ),
                             child: DropdownButtonFormField<dsgnModelValues>(
                               // value: controller.designationList.first,
-                               validator: (value) {
+                              validator: (value) {
                                 if (value == null) {
                                   return "";
                                 }
@@ -339,8 +344,10 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                   "selected": true
                                 });
                                 await feachEmpolyee(
-                                    mi_id: 0,
-                                    userId: 0,
+                                  base:baseUrlFromInsCode("issuemanager", widget.mskoolController),
+                                   userId: widget.loginSuccessModel.userId!,
+                                    mi_id: widget.loginSuccessModel.mIID!,
+                                    ivrmrtId: widget.loginSuccessModel.roleId!,
                                     controller: controller,
                                     list: emplist);
                               },
@@ -368,8 +375,8 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                 ),
                               ],
                             ),
-                            child:
-                                DropdownButtonFormField<EmployeeModelListValues>(
+                            child: DropdownButtonFormField<
+                                EmployeeModelListValues>(
                               // value: controller.employeeList.first,
                               validator: (value) {
                                 if (value == null) {
@@ -418,16 +425,16 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                 ),
                               ),
                               iconSize: 30,
-                              items: List.generate(controller.employeeList.length,
-                                  (index) {
+                              items: List.generate(
+                                  controller.employeeList.length, (index) {
                                 return DropdownMenuItem(
                                   value: controller.employeeList[index],
                                   child: Padding(
                                     padding:
                                         const EdgeInsets.only(top: 13, left: 5),
                                     child: SizedBox(
-                                      width:
-                                          MediaQuery.of(context).size.width / 1.5,
+                                      width: MediaQuery.of(context).size.width /
+                                          1.5,
                                       child: RichText(
                                         overflow: TextOverflow.clip,
                                         text: TextSpan(
@@ -452,7 +459,8 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                                   .textTheme
                                                   .titleSmall!
                                                   .merge(const TextStyle(
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       fontSize: 14.0,
                                                       letterSpacing: 0.3)),
                                             ),
@@ -471,7 +479,8 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                         : SizedBox(),
               ),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 25),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 25),
                 child: CustomContainer(
                   child: TextField(
                     style: Theme.of(context).textTheme.titleSmall,
@@ -480,7 +489,6 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                       showDatePicker(
                         context: context,
                         initialDate: selecteddate,
-                        
                         selectableDayPredicate: (DateTime date) {
                           if (date.weekday == DateTime.sunday) {
                             return false;
@@ -495,11 +503,11 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                           setState(() {
                             // getDate =
                             //     "${selecteddate.year}/${numberList[selecteddate.month]}/${numberList[selecteddate.day]}";
-                             
+
                             todayDate.text = getDateNeed(selecteddate);
                           });
-                        }else{
-                         Fluttertoast.showToast(msg: "Please select date");
+                        } else {
+                          Fluttertoast.showToast(msg: "Please select date");
                         }
                       });
                     },
@@ -526,13 +534,15 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                             ),
                             Text(
                               " Select Date ",
-                              style:
-                                  Theme.of(context).textTheme.labelMedium!.merge(
-                                        const TextStyle(
-                                          fontSize: 20.0,
-                                          color: Color.fromRGBO(62, 120, 170, 1),
-                                        ),
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .merge(
+                                    const TextStyle(
+                                      fontSize: 20.0,
+                                      color: Color.fromRGBO(62, 120, 170, 1),
+                                    ),
+                                  ),
                             ),
                           ],
                         ),
@@ -561,7 +571,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                   ),
                 ),
               ),
-              SizedBox(
+             const SizedBox(
                 height: 20,
               ),
               Center(
@@ -576,36 +586,29 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                   ),
                   onPressed: () async {
                     drController.sList.clear();
-                   
-                    
-                     if (_formKey.currentState!.validate()) {
-                    
-                       int goto = await getdrLists(
-                      mi_id: 0,
-                      userId: 0,
-                       hrmdc_Id:hrmdc_Id!,
-                       hrmdes_Id:hrmdes_Id! ,
-                       hrme_Id:hrme_Id! ,
-                      date:  todayDate.text.toString(),
-                      controller: drController,
-                    
-                    );
-                   if (goto == 200) {
-                      Get.to(() => DRApprovalScreen(
-                        loginSuccessModel: widget.loginSuccessModel,
-                        mskoolController: widget.mskoolController,
 
-                      date: todayDate.text.toString(),
-                      ));
+                    if (_formKey.currentState!.validate()) {
+                      int goto = await getdrLists(
+                        mi_id: 0,
+                        userId: 0,
+                        hrmdc_Id: hrmdc_Id!,
+                        hrmdes_Id: hrmdes_Id!,
+                        hrme_Id: hrme_Id!,
+                        date: todayDate.text.toString(),
+                        controller: drController,
+                      );
+                      if (goto == 200) {
+                        Get.to(() => DRApprovalScreen(
+                              loginSuccessModel: widget.loginSuccessModel,
+                              mskoolController: widget.mskoolController,
+                              date: todayDate.text.toString(),
+                            ));
+                      }
+                    } else {
+                      Fluttertoast.showToast(msg: "Please select field");
                     }
-                     }
-                     else{
-                     Fluttertoast.showToast(msg: "Please select field");
-
-                     }
- 
                   },
-                  child:const Text("Search"),
+                  child: const Text("Search"),
                 ),
               ),
             ],
@@ -614,7 +617,8 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
       ),
     );
   }
-   String getDateNeed(DateTime dt) {
+
+  String getDateNeed(DateTime dt) {
     return "${dt.month.toString().padLeft(2, "0")}-${dt.day.toString().padLeft(2, "0")}-${dt.year}";
   }
 }

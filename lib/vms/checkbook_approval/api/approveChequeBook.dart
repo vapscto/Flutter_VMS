@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 
@@ -10,8 +11,8 @@ Future<int> approveApi({
   required int otp,
 }) async {
   final Dio ins = getGlobalDio();
-    String apiUrl =
-      "https://vmsstaging.vapssmartecampus.com:40015/api/CheckBookEntryApprovalFacade/Getdata/";
+    String apiUrl = base+URLS.submitCheck;
+      // "https://vmsstaging.vapssmartecampus.com:40015/api/CheckBookEntryApprovalFacade/Getdata/";
 
   logger.d(apiUrl);
 
@@ -19,9 +20,9 @@ Future<int> approveApi({
     final Response response = await ins.post(apiUrl,
         options: Options(headers: getSession()),
         data: {
-           "UserId":userId,
+        "UserId":userId,
         "MI_Id":mi_id ,
-          "Apprval": detailsList, "VPAYVOUAUT_OTP": otp});
+        "Apprval": detailsList, "VPAYVOUAUT_OTP": otp});
  logger.d(  {"Apprval": detailsList, "VPAYVOUAUT_OTP": otp});
     return response.statusCode!;
   } on DioError catch (e) {
