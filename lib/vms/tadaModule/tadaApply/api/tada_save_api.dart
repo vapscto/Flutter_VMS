@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/controller/tada_apply_controller.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/save_tada.dart';
 
 class TadaSaveApi {
   TadaSaveApi.init();
@@ -46,7 +47,46 @@ class TadaSaveApi {
             "VTADAAA_ArrivalTime": arrivalTime,
             "VTADAAA_ClientMultiple": clintMultiple,
           });
+      logger.i({
+        "IVRMMCT_Id": ctId,
+        "VTADAAA_FromDate": fromDate,
+        "VTADAAA_ToDate": toDate,
+        "VTADAAA_ClientId": clintId,
+        "VTADAAA_TotalAppliedAmount": totalAppliedAmount,
+        "VTADAAA_ToAddress": toAddress,
+        "VTADAAA_Remarks": remarks,
+        "AllowanceArray": allowanceArray,
+        "VTADAAA_Id": vtadaaaId,
+        "VTADAAA_DepartureTime": departureTime,
+        "VTADAAA_ArrivalTime": arrivalTime,
+        "VTADAAA_ClientMultiple": clintMultiple,
+      });
+      logger.i(response.data);
+      logger.i(response.statusCode);
       if (response.statusCode == 200) {
+        SaveTadaModel saveTadaModel = SaveTadaModel.fromJson(response.data);
+        if (saveTadaModel.returnvalue == true) {
+          //   if (saveTadaModel.returnval == "Insert") {
+          //     Fluttertoast.showToast(msg: "Record Saved Successfully");
+          //   } else if (saveTadaModel.returnval == "Failed") {
+          //     showSweetAlert("Record Not saved");
+          //   } else if (saveTadaModel.returnval == "Duplicate") {
+          //     showSweetAlert("Record Already Exist");
+          //   } else if (promise.returnval == "Update") {
+          //     showSweetAlert("Record Update Successfully");
+          //   } else if (promise.returnval == "UpdateFailed") {
+          //     showSweetAlert("Record Not Update");
+          //   } else if (promise.returnval == "") {
+          //     showSweetAlert("please contact administrator !");
+          //   }
+          //   // Reload the state (you should replace this with your actual state management logic)
+          //   $state.reload();
+          // } else if (promise.returnvalue == false) {
+          //   if (promise.returnval == "") {
+          //     showSweetAlert("please contact Administrator !");
+          //   }
+        }
+
         tadaApplyController.saveData(false);
         Fluttertoast.showToast(msg: "TA-DA saved successfully");
         return;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/vms/tadaModule/model/check_planner.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/allowence_table_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/city_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/clint_list_model.dart';
@@ -12,6 +13,11 @@ class TadaApplyController extends GetxController {
   RxBool isAllowenseLoading = RxBool(false);
   RxBool isSave = RxBool(false);
   RxBool isEdit = RxBool(false);
+  RxBool isPlannerCreate = RxBool(false);
+
+  void plannerCreate(bool loading) {
+    isPlannerCreate.value = loading;
+  }
 
   void saveData(bool loading) {
     isSave.value = loading;
@@ -125,6 +131,16 @@ class TadaApplyController extends GetxController {
       accomodationAmount.value =
           data.elementAt(i).vtadacMAccommodationAmt!.toInt();
     }
+  }
+
+  //** Check Planner **//
+  RxList<CheckPlannerModelValues> checkPlanner =
+      <CheckPlannerModelValues>[].obs;
+  void checkPlan(List<CheckPlannerModelValues> plan) {
+    if (checkPlanner.isNotEmpty) {
+      checkPlanner.clear();
+    }
+    checkPlanner.addAll(plan);
   }
 
   //** Save TA-DA **//
