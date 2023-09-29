@@ -3,7 +3,6 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/tadaModule/model/check_planner.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/controller/tada_apply_controller.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/allowence_table_model.dart';
 
 class CheckPlannerAPI {
   CheckPlannerAPI.init();
@@ -28,8 +27,8 @@ class CheckPlannerAPI {
         url,
         // options: Options(headers: getSession()),
         data: {
-          "UserId": 60934,
-          "MI_Id": 17,
+          "UserId": userId,
+          "MI_Id": miId,
           // "IVRMMCT_Id": 122,
           "VTADAAA_FromDate": fromDate,
           "VTADAAA_ToDate": toDate,
