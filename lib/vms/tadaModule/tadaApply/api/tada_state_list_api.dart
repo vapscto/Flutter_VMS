@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/vms/tadaModule/model/get_save_data_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/controller/tada_apply_controller.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/clint_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/state_list_model.dart';
@@ -35,6 +36,12 @@ class TadaStateListAPI {
         ClintListModel clintListModel =
             ClintListModel.fromJson(response.data['client_Master']);
         tadaApplyController.getClintList(clintListModel.values!);
+        if (response.data['getReport'] != null) {
+          GetSaveDataModel getSaveDataModel =
+              GetSaveDataModel.fromJson(response.data['getReport']);
+          tadaApplyController.getSavedDataValue(getSaveDataModel.values!);
+        }
+
         tadaApplyController.stateLoading(false);
       }
     } on DioError catch (e) {

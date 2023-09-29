@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/controller/tada_apply_controller.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/edit_model.dart';
 
 class TadaEditAPI {
   TadaEditAPI.init();
@@ -23,16 +25,14 @@ class TadaEditAPI {
       var response = await dio.post(
         api,
         // options: Options(headers: getSession()),
-        data: {"UserId": 60934, "MI_Id": 17, "VTADAAA_Id": 0},
+        data: {"UserId": userId, "MI_Id": miId, "VTADAAA_Id": vtadaaaId},
       );
+      logger.i({"UserId": userId, "MI_Id": miId, "VTADAAA_Id": vtadaaaId});
+      logger.i(response.statusCode);
+      logger.i(response.data);
       if (response.statusCode == 200) {
-        if (response.data['client_Master']['values'] == null) {
-          if (response.data['client_Master']['values'] != null) {
-            tadaApplyController.checkPlanner
-                .addAll(response.data['client_Master']['values']);
-          }
-          return true;
-        }
+        EditModel editModel = EditModel.fromJson(response.data['editArray']);
+        Fluttertoast.showToast(msg: "TA-DA Deactivated successfully");
         tadaApplyController.editData(false);
       }
     } on DioError catch (e) {

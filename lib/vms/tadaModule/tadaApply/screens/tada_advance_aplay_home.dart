@@ -13,6 +13,7 @@ import 'package:m_skool_flutter/student/gallery_view/widget/gallery_checkbox.con
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/api/check_planner_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/api/tada_allowense_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/api/tada_city_list_api.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tadaApply/api/tada_edit_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/api/tada_save_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/api/tada_state_list_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/controller/tada_apply_controller.dart';
@@ -92,6 +93,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
       stateLists = tadaApplyController.stateList.first;
       getCity(stateLists!.ivrmmCId!, stateLists!.ivrmmSId!);
     }
+
     _startDate.clear();
     _startTime.clear();
     _endDate.clear();
@@ -101,9 +103,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
     tadaApplyController.addressListController.clear();
     tadaApplyController.allowenseData.clear();
 
-    Future.delayed(const Duration(microseconds: 2)).then((value) {
-      tadaApplyController.stateLoading(false);
-    });
+    tadaApplyController.stateLoading(false);
   }
 
   getCity(int countryId, int stateId) async {
@@ -195,6 +195,18 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
       _endDate.clear();
     }
     tadaApplyController.plannerCreate(false);
+  }
+
+  editData(int id) {
+    tadaApplyController.editData(true);
+    TadaEditAPI.instance.tadaEditData(
+        base: '',
+        userId: widget.loginSuccessModel.userId!,
+        miId: widget.loginSuccessModel.mIID!,
+        vtadaaaId: id,
+        tadaApplyController: tadaApplyController);
+    getStateList();
+    tadaApplyController.editData(false);
   }
 
   @override
@@ -1665,7 +1677,13 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                       : () => Fluttertoast.showToast(
                                           msg: "Enter all Fields"),
                                 ),
-                              )
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              tadaApplyController.getSavedData.isNotEmpty
+                                  ? _getAppliedDetailsTable()
+                                  : const SizedBox()
                             ],
                           )
                         : const Center(
@@ -1721,4 +1739,116 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
       ),
     );
   }
+
+  _getAppliedDetailsTable() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: DataTable(
+          dataRowHeight: 35,
+          headingRowHeight: 45,
+          columnSpacing: 20,
+          headingTextStyle: const TextStyle(color: Colors.white),
+          border: TableBorder.all(
+            color: Colors.black,
+            width: 0.6,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          headingRowColor: MaterialStateColor.resolveWith(
+              (states) => Theme.of(context).primaryColor),
+          columns: const [
+            DataColumn(label: Text("SL.NO.")),
+            DataColumn(label: Text("City")),
+            DataColumn(label: Text("Form Date")),
+            DataColumn(label: Text("Departure Time")),
+            DataColumn(label: Text("To Date")),
+            DataColumn(label: Text("Arrival Time")),
+            DataColumn(label: Text("Total Applied Amount")),
+            DataColumn(label: Text("Action")),
+          ],
+          rows: List.generate(tadaApplyController.getSavedData.length, (index) {
+            var value = index + 1;
+            if (tadaApplyController.getSavedData[index].vtadaaAFromDate !=
+                null) {
+              DateTime dt = DateTime.parse(
+                  tadaApplyController.getSavedData[index].vtadaaAFromDate!);
+              date = '${dt.day}-${dt.month}-${dt.year}';
+            }
+            if (tadaApplyController.getSavedData[index].vtadaaAToDate != null) {
+              DateTime dt = DateTime.parse(
+                  tadaApplyController.getSavedData[index].vtadaaAToDate!);
+              toSelectedDate = '${dt.day}-${dt.month}-${dt.year}';
+            }
+            TimeOfDay startTime = TimeOfDay(
+                hour: int.parse(tadaApplyController
+                    .getSavedData[index].vtadaaADepartureTime!
+                    .split(":")[0]),
+                minute: int.parse(tadaApplyController
+                    .getSavedData[index].vtadaaADepartureTime!
+                    .split(":")[1]));
+            time =
+                '${startTime.hourOfPeriod}:${startTime.minute} ${startTime.period.name.toUpperCase()}';
+
+            //
+            TimeOfDay startToTime = TimeOfDay(
+                hour: int.parse(tadaApplyController
+                    .getSavedData[index].vtadaaAArrivalTime!
+                    .split(":")[0]),
+                minute: int.parse(tadaApplyController
+                    .getSavedData[index].vtadaaAArrivalTime!
+                    .split(":")[1]));
+            toSavedTime =
+                '${startToTime.hourOfPeriod}:${startToTime.minute} ${startToTime.period.name.toUpperCase()}';
+
+            return DataRow(cells: [
+              DataCell(Text(value.toString())),
+              DataCell(Text(
+                  tadaApplyController.getSavedData[index].ivrmmcTName ?? "")),
+              DataCell(Text(date)),
+              DataCell(Text(time)),
+              DataCell(Text(toSelectedDate)),
+              DataCell(Text(toSavedTime)),
+              DataCell(Text(tadaApplyController
+                  .getSavedData[index].vtadaaATotalAppliedAmount
+                  .toString())),
+              DataCell(InkWell(
+                  onTap: () {
+                    setState(() {
+                      editData(
+                          tadaApplyController.getSavedData[index].vtadaaAId!);
+                      flag = tadaApplyController
+                          .getSavedData[index].vtadaaAActiveFlg!;
+                      logger.e("===$flag");
+                      logger.i(tadaApplyController
+                          .getSavedData[index].vtadaaAActiveFlg!);
+                    });
+                  },
+                  child: (flag == true)
+                      ? Text(
+                          "Deactivate",
+                          style: Get.textTheme.titleMedium!.copyWith(
+                              color: Colors.red,
+                              fontWeight: FontWeight.w200,
+                              fontStyle: FontStyle.italic),
+                        )
+                      : Text(
+                          "Activate",
+                          style: Get.textTheme.titleMedium!.copyWith(
+                              color: Colors.green,
+                              fontWeight: FontWeight.w200,
+                              fontStyle: FontStyle.italic),
+                        ))),
+            ]);
+          }),
+        ),
+      ),
+    );
+  }
+
+  var date;
+  var time;
+  var tosavedDate;
+  var toSavedTime;
+  bool flag = false;
 }
