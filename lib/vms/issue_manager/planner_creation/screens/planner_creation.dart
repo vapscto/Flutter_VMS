@@ -196,8 +196,8 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                                   initialDate: DateTime.now(),
                                   firstDate: DateTime(2022),
                                   lastDate: DateTime(3050),
-                                  selectableDayPredicate: (day) =>
-                                      day.weekday == 7 ? false : true,
+                                  // selectableDayPredicate: (day) =>
+                                  //     day.weekday == 1 ? false : true,
                                 );
                                 if (fromDate != null) {
                                   setState(() {
@@ -215,8 +215,8 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                                       initialDate: DateTime.now(),
                                       firstDate: DateTime(2022),
                                       lastDate: DateTime(3050),
-                                      selectableDayPredicate: (day) =>
-                                          day.weekday == 7 ? false : true,
+                                      // selectableDayPredicate: (day) =>
+                                      //     day.weekday == 1 ? false : true,
                                     );
                                     if (fromDate != null) {
                                       setState(() {
@@ -303,10 +303,10 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                                     firstDate:
                                         DateTime(int.parse(_endDate.text)),
                                     lastDate: DateTime(3050),
-                                    selectableDayPredicate: (day) =>
-                                        day.weekday == 7 || day.weekday == 7
-                                            ? false
-                                            : true,
+                                    // selectableDayPredicate: (day) =>
+                                    //     day.weekday == 7 || day.weekday == 7
+                                    //         ? false
+                                    //         : true,
                                   );
                                   if (toDate != null) {
                                     setState(() {
@@ -334,10 +334,10 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                                         firstDate: DateTime.now(),
                                         lastDate: DateTime(3050),
                                         fieldHintText: 'Date:Month:Year',
-                                        selectableDayPredicate: (day) =>
-                                            day.weekday == 7 || day.weekday == 7
-                                                ? false
-                                                : true,
+                                        // selectableDayPredicate: (day) =>
+                                        //     day.weekday == 7 || day.weekday == 7
+                                        //         ? false
+                                        //         : true,
                                       );
                                       if (toDate != null) {
                                         setState(() {
@@ -494,7 +494,11 @@ class _PlannerCreationScreenState extends State<PlannerCreationScreen> {
                   alignment: Alignment.bottomCenter,
                   child: MSkollBtn(
                     title: "Save",
-                    onPress: () {},
+                    onPress: () {
+                      if (_plannerName.text.isEmpty ||
+                          _startDate.text.isEmpty ||
+                          _endDate.text.isEmpty) {}
+                    },
                   ),
                 ),
         ],

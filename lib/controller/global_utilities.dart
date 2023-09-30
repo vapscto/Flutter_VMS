@@ -57,6 +57,7 @@ import 'package:m_skool_flutter/student/library/screen/library_home.dart';
 import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_creation.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
@@ -735,7 +736,10 @@ void openMappedPages(
     //     mskoolController: mskoolController,
     //   );
     // }));
-    Get.to(() => const PlannerCreationScreen());
+    Get.to(() => PlannerCreateHomeScreen(
+          mskoolController: mskoolController,
+          loginSuccessModel: loginSuccessModel,
+        ));
     return;
   }
   if (pageName == "Salary Slip") {
