@@ -514,4 +514,10 @@ class URLS {
   static String onChangeDatePC = "api/PC_Indent_ApprovalFacade/onchangedate";
 
   static String saveRecordPC = "api/PC_Indent_ApprovalFacade/saverecord";
+
+  static String taskGetDetails="api/ISM_TaskCreationFacade/getdetails/";
+
+  static String taskGetProjects="api/ISM_TaskCreationFacade/get_category/";
+
+  static String getTskClinet="api/ISM_TaskCreationFacade/getmodule/";
 }
