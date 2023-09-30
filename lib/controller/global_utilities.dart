@@ -63,6 +63,7 @@ import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.
 import 'package:m_skool_flutter/vms/security/screen/Shome_Screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/screens/tada_advance_aplay_home.dart';
+import 'package:m_skool_flutter/vms/task%20creation/screens/taskCreationHome.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -740,7 +741,7 @@ void openMappedPages(
   }
   if (pageName == "Salary Slip") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return SalarySlipHome(
+      return TaskCreationHome(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
       );
