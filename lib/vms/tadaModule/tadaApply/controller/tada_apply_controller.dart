@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/vms/tadaModule/model/check_planner.dart';
+import 'package:m_skool_flutter/vms/tadaModule/model/get_save_data_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/allowence_table_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/city_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/clint_list_model.dart';
@@ -12,6 +14,11 @@ class TadaApplyController extends GetxController {
   RxBool isAllowenseLoading = RxBool(false);
   RxBool isSave = RxBool(false);
   RxBool isEdit = RxBool(false);
+  RxBool isPlannerCreate = RxBool(false);
+
+  void plannerCreate(bool loading) {
+    isPlannerCreate.value = loading;
+  }
 
   void saveData(bool loading) {
     isSave.value = loading;
@@ -43,6 +50,7 @@ class TadaApplyController extends GetxController {
 
   //**State List* *//
   RxList<StateListModelValues> stateList = <StateListModelValues>[].obs;
+  RxList<GetSaveDataModelValues> getSavedData = <GetSaveDataModelValues>[].obs;
 
   void getStateList(List<StateListModelValues> states) {
     if (stateList.isNotEmpty) {
@@ -50,6 +58,15 @@ class TadaApplyController extends GetxController {
     }
     for (int i = 0; i < states.length; i++) {
       stateList.add(states.elementAt(i));
+    }
+  }
+
+  void getSavedDataValue(List<GetSaveDataModelValues> data) {
+    if (getSavedData.isNotEmpty) {
+      getSavedData.clear();
+    }
+    for (int i = 0; i < data.length; i++) {
+      getSavedData.add(data.elementAt(i));
     }
   }
 
@@ -125,6 +142,16 @@ class TadaApplyController extends GetxController {
       accomodationAmount.value =
           data.elementAt(i).vtadacMAccommodationAmt!.toInt();
     }
+  }
+
+  //** Check Planner **//
+  RxList<CheckPlannerModelValues> checkPlanner =
+      <CheckPlannerModelValues>[].obs;
+  void checkPlan(List<CheckPlannerModelValues> plan) {
+    if (checkPlanner.isNotEmpty) {
+      checkPlanner.clear();
+    }
+    checkPlanner.addAll(plan);
   }
 
   //** Save TA-DA **//
