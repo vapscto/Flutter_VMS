@@ -214,8 +214,8 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
                                                   null)
                                               ? Text(
                                                   'Remarks: ${statusList[index].remarks}',
-                                                  maxLines: 1,
-                                                  overflow: TextOverflow.fade,
+                                                  // maxLines: 1,
+                                                  overflow: TextOverflow.clip,
                                                 )
                                               : const SizedBox(),
                                         ],
@@ -230,7 +230,7 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
                       )
                     : const Center(
                         child: AnimatedProgressWidget(
-                            title: "Planner status not Found",
+                            title: "Planners not Found",
                             desc: " ",
                             animationPath: "assets/json/nodata.json")),
           ],

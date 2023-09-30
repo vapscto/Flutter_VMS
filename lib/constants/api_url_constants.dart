@@ -522,4 +522,6 @@ class URLS {
   static String getTskClinet = "api/ISM_TaskCreationFacade/getmodule/";
   // Planner Creation
   static String planStatusList = 'api/ISM_PlannerCreationFacade/getdetails/';
+  static String assignTaskList =
+      'api/ISM_PlannerCreationFacade/geteffortdetails';
 }

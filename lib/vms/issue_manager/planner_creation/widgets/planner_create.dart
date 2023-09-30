@@ -5,23 +5,33 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_creation/api/task_list_api.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_creation/controller/planner_creation_controller.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/category_plan_table.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/create_planner_table_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
+import '../../../../controller/global_utilities.dart';
+
 class PlannerCreateWidget extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  const PlannerCreateWidget(
-      {super.key,
-      required this.loginSuccessModel,
-      required this.mskoolController});
+
+  const PlannerCreateWidget({
+    super.key,
+    required this.loginSuccessModel,
+    required this.mskoolController,
+  });
 
   @override
   State<PlannerCreateWidget> createState() => _PlannerCreateWidgetState();
 }
 
 class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
+  PlannerCreationController plannerCreationController =
+      Get.put(PlannerCreationController());
+
   final _plannerName = TextEditingController();
   final _plannerGoal = TextEditingController();
   final _startDate = TextEditingController();
@@ -35,6 +45,35 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   DateTime? fromDate;
   DateTime? toDate;
   List<CreatePlannerTable> newTable = [];
+  List<CategoryPlanTable> categoryList = [];
+
+  getListData() async {
+    plannerCreationController.taskLoading(true);
+    await TaskListAPI.instance.getList(
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+        plannerCreationController: plannerCreationController,
+        userId: widget.loginSuccessModel.userId!,
+        miId: widget.loginSuccessModel.mIID!,
+        asmayId: widget.loginSuccessModel.asmaYId!,
+        flag: '',
+        startDate: _startDate.text,
+        endDate: _endDate.text);
+    if (plannerCreationController.categoryWisePlan.isNotEmpty) {
+      for (int index = 0;
+          index < plannerCreationController.categoryWisePlan.length;
+          index++) {
+        categoryList.add(CategoryPlanTable(
+            plannerCreationController.categoryWisePlan
+                .elementAt(index)
+                .ismmtcaTTaskCategoryName!,
+            '${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage} %',
+            "",
+            "",
+            ""));
+      }
+    }
+    plannerCreationController.taskLoading(false);
+  }
 
   @override
   void initState() {
@@ -306,6 +345,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                   _endDate.text =
                                       "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                                   isPlan = true;
+                                  getListData();
                                 });
                               }
                             } else {
@@ -337,6 +377,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                       _endDate.text =
                                           "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                                       isPlan = true;
+                                      getListData();
                                     });
                                   }
                                 } else {
@@ -479,6 +520,9 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                     ],
                   ),
                 )),
+          (plannerCreationController.categoryWisePlan.isNotEmpty)
+              ? _createCategortTable()
+              : const SizedBox(),
           (isPlan != true) ? const SizedBox() : _createPlannerTable(),
           (isPlan != true)
               ? const SizedBox()
@@ -755,6 +799,61 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                 )),
               ]);
             })
+          ],
+        ),
+      ),
+    );
+  }
+
+  _createCategortTable() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      scrollDirection: Axis.horizontal,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: DataTable(
+          headingRowColor:
+              MaterialStatePropertyAll(Theme.of(context).primaryColor),
+          dataTextStyle: const TextStyle(
+              fontSize: 14,
+              color: Color.fromRGBO(0, 0, 0, 0.95),
+              fontWeight: FontWeight.w400),
+          horizontalMargin: 2,
+          columnSpacing: MediaQuery.of(context).size.width * 0.04,
+          dividerThickness: 1,
+          headingTextStyle:
+              const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+          border: TableBorder.all(
+              borderRadius: BorderRadius.circular(10), width: 0.5),
+          columns: const [
+            DataColumn(
+              label: Text("Category Name"),
+            ),
+            DataColumn(
+              label: Text('Required Percentage'),
+            ),
+            DataColumn(
+              label: Text('Minimun Effort Required'),
+            ),
+            DataColumn(
+              label: Text('Current Effort'),
+            ),
+            DataColumn(
+              label: Text('Required Effort'),
+            ),
+          ],
+          rows: [
+            ...List.generate(categoryList.length, (index) {
+              return DataRow(cells: [
+                DataCell(Text(categoryList[index].categoryName)),
+                DataCell(Text(categoryList[index].percentage)),
+                DataCell(Text(categoryList[index].effort)),
+                DataCell(Text(categoryList[index].currentEffort)),
+                DataCell(
+                  Text(categoryList[index].requiredEffort),
+                ),
+              ]);
+            }),
           ],
         ),
       ),
