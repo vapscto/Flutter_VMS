@@ -17,9 +17,8 @@ class TADADetailsAPI {
       required TADAController tadaController,
       required int vtaDaaaId}) async {
     final dio = Dio();
-    var url = base + APIConstant().tadaShow;
-    var url2 =
-        'https://vmsstaging.vapssmartecampus.com:40015/${URLS.tadaDetails}';
+    // var url = base + APIConstant().tadaShow;
+    var url2 = base + URLS.tadaDetails;
 
     try {
       if (tadaController.isErrorOccured.value) {

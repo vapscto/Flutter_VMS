@@ -15,7 +15,7 @@ class TadaStateListAPI {
       required String base,
       required TadaApplyController tadaApplyController}) async {
     var dio = Dio();
-    var api = 'https://vmsstaging.vapssmartecampus.com:40015/${URLS.stateList}';
+    var api = base + URLS.stateList;
     try {
       if (tadaApplyController.isErrorLoading.value) {
         tadaApplyController.errorLoading(false);

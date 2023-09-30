@@ -40,7 +40,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
   _getData() async {
     widget.tadaController.updateIsLoading(true);
     TADADetailsAPI.instance.tadaDetails(
-        base: '',
+        base: 'issuemanager',
         userId: widget.values.userId!,
         tadaController: widget.tadaController,
         vtaDaaaId: widget.values.vTADAAAId!);
@@ -247,7 +247,8 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                       }
 
                       logger.i(headArray);
-                      SaveTADAAPI.instance.saveTADA(base: '', body: {
+                      SaveTADAAPI.instance
+                          .saveTADA(base: 'issuemanager', body: {
                         'VTADAAA_Remarks': remark,
                         'VTADAAA_TotalSactionedAmount':
                             sanctionController2.text,
@@ -261,7 +262,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                       }).then((v) {
                         logger.i("success");
                         TADAApplyListAPI.instance.showApplyList(
-                            base: "",
+                            base: "issuemanager",
                             userId: widget.values.userId!,
                             tadaController: widget.tadaController);
                         _getData();

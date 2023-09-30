@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/apis/tada_details_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/controller/tada_controller.dart';
 import 'package:m_skool_flutter/vms/tadaModule/model/tada_apply_list.dart';
@@ -9,6 +12,8 @@ import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class TADADetailsScreen extends StatefulWidget {
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
   final TADAController tadaController;
   final int vtadaaaId;
   final GetadvancetadaValues values;
@@ -19,7 +24,9 @@ class TADADetailsScreen extends StatefulWidget {
       required this.tadaController,
       required this.date,
       required this.vtadaaaId,
-      required this.values});
+      required this.values,
+      required this.loginSuccessModel,
+      required this.mskoolController});
 
   @override
   State<TADADetailsScreen> createState() => _TADADetailsScreenState();
@@ -37,7 +44,7 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
   _getData() async {
     widget.tadaController.updateIsLoading(true);
     TADADetailsAPI.instance.tadaDetails(
-        base: '',
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         userId: widget.values.userId!,
         tadaController: widget.tadaController,
         vtaDaaaId: widget.vtadaaaId);

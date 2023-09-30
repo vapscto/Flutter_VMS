@@ -51,8 +51,8 @@ class _PlannerCreateHomeScreenState extends State<PlannerCreateHomeScreen>
             child: CustomTabBar(
               tabController: tabController!,
               tabs: const [
-                CustomTab(name: "Planner Approval", asset: " "),
-                CustomTab(name: "Approved Status", asset: " "),
+                CustomTab(name: "Creat Planner", asset: " "),
+                CustomTab(name: "Planner Status", asset: " "),
               ],
             ),
           ),
@@ -60,15 +60,15 @@ class _PlannerCreateHomeScreenState extends State<PlannerCreateHomeScreen>
             child: TabBarView(
               physics: const NeverScrollableScrollPhysics(),
               controller: tabController,
-              children: const [
+              children: [
                 PlannerCreateWidget(
-                    // loginSuccessModel: widget.loginSuccessModel,
-                    // mskoolController: widget.mskoolController,
-                    ),
+                  loginSuccessModel: widget.loginSuccessModel,
+                  mskoolController: widget.mskoolController,
+                ),
                 PlannerStatusWidget(
-                    // loginSuccessModel: widget.loginSuccessModel,
-                    // mskoolController: widget.mskoolController,
-                    ),
+                  loginSuccessModel: widget.loginSuccessModel,
+                  mskoolController: widget.mskoolController,
+                ),
               ],
             ),
           ),

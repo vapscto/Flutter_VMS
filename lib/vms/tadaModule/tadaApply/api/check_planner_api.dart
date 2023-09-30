@@ -17,7 +17,7 @@ class CheckPlannerAPI {
     required TadaApplyController tadaApplyController,
   }) async {
     var dio = Dio();
-    var url = 'https://vmsstaging.vapssmartecampus.com:40015/${URLS.allowense}';
+    var url = base + URLS.allowense;
     try {
       if (tadaApplyController.isErrorLoading.value) {
         tadaApplyController.errorLoading(false);
