@@ -14,6 +14,8 @@ import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 
+import '../../../widget/mskoll_btn.dart';
+
 class PurchaserequisitionHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
@@ -229,8 +231,10 @@ final _dateController = TextEditingController();
                                 );
                               }),
                               onChanged: (s) {
+                                purchaseRequisitionController.getrequestRequisitionList.clear();
                                 selectedcompanyname = s;
                                 purchaseRequisitionController.getrequestGetItemList.clear();
+                              
                                 load(s!.mIId!);
                               },
                             ),
@@ -372,12 +376,112 @@ final _dateController = TextEditingController();
                   ),
 
                 ),
-          ],
-         
+                const SizedBox(height: 35),
+                TextFormField(
+                  maxLines: 6,
+                  style:   const TextStyle(
+                  fontWeight: FontWeight.w100
           
+                  ),
+                  decoration: InputDecoration(
+                    hintText: 'Enter Remarks',
+                    hintStyle: const TextStyle(
+                      fontWeight: FontWeight.w100
+                    ),
+                     border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)
+                     ),
+                     
+                  ),
+              
+              ),
+              const SizedBox(height: 35),
+               CustomContainer(
+                          child: TextField(
+                            style: Theme.of(context).textTheme.titleSmall,
+                            
+                            decoration: InputDecoration(
+                              label: Container(  
+                                margin: const EdgeInsets.only(bottom: 12),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0, vertical: 6.0),
+                                decoration: BoxDecoration(
+                                  boxShadow: const [
+                                  BoxShadow(
+                                    offset: Offset(1, 2),
+                                    blurRadius: 4,
+                                    spreadRadius: 2,
+                                    color: Colors.black12
+                                  )
+                                ],
+                                    borderRadius: BorderRadius.circular(24.0),
+                                    color: const Color.fromARGB(255, 11, 1, 0)),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Image.asset(
+                                      "assets/images/subjectfielicon.png",
+                                      height: 24.0,
+                                    ),
+                                    const SizedBox(
+                                      width: 6.0,
+                                    ),
+                                    Text(
+                                      " Total Approximate Amount : ",
+                                      style:
+                                          Theme.of(context).textTheme.labelMedium!.merge(
+                                                const TextStyle(
+                                                    fontSize: 20.0,
+                                                    color: Color.fromARGB(255, 250, 251, 251)),
+                                              ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              hintText: 'Total Amount.',
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                ),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                ),
+                              ),
+                            ),
+                          ),
+                      
+                        ),
+                        const SizedBox(height: 35),
+                         Row(
+                           children: [
+                             Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: MSkollBtn(
+                        size: const Size.fromWidth(100),
+                        title: "Save",
+                        onPress: () {
+                              // saveData();
+                        },
+                      ),
+                    ),
+                        Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                      child: MSkollBtn(
+                        size: const Size.fromWidth(100),
+                        title: "Exit",
+                        onPress: () {
+                              // saveData();
+                        },
+                      ),
+                    ),
+                           ],
+                         )
+          ],
         ),
-      )
-                                      
+      )                      
     );
   }   
   
