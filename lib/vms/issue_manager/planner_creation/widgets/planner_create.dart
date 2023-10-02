@@ -42,8 +42,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   bool selectAll = false;
   bool checked = false;
   List<int> checkList = [];
-  bool isPlan = false;
-
+  RxString remark = ''.obs;
   DateTime? fromDate;
   DateTime? toDate;
   List<CreatePlannerTable> newTable = [];
@@ -120,7 +119,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               plannerCreationController.assignedTaskList
                       .elementAt(index)
                       .iSMTCRASTORemarks ??
-                  'N/a'));
+                  ' '));
         });
       }
     }
@@ -381,9 +380,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                               toDate = await showDatePicker(
                                 context: context,
                                 helpText: "Select To Date",
-                                initialDate:
-                                    DateTime(int.parse(_startDate.text)),
-                                firstDate: DateTime(int.parse(_startDate.text)),
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime.now(),
                                 lastDate: DateTime(3050),
                                 // selectableDayPredicate: (day) =>
                                 //     day.weekday == 7 || day.weekday == 7
@@ -394,7 +392,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                 setState(() {
                                   _endDate.text =
                                       "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
-                                  isPlan = true;
                                   getListData();
                                 });
                               }
@@ -426,7 +423,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                     setState(() {
                                       _endDate.text =
                                           "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
-                                      isPlan = true;
                                       getListData();
                                     });
                                   }
@@ -606,30 +602,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                         _createPlannerTable(),
                       ],
                     ),
-
-          // const SizedBox(height: 8),
-          // (plannerCreationController.categoryWisePlan.isNotEmpty)
-          //     ? const SizedBox()
-          //     :
-          // (plannerCreationController.categoryWisePlan.isNotEmpty)
-          //     ? _createCategortTable()
-          //     : const SizedBox(),
-          // (plannerCreationController.assignedTaskList.isEmpty)
-          //     ? const SizedBox()
-          //     : _createPlannerTable(),
-          // (plannerCreationController.assignedTaskList.isEmpty)
-          //     ? const SizedBox()
-          //     : Align(
-          //         alignment: Alignment.bottomCenter,
-          //         child: MSkollBtn(
-          //           title: "Save",
-          //           onPress: () {
-          //             if (_plannerName.text.isEmpty ||
-          //                 _startDate.text.isEmpty ||
-          //                 _endDate.text.isEmpty) {}
-          //           },
-          //         ),
-          //       ),
         ],
       ),
     );
@@ -860,6 +832,10 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                 DataCell(Text(newTable[index].date)),
                 DataCell(Text(newTable[index].effort)),
                 DataCell(TextFormField(
+                  initialValue: newTable[index].remarks,
+                  onChanged: (value) {
+                    remark.value = value;
+                  },
                   onTap: () {
                     var checkTxt = checkList.contains(
                             newTable.indexOf(newTable.elementAt(index)))
@@ -878,7 +854,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                       contentPadding: EdgeInsets.only(left: 4, right: 4),
                       border: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.blue))),
-                  // controller: widget.remarkEntryController
                 )),
               ]);
             })
