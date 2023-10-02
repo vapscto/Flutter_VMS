@@ -36,13 +36,20 @@ class TaskListAPI {
         "ISMTPL_StartDate": "2023-10-03T00:00:00",
         "ISMTPL_EndDate": "2023-10-07T00:00:00"
       });
+      // logger.i(response.data['categorylist']);
+      logger.i(url);
       if (response.statusCode == 200) {
         CategoryWisePlanModel categoryWisePlanModel =
             CategoryWisePlanModel.fromJson(response.data['categorylist']);
-        plannerCreationController.categoryList(categoryWisePlanModel.values!);
+        if (categoryWisePlanModel.values!.isNotEmpty) {
+          plannerCreationController.categoryList(categoryWisePlanModel.values!);
+        }
+
         AssignedTaskList assignedTaskList =
             AssignedTaskList.fromJson(response.data['get_Assignedtasklist']);
-        plannerCreationController.assignedTask(assignedTaskList.values!);
+        if (assignedTaskList.values!.isNotEmpty) {
+          plannerCreationController.assignedTask(assignedTaskList.values!);
+        }
       }
     } on DioError catch (e) {
       logger.e(e.message);

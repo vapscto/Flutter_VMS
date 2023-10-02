@@ -4,11 +4,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/api/task_list_api.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/controller/planner_creation_controller.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/category_plan_table.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/create_planner_table_widget.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
@@ -46,6 +48,9 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   DateTime? toDate;
   List<CreatePlannerTable> newTable = [];
   List<CategoryPlanTable> categoryList = [];
+  String startDate = '';
+  String endDate = '';
+  String assignedDate = '';
 
   getListData() async {
     plannerCreationController.taskLoading(true);
@@ -62,14 +67,61 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
       for (int index = 0;
           index < plannerCreationController.categoryWisePlan.length;
           index++) {
-        categoryList.add(CategoryPlanTable(
-            plannerCreationController.categoryWisePlan
-                .elementAt(index)
-                .ismmtcaTTaskCategoryName!,
-            '${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage} %',
-            "",
-            "",
-            ""));
+        setState(() {
+          categoryList.add(CategoryPlanTable(
+              '${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskCategoryName}',
+              '${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage} %',
+              "${plannerCreationController.categoryWisePlan.elementAt(index).ismtcrastOEffortInHrs}",
+              "${plannerCreationController.categoryWisePlan.elementAt(index).ismtpltAEffortInHrs}",
+              "${plannerCreationController.categoryWisePlan.elementAt(index).ismtpLTotalHrs}"));
+        });
+      }
+    }
+    if (plannerCreationController.assignedTaskList.isNotEmpty) {
+      for (int index = 0;
+          index < plannerCreationController.assignedTaskList.length;
+          index++) {
+        setState(() {
+          DateTime dt = DateTime.parse(plannerCreationController
+              .assignedTaskList
+              .elementAt(index)
+              .iSMTCRASTOAssignedDate
+              .toString());
+          assignedDate =
+              '${numberList[dt.day]}:${numberList[dt.month]}:${dt.year}';
+          //
+          DateTime startDt = DateTime.parse(plannerCreationController
+              .assignedTaskList
+              .elementAt(index)
+              .iSMTCRASTOStartDate!);
+          startDate =
+              '${numberList[startDt.day]}:${numberList[startDt.month]}:${startDt.year}';
+          logger.i('===$startDate');
+          //
+          DateTime endDt = DateTime.parse(plannerCreationController
+              .assignedTaskList
+              .elementAt(index)
+              .iSMTCRASTOEndDate!);
+          endDate =
+              '${numberList[endDt.day]}:${numberList[endDt.month]}:${endDt.year}';
+          //
+          newTable.add(CreatePlannerTable(
+              false,
+              '${plannerCreationController.assignedTaskList.elementAt(index).iSMTCRTaskNo}',
+              '${plannerCreationController.assignedTaskList.elementAt(index).iSMTCRTitle}',
+              '${plannerCreationController.assignedTaskList.elementAt(index).hRMPName}',
+              '${plannerCreationController.assignedTaskList.elementAt(index).iSMMCLTClientName}',
+              '${plannerCreationController.assignedTaskList.elementAt(index).hRMDDepartmentName}',
+              '${plannerCreationController.assignedTaskList.elementAt(index).periodicity}',
+              assignedDate,
+              '${plannerCreationController.assignedTaskList.elementAt(index).assignedby}',
+              '$startDate To $endDate ',
+              '${plannerCreationController.assignedTaskList.elementAt(index).iSMTCRASTOEffortInHrs} Hr',
+              plannerCreationController.assignedTaskList
+                      .elementAt(index)
+                      .iSMTCRASTORemarks ??
+                  'N/a'));
+        });
       }
     }
     plannerCreationController.taskLoading(false);
@@ -77,22 +129,19 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
 
   @override
   void initState() {
-    setState(() {
-      newTable.add(CreatePlannerTable(
-          false,
-          'TASK/70466/2022-2023',
-          'Tenant module live implement and remaining should be completed',
-          'Major',
-          'HO',
-          'Softwate Development',
-          'Daily',
-          '18-12-2023',
-          'Name',
-          '22-12-2023 To 28-12-2023',
-          '4:30 HR',
-          ''));
-    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (plannerCreationController.categoryWisePlan.isNotEmpty) {
+      plannerCreationController.categoryWisePlan.isEmpty;
+    }
+    if (plannerCreationController.assignedTaskList.isNotEmpty) {
+      plannerCreationController.assignedTaskList.isEmpty;
+    }
+
+    super.dispose();
   }
 
   @override
@@ -332,8 +381,9 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                               toDate = await showDatePicker(
                                 context: context,
                                 helpText: "Select To Date",
-                                initialDate: DateTime(int.parse(_endDate.text)),
-                                firstDate: DateTime(int.parse(_endDate.text)),
+                                initialDate:
+                                    DateTime(int.parse(_startDate.text)),
+                                firstDate: DateTime(int.parse(_startDate.text)),
                                 lastDate: DateTime(3050),
                                 // selectableDayPredicate: (day) =>
                                 //     day.weekday == 7 || day.weekday == 7
@@ -445,98 +495,141 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: Text(
-              "Planner Details",
-              style: Get.textTheme.titleSmall!.copyWith(
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.w600),
-            ),
-          ),
-          const SizedBox(height: 8),
-          (isPlan != true)
-              ? const SizedBox()
-              : CustomContainer(
-                  child: Container(
-                  margin: const EdgeInsets.all(8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: 'Total Task: ',
+          (plannerCreationController.isAssignedTask.value)
+              ? const AnimatedProgressWidget(
+                  animationPath: 'assets/json/default.json',
+                  title: 'Loading data',
+                  desc: "Please wait we are loading data",
+                )
+              : (plannerCreationController.assignedTaskList.isEmpty)
+                  ? const AnimatedProgressWidget(
+                      animationPath: 'assets/json/nodata.json',
+                      title: 'No data Available',
+                      desc: " ",
+                      animatorHeight: 250,
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16.0),
+                          child: Text(
+                            "Planner Details",
                             style: Get.textTheme.titleSmall!.copyWith(
-                                color: Theme.of(context).primaryColor)),
-                        TextSpan(
-                            text: '25 ',
-                            style: Get.textTheme.titleSmall!.copyWith()),
-                      ])),
-                      const SizedBox(height: 6),
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: 'Total Working Days: ',
-                            style: Get.textTheme.titleSmall!.copyWith(
-                                color: Theme.of(context).primaryColor)),
-                        TextSpan(
-                            text: '7 ',
-                            style: Get.textTheme.titleSmall!.copyWith()),
-                      ])),
-                      const SizedBox(height: 6),
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: 'Minimum Effort Required: ',
-                            style: Get.textTheme.titleSmall!.copyWith(
-                                color: Theme.of(context).primaryColor)),
-                        TextSpan(
-                            text: '25 ',
-                            style: Get.textTheme.titleSmall!.copyWith()),
-                      ])),
-                      const SizedBox(height: 6),
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: 'planned Effort: ',
-                            style: Get.textTheme.titleSmall!.copyWith(
-                                color: Theme.of(context).primaryColor)),
-                        TextSpan(
-                            text: '25 Hrs ',
-                            style: Get.textTheme.titleSmall!.copyWith()),
-                      ])),
-                      const SizedBox(height: 6),
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: 'Total Effort: ',
-                            style: Get.textTheme.titleSmall!.copyWith(
-                                color: Theme.of(context).primaryColor)),
-                        TextSpan(
-                            text: '25 ',
-                            style: Get.textTheme.titleSmall!.copyWith()),
-                      ])),
-                    ],
-                  ),
-                )),
-          (plannerCreationController.categoryWisePlan.isNotEmpty)
-              ? _createCategortTable()
-              : const SizedBox(),
-          (isPlan != true) ? const SizedBox() : _createPlannerTable(),
-          (isPlan != true)
-              ? const SizedBox()
-              : Align(
-                  alignment: Alignment.bottomCenter,
-                  child: MSkollBtn(
-                    title: "Save",
-                    onPress: () {
-                      if (_plannerName.text.isEmpty ||
-                          _startDate.text.isEmpty ||
-                          _endDate.text.isEmpty) {}
-                    },
-                  ),
-                ),
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        CustomContainer(
+                            child: Container(
+                          margin: const EdgeInsets.all(8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                    text: 'Total Task: ',
+                                    style: Get.textTheme.titleSmall!.copyWith(
+                                        color: Theme.of(context).primaryColor)),
+                                TextSpan(
+                                    text: '25 ',
+                                    style:
+                                        Get.textTheme.titleSmall!.copyWith()),
+                              ])),
+                              const SizedBox(height: 6),
+                              RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                    text: 'Total Working Days: ',
+                                    style: Get.textTheme.titleSmall!.copyWith(
+                                        color: Theme.of(context).primaryColor)),
+                                TextSpan(
+                                    text: '7 ',
+                                    style:
+                                        Get.textTheme.titleSmall!.copyWith()),
+                              ])),
+                              const SizedBox(height: 6),
+                              RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                    text: 'Minimum Effort Required: ',
+                                    style: Get.textTheme.titleSmall!.copyWith(
+                                        color: Theme.of(context).primaryColor)),
+                                TextSpan(
+                                    text: '25 ',
+                                    style:
+                                        Get.textTheme.titleSmall!.copyWith()),
+                              ])),
+                              const SizedBox(height: 6),
+                              RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                    text: 'planned Effort: ',
+                                    style: Get.textTheme.titleSmall!.copyWith(
+                                        color: Theme.of(context).primaryColor)),
+                                TextSpan(
+                                    text: '25 Hrs ',
+                                    style:
+                                        Get.textTheme.titleSmall!.copyWith()),
+                              ])),
+                              const SizedBox(height: 6),
+                              RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                    text: 'Total Effort: ',
+                                    style: Get.textTheme.titleSmall!.copyWith(
+                                        color: Theme.of(context).primaryColor)),
+                                TextSpan(
+                                    text: '25 ',
+                                    style:
+                                        Get.textTheme.titleSmall!.copyWith()),
+                              ])),
+                            ],
+                          ),
+                        )),
+                        (plannerCreationController.categoryWisePlan.isNotEmpty)
+                            ? _createCategortTable()
+                            : const SizedBox(),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: MSkollBtn(
+                            title: "Save",
+                            onPress: () {
+                              if (_plannerName.text.isEmpty ||
+                                  _startDate.text.isEmpty ||
+                                  _endDate.text.isEmpty) {}
+                            },
+                          ),
+                        ),
+                        _createPlannerTable(),
+                      ],
+                    ),
+
+          // const SizedBox(height: 8),
+          // (plannerCreationController.categoryWisePlan.isNotEmpty)
+          //     ? const SizedBox()
+          //     :
+          // (plannerCreationController.categoryWisePlan.isNotEmpty)
+          //     ? _createCategortTable()
+          //     : const SizedBox(),
+          // (plannerCreationController.assignedTaskList.isEmpty)
+          //     ? const SizedBox()
+          //     : _createPlannerTable(),
+          // (plannerCreationController.assignedTaskList.isEmpty)
+          //     ? const SizedBox()
+          //     : Align(
+          //         alignment: Alignment.bottomCenter,
+          //         child: MSkollBtn(
+          //           title: "Save",
+          //           onPress: () {
+          //             if (_plannerName.text.isEmpty ||
+          //                 _startDate.text.isEmpty ||
+          //                 _endDate.text.isEmpty) {}
+          //           },
+          //         ),
+          //       ),
         ],
       ),
     );
@@ -557,7 +650,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               fontSize: 14,
               color: Color.fromRGBO(0, 0, 0, 0.95),
               fontWeight: FontWeight.w400),
-          dataRowHeight: MediaQuery.of(context).size.height * 0.23,
+          dataRowHeight: MediaQuery.of(context).size.height * 0.21,
           headingRowHeight: MediaQuery.of(context).size.height * 0.08,
           horizontalMargin: 10,
           columnSpacing: MediaQuery.of(context).size.width * 0.08,
@@ -692,90 +785,80 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                         },
                       )),
                 ),
-                DataCell(Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 6.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        newTable[index].taskNo,
-                        style: Get.textTheme.titleSmall!
-                            .copyWith(color: Theme.of(context).primaryColor),
-                      ),
-                      Text(
-                        newTable[index].taskName,
-                        maxLines: 2,
-                        style: Get.textTheme.titleSmall!
-                            .copyWith(color: Theme.of(context).primaryColor),
-                      ),
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: 'Type Task: ',
-                            style: Get.textTheme.titleSmall!.copyWith(
-                                color: Theme.of(context).primaryColor)),
-                        TextSpan(
-                            text: newTable[index].taskType,
-                            style: Get.textTheme.titleSmall!.copyWith()),
-                      ])),
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: 'Clint: ',
-                            style: Get.textTheme.titleSmall!.copyWith(
-                                color: Theme.of(context).primaryColor)),
-                        TextSpan(
-                            text: newTable[index].clint,
-                            style: Get.textTheme.titleSmall!.copyWith()),
-                      ])),
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: 'Category: ',
-                            style: Get.textTheme.titleSmall!.copyWith(
-                                color: Theme.of(context).primaryColor)),
-                        TextSpan(
-                            text: newTable[index].category,
-                            style: Get.textTheme.titleSmall!.copyWith()),
-                      ])),
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: 'Periodicity: ',
-                            style: Get.textTheme.titleSmall!.copyWith(
-                                color: Theme.of(context).primaryColor)),
-                        TextSpan(
-                            text: newTable[index].Periodicity,
-                            style: Get.textTheme.titleSmall!.copyWith()),
-                      ])),
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: 'Assigned Date: ',
-                            style: Get.textTheme.titleSmall!.copyWith(
-                                color: Theme.of(context).primaryColor)),
-                        TextSpan(
-                            text: newTable[index].assignedDate,
-                            style: Get.textTheme.titleSmall!.copyWith()),
-                      ])),
-                    ],
+                DataCell(SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          newTable[index].taskNo,
+                          style: Get.textTheme.titleSmall!
+                              .copyWith(color: Theme.of(context).primaryColor),
+                        ),
+                        Text(
+                          newTable[index].taskName,
+                          maxLines: 2,
+                          style: Get.textTheme.titleSmall!
+                              .copyWith(color: Theme.of(context).primaryColor),
+                        ),
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: 'Type Task: ',
+                              style: Get.textTheme.titleSmall!.copyWith(
+                                  color: Theme.of(context).primaryColor)),
+                          TextSpan(
+                              text: newTable[index].taskType,
+                              style: Get.textTheme.titleSmall!.copyWith()),
+                        ])),
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: 'Clint: ',
+                              style: Get.textTheme.titleSmall!.copyWith(
+                                  color: Theme.of(context).primaryColor)),
+                          TextSpan(
+                              text: newTable[index].clint,
+                              style: Get.textTheme.titleSmall!.copyWith()),
+                        ])),
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: 'Category: ',
+                              style: Get.textTheme.titleSmall!.copyWith(
+                                  color: Theme.of(context).primaryColor)),
+                          TextSpan(
+                              text: newTable[index].category,
+                              style: Get.textTheme.titleSmall!.copyWith()),
+                        ])),
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: 'Periodicity: ',
+                              style: Get.textTheme.titleSmall!.copyWith(
+                                  color: Theme.of(context).primaryColor)),
+                          TextSpan(
+                              text: newTable[index].Periodicity,
+                              style: Get.textTheme.titleSmall!.copyWith()),
+                        ])),
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: 'Assigned Date: ',
+                              style: Get.textTheme.titleSmall!.copyWith(
+                                  color: Theme.of(context).primaryColor)),
+                          TextSpan(
+                              text: newTable[index].assignedDate,
+                              style: Get.textTheme.titleSmall!.copyWith()),
+                        ])),
+                      ],
+                    ),
                   ),
                 )),
-                DataCell(Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 6.0),
-                  child: Text(newTable[index].assignedBy),
-                )),
-                DataCell(Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 6.0),
-                  child: Text(
-                    newTable[index].date,
-                    maxLines: 2,
-                  ),
-                )),
-                DataCell(Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 6.0),
-                  child: Text(newTable[index].effort),
-                )),
+                DataCell(Text(newTable[index].assignedBy)),
+                DataCell(Text(newTable[index].date)),
+                DataCell(Text(newTable[index].effort)),
                 DataCell(TextFormField(
                   onTap: () {
                     var checkTxt = checkList.contains(
@@ -845,12 +928,17 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
           rows: [
             ...List.generate(categoryList.length, (index) {
               return DataRow(cells: [
-                DataCell(Text(categoryList[index].categoryName)),
-                DataCell(Text(categoryList[index].percentage)),
-                DataCell(Text(categoryList[index].effort)),
-                DataCell(Text(categoryList[index].currentEffort)),
+                DataCell(Text(categoryList.elementAt(index).categoryName)),
+                DataCell(Text(categoryList.elementAt(index).percentage)),
+                DataCell(Text('${categoryList.elementAt(index).effort} Hr')),
                 DataCell(
-                  Text(categoryList[index].requiredEffort),
+                    Text('${categoryList.elementAt(index).currentEffort} Hr')),
+                DataCell(
+                  Text(
+                    '${categoryList.elementAt(index).requiredEffort} Hr',
+                    style:
+                        Get.textTheme.titleSmall!.copyWith(color: Colors.red),
+                  ),
                 ),
               ]);
             }),
