@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_Tsk_Client.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_project_category.dart';
+import 'package:m_skool_flutter/vms/task%20creation/model/get_tsk_module.dart';
 
 class TaskClientModuleCntroller extends GetxController {
 RxBool clientLoading = RxBool(false);
@@ -16,5 +17,6 @@ void updateTskClientErrorLoading(bool val){
 }
 
 RxList<GeTskClientValues> taskClientList = <GeTskClientValues>[].obs;
+  RxList<GetmoduleValues> getModuleValuesList = <GetmoduleValues>[].obs;
 
 }

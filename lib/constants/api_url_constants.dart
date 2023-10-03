@@ -520,4 +520,6 @@ class URLS {
   static String taskGetProjects="api/ISM_TaskCreationFacade/get_category/";
 
   static String getTskClinet="api/ISM_TaskCreationFacade/getmodule/";
+
+  static String onchangeMoudleChange="api/ISM_TaskCreationFacade/getIEuser/";
 }

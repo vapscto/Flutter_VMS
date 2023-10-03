@@ -1,47 +1,20 @@
-class GetDepts {
-  String? type;
-  List<GetDeptsValues>? values;
-
-  GetDepts({this.type, this.values});
-
-  GetDepts.fromJson(Map<String, dynamic> json) {
-    type = json['\$type'];
-    if (json['\$values'] != null) {
-      values = <GetDeptsValues>[];
-      json['\$values'].forEach((v) {
-        values!.add(  GetDeptsValues.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class GetDeptsValues {
+class GetEmployeeId {
   bool? returnval;
   bool? roleflag;
   bool? completed;
   bool? pending;
   bool? alreadyCnt;
   int? userId;
+  String? roletype;
   int? ivrmrTId;
   bool? plannerextapproval;
   String? plannerMaxdate;
-  String? hrmDDepartmentName;
   int? ismmaCId;
   int? mIId;
   int? miId;
   int? hrmEId;
   int? asmaYId;
   int? hrmDId;
-  int? hrmdCID;
   int? ismmpRId;
   int? ivrmMId;
   int? ismmmDId;
@@ -63,27 +36,27 @@ class GetDeptsValues {
   int? ismtcraTCreatedBy;
   int? ismtcraTUpdatedBy;
   int? prioritycheck;
+  
   int? ismciMIEList;
   double? effortinhrs;
 
-  GetDeptsValues(
+  GetEmployeeId(
       {this.returnval,
       this.roleflag,
       this.completed,
       this.pending,
       this.alreadyCnt,
       this.userId,
+      this.roletype,
       this.ivrmrTId,
       this.plannerextapproval,
       this.plannerMaxdate,
-      this.hrmDDepartmentName,
       this.ismmaCId,
       this.mIId,
       this.miId,
       this.hrmEId,
       this.asmaYId,
       this.hrmDId,
-      this.hrmdCID,
       this.ismmpRId,
       this.ivrmMId,
       this.ismmmDId,
@@ -105,27 +78,27 @@ class GetDeptsValues {
       this.ismtcraTCreatedBy,
       this.ismtcraTUpdatedBy,
       this.prioritycheck,
+       
       this.ismciMIEList,
       this.effortinhrs});
 
-  GetDeptsValues.fromJson(Map<String, dynamic> json) {
+  GetEmployeeId.fromJson(Map<String, dynamic> json) {
     returnval = json['returnval'];
     roleflag = json['roleflag'];
     completed = json['completed'];
     pending = json['pending'];
     alreadyCnt = json['already_cnt'];
     userId = json['userId'];
+    roletype = json['roletype'];
     ivrmrTId = json['ivrmrT_Id'];
     plannerextapproval = json['plannerextapproval'];
     plannerMaxdate = json['plannerMaxdate'];
-    hrmDDepartmentName = json['hrmD_DepartmentName'];
     ismmaCId = json['ismmaC_Id'];
     mIId = json['mI_Id'];
     miId = json['miId'];
     hrmEId = json['hrmE_Id'];
     asmaYId = json['asmaY_Id'];
     hrmDId = json['hrmD_Id'];
-    hrmdCID = json['hrmdC_ID'];
     ismmpRId = json['ismmpR_Id'];
     ivrmMId = json['ivrmM_Id'];
     ismmmDId = json['ismmmD_Id'];
@@ -147,6 +120,7 @@ class GetDeptsValues {
     ismtcraTCreatedBy = json['ismtcraT_CreatedBy'];
     ismtcraTUpdatedBy = json['ismtcraT_UpdatedBy'];
     prioritycheck = json['prioritycheck'];
+     
     ismciMIEList = json['ismciM_IEList'];
     effortinhrs = json['effortinhrs'];
   }
@@ -159,17 +133,16 @@ class GetDeptsValues {
     data['pending'] = this.pending;
     data['already_cnt'] = this.alreadyCnt;
     data['userId'] = this.userId;
+    data['roletype'] = this.roletype;
     data['ivrmrT_Id'] = this.ivrmrTId;
     data['plannerextapproval'] = this.plannerextapproval;
     data['plannerMaxdate'] = this.plannerMaxdate;
-    data['hrmD_DepartmentName'] = this.hrmDDepartmentName;
     data['ismmaC_Id'] = this.ismmaCId;
     data['mI_Id'] = this.mIId;
     data['miId'] = this.miId;
     data['hrmE_Id'] = this.hrmEId;
     data['asmaY_Id'] = this.asmaYId;
     data['hrmD_Id'] = this.hrmDId;
-    data['hrmdC_ID'] = this.hrmdCID;
     data['ismmpR_Id'] = this.ismmpRId;
     data['ivrmM_Id'] = this.ivrmMId;
     data['ismmmD_Id'] = this.ismmmDId;
@@ -191,14 +164,10 @@ class GetDeptsValues {
     data['ismtcraT_CreatedBy'] = this.ismtcraTCreatedBy;
     data['ismtcraT_UpdatedBy'] = this.ismtcraTUpdatedBy;
     data['prioritycheck'] = this.prioritycheck;
+    
     data['ismciM_IEList'] = this.ismciMIEList;
     data['effortinhrs'] = this.effortinhrs;
     return data;
   }
 }
-
-class AtachmentFile{
-  int? id;
-  String? FileName;
- AtachmentFile({required this.id,required this.FileName}) ;
-}
+ 
