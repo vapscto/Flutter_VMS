@@ -252,7 +252,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       height: 12.0,
                     ),
                     Text(
-                      "M Skool",
+                      "Vaps Management System",
                       style: Theme.of(context).textTheme.titleMedium!.merge(
                           const TextStyle(fontSize: 30.0, color: Colors.white)),
                     ),

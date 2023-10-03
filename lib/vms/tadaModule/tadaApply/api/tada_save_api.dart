@@ -25,7 +25,7 @@ class TadaSaveApi {
     required TadaApplyController tadaApplyController,
   }) async {
     var dio = Dio();
-    var url = 'https://vmsstaging.vapssmartecampus.com:40015/${URLS.saveTada}';
+    var url = base + URLS.saveTada;
     try {
       if (tadaApplyController.isErrorLoading.value = false) {
         tadaApplyController.errorLoading(false);

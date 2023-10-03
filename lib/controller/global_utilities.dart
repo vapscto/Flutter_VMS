@@ -37,7 +37,6 @@ import 'package:m_skool_flutter/staffs/gallery_upload/screen/gallery_home.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/screen/hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
 import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dart';
-import 'package:m_skool_flutter/staffs/salary_slip/screen/salary_slip_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/view_notice/screens/view_notice_home_screen.dart';
@@ -57,7 +56,7 @@ import 'package:m_skool_flutter/student/library/screen/library_home.dart';
 import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
-import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_creation.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
 import 'package:m_skool_flutter/vms/security/screen/Shome_Screen.dart';
@@ -736,7 +735,10 @@ void openMappedPages(
     //     mskoolController: mskoolController,
     //   );
     // }));
-    Get.to(() => const PlannerCreationScreen());
+    Get.to(() => PlannerCreateHomeScreen(
+          mskoolController: mskoolController,
+          loginSuccessModel: loginSuccessModel,
+        ));
     return;
   }
   if (pageName == "Salary Slip") {

@@ -515,11 +515,15 @@ class URLS {
 
   static String saveRecordPC = "api/PC_Indent_ApprovalFacade/saverecord";
 
-  static String taskGetDetails="api/ISM_TaskCreationFacade/getdetails/";
+  static String taskGetDetails = "api/ISM_TaskCreationFacade/getdetails/";
 
-  static String taskGetProjects="api/ISM_TaskCreationFacade/get_category/";
+  static String taskGetProjects = "api/ISM_TaskCreationFacade/get_category/";
 
-  static String getTskClinet="api/ISM_TaskCreationFacade/getmodule/";
+  static String getTskClinet = "api/ISM_TaskCreationFacade/getmodule/";
+  // Planner Creation
+  static String planStatusList = 'api/ISM_PlannerCreationFacade/getdetails/';
+  static String assignTaskList =
+      'api/ISM_PlannerCreationFacade/geteffortdetails';
 
   static String onchangeMoudleChange="api/ISM_TaskCreationFacade/getIEuser/";
 }

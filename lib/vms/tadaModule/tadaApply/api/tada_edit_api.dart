@@ -15,7 +15,7 @@ class TadaEditAPI {
       required int vtadaaaId,
       required TadaApplyController tadaApplyController}) async {
     var dio = Dio();
-    var api = 'https://vmsstaging.vapssmartecampus.com:40015/${URLS.tadaEdit}';
+    var api = base + URLS.tadaEdit;
 
     try {
       if (tadaApplyController.isErrorLoading.value) {

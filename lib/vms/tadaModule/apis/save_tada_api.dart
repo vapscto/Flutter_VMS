@@ -9,7 +9,7 @@ class SaveTADAAPI {
 
   saveTADA({required Map<String, dynamic> body, required String base}) async {
     var dio = Dio();
-    var url = 'https://vmsstaging.vapssmartecampus.com:40015/${URLS.tadaSave}';
+    var url = base + URLS.tadaSave;
     try {
       var response = await dio.post(
         url,

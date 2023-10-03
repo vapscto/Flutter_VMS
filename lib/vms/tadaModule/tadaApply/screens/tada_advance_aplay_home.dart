@@ -87,7 +87,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
     await TadaStateListAPI.instance.tadastateList(
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!,
-        base: baseUrlFromInsCode('login', widget.mskoolController),
+        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         tadaApplyController: tadaApplyController);
     if (tadaApplyController.stateList.isNotEmpty) {
       stateLists = tadaApplyController.stateList.first;
@@ -111,7 +111,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
     await TadaCityListAPI.instance.tadaCityList(
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!,
-        base: baseUrlFromInsCode('login', widget.mskoolController),
+        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         countryId: countryId,
         stateId: stateId,
         tadaApplyController: tadaApplyController);
@@ -127,7 +127,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
   getAllowenseData(int ctId) async {
     tadaApplyController.allowenseLoading(true);
     await TadaAllowenceAPI.instance.getAllowense(
-        base: baseUrlFromInsCode('login', widget.mskoolController),
+        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         userId: widget.loginSuccessModel.userId!,
         miId: widget.loginSuccessModel.mIID!,
         ivrmCtId: ctId,
@@ -162,7 +162,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
   ) {
     tadaApplyController.saveData(true);
     TadaSaveApi.instance.tadaSave(
-        base: baseUrlFromInsCode('login', widget.mskoolController),
+        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         ctId: citySelectedValue!.ivrmmcTId!,
         fromDate: fromSelectedDate,
         toDate: toSelectedDate,
@@ -183,7 +183,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
   checkPlanner() async {
     tadaApplyController.plannerCreate(true);
     await CheckPlannerAPI.instance.checkPlannerAPI(
-        base: baseUrlFromInsCode('login', widget.mskoolController),
+        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         userId: widget.loginSuccessModel.userId!,
         miId: widget.loginSuccessModel.mIID!,
         fromDate: fromSelectedDate,
@@ -200,7 +200,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
   editData(int id) {
     tadaApplyController.editData(true);
     TadaEditAPI.instance.tadaEditData(
-        base: '',
+        base: 'issuemanager',
         userId: widget.loginSuccessModel.userId!,
         miId: widget.loginSuccessModel.mIID!,
         vtadaaaId: id,

@@ -28,7 +28,7 @@ class _TadaListScreenState extends State<TadaListScreen> {
   _getAPIData() async {
     tadaController.updateIsLoading(true);
     await TADAApplyListAPI.instance.showApplyList(
-        base: baseUrlFromInsCode("login", widget.mskoolController),
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         userId: widget.loginSuccessModel.userId!,
         tadaController: tadaController);
     // Future.delayed(const Duration(seconds: 3)).then((value) {
@@ -154,6 +154,8 @@ class _TadaListScreenState extends State<TadaListScreen> {
                             ? tadaController.tadaData[index].vTADAAAId!
                             : 0,
                     values: tadaController.tadaData[index],
+                    loginSuccessModel: widget.loginSuccessModel,
+                    mskoolController: widget.mskoolController,
                   ));
             },
             icon: const Icon(Icons.visibility))),
