@@ -56,6 +56,7 @@ class _GalleryUploadPageState extends State<GalleryUploadPage>
     if (pickedImage != null) {
       setState(() {
         galleryController.selectedMedia.add(File(pickedImage.path));
+           
       });
     }
   }
