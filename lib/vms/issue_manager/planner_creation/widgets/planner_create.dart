@@ -896,8 +896,10 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                         checkColor: Colors.indigo,
                         shape: ContinuousRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
-                        value: newTable.elementAt(index).flag,
-                        onChanged: (id == 0)
+                        value: (newTable[index].ismtpltaId == 0)
+                            ? newTable.elementAt(index).flag
+                            : true,
+                        onChanged: (newTable[index].ismtpltaId == 0)
                             ? (val) {
                                 setState(() {
                                   checked = newTable[index].flag = val!;
@@ -913,9 +915,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                       selectAll = true;
                                     }
                                   }
-                                  // (newTable.elementAt(i).ismtpltaId == 0)
-                                  //     ? newTable.elementAt(index).flag
-                                  //     : true;
                                 });
                               }
                             : null,
@@ -943,7 +942,9 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                           TextSpan(
                               text: 'Type Task: ',
                               style: Get.textTheme.titleSmall!.copyWith(
-                                  color: Theme.of(context).primaryColor)),
+                                  color: (newTable[index].ismtpltaId == 0)
+                                      ? Theme.of(context).primaryColor
+                                      : Colors.red)),
                           TextSpan(
                               text: newTable[index].taskType,
                               style: Get.textTheme.titleSmall!.copyWith()),
