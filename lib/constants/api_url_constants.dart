@@ -524,4 +524,5 @@ class URLS {
   static String planStatusList = 'api/ISM_PlannerCreationFacade/getdetails/';
   static String assignTaskList =
       'api/ISM_PlannerCreationFacade/geteffortdetails';
+  static String savePlanner = 'api/ISM_PlannerCreationFacade/savePlanner/';
 }

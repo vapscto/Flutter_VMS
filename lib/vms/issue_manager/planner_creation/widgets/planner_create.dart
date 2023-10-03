@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_creation/api/planner_save_api.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/api/task_list_api.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/controller/planner_creation_controller.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/category_plan_table.dart';
@@ -13,6 +14,7 @@ import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/create_
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
+import 'package:text_scroll/text_scroll.dart';
 
 import '../../../../controller/global_utilities.dart';
 
@@ -45,13 +47,23 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   RxString remark = ''.obs;
   DateTime? fromDate;
   DateTime? toDate;
+  DateTime dt = DateTime.now();
+  int totalday = 0;
   List<CreatePlannerTable> newTable = [];
   List<CategoryPlanTable> categoryList = [];
   String startDate = '';
   String endDate = '';
   String assignedDate = '';
+  double plannedEffort = 0.0;
+  List<Map<String, dynamic>> plannerrArray = [];
+  List<Map<String, dynamic>> categoryArray = [];
+  List<Map<String, dynamic>> newCategoryArray = [];
+  double totalHour = 0;
+  int id = 0;
 
   getListData() async {
+    plannedEffort = 0.0;
+    totalHour = 0;
     plannerCreationController.taskLoading(true);
     await TaskListAPI.instance.getList(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
@@ -59,10 +71,15 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         userId: widget.loginSuccessModel.userId!,
         miId: widget.loginSuccessModel.mIID!,
         asmayId: widget.loginSuccessModel.asmaYId!,
-        flag: '',
-        startDate: _startDate.text,
-        endDate: _endDate.text);
+        flag: 'S',
+        startDate: (fromDate != null)
+            ? fromDate!.toIso8601String()
+            : dt.toIso8601String(),
+        endDate: (toDate != null)
+            ? toDate!.toIso8601String()
+            : dt.toIso8601String());
     if (plannerCreationController.categoryWisePlan.isNotEmpty) {
+      categoryList.clear();
       for (int index = 0;
           index < plannerCreationController.categoryWisePlan.length;
           index++) {
@@ -70,39 +87,85 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
           categoryList.add(CategoryPlanTable(
               '${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskCategoryName}',
               '${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage} %',
+              "${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage! / 100 * 8 * totalday}",
               "${plannerCreationController.categoryWisePlan.elementAt(index).ismtcrastOEffortInHrs}",
-              "${plannerCreationController.categoryWisePlan.elementAt(index).ismtpltAEffortInHrs}",
-              "${plannerCreationController.categoryWisePlan.elementAt(index).ismtpLTotalHrs}"));
+              "${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage! / 100 * 8 * totalday}"));
         });
+
+        categoryArray.add({
+          "ISMMTCAT_Id": plannerCreationController.categoryWisePlan
+              .elementAt(index)
+              .ismmtcaTId,
+        });
+        newCategoryArray.addAll(categoryArray.toSet());
       }
     }
     if (plannerCreationController.assignedTaskList.isNotEmpty) {
+      newTable.clear();
       for (int index = 0;
           index < plannerCreationController.assignedTaskList.length;
           index++) {
         setState(() {
-          DateTime dt = DateTime.parse(plannerCreationController
-              .assignedTaskList
-              .elementAt(index)
-              .iSMTCRASTOAssignedDate
-              .toString());
-          assignedDate =
-              '${numberList[dt.day]}:${numberList[dt.month]}:${dt.year}';
+          if (plannerCreationController.assignedTaskList
+                  .elementAt(index)
+                  .iSMTCRASTOAssignedDate !=
+              null) {
+            DateTime dt = DateTime.parse(plannerCreationController
+                .assignedTaskList
+                .elementAt(index)
+                .iSMTCRASTOAssignedDate
+                .toString());
+            assignedDate =
+                '${numberList[dt.day]}:${numberList[dt.month]}:${dt.year}';
+          }
           //
-          DateTime startDt = DateTime.parse(plannerCreationController
-              .assignedTaskList
-              .elementAt(index)
-              .iSMTCRASTOStartDate!);
-          startDate =
-              '${numberList[startDt.day]}:${numberList[startDt.month]}:${startDt.year}';
-          logger.i('===$startDate');
+          if (plannerCreationController.assignedTaskList
+                  .elementAt(index)
+                  .iSMTCRASTOStartDate !=
+              null) {
+            DateTime startDt = DateTime.parse(plannerCreationController
+                .assignedTaskList
+                .elementAt(index)
+                .iSMTCRASTOStartDate!);
+            startDate =
+                '${numberList[startDt.day]}:${numberList[startDt.month]}:${startDt.year}';
+          }
+
           //
-          DateTime endDt = DateTime.parse(plannerCreationController
-              .assignedTaskList
+          if (plannerCreationController.assignedTaskList
+                  .elementAt(index)
+                  .iSMTCRASTOEndDate !=
+              null) {
+            DateTime endDt = DateTime.parse(plannerCreationController
+                .assignedTaskList
+                .elementAt(index)
+                .iSMTCRASTOEndDate!);
+            endDate =
+                '${numberList[endDt.day]}:${numberList[endDt.month]}:${endDt.year}';
+          }
+          // plannedEffort = 0.0;
+          if (plannerCreationController.assignedTaskList
+                  .elementAt(index)
+                  .iSMTPLTAId !=
+              null) {
+            if (plannerCreationController.assignedTaskList
+                    .elementAt(index)
+                    .iSMTPLTAId! ==
+                0) {
+              plannedEffort += plannerCreationController.assignedTaskList
+                  .elementAt(index)
+                  .iSMTCRASTOEffortInHrs!;
+              setState(() {});
+            }
+          }
+
+          //
+
+          id = plannerCreationController.assignedTaskList
               .elementAt(index)
-              .iSMTCRASTOEndDate!);
-          endDate =
-              '${numberList[endDt.day]}:${numberList[endDt.month]}:${endDt.year}';
+              .iSMTPLTAId!;
+          //
+          logger.i('===$id');
           //
           newTable.add(CreatePlannerTable(
               false,
@@ -119,15 +182,74 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               plannerCreationController.assignedTaskList
                       .elementAt(index)
                       .iSMTCRASTORemarks ??
-                  ' '));
+                  ' ',
+              plannerCreationController.assignedTaskList
+                  .elementAt(index)
+                  .iSMTPLTAId!));
+          if (plannerCreationController.assignedTaskList
+                  .elementAt(index)
+                  .iSMTCRASTOEffortInHrs !=
+              null) {
+            totalHour += plannerCreationController.assignedTaskList
+                .elementAt(index)
+                .iSMTCRASTOEffortInHrs!;
+          }
+
+          //
+          plannerrArray.add({
+            "ISMTCR_Id": plannerCreationController.assignedTaskList
+                .elementAt(index)
+                .iSMTCRId,
+            "ISMTPLTA_StartDate": plannerCreationController.assignedTaskList
+                .elementAt(index)
+                .iSMTPLTAStartDate,
+            "ISMTPLTA_EndDate": plannerCreationController.assignedTaskList
+                .elementAt(index)
+                .iSMTPLTAEndDate,
+            "ISMTPLTA_EffortInHrs": plannerCreationController.assignedTaskList
+                .elementAt(index)
+                .iSMTCRASTOEffortInHrs,
+            "ISMTPLTA_Remarks": plannerCreationController.assignedTaskList
+                .elementAt(index)
+                .iSMTCRASTORemarks,
+            "ISMTPLTA_Id": plannerCreationController.assignedTaskList
+                .elementAt(index)
+                .iSMTPLTAId,
+            "ISMTPLTA_Status": plannerCreationController.assignedTaskList
+                .elementAt(index)
+                .iSMTPLTAStatus,
+            "ISMTPLTA_PreviousTask": plannerCreationController.assignedTaskList
+                .elementAt(index)
+                .iSMTPLTAPreviousTask,
+            "ISMTPLTA_ApprovalFlg": plannerCreationController.assignedTaskList
+                .elementAt(index)
+                .iSMTPLTAApprovalFlg,
+          });
         });
       }
     }
     plannerCreationController.taskLoading(false);
   }
 
+  savePlanner() async {
+    await PlannerSaveAPI.instance.saveDataAPI(
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+        userId: widget.loginSuccessModel.userId!,
+        miId: widget.loginSuccessModel.mIID!,
+        plannerName: _plannerName.text,
+        startDate: fromDate!.toIso8601String(),
+        endDate: toDate!.toIso8601String(),
+        totalHour: totalHour.toInt(),
+        remarks: _plannerGoal.text,
+        catListId: categoryArray,
+        taskplannerArray: plannerrArray);
+    getListData();
+  }
+
+  bool isDeta = false;
   @override
   void initState() {
+    getListData();
     super.initState();
   }
 
@@ -149,6 +271,22 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
         children: [
+          (plannerCreationController.isPlannerCreate.value == false)
+              ? const Padding(
+                  padding: EdgeInsets.only(top: 8.0, bottom: 30),
+                  child: TextScroll(
+                    'YOU CANOT GENERATE PLANNER TODAY!!  ',
+                    delayBefore: Duration(milliseconds: 500),
+                    mode: TextScrollMode.endless,
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600),
+                    textAlign: TextAlign.left,
+                    selectable: true,
+                  ),
+                )
+              : const SizedBox(),
           Form(
             key: _key,
             child: Column(
@@ -276,8 +414,13 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                             fromDate = await showDatePicker(
                               context: context,
                               helpText: "Select From Data",
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2022),
+
+                              firstDate: DateTime.parse(
+                                  plannerCreationController.assignedTaskList
+                                      .last.iSMTCRASTOEndDate!),
+                              initialDate: DateTime.parse(
+                                  plannerCreationController.assignedTaskList
+                                      .last.iSMTCRASTOEndDate!),
                               lastDate: DateTime(3050),
                               // selectableDayPredicate: (day) =>
                               //     day.weekday == 1 ? false : true,
@@ -295,8 +438,13 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                 fromDate = await showDatePicker(
                                   helpText: "Select From Data",
                                   context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(2022),
+
+                                  firstDate: DateTime.parse(
+                                      plannerCreationController.assignedTaskList
+                                          .last.iSMTCRASTOEndDate!),
+                                  initialDate: DateTime.parse(
+                                      plannerCreationController.assignedTaskList
+                                          .last.iSMTCRASTOEndDate!),
                                   lastDate: DateTime(3050),
                                   // selectableDayPredicate: (day) =>
                                   //     day.weekday == 1 ? false : true,
@@ -392,7 +540,10 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                 setState(() {
                                   _endDate.text =
                                       "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                  totalday =
+                                      toDate!.difference(fromDate!).inDays + 1;
                                   getListData();
+                                  isDeta = true;
                                 });
                               }
                             } else {
@@ -423,7 +574,11 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                     setState(() {
                                       _endDate.text =
                                           "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                      totalday =
+                                          toDate!.difference(fromDate!).inDays +
+                                              1;
                                       getListData();
+                                      isDeta = true;
                                     });
                                   }
                                 } else {
@@ -497,7 +652,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                   title: 'Loading data',
                   desc: "Please wait we are loading data",
                 )
-              : (plannerCreationController.assignedTaskList.isEmpty)
+              : (plannerCreationController.assignedTaskList.isEmpty ||
+                      isDeta == false)
                   ? const AnimatedProgressWidget(
                       animationPath: 'assets/json/nodata.json',
                       title: 'No data Available',
@@ -530,7 +686,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                     style: Get.textTheme.titleSmall!.copyWith(
                                         color: Theme.of(context).primaryColor)),
                                 TextSpan(
-                                    text: '25 ',
+                                    text:
+                                        '${plannerCreationController.assignedTaskList.length} ',
                                     style:
                                         Get.textTheme.titleSmall!.copyWith()),
                               ])),
@@ -542,7 +699,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                     style: Get.textTheme.titleSmall!.copyWith(
                                         color: Theme.of(context).primaryColor)),
                                 TextSpan(
-                                    text: '7 ',
+                                    text: '$totalday',
                                     style:
                                         Get.textTheme.titleSmall!.copyWith()),
                               ])),
@@ -554,7 +711,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                     style: Get.textTheme.titleSmall!.copyWith(
                                         color: Theme.of(context).primaryColor)),
                                 TextSpan(
-                                    text: '25 ',
+                                    text: '${totalday * 8}',
                                     style:
                                         Get.textTheme.titleSmall!.copyWith()),
                               ])),
@@ -566,7 +723,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                     style: Get.textTheme.titleSmall!.copyWith(
                                         color: Theme.of(context).primaryColor)),
                                 TextSpan(
-                                    text: '25 Hrs ',
+                                    text: '$plannedEffort',
                                     style:
                                         Get.textTheme.titleSmall!.copyWith()),
                               ])),
@@ -578,7 +735,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                     style: Get.textTheme.titleSmall!.copyWith(
                                         color: Theme.of(context).primaryColor)),
                                 TextSpan(
-                                    text: '25 ',
+                                    text: '$totalHour Hr ',
                                     style:
                                         Get.textTheme.titleSmall!.copyWith()),
                               ])),
@@ -590,13 +747,19 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                             : const SizedBox(),
                         Align(
                           alignment: Alignment.bottomCenter,
-                          child: MSkollBtn(
-                            title: "Save",
-                            onPress: () {
-                              if (_plannerName.text.isEmpty ||
-                                  _startDate.text.isEmpty ||
-                                  _endDate.text.isEmpty) {}
-                            },
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 16.0),
+                            child: MSkollBtn(
+                              title: "Save",
+                              onPress: () {
+                                if (_plannerName.text.isEmpty) {
+                                  Fluttertoast.showToast(
+                                      msg: "Please enter plan name");
+                                } else {
+                                  savePlanner();
+                                }
+                              },
+                            ),
                           ),
                         ),
                         _createPlannerTable(),
@@ -659,9 +822,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                       if (selectAll) {
                         for (var i = 0; i < newTable.length; i++) {
                           checkList.add(i);
-                          setState(() {
-                            newTable.elementAt(i).flag = true;
-                          });
                         }
                       } else {
                         for (var i = 0; i < newTable.length; i++) {
@@ -726,6 +886,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
           rows: [
             ...List.generate(newTable.length, (index) {
               var i = index + 1;
+
               return DataRow(cells: [
                 DataCell(Text(i.toString())),
                 DataCell(
@@ -736,25 +897,28 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                         shape: ContinuousRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                         value: newTable.elementAt(index).flag,
-                        onChanged: (val) {
-                          setState(() {
-                            checked = newTable[index].flag = val!;
-                            if (checkList.contains(index)) {
-                              checkList.remove(index);
-                              checked = newTable[index].flag = false;
-                              if (newTable.length != checkList.length) {
-                                selectAll = false;
+                        onChanged: (id == 0)
+                            ? (val) {
+                                setState(() {
+                                  checked = newTable[index].flag = val!;
+                                  if (checkList.contains(index)) {
+                                    checkList.remove(index);
+                                    checked = newTable[index].flag = false;
+                                    if (newTable.length != checkList.length) {
+                                      selectAll = false;
+                                    }
+                                  } else {
+                                    checkList.add(index);
+                                    if (newTable.length == checkList.length) {
+                                      selectAll = true;
+                                    }
+                                  }
+                                  // (newTable.elementAt(i).ismtpltaId == 0)
+                                  //     ? newTable.elementAt(index).flag
+                                  //     : true;
+                                });
                               }
-                              setState(() {});
-                            } else {
-                              checkList.add(index);
-                              if (newTable.length == checkList.length) {
-                                selectAll = true;
-                              }
-                            }
-                            setState(() {});
-                          });
-                        },
+                            : null,
                       )),
                 ),
                 DataCell(SizedBox(

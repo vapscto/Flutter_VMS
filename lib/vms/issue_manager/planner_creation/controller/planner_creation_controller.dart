@@ -2,13 +2,14 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/assigned_task_list.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/category_wise_list.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/planner_status_list.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/total_effort_data.dart';
 
 class PlannerCreationController extends GetxController {
   RxBool isstatusLoading = RxBool(false);
   RxBool isErrorLoading = RxBool(false);
   RxBool isCategoryTask = RxBool(false);
   RxBool isAssignedTask = RxBool(false);
-
+  RxBool isPlannerCreate = RxBool(true);
   void statusLoading(bool loading) {
     isstatusLoading.value = loading;
   }
@@ -55,6 +56,18 @@ class PlannerCreationController extends GetxController {
     }
     for (int i = 0; i < value.length; i++) {
       assignedTaskList.add(value.elementAt(i));
+    }
+  }
+
+  //effort list
+  RxList<TotalEffortDataValues> effortDataValues =
+      <TotalEffortDataValues>[].obs;
+  effortData(List<TotalEffortDataValues> data) {
+    if (effortDataValues.isNotEmpty) {
+      effortDataValues.clear();
+    }
+    for (int i = 0; i < data.length; i++) {
+      effortDataValues.add(data.elementAt(i));
     }
   }
 }
