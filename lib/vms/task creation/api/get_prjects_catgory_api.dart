@@ -4,6 +4,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/task%20creation/controller/task_projects_cntroller.dart';
+import 'package:m_skool_flutter/vms/task%20creation/model/get_emp_details.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_project_category.dart';
  
 
@@ -31,23 +32,15 @@ Future<int> getTskPrjtCatgryList(
     "HRME_Id":HRME_Id,
     "HRMD_Id":HRMD_Id
 });
-logger.d(
-   {
-    "IVRMRT_Id": ivrmrtId,
-    "UserId": userId,
-    "MI_Id": miId,
-    "HRME_Id":HRME_Id,
-    "HRMD_Id":HRMD_Id
-}
-);
- GeTskProjects project = GeTskProjects.fromJson(response.data['get_project']);
+ GetEmployeeId getEmployeeId =  GetEmployeeId.fromJson(response.data );
+     logInBox!.put("HRMDID", getEmployeeId.hrmDId);
+  GeTskProjects project = GeTskProjects.fromJson(response.data['get_project']);
  controller.getTaskProjectsList.addAll(project.values!);
-
- TaskCategoryModel category = TaskCategoryModel.fromJson(response.data['get_category']);
+  
+ GeTskCategory category = GeTskCategory.fromJson(response.data['get_category']);
  controller.getTaskCategoryList.addAll(category.values!);
 
-
-  controller.updateTaskProjectsLoading(false);
+ logger.d("Home",category.values!.first);
     return response.statusCode!;
   } on DioError catch (e) {
     controller.updateTaskProjectsErrorLoading(true);

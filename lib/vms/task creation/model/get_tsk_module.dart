@@ -1,15 +1,15 @@
-class GetDepts {
+class Getmodule {
   String? type;
-  List<GetDeptsValues>? values;
+  List<GetmoduleValues>? values;
 
-  GetDepts({this.type, this.values});
+  Getmodule({this.type, this.values});
 
-  GetDepts.fromJson(Map<String, dynamic> json) {
+  Getmodule.fromJson(Map<String, dynamic> json) {
     type = json['\$type'];
     if (json['\$values'] != null) {
-      values = <GetDeptsValues>[];
+      values = <GetmoduleValues>[];
       json['\$values'].forEach((v) {
-        values!.add(  GetDeptsValues.fromJson(v));
+        values!.add(new GetmoduleValues.fromJson(v));
       });
     }
   }
@@ -24,7 +24,7 @@ class GetDepts {
   }
 }
 
-class GetDeptsValues {
+class GetmoduleValues {
   bool? returnval;
   bool? roleflag;
   bool? completed;
@@ -34,16 +34,15 @@ class GetDeptsValues {
   int? ivrmrTId;
   bool? plannerextapproval;
   String? plannerMaxdate;
-  String? hrmDDepartmentName;
   int? ismmaCId;
   int? mIId;
   int? miId;
   int? hrmEId;
   int? asmaYId;
   int? hrmDId;
-  int? hrmdCID;
   int? ismmpRId;
   int? ivrmMId;
+  String? ivrmMModuleName;
   int? ismmmDId;
   int? ismmmDModuleHeadId;
   int? ismtcRId;
@@ -66,7 +65,7 @@ class GetDeptsValues {
   int? ismciMIEList;
   double? effortinhrs;
 
-  GetDeptsValues(
+  GetmoduleValues(
       {this.returnval,
       this.roleflag,
       this.completed,
@@ -76,16 +75,15 @@ class GetDeptsValues {
       this.ivrmrTId,
       this.plannerextapproval,
       this.plannerMaxdate,
-      this.hrmDDepartmentName,
       this.ismmaCId,
       this.mIId,
       this.miId,
       this.hrmEId,
       this.asmaYId,
       this.hrmDId,
-      this.hrmdCID,
       this.ismmpRId,
       this.ivrmMId,
+      this.ivrmMModuleName,
       this.ismmmDId,
       this.ismmmDModuleHeadId,
       this.ismtcRId,
@@ -108,7 +106,7 @@ class GetDeptsValues {
       this.ismciMIEList,
       this.effortinhrs});
 
-  GetDeptsValues.fromJson(Map<String, dynamic> json) {
+  GetmoduleValues.fromJson(Map<String, dynamic> json) {
     returnval = json['returnval'];
     roleflag = json['roleflag'];
     completed = json['completed'];
@@ -118,16 +116,15 @@ class GetDeptsValues {
     ivrmrTId = json['ivrmrT_Id'];
     plannerextapproval = json['plannerextapproval'];
     plannerMaxdate = json['plannerMaxdate'];
-    hrmDDepartmentName = json['hrmD_DepartmentName'];
     ismmaCId = json['ismmaC_Id'];
     mIId = json['mI_Id'];
     miId = json['miId'];
     hrmEId = json['hrmE_Id'];
     asmaYId = json['asmaY_Id'];
     hrmDId = json['hrmD_Id'];
-    hrmdCID = json['hrmdC_ID'];
     ismmpRId = json['ismmpR_Id'];
     ivrmMId = json['ivrmM_Id'];
+    ivrmMModuleName = json['ivrmM_ModuleName'];
     ismmmDId = json['ismmmD_Id'];
     ismmmDModuleHeadId = json['ismmmD_ModuleHeadId'];
     ismtcRId = json['ismtcR_Id'];
@@ -162,16 +159,15 @@ class GetDeptsValues {
     data['ivrmrT_Id'] = this.ivrmrTId;
     data['plannerextapproval'] = this.plannerextapproval;
     data['plannerMaxdate'] = this.plannerMaxdate;
-    data['hrmD_DepartmentName'] = this.hrmDDepartmentName;
     data['ismmaC_Id'] = this.ismmaCId;
     data['mI_Id'] = this.mIId;
     data['miId'] = this.miId;
     data['hrmE_Id'] = this.hrmEId;
     data['asmaY_Id'] = this.asmaYId;
     data['hrmD_Id'] = this.hrmDId;
-    data['hrmdC_ID'] = this.hrmdCID;
     data['ismmpR_Id'] = this.ismmpRId;
     data['ivrmM_Id'] = this.ivrmMId;
+    data['ivrmM_ModuleName'] = this.ivrmMModuleName;
     data['ismmmD_Id'] = this.ismmmDId;
     data['ismmmD_ModuleHeadId'] = this.ismmmDModuleHeadId;
     data['ismtcR_Id'] = this.ismtcRId;
@@ -195,10 +191,4 @@ class GetDeptsValues {
     data['effortinhrs'] = this.effortinhrs;
     return data;
   }
-}
-
-class AtachmentFile{
-  int? id;
-  String? FileName;
- AtachmentFile({required this.id,required this.FileName}) ;
 }

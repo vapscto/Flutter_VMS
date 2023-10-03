@@ -6,7 +6,7 @@ RxBool tskPrjtloading = RxBool(false);
 RxBool tskPrjErrorLoading = RxBool(false);
 
 RxBool categoryLoading = RxBool(false);
-
+RxBool projectUiLoading = RxBool(true);
 void updateTaskProjectsLoading(bool val)
 {
 tskPrjtloading.value = val;
@@ -19,8 +19,11 @@ void updateCategoryLoading(bool val){
  categoryLoading.value = val; 
 }
 
+void projectUi(bool val){
+  projectUiLoading.value = val;
+}
 RxList<GeTskProjectsValues> getTaskProjectsList = <GeTskProjectsValues>[].obs;
-// loading projects
-RxList<TaskCategoryModelValues> getTaskCategoryList = <TaskCategoryModelValues>[].obs;
+// loading Category
+RxList<GeTskCategoryValues> getTaskCategoryList = <GeTskCategoryValues>[].obs;
 
 }

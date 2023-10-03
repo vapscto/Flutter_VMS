@@ -295,6 +295,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
       String userName = logInBox!.get("userName");
       String password = logInBox!.get("password");
+      
       int miId = importantIds!.get(URLS.miId);
       String loginBaseUrl = "";
       for (int i = 0; i < codeModel.apiarray.values.length; i++) {
