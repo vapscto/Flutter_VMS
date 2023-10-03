@@ -525,5 +525,5 @@ class URLS {
   static String assignTaskList =
       'api/ISM_PlannerCreationFacade/geteffortdetails';
 
-  static String onchangeMoudleChange="api/ISM_TaskCreationFacade/getIEuser/";
+  static String purchaserequisitionapi = 'api/INV_PurchaseRequisitionFacade/GetOnchangeData/';
 }

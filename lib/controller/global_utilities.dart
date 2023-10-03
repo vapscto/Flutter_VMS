@@ -55,6 +55,7 @@ import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart
 import 'package:m_skool_flutter/student/library/screen/library_home.dart';
 import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
+import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
@@ -828,6 +829,18 @@ void openMappedPages(
         ));
     return;
   }
+
+
+
+  if (pageName == "Purchase Requisition") {
+    Get.to(() => PurchaserequisitionHome(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
+    return;
+  }
+
+
   if (pageName == "View Notice") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return ViewNoticeHome(

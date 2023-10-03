@@ -11,6 +11,7 @@ class CreatePlannerTable {
   String date;
   String effort;
   String remarks;
+  int ismtpltaId;
   CreatePlannerTable(
       this.flag,
       this.taskNo,
@@ -23,5 +24,6 @@ class CreatePlannerTable {
       this.assignedBy,
       this.date,
       this.effort,
-      this.remarks);
+      this.remarks,
+      this.ismtpltaId);
 }
