@@ -526,4 +526,8 @@ class URLS {
       'api/ISM_PlannerCreationFacade/geteffortdetails';
 
   static String purchaserequisitionapi = 'api/INV_PurchaseRequisitionFacade/GetOnchangeData/';
+
+  static String savePlanner='api/ISM_PlannerCreationFacade/savePlanner/';
+  static String onchangeMoudleChange="api/ISM_TaskCreationFacade/getIEuser/";
+
 }
