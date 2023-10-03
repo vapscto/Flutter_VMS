@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:image_picker/image_picker.dart';
+
 class GetDepts {
   String? type;
   List<GetDeptsValues>? values;
@@ -200,5 +204,6 @@ class GetDeptsValues {
 class AtachmentFile{
   int? id;
   String? FileName;
- AtachmentFile({required this.id,required this.FileName}) ;
+  XFile? file;
+ AtachmentFile({required this.id,required this.FileName,   this.file}) ;
 }

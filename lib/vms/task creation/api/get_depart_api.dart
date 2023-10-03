@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/vms/task%20creation/controller/task_department_c
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_emp_details.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/priority_model.dart';
+import 'package:m_skool_flutter/vms/task%20creation/model/task_employee_list.dart';
 
 Future<bool> getTskCompaniesList(
     {required String base,
@@ -14,7 +15,7 @@ Future<bool> getTskCompaniesList(
     required int userId,
     required int ivrmrtId,
     required int miId,
-    required int HRME_Id}) async {
+    }) async {
   final Dio ins = getGlobalDio();
 
   final String apiUrl = base + URLS.taskGetDetails;
@@ -34,6 +35,8 @@ Future<bool> getTskCompaniesList(
      logInBox!.put("EmpId", getEmployeeId.hrmEId);
     GetDepts getDepts = GetDepts.fromJson(response.data['get_department']);
     GetPriorityModel priorityModelList = GetPriorityModel.fromJson(response.data['get_priority']); 
+    TaskEmployeeListModel employeeListModel = TaskEmployeeListModel.fromJson(response.data['get_employeelist']);
+    controller.getTaskEmployeeList.addAll(employeeListModel.values!);
     controller.getPriorityModelList.addAll(priorityModelList.values!);
     controller.getDeptsList.addAll(getDepts.values!);
     controller.taskDeptLoading(false);
