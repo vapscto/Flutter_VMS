@@ -48,7 +48,6 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
       <TextEditingController>[].obs;
   RxList<TextEditingController> remarksController =
       <TextEditingController>[].obs;
-  RxList<int> totalAmountList = <int>[].obs;
   final totalAmount = TextEditingController();
   int newAmount = 0;
 
@@ -88,6 +87,19 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
 
   removeControllerData(int value) {
     newWidget.removeAt(value);
+    setState(() {});
+  }
+
+  int sum = 0;
+  addAmount(int amount) {
+    sum += amount;
+    totalAmount.text = sum.toString();
+    setState(() {});
+  }
+
+  removeAmount(int amount) {
+    sum -= amount;
+    totalAmount.text = sum.toString();
     setState(() {});
   }
 
@@ -580,15 +592,18 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                                       .elementAt(index)
                                                       .text);
                                               setState(() {
-                                                // totalAmount.clear();
                                                 int amount = rate *
                                                     int.parse(quantityController
                                                         .elementAt(index)
                                                         .text);
-
                                                 amountController
                                                     .elementAt(index)
                                                     .text = amount.toString();
+                                                //
+                                                addAmount(int.parse(
+                                                    amountController
+                                                        .elementAt(index)
+                                                        .text));
                                               });
                                             },
                                             decoration: const InputDecoration(
@@ -617,19 +632,9 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleSmall,
+                                            readOnly: true,
                                             controller: amountController
                                                 .elementAt(index),
-                                            onChanged: (value) {
-                                              newAmount += int.parse(
-                                                  amountController
-                                                      .elementAt(index)
-                                                      .text);
-                                              logger.i(newAmount);
-                                              setState(() {
-                                                totalAmount.text =
-                                                    newAmount.toString();
-                                              });
-                                            },
                                             keyboardType: TextInputType.number,
                                             decoration: const InputDecoration(
                                               border: OutlineInputBorder(),
@@ -685,17 +690,12 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                                 ? addControllerData(index + 1)
                                                 : removeControllerData(index);
                                             (index == 0)
-                                                ? newAmount += int.parse(
+                                                ? null
+                                                : removeAmount(int.parse(
                                                     amountController
                                                         .elementAt(index)
-                                                        .text)
-                                                : newAmount -= int.parse(
-                                                    amountController
-                                                        .elementAt(index)
-                                                        .text);
+                                                        .text));
                                           });
-                                          totalAmount.text =
-                                              newAmount.toString();
                                         },
                                         icon: (index == 0)
                                             ? Icon(
