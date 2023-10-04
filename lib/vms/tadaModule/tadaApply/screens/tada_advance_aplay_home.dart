@@ -164,8 +164,8 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
     TadaSaveApi.instance.tadaSave(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         ctId: citySelectedValue!.ivrmmcTId!,
-        fromDate: fromSelectedDate,
-        toDate: toSelectedDate,
+        fromDate: fromDate!.toIso8601String(),
+        toDate: toDate!.toIso8601String(),
         clintId: 0,
         totalAppliedAmount: double.parse(allAmount.toString()),
         toAddress: _addressController.text,
@@ -262,7 +262,6 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                             ? false
                                             : true,
                                   );
-
                                   if (fromDate != null) {
                                     setState(() {
                                       _startDate.text =
