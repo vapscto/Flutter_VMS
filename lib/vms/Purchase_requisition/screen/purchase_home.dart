@@ -589,22 +589,6 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                                 amountController
                                                     .elementAt(index)
                                                     .text = amount.toString();
-
-                                                newAmount += int.parse(
-                                                    amountController
-                                                        .elementAt(index)
-                                                        .text);
-                                                logger.i(newAmount);
-
-                                                // totalAmountList.add(amount);
-                                                // for (int i = 0;
-                                                //     i < totalAmountList.length;
-                                                //     i++) {
-                                                // totalAmount.text +=
-                                                //     totalAmountList
-                                                //         .elementAt(i)
-                                                //         .toString();
-                                                // }
                                               });
                                             },
                                             decoration: const InputDecoration(
@@ -635,6 +619,17 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                                 .titleSmall,
                                             controller: amountController
                                                 .elementAt(index),
+                                            onChanged: (value) {
+                                              newAmount += int.parse(
+                                                  amountController
+                                                      .elementAt(index)
+                                                      .text);
+                                              logger.i(newAmount);
+                                              setState(() {
+                                                totalAmount.text =
+                                                    newAmount.toString();
+                                              });
+                                            },
                                             keyboardType: TextInputType.number,
                                             decoration: const InputDecoration(
                                               border: OutlineInputBorder(),
@@ -689,7 +684,18 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                             (index == 0)
                                                 ? addControllerData(index + 1)
                                                 : removeControllerData(index);
+                                            (index == 0)
+                                                ? newAmount += int.parse(
+                                                    amountController
+                                                        .elementAt(index)
+                                                        .text)
+                                                : newAmount -= int.parse(
+                                                    amountController
+                                                        .elementAt(index)
+                                                        .text);
                                           });
+                                          totalAmount.text =
+                                              newAmount.toString();
                                         },
                                         icon: (index == 0)
                                             ? Icon(
