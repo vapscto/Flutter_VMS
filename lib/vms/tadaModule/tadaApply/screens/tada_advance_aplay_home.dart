@@ -200,7 +200,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
   editData(int id) {
     tadaApplyController.editData(true);
     TadaEditAPI.instance.tadaEditData(
-        base: 'issuemanager',
+        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         userId: widget.loginSuccessModel.userId!,
         miId: widget.loginSuccessModel.mIID!,
         vtadaaaId: id,
@@ -1824,12 +1824,18 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                     });
                   },
                   child: (flag == true)
-                      ? Text(
-                          "Deactivate",
-                          style: Get.textTheme.titleMedium!.copyWith(
-                              color: Colors.red,
-                              fontWeight: FontWeight.w200,
-                              fontStyle: FontStyle.italic),
+                      ? Row(
+                          children: [
+                            IconButton(
+                                onPressed: () {}, icon: const Icon(Icons.edit)),
+                            Text(
+                              "Deactivate",
+                              style: Get.textTheme.titleMedium!.copyWith(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.w200,
+                                  fontStyle: FontStyle.italic),
+                            ),
+                          ],
                         )
                       : Text(
                           "Activate",

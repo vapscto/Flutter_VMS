@@ -494,11 +494,12 @@ class URLS {
   static String cityList = 'api/TADA_Advance_ApplyFacade/getstate/';
   static String allowense = 'api/TADA_Advance_ApplyFacade/TadaAllwence/';
   static String saveTada = 'api/TADA_Advance_ApplyFacade/savedta/';
+  static String tadaEdit = 'api/TADA_Advance_ApplyFacade/edit/';
+  static String tadaDeactive = 'api/TADA_Advance_ApplyFacade/deactive/';
   //** TADA Approval APIS **//
   static String tadaSave = 'api/TADAAdvanceApprovalFacade/savedta';
   static String tadaList = 'api/TADAAdvanceApprovalFacade/getalldata/';
   static String tadaDetails = 'api/TADAAdvanceApprovalFacade/edit';
-  static String tadaEdit = 'api/TADA_Advance_ApplyFacade/edit/';
 
   static String onChangeInstitution =
       "api/PC_Indent_ApprovalFacade/OnChangeInstitution";
@@ -525,9 +526,9 @@ class URLS {
   static String assignTaskList =
       'api/ISM_PlannerCreationFacade/geteffortdetails';
 
-  static String purchaserequisitionapi = 'api/INV_PurchaseRequisitionFacade/GetOnchangeData/';
+  static String purchaserequisitionapi =
+      'api/INV_PurchaseRequisitionFacade/GetOnchangeData/';
 
-  static String savePlanner='api/ISM_PlannerCreationFacade/savePlanner/';
-  static String onchangeMoudleChange="api/ISM_TaskCreationFacade/getIEuser/";
-
+  static String savePlanner = 'api/ISM_PlannerCreationFacade/savePlanner/';
+  static String onchangeMoudleChange = "api/ISM_TaskCreationFacade/getIEuser/";
 }
