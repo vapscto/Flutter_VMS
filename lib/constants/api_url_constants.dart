@@ -500,6 +500,8 @@ class URLS {
   static String tadaDetails = 'api/TADAAdvanceApprovalFacade/edit';
   static String tadaEdit = 'api/TADA_Advance_ApplyFacade/edit/';
 
+  ///***  PETTY CASH APPROVAL  ***///
+
   static String onChangeInstitution =
       "api/PC_Indent_ApprovalFacade/OnChangeInstitution";
 
@@ -515,6 +517,19 @@ class URLS {
 
   static String saveRecordPC = "api/PC_Indent_ApprovalFacade/saverecord";
 
+  ///*** PETTY CASH REQUISITION ***/
+
+  static String departmentonLoadPCRequest =
+      "api/PC_RequisitionFacade/onloaddata";
+
+  static String employeeListPCRequest = "api/PC_RequisitionFacade/onchangedept";
+
+  static String reqDetailsSaveRecord = "api/PC_RequisitionFacade/saverecord";
+
+  static String viewDataPcReq = "api/PC_RequisitionFacade/Viewdata";
+
+  ///***   ***///
+
   static String taskGetDetails = "api/ISM_TaskCreationFacade/getdetails/";
 
   static String taskGetProjects = "api/ISM_TaskCreationFacade/get_category/";
@@ -525,9 +540,9 @@ class URLS {
   static String assignTaskList =
       'api/ISM_PlannerCreationFacade/geteffortdetails';
 
-  static String purchaserequisitionapi = 'api/INV_PurchaseRequisitionFacade/GetOnchangeData/';
+  static String purchaserequisitionapi =
+      'api/INV_PurchaseRequisitionFacade/GetOnchangeData/';
 
-  static String savePlanner='api/ISM_PlannerCreationFacade/savePlanner/';
-  static String onchangeMoudleChange="api/ISM_TaskCreationFacade/getIEuser/";
-
+  static String savePlanner = 'api/ISM_PlannerCreationFacade/savePlanner/';
+  static String onchangeMoudleChange = "api/ISM_TaskCreationFacade/getIEuser/";
 }
