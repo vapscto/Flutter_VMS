@@ -36,6 +36,9 @@ Future<bool> getTskCompaniesList(
     GetDepts getDepts = GetDepts.fromJson(response.data['get_department']);
     GetPriorityModel priorityModelList = GetPriorityModel.fromJson(response.data['get_priority']); 
     TaskEmployeeListModel employeeListModel = TaskEmployeeListModel.fromJson(response.data['get_employeelist']);
+    for(int i = 0; i < employeeListModel.values!.length; i++){
+      controller.checkBox.add(false);
+    }
     controller.getTaskEmployeeList.addAll(employeeListModel.values!);
     controller.getPriorityModelList.addAll(priorityModelList.values!);
     controller.getDeptsList.addAll(getDepts.values!);
