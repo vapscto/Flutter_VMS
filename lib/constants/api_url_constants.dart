@@ -501,6 +501,8 @@ class URLS {
   static String tadaList = 'api/TADAAdvanceApprovalFacade/getalldata/';
   static String tadaDetails = 'api/TADAAdvanceApprovalFacade/edit';
 
+  ///***  PETTY CASH APPROVAL  ***///
+
   static String onChangeInstitution =
       "api/PC_Indent_ApprovalFacade/OnChangeInstitution";
 
@@ -515,6 +517,19 @@ class URLS {
   static String onChangeDatePC = "api/PC_Indent_ApprovalFacade/onchangedate";
 
   static String saveRecordPC = "api/PC_Indent_ApprovalFacade/saverecord";
+
+  ///*** PETTY CASH REQUISITION ***/
+
+  static String departmentonLoadPCRequest =
+      "api/PC_RequisitionFacade/onloaddata";
+
+  static String employeeListPCRequest = "api/PC_RequisitionFacade/onchangedept";
+
+  static String reqDetailsSaveRecord = "api/PC_RequisitionFacade/saverecord";
+
+  static String viewDataPcReq = "api/PC_RequisitionFacade/Viewdata";
+
+  ///***   ***///
 
   static String taskGetDetails = "api/ISM_TaskCreationFacade/getdetails/";
 

@@ -58,16 +58,18 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   TextEditingController minutesEt = TextEditingController();
   TextEditingController remarksEt = TextEditingController();
   TextEditingController serchEmployee = TextEditingController();
- RxList<TaskEmployeeListModelValues> taskEmployeeList = <TaskEmployeeListModelValues> [].obs;
+  RxList<TaskEmployeeListModelValues> taskEmployeeList =
+      <TaskEmployeeListModelValues>[].obs;
+  RxList<String> periodicityList = <String>["Daily","Weekly","Once in Fortnight","Yearly Once","Specific Day"].obs;
+  String dropdownValue = "";
    
-
   @override
   void initState() {
     loadCmpny();
-   
-  addItemListBrowse(0, "");
+
+    addItemListBrowse(0, "");
     taskEmployeeList.assignAll(_taskDepartController.getTaskEmployeeList);
-    
+
     _etListControllerStatus.text = "Open";
     super.initState();
   }
@@ -217,7 +219,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                         onChanged: (s) async {
                           _taskProjectsController.getTaskProjectsList.clear();
                           _taskProjectsController.getTaskCategoryList.clear();
-                                 filterEmployees("Developer");
+                          filterEmployees("Developer");
                           await getTskPrjtCatgryList(
                               base: baseUrlFromInsCode(
                                 'issuemanager',
@@ -1210,432 +1212,589 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             }),
                           ))))),
           // select time date employee
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "ASSIGN ISSUE/TASK/ENHANCEMENT",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          Obx(
+            () => Visibility(
+              visible: _taskDepartController.taskAssingn.value == "Y",
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "ASSIGN ISSUE/TASK/ENHANCEMENT",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
             ),
           ),
-          SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: Center(
-                  child: SingleChildScrollView(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 20),
-                      scrollDirection: Axis.horizontal,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: DataTable(
-                            dataTextStyle: const TextStyle(
-                                fontSize: 14,
-                                color: Color.fromRGBO(0, 0, 0, 0.95),
-                                fontWeight: FontWeight.w500),
-                            dataRowHeight: 210,
-                            headingRowHeight: 40,
-                            horizontalMargin: 10,
-                            columnSpacing: 30,
-                            dividerThickness: 1,
-                            headingTextStyle: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700),
-                            border: TableBorder.all(
-                                borderRadius: BorderRadius.circular(10),
-                                width: 0.5),
-                            headingRowColor: MaterialStateProperty.all(
-                                Theme.of(context).primaryColor),
-                            columns: const [
-                              // 1
 
-                              DataColumn(
-                                label: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    'Start and End Date',
-                                    style: TextStyle(
-                                      fontSize: 14,
+          Obx(
+             ()=> Visibility(
+              visible: _taskDepartController.taskAssingn.value =="Y",
+               child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                      child: SingleChildScrollView(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          scrollDirection: Axis.horizontal,
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Obx(
+                                    () => Visibility(
+                                      visible:
+                                          _taskDepartController.typesTask.value ==
+                                              "T",
+                                      child: Container(
+                                        width: 250,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.rectangle,
+                                            color: Color.fromRGBO(12, 54, 238, 1),
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10))),
+                                        child: Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            'Periodicity',
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                              DataColumn(
-                                label: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    'Effort for each task',
-                                    style: TextStyle(
-                                      fontSize: 14,
+                                  Obx(
+                                    () => Container(
+                                      width: 250,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.rectangle,
+                                        borderRadius:
+                                            _taskDepartController.typesTask.value ==
+                                                    "T"
+                                                ? BorderRadius.zero
+                                                : BorderRadius.only(
+                                                    topLeft: Radius.circular(10)),
+                                        color: Color.fromRGBO(12, 54, 238, 1),
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'Start and End Date',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                              DataColumn(
-                                label: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    'Assign To',
-                                    style: TextStyle(
-                                      fontSize: 14,
+                                  Container(
+                                    width: 210,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      color: Color.fromRGBO(12, 54, 238, 1),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        'Effort for each task',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                              DataColumn(
-                                label: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    'Remarks',
-                                    style: TextStyle(
-                                      fontSize: 14,
+                                  Container(
+                                    width: 250,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      color: Color.fromRGBO(12, 54, 238, 1),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        'Assign To',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                  Container(
+                                    width: 250,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.rectangle,
+                                        color: Color.fromRGBO(12, 54, 238, 1),
+                                        borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(10))),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        'Remarks',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                            rows: List.generate(1, (index) {
-                              return DataRow(cells: [
-                                DataCell(Align(
-                                  alignment: Alignment.center,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      TextField(
-                                        onTap: () {
-                                          fromDate();
-                                        },
-                                        readOnly: true,
-                                        controller: selectFromDate,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                          suffixIcon: Padding(
-                                            padding: const EdgeInsets.all(12),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                toDate();
+                              Row(
+                                children: [
+                                  Obx(
+                                    () => Visibility(
+                                      visible:
+                                          _taskDepartController.typesTask.value ==
+                                              "T",
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          border: Border(
+                                              left: BorderSide(
+                                                  width: 0.5,
+                                                  color: Colors.black54),
+                                              right: BorderSide(
+                                                  width: 1, color: Colors.black54),
+                                              bottom: BorderSide(
+                                                  width: 1, color: Colors.black54)),
+                                        ),
+                                        width: 250,
+                                        height: 210,
+                                        child: 
+                                           SizedBox(
+                                            width: 200,
+                                             child:  DropdownMenu<String>(
+                                             initialSelection: periodicityList.first,
+                                              onSelected: (String? value) {
+                                               setState(() {
+                                             dropdownValue = value!;
+                                                });
                                               },
-                                              child: SvgPicture.asset(
-                                                "assets/svg/calendar_icon.svg",
-                                                color: const Color(0xFF3E78AA),
+                                            dropdownMenuEntries: periodicityList.map<DropdownMenuEntry<String>>((String value) {
+                                           return DropdownMenuEntry<String>(value: value, label: value);
+                                           }).toList(),
                                               ),
-                                            ),
-                                          ),
-                                          hintText: "Select From Date",
-                                          hintStyle: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall!
-                                              .merge(const TextStyle(
-                                                fontWeight: FontWeight.w100,
-                                                fontSize: 16.0,
-                                                letterSpacing: 0.3,
-                                                overflow: TextOverflow.clip,
-                                              )),
-                                        ),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .merge(const TextStyle(
-                                              fontWeight: FontWeight.w100,
-                                              fontSize: 16.0,
-                                              letterSpacing: 0.3,
-                                              overflow: TextOverflow.clip,
-                                            )),
+                                           ),
+                                        
                                       ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      TextField(
-                                        onTap: () {
-                                          toDate();
-                                        },
-                                        readOnly: true,
-                                        controller: selectToDate,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                          suffixIcon: Padding(
-                                            padding: const EdgeInsets.all(12),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                fromDate();
-                                              },
-                                              child: SvgPicture.asset(
-                                                "assets/svg/calendar_icon.svg",
-                                                color: const Color(0xFF3E78AA),
-                                              ),
-                                            ),
-                                          ),
-                                          hintText: "Select From Date",
-                                          hintStyle: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall!
-                                              .merge(const TextStyle(
-                                                fontWeight: FontWeight.w100,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.3,
-                                                overflow: TextOverflow.clip,
-                                              )),
-                                        ),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .merge(const TextStyle(
-                                              fontWeight: FontWeight.w100,
-                                              fontSize: 14.0,
-                                              letterSpacing: 0.3,
-                                              overflow: TextOverflow.clip,
-                                            )),
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                )),
-                                DataCell(Align(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            width: 60,
-                                            child: TextField(
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              maxLines: 1,
-                                              controller: hoursEt,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall!
-                                                  .merge(const TextStyle(
-                                                    fontWeight: FontWeight.w100,
-                                                    fontSize: 14.0,
-                                                    letterSpacing: 0.3,
-                                                    overflow: TextOverflow.clip,
-                                                  )),
-                                              decoration: InputDecoration(
+                                  Obx(
+                                    () => Container(
+                                      width: 250,
+                                      height: 210,
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                            left: _taskDepartController
+                                                        .typesTask.value ==
+                                                    "T"
+                                                ? BorderSide.none
+                                                : BorderSide(
+                                                    width: 1,
+                                                    color: Colors.black54),
+                                            right: BorderSide(
+                                                width: 1, color: Colors.black54),
+                                            bottom: BorderSide(
+                                                width: 1, color: Colors.black54)),
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              width: 200,
+                                              child: TextField(
+                                                onTap: () {
+                                                  fromDate();
+                                                },
+                                                readOnly: true,
+                                                controller: selectFromDate,
+                                                decoration: InputDecoration(
                                                   border: OutlineInputBorder(
                                                       borderRadius:
-                                                          BorderRadius.circular(
-                                                              5))),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text("HH")
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            width: 60,
-                                            child: TextField(
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              maxLines: 1,
-                                              decoration: InputDecoration(
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5))),
-                                              controller: minutesEt,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall!
-                                                  .merge(const TextStyle(
-                                                    fontWeight: FontWeight.w100,
-                                                    fontSize: 14.0,
-                                                    letterSpacing: 0.3,
-                                                    overflow: TextOverflow.clip,
-                                                  )),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text('MM')
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                                DataCell(Align(
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 10),
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                            height: 30,
-                                            child: TextField(
-                                              maxLines: 1,
-                                              controller: serchEmployee,
-                                              onChanged: (value) {
-                                                filterEmployees(value);
-                                              },
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall!
-                                                  .merge(const TextStyle(
-                                                    fontWeight: FontWeight.w100,
-                                                    fontSize: 12.0,
-                                                    letterSpacing: 0.3,
-                                                    overflow: TextOverflow.clip,
-                                                  )),
-                                              decoration: InputDecoration(
-                                                hintText: "Search",
-                                                helperStyle:Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall!
-                                                  .merge(const TextStyle(
-                                                    fontWeight: FontWeight.w100,
-                                                    fontSize: 12.0,
-                                                    letterSpacing: 0.3,
-                                                    overflow: TextOverflow.clip,
-                                                  )),
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5))),
-                                            )),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          width: 250,
-                                          height: 150,
-                                          child: Obx(
-                                            () => ListView.builder(
-                                              
-                                              itemCount: taskEmployeeList.length,
-                                              itemBuilder: (context, index) {
-                                                return Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(vertical: 2),
-                                                  child: Container(
-                                                    width: 200,
-                                                    height: 30,
-                                                    child: Row(
-                                                      children: [
-                                                        Checkbox(
-                                                          shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                                         activeColor: Color.fromRGBO(26, 48, 241, 1),
-                                                          value: _taskDepartController.checkBox[index],
-                                                          onChanged: (value) {
-                                                            setState(() {
-                                                               _taskDepartController.checkBox[index] = value!;
-                                                            });
-                                                          },
-                                                        ),
-                                                        SizedBox(),
-                                                        SizedBox(
-                                                          width: 200,
-                                                          child: RichText(
-                                                              text: TextSpan(
-                                                                  children: [
-                                                                TextSpan(
-                                                                  text: taskEmployeeList[
-                                                                          index]
-                                                                      .employeeName,
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .titleSmall!
-                                                                      .merge(
-                                                                          const TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight.bold,
-                                                                        fontSize:
-                                                                            12.0,
-                                                                        letterSpacing:
-                                                                            0.3,
-                                                                        overflow:
-                                                                            TextOverflow.clip,
-                                                                      )),
-                                                                ),
-                                                                TextSpan(
-                                                                  text:
-                                                                      " : ${taskEmployeeList[index].hRMDESDesignationName} ",
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .titleSmall!
-                                                                      .merge(
-                                                                          const TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight.w100,
-                                                                        fontSize:
-                                                                            12.0,
-                                                                        letterSpacing:
-                                                                            0.3,
-                                                                        overflow:
-                                                                            TextOverflow.clip,
-                                                                      )),
-                                                                ),
-                                                              ])),
-                                                        )
-                                                      ],
+                                                          BorderRadius.circular(5)),
+                                                  suffixIcon: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(12),
+                                                    child: InkWell(
+                                                      onTap: () async {
+                                                        toDate();
+                                                      },
+                                                      child: SvgPicture.asset(
+                                                        "assets/svg/calendar_icon.svg",
+                                                        color:
+                                                            const Color(0xFF3E78AA),
+                                                      ),
                                                     ),
                                                   ),
-                                                );
-                                              },
+                                                  hintText: "Select From Date",
+                                                  hintStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .merge(const TextStyle(
+                                                        fontWeight: FontWeight.w100,
+                                                        fontSize: 16.0,
+                                                        letterSpacing: 0.3,
+                                                        overflow: TextOverflow.clip,
+                                                      )),
+                                                ),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .merge(const TextStyle(
+                                                      fontWeight: FontWeight.w100,
+                                                      fontSize: 16.0,
+                                                      letterSpacing: 0.3,
+                                                      overflow: TextOverflow.clip,
+                                                    )),
+                                              ),
                                             ),
-                                          ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            SizedBox(
+                                              width: 200,
+                                              child: TextField(
+                                                onTap: () {
+                                                  toDate();
+                                                },
+                                                readOnly: true,
+                                                controller: selectToDate,
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(5)),
+                                                  suffixIcon: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(12),
+                                                    child: InkWell(
+                                                      onTap: () async {
+                                                        fromDate();
+                                                      },
+                                                      child: SvgPicture.asset(
+                                                        "assets/svg/calendar_icon.svg",
+                                                        color:
+                                                            const Color(0xFF3E78AA),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  hintText: "Select From Date",
+                                                  hintStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .merge(const TextStyle(
+                                                        fontWeight: FontWeight.w100,
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.3,
+                                                        overflow: TextOverflow.clip,
+                                                      )),
+                                                ),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .merge(const TextStyle(
+                                                      fontWeight: FontWeight.w100,
+                                                      fontSize: 14.0,
+                                                      letterSpacing: 0.3,
+                                                      overflow: TextOverflow.clip,
+                                                    )),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                )),
-                                DataCell(Align(
-                                  child: SizedBox(
-                                    width: 150,
-                                    child: TextField(
-                                      controller: remarksEt,
-                                      maxLines: 8,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .merge(const TextStyle(
-                                            fontWeight: FontWeight.w100,
-                                            fontSize: 12.0,
-                                            letterSpacing: 0.3,
-                                            overflow: TextOverflow.clip,
-                                          )),
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5)),
-                                        hintText: 'Remarks',
-                                        hintStyle: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .merge(const TextStyle(
-                                              fontWeight: FontWeight.w100,
-                                              fontSize: 14.0,
-                                              letterSpacing: 0.3,
-                                              overflow: TextOverflow.clip,
-                                            )),
                                       ),
                                     ),
                                   ),
-                                )),
-                              ]);
-                            }),
-                          )))))
+                                  Container(
+                                    width: 210,
+                                    height: 210,
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              width: 1, color: Colors.black54),
+                                          bottom: BorderSide(
+                                              width: 1, color: Colors.black54)),
+                                    ),
+                                    child: Align(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                width: 60,
+                                                child: TextField(
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  maxLines: 1,
+                                                  controller: hoursEt,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .merge(const TextStyle(
+                                                        fontWeight: FontWeight.w100,
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.3,
+                                                        overflow: TextOverflow.clip,
+                                                      )),
+                                                  decoration: InputDecoration(
+                                                      border: OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  5))),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text("HH")
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                width: 60,
+                                                child: TextField(
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  maxLines: 1,
+                                                  decoration: InputDecoration(
+                                                      border: OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  5))),
+                                                  controller: minutesEt,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .merge(const TextStyle(
+                                                        fontWeight: FontWeight.w100,
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.3,
+                                                        overflow: TextOverflow.clip,
+                                                      )),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text('MM')
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 250,
+                                    height: 210,
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              width: 1, color: Colors.black54),
+                                          bottom: BorderSide(
+                                              width: 1, color: Colors.black54)),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 5, horizontal: 5),
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                              height: 30,
+                                              width: 200,
+                                              child: TextField(
+                                                maxLines: 1,
+                                                controller: serchEmployee,
+                                                onChanged: (value) {
+                                                  filterEmployees(value);
+                                                },
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .merge(const TextStyle(
+                                                      fontWeight: FontWeight.w100,
+                                                      fontSize: 12.0,
+                                                      letterSpacing: 0.3,
+                                                      overflow: TextOverflow.clip,
+                                                    )),
+                                                decoration: InputDecoration(
+                                                    hintText: "Search",
+                                                    helperStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall!
+                                                        .merge(const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w100,
+                                                          fontSize: 12.0,
+                                                          letterSpacing: 0.3,
+                                                          overflow:
+                                                              TextOverflow.clip,
+                                                        )),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                5))),
+                                              )),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Container(
+                                            width: 240,
+                                            height: 150,
+                                            child: Obx(
+                                              () => ListView.builder(
+                                                itemCount: taskEmployeeList.length,
+                                                itemBuilder: (context, index) {
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.symmetric(
+                                                            vertical: 2),
+                                                    child: Container(
+                                                      width: 180,
+                                                      height: 30,
+                                                      child: Row(
+                                                        children: [
+                                                          Checkbox(
+                                                            shape: ContinuousRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10)),
+                                                            activeColor:
+                                                                Color.fromRGBO(
+                                                                    26, 48, 241, 1),
+                                                            value:
+                                                                _taskDepartController
+                                                                        .checkBox[
+                                                                    index],
+                                                            onChanged: (value) {
+                                                              setState(() {
+                                                                _taskDepartController
+                                                                        .checkBox[
+                                                                    index] = value!;
+                                                              });
+                                                            },
+                                                          ),
+                                                          SizedBox(),
+                                                          SizedBox(
+                                                            width: 180,
+                                                            child: RichText(
+                                                                text: TextSpan(
+                                                                    children: [
+                                                                  TextSpan(
+                                                                    text: taskEmployeeList[
+                                                                            index]
+                                                                        .employeeName,
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .titleSmall!
+                                                                        .merge(
+                                                                            const TextStyle(
+                                                                          fontWeight:
+                                                                              FontWeight
+                                                                                  .bold,
+                                                                          fontSize:
+                                                                              12.0,
+                                                                          letterSpacing:
+                                                                              0.3,
+                                                                          overflow:
+                                                                              TextOverflow
+                                                                                  .clip,
+                                                                        )),
+                                                                  ),
+                                                                  TextSpan(
+                                                                    text:
+                                                                        " : ${taskEmployeeList[index].hRMDESDesignationName} ",
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .titleSmall!
+                                                                        .merge(
+                                                                            const TextStyle(
+                                                                          fontWeight:
+                                                                              FontWeight
+                                                                                  .w100,
+                                                                          fontSize:
+                                                                              12.0,
+                                                                          letterSpacing:
+                                                                              0.3,
+                                                                          overflow:
+                                                                              TextOverflow
+                                                                                  .clip,
+                                                                        )),
+                                                                  ),
+                                                                ])),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 250,
+                                    height: 210,
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              width: 1, color: Colors.black54),
+                                          bottom: BorderSide(
+                                              width: 1, color: Colors.black54)),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 10),
+                                        child: TextField(
+                                          decoration: InputDecoration(
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5))),
+                                          controller: hoursEt,
+                                          maxLines: 6,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          )))),
+             ),
+          )
         ]),
       ),
     );
-    
   }
 
   Future<void> fromDate() async {
@@ -1650,7 +1809,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       });
     });
   }
-  
+
   Future<void> toDate() async {
     await showDatePicker(
       context: context,
@@ -1677,17 +1836,26 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       setState(() {});
     }
   }
-   void filterEmployees(String query) {
-     taskEmployeeList.value = _taskDepartController.getTaskEmployeeList
+
+  void filterEmployees(String query) {
+    taskEmployeeList.value = _taskDepartController.getTaskEmployeeList
         .where((employee) =>
-            employee.employeeName!.toLowerCase().contains(query.toLowerCase()) ||
-            employee.hRMDESDesignationName!.toLowerCase().contains(query.toLowerCase()))
+            employee.employeeName!
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
+            employee.hRMDESDesignationName!
+                .toLowerCase()
+                .contains(query.toLowerCase()))
         .toList();
   }
+
   @override
   void dispose() {
-   taskEmployeeList.clear();
+    taskEmployeeList.clear();
+    _taskDepartController.addListBrowser.clear();
+    _taskDepartController.getTaskEmployeeList.clear();
     super.dispose();
   }
-  
+
 }
+                                    

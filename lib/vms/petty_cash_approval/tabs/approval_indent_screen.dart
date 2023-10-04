@@ -45,20 +45,26 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
 
   bool validateFields() {
     if (selectedIndent == null) {
-      Fluttertoast.showToast(msg: "Please select a department.");
+      Fluttertoast.showToast(msg: "Please select an Indent.");
+      return false;
+    }
+    
+    
+    if (selectCheckBx!.isEmpty) {
+      Fluttertoast.showToast(msg: "Please select at least one checkbox.");
+      return false;
+    }
+    if (_pcapprovalController.eTapprovalAmount
+        .any((controller) => controller.text.isEmpty)) {
+      Fluttertoast.showToast(msg: "Please enter an amount for all fields.");
+      return false;
+    }
+    if (totalAmountController.text.isEmpty) {
+      Fluttertoast.showToast(msg: "Please enter a total approved amount.");
       return false;
     }
     if (descriptionController.text.isEmpty) {
       Fluttertoast.showToast(msg: "Please enter a description.");
-      return false;
-    }
-    if (totalAmountController.text.isEmpty) {
-      Fluttertoast.showToast(msg: "Please enter a total amount.");
-      return false;
-    }
-
-    if (selectCheckBx!.isEmpty) {
-      Fluttertoast.showToast(msg: "Please select at least one checkbox.");
       return false;
     }
 
@@ -139,7 +145,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
   double? sanctionedAmoub;
   int? partId;
 
-  saveRecord() {
+  saveRecordApproval() {
     featchList.clear();
     for (int i = 0; i < selectCheckBx!.length; i++) {
       featchList.add({
@@ -911,60 +917,75 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                                   )),
                                                   DataCell(
                                                     Align(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      // child: TapRegion(
-                                                      // onTapOutside:(event) {
-                                                      //   if(_pcapprovalController.eTapprovalAmount.last ==true){
-                                                      //      updateTotalAmount(index);
-                                                      //   }
+                                                        alignment:
+                                                            Alignment.center,
+                                                        // child: TapRegion(
+                                                        // onTapOutside:(event) {
+                                                        //   if(_pcapprovalController.eTapprovalAmount.last ==true){
+                                                        //      updateTotalAmount(index);
+                                                        //   }
 
-                                                      // } ,
-                                                      child: TextFormField(
-                                                        controller:
-                                                            _pcapprovalController
-                                                                .eTapprovalAmount
-                                                                .elementAt(
-                                                                    index),
-                                                        keyboardType:
-                                                            TextInputType
-                                                                .number,
-                                                        enabled:
-                                                            _pcapprovalController
+                                                        // } ,
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            if (!_pcapprovalController
                                                                 .checkList
                                                                 .elementAt(
-                                                                    index),
-                                                        validator: (value) {
-                                                          if (value == null ||
-                                                              value.isEmpty) {
-                                                            return 'Enter Amount';
-                                                          }
-                                                          return null;
-                                                        },
-                                                        onTap: () {
-                                                          if (_pcapprovalController
-                                                              .checkList
-                                                              .elementAt(
-                                                                  index)) {
-                                                            Fluttertoast.showToast(
-                                                                msg:
-                                                                    "Select Checkbox");
-                                                          }
-                                                        },
-                                                        onChanged: (text) {
-                                                          if (!_pcapprovalController
-                                                              .checkList
-                                                              .elementAt(
-                                                                  index)) {
-                                                            _pcapprovalController
-                                                                .eTapprovalAmount
-                                                                .elementAt(
-                                                                    index)
-                                                                .text = '';
-                                                          }
-                                                        },
-                                                      ),
-                                                    ),
+                                                                    index)) {
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg:
+                                                                          "Select Checkbox");
+                                                            } else {
+                                                              // Handle tap event when the condition is met
+                                                            }
+                                                          },
+                                                          child: AbsorbPointer(
+                                                            absorbing:
+                                                                !_pcapprovalController
+                                                                    .checkList
+                                                                    .elementAt(
+                                                                        index),
+                                                            child:
+                                                                TextFormField(
+                                                              controller:
+                                                                  _pcapprovalController
+                                                                      .eTapprovalAmount
+                                                                      .elementAt(
+                                                                          index),
+                                                              keyboardType:
+                                                                  TextInputType
+                                                                      .number,
+                                                              enabled: _pcapprovalController
+                                                                  .checkList
+                                                                  .elementAt(
+                                                                      index), // Enable the TextField when the condition is met
+                                                              validator:
+                                                                  (value) {
+                                                                if (value ==
+                                                                        null ||
+                                                                    value
+                                                                        .isEmpty) {
+                                                                  return 'Enter Amount';
+                                                                }
+                                                                return null;
+                                                              },
+                                                              onChanged:
+                                                                  (text) {
+                                                                if (!_pcapprovalController
+                                                                    .checkList
+                                                                    .elementAt(
+                                                                        index)) {
+                                                                  _pcapprovalController
+                                                                      .eTapprovalAmount
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .text = '';
+                                                                }
+                                                              },
+                                                            ),
+                                                          ),
+                                                        )),
                                                   )
                                                   // )
                                                   ,
@@ -976,12 +997,12 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                               );
                                             })),
                                       ),
-                                      const SizedBox(height: 35),
+                                      SizedBox(height: 35),
                                       CustomContainer(
                                           child: Row(
                                         children: [
-                                          const Padding(
-                                            padding: EdgeInsets.only(
+                                          Padding(
+                                            padding: const EdgeInsets.only(
                                                 top: 22.0,
                                                 bottom: 22,
                                                 left: 16,
@@ -1004,7 +1025,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                           )
                                         ],
                                       )),
-                                      const SizedBox(height: 35),
+                                      SizedBox(height: 35),
                                       Row(
                                         children: [
                                           GestureDetector(
@@ -1016,14 +1037,14 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                               });
                                             },
                                             child: Container(
-                                              padding: const EdgeInsets.all(20),
+                                              padding: EdgeInsets.all(20),
                                               decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
+                                                color: Color.fromARGB(
                                                     255, 255, 214, 212),
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                               ),
-                                              child: const Text(
+                                              child: Text(
                                                 "Calculate",
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w700,
@@ -1031,7 +1052,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(
+                                          SizedBox(
                                             width: 15,
                                           ),
                                           Container(
@@ -1040,11 +1061,10 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                                     .width /
                                                 1.6,
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(10)),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10)),
                                               border: Border.all(
-                                                  color: const Color.fromARGB(
+                                                  color: Color.fromARGB(
                                                       255, 211, 211, 211)),
                                             ),
                                             child: TextField(
@@ -1063,7 +1083,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                               decoration: InputDecoration(
                                                 hintText:
                                                     "Tap to view Total Amount",
-                                                hintStyle: const TextStyle(
+                                                hintStyle: TextStyle(
                                                     color: Color.fromARGB(
                                                         136, 189, 187, 187),
                                                     fontWeight:
@@ -1128,14 +1148,14 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(height: 35),
+                                      SizedBox(height: 35),
                                       Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(
+                                          borderRadius: BorderRadius.all(
                                               Radius.circular(10)),
                                           border: Border.all(
-                                              color: const Color.fromARGB(
+                                              color: Color.fromARGB(
                                                   255, 211, 211, 211)),
                                         ),
                                         child: TextField(
@@ -1153,7 +1173,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
 
                                           decoration: InputDecoration(
                                             hintText: "Enter Description",
-                                            hintStyle: const TextStyle(
+                                            hintStyle: TextStyle(
                                                 color: Color.fromARGB(
                                                     136, 189, 187, 187),
                                                 fontWeight: FontWeight.w700),
@@ -1168,7 +1188,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(24.0),
-                                                color: const Color.fromARGB(
+                                                color: Color.fromARGB(
                                                     255, 230, 255, 235),
                                               ),
                                               child: Row(
@@ -1214,7 +1234,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                           onChanged: (value) {},
                                         ),
                                       ),
-                                      const SizedBox(
+                                      SizedBox(
                                         height: 35,
                                       ),
                                       CustomContainer(
@@ -1326,7 +1346,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                           ),
                                         ),
                                       ),
-                                      const SizedBox(
+                                      SizedBox(
                                         height: 30,
                                       ),
                                       Center(
@@ -1336,13 +1356,12 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(6),
                                             ),
-                                            backgroundColor:
-                                                const Color.fromARGB(
-                                                    235, 56, 23, 243),
+                                            backgroundColor: Color.fromARGB(
+                                                235, 56, 23, 243),
                                           ),
                                           onPressed: () async {
                                             if (!validateFields()) {
-                                              return; // Don't proceed with the save if fields are not valid.
+                                              return;
                                             }
 
                                             setState(() {
@@ -1354,7 +1373,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                               isLoading = true;
                                             });
 
-                                            await saveRecord();
+                                            await saveRecordApproval();
                                             int status = await approveApi(
                                               base: baseUrlFromInsCode(
                                                   "issuemanager",
@@ -1389,7 +1408,11 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                             if (status == 200) {
                                               setState(() {
                                                 isLoading = false;
+                                                // _pcapprovalController.eTapprovalAmount.clear();
                                                 descriptionController.clear();
+                                                fromDate.clear();
+                                                toDate.clear();
+                                                selectedIndent == null ;
                                                 totalAmountController.clear();
                                               });
                                               Fluttertoast.showToast(
@@ -1397,7 +1420,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                             }
                                           },
                                           child: isLoading
-                                              ? const SizedBox(
+                                              ? SizedBox(
                                                   height: 18,
                                                   width: 18,
                                                   child:
@@ -1406,8 +1429,9 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                                     strokeWidth: 2,
                                                   ),
                                                 )
-                                              : const Padding(
-                                                  padding: EdgeInsets.only(
+                                              : Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
                                                     top: 13.0,
                                                     bottom: 13,
                                                     left: 14,
@@ -1433,7 +1457,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                           : Visibility(
                               visible: !_pcapprovalController
                                   .particularIndentDetails.isNotEmpty,
-                              child: const AnimatedProgressWidget(
+                              child: AnimatedProgressWidget(
                                 animationPath: 'assets/json/nodata.json',
                                 title: 'Select Indent No.',
                                 desc: "Select the Indent No. to show the Data",
@@ -1444,7 +1468,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                   )
                 : Visibility(
                     visible: !_pcapprovalController.pcIndentDetails.isNotEmpty,
-                    child: const AnimatedProgressWidget(
+                    child: AnimatedProgressWidget(
                       animationPath: 'assets/json/nodata.json',
                       title: 'Select From and To Date',
                       desc: "Select the From and To Date to show the Data",

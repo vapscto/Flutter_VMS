@@ -60,6 +60,7 @@ import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.da
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
+import 'package:m_skool_flutter/vms/petty_cash_requisition/screen/pc_requisition_HOME.dart';
 import 'package:m_skool_flutter/vms/security/screen/Shome_Screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/screens/tada_advance_aplay_home.dart';
@@ -772,6 +773,9 @@ void openMappedPages(
           mskoolController: mskoolController,
         ));
   }
+
+  ///PETTY CASH ///
+  
   if (pageName == "Petty Cash Approval") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return PCApprovalHome(
@@ -780,6 +784,27 @@ void openMappedPages(
       );
     }));
   }
+
+  if (pageName == "Petty Cash Request") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return PCRequisitionHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+  }
+
+  if (pageName == "Cash Request") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return PCRequisitionHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+  }
+
+  ///////////////
+  
   if (pageName == "Student Birth Day Report") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return StudentBdayHome(
