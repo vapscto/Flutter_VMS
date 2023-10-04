@@ -775,7 +775,7 @@ void openMappedPages(
   }
 
   ///PETTY CASH ///
-  
+
   if (pageName == "Petty Cash Approval") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return PCApprovalHome(
@@ -785,7 +785,7 @@ void openMappedPages(
     }));
   }
 
-  if (pageName == "Petty Cash Request") {
+  if (pageName == "Petty Cash  Requisition") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return PCRequisitionHome(
         loginSuccessModel: loginSuccessModel,
@@ -804,7 +804,7 @@ void openMappedPages(
   }
 
   ///////////////
-  
+
   if (pageName == "Student Birth Day Report") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return StudentBdayHome(
@@ -855,8 +855,6 @@ void openMappedPages(
     return;
   }
 
-
-
   if (pageName == "Purchase Requisition") {
     Get.to(() => PurchaserequisitionHome(
           loginSuccessModel: loginSuccessModel,
@@ -864,7 +862,6 @@ void openMappedPages(
         ));
     return;
   }
-
 
   if (pageName == "View Notice") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
