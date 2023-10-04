@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/controller/tada_apply_controller.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/save_tada.dart';
@@ -31,22 +32,21 @@ class TadaSaveApi {
         tadaApplyController.errorLoading(false);
       }
       tadaApplyController.saveData(true);
-      var response = await dio.post(url,
-          // options: Options(headers: getSession())
-          data: {
-            "IVRMMCT_Id": ctId,
-            "VTADAAA_FromDate": fromDate,
-            "VTADAAA_ToDate": toDate,
-            "VTADAAA_ClientId": clintId,
-            "VTADAAA_TotalAppliedAmount": totalAppliedAmount,
-            "VTADAAA_ToAddress": toAddress,
-            "VTADAAA_Remarks": remarks,
-            "AllowanceArray": allowanceArray,
-            "VTADAAA_Id": vtadaaaId,
-            "VTADAAA_DepartureTime": departureTime,
-            "VTADAAA_ArrivalTime": arrivalTime,
-            "VTADAAA_ClientMultiple": clintMultiple,
-          });
+      var response =
+          await dio.post(url, options: Options(headers: getSession()), data: {
+        "IVRMMCT_Id": ctId,
+        "VTADAAA_FromDate": fromDate,
+        "VTADAAA_ToDate": toDate,
+        "VTADAAA_ClientId": clintId,
+        "VTADAAA_TotalAppliedAmount": totalAppliedAmount,
+        "VTADAAA_ToAddress": toAddress,
+        "VTADAAA_Remarks": remarks,
+        "AllowanceArray": allowanceArray,
+        "VTADAAA_Id": vtadaaaId,
+        "VTADAAA_DepartureTime": departureTime,
+        "VTADAAA_ArrivalTime": arrivalTime,
+        "VTADAAA_ClientMultiple": clintMultiple,
+      });
       logger.i({
         "IVRMMCT_Id": ctId,
         "VTADAAA_FromDate": fromDate,
