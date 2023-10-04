@@ -21,6 +21,7 @@ import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_project_category.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_tsk_module.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/priority_model.dart';
+import 'package:m_skool_flutter/vms/task%20creation/model/task_employee_list.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
@@ -57,10 +58,16 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   TextEditingController minutesEt = TextEditingController();
   TextEditingController remarksEt = TextEditingController();
   TextEditingController serchEmployee = TextEditingController();
+ RxList<TaskEmployeeListModelValues> taskEmployeeList = <TaskEmployeeListModelValues> [].obs;
+   
+
   @override
   void initState() {
     loadCmpny();
-    addItemListBrowse(0, "");
+   
+  addItemListBrowse(0, "");
+    taskEmployeeList.assignAll(_taskDepartController.getTaskEmployeeList);
+    
     _etListControllerStatus.text = "Open";
     super.initState();
   }
@@ -99,7 +106,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         titleSpacing: 0,
         leading: const CustomGoBackButton(),
@@ -210,7 +217,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                         onChanged: (s) async {
                           _taskProjectsController.getTaskProjectsList.clear();
                           _taskProjectsController.getTaskCategoryList.clear();
-
+                                 filterEmployees("Developer");
                           await getTskPrjtCatgryList(
                               base: baseUrlFromInsCode(
                                 'issuemanager',
@@ -1227,7 +1234,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                 fontSize: 14,
                                 color: Color.fromRGBO(0, 0, 0, 0.95),
                                 fontWeight: FontWeight.w500),
-                            dataRowHeight: 180,
+                            dataRowHeight: 210,
                             headingRowHeight: 40,
                             horizontalMargin: 10,
                             columnSpacing: 30,
@@ -1465,71 +1472,117 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                 )),
                                 DataCell(Align(
                                   child: Padding(
-                                    padding:  EdgeInsets.symmetric(vertical: 10),
-                                    child: Container(
-                                      width: 250,
-                                      height: 150,
-                                      child: Column(
-                                        children: [
-                                          
-                                          Obx(
+                                    padding: EdgeInsets.symmetric(vertical: 10),
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                            height: 30,
+                                            child: TextField(
+                                              maxLines: 1,
+                                              controller: serchEmployee,
+                                              onChanged: (value) {
+                                                filterEmployees(value);
+                                              },
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .merge(const TextStyle(
+                                                    fontWeight: FontWeight.w100,
+                                                    fontSize: 12.0,
+                                                    letterSpacing: 0.3,
+                                                    overflow: TextOverflow.clip,
+                                                  )),
+                                              decoration: InputDecoration(
+                                                hintText: "Search",
+                                                helperStyle:Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .merge(const TextStyle(
+                                                    fontWeight: FontWeight.w100,
+                                                    fontSize: 12.0,
+                                                    letterSpacing: 0.3,
+                                                    overflow: TextOverflow.clip,
+                                                  )),
+                                                  border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5))),
+                                            )),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Container(
+                                          width: 250,
+                                          height: 150,
+                                          child: Obx(
                                             () => ListView.builder(
-                                              itemCount: _taskDepartController
-                                                  .getTaskEmployeeList.length,
+                                              
+                                              itemCount: taskEmployeeList.length,
                                               itemBuilder: (context, index) {
                                                 return Padding(
-                                                  padding: const EdgeInsets.symmetric(vertical: 2),
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 2),
                                                   child: Container(
                                                     width: 200,
                                                     height: 30,
                                                     child: Row(
                                                       children: [
                                                         Checkbox(
-                                                          value: false,
-                                                          onChanged: (value) {},
+                                                          shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                                         activeColor: Color.fromRGBO(26, 48, 241, 1),
+                                                          value: _taskDepartController.checkBox[index],
+                                                          onChanged: (value) {
+                                                            setState(() {
+                                                               _taskDepartController.checkBox[index] = value!;
+                                                            });
+                                                          },
                                                         ),
                                                         SizedBox(),
                                                         SizedBox(
                                                           width: 200,
                                                           child: RichText(
-                                                              text: TextSpan(children: [
-                                                            TextSpan(
-                                                              text: _taskDepartController
-                                                                  .getTaskEmployeeList[
-                                                                      index]
-                                                                  .employeeName,
-                                                              style: Theme.of(context)
-                                                                  .textTheme
-                                                                  .titleSmall!
-                                                                  .merge(
-                                                                      const TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight.bold,
-                                                                    fontSize: 12.0,
-                                                                    letterSpacing: 0.3,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .clip,
-                                                                  )),
-                                                            ),
-                                                            TextSpan(
-                                                              text:
-                                                                  " : ${_taskDepartController.getTaskEmployeeList[index].hRMDESDesignationName} ",
-                                                              style: Theme.of(context)
-                                                                  .textTheme
-                                                                  .titleSmall!
-                                                                  .merge(
-                                                                      const TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight.w100,
-                                                                    fontSize: 12.0,
-                                                                    letterSpacing: 0.3,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .clip,
-                                                                  )),
-                                                            ),
-                                                          ])),
+                                                              text: TextSpan(
+                                                                  children: [
+                                                                TextSpan(
+                                                                  text: taskEmployeeList[
+                                                                          index]
+                                                                      .employeeName,
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .merge(
+                                                                          const TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.bold,
+                                                                        fontSize:
+                                                                            12.0,
+                                                                        letterSpacing:
+                                                                            0.3,
+                                                                        overflow:
+                                                                            TextOverflow.clip,
+                                                                      )),
+                                                                ),
+                                                                TextSpan(
+                                                                  text:
+                                                                      " : ${taskEmployeeList[index].hRMDESDesignationName} ",
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .merge(
+                                                                          const TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.w100,
+                                                                        fontSize:
+                                                                            12.0,
+                                                                        letterSpacing:
+                                                                            0.3,
+                                                                        overflow:
+                                                                            TextOverflow.clip,
+                                                                      )),
+                                                                ),
+                                                              ])),
                                                         )
                                                       ],
                                                     ),
@@ -1538,8 +1591,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                               },
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 )),
@@ -1548,7 +1601,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     width: 150,
                                     child: TextField(
                                       controller: remarksEt,
-                                      maxLines: 5,
+                                      maxLines: 8,
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleSmall!
@@ -1582,6 +1635,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
         ]),
       ),
     );
+    
   }
 
   Future<void> fromDate() async {
@@ -1596,7 +1650,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       });
     });
   }
-
+  
   Future<void> toDate() async {
     await showDatePicker(
       context: context,
@@ -1622,5 +1676,17 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       _taskDepartController.addListBrowser[index].FileName = pickedImage.name;
       setState(() {});
     }
+  }
+   void filterEmployees(String query) {
+     taskEmployeeList.value = _taskDepartController.getTaskEmployeeList
+        .where((employee) =>
+            employee.employeeName!.toLowerCase().contains(query.toLowerCase()) ||
+            employee.hRMDESDesignationName!.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+  }
+  @override
+  void dispose() {
+   taskEmployeeList.clear();
+    super.dispose();
   }
 }
