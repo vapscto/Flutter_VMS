@@ -14,6 +14,8 @@ import 'package:m_skool_flutter/vms/Purchase_requisition/controller/purchase_con
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_Model.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_getitem.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_items_model.dart';
+import 'package:m_skool_flutter/vms/api/vms_transation_api.dart';
+import 'package:m_skool_flutter/vms/controller/vms_common_controller.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -52,8 +54,72 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
   final totalAmount = TextEditingController();
   int newAmount = 0;
 
+  VmsTransationController vmsTransationController =
+      Get.put(VmsTransationController());
+  List<Map<String, dynamic>> arrayPR = [];
+  Map<String, dynamic> transnumbconfigurationsettingsss = {};
+  _getTransation() async {
+    String password = logInBox!.get("password");
+    await VmsTransationAPI.instance.getTransation(
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+        vmsTransationController: vmsTransationController,
+        userName: widget.loginSuccessModel.userName!,
+        password: password,
+        miId: widget.loginSuccessModel.mIID!,
+        roleId: widget.loginSuccessModel.roleId!);
+    for (int index = 0;
+        index < vmsTransationController.transationConfigmodel.length;
+        index++) {
+      transnumbconfigurationsettingsss.addAll({
+        "IMN_Id": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNId,
+        "MI_Id":
+            vmsTransationController.transationConfigmodel.elementAt(index).mIId,
+        "IMN_AutoManualFlag": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNAutoManualFlag,
+        "IMN_StartingNo": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNStartingNo,
+        "IMN_WidthNumeric": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNWidthNumeric,
+        "IMN_ZeroPrefixFlag": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNZeroPrefixFlag,
+        "IMN_PrefixAcadYearCode": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNPrefixAcadYearCode,
+        "IMN_PrefixParticular": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNPrefixParticular,
+        "IMN_SuffixAcadYearCode": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNSuffixAcadYearCode,
+        "IMN_SuffixParticular": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNSuffixParticular,
+        "IMN_RestartNumFlag": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNRestartNumFlag,
+        "IMN_Flag": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNFlag,
+        "ASMAY_Id": widget.loginSuccessModel.asmaYId,
+        "CreatedDate": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .createdDate,
+        "UpdatedDate": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .updatedDate,
+      });
+    }
+  }
+
   @override
   void initState() {
+    _getTransation();
     load(widget.loginSuccessModel.mIID!);
     addControllerData(1);
     super.initState();
@@ -104,20 +170,39 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
     setState(() {});
   }
 
-  List<Map<String, dynamic>> arrayPR = [];
-  Map<String, dynamic> transnumbconfigurationsettingsss = {};
-
   _saveData() async {
+    for (int i = 0;
+        i < purchaseRequisitionController.getrequestGetItemList.length;
+        i++) {
+      arrayPR.add({
+        "INVTPR_Id":
+            purchaseRequisitionController.getrequestGetItemList[i].invtpRId,
+        "INVMPR_Id":
+            purchaseRequisitionController.getrequestGetItemList[i].invmpRId,
+        "INVMI_Id":
+            purchaseRequisitionController.getrequestGetItemList[i].invmIId,
+        "INVMUOM_Id":
+            purchaseRequisitionController.getrequestGetItemList[i].invmuoMId,
+        "INVTPR_PRQty":
+            purchaseRequisitionController.getrequestGetItemList[i].invtpRPRQty,
+        "INVTPR_ApproxAmount": amountController.elementAt(i).text,
+        "INVTPR_ApprovedQty": 0.0,
+        "INVTPR_PRUnitRate": 10.0,
+        "INVTPR_Remarks": "Visiting cards",
+        "INVTPR_ActiveFlg": purchaseRequisitionController
+            .getrequestGetItemList[i].invtpRActiveFlg
+      });
+    }
     purchaseRequisitionController.saveLoading(true);
     await PurchaseSaveAPI.instance.purchaseSave(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         purchaseRequisitionController: purchaseRequisitionController,
         body: {
-          "MI_Id": 17,
+          "MI_Id": widget.loginSuccessModel.mIID,
           "MI_IdNew": 20,
           "HRMD_Id": 0,
-          "ASMAY_Id": 125,
-          "UserId": 60064,
+          "ASMAY_Id": widget.loginSuccessModel.asmaYId,
+          "UserId": widget.loginSuccessModel.userId,
           "INVMI_Id": 0,
           "INVMUOM_Id": 0,
           "INVMPR_Id": 619,
@@ -129,6 +214,8 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
           "INVTPR_ApproxAmount": 0.0,
           "INVTPR_ApprovedQty": 0.0,
           "INVTPR_PRUnitRate": 0.0,
+          "transnumbconfigurationsettingsss": transnumbconfigurationsettingsss,
+          "arrayPR": arrayPR,
         });
     purchaseRequisitionController.saveLoading(false);
     Get.back();

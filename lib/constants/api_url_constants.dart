@@ -552,4 +552,7 @@ class URLS {
 
   static String savePlanner = 'api/ISM_PlannerCreationFacade/savePlanner/';
   static String onchangeMoudleChange = "api/ISM_TaskCreationFacade/getIEuser/";
+
+  // VMS common
+  static String logintransation = 'api/LoginFacade/getRoleData';
 }
