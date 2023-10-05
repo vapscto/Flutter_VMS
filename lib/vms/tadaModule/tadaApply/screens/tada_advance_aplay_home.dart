@@ -1818,12 +1818,12 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                           tadaApplyController.getSavedData[index].vtadaaAId!);
                       flag = tadaApplyController
                           .getSavedData[index].vtadaaAActiveFlg!;
-                      logger.e("===$flag");
-                      logger.i(tadaApplyController
-                          .getSavedData[index].vtadaaAActiveFlg!);
                     });
                   },
-                  child: (flag == true)
+                  child: (tadaApplyController.getSavedData
+                              .elementAt(index)
+                              .vtadaaAActiveFlg! ==
+                          true)
                       ? Row(
                           children: [
                             IconButton(
@@ -1851,9 +1851,9 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
     );
   }
 
-  var date;
-  var time;
-  var tosavedDate;
-  var toSavedTime;
+  var date = '';
+  var time = '';
+  var tosavedDate = '';
+  var toSavedTime = '';
   bool flag = false;
 }
