@@ -63,7 +63,7 @@ import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.
 import 'package:m_skool_flutter/vms/petty_cash_requisition/screen/pc_requisition_HOME.dart';
 import 'package:m_skool_flutter/vms/security/screen/Shome_Screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tadaApply/screens/tada_advance_aplay_home.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/screens/tada_advance_aplay_home.dart';
 import 'package:m_skool_flutter/vms/task%20creation/screens/taskCreationHome.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
