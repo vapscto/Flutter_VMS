@@ -1,29 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
-import 'package:m_skool_flutter/vms/issue_manager/planner_creation/widgets/planner_create.dart';
-import 'package:m_skool_flutter/vms/issue_manager/planner_creation/widgets/planner_status.dart';
-import 'package:m_skool_flutter/vms/petty_cash_approval/controller/petty_cash_approval_controller.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/widgets/tada_apply.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/widgets/tada_balance_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
-class PlannerCreateHomeScreen extends StatefulWidget {
-  final LoginSuccessModel loginSuccessModel;
+class TadaApplyHomeScreen extends StatefulWidget {
   final MskoolController mskoolController;
-
-  const PlannerCreateHomeScreen({
-    super.key,
-    required this.loginSuccessModel,
-    required this.mskoolController,
-  });
+  final LoginSuccessModel loginSuccessModel;
+  const TadaApplyHomeScreen(
+      {super.key,
+      required this.mskoolController,
+      required this.loginSuccessModel});
 
   @override
-  State<PlannerCreateHomeScreen> createState() =>
-      _PlannerCreateHomeScreenState();
+  State<TadaApplyHomeScreen> createState() => _TadaApplyHomeScreenState();
 }
 
-class _PlannerCreateHomeScreenState extends State<PlannerCreateHomeScreen>
+class _TadaApplyHomeScreenState extends State<TadaApplyHomeScreen>
     with SingleTickerProviderStateMixin {
   TabController? tabController;
 
@@ -42,7 +37,7 @@ class _PlannerCreateHomeScreenState extends State<PlannerCreateHomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Planner Creation").getAppBar(),
+      appBar: const CustomAppBar(title: "TA-DA Apply").getAppBar(),
       body: Column(
         children: [
           Container(
@@ -50,8 +45,11 @@ class _PlannerCreateHomeScreenState extends State<PlannerCreateHomeScreen>
             child: CustomTabBar(
               tabController: tabController!,
               tabs: const [
-                CustomTab(name: "Creat Planner", asset: ""),
-                CustomTab(name: "Planner Status", asset: ""),
+                CustomTab(
+                    name: "TADA Apply", asset: "assets/svg/calendar_icon.svg"),
+                CustomTab(
+                    name: "TADA Balance Apply",
+                    asset: "assets/svg/calendar_icon.svg"),
               ],
             ),
           ),
@@ -60,11 +58,11 @@ class _PlannerCreateHomeScreenState extends State<PlannerCreateHomeScreen>
               physics: const NeverScrollableScrollPhysics(),
               controller: tabController,
               children: [
-                PlannerCreateWidget(
+                TadaApplyWidget(
                   loginSuccessModel: widget.loginSuccessModel,
                   mskoolController: widget.mskoolController,
                 ),
-                PlannerStatusWidget(
+                TadaBalanceWidget(
                   loginSuccessModel: widget.loginSuccessModel,
                   mskoolController: widget.mskoolController,
                 ),
