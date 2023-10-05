@@ -186,9 +186,9 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
         "INVTPR_PRQty":
             purchaseRequisitionController.getrequestGetItemList[i].invtpRPRQty,
         "INVTPR_ApproxAmount": amountController.elementAt(i).text,
-        "INVTPR_ApprovedQty": 0.0,
-        "INVTPR_PRUnitRate": 10.0,
-        "INVTPR_Remarks": "Visiting cards",
+        "INVTPR_ApprovedQty": quantityController.elementAt(i).text,
+        "INVTPR_PRUnitRate": rateController.elementAt(i).text,
+        "INVTPR_Remarks": remarksController.elementAt(i).text,
         "INVTPR_ActiveFlg": purchaseRequisitionController
             .getrequestGetItemList[i].invtpRActiveFlg
       });
