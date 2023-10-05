@@ -543,6 +543,8 @@ class URLS {
 
   static String purchaserequisitionapi =
       'api/INV_PurchaseRequisitionFacade/GetOnchangeData/';
+  static String purchaseRequisitionSave =
+      'api/INV_PurchaseRequisitionFacade/savedetails/';
 
   static String savePlanner = 'api/ISM_PlannerCreationFacade/savePlanner/';
   static String onchangeMoudleChange = "api/ISM_TaskCreationFacade/getIEuser/";

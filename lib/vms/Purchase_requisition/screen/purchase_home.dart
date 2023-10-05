@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/api/purchase_dropdownlist_api.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/api/purchase_getitem_api.dart';
+import 'package:m_skool_flutter/vms/Purchase_requisition/api/purchase_save_api.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/controller/purchase_controller.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_Model.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_getitem.dart';
@@ -101,6 +102,36 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
     sum -= amount;
     totalAmount.text = sum.toString();
     setState(() {});
+  }
+
+  List<Map<String, dynamic>> arrayPR = [];
+  Map<String, dynamic> transnumbconfigurationsettingsss = {};
+
+  _saveData() async {
+    purchaseRequisitionController.saveLoading(true);
+    await PurchaseSaveAPI.instance.purchaseSave(
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+        purchaseRequisitionController: purchaseRequisitionController,
+        body: {
+          "MI_Id": 17,
+          "MI_IdNew": 20,
+          "HRMD_Id": 0,
+          "ASMAY_Id": 125,
+          "UserId": 60064,
+          "INVMI_Id": 0,
+          "INVMUOM_Id": 0,
+          "INVMPR_Id": 619,
+          "INVMPR_PRDate": "2023-10-04",
+          "INVMPR_Remarks": "Visiting cards",
+          "INVMPR_ApproxTotAmount": 30.00,
+          "INVTPR_Id": 0,
+          "INVTPR_PRQty": 0.0,
+          "INVTPR_ApproxAmount": 0.0,
+          "INVTPR_ApprovedQty": 0.0,
+          "INVTPR_PRUnitRate": 0.0,
+        });
+    purchaseRequisitionController.saveLoading(false);
+    Get.back();
   }
 
   DateTime? selectedDate;
@@ -841,7 +872,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                   size: const Size.fromWidth(100),
                                   title: "Save",
                                   onPress: () {
-                                    // saveData();
+                                    _saveData();
                                   },
                                 ),
                               ),
@@ -851,9 +882,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                 child: MSkollBtn(
                                   size: const Size.fromWidth(100),
                                   title: "Exit",
-                                  onPress: () {
-                                    // saveData();
-                                  },
+                                  onPress: () {},
                                 ),
                               ),
                             ],
