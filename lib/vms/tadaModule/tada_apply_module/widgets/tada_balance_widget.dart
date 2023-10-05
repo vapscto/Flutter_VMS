@@ -29,31 +29,41 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(16),
       children: [
-        Text(
-          "Note:",
-          style: Get.textTheme.titleMedium!
-              .copyWith(color: Theme.of(context).primaryColor),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Note:",
+                style: Get.textTheme.titleMedium!
+                    .copyWith(color: Theme.of(context).primaryColor),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                "* TA-DA Should Applied Only Below 30 Days",
+                style: Get.textTheme.titleSmall!
+                    .copyWith(color: Colors.red, fontSize: 10),
+              ),
+              Text(
+                "*  When Daily Report Not Generate Ta Da Not Avalible For apply",
+                style: Get.textTheme.titleSmall!
+                    .copyWith(color: Colors.red, fontSize: 10),
+              ),
+              Text(
+                "* Old Balance Not Clear Ta Da Not Avalible For apply",
+                style: Get.textTheme.titleSmall!
+                    .copyWith(color: Colors.red, fontSize: 10),
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: 8),
-        Text(
-          "* TA-DA Should Applied Only Below 30 Days",
-          style: Get.textTheme.titleSmall!.copyWith(color: Colors.red),
-        ),
-        Text(
-          "*  When Daily Report Not Generate Ta Da Not Avalible For apply",
-          style: Get.textTheme.titleSmall!.copyWith(color: Colors.red),
-        ),
-        Text(
-          "* Old Balance Not Clear Ta Da Not Avalible For apply",
-          style: Get.textTheme.titleSmall!.copyWith(color: Colors.red),
-        ),
-        const SizedBox(height: 16),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.all(2),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
             child: DataTable(
                 dataRowHeight: 35,
                 headingRowHeight: 45,
@@ -62,7 +72,7 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
                 border: TableBorder.all(
                   color: Colors.black,
                   width: 0.6,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(5),
                 ),
                 headingRowColor: MaterialStateColor.resolveWith(
                     (states) => Theme.of(context).primaryColor),
@@ -71,7 +81,7 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
                   DataColumn(label: Text("City")),
                   DataColumn(label: Text("Total Applied Amount")),
                   DataColumn(label: Text("Total Sactioned Amount")),
-                  DataColumn(label: Text("Total Paid Amount ")),
+                  DataColumn(label: Text("Total Paid Amount")),
                   DataColumn(label: Text("From Date")),
                   DataColumn(label: Text("To Date")),
                   DataColumn(label: Text("Action")),

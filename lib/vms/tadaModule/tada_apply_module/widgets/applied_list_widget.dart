@@ -77,131 +77,126 @@ class _AppliedListWidgetState extends State<AppliedListWidget> {
               ),
             ),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Column(
-                children: [
-                  Text(
-                    "Leavel  Approved by - VAPSACCOUNTANT",
-                    style: Get.textTheme.bodyMedium!
-                        .copyWith(color: Theme.of(context).primaryColor),
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: DataTable(
-                          dataRowHeight: 35,
-                          headingRowHeight: 45,
-                          columnSpacing: 20,
-                          headingTextStyle:
-                              const TextStyle(color: Colors.white),
-                          border: TableBorder.all(
-                            color: Colors.black,
-                            width: 0.6,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          headingRowColor: MaterialStateColor.resolveWith(
-                              (states) => Theme.of(context).primaryColor),
-                          columns: const [
-                            DataColumn(label: Text("SL.NO.")),
-                            DataColumn(label: Text("Expenditure Head")),
-                            DataColumn(label: Text("Applied Date")),
-                            DataColumn(label: Text("Applied Amount")),
-                            DataColumn(label: Text("Approved Amount")),
-                            DataColumn(label: Text("Approve Date")),
-                            DataColumn(label: Text("Remark")),
-                            DataColumn(label: Text("ExpenditureHead Status")),
-                          ],
-                          rows: List.generate(newWidget.length, (index) {
-                            var value = index + 1;
-                            // if (tadaController
-                            //         .tadaData[index].vTADAAAAppliedDate !=
-                            //     null) {
-                            //   DateTime dt = DateTime.parse(tadaController
-                            //       .tadaData[index].vTADAAAAppliedDate!);
-                            //   date = '${dt.day}-${dt.month}-${dt.year}';
-                            // }
+            Column(
+              children: [
+                Text(
+                  "Leavel  Approved by - VAPSACCOUNTANT",
+                  style: Get.textTheme.bodyMedium!
+                      .copyWith(color: Theme.of(context).primaryColor),
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: DataTable(
+                        dataRowHeight: 35,
+                        headingRowHeight: 45,
+                        columnSpacing: 20,
+                        headingTextStyle: const TextStyle(color: Colors.white),
+                        border: TableBorder.all(
+                          color: Colors.black,
+                          width: 0.6,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        headingRowColor: MaterialStateColor.resolveWith(
+                            (states) => Theme.of(context).primaryColor),
+                        columns: const [
+                          DataColumn(label: Text("SL.NO.")),
+                          DataColumn(label: Text("Expenditure Head")),
+                          DataColumn(label: Text("Applied Date")),
+                          DataColumn(label: Text("Applied Amount")),
+                          DataColumn(label: Text("Approved Amount")),
+                          DataColumn(label: Text("Approve Date")),
+                          DataColumn(label: Text("Remark")),
+                          DataColumn(label: Text("ExpenditureHead Status")),
+                        ],
+                        rows: List.generate(newWidget.length, (index) {
+                          var value = index + 1;
+                          // if (tadaController
+                          //         .tadaData[index].vTADAAAAppliedDate !=
+                          //     null) {
+                          //   DateTime dt = DateTime.parse(tadaController
+                          //       .tadaData[index].vTADAAAAppliedDate!);
+                          //   date = '${dt.day}-${dt.month}-${dt.year}';
+                          // }
 
-                            return DataRow(cells: [
-                              DataCell(Text(value.toString())),
-                              DataCell(Text(newWidget[index].expenditureHead)),
-                              DataCell(Text(newWidget[index].appliedDate)),
-                              DataCell(Text(
-                                  newWidget[index].appliedAmount.toString())),
-                              DataCell(Text(
-                                  newWidget[index].approvedAmount.toString())),
-                              DataCell(Text(newWidget[index].approvedDate)),
-                              DataCell(
-                                  Text(newWidget[index].remarks.toString())),
-                              DataCell(Text(newWidget[index].status)),
-                            ]);
-                          })),
-                    ),
+                          return DataRow(cells: [
+                            DataCell(Text(value.toString())),
+                            DataCell(Text(newWidget[index].expenditureHead)),
+                            DataCell(Text(newWidget[index].appliedDate)),
+                            DataCell(Text(
+                                newWidget[index].appliedAmount.toString())),
+                            DataCell(Text(
+                                newWidget[index].approvedAmount.toString())),
+                            DataCell(Text(newWidget[index].approvedDate)),
+                            DataCell(Text(newWidget[index].remarks.toString())),
+                            DataCell(Text(newWidget[index].status)),
+                          ]);
+                        })),
                   ),
-                  Text(
-                    "Leavel Approved by - SIDDESH",
-                    style: Get.textTheme.bodyMedium!
-                        .copyWith(color: Theme.of(context).primaryColor),
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: DataTable(
-                          dataRowHeight: 35,
-                          headingRowHeight: 45,
-                          columnSpacing: 20,
-                          headingTextStyle:
-                              const TextStyle(color: Colors.white),
-                          border: TableBorder.all(
-                            color: Colors.black,
-                            width: 0.6,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          headingRowColor: MaterialStateColor.resolveWith(
-                              (states) => Theme.of(context).primaryColor),
-                          columns: const [
-                            DataColumn(label: Text("SL.NO.")),
-                            DataColumn(label: Text("Expenditure Head")),
-                            DataColumn(label: Text("Applied Date")),
-                            DataColumn(label: Text("Applied Amount")),
-                            DataColumn(label: Text("Approved Amount")),
-                            DataColumn(label: Text("Approve Date")),
-                            DataColumn(label: Text("Remark")),
-                            DataColumn(label: Text("ExpenditureHead Status")),
-                          ],
-                          rows: List.generate(newWidget.length, (index) {
-                            var value = index + 1;
-                            // if (tadaController
-                            //         .tadaData[index].vTADAAAAppliedDate !=
-                            //     null) {
-                            //   DateTime dt = DateTime.parse(tadaController
-                            //       .tadaData[index].vTADAAAAppliedDate!);
-                            //   date = '${dt.day}-${dt.month}-${dt.year}';
-                            // }
+                ),
+                Text(
+                  "Leavel Approved by - SIDDESH",
+                  style: Get.textTheme.bodyMedium!
+                      .copyWith(color: Theme.of(context).primaryColor),
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: DataTable(
+                        dataRowHeight: 35,
+                        headingRowHeight: 45,
+                        columnSpacing: 20,
+                        headingTextStyle: const TextStyle(color: Colors.white),
+                        border: TableBorder.all(
+                          color: Colors.black,
+                          width: 0.6,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        headingRowColor: MaterialStateColor.resolveWith(
+                            (states) => Theme.of(context).primaryColor),
+                        columns: const [
+                          DataColumn(label: Text("SL.NO.")),
+                          DataColumn(label: Text("Expenditure Head")),
+                          DataColumn(label: Text("Applied Date")),
+                          DataColumn(label: Text("Applied Amount")),
+                          DataColumn(label: Text("Approved Amount")),
+                          DataColumn(label: Text("Approve Date")),
+                          DataColumn(label: Text("Remark")),
+                          DataColumn(label: Text("ExpenditureHead Status")),
+                        ],
+                        rows: List.generate(newWidget.length, (index) {
+                          var value = index + 1;
+                          // if (tadaController
+                          //         .tadaData[index].vTADAAAAppliedDate !=
+                          //     null) {
+                          //   DateTime dt = DateTime.parse(tadaController
+                          //       .tadaData[index].vTADAAAAppliedDate!);
+                          //   date = '${dt.day}-${dt.month}-${dt.year}';
+                          // }
 
-                            return DataRow(cells: [
-                              DataCell(Text(value.toString())),
-                              DataCell(Text(newWidget[index].expenditureHead)),
-                              DataCell(Text(newWidget[index].appliedDate)),
-                              DataCell(Text(
-                                  newWidget[index].appliedAmount.toString())),
-                              DataCell(Text(
-                                  newWidget[index].approvedAmount.toString())),
-                              DataCell(Text(newWidget[index].approvedDate)),
-                              DataCell(
-                                  Text(newWidget[index].remarks.toString())),
-                              DataCell(Text(newWidget[index].status)),
-                            ]);
-                          })),
-                    ),
+                          return DataRow(cells: [
+                            DataCell(Text(value.toString())),
+                            DataCell(Text(newWidget[index].expenditureHead)),
+                            DataCell(Text(newWidget[index].appliedDate)),
+                            DataCell(Text(
+                                newWidget[index].appliedAmount.toString())),
+                            DataCell(Text(
+                                newWidget[index].approvedAmount.toString())),
+                            DataCell(Text(newWidget[index].approvedDate)),
+                            DataCell(Text(newWidget[index].remarks.toString())),
+                            DataCell(Text(newWidget[index].status)),
+                          ]);
+                        })),
                   ),
-                  const SizedBox(height: 10),
-                ],
-              ),
+                ),
+                const SizedBox(height: 10),
+              ],
             )
           ],
         ),

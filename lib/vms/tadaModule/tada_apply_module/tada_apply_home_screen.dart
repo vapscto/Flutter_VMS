@@ -45,10 +45,9 @@ class _TadaApplyHomeScreenState extends State<TadaApplyHomeScreen>
             child: CustomTabBar(
               tabController: tabController!,
               tabs: const [
+                CustomTab(name: "Apply", asset: "assets/svg/calendar_icon.svg"),
                 CustomTab(
-                    name: "TADA Apply", asset: "assets/svg/calendar_icon.svg"),
-                CustomTab(
-                    name: "TADA Balance Apply",
+                    name: "Balance Apply",
                     asset: "assets/svg/calendar_icon.svg"),
               ],
             ),

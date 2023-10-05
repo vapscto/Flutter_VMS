@@ -489,7 +489,7 @@ class URLS {
 
   // static String purchaseindentapi = "api/IndentApprovalFacade/getloaddata/";
 
-  //** TADA Apply APIS* *//
+  //** TADA Advance Apply APIS* *//
   static String stateList = 'api/TADA_Advance_ApplyFacade/getalldata/';
   static String cityList = 'api/TADA_Advance_ApplyFacade/getstate/';
   static String allowense = 'api/TADA_Advance_ApplyFacade/TadaAllwence/';
@@ -500,6 +500,10 @@ class URLS {
   static String tadaSave = 'api/TADAAdvanceApprovalFacade/savedta';
   static String tadaList = 'api/TADAAdvanceApprovalFacade/getalldata/';
   static String tadaDetails = 'api/TADAAdvanceApprovalFacade/edit';
+
+  //TADA Apply Apis
+  static String stateAndClintList = 'api/TADA_ApplyFacade/getalldata/';
+  static String tadaCityList = 'api/TADA_ApplyFacade/getstate/';
 
   ///***  PETTY CASH APPROVAL  ***///
 
