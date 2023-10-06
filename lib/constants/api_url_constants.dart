@@ -530,4 +530,6 @@ class URLS {
   static String savePlanner='api/ISM_PlannerCreationFacade/savePlanner/';
   static String onchangeMoudleChange="api/ISM_TaskCreationFacade/getIEuser/";
 
+  static String saveTaskCreation="api/ISM_TaskCreationFacade/savedata/";
+
 }

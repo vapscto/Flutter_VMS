@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -13,6 +11,7 @@ import 'package:m_skool_flutter/vms/task%20creation/api/get_depart_api.dart';
 import 'package:m_skool_flutter/vms/task%20creation/api/get_prjects_catgory_api.dart';
 import 'package:m_skool_flutter/vms/task%20creation/api/get_task_client.dart';
 import 'package:m_skool_flutter/vms/task%20creation/api/onchange_client_module.dart';
+import 'package:m_skool_flutter/vms/task%20creation/api/sava_task.dart';
 import 'package:m_skool_flutter/vms/task%20creation/controller/task_client_module.dart';
 import 'package:m_skool_flutter/vms/task%20creation/controller/task_department_cntrlr.dart';
 import 'package:m_skool_flutter/vms/task%20creation/controller/task_projects_cntroller.dart';
@@ -58,11 +57,27 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   TextEditingController minutesEt = TextEditingController();
   TextEditingController remarksEt = TextEditingController();
   TextEditingController serchEmployee = TextEditingController();
+  TextEditingController etDayControllers = TextEditingController();
+  TextEditingController etRemarkControllers = TextEditingController();
+  var moduleId;
+  List<int> employeesID = [];
   RxList<TaskEmployeeListModelValues> taskEmployeeList =
       <TaskEmployeeListModelValues>[].obs;
-  RxList<String> periodicityList = <String>["Daily","Weekly","Once in Fortnight","Yearly Once","Specific Day"].obs;
-  String dropdownValue = "";
+  RxList<String> periodicityList = <String>[
+    "Daily",
+    "Weekly",
+    "Once in Fortnight",
+    "Yearly Once",
+    "Specific Day"
+  ].obs;
+  RxString dropdownValue = "Daily".obs;
+  int hrmdIds = 0;
+  String priorityId = "";
+  int clinetId = 0;
+  int projectId = 0;
+  int categoryId = 0;
    
+  List<Map<String, dynamic>> taskEmpArray = [];
   @override
   void initState() {
     loadCmpny();
@@ -86,6 +101,60 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   removeItemListBrowse(int val) {
     _taskDepartController.addListBrowser.removeAt(val);
     setState(() {});
+  }
+
+  Future<void> loadImages() async {
+    String? periodicityType;
+    var taskDay;
+    if (_taskDepartController.typesTask.value == "T") {
+      periodicityType = dropdownValue.value;
+      if (dropdownValue.value == "Daily" ||
+          dropdownValue.value == "Yearly Once" ||
+          dropdownValue.value == "Specific Day") {
+        taskDay = 0;
+      } else if (dropdownValue.value == "Weekly" ||
+          dropdownValue.value == "Once in Fortnight") {
+        taskDay = etDayControllers.text;
+      }
+    } else if (_taskDepartController.typesTask.value == "B" ||
+        _taskDepartController.typesTask.value == "E" ||
+        _taskDepartController.typesTask.value == "O") {
+      periodicityType = "";
+    }
+    for (int i = 0; i < employeesID.length; i++) {
+      taskEmpArray.add({"HRME_Id": employeesID[i]});
+    }
+    await saveTask(
+      typeAssign: _taskDepartController.taskAssingn.value ,
+      base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
+      controller: _taskDepartController,
+      miId: widget.loginSuccessModel.mIID!,
+      HRMD_Id: hrmdIds,
+      HRMPR_Id: priorityId, // priority id
+      ISMCIM_IEList: "0",
+      ISMMCLT_Id: clinetId, //clientsID
+      ISMMPR_Id: projectId, // projectId
+      ISMMTCAT_Id: categoryId, // categoryId
+      ISMTCR_BugOREnhancementFlg: _taskDepartController.typesTask.value,
+      ISMTCR_CreationDate: DateTime.now().toString(),
+      ISMTCR_Desc: _descritpionETController.text,
+      ISMTCR_Id: "0",
+      ISMTCR_Status: "Open",
+      ISMTCR_Title: _titleETController.text,
+      IVRMM_Id: moduleId, //module id
+      TaskDay: taskDay,
+      TimeRequiredFlg: "HOURS",
+      Yearlydate: "Thu Jan 01 1970",
+      assignto: _taskDepartController.taskAssingn.value,
+      uploadDocs: _taskDepartController.addListBrowser,
+      effortinhrs: int.tryParse("${hoursEt.text}.${minutesEt.text}"),
+      enddate: selectToDate.text,
+      periodicity: periodicityType,
+      remarks: etRemarkControllers.text,
+      roletype: widget.loginSuccessModel.roleforlogin,
+      startdate: selectFromDate.text,
+      taskEmpArray: taskEmpArray,
+    );
   }
 
   loadCmpny() async {
@@ -219,6 +288,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                         onChanged: (s) async {
                           _taskProjectsController.getTaskProjectsList.clear();
                           _taskProjectsController.getTaskCategoryList.clear();
+                          hrmdIds = s!.hrmDId!;
                           filterEmployees("Developer");
                           await getTskPrjtCatgryList(
                               base: baseUrlFromInsCode(
@@ -230,7 +300,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                               ivrmrtId: widget.loginSuccessModel.roleId!,
                               miId: widget.loginSuccessModel.mIID!,
                               HRME_Id: logInBox!.get("EmpId"),
-                              HRMD_Id: s!.hrmDId!);
+                              HRMD_Id: s.hrmDId!);
                         },
                       ),
                     )),
@@ -343,6 +413,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                               _taskClientModuleCntroller.taskClientList.clear();
                               _taskClientModuleCntroller.getModuleValuesList
                                   .clear();
+                              projectId = s!.ismmpRId!;
                               await geTskClientApi(
                                   base: baseUrlFromInsCode(
                                     "issuemanager",
@@ -356,7 +427,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                   HRMD_Id: logInBox!.get("HRMDID"),
                                   roleflag:
                                       widget.loginSuccessModel.roleforlogin!,
-                                  ISMMPR_Id: s!.ismmpRId!);
+                                  ISMMPR_Id: s.ismmpRId!);
                             },
                           ),
                         )),
@@ -472,6 +543,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                               );
                             }),
                             onChanged: (s) async {
+                              clinetId = s!.ismmclTId!;
                               await onChangeModuleListApi(
                                   base: baseUrlFromInsCode(
                                     "issuemanager",
@@ -485,7 +557,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                   hrmdId: logInBox!.get("HRMDID"),
                                   roleType:
                                       widget.loginSuccessModel.roleforlogin!,
-                                  ismmprId: s!.ismmpRId!,
+                                  ismmprId: s.ismmpRId!,
                                   ismmcltId: s.ismmclTId!);
                             },
                           ),
@@ -573,7 +645,9 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                         ),
                       );
                     }),
-                    onChanged: (s) async {},
+                    onChanged: (s) async {
+                      categoryId = s!.ismmtcaTId!;
+                    },
                   ),
                 )
               : SizedBox()),
@@ -748,7 +822,9 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                 ),
                               );
                             }),
-                            onChanged: (s) async {},
+                            onChanged: (s) async {
+                              moduleId = s!.ivrmMId;
+                            },
                           ),
                         )),
 
@@ -847,7 +923,9 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             ),
                           );
                         }),
-                        onChanged: (s) async {},
+                        onChanged: (s) async {
+                          priorityId = s!.hrmpRId.toString();
+                        },
                       ),
                     )),
           Row(
@@ -994,6 +1072,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                         groupValue: _taskDepartController.typesTask.value,
                         onChanged: (v) {
                           _taskDepartController.updateTypeOfTask(v!);
+                          dropdownValue.value == "Daily";
+                          setState(() {});
                         },
                       ),
                     ),
@@ -1189,7 +1269,9 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                               InkWell(
                                                   onTap: () {
                                                     addItemListBrowse(
-                                                        index + 1, "");
+                                                      index + 1,
+                                                      "",
+                                                    );
                                                   },
                                                   child: Icon(Icons.add)),
                                               InkWell(
@@ -1230,9 +1312,9 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
           ),
 
           Obx(
-             ()=> Visibility(
-              visible: _taskDepartController.taskAssingn.value =="Y",
-               child: SizedBox(
+            () => Visibility(
+              visible: _taskDepartController.taskAssingn.value == "Y",
+              child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Center(
                       child: SingleChildScrollView(
@@ -1245,15 +1327,16 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                 children: [
                                   Obx(
                                     () => Visibility(
-                                      visible:
-                                          _taskDepartController.typesTask.value ==
-                                              "T",
+                                      visible: _taskDepartController
+                                              .typesTask.value ==
+                                          "T",
                                       child: Container(
                                         width: 250,
                                         height: 40,
                                         decoration: BoxDecoration(
                                             shape: BoxShape.rectangle,
-                                            color: Color.fromRGBO(12, 54, 238, 1),
+                                            color:
+                                                Color.fromRGBO(12, 54, 238, 1),
                                             borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(10))),
                                         child: Align(
@@ -1269,18 +1352,50 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                       ),
                                     ),
                                   ),
+                                  Obx(() => Visibility(
+                                        visible: dropdownValue.value == "Daily"
+                                            ? false
+                                            : _taskDepartController
+                                                        .typesTask.value ==
+                                                    "T"
+                                                ? true
+                                                : false,
+                                        child: Container(
+                                          width: 250,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.rectangle,
+                                            color:
+                                                Color.fromRGBO(12, 54, 238, 1),
+                                          ),
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              dropdownValue.value == "Weekly" ||
+                                                      dropdownValue.value ==
+                                                          "Once in Fortnight"
+                                                  ? 'Task Day'
+                                                  : "Date",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ),
+                                      )),
                                   Obx(
                                     () => Container(
                                       width: 250,
                                       height: 40,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.rectangle,
-                                        borderRadius:
-                                            _taskDepartController.typesTask.value ==
-                                                    "T"
-                                                ? BorderRadius.zero
-                                                : BorderRadius.only(
-                                                    topLeft: Radius.circular(10)),
+                                        borderRadius: _taskDepartController
+                                                    .typesTask.value ==
+                                                "T"
+                                            ? BorderRadius.zero
+                                            : BorderRadius.only(
+                                                topLeft: Radius.circular(10)),
                                         color: Color.fromRGBO(12, 54, 238, 1),
                                       ),
                                       child: Align(
@@ -1356,9 +1471,9 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                 children: [
                                   Obx(
                                     () => Visibility(
-                                      visible:
-                                          _taskDepartController.typesTask.value ==
-                                              "T",
+                                      visible: _taskDepartController
+                                              .typesTask.value ==
+                                          "T",
                                       child: Container(
                                         decoration: BoxDecoration(
                                           border: Border(
@@ -1366,29 +1481,197 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                   width: 0.5,
                                                   color: Colors.black54),
                                               right: BorderSide(
-                                                  width: 1, color: Colors.black54),
+                                                  width: 1,
+                                                  color: Colors.black54),
                                               bottom: BorderSide(
-                                                  width: 1, color: Colors.black54)),
+                                                  width: 1,
+                                                  color: Colors.black54)),
                                         ),
                                         width: 250,
                                         height: 210,
-                                        child: 
-                                           SizedBox(
-                                            width: 200,
-                                             child:  DropdownMenu<String>(
-                                             initialSelection: periodicityList.first,
+                                        child: Align(
+                                          alignment: Alignment.center,
+                                          child: SizedBox(
+                                            child: DropdownMenu<String>(
+                                              width: 200,
+                                              textStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .merge(const TextStyle(
+                                                    fontWeight: FontWeight.w100,
+                                                    fontSize: 16.0,
+                                                    letterSpacing: 0.3,
+                                                    overflow: TextOverflow.clip,
+                                                  )),
+                                              initialSelection:
+                                                  periodicityList.first,
                                               onSelected: (String? value) {
-                                               setState(() {
-                                             dropdownValue = value!;
+                                                setState(() {
+                                                  dropdownValue.value = value!;
                                                 });
                                               },
-                                            dropdownMenuEntries: periodicityList.map<DropdownMenuEntry<String>>((String value) {
-                                           return DropdownMenuEntry<String>(value: value, label: value);
-                                           }).toList(),
-                                              ),
-                                           ),
-                                        
+                                              dropdownMenuEntries:
+                                                  periodicityList.map<
+                                                          DropdownMenuEntry<
+                                                              String>>(
+                                                      (String value) {
+                                                return DropdownMenuEntry<
+                                                        String>(
+                                                    value: value, label: value);
+                                              }).toList(),
+                                            ),
+                                          ),
+                                        ),
                                       ),
+                                    ),
+                                  ),
+                                  Obx(
+                                    () => Visibility(
+                                      visible: dropdownValue.value == "Daily"
+                                          ? false
+                                          : _taskDepartController
+                                                      .typesTask.value ==
+                                                  "T"
+                                              ? true
+                                              : false,
+                                      child: Container(
+                                          width: 250,
+                                          height: 210,
+                                          decoration: BoxDecoration(
+                                              border: Border(
+                                                  right: BorderSide(
+                                                      color: Colors.black54,
+                                                      width: 1),
+                                                  bottom: BorderSide(
+                                                    color: Colors.black54,
+                                                  ))),
+                                          child: dropdownValue.value ==
+                                                      "Once in Fortnight" ||
+                                                  dropdownValue.value ==
+                                                      "Weekly"
+                                              ? Align(
+                                                  alignment: Alignment.center,
+                                                  child: SizedBox(
+                                                    width: 200,
+                                                    child: TextField(
+                                                      maxLines: 1,
+                                                      keyboardType:
+                                                          TextInputType.number,
+                                                      decoration: InputDecoration(
+                                                          border: OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5))),
+                                                      controller:
+                                                          etDayControllers,
+                                                    ),
+                                                  ),
+                                                )
+                                              : Align(
+                                                  alignment: Alignment.center,
+                                                  child: SizedBox(
+                                                    width: 200,
+                                                    child: TextField(
+                                                      onTap: () async {
+                                                        await showDatePicker(
+                                                          context: context,
+                                                          firstDate:
+                                                              DateTime.now(),
+                                                          lastDate:
+                                                              DateTime(2035),
+                                                          initialDate:
+                                                              DateTime.now(),
+                                                        ).then((value) {
+                                                          setState(() {
+                                                            etDayControllers
+                                                                    .text =
+                                                                getDateFrom(
+                                                                    value);
+                                                          });
+                                                        });
+                                                      },
+                                                      readOnly: true,
+                                                      controller:
+                                                          selectFromDate,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        border:
+                                                            OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5)),
+                                                        suffixIcon: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(12),
+                                                          child: InkWell(
+                                                            onTap: () async {
+                                                              await showDatePicker(
+                                                                context:
+                                                                    context,
+                                                                firstDate:
+                                                                    DateTime
+                                                                        .now(),
+                                                                lastDate:
+                                                                    DateTime(
+                                                                        2035),
+                                                                initialDate:
+                                                                    DateTime
+                                                                        .now(),
+                                                              ).then((value) {
+                                                                setState(() {
+                                                                  etDayControllers
+                                                                          .text =
+                                                                      getDateFrom(
+                                                                          value);
+                                                                });
+                                                              });
+                                                            },
+                                                            child: SvgPicture
+                                                                .asset(
+                                                              "assets/svg/calendar_icon.svg",
+                                                              color: const Color(
+                                                                  0xFF3E78AA),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        hintText:
+                                                            "Select From Date",
+                                                        hintStyle: Theme.of(
+                                                                context)
+                                                            .textTheme
+                                                            .titleSmall!
+                                                            .merge(
+                                                                const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w100,
+                                                              fontSize: 16.0,
+                                                              letterSpacing:
+                                                                  0.3,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .clip,
+                                                            )),
+                                                      ),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .titleSmall!
+                                                          .merge(
+                                                              const TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w100,
+                                                            fontSize: 16.0,
+                                                            letterSpacing: 0.3,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .clip,
+                                                          )),
+                                                    ),
+                                                  ),
+                                                )),
                                     ),
                                   ),
                                   Obx(
@@ -1405,9 +1688,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                     width: 1,
                                                     color: Colors.black54),
                                             right: BorderSide(
-                                                width: 1, color: Colors.black54),
+                                                width: 1,
+                                                color: Colors.black54),
                                             bottom: BorderSide(
-                                                width: 1, color: Colors.black54)),
+                                                width: 1,
+                                                color: Colors.black54)),
                                       ),
                                       child: Align(
                                         alignment: Alignment.center,
@@ -1426,18 +1711,20 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                 decoration: InputDecoration(
                                                   border: OutlineInputBorder(
                                                       borderRadius:
-                                                          BorderRadius.circular(5)),
+                                                          BorderRadius.circular(
+                                                              5)),
                                                   suffixIcon: Padding(
                                                     padding:
-                                                        const EdgeInsets.all(12),
+                                                        const EdgeInsets.all(
+                                                            12),
                                                     child: InkWell(
                                                       onTap: () async {
                                                         toDate();
                                                       },
                                                       child: SvgPicture.asset(
                                                         "assets/svg/calendar_icon.svg",
-                                                        color:
-                                                            const Color(0xFF3E78AA),
+                                                        color: const Color(
+                                                            0xFF3E78AA),
                                                       ),
                                                     ),
                                                   ),
@@ -1446,20 +1733,24 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                       .textTheme
                                                       .titleSmall!
                                                       .merge(const TextStyle(
-                                                        fontWeight: FontWeight.w100,
+                                                        fontWeight:
+                                                            FontWeight.w100,
                                                         fontSize: 16.0,
                                                         letterSpacing: 0.3,
-                                                        overflow: TextOverflow.clip,
+                                                        overflow:
+                                                            TextOverflow.clip,
                                                       )),
                                                 ),
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .titleSmall!
                                                     .merge(const TextStyle(
-                                                      fontWeight: FontWeight.w100,
+                                                      fontWeight:
+                                                          FontWeight.w100,
                                                       fontSize: 16.0,
                                                       letterSpacing: 0.3,
-                                                      overflow: TextOverflow.clip,
+                                                      overflow:
+                                                          TextOverflow.clip,
                                                     )),
                                               ),
                                             ),
@@ -1477,18 +1768,20 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                 decoration: InputDecoration(
                                                   border: OutlineInputBorder(
                                                       borderRadius:
-                                                          BorderRadius.circular(5)),
+                                                          BorderRadius.circular(
+                                                              5)),
                                                   suffixIcon: Padding(
                                                     padding:
-                                                        const EdgeInsets.all(12),
+                                                        const EdgeInsets.all(
+                                                            12),
                                                     child: InkWell(
                                                       onTap: () async {
                                                         fromDate();
                                                       },
                                                       child: SvgPicture.asset(
                                                         "assets/svg/calendar_icon.svg",
-                                                        color:
-                                                            const Color(0xFF3E78AA),
+                                                        color: const Color(
+                                                            0xFF3E78AA),
                                                       ),
                                                     ),
                                                   ),
@@ -1497,20 +1790,24 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                       .textTheme
                                                       .titleSmall!
                                                       .merge(const TextStyle(
-                                                        fontWeight: FontWeight.w100,
+                                                        fontWeight:
+                                                            FontWeight.w100,
                                                         fontSize: 14.0,
                                                         letterSpacing: 0.3,
-                                                        overflow: TextOverflow.clip,
+                                                        overflow:
+                                                            TextOverflow.clip,
                                                       )),
                                                 ),
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .titleSmall!
                                                     .merge(const TextStyle(
-                                                      fontWeight: FontWeight.w100,
+                                                      fontWeight:
+                                                          FontWeight.w100,
                                                       fontSize: 14.0,
                                                       letterSpacing: 0.3,
-                                                      overflow: TextOverflow.clip,
+                                                      overflow:
+                                                          TextOverflow.clip,
                                                     )),
                                               ),
                                             ),
@@ -1531,7 +1828,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     ),
                                     child: Align(
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Column(
                                             mainAxisAlignment:
@@ -1548,16 +1846,20 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                       .textTheme
                                                       .titleSmall!
                                                       .merge(const TextStyle(
-                                                        fontWeight: FontWeight.w100,
+                                                        fontWeight:
+                                                            FontWeight.w100,
                                                         fontSize: 14.0,
                                                         letterSpacing: 0.3,
-                                                        overflow: TextOverflow.clip,
+                                                        overflow:
+                                                            TextOverflow.clip,
                                                       )),
                                                   decoration: InputDecoration(
-                                                      border: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  5))),
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5))),
                                                 ),
                                               ),
                                               SizedBox(
@@ -1580,19 +1882,23 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                       TextInputType.number,
                                                   maxLines: 1,
                                                   decoration: InputDecoration(
-                                                      border: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  5))),
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5))),
                                                   controller: minutesEt,
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .titleSmall!
                                                       .merge(const TextStyle(
-                                                        fontWeight: FontWeight.w100,
+                                                        fontWeight:
+                                                            FontWeight.w100,
                                                         fontSize: 14.0,
                                                         letterSpacing: 0.3,
-                                                        overflow: TextOverflow.clip,
+                                                        overflow:
+                                                            TextOverflow.clip,
                                                       )),
                                                 ),
                                               ),
@@ -1634,14 +1940,17 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                     .textTheme
                                                     .titleSmall!
                                                     .merge(const TextStyle(
-                                                      fontWeight: FontWeight.w100,
+                                                      fontWeight:
+                                                          FontWeight.w100,
                                                       fontSize: 12.0,
                                                       letterSpacing: 0.3,
-                                                      overflow: TextOverflow.clip,
+                                                      overflow:
+                                                          TextOverflow.clip,
                                                     )),
                                                 decoration: InputDecoration(
                                                     hintText: "Search",
-                                                    helperStyle: Theme.of(context)
+                                                    helperStyle: Theme.of(
+                                                            context)
                                                         .textTheme
                                                         .titleSmall!
                                                         .merge(const TextStyle(
@@ -1654,8 +1963,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                         )),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                5))),
+                                                            BorderRadius
+                                                                .circular(5))),
                                               )),
                                           SizedBox(
                                             height: 10,
@@ -1665,12 +1974,12 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                             height: 150,
                                             child: Obx(
                                               () => ListView.builder(
-                                                itemCount: taskEmployeeList.length,
+                                                itemCount:
+                                                    taskEmployeeList.length,
                                                 itemBuilder: (context, index) {
                                                   return Padding(
-                                                    padding:
-                                                        const EdgeInsets.symmetric(
-                                                            vertical: 2),
+                                                    padding: const EdgeInsets
+                                                        .symmetric(vertical: 2),
                                                     child: Container(
                                                       width: 180,
                                                       height: 30,
@@ -1684,12 +1993,29 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                                             10)),
                                                             activeColor:
                                                                 Color.fromRGBO(
-                                                                    26, 48, 241, 1),
+                                                                    26,
+                                                                    48,
+                                                                    241,
+                                                                    1),
                                                             value:
                                                                 _taskDepartController
                                                                         .checkBox[
                                                                     index],
                                                             onChanged: (value) {
+                                                              if (employeesID.contains(
+                                                                  taskEmployeeList[
+                                                                          index]
+                                                                      .hRMEId)) {
+                                                                employeesID.remove(
+                                                                    taskEmployeeList[
+                                                                            index]
+                                                                        .hRMEId);
+                                                              } else {
+                                                                employeesID.add(
+                                                                    taskEmployeeList[
+                                                                            index]
+                                                                        .hRMEId!);
+                                                              }
                                                               setState(() {
                                                                 _taskDepartController
                                                                         .checkBox[
@@ -1714,15 +2040,13 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                                         .merge(
                                                                             const TextStyle(
                                                                           fontWeight:
-                                                                              FontWeight
-                                                                                  .bold,
+                                                                              FontWeight.bold,
                                                                           fontSize:
                                                                               12.0,
                                                                           letterSpacing:
                                                                               0.3,
                                                                           overflow:
-                                                                              TextOverflow
-                                                                                  .clip,
+                                                                              TextOverflow.clip,
                                                                         )),
                                                                   ),
                                                                   TextSpan(
@@ -1735,15 +2059,13 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                                         .merge(
                                                                             const TextStyle(
                                                                           fontWeight:
-                                                                              FontWeight
-                                                                                  .w100,
+                                                                              FontWeight.w100,
                                                                           fontSize:
                                                                               12.0,
                                                                           letterSpacing:
                                                                               0.3,
                                                                           overflow:
-                                                                              TextOverflow
-                                                                                  .clip,
+                                                                              TextOverflow.clip,
                                                                         )),
                                                                   ),
                                                                 ])),
@@ -1773,14 +2095,15 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     child: Align(
                                       alignment: Alignment.center,
                                       child: Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(horizontal: 10),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10),
                                         child: TextField(
                                           decoration: InputDecoration(
                                               border: OutlineInputBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(5))),
-                                          controller: hoursEt,
+                                                      BorderRadius.circular(
+                                                          5))),
+                                          controller: etRemarkControllers,
                                           maxLines: 6,
                                         ),
                                       ),
@@ -1790,8 +2113,21 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                               )
                             ],
                           )))),
-             ),
-          )
+            ),
+          ),
+          SizedBox(
+            height: 40,
+          ),
+          MaterialButton(
+            color: Colors.indigoAccent,
+            minWidth: 200,
+            onPressed: () async {
+              await loadImages();
+            },
+          ),
+          SizedBox(
+            height: 40,
+          ),
         ]),
       ),
     );
@@ -1806,6 +2142,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     ).then((value) {
       setState(() {
         selectFromDate.text = getDateFrom(value);
+        selectToDate.text = getDateFrom(value!.add(Duration(days: 5)));
       });
     });
   }
@@ -1856,6 +2193,4 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     _taskDepartController.getTaskEmployeeList.clear();
     super.dispose();
   }
-
 }
-                                    
