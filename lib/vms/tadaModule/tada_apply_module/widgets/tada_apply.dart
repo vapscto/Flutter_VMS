@@ -7,6 +7,8 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/notice_board_staff/widget/staff_widget.dart';
+import 'package:m_skool_flutter/student/gallery_view/widget/gallery_checkbox.container.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/city_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/state_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/city_list_api.dart';
@@ -32,6 +34,10 @@ class TadaApplyWidget extends StatefulWidget {
 class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   TadaApplyDataController tadaApplyDataController =
       Get.put(TadaApplyDataController());
+  final ScrollController _controller = ScrollController();
+  final RxBool selectAllDepartment = RxBool(false);
+  final _addressController = TextEditingController();
+  final _totalAmountController = TextEditingController();
   //
   StateListModelValues? stateListModelValues;
   CityListModelValues? citySelectedValue;
@@ -808,6 +814,240 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             ),
                           )
                         : const SizedBox(),
+                tadaApplyDataController.clintListValues.isNotEmpty
+                    ? Container(
+                        margin:
+                            const EdgeInsets.only(top: 30, left: 16, right: 16),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Container(
+                              height: 160,
+                              padding:
+                                  const EdgeInsets.only(top: 10, bottom: 10),
+                              decoration: BoxDecoration(
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                                borderRadius: BorderRadius.circular(16.0),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    offset: Offset(0, 1),
+                                    blurRadius: 4,
+                                    color: Colors.black12,
+                                  ),
+                                ],
+                              ),
+                              child: RawScrollbar(
+                                thumbColor: const Color(0xFF1E38FC),
+                                trackColor:
+                                    const Color.fromRGBO(223, 239, 253, 1),
+                                trackRadius: const Radius.circular(10),
+                                trackVisibility: true,
+                                radius: const Radius.circular(10),
+                                thickness: 14,
+                                thumbVisibility: true,
+                                controller: _controller,
+                                child: SingleChildScrollView(
+                                  controller: _controller,
+                                  child: ListView.builder(
+                                    itemCount: tadaApplyDataController
+                                        .clintListValues.length,
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemBuilder: (context, index) {
+                                      return SizedBox(
+                                          height: 35,
+                                          child: Obx(() {
+                                            return CheckBoxContainer(
+                                                sectionName:
+                                                    "${tadaApplyDataController.clintListValues.elementAt(index).ismmclTClientName}",
+                                                func: (b) {
+                                                  setState(() {
+                                                    if (b) {
+                                                      tadaApplyDataController
+                                                          .addSelectedValues(
+                                                              tadaApplyDataController
+                                                                  .clintListValues
+                                                                  .elementAt(
+                                                                      index));
+                                                      // clintId =
+                                                      //     '${tadaApplyDataController.clintListValues.elementAt(index).ismmclTId!}';
+                                                      // clintName +=
+                                                      //     '${index + 1} ) ${tadaApplyDataController.clintListValues.elementAt(index).ismmclTClientName} ';
+
+                                                      tadaApplyDataController.addAddress(
+                                                          tadaApplyDataController
+                                                              .clintListValues
+                                                              .elementAt(index)
+                                                              .ismmclTAddress!);
+                                                      int count = 0;
+                                                      _addressController
+                                                          .clear();
+                                                      for (int i = 0;
+                                                          i <
+                                                              tadaApplyDataController
+                                                                  .addressListController
+                                                                  .length;
+                                                          i++) {
+                                                        count++;
+                                                        _addressController
+                                                                .text +=
+                                                            ' $count ) ${tadaApplyDataController.addressListController[i]}  ';
+                                                      }
+                                                    } else {
+                                                      _addressController
+                                                          .clear();
+                                                      selectAllDepartment
+                                                          .value = false;
+                                                      tadaApplyDataController
+                                                          .removeSelectedValues(
+                                                              tadaApplyDataController
+                                                                  .clintListValues
+                                                                  .elementAt(
+                                                                      index));
+                                                      tadaApplyDataController
+                                                          .removeAddress(
+                                                              tadaApplyDataController
+                                                                  .clintListValues
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .ismmclTAddress!);
+                                                      for (int i = 0;
+                                                          i <
+                                                              tadaApplyDataController
+                                                                  .addressListController
+                                                                  .length;
+                                                          i++) {
+                                                        _addressController
+                                                                .text =
+                                                            '${i + 1} ) ${tadaApplyDataController.addressListController.elementAt(i)} ';
+                                                      }
+                                                    }
+                                                  });
+                                                },
+                                                isChecked: RxBool(
+                                                  tadaApplyDataController
+                                                      .clintSelectedValues
+                                                      .contains(
+                                                    tadaApplyDataController
+                                                        .clintListValues
+                                                        .elementAt(index),
+                                                  ),
+                                                ));
+                                          }));
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const ContainerTitle(
+                              iT: Color(0xFFFF6F67),
+                              bg: Color.fromARGB(255, 255, 236, 235),
+                              image: 'assets/images/subjectfielicon.png',
+                              title: 'Select Clint',
+                            ),
+                          ],
+                        ),
+                      )
+                    : const SizedBox(),
+                Container(
+                  margin: const EdgeInsets.only(top: 30, left: 16, right: 16),
+                  child: CustomContainer(
+                    child: TextFormField(
+                      controller: _addressController,
+                      maxLines: 3,
+                      keyboardType: TextInputType.multiline,
+                      style: Get.textTheme.titleSmall!.copyWith(fontSize: 15),
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(
+                            borderSide: BorderSide.none),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        hintText: "Enter Address",
+                        label: Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFDFFBFE),
+                            borderRadius: BorderRadius.circular(24.0),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12.0, vertical: 6.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image.asset(
+                                "assets/images/cap.png",
+                                height: 28.0,
+                              ),
+                              const SizedBox(
+                                width: 6.0,
+                              ),
+                              Text(
+                                " Address",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .merge(
+                                      const TextStyle(
+                                          backgroundColor: Color(0xFFDFFBFE),
+                                          fontSize: 20.0,
+                                          color: Color(0xFF28B6C8)),
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 30, left: 16, right: 16),
+                  child: CustomContainer(
+                    child: TextFormField(
+                      controller: _totalAmountController,
+                      keyboardType: TextInputType.multiline,
+                      style: Get.textTheme.titleSmall!.copyWith(fontSize: 15),
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(
+                            borderSide: BorderSide.none),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        hintText: "Total Amount",
+                        label: Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFDFFBFE),
+                            borderRadius: BorderRadius.circular(24.0),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12.0, vertical: 6.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image.asset(
+                                "assets/images/cap.png",
+                                height: 28.0,
+                              ),
+                              const SizedBox(
+                                width: 6.0,
+                              ),
+                              Text(
+                                "Total Amount",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .merge(
+                                      const TextStyle(
+                                          backgroundColor: Color(0xFFDFFBFE),
+                                          fontSize: 20.0,
+                                          color: Color(0xFF28B6C8)),
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 const SizedBox(
                   height: 16,
                 ),

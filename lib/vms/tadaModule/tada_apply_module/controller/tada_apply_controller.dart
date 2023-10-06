@@ -38,6 +38,7 @@ class TadaApplyDataController extends GetxController {
   }
 
   //**Clint List **//
+  RxList<String> addressListController = <String>[].obs;
   RxList<ClintListModelValues> clintListValues = <ClintListModelValues>[].obs;
   RxList<ClintListModelValues> clintSelectedValues =
       <ClintListModelValues>[].obs;
@@ -48,6 +49,22 @@ class TadaApplyDataController extends GetxController {
     for (int i = 0; i < clintList.length; i++) {
       clintListValues.add(clintList.elementAt(i));
     }
+  }
+
+  void addSelectedValues(ClintListModelValues value) {
+    clintSelectedValues.add(value);
+  }
+
+  void removeSelectedValues(ClintListModelValues value) {
+    clintSelectedValues.remove(value);
+  }
+
+  void addAddress(String controller) {
+    addressListController.add(controller);
+  }
+
+  void removeAddress(String controller) {
+    addressListController.remove(controller);
   }
 
   //city List controller
