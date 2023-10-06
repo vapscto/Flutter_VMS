@@ -6,6 +6,8 @@ import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/allowenc
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/city_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/clint_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/state_list_model.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/model/tada_applied_data_model.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/model/tada_saved_data_model.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 
 class TadaApplyDataController extends GetxController {
@@ -16,6 +18,11 @@ class TadaApplyDataController extends GetxController {
   RxBool isSave = RxBool(false);
   RxBool isEdit = RxBool(false);
   RxBool isPlannerCreate = RxBool(false);
+  RxBool isAppliedDataLoading = RxBool(false);
+
+  void appliedData(bool loading) {
+    isAppliedDataLoading.value = loading;
+  }
 
   void plannerCreate(bool loading) {
     isPlannerCreate.value = loading;
@@ -51,7 +58,7 @@ class TadaApplyDataController extends GetxController {
 
   //**State List* *//
   RxList<StateListModelValues> stateList = <StateListModelValues>[].obs;
-  RxList<GetSaveDataModelValues> getSavedData = <GetSaveDataModelValues>[].obs;
+  RxList<TadaSavedModelValues> getSavedData = <TadaSavedModelValues>[].obs;
 
   void getStateList(List<StateListModelValues> states) {
     if (stateList.isNotEmpty) {
@@ -62,7 +69,7 @@ class TadaApplyDataController extends GetxController {
     }
   }
 
-  void getSavedDataValue(List<GetSaveDataModelValues> data) {
+  void getSavedDataValue(List<TadaSavedModelValues> data) {
     if (getSavedData.isNotEmpty) {
       getSavedData.clear();
     }
@@ -158,4 +165,22 @@ class TadaApplyDataController extends GetxController {
   // attachment
   RxList<AtachmentFile> addListBrowser = <AtachmentFile>[].obs;
   RxList<bool> checkBox = <bool>[].obs;
+  RxList<int> newList = <int>[].obs;
+
+  RxList<TextEditingController> newRemarksController =
+      <TextEditingController>[].obs;
+  RxList<TextEditingController> fileNameController =
+      <TextEditingController>[].obs;
+  // Saved Data
+  RxList<TadaSavedDataModelValues> tadaSavedDataValues =
+      <TadaSavedDataModelValues>[].obs;
+
+  void appliedSaved(List<TadaSavedDataModelValues> values) {
+    if (tadaSavedDataValues.isNotEmpty) {
+      tadaSavedDataValues.clear();
+    }
+    for (int i = 0; i < values.length; i++) {
+      tadaSavedDataValues.add(values.elementAt(i));
+    }
+  }
 }

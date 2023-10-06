@@ -14,22 +14,21 @@ class FileUploadWidget extends StatefulWidget {
 }
 
 class _FileUploadWidgetState extends State<FileUploadWidget> {
-  RxList<int> newList = <int>[].obs;
-  RxList<TextEditingController> remarksController =
-      <TextEditingController>[].obs;
-  RxList<TextEditingController> fileNameController =
-      <TextEditingController>[].obs;
   final ImagePicker _imagePicker = ImagePicker();
   void addRow(int value) {
-    newList.add(value);
-    for (int i = 0; i < newList.length; i++) {
-      remarksController.add(TextEditingController(text: ''));
-      fileNameController.add(TextEditingController(text: ''));
+    widget.tadaApplyDataController.newList.add(value);
+    for (int i = 0; i < widget.tadaApplyDataController.newList.length; i++) {
+      widget.tadaApplyDataController.newRemarksController
+          .add(TextEditingController(text: ''));
+      widget.tadaApplyDataController.fileNameController
+          .add(TextEditingController(text: ''));
     }
+    setState(() {});
   }
 
   void removeRow(int value) {
-    newList.removeAt(value);
+    widget.tadaApplyDataController.newList.removeAt(value);
+    setState(() {});
   }
 
   @override
@@ -43,7 +42,7 @@ class _FileUploadWidgetState extends State<FileUploadWidget> {
     return Obx(() {
       return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 3),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: DataTable(
@@ -65,9 +64,9 @@ class _FileUploadWidgetState extends State<FileUploadWidget> {
                 DataColumn(label: Text("Remarks")),
                 DataColumn(label: Text("Action")),
               ],
-              rows: List.generate(newList.length, (index) {
+              rows: List.generate(widget.tadaApplyDataController.newList.length,
+                  (index) {
                 var value = index + 1;
-                logger.i(value);
                 return DataRow(cells: [
                   DataCell(Text(value.toString())),
                   DataCell(Padding(
@@ -106,25 +105,51 @@ class _FileUploadWidgetState extends State<FileUploadWidget> {
                       child: TextField(
                         style: Get.textTheme.titleSmall!
                             .copyWith(color: Colors.black),
-                        controller: remarksController.elementAt(index),
+                        controller: widget
+                            .tadaApplyDataController.newRemarksController
+                            .elementAt(index),
                       ),
                     ),
                   )),
-                  DataCell(IconButton(
-                      onPressed: () {
-                        setState(() {
-                          (index == 0) ? addRow(index + 1) : removeRow(index);
-                        });
-                      },
-                      icon: (index == 0)
-                          ? Icon(
-                              Icons.add,
-                              color: Theme.of(context).primaryColor,
-                            )
-                          : Icon(
-                              Icons.remove,
-                              color: Theme.of(context).primaryColor,
-                            ))),
+                  DataCell((index == 0)
+                      ? IconButton(
+                          onPressed: () {
+                            setState(() {
+                              addRow(index + 1);
+                            });
+                            setState(() {});
+                          },
+                          icon: Icon(
+                            Icons.add,
+                            color: Theme.of(context).primaryColor,
+                          ))
+                      : Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    addRow(index + 1);
+                                  });
+                                  setState(() {});
+                                },
+                                icon: Icon(
+                                  Icons.add,
+                                  color: Theme.of(context).primaryColor,
+                                )),
+                            IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    removeRow(index);
+                                  });
+                                  setState(() {});
+                                },
+                                icon: Icon(
+                                  Icons.remove,
+                                  color: Theme.of(context).primaryColor,
+                                )),
+                          ],
+                        )),
                 ]);
               })),
         ),

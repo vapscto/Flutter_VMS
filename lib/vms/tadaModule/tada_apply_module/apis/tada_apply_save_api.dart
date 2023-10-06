@@ -24,6 +24,7 @@ class TadaSaveApi {
     required String clintMultiple,
     required List<Map<String, dynamic>> allowanceArray,
     required TadaApplyDataController tadaApplyController,
+    required List<Map<String, dynamic>> fileList,
   }) async {
     var dio = Dio();
     var url = base + URLS.applyTada;
@@ -46,6 +47,7 @@ class TadaSaveApi {
         "VTADAAA_DepartureTime": departureTime,
         "VTADAAA_ArrivalTime": arrivalTime,
         "VTADAAA_ClientMultiple": clintMultiple,
+        "filelist": fileList
       });
       logger.i({
         "IVRMMCT_Id": ctId,
@@ -60,6 +62,7 @@ class TadaSaveApi {
         "VTADAAA_DepartureTime": departureTime,
         "VTADAAA_ArrivalTime": arrivalTime,
         "VTADAAA_ClientMultiple": clintMultiple,
+        "filelist": fileList
       });
       logger.i(response.data);
       logger.i(response.statusCode);

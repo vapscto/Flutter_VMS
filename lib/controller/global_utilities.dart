@@ -77,6 +77,7 @@ RxBool isPageLoading = false.obs;
 RxString mobileNumber = "".obs;
 RxString passWord = "".obs;
 RxInt currentAuthTab = 0.obs;
+RxInt currentTab = 0.obs;
 Dio? dio;
 
 Dio getGlobalDio() {
