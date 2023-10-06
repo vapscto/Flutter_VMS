@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/state_li
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/city_list_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/state_list_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/widgets/file_upload_widget.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
@@ -116,36 +117,38 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                   animationPath: "assets/json/default.json"),
             )
           : ListView(
-              padding: const EdgeInsets.all(16.0),
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Note:",
-                      style: Get.textTheme.titleMedium!
-                          .copyWith(color: Theme.of(context).primaryColor),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "* TA-DA Should Be Applied with 48 Hours of Arrival",
-                      style: Get.textTheme.titleSmall!
-                          .copyWith(color: Colors.red, fontSize: 10),
-                    ),
-                    Text(
-                      "* If Daily Report Not Generated TADA Not Applicable",
-                      style: Get.textTheme.titleSmall!
-                          .copyWith(color: Colors.red, fontSize: 10),
-                    ),
-                    Text(
-                      "* New TADA is not applicable until previous TADA is settled",
-                      style: Get.textTheme.titleSmall!
-                          .copyWith(color: Colors.red, fontSize: 10),
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Note:",
+                        style: Get.textTheme.titleMedium!
+                            .copyWith(color: Theme.of(context).primaryColor),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "* TA-DA Should Be Applied with 48 Hours of Arrival",
+                        style: Get.textTheme.titleSmall!
+                            .copyWith(color: Colors.red, fontSize: 10),
+                      ),
+                      Text(
+                        "* If Daily Report Not Generated TADA Not Applicable",
+                        style: Get.textTheme.titleSmall!
+                            .copyWith(color: Colors.red, fontSize: 10),
+                      ),
+                      Text(
+                        "* New TADA is not applicable until previous TADA is settled",
+                        style: Get.textTheme.titleSmall!
+                            .copyWith(color: Colors.red, fontSize: 10),
+                      ),
+                    ],
+                  ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.only(top: 20, left: 16, right: 16),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -385,7 +388,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 30),
+                  margin: const EdgeInsets.only(top: 30, left: 16, right: 16),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -577,7 +580,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                 tadaApplyDataController.stateList.isEmpty
                     ? const SizedBox()
                     : Container(
-                        margin: const EdgeInsets.only(top: 30, bottom: 0),
+                        margin: const EdgeInsets.only(
+                            top: 30, bottom: 0, left: 16, right: 16),
                         decoration: BoxDecoration(
                           color: Theme.of(context).scaffoldBackgroundColor,
                           borderRadius: BorderRadius.circular(10.0),
@@ -692,7 +696,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                       )
                     : tadaApplyDataController.cityList.isNotEmpty
                         ? Container(
-                            margin: const EdgeInsets.only(top: 30, bottom: 0),
+                            margin: const EdgeInsets.only(
+                                top: 30, bottom: 0, right: 16, left: 16),
                             decoration: BoxDecoration(
                               color: Theme.of(context).scaffoldBackgroundColor,
                               borderRadius: BorderRadius.circular(10.0),
@@ -803,6 +808,12 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             ),
                           )
                         : const SizedBox(),
+                const SizedBox(
+                  height: 16,
+                ),
+                FileUploadWidget(
+                  tadaApplyDataController: tadaApplyDataController,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 30),
                   child: Align(

@@ -3,6 +3,7 @@ import 'package:m_skool_flutter/vms/tadaModule/model/get_save_data_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/city_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/clint_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/state_list_model.dart';
+import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 
 class TadaApplyDataController extends GetxController {
   RxBool isErrorLoading = RxBool(false);
@@ -64,4 +65,8 @@ class TadaApplyDataController extends GetxController {
       cityList.add(city.elementAt(i));
     }
   }
+
+  // attachment
+  RxList<AtachmentFile> addListBrowser = <AtachmentFile>[].obs;
+  RxList<bool> checkBox = <bool>[].obs;
 }
