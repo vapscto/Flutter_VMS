@@ -504,6 +504,10 @@ class URLS {
   //TADA Apply Apis
   static String stateAndClintList = 'api/TADA_ApplyFacade/getalldata/';
   static String tadaCityList = 'api/TADA_ApplyFacade/getstate/';
+  static String tadaAllowense = 'api/TADA_ApplyFacade/TadaAllwence/';
+  static String tadaApplyDeactive = 'api/TADA_ApplyFacade/deactive/';
+  static String applyTada = 'api/TADA_ApplyFacade/savedta/';
+  static String tadaApplyEdit = 'api/TADA_ApplyFacade/edit/';
 
   ///***  PETTY CASH APPROVAL  ***///
 
@@ -556,5 +560,5 @@ class URLS {
   // VMS common
   static String logintransation = 'api/LoginFacade/getRoleData';
 
-  static String saveTaskCreation="api/ISM_TaskCreationFacade/savedata/";
+  static String saveTaskCreation = "api/ISM_TaskCreationFacade/savedata/";
 }

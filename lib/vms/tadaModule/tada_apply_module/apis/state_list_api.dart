@@ -32,7 +32,7 @@ class StateListAPI {
         // logger.i(response.data['state']);
         StateListModel stateListModel =
             StateListModel.fromJson(response.data['state']);
-        tadaApplyController.getState(stateListModel.values!);
+        tadaApplyController.getStateList(stateListModel.values!);
         ClintListModel clintListModel =
             ClintListModel.fromJson(response.data['client_Master']);
         tadaApplyController.getClintList(clintListModel.values!);
