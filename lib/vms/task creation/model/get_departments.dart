@@ -207,3 +207,28 @@ class AtachmentFile{
   XFile? file;
  AtachmentFile({required this.id,required this.FileName,   this.file}) ;
 }
+class UploadAttachment {
+  String? iSMTCRATAttatchment;
+  String? iSMTCRATFile;
+
+  UploadAttachment({ required this.iSMTCRATAttatchment,required this.iSMTCRATFile});
+
+  UploadAttachment.fromJson(Map<String, dynamic> json) {
+    iSMTCRATAttatchment = json['ISMTCRAT_Attatchment'];
+    iSMTCRATFile = json['ISMTCRAT_File'];
+  }
+ 
+factory  UploadAttachment.fromMap(Map<String, dynamic> map) {
+  return UploadAttachment(
+iSMTCRATAttatchment: map['ISMTCRAT_Attatchment'] as String,
+iSMTCRATFile:map['ISMTCRAT_File'] as String
+  );
+}
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['ISMTCRAT_Attatchment'] = this.iSMTCRATAttatchment;
+    data['ISMTCRAT_File'] = this.iSMTCRATFile;
+    return data;
+  }
+}
