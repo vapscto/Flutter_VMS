@@ -30,8 +30,6 @@ class VmsTransationAPI {
             "roleId": roleId
           });
       if (response.statusCode == 200) {
-        logger.i(url);
-        logger.e(response.data['transnumconfig']);
         TransationConfigModel transationConfigModel =
             TransationConfigModel.fromJson(response.data['transnumconfig']);
         vmsTransationController

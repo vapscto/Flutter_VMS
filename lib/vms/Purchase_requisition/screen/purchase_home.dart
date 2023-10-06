@@ -53,6 +53,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
       <TextEditingController>[].obs;
   final totalAmount = TextEditingController();
   int newAmount = 0;
+  final commonRemarksController = TextEditingController();
 
   VmsTransationController vmsTransationController =
       Get.put(VmsTransationController());
@@ -171,9 +172,37 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
   }
 
   _saveData() async {
+    int miIdNew = 0;
+    int hrmdId = 0;
+    int invmId = 0;
+    int invmmouId = 0;
+    int invmprId = 0;
+    int invtprId = 0;
+    double quantity = 0.0;
+    double approxAmount = 0.0;
+    double approvedQuantity = 0.0;
+    double unitRate = 0.0;
     for (int i = 0;
         i < purchaseRequisitionController.getrequestGetItemList.length;
         i++) {
+      miIdNew = purchaseRequisitionController.getrequestGetItemList[i].mIIdNew!;
+      hrmdId = purchaseRequisitionController.getrequestGetItemList[i].hrmDId!;
+      invmId = purchaseRequisitionController.getrequestGetItemList[i].invmIId!;
+      invmprId =
+          purchaseRequisitionController.getrequestGetItemList[i].invmpRId!;
+      invmmouId =
+          purchaseRequisitionController.getrequestGetItemList[i].invmuoMId!;
+      invtprId =
+          purchaseRequisitionController.getrequestGetItemList[i].invtpRId!;
+      quantity =
+          purchaseRequisitionController.getrequestGetItemList[i].invtpRPRQty!;
+      approxAmount = purchaseRequisitionController
+          .getrequestGetItemList[i].invtpRApproxAmount!;
+      approvedQuantity = purchaseRequisitionController
+          .getrequestGetItemList[i].invtpRApprovedQty!;
+      unitRate = purchaseRequisitionController
+          .getrequestGetItemList[i].invtpRPRUnitRate!;
+      //
       arrayPR.add({
         "INVTPR_Id":
             purchaseRequisitionController.getrequestGetItemList[i].invtpRId,
@@ -199,21 +228,21 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
         purchaseRequisitionController: purchaseRequisitionController,
         body: {
           "MI_Id": widget.loginSuccessModel.mIID,
-          "MI_IdNew": 20,
-          "HRMD_Id": 0,
+          "MI_IdNew": miIdNew,
+          "HRMD_Id": hrmdId,
           "ASMAY_Id": widget.loginSuccessModel.asmaYId,
           "UserId": widget.loginSuccessModel.userId,
-          "INVMI_Id": 0,
-          "INVMUOM_Id": 0,
-          "INVMPR_Id": 619,
-          "INVMPR_PRDate": "2023-10-04",
-          "INVMPR_Remarks": "Visiting cards",
-          "INVMPR_ApproxTotAmount": 30.00,
-          "INVTPR_Id": 0,
-          "INVTPR_PRQty": 0.0,
-          "INVTPR_ApproxAmount": 0.0,
-          "INVTPR_ApprovedQty": 0.0,
-          "INVTPR_PRUnitRate": 0.0,
+          "INVMI_Id": invmId,
+          "INVMUOM_Id": invmmouId,
+          "INVMPR_Id": invmprId,
+          "INVMPR_PRDate": _dateController.text,
+          "INVMPR_Remarks": commonRemarksController.text,
+          "INVMPR_ApproxTotAmount": totalAmount.text,
+          "INVTPR_Id": invtprId,
+          "INVTPR_PRQty": quantity,
+          "INVTPR_ApproxAmount": approxAmount,
+          "INVTPR_ApprovedQty": approvedQuantity,
+          "INVTPR_PRUnitRate": unitRate,
           "transnumbconfigurationsettingsss": transnumbconfigurationsettingsss,
           "arrayPR": arrayPR,
         });
@@ -877,6 +906,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                           // ),
                           const SizedBox(height: 16),
                           TextFormField(
+                            controller: commonRemarksController,
                             maxLines: 6,
                             style: const TextStyle(fontWeight: FontWeight.w100),
                             decoration: InputDecoration(
