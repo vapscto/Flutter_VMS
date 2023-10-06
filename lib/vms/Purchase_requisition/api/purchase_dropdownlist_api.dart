@@ -32,7 +32,7 @@ getPurchaseRequisitionApi({
     });
 
     // logger.i(response.data['get_mi_list']);
-    logger.i(response.data['get_item']);
+    // logger.i(response.data['get_item']);
 
     if (response.data['get_mi_list'] != null) {
       controller.updateIsErrorOccuredRequestRequisition(true);

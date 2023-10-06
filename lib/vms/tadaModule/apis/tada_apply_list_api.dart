@@ -30,6 +30,8 @@ class TADAApplyListAPI {
         data: {"UserId": userId},
         options: Options(headers: getSession()),
       );
+      logger.i(url2);
+      logger.i({"UserId": userId});
       if (response.statusCode == 200) {
         Getadvancetada getadvancetada =
             Getadvancetada.fromJson(response.data['getadvancetada']);

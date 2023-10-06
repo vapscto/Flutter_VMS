@@ -489,16 +489,23 @@ class URLS {
 
   // static String purchaseindentapi = "api/IndentApprovalFacade/getloaddata/";
 
-  //** TADA Apply APIS* *//
+  //** TADA Advance Apply APIS* *//
   static String stateList = 'api/TADA_Advance_ApplyFacade/getalldata/';
   static String cityList = 'api/TADA_Advance_ApplyFacade/getstate/';
   static String allowense = 'api/TADA_Advance_ApplyFacade/TadaAllwence/';
   static String saveTada = 'api/TADA_Advance_ApplyFacade/savedta/';
+  static String tadaEdit = 'api/TADA_Advance_ApplyFacade/edit/';
+  static String tadaDeactive = 'api/TADA_Advance_ApplyFacade/deactive/';
   //** TADA Approval APIS **//
   static String tadaSave = 'api/TADAAdvanceApprovalFacade/savedta';
   static String tadaList = 'api/TADAAdvanceApprovalFacade/getalldata/';
   static String tadaDetails = 'api/TADAAdvanceApprovalFacade/edit';
-  static String tadaEdit = 'api/TADA_Advance_ApplyFacade/edit/';
+
+  //TADA Apply Apis
+  static String stateAndClintList = 'api/TADA_ApplyFacade/getalldata/';
+  static String tadaCityList = 'api/TADA_ApplyFacade/getstate/';
+
+  ///***  PETTY CASH APPROVAL  ***///
 
   static String onChangeInstitution =
       "api/PC_Indent_ApprovalFacade/OnChangeInstitution";
@@ -515,6 +522,19 @@ class URLS {
 
   static String saveRecordPC = "api/PC_Indent_ApprovalFacade/saverecord";
 
+  ///*** PETTY CASH REQUISITION ***/
+
+  static String departmentonLoadPCRequest =
+      "api/PC_RequisitionFacade/onloaddata";
+
+  static String employeeListPCRequest = "api/PC_RequisitionFacade/onchangedept";
+
+  static String reqDetailsSaveRecord = "api/PC_RequisitionFacade/saverecord";
+
+  static String viewDataPcReq = "api/PC_RequisitionFacade/Viewdata";
+
+  ///***   ***///
+
   static String taskGetDetails = "api/ISM_TaskCreationFacade/getdetails/";
 
   static String taskGetProjects = "api/ISM_TaskCreationFacade/get_category/";
@@ -525,11 +545,16 @@ class URLS {
   static String assignTaskList =
       'api/ISM_PlannerCreationFacade/geteffortdetails';
 
-  static String purchaserequisitionapi = 'api/INV_PurchaseRequisitionFacade/GetOnchangeData/';
+  static String purchaserequisitionapi =
+      'api/INV_PurchaseRequisitionFacade/GetOnchangeData/';
+  static String purchaseRequisitionSave =
+      'api/INV_PurchaseRequisitionFacade/savedetails/';
 
-  static String savePlanner='api/ISM_PlannerCreationFacade/savePlanner/';
-  static String onchangeMoudleChange="api/ISM_TaskCreationFacade/getIEuser/";
+  static String savePlanner = 'api/ISM_PlannerCreationFacade/savePlanner/';
+  static String onchangeMoudleChange = "api/ISM_TaskCreationFacade/getIEuser/";
 
-  static String saveTaskCreation="api/ISM_TaskCreationFacade/savedata/";
+  // VMS common
+  static String logintransation = 'api/LoginFacade/getRoleData';
 
+  static String saveTaskCreation="";
 }

@@ -9,10 +9,13 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/api/purchase_dropdownlist_api.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/api/purchase_getitem_api.dart';
+import 'package:m_skool_flutter/vms/Purchase_requisition/api/purchase_save_api.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/controller/purchase_controller.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_Model.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_getitem.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_items_model.dart';
+import 'package:m_skool_flutter/vms/api/vms_transation_api.dart';
+import 'package:m_skool_flutter/vms/controller/vms_common_controller.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -50,9 +53,74 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
       <TextEditingController>[].obs;
   final totalAmount = TextEditingController();
   int newAmount = 0;
+  final commonRemarksController = TextEditingController();
+
+  VmsTransationController vmsTransationController =
+      Get.put(VmsTransationController());
+  List<Map<String, dynamic>> arrayPR = [];
+  Map<String, dynamic> transnumbconfigurationsettingsss = {};
+  _getTransation() async {
+    String password = logInBox!.get("password");
+    await VmsTransationAPI.instance.getTransation(
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+        vmsTransationController: vmsTransationController,
+        userName: widget.loginSuccessModel.userName!,
+        password: password,
+        miId: widget.loginSuccessModel.mIID!,
+        roleId: widget.loginSuccessModel.roleId!);
+    for (int index = 0;
+        index < vmsTransationController.transationConfigmodel.length;
+        index++) {
+      transnumbconfigurationsettingsss.addAll({
+        "IMN_Id": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNId,
+        "MI_Id":
+            vmsTransationController.transationConfigmodel.elementAt(index).mIId,
+        "IMN_AutoManualFlag": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNAutoManualFlag,
+        "IMN_StartingNo": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNStartingNo,
+        "IMN_WidthNumeric": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNWidthNumeric,
+        "IMN_ZeroPrefixFlag": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNZeroPrefixFlag,
+        "IMN_PrefixAcadYearCode": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNPrefixAcadYearCode,
+        "IMN_PrefixParticular": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNPrefixParticular,
+        "IMN_SuffixAcadYearCode": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNSuffixAcadYearCode,
+        "IMN_SuffixParticular": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNSuffixParticular,
+        "IMN_RestartNumFlag": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNRestartNumFlag,
+        "IMN_Flag": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNFlag,
+        "ASMAY_Id": widget.loginSuccessModel.asmaYId,
+        "CreatedDate": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .createdDate,
+        "UpdatedDate": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .updatedDate,
+      });
+    }
+  }
 
   @override
   void initState() {
+    _getTransation();
     load(widget.loginSuccessModel.mIID!);
     addControllerData(1);
     super.initState();
@@ -101,6 +169,85 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
     sum -= amount;
     totalAmount.text = sum.toString();
     setState(() {});
+  }
+
+  _saveData() async {
+    int miIdNew = 0;
+    int hrmdId = 0;
+    int invmId = 0;
+    int invmmouId = 0;
+    int invmprId = 0;
+    int invtprId = 0;
+    double quantity = 0.0;
+    double approxAmount = 0.0;
+    double approvedQuantity = 0.0;
+    double unitRate = 0.0;
+    for (int i = 0;
+        i < purchaseRequisitionController.getrequestGetItemList.length;
+        i++) {
+      miIdNew = purchaseRequisitionController.getrequestGetItemList[i].mIIdNew!;
+      hrmdId = purchaseRequisitionController.getrequestGetItemList[i].hrmDId!;
+      invmId = purchaseRequisitionController.getrequestGetItemList[i].invmIId!;
+      invmprId =
+          purchaseRequisitionController.getrequestGetItemList[i].invmpRId!;
+      invmmouId =
+          purchaseRequisitionController.getrequestGetItemList[i].invmuoMId!;
+      invtprId =
+          purchaseRequisitionController.getrequestGetItemList[i].invtpRId!;
+      quantity =
+          purchaseRequisitionController.getrequestGetItemList[i].invtpRPRQty!;
+      approxAmount = purchaseRequisitionController
+          .getrequestGetItemList[i].invtpRApproxAmount!;
+      approvedQuantity = purchaseRequisitionController
+          .getrequestGetItemList[i].invtpRApprovedQty!;
+      unitRate = purchaseRequisitionController
+          .getrequestGetItemList[i].invtpRPRUnitRate!;
+      //
+      arrayPR.add({
+        "INVTPR_Id":
+            purchaseRequisitionController.getrequestGetItemList[i].invtpRId,
+        "INVMPR_Id":
+            purchaseRequisitionController.getrequestGetItemList[i].invmpRId,
+        "INVMI_Id":
+            purchaseRequisitionController.getrequestGetItemList[i].invmIId,
+        "INVMUOM_Id":
+            purchaseRequisitionController.getrequestGetItemList[i].invmuoMId,
+        "INVTPR_PRQty":
+            purchaseRequisitionController.getrequestGetItemList[i].invtpRPRQty,
+        "INVTPR_ApproxAmount": amountController.elementAt(i).text,
+        "INVTPR_ApprovedQty": quantityController.elementAt(i).text,
+        "INVTPR_PRUnitRate": rateController.elementAt(i).text,
+        "INVTPR_Remarks": remarksController.elementAt(i).text,
+        "INVTPR_ActiveFlg": purchaseRequisitionController
+            .getrequestGetItemList[i].invtpRActiveFlg
+      });
+    }
+    purchaseRequisitionController.saveLoading(true);
+    await PurchaseSaveAPI.instance.purchaseSave(
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+        purchaseRequisitionController: purchaseRequisitionController,
+        body: {
+          "MI_Id": widget.loginSuccessModel.mIID,
+          "MI_IdNew": miIdNew,
+          "HRMD_Id": hrmdId,
+          "ASMAY_Id": widget.loginSuccessModel.asmaYId,
+          "UserId": widget.loginSuccessModel.userId,
+          "INVMI_Id": invmId,
+          "INVMUOM_Id": invmmouId,
+          "INVMPR_Id": invmprId,
+          "INVMPR_PRDate": _dateController.text,
+          "INVMPR_Remarks": commonRemarksController.text,
+          "INVMPR_ApproxTotAmount": totalAmount.text,
+          "INVTPR_Id": invtprId,
+          "INVTPR_PRQty": quantity,
+          "INVTPR_ApproxAmount": approxAmount,
+          "INVTPR_ApprovedQty": approvedQuantity,
+          "INVTPR_PRUnitRate": unitRate,
+          "transnumbconfigurationsettingsss": transnumbconfigurationsettingsss,
+          "arrayPR": arrayPR,
+        });
+    purchaseRequisitionController.saveLoading(false);
+    Get.back();
   }
 
   DateTime? selectedDate;
@@ -759,6 +906,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                           // ),
                           const SizedBox(height: 16),
                           TextFormField(
+                            controller: commonRemarksController,
                             maxLines: 6,
                             style: const TextStyle(fontWeight: FontWeight.w100),
                             decoration: InputDecoration(
@@ -841,7 +989,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                   size: const Size.fromWidth(100),
                                   title: "Save",
                                   onPress: () {
-                                    // saveData();
+                                    _saveData();
                                   },
                                 ),
                               ),
@@ -851,9 +999,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                 child: MSkollBtn(
                                   size: const Size.fromWidth(100),
                                   title: "Exit",
-                                  onPress: () {
-                                    // saveData();
-                                  },
+                                  onPress: () {},
                                 ),
                               ),
                             ],

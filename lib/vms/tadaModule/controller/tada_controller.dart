@@ -30,7 +30,9 @@ class TADAController {
     if (tadaData.isNotEmpty) {
       tadaData.clear();
     }
-    tadaData.addAll(newtadaData);
+    for (int index = 0; index < newtadaData.length; index++) {
+      tadaData.add(newtadaData.elementAt(index));
+    }
   }
 
   void getTimeArray(List<TimeArrayTADADataValues> timeArray) async {

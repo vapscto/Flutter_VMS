@@ -60,9 +60,11 @@ import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.da
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
+import 'package:m_skool_flutter/vms/petty_cash_requisition/screen/pc_requisition_HOME.dart';
 import 'package:m_skool_flutter/vms/security/screen/Shome_Screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tadaApply/screens/tada_advance_aplay_home.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/screens/tada_advance_aplay_home.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/tada_apply_home_screen.dart';
 import 'package:m_skool_flutter/vms/task%20creation/screens/taskCreationHome.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -772,6 +774,9 @@ void openMappedPages(
           mskoolController: mskoolController,
         ));
   }
+
+  ///PETTY CASH ///
+
   if (pageName == "Petty Cash Approval") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return PCApprovalHome(
@@ -780,6 +785,27 @@ void openMappedPages(
       );
     }));
   }
+
+  if (pageName == "Petty Cash  Requisition") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return PCRequisitionHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+  }
+
+  if (pageName == "Cash Request") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return PCRequisitionHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+  }
+
+  ///////////////
+
   if (pageName == "Student Birth Day Report") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return StudentBdayHome(
@@ -830,8 +856,6 @@ void openMappedPages(
     return;
   }
 
-
-
   if (pageName == "Purchase Requisition") {
     Get.to(() => PurchaserequisitionHome(
           loginSuccessModel: loginSuccessModel,
@@ -839,7 +863,6 @@ void openMappedPages(
         ));
     return;
   }
-
 
   if (pageName == "View Notice") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -1026,12 +1049,12 @@ void openMappedPages(
 
     return;
   }
-  if (pageName == "Leave Approval Staff") {
+  if (pageName == "Leave Approval") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return StaffLeaveApproval(
+      return TadaApplyHomeScreen(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
-        title: pageName,
+        // title: pageName,
       );
     }));
 

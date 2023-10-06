@@ -3,8 +3,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tadaApply/controller/tada_apply_controller.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/save_tada.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/controller/tada_apply_controller.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/save_tada.dart';
 
 class TadaSaveApi {
   TadaSaveApi.init();
@@ -41,7 +41,7 @@ class TadaSaveApi {
         "VTADAAA_TotalAppliedAmount": totalAppliedAmount,
         "VTADAAA_ToAddress": toAddress,
         "VTADAAA_Remarks": remarks,
-        "AllowanceArray": allowanceArray,
+        "AllowenceArray": allowanceArray,
         "VTADAAA_Id": vtadaaaId,
         "VTADAAA_DepartureTime": departureTime,
         "VTADAAA_ArrivalTime": arrivalTime,
@@ -55,7 +55,7 @@ class TadaSaveApi {
         "VTADAAA_TotalAppliedAmount": totalAppliedAmount,
         "VTADAAA_ToAddress": toAddress,
         "VTADAAA_Remarks": remarks,
-        "AllowanceArray": allowanceArray,
+        "AllowenceArray": allowanceArray,
         "VTADAAA_Id": vtadaaaId,
         "VTADAAA_DepartureTime": departureTime,
         "VTADAAA_ArrivalTime": arrivalTime,

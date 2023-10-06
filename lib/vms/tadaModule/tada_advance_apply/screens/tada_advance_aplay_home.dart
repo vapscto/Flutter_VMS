@@ -10,15 +10,15 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/widget/staff_widget.dart';
 import 'package:m_skool_flutter/student/gallery_view/widget/gallery_checkbox.container.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tadaApply/api/check_planner_api.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tadaApply/api/tada_allowense_api.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tadaApply/api/tada_city_list_api.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tadaApply/api/tada_edit_api.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tadaApply/api/tada_save_api.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tadaApply/api/tada_state_list_api.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tadaApply/controller/tada_apply_controller.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/city_list_model.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tadaApply/model/state_list_model.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/api/check_planner_api.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/api/tada_allowense_api.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/api/tada_city_list_api.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/api/tada_edit_api.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/api/tada_save_api.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/api/tada_state_list_api.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/controller/tada_apply_controller.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/city_list_model.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/state_list_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -200,7 +200,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
   editData(int id) {
     tadaApplyController.editData(true);
     TadaEditAPI.instance.tadaEditData(
-        base: 'issuemanager',
+        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         userId: widget.loginSuccessModel.userId!,
         miId: widget.loginSuccessModel.mIID!,
         vtadaaaId: id,
@@ -1818,18 +1818,24 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                           tadaApplyController.getSavedData[index].vtadaaAId!);
                       flag = tadaApplyController
                           .getSavedData[index].vtadaaAActiveFlg!;
-                      logger.e("===$flag");
-                      logger.i(tadaApplyController
-                          .getSavedData[index].vtadaaAActiveFlg!);
                     });
                   },
-                  child: (flag == true)
-                      ? Text(
-                          "Deactivate",
-                          style: Get.textTheme.titleMedium!.copyWith(
-                              color: Colors.red,
-                              fontWeight: FontWeight.w200,
-                              fontStyle: FontStyle.italic),
+                  child: (tadaApplyController.getSavedData
+                              .elementAt(index)
+                              .vtadaaAActiveFlg! ==
+                          true)
+                      ? Row(
+                          children: [
+                            IconButton(
+                                onPressed: () {}, icon: const Icon(Icons.edit)),
+                            Text(
+                              "Deactivate",
+                              style: Get.textTheme.titleMedium!.copyWith(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.w200,
+                                  fontStyle: FontStyle.italic),
+                            ),
+                          ],
                         )
                       : Text(
                           "Activate",
@@ -1845,9 +1851,9 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
     );
   }
 
-  var date;
-  var time;
-  var tosavedDate;
-  var toSavedTime;
+  var date = '';
+  var time = '';
+  var tosavedDate = '';
+  var toSavedTime = '';
   bool flag = false;
 }

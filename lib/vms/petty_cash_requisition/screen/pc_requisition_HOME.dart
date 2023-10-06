@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
-import 'package:m_skool_flutter/vms/issue_manager/planner_creation/widgets/planner_create.dart';
-import 'package:m_skool_flutter/vms/issue_manager/planner_creation/widgets/planner_status.dart';
-import 'package:m_skool_flutter/vms/petty_cash_approval/controller/petty_cash_approval_controller.dart';
+import 'package:m_skool_flutter/vms/petty_cash_requisition/tabs/particular_requisition.dart';
+import 'package:m_skool_flutter/vms/petty_cash_requisition/tabs/requisition_details.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
-class PlannerCreateHomeScreen extends StatefulWidget {
+class PCRequisitionHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-
-  const PlannerCreateHomeScreen({
-    super.key,
-    required this.loginSuccessModel,
-    required this.mskoolController,
-  });
+  const PCRequisitionHome({super.key,
+  required this.loginSuccessModel,
+  required this.mskoolController});
 
   @override
-  State<PlannerCreateHomeScreen> createState() =>
-      _PlannerCreateHomeScreenState();
+  State<PCRequisitionHome> createState() => _PCRequisitionHomeState();
 }
 
-class _PlannerCreateHomeScreenState extends State<PlannerCreateHomeScreen>
-    with SingleTickerProviderStateMixin {
+class _PCRequisitionHomeState extends State<PCRequisitionHome> with SingleTickerProviderStateMixin {
+  
+
+
   TabController? tabController;
 
   @override
@@ -36,22 +34,24 @@ class _PlannerCreateHomeScreenState extends State<PlannerCreateHomeScreen>
   @override
   void dispose() {
     tabController!.dispose();
+    // Get.delete<PettyCashApprovalController>();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Planner Creation").getAppBar(),
+      appBar: CustomAppBar(title: "Petty Cash Requisition").getAppBar(),
       body: Column(
+
         children: [
           Container(
             color: Theme.of(context).scaffoldBackgroundColor,
             child: CustomTabBar(
               tabController: tabController!,
               tabs: const [
-                CustomTab(name: "Creat Planner", asset: ""),
-                CustomTab(name: "Planner Status", asset: ""),
+                CustomTab(
+                    name: "Requisition", asset: "assets/svg/calendar.svg"),
+                CustomTab(name: "Requisition Details", asset: "assets/svg/calendar.svg"),
               ],
             ),
           ),
@@ -60,18 +60,20 @@ class _PlannerCreateHomeScreenState extends State<PlannerCreateHomeScreen>
               physics: const NeverScrollableScrollPhysics(),
               controller: tabController,
               children: [
-                PlannerCreateWidget(
+                PcRequisitionScreen(
                   loginSuccessModel: widget.loginSuccessModel,
                   mskoolController: widget.mskoolController,
                 ),
-                PlannerStatusWidget(
+                PcRequisitionDetailsScreen(
                   loginSuccessModel: widget.loginSuccessModel,
                   mskoolController: widget.mskoolController,
                 ),
+                
               ],
             ),
           ),
         ],
+
       ),
     );
   }
