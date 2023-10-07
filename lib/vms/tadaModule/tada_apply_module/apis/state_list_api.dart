@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/vms/tadaModule/model/get_save_data_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/clint_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/state_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/model/tada_saved_data_model.dart';
 
 class StateListAPI {
   StateListAPI.init();
@@ -32,13 +33,13 @@ class StateListAPI {
         // logger.i(response.data['state']);
         StateListModel stateListModel =
             StateListModel.fromJson(response.data['state']);
-        tadaApplyController.getState(stateListModel.values!);
+        tadaApplyController.getStateList(stateListModel.values!);
         ClintListModel clintListModel =
             ClintListModel.fromJson(response.data['client_Master']);
         tadaApplyController.getClintList(clintListModel.values!);
         if (response.data['getReport'] != null) {
-          GetSaveDataModel getSaveDataModel =
-              GetSaveDataModel.fromJson(response.data['getReport']);
+          TadaSavedModel getSaveDataModel =
+              TadaSavedModel.fromJson(response.data['getReport']);
           tadaApplyController.getSavedDataValue(getSaveDataModel.values!);
         }
         tadaApplyController.stateLoading(false);

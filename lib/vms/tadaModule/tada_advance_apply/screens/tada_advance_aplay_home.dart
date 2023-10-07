@@ -1187,7 +1187,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                   ),
                                 ),
                               ),
-                              (isTableLoading != true)
+                              isTableLoading == false
                                   ? const SizedBox()
                                   : tadaApplyController.allowenseData.isNotEmpty
                                       ? SingleChildScrollView(
