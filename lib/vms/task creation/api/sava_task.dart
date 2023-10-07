@@ -141,6 +141,7 @@ Future<bool> saveTask({
     "ISMTCR_Status": "Open",
     "ISMTCRCL_Id": 0,
     "ISMMCLT_Id": ISMMCLT_Id,
+    "TaskDay":TaskDay,
     "TimeRequiredFlg": "HOURS",
     "attachmentArray":  att,
     "effortinhrs": effortinhrs,

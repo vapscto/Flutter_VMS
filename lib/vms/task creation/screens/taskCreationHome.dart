@@ -1701,6 +1701,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                     child: SizedBox(
                                                       width: 200,
                                                       child: TextField(
+                                                      
                                                         onTap: () async {
                                                           await showDatePicker(
                                                             context: context,
@@ -1722,6 +1723,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                         readOnly: true,
                                                         controller:
                                                             etDayControllers,
+                                                            
                                                         decoration:
                                                             InputDecoration(
                                                           border:
@@ -2226,6 +2228,19 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 10),
                                           child: TextField(
+                                            style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall!
+                                                            .merge(
+                                                                const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.w100,
+                                                              fontSize: 16.0,
+                                                              letterSpacing: 0.3,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .clip,
+                                                            )),
                                             decoration: InputDecoration(
                                                 border: OutlineInputBorder(
                                                     borderRadius:
