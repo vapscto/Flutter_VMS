@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,7 +12,9 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/widget/staff_widget.dart';
 import 'package:m_skool_flutter/student/gallery_view/widget/gallery_checkbox.container.dart';
+import 'package:m_skool_flutter/student/homework/model/upload_hw_cw_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/city_list_model.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/clint_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/state_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/applied_deta_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/check_apply_planner_api.dart';
@@ -22,6 +26,7 @@ import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/tada_apply
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/widgets/applied_table_widget.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/widgets/file_upload_widget.dart';
+import 'package:m_skool_flutter/vms/task%20creation/api/sava_task.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
@@ -51,6 +56,10 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   //
   StateListModelValues? stateListModelValues;
   CityListModelValues? citySelectedValue;
+  //
+  List<StateListModelValues> stateNew = [];
+  List<ClintListModelValues> clintlist = [];
+  //
   List addAmount = ['Add Amount', 'Minus Amount'];
   bool amountSelectedValue1 = false;
   bool amountSelectedValue2 = false;
@@ -75,6 +84,21 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   }
 
 //After apply
+  void getState(int query) {
+    stateNew = tadaApplyDataController.stateList
+        .where((value) => value.ivrmmSId! == (query))
+        .toList();
+  }
+
+  void getClint(int query) {
+    clintlist = tadaApplyDataController.clintListValues
+        .where((value) => value.ismmclTId! == (query))
+        .toList();
+    for (int i = 0; i < clintlist.length; i++) {
+      clint += '${clintlist[i].ismmclTClientName}, ';
+    }
+  }
+
   String state = '';
   String city = '';
   String clint = '';
@@ -87,6 +111,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   String time1 = '';
   String date2 = '';
   String time2 = '';
+  bool a = false;
+
   savedDataListAPI() async {
     if (tadaApplyDataController.tadaSavedData.isNotEmpty) {
       for (int index = 0;
@@ -122,31 +148,14 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         _endTime.text =
             '${startTime2.hourOfPeriod}:${startTime2.minute} ${startTime2.period.name.toUpperCase()}';
         //
-        logger.e(
-            "---${tadaApplyDataController.stateList.elementAt(index).ivrmmSId}");
-        logger.i(
-            "--==${tadaApplyDataController.tadaSavedData.elementAt(index).ivrmmSId}");
-
-        if (stateId.compareTo(tadaApplyDataController.tadaSavedData
-                .elementAt(index)
-                .ivrmmSId!
-                .toInt()) ==
-            tadaApplyDataController.tadaSavedData.elementAt(index).ivrmmSId) {
-          state =
-              '${tadaApplyDataController.stateList.elementAt(index).ivrmmSId!}';
-          logger.i(state);
-        }
+        getState(
+            tadaApplyDataController.tadaSavedData.elementAt(index).ivrmmSId!);
+        getClint(tadaApplyDataController.tadaSavedData
+            .elementAt(index)
+            .vtadaaAClientId!);
         city =
             tadaApplyDataController.tadaSavedData.elementAt(index).ivrmmcTName!;
-        if (tadaApplyDataController.clintListValues
-                .elementAt(index)
-                .ismmclTId! ==
-            tadaApplyDataController.tadaSavedData
-                .elementAt(index)
-                .vtadaaAClientId) {
-          clint =
-              '${tadaApplyDataController.clintListValues.elementAt(index).ismmclTClientName}';
-        }
+
         advanceAmount = tadaApplyDataController.tadaSavedData
             .elementAt(index)
             .vtadaaATotalAppliedAmount!
@@ -246,11 +255,32 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
     accommudationSlot = aSlot.toStringAsFixed(0);
   }
 
+  List<UploadHwCwModel> uploadAttachment = [];
+
 //
   saveData(
     int clintId,
-  ) {
+  ) async {
     tadaApplyDataController.saveData(true);
+
+    for (var element in tadaApplyDataController.addListBrowser) {
+      try {
+        uploadAttachment.add(await uploadAtt(
+            miId: widget.loginSuccessModel.mIID!,
+            file: File(element.file!.path)));
+      } catch (e) {
+        return Future.error({
+          "errorTitle": "An Error Occured",
+          "errorMsg":
+              "While trying to upload attchement, we encountered an error"
+        });
+      }
+    }
+    for (var element in uploadAttachment) {
+      uploadArray.add(
+          {"VTADAAF_FilePath": element.path, "VTADAAF_FileName": element.name});
+    }
+
     TadaSaveApi.instance.tadaApplySave(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         ctId: citySelectedValue!.ivrmmcTId!,
@@ -1696,7 +1726,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                     color: Theme.of(context)
                                                         .primaryColor),
                                           ),
-                                          Text(state,
+                                          Text(stateNew.first.ivrmmSName!,
                                               style: Get.textTheme.titleSmall),
                                         ],
                                       ),
@@ -2055,10 +2085,10 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                             .addListBrowser.length;
                                     i++) {
                                   uploadArray.add({
-                                    "VTADAAF_FileName": tadaApplyDataController
-                                        .addListBrowser[i].file!.name,
-                                    "VTADAAF_FilePath": tadaApplyDataController
-                                        .addListBrowser[i].file!.path,
+                                    // "VTADAAF_FileName": tadaApplyDataController
+                                    //     .addListBrowser[i].file!.name,
+                                    // "VTADAAF_FilePath": tadaApplyDataController
+                                    //     .addListBrowser[i].file!.path,
                                     "VTADAAF_Remarks": tadaApplyDataController
                                         .newRemarksController
                                         .elementAt(i)
