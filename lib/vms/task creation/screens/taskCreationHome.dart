@@ -1280,7 +1280,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                   width: 0.5),
                               headingRowColor: MaterialStateProperty.all(
                                   Theme.of(context).primaryColor),
-                              columns: [
+                              columns:const [
                                 // 1
                                 DataColumn(
                                   label: Align(
@@ -1425,9 +1425,9 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
             Obx(
               () => Visibility(
                 visible: _taskDepartController.taskAssingn.value == "Y",
-                child: Padding(
+                child:const Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -1461,13 +1461,13 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                         child: Container(
                                           width: 250,
                                           height: 40,
-                                          decoration: BoxDecoration(
+                                          decoration:const  BoxDecoration(
                                               shape: BoxShape.rectangle,
                                               color:
                                                   Color.fromRGBO(12, 54, 238, 1),
                                               borderRadius: BorderRadius.only(
                                                   topLeft: Radius.circular(10))),
-                                          child: Align(
+                                          child: const Align(
                                             alignment: Alignment.center,
                                             child: Text(
                                               'Periodicity',
@@ -1491,7 +1491,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                           child: Container(
                                             width: 250,
                                             height: 40,
-                                            decoration: BoxDecoration(
+                                            decoration:const BoxDecoration(
                                               shape: BoxShape.rectangle,
                                               color:
                                                   Color.fromRGBO(12, 54, 238, 1),
@@ -1504,7 +1504,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                             "Once in Fortnight"
                                                     ? 'Task Day'
                                                     : "Date",
-                                                style: TextStyle(
+                                                style:const TextStyle(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.white),
@@ -1522,11 +1522,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                       .typesTask.value ==
                                                   "T"
                                               ? BorderRadius.zero
-                                              : BorderRadius.only(
+                                              :const  BorderRadius.only(
                                                   topLeft: Radius.circular(10)),
                                           color: Color.fromRGBO(12, 54, 238, 1),
                                         ),
-                                        child: Align(
+                                        child:const Align(
                                           alignment: Alignment.center,
                                           child: Text(
                                             'Start and End Date',
@@ -1541,11 +1541,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     Container(
                                       width: 210,
                                       height: 40,
-                                      decoration: BoxDecoration(
+                                      decoration:const BoxDecoration(
                                         shape: BoxShape.rectangle,
                                         color: Color.fromRGBO(12, 54, 238, 1),
                                       ),
-                                      child: Align(
+                                      child:const Align(
                                         alignment: Alignment.center,
                                         child: Text(
                                           'Effort for each task',
@@ -1559,11 +1559,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     Container(
                                       width: 250,
                                       height: 40,
-                                      decoration: BoxDecoration(
+                                      decoration:const BoxDecoration(
                                         shape: BoxShape.rectangle,
                                         color: Color.fromRGBO(12, 54, 238, 1),
                                       ),
-                                      child: Align(
+                                      child:const Align(
                                         alignment: Alignment.center,
                                         child: Text(
                                           'Assign To',
@@ -1577,12 +1577,12 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     Container(
                                       width: 250,
                                       height: 40,
-                                      decoration: BoxDecoration(
+                                      decoration:const BoxDecoration(
                                           shape: BoxShape.rectangle,
                                           color: Color.fromRGBO(12, 54, 238, 1),
                                           borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(10))),
-                                      child: Align(
+                                      child: const Align(
                                         alignment: Alignment.center,
                                         child: Text(
                                           'Remarks',
@@ -1596,14 +1596,14 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                   ],
                                 ),
                                 Row(
-                                  children: [
+                                  children:  [
                                     Obx(
                                       () => Visibility(
                                         visible: _taskDepartController
                                                 .typesTask.value ==
                                             "T",
-                                        child: Container(
-                                          decoration: BoxDecoration(
+                                        child:  Container(
+                                          decoration:const BoxDecoration(
                                             border: Border(
                                                 left: BorderSide(
                                                     width: 0.5,
@@ -1665,7 +1665,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                         child: Container(
                                             width: 250,
                                             height: 210,
-                                            decoration: BoxDecoration(
+                                            decoration:const BoxDecoration(
                                                 border: Border(
                                                     right: BorderSide(
                                                         color: Colors.black54,
@@ -1812,13 +1812,13 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                           .typesTask.value ==
                                                       "T"
                                                   ? BorderSide.none
-                                                  : BorderSide(
+                                                  :const BorderSide(
                                                       width: 1,
                                                       color: Colors.black54),
-                                              right: BorderSide(
+                                              right:const BorderSide(
                                                   width: 1,
                                                   color: Colors.black54),
-                                              bottom: BorderSide(
+                                              bottom:const BorderSide(
                                                   width: 1,
                                                   color: Colors.black54)),
                                         ),
@@ -1882,7 +1882,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                       )),
                                                 ),
                                               ),
-                                              SizedBox(
+                                            const  SizedBox(
                                                 height: 10,
                                               ),
                                               SizedBox(
@@ -1947,8 +1947,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     Container(
                                       width: 210,
                                       height: 210,
-                                      decoration: BoxDecoration(
-                                        border: Border(
+                                      decoration:const BoxDecoration(
+                                        border:  Border(
                                             right: BorderSide(
                                                 width: 1, color: Colors.black54),
                                             bottom: BorderSide(
@@ -1990,13 +1990,13 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                                             5))),
                                                   ),
                                                 ),
-                                                SizedBox(
+                                              const  SizedBox(
                                                   height: 5,
                                                 ),
                                                 Text("HH")
                                               ],
                                             ),
-                                            SizedBox(
+                                          const  SizedBox(
                                               width: 5,
                                             ),
                                             Column(
@@ -2030,10 +2030,10 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                         )),
                                                   ),
                                                 ),
-                                                SizedBox(
+                                              const  SizedBox(
                                                   height: 5,
                                                 ),
-                                                Text('MM')
+                                               const Text('MM')
                                               ],
                                             ),
                                           ],
@@ -2043,7 +2043,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     Container(
                                       width: 250,
                                       height: 210,
-                                      decoration: BoxDecoration(
+                                      decoration:const BoxDecoration(
                                         border: Border(
                                             right: BorderSide(
                                                 width: 1, color: Colors.black54),
@@ -2051,7 +2051,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                 width: 1, color: Colors.black54)),
                                       ),
                                       child: Padding(
-                                        padding: EdgeInsets.symmetric(
+                                        padding:const EdgeInsets.symmetric(
                                             vertical: 5, horizontal: 5),
                                         child: Column(
                                           children: [
@@ -2094,10 +2094,10 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                               BorderRadius
                                                                   .circular(5))),
                                                 )),
-                                            SizedBox(
+                                           const SizedBox(
                                               height: 10,
                                             ),
-                                            Container(
+                                             Container(
                                               width: 240,
                                               height: 150,
                                               child: Obx(
@@ -2119,7 +2119,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                                       BorderRadius
                                                                           .circular(
                                                                               10)),
-                                                              activeColor:
+                                                              activeColor:const
                                                                   Color.fromRGBO(
                                                                       26,
                                                                       48,
@@ -2213,7 +2213,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     Container(
                                       width: 250,
                                       height: 210,
-                                      decoration: BoxDecoration(
+                                      decoration:const BoxDecoration(
                                         border: Border(
                                             right: BorderSide(
                                                 width: 1, color: Colors.black54),
@@ -2243,11 +2243,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             )))),
               ),
             ),
-            SizedBox(
+           const SizedBox(
               height: 40,
             ),
             
-            SizedBox(
+          const  SizedBox(
               height: 40,
             ),
           ]),
