@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/applied_deta_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/tada_apply_home_screen.dart';
 
 import '../../../../widget/animated_progress_widget.dart';
 
@@ -27,11 +28,10 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
       Get.put(TadaApplyDataController());
 
   savedDataListAPI() async {
-    print("===========");
     tadaApplyDataController.appliedData(true);
     await AppliedDataAPI.instance.tadaAppliedListAPI(
         miId: widget.loginSuccessModel.mIID!,
-        userId: widget.loginSuccessModel.userId!,
+        userId: 60249, //widget.loginSuccessModel.userId!,
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         tadaApplyController: tadaApplyDataController);
 
@@ -42,6 +42,12 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
   void initState() {
     savedDataListAPI();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    currentTab.value = 0;
+    super.dispose();
   }
 
   @override
@@ -97,7 +103,7 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
                       )
                     : SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.all(2),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(5),
                           child: DataTable(
@@ -174,9 +180,18 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
                                   DataCell(IconButton(
                                       onPressed: () {
                                         setState(() {
-                                          widget.tabController.index = 0;
-                                          currentTab.value = 1;
-                                          Get.back();
+                                          tadaApplyDataController.tadaSavedData
+                                              .add(tadaApplyDataController
+                                                  .tadaSavedDataValues[index]);
+                                          Get.off(() => TadaApplyHomeScreen(
+                                                mskoolController:
+                                                    widget.mskoolController,
+                                                loginSuccessModel:
+                                                    widget.loginSuccessModel,
+                                                previousScreen: 1,
+                                              ));
+                                          // widget.tabController.index = 0;
+                                          // currentTab.value = 1;
                                         });
                                       },
                                       icon: Icon(

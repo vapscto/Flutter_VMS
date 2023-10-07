@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/staffs/notice_board_staff/widget/staff_widget.da
 import 'package:m_skool_flutter/student/gallery_view/widget/gallery_checkbox.container.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/city_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/state_list_model.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/applied_deta_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/check_apply_planner_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/city_list_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/state_list_api.dart';
@@ -54,6 +55,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   bool amountSelectedValue1 = false;
   bool amountSelectedValue2 = false;
   //
+  int stateId = 0;
   getStateList() async {
     tadaApplyDataController.stateLoading(true);
     tadaApplyDataController.cityListValues.clear();
@@ -64,10 +66,106 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         tadaApplyController: tadaApplyDataController);
     if (tadaApplyDataController.stateList.isNotEmpty) {
       stateListModelValues = tadaApplyDataController.stateList.first;
+      for (int i = 0; i < tadaApplyDataController.stateList.length; i++) {
+        stateId = tadaApplyDataController.stateList.elementAt(i).ivrmmSId!;
+      }
       getCity(stateListModelValues!.ivrmmCId!, stateListModelValues!.ivrmmSId!);
+    }
+    tadaApplyDataController.stateLoading(false);
+  }
+
+//After apply
+  String state = '';
+  String city = '';
+  String clint = '';
+  int advanceAmount = 0;
+  int paidAmount = 0;
+  int balanceAmount = 0;
+  String address = '';
+  String remarks = '';
+  String date1 = '';
+  String time1 = '';
+  String date2 = '';
+  String time2 = '';
+  savedDataListAPI() async {
+    if (tadaApplyDataController.tadaSavedData.isNotEmpty) {
+      for (int index = 0;
+          index < tadaApplyDataController.tadaSavedData.length;
+          index++) {
+        DateTime dt1 = DateTime.parse(tadaApplyDataController.tadaSavedData
+            .elementAt(index)
+            .vtadaaAFromDate!);
+        _startDate.text = '${dt1.day}:${dt1.month}:${dt1.year}';
+        //
+        DateTime dt2 = DateTime.parse(tadaApplyDataController.tadaSavedData
+            .elementAt(index)
+            .vtadaaAToDate!);
+        _endDate.text = '${dt2.day}:${dt2.month}:${dt2.year}';
+        //
+        TimeOfDay startTime = TimeOfDay(
+            hour: int.parse(tadaApplyDataController
+                .tadaSavedData[index].vtadaaADepartureTime!
+                .split(":")[0]),
+            minute: int.parse(tadaApplyDataController
+                .tadaSavedData[index].vtadaaADepartureTime!
+                .split(":")[1]));
+        _startTime.text =
+            '${startTime.hourOfPeriod}:${startTime.minute} ${startTime.period.name.toUpperCase()}';
+        //
+        TimeOfDay startTime2 = TimeOfDay(
+            hour: int.parse(tadaApplyDataController
+                .tadaSavedData[index].vtadaaADepartureTime!
+                .split(":")[0]),
+            minute: int.parse(tadaApplyDataController
+                .tadaSavedData[index].vtadaaADepartureTime!
+                .split(":")[1]));
+        _endTime.text =
+            '${startTime2.hourOfPeriod}:${startTime2.minute} ${startTime2.period.name.toUpperCase()}';
+        //
+        logger.e(
+            "---${tadaApplyDataController.stateList.elementAt(index).ivrmmSId}");
+        logger.i(
+            "--==${tadaApplyDataController.tadaSavedData.elementAt(index).ivrmmSId}");
+
+        if (stateId.compareTo(tadaApplyDataController.tadaSavedData
+                .elementAt(index)
+                .ivrmmSId!
+                .toInt()) ==
+            tadaApplyDataController.tadaSavedData.elementAt(index).ivrmmSId) {
+          state =
+              '${tadaApplyDataController.stateList.elementAt(index).ivrmmSId!}';
+          logger.i(state);
+        }
+        city =
+            tadaApplyDataController.tadaSavedData.elementAt(index).ivrmmcTName!;
+        if (tadaApplyDataController.clintListValues
+                .elementAt(index)
+                .ismmclTId! ==
+            tadaApplyDataController.tadaSavedData
+                .elementAt(index)
+                .vtadaaAClientId) {
+          clint =
+              '${tadaApplyDataController.clintListValues.elementAt(index).ismmclTClientName}';
+        }
+        advanceAmount = tadaApplyDataController.tadaSavedData
+            .elementAt(index)
+            .vtadaaATotalAppliedAmount!
+            .toInt();
+        paidAmount = tadaApplyDataController.tadaSavedData
+            .elementAt(index)
+            .vtadaaATotalPaidAmount!
+            .toInt();
+        balanceAmount = ((advanceAmount) - (paidAmount));
+        allAmount += balanceAmount;
+        address =
+            '${tadaApplyDataController.tadaSavedData.elementAt(index).vtadaaAToAddress}';
+        remarks =
+            '${tadaApplyDataController.tadaSavedData.elementAt(index).vtadaaARemarks}';
+      }
     }
   }
 
+//
   getCity(int countryId, int stateId) async {
     tadaApplyDataController.cityLoading(true);
     await CityListAPI.instance.tadaCityList(
@@ -129,7 +227,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   }
 
   //
-
   var foodSlot;
   var accommudationSlot;
 
@@ -149,6 +246,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
     accommudationSlot = aSlot.toStringAsFixed(0);
   }
 
+//
   saveData(
     int clintId,
   ) {
@@ -174,6 +272,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
     tadaApplyDataController.saveData(false);
   }
 
+//
   checkPlanner() async {
     tadaApplyDataController.plannerCreate(true);
     await CheckPlannerAPI.instance.applyCheckPlannerAPI(
@@ -191,6 +290,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
     tadaApplyDataController.plannerCreate(false);
   }
 
+//
   editData(int id) {
     tadaApplyDataController.editData(true);
     TadaEditAPI.instance.tadaApplyEditData(
@@ -211,7 +311,15 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   @override
   void initState() {
     getStateList();
+    logger.e("===${widget.previousScreen}");
+    savedDataListAPI();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    tadaApplyDataController.tadaSavedData.clear();
+    super.dispose();
   }
 
   @override
@@ -1561,142 +1669,305 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                               : const SizedBox(),
                         ],
                       )
-                    : const SizedBox(),
-                Padding(
-                  padding: const EdgeInsets.only(top: 0, left: 16, right: 16),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 60,
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    : Padding(
+                        padding:
+                            const EdgeInsets.only(top: 0, left: 16, right: 16),
+                        child: Column(
                           children: [
-                            Row(
-                              children: [
-                                Checkbox(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(6)),
-                                    fillColor: MaterialStatePropertyAll(
-                                        Theme.of(context).primaryColor),
-                                    visualDensity:
-                                        const VisualDensity(horizontal: 0),
-                                    value: amountSelectedValue1,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        amountSelectedValue1 = value!;
-                                        amountSelectedValue2 = false;
-                                        if (amountSelectedValue1 == true) {
-                                          allAmount += int.parse(
-                                              _extraAmountController.text);
-                                        }
-                                      });
-                                    }),
-                                Text(
-                                  addAmount[0],
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelSmall!
-                                      .merge(TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.0,
-                                          letterSpacing: 0.3,
-                                          color:
-                                              Theme.of(context).primaryColor)),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Checkbox(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(6)),
-                                    fillColor: MaterialStatePropertyAll(
-                                        Theme.of(context).primaryColor),
-                                    visualDensity:
-                                        const VisualDensity(horizontal: 0),
-                                    value: amountSelectedValue2,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        amountSelectedValue2 = value!;
-                                        amountSelectedValue1 = false;
-                                        if (amountSelectedValue2 == true) {
-                                          allAmount -= int.parse(
-                                              _extraAmountController.text);
-                                        }
-                                      });
-                                    }),
-                                Text(
-                                  addAmount[1],
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelSmall!
-                                      .merge(TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.0,
-                                          letterSpacing: 0.3,
-                                          color:
-                                              Theme.of(context).primaryColor)),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      CustomContainer(
-                        child: TextFormField(
-                          controller: _extraAmountController,
-                          onChanged: (value) {
-                            setState(() {});
-                          },
-                          keyboardType: TextInputType.multiline,
-                          style:
-                              Get.textTheme.titleSmall!.copyWith(fontSize: 15),
-                          decoration: InputDecoration(
-                            border: const OutlineInputBorder(
-                                borderSide: BorderSide.none),
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            hintText: "Extra Amount",
-                            label: Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFDFFBFE),
-                                borderRadius: BorderRadius.circular(24.0),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12.0, vertical: 6.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Image.asset(
-                                    "assets/images/cap.png",
-                                    height: 28.0,
-                                  ),
-                                  const SizedBox(
-                                    width: 6.0,
-                                  ),
-                                  Text(
-                                    " Extra Amount",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .merge(
-                                          const TextStyle(
-                                              backgroundColor:
-                                                  Color(0xFFDFFBFE),
-                                              fontSize: 20.0,
-                                              color: Color(0xFF28B6C8)),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 16.0),
+                                child: CustomContainer(
+                                    child: Container(
+                                  margin: const EdgeInsets.all(8),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "State : ",
+                                            style: Get.textTheme.titleSmall!
+                                                .copyWith(
+                                                    color: Theme.of(context)
+                                                        .primaryColor),
+                                          ),
+                                          Text(state,
+                                              style: Get.textTheme.titleSmall),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "City : ",
+                                            style: Get.textTheme.titleSmall!
+                                                .copyWith(
+                                                    color: Theme.of(context)
+                                                        .primaryColor),
+                                          ),
+                                          Text(city,
+                                              style: Get.textTheme.titleSmall),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Clint : ",
+                                            style: Get.textTheme.titleSmall!
+                                                .copyWith(
+                                                    color: Theme.of(context)
+                                                        .primaryColor),
+                                          ),
+                                          Text(clint,
+                                              style: Get.textTheme.titleSmall),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Advance Amount : ",
+                                            style: Get.textTheme.titleSmall!
+                                                .copyWith(
+                                                    color: Theme.of(context)
+                                                        .primaryColor),
+                                          ),
+                                          Text(advanceAmount.toString(),
+                                              style: Get.textTheme.titleSmall),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Paid Amount : ",
+                                            style: Get.textTheme.titleSmall!
+                                                .copyWith(
+                                                    color: Theme.of(context)
+                                                        .primaryColor),
+                                          ),
+                                          Text(paidAmount.toString(),
+                                              style: Get.textTheme.titleSmall),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Balance Amount : ",
+                                            style: Get.textTheme.titleSmall!
+                                                .copyWith(
+                                                    color: Theme.of(context)
+                                                        .primaryColor),
+                                          ),
+                                          Text(balanceAmount.toString(),
+                                              style: Get.textTheme.titleSmall),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Address : ",
+                                            style: Get.textTheme.titleSmall!
+                                                .copyWith(
+                                                    color: Theme.of(context)
+                                                        .primaryColor),
+                                          ),
+                                          Text(address,
+                                              style: Get.textTheme.titleSmall),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 8),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Remarks : ",
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .primaryColor),
+                                            ),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.65,
+                                              child: Text(remarks,
+                                                  maxLines: 10,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style:
+                                                      Get.textTheme.titleSmall),
+                                            ),
+                                          ],
                                         ),
+                                      ),
+                                    ],
                                   ),
+                                )),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 60,
+                              width: MediaQuery.of(context).size.width,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Checkbox(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(6)),
+                                          fillColor: MaterialStatePropertyAll(
+                                              Theme.of(context).primaryColor),
+                                          visualDensity: const VisualDensity(
+                                              horizontal: 0),
+                                          value: amountSelectedValue1,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              amountSelectedValue1 = value!;
+                                              amountSelectedValue2 = false;
+                                              if (amountSelectedValue1 ==
+                                                  true) {
+                                                allAmount += int.parse(
+                                                    _extraAmountController
+                                                        .text);
+                                              }
+                                            });
+                                          }),
+                                      Text(
+                                        addAmount[0],
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .merge(TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14.0,
+                                                letterSpacing: 0.3,
+                                                color: Theme.of(context)
+                                                    .primaryColor)),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Checkbox(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(6)),
+                                          fillColor: MaterialStatePropertyAll(
+                                              Theme.of(context).primaryColor),
+                                          visualDensity: const VisualDensity(
+                                              horizontal: 0),
+                                          value: amountSelectedValue2,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              amountSelectedValue2 = value!;
+                                              amountSelectedValue1 = false;
+                                              if (amountSelectedValue2 ==
+                                                  true) {
+                                                allAmount -= int.parse(
+                                                    _extraAmountController
+                                                        .text);
+                                              }
+                                            });
+                                          }),
+                                      Text(
+                                        addAmount[1],
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .merge(TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14.0,
+                                                letterSpacing: 0.3,
+                                                color: Theme.of(context)
+                                                    .primaryColor)),
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
-                          ),
+                            const SizedBox(height: 16),
+                            CustomContainer(
+                              child: TextFormField(
+                                controller: _extraAmountController,
+                                onChanged: (value) {},
+                                keyboardType: TextInputType.multiline,
+                                style: Get.textTheme.titleSmall!
+                                    .copyWith(fontSize: 15),
+                                decoration: InputDecoration(
+                                  border: const OutlineInputBorder(
+                                      borderSide: BorderSide.none),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always,
+                                  hintText: "Extra Amount",
+                                  label: Container(
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFDFFBFE),
+                                      borderRadius: BorderRadius.circular(24.0),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12.0, vertical: 6.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/cap.png",
+                                          height: 28.0,
+                                        ),
+                                        const SizedBox(
+                                          width: 6.0,
+                                        ),
+                                        Text(
+                                          " Extra Amount",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!
+                                              .merge(
+                                                const TextStyle(
+                                                    backgroundColor:
+                                                        Color(0xFFDFFBFE),
+                                                    fontSize: 20.0,
+                                                    color: Color(0xFF28B6C8)),
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
                 Container(
                   margin: const EdgeInsets.only(top: 30, left: 16, right: 16),
                   child: RichText(

@@ -174,10 +174,13 @@ class TadaApplyDataController extends GetxController {
   // Saved Data
   RxList<TadaSavedDataModelValues> tadaSavedDataValues =
       <TadaSavedDataModelValues>[].obs;
+  RxList<TadaSavedDataModelValues> tadaSavedData =
+      <TadaSavedDataModelValues>[].obs;
 
   void appliedSaved(List<TadaSavedDataModelValues> values) {
     if (tadaSavedDataValues.isNotEmpty) {
       tadaSavedDataValues.clear();
+      tadaSavedData.clear();
     }
     for (int i = 0; i < values.length; i++) {
       tadaSavedDataValues.add(values.elementAt(i));

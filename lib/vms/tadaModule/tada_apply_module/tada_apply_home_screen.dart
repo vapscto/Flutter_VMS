@@ -10,10 +10,12 @@ import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 class TadaApplyHomeScreen extends StatefulWidget {
   final MskoolController mskoolController;
   final LoginSuccessModel loginSuccessModel;
+  final int previousScreen;
   const TadaApplyHomeScreen(
       {super.key,
       required this.mskoolController,
-      required this.loginSuccessModel});
+      required this.loginSuccessModel,
+      required this.previousScreen});
 
   @override
   State<TadaApplyHomeScreen> createState() => _TadaApplyHomeScreenState();
@@ -38,7 +40,9 @@ class _TadaApplyHomeScreenState extends State<TadaApplyHomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "TA-DA Apply").getAppBar(),
+      appBar: const CustomAppBar(
+        title: "TA-DA Apply",
+      ).getAppBar(),
       body: Column(
         children: [
           Container(
@@ -61,7 +65,7 @@ class _TadaApplyHomeScreenState extends State<TadaApplyHomeScreen>
                 TadaApplyWidget(
                   loginSuccessModel: widget.loginSuccessModel,
                   mskoolController: widget.mskoolController,
-                  previousScreen: currentTab.value,
+                  previousScreen: widget.previousScreen,
                 ),
                 TadaBalanceWidget(
                   loginSuccessModel: widget.loginSuccessModel,

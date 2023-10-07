@@ -36,9 +36,9 @@ class TadaSavedDataModelValues {
   String? vtadaaAToDate;
   int? vtadaaAClientId;
   String? vtadaaAStatusFlg;
-  int? vtadaaATotalAppliedAmount;
-  int? vtadaaATotalSactionedAmount;
-  int? vtadaaATotalPaidAmount;
+  double? vtadaaATotalAppliedAmount;
+  double? vtadaaATotalSactionedAmount;
+  double? vtadaaATotalPaidAmount;
   String? vtadaaACreatedDate;
   String? vtadaaAToAddress;
   String? vtadaaARemarks;
