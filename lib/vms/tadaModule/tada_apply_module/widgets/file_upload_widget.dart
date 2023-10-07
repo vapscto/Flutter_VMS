@@ -38,6 +38,12 @@ class _FileUploadWidgetState extends State<FileUploadWidget> {
   }
 
   @override
+  void dispose() {
+    widget.tadaApplyDataController.newList.clear();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Obx(() {
       return SingleChildScrollView(
