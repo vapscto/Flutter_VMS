@@ -135,7 +135,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
         taskDay = etDayControllers.text;
       } else if (dropdownValue.value == "Yearly Once" ||
           dropdownValue.value == "Specific Day") {
-        taskDay = 0;
+            int dayNum =0;
+        taskDay = dayNum.toInt();
       }
     } else if (_taskDepartController.typesTask.value == "B" ||
         _taskDepartController.typesTask.value == "E" ||
