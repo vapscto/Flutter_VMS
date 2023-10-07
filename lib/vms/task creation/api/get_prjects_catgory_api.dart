@@ -20,9 +20,9 @@ Future<int> getTskPrjtCatgryList(
 
   final String apiUrl = base + URLS.taskGetProjects;
    logger.d(base + URLS.taskGetDetails);
-
+controller.updateTaskProjectsLoading(true);
   try {
-    controller.updateTaskProjectsLoading(true);
+    
     final Response response = await ins.post(apiUrl,
         options: Options(headers: getSession()),
         data: {
@@ -39,6 +39,7 @@ Future<int> getTskPrjtCatgryList(
   
  GeTskCategory category = GeTskCategory.fromJson(response.data['get_category']);
  controller.getTaskCategoryList.addAll(category.values!);
+controller.updateTaskProjectsLoading(false);
 
  logger.d("Home",category.values!.first);
     return response.statusCode!;

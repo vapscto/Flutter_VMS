@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/student/homework/model/upload_hw_cw_model.dart';
+import 'package:m_skool_flutter/vms/maker%20and%20checker/controller/dr_details_ctrlr.dart';
 import 'package:m_skool_flutter/vms/task%20creation/controller/task_department_cntrlr.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 import 'package:mime/mime.dart';
@@ -16,7 +17,13 @@ Future<bool> saveTask({
   required typeAssign,
   required String base,
   required TaskDepartController controller,
+  required  DrDetailsCtrlr controllerLoading,
+  required Map<String, dynamic> trnsNumConfig,
   required int miId,
+  required int userID,
+  required int ivrmrtId,
+  required int academicYear,
+  required int hrme,
   required int? HRMD_Id,
   required String? HRMPR_Id,
   required String? ISMCIM_IEList,
@@ -30,12 +37,12 @@ Future<bool> saveTask({
   required String? ISMTCR_Status,
   required String? ISMTCR_Title,
   required int? IVRMM_Id,
-  required String? TaskDay,
+  required var TaskDay,
   required String? TimeRequiredFlg,
   required String? Yearlydate,
   required String? assignto,
   required List<AtachmentFile> uploadDocs,
-  required int? effortinhrs,
+  required double? effortinhrs,
   required String? enddate,
   required String? periodicity,
   required String? remarks,
@@ -49,7 +56,11 @@ Future<bool> saveTask({
   List<Map<String, dynamic>> att = [];
   List<UploadHwCwModel> uploadAttachment = [];
    logger.d(apiUrl);
+   
   for (var element in controller.addListBrowser) {
+    if(element.FileName==""){
+    print("File not exist");
+    }else{
     try {
       uploadAttachment
           .add(await uploadAtt(miId: miId, file: File(element.file!.path)));
@@ -59,64 +70,115 @@ Future<bool> saveTask({
         "errorMsg": "While trying to upload attchement, we encountered an error"
       });
     }
+    }
+    
   }
   for (var element in uploadAttachment) {
     att.add(
         {"ISMTCRAT_Attatchment": element.path, "ISMTCRAT_File": element.name});
   }
   if (typeAssign == "Y") {
-    dataMap = {
-      "MI_Id":miId,
-      "UserId":60934,
-      "IVRMRT_Id":18,
-      "HRMD_Id": HRMD_Id,
-      "HRMPR_Id": HRMPR_Id,
-      "ISMCIM_IEList": "undefined",
-      "ISMMCLT_Id": ISMMCLT_Id,
-      "ISMMPR_Id": ISMMPR_Id,
-      "ISMMTCAT_Id": ISMMTCAT_Id,
-      "ISMTCR_BugOREnhancementFlg": ISMTCR_BugOREnhancementFlg,
-      "ISMTCR_CreationDate": ISMTCR_CreationDate,
-      "ISMTCR_Desc": ISMTCR_Desc,
-      "ISMTCR_Id": "undefined",
-      "ISMTCR_Status": "Open",
-      "ISMTCR_Title": ISMTCR_Title,
-      "IVRMM_Id": IVRMM_Id,
-      "TaskDay": TaskDay,
-      "TimeRequiredFlg": "HOURS",
-      "Yearlydate": "Thu Jan 01 1970",
-      "assignto": assignto,
-      "attachmentArray": att,
-      "effortinhrs": effortinhrs,
-      "enddate": enddate,
-      "periodicity": periodicity,
-      "remarks": remarks,
-      "roletype": roletype,
-      "startdate": startdate,
-      "taskEmpArray": taskEmpArray
+    if(periodicity =="Daily"){
+      print("001");
+ dataMap = {
+    "transnumbconfigurationsettingsss": trnsNumConfig ,
+    "UserId": userID,
+    "Role_flag": "S",
+    "roletype": roletype,
+    "IVRMRT_Id": ivrmrtId,
+    "plannerextapproval": false,
+    "plannerMaxdate": "0001-01-01T00:00:00",
+    "MI_Id": miId,
+    "HRME_Id": hrme,
+    "ASMAY_Id": academicYear,
+    "HRMD_Id": HRMD_Id,
+    "HRMDC_ID": null,
+    "ISMMPR_Id": ISMMPR_Id,
+    "IVRMM_Id": IVRMM_Id,
+    "ISMTCR_BugOREnhancementFlg": ISMTCR_BugOREnhancementFlg,
+    "assignto": assignto,
+    "ISMTCR_CreationDate": ISMTCR_CreationDate,
+    "ISMTCR_Title": ISMTCR_Title,
+    "HRMPR_Id": HRMPR_Id,
+    "ISMMTCAT_Id":ISMMTCAT_Id,
+    "ISMTCR_Desc": ISMTCR_Desc,
+    "ISMTCR_Status": "Open",
+    "ISMTCRCL_Id": 0,
+    "ISMMCLT_Id": ISMMCLT_Id,
+    "TimeRequiredFlg": "HOURS",
+    "attachmentArray":  att,
+    "effortinhrs": effortinhrs,
+    "enddate":  enddate,
+    "periodicity":periodicity,
+    "remarks": remarks,
+    "startdate": startdate,
+    "taskEmpArray":  taskEmpArray
     };
-     
+    }else{
+      print("002");
+    dataMap = {
+   "transnumbconfigurationsettingsss": trnsNumConfig ,
+    "UserId": userID,
+    "Role_flag": "S",
+    "roletype": roletype,
+    "IVRMRT_Id": ivrmrtId,
+    "plannerextapproval": false,
+    "plannerMaxdate": "0001-01-01T00:00:00",
+    "MI_Id": miId,
+    "HRME_Id": hrme,
+    "ASMAY_Id":  academicYear,
+    "HRMD_Id": HRMD_Id,
+    "HRMDC_ID": null,
+    "ISMMPR_Id": ISMMPR_Id,
+    "IVRMM_Id": IVRMM_Id,
+    "ISMTCR_BugOREnhancementFlg":ISMTCR_BugOREnhancementFlg ,
+    "assignto": assignto ,
+    "ISMTCR_CreationDate":  ISMTCR_CreationDate,
+    "ISMTCR_Title":ISMTCR_Title  ,
+    "HRMPR_Id":  HRMPR_Id,
+    "ISMMTCAT_Id": ISMMTCAT_Id,
+    "ISMTCR_Desc": ISMTCR_Desc ,
+    "ISMTCR_Status": "Open",
+    "ISMTCRCL_Id": 0,
+    "ISMMCLT_Id": ISMMCLT_Id,
+    "TimeRequiredFlg": "HOURS",
+    "attachmentArray":  att,
+    "effortinhrs": effortinhrs,
+    "enddate": enddate,
+    "periodicity": periodicity,
+    "remarks": remarks,
+    "startdate": startdate,
+    "taskEmpArray":  taskEmpArray
+    };
+    }
+ logger.d(dataMap);
   } else if (typeAssign == "N") {
     dataMap = {
-      "MI_Id":miId,
-      "UserId":60934,
-      "IVRMRT_Id":18,
-      "HRMD_Id": HRMD_Id,
-      "HRMPR_Id": HRMPR_Id,
-      "ISMCIM_IEList": "undefined",
-      "ISMMCLT_Id": ISMMCLT_Id,
-      "ISMMPR_Id": ISMMPR_Id,
-      "ISMMTCAT_Id": ISMMTCAT_Id,
-      "ISMTCR_BugOREnhancementFlg": ISMTCR_BugOREnhancementFlg,
-      "ISMTCR_CreationDate": ISMTCR_CreationDate,
-      "ISMTCR_Desc": ISMTCR_Desc,
-      "ISMTCR_Id": "undefined",
-      "ISMTCR_Status": "Open",
-      "ISMTCR_Title": ISMTCR_Title,
-      "IVRMM_Id": IVRMM_Id,
-      "assignto": assignto,
-      "attachmentArray": att,
-      "roletype": roletype,
+    "transnumbconfigurationsettingsss": trnsNumConfig ,
+    "UserId": userID,
+    "Role_flag": "S",
+    "roletype": roletype,
+    "IVRMRT_Id": ivrmrtId,
+    "plannerextapproval": false,
+    "plannerMaxdate": "0001-01-01T00:00:00",
+    "MI_Id": miId,
+    "HRME_Id": hrme,
+    "ASMAY_Id": academicYear,
+    "HRMD_Id": HRMD_Id,
+    "HRMDC_ID": null,
+    "ISMMPR_Id": ISMMPR_Id,
+    "IVRMM_Id": IVRMM_Id,
+    "ISMTCR_BugOREnhancementFlg": ISMTCR_BugOREnhancementFlg,
+    "assignto": assignto,
+    "ISMTCR_CreationDate":ISMTCR_CreationDate,
+    "ISMTCR_Title": ISMTCR_Title,
+    "HRMPR_Id": HRMPR_Id,
+    "ISMMTCAT_Id":ISMMTCAT_Id,
+    "ISMTCR_Desc": ISMTCR_Desc,
+    "ISMTCR_Status": "Open",
+    "ISMTCRCL_Id": 0,
+    "ISMMCLT_Id": ISMMCLT_Id,
+    "attachmentArray":[]
     };
     
   }
@@ -124,14 +186,15 @@ Future<bool> saveTask({
   try {
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data:  dataMap);
-    logger.d(dataMap);
-    logger.d(response);
+   // logger.d(dataMap);
+    logger.d(response.data);
+     controllerLoading.updateTabLoading(false);
     return true;
   } on DioError catch (e) {
     logger.e(e.message);
-    return false;
+     return false;
   } on Exception catch (e) {
-    return false;
+     return false;
   }
 }
 
