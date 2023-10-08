@@ -61,6 +61,7 @@ import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/plann
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
 import 'package:m_skool_flutter/vms/petty_cash_requisition/screen/pc_requisition_HOME.dart';
+import 'package:m_skool_flutter/vms/sales_report/screens/sales_report_honme_screen.dart';
 import 'package:m_skool_flutter/vms/security/screen/Shome_Screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/screens/tada_advance_aplay_home.dart';
@@ -1051,15 +1052,18 @@ void openMappedPages(
     return;
   }
   if (pageName == "Leave Approval") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return TadaApplyHomeScreen(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-        previousScreen: 0,
-        // title: pageName,
-      );
-    }));
-
+    // Navigator.push(context, MaterialPageRoute(builder: (_) {
+    //   return TadaApplyHomeScreen(
+    //     loginSuccessModel: loginSuccessModel,
+    //     mskoolController: mskoolController,
+    //     previousScreen: 0,
+    //     // title: pageName,
+    //   );
+    // }));
+    Get.to(() => SalesReportHomeScreen(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
     return;
   }
   if (pageName == "Employee Details") {
