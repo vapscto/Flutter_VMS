@@ -742,194 +742,196 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                   "Please wait while we load Sales report entry and create a view for you.",
                               animationPath: "assets/json/default.json"),
                         )
-                      // : salesController.employeeListValues.isEmpty
-                      //     ? const SizedBox()
-                      : Container(
-                          margin: const EdgeInsets.only(top: 30),
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              Container(
-                                height: 160,
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 10),
-                                decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  borderRadius: BorderRadius.circular(16.0),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      offset: Offset(0, 1),
-                                      blurRadius: 4,
-                                      color: Colors.black12,
-                                    ),
-                                  ],
-                                ),
-                                child: RawScrollbar(
-                                  thumbColor: const Color(0xFF1E38FC),
-                                  trackColor:
-                                      const Color.fromRGBO(223, 239, 253, 1),
-                                  trackRadius: const Radius.circular(10),
-                                  trackVisibility: true,
-                                  radius: const Radius.circular(10),
-                                  thickness: 14,
-                                  thumbVisibility: true,
-                                  controller: _controller1,
-                                  child: SingleChildScrollView(
-                                    controller: _controller2,
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 30,
-                                          child: CheckboxListTile(
-                                              controlAffinity:
-                                                  ListTileControlAffinity
-                                                      .leading,
-                                              checkboxShape:
-                                                  RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              6)),
-                                              dense: true,
-                                              activeColor: Theme.of(context)
-                                                  .primaryColor,
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 8),
-                                              visualDensity:
-                                                  const VisualDensity(
-                                                      horizontal: -4.0),
-                                              title: Text(
-                                                'Select all',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .labelSmall!
-                                                    .merge(const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.3)),
-                                              ),
-                                              value: selectAllEmployee.value,
-                                              onChanged: (value) {
-                                                selectAllEmployee.value =
-                                                    value!;
-
-                                                salesController
-                                                    .selectedEmployeeListValues
-                                                    .clear();
-                                                if (value) {
-                                                  salesController
-                                                      .selectedEmployeeListValues
-                                                      .addAll(salesController
-                                                          .employeeListValues);
-                                                  for (int i = 0;
-                                                      i <
-                                                          salesController
-                                                              .employeeListValues
-                                                              .length;
-                                                      i++) {
-                                                    addId(salesController
-                                                        .employeeListValues
-                                                        .elementAt(i)
-                                                        .hrmDId!);
-
-                                                    setState(() {});
-                                                  }
-                                                } else {
-                                                  salesController
-                                                      .selectedEmployeeListValues
-                                                      .clear();
-                                                  salesController.empId.clear();
-
-                                                  setState(() {});
-                                                }
-                                              }),
-                                        ),
-                                        ListView.builder(
-                                          itemCount: salesController
-                                              .employeeListValues.length,
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemBuilder: (context, index) {
-                                            logger.i(
-                                                " =========${salesController.employeeListValues.elementAt(index).hrmEEmployeeFirstName}");
-                                            return SizedBox(
-                                              height: 35,
-                                              child: CheckBoxContainer(
-                                                  sectionName:
-                                                      "${salesController.employeeListValues.elementAt(index).hrmEEmployeeFirstName} ${salesController.employeeListValues.elementAt(index).hrmEEmployeeMiddleName ?? ''} ${salesController.employeeListValues.elementAt(index).hrmEEmployeeLastName ?? ''}",
-                                                  func: (b) {
-                                                    setState(() {
-                                                      if (b) {
-                                                        salesController
-                                                            .addSelectedEmpValues(
-                                                                salesController
-                                                                    .employeeListValues
-                                                                    .elementAt(
-                                                                        index));
-
-                                                        salesController.addEmpId(
-                                                            salesController
-                                                                .employeeListValues
-                                                                .elementAt(
-                                                                    index)
-                                                                .hrmDId!);
-
-                                                        setState(() {});
-                                                      } else {
-                                                        selectAllDepartment
-                                                            .value = false;
-                                                        salesController
-                                                            .removeSelectedEmpValues(
-                                                                salesController
-                                                                    .employeeListValues
-                                                                    .elementAt(
-                                                                        index));
-                                                        for (int i = 0;
-                                                            i <
-                                                                salesController
-                                                                    .empId
-                                                                    .length;
-                                                            i++) {
-                                                          removeId(
-                                                              salesController
-                                                                      .empId[
-                                                                  index]);
-                                                        }
-
-                                                        setState(() {});
-                                                      }
-                                                    });
-                                                  },
-                                                  isChecked: RxBool(
-                                                    salesController
-                                                        .selectedEmployeeListValues
-                                                        .contains(
-                                                      salesController
-                                                          .employeeListValues
-                                                          .elementAt(index),
-                                                    ),
-                                                  )),
-                                              // })
-                                            );
-                                          },
+                      : salesController.employeeListValues.isEmpty
+                          ? const SizedBox()
+                          : Container(
+                              margin: const EdgeInsets.only(top: 30),
+                              child: Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  Container(
+                                    height: 160,
+                                    padding: const EdgeInsets.only(
+                                        top: 10, bottom: 10),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      borderRadius: BorderRadius.circular(16.0),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          offset: Offset(0, 1),
+                                          blurRadius: 4,
+                                          color: Colors.black12,
                                         ),
                                       ],
                                     ),
+                                    child: RawScrollbar(
+                                      thumbColor: const Color(0xFF1E38FC),
+                                      trackColor: const Color.fromRGBO(
+                                          223, 239, 253, 1),
+                                      trackRadius: const Radius.circular(10),
+                                      trackVisibility: true,
+                                      radius: const Radius.circular(10),
+                                      thickness: 14,
+                                      thumbVisibility: true,
+                                      controller: _controller1,
+                                      child: SingleChildScrollView(
+                                        controller: _controller2,
+                                        child: Column(
+                                          children: [
+                                            SizedBox(
+                                              height: 30,
+                                              child: CheckboxListTile(
+                                                  controlAffinity:
+                                                      ListTileControlAffinity
+                                                          .leading,
+                                                  checkboxShape:
+                                                      RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(6)),
+                                                  dense: true,
+                                                  activeColor: Theme.of(context)
+                                                      .primaryColor,
+                                                  contentPadding:
+                                                      const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 8),
+                                                  visualDensity:
+                                                      const VisualDensity(
+                                                          horizontal: -4.0),
+                                                  title: Text(
+                                                    'Select all',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .labelSmall!
+                                                        .merge(const TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            fontSize: 14.0,
+                                                            letterSpacing:
+                                                                0.3)),
+                                                  ),
+                                                  value:
+                                                      selectAllEmployee.value,
+                                                  onChanged: (value) {
+                                                    selectAllEmployee.value =
+                                                        value!;
+
+                                                    salesController
+                                                        .selectedEmployeeListValues
+                                                        .clear();
+                                                    if (value) {
+                                                      salesController
+                                                          .selectedEmployeeListValues
+                                                          .addAll(salesController
+                                                              .employeeListValues);
+                                                      for (int i = 0;
+                                                          i <
+                                                              salesController
+                                                                  .employeeListValues
+                                                                  .length;
+                                                          i++) {
+                                                        addId(salesController
+                                                            .employeeListValues
+                                                            .elementAt(i)
+                                                            .hrmDId!);
+
+                                                        setState(() {});
+                                                      }
+                                                    } else {
+                                                      salesController
+                                                          .selectedEmployeeListValues
+                                                          .clear();
+                                                      salesController.empId
+                                                          .clear();
+
+                                                      setState(() {});
+                                                    }
+                                                  }),
+                                            ),
+                                            ListView.builder(
+                                              itemCount: salesController
+                                                  .employeeListValues.length,
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemBuilder: (context, index) {
+                                                logger.i(
+                                                    " =========${salesController.employeeListValues.elementAt(index).hrmEEmployeeFirstName}");
+                                                return SizedBox(
+                                                  height: 35,
+                                                  child: CheckBoxContainer(
+                                                      sectionName:
+                                                          "${salesController.employeeListValues.elementAt(index).hrmEEmployeeFirstName} ${salesController.employeeListValues.elementAt(index).hrmEEmployeeMiddleName ?? ''} ${salesController.employeeListValues.elementAt(index).hrmEEmployeeLastName ?? ''}",
+                                                      func: (b) {
+                                                        setState(() {
+                                                          if (b) {
+                                                            salesController.addSelectedEmpValues(
+                                                                salesController
+                                                                    .employeeListValues
+                                                                    .elementAt(
+                                                                        index));
+
+                                                            salesController.addEmpId(
+                                                                salesController
+                                                                    .employeeListValues
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .hrmDId!);
+
+                                                            setState(() {});
+                                                          } else {
+                                                            selectAllDepartment
+                                                                .value = false;
+                                                            salesController.removeSelectedEmpValues(
+                                                                salesController
+                                                                    .employeeListValues
+                                                                    .elementAt(
+                                                                        index));
+                                                            for (int i = 0;
+                                                                i <
+                                                                    salesController
+                                                                        .empId
+                                                                        .length;
+                                                                i++) {
+                                                              removeId(
+                                                                  salesController
+                                                                          .empId[
+                                                                      index]);
+                                                            }
+
+                                                            setState(() {});
+                                                          }
+                                                        });
+                                                      },
+                                                      isChecked: RxBool(
+                                                        salesController
+                                                            .selectedEmployeeListValues
+                                                            .contains(
+                                                          salesController
+                                                              .employeeListValues
+                                                              .elementAt(index),
+                                                        ),
+                                                      )),
+                                                  // })
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  const ContainerTitle(
+                                    iT: Color(0xFFFF6F67),
+                                    bg: Color.fromARGB(255, 255, 236, 235),
+                                    image: 'assets/images/subjectfielicon.png',
+                                    title: 'Select Employee',
+                                  ),
+                                ],
                               ),
-                              const ContainerTitle(
-                                iT: Color(0xFFFF6F67),
-                                bg: Color.fromARGB(255, 255, 236, 235),
-                                image: 'assets/images/subjectfielicon.png',
-                                title: 'Select Employee',
-                              ),
-                            ],
-                          ),
-                        ),
+                            ),
                   // const SizedBox(height: 20),
                   // MSkollBtn(title: "Search", onPress: () {})
                 ],
