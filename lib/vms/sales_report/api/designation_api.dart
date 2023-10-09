@@ -14,7 +14,7 @@ class DesignationAPI {
       required SalesController salesController}) async {
     var dio = Dio();
     var url =
-        'https://vmsstaging.vapssmartecampus.com:40019/${URLS.designation}';
+        base+URLS.designation;
     try {
       salesController.designationLoading(true);
       var response = await dio.post(url,

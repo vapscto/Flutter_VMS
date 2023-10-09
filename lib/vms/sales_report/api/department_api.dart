@@ -13,8 +13,7 @@ class DepartmentAPI {
       required int hrmdId,
       required SalesController salesController}) async {
     var dio = Dio();
-    var url =
-        'https://vmsstaging.vapssmartecampus.com:40019/${URLS.department}';
+
     var url2 = base + URLS.department;
     logger.i(url2);
     try {
@@ -22,7 +21,7 @@ class DepartmentAPI {
         salesController.error(false);
       }
       salesController.departmentLoading(true);
-      var response = await dio.post(url,
+      var response = await dio.post(url2,
           // options: Options(headers: getSession()),
           data: {"MI_Id": miId, "HRMD_Id": hrmdId});
       if (response.statusCode == 200) {

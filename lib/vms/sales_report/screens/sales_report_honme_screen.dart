@@ -56,7 +56,7 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
     salesController.departmentLoading(true);
     salesController.designationListValues.clear();
     await DepartmentAPI.instance.departmentAPI(
-        base: baseUrlFromInsCode("Recruitement", widget.mskoolController),
+        base: baseUrlFromInsCode("recruitement", widget.mskoolController),
         miId: widget.loginSuccessModel.mIID!,
         hrmdId: widget.loginSuccessModel.empId!,
         salesController: salesController);
@@ -67,7 +67,7 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
   _getDegnisation(List<int> hrndId) async {
     salesController.designationLoading(true);
     await DesignationAPI.instance.designationAPI(
-        base: baseUrlFromInsCode("Recruitement", widget.mskoolController),
+        base: baseUrlFromInsCode("recruitement", widget.mskoolController),
         miId: widget.loginSuccessModel.mIID!,
         hrndIdList: hrndId,
         salesController: salesController);
@@ -77,7 +77,7 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
   _getEmployee() async {
     salesController.employeeLoading(true);
     await EmployeeListAPI.instance.employeeListAPI(
-        base: baseUrlFromInsCode("Recruitement", widget.mskoolController),
+        base: baseUrlFromInsCode("recruitement", widget.mskoolController),
         miId: widget.loginSuccessModel.mIID!,
         hrndIdList: idList,
         hrmdesIdList: salesController.designationId,
@@ -131,231 +131,6 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 20, left: 16, right: 16),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: CustomContainer(
-                            child: TextField(
-                              style: Theme.of(context).textTheme.titleSmall,
-                              readOnly: true,
-                              controller: _startDate,
-                              onTap: () async {
-                                fromDate = await showDatePicker(
-                                  context: context,
-                                  helpText: "Select Data",
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(2000),
-                                  lastDate: DateTime(3050),
-                                  selectableDayPredicate: (day) =>
-                                      day.weekday == 7 || day.weekday == 7
-                                          ? false
-                                          : true,
-                                );
-                                if (fromDate != null) {
-                                  setState(() {
-                                    _startDate.text =
-                                        "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
-                                  });
-                                }
-                              },
-                              decoration: InputDecoration(
-                                suffixIcon: IconButton(
-                                  onPressed: () async {
-                                    fromDate = await showDatePicker(
-                                      helpText: "Select Data",
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(2000),
-                                      lastDate: DateTime(3050),
-                                      selectableDayPredicate: (day) =>
-                                          day.weekday == 7 || day.weekday == 7
-                                              ? false
-                                              : true,
-                                    );
-
-                                    if (fromDate != null) {
-                                      setState(() {
-                                        _startDate.text =
-                                            "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
-                                      });
-                                    }
-                                  },
-                                  icon: SvgPicture.asset(
-                                    "assets/svg/calendar_icon.svg",
-                                    color: const Color(0xFF3E78AA),
-                                    height: 18,
-                                  ),
-                                ),
-                                contentPadding:
-                                    const EdgeInsets.only(top: 40.0, left: 12),
-                                border: const OutlineInputBorder(),
-                                label: Container(
-                                  margin: const EdgeInsets.only(bottom: 5),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12.0, vertical: 8.0),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(24.0),
-                                      color: const Color(0xFFE5F3FF)),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      SvgPicture.asset(
-                                        "assets/svg/calendar_icon.svg",
-                                        color: const Color(0xFF3E78AA),
-                                        height: 18,
-                                      ),
-                                      const SizedBox(
-                                        width: 6.0,
-                                      ),
-                                      Text(
-                                        " Start Date ",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelMedium!
-                                            .merge(
-                                              const TextStyle(
-                                                fontSize: 18.0,
-                                                color: Color(0xFF3E78AA),
-                                              ),
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                hintText: 'Select Date',
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.always,
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 12.0,
-                        ),
-                        Expanded(
-                          child: CustomContainer(
-                            child: TextField(
-                              readOnly: true,
-                              style: Theme.of(context).textTheme.titleSmall,
-                              controller: _endDate,
-                              onTap: () async {
-                                if (_startDate.text.isNotEmpty) {
-                                  toDate = await showDatePicker(
-                                    context: context,
-                                    helpText: "Select Date",
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(2000),
-                                    lastDate: DateTime(3050),
-                                  );
-                                  if (toDate != null) {
-                                    setState(() {
-                                      _endDate.text =
-                                          "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
-                                    });
-                                  }
-                                } else {
-                                  Fluttertoast.showToast(
-                                      msg: "Please Select Start Date");
-                                }
-                              },
-                              decoration: InputDecoration(
-                                isDense: true,
-                                contentPadding:
-                                    const EdgeInsets.only(top: 40.0, left: 12),
-                                suffixIcon: IconButton(
-                                  onPressed: () async {
-                                    if (_startDate.text.isNotEmpty) {
-                                      toDate = await showDatePicker(
-                                        context: context,
-                                        helpText: "Select Date",
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(2000),
-                                        lastDate: DateTime(3050),
-                                      );
-                                      if (toDate != null) {
-                                        setState(() {
-                                          _endDate.text =
-                                              "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
-                                        });
-                                      }
-                                    } else {
-                                      Fluttertoast.showToast(
-                                          msg: "Please Select Start Date");
-                                    }
-                                  },
-                                  icon: SvgPicture.asset(
-                                    "assets/svg/calendar_icon.svg",
-                                    color: const Color(0xFF3E78AA),
-                                    height: 18,
-                                  ),
-                                ),
-                                border: const OutlineInputBorder(),
-                                label: Container(
-                                  margin: const EdgeInsets.only(bottom: 5),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12.0, vertical: 8.0),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(24.0),
-                                      color: const Color(0xFFE5F3FF)),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      SvgPicture.asset(
-                                        "assets/svg/calendar_icon.svg",
-                                        color: const Color(0xFF3E78AA),
-                                        height: 18,
-                                      ),
-                                      const SizedBox(
-                                        width: 6.0,
-                                      ),
-                                      Text(
-                                        " End Date ",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelMedium!
-                                            .merge(
-                                              const TextStyle(
-                                                  fontSize: 18.0,
-                                                  color: Color(0xFF3E78AA)),
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                hintText: 'Select Date',
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.always,
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                   salesController.departmentlistValues.isEmpty
                       ? const SizedBox()
                       : Container(
@@ -635,10 +410,11 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                                                   .designationListValues
                                                                   .length;
                                                           i++) {
-                                                        addId(salesController
-                                                            .designationListValues
-                                                            .elementAt(i)
-                                                            .hrmdCID!);
+                                                        salesController.addDegId(
+                                                            salesController
+                                                                .designationListValues
+                                                                .elementAt(i)
+                                                                .hrmdeSId!);
                                                         _getEmployee();
                                                         setState(() {});
                                                       }
@@ -680,7 +456,7 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                                                     .designationListValues
                                                                     .elementAt(
                                                                         index)
-                                                                    .hrmdCID!);
+                                                                    .hrmdeSId!);
                                                             _getEmployee();
                                                             setState(() {});
                                                           } else {
@@ -826,6 +602,9 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                                           .selectedEmployeeListValues
                                                           .addAll(salesController
                                                               .employeeListValues);
+                                                      logger.i(salesController
+                                                          .employeeListValues
+                                                          .length);
                                                       for (int i = 0;
                                                           i <
                                                               salesController
@@ -932,8 +711,231 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                 ],
                               ),
                             ),
-                  // const SizedBox(height: 20),
-                  // MSkollBtn(title: "Search", onPress: () {})
+                  Container(
+                    margin: const EdgeInsets.only(top: 20, left: 16, right: 16),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: CustomContainer(
+                            child: TextField(
+                              style: Theme.of(context).textTheme.titleSmall,
+                              readOnly: true,
+                              controller: _startDate,
+                              onTap: () async {
+                                fromDate = await showDatePicker(
+                                  context: context,
+                                  helpText: "Select Data",
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(3050),
+                                  selectableDayPredicate: (day) =>
+                                      day.weekday == 7 || day.weekday == 7
+                                          ? false
+                                          : true,
+                                );
+                                if (fromDate != null) {
+                                  setState(() {
+                                    _startDate.text =
+                                        "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
+                                  });
+                                }
+                              },
+                              decoration: InputDecoration(
+                                suffixIcon: IconButton(
+                                  onPressed: () async {
+                                    fromDate = await showDatePicker(
+                                      helpText: "Select Data",
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(2000),
+                                      lastDate: DateTime(3050),
+                                      selectableDayPredicate: (day) =>
+                                          day.weekday == 7 || day.weekday == 7
+                                              ? false
+                                              : true,
+                                    );
+
+                                    if (fromDate != null) {
+                                      setState(() {
+                                        _startDate.text =
+                                            "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
+                                      });
+                                    }
+                                  },
+                                  icon: SvgPicture.asset(
+                                    "assets/svg/calendar_icon.svg",
+                                    color: const Color(0xFF3E78AA),
+                                    height: 18,
+                                  ),
+                                ),
+                                contentPadding:
+                                    const EdgeInsets.only(top: 40.0, left: 12),
+                                border: const OutlineInputBorder(),
+                                label: Container(
+                                  margin: const EdgeInsets.only(bottom: 5),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0, vertical: 8.0),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(24.0),
+                                      color: const Color(0xFFE5F3FF)),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/svg/calendar_icon.svg",
+                                        color: const Color(0xFF3E78AA),
+                                        height: 18,
+                                      ),
+                                      const SizedBox(
+                                        width: 6.0,
+                                      ),
+                                      Text(
+                                        " Start Date ",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
+                                            .merge(
+                                              const TextStyle(
+                                                fontSize: 18.0,
+                                                color: Color(0xFF3E78AA),
+                                              ),
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                hintText: 'Select Date',
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 12.0,
+                        ),
+                        Expanded(
+                          child: CustomContainer(
+                            child: TextField(
+                              readOnly: true,
+                              style: Theme.of(context).textTheme.titleSmall,
+                              controller: _endDate,
+                              onTap: () async {
+                                if (_startDate.text.isNotEmpty) {
+                                  toDate = await showDatePicker(
+                                    context: context,
+                                    helpText: "Select Date",
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(3050),
+                                  );
+                                  if (toDate != null) {
+                                    setState(() {
+                                      _endDate.text =
+                                          "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                    });
+                                  }
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg: "Please Select Start Date");
+                                }
+                              },
+                              decoration: InputDecoration(
+                                isDense: true,
+                                contentPadding:
+                                    const EdgeInsets.only(top: 40.0, left: 12),
+                                suffixIcon: IconButton(
+                                  onPressed: () async {
+                                    if (_startDate.text.isNotEmpty) {
+                                      toDate = await showDatePicker(
+                                        context: context,
+                                        helpText: "Select Date",
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(2000),
+                                        lastDate: DateTime(3050),
+                                      );
+                                      if (toDate != null) {
+                                        setState(() {
+                                          _endDate.text =
+                                              "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                        });
+                                      }
+                                    } else {
+                                      Fluttertoast.showToast(
+                                          msg: "Please Select Start Date");
+                                    }
+                                  },
+                                  icon: SvgPicture.asset(
+                                    "assets/svg/calendar_icon.svg",
+                                    color: const Color(0xFF3E78AA),
+                                    height: 18,
+                                  ),
+                                ),
+                                border: const OutlineInputBorder(),
+                                label: Container(
+                                  margin: const EdgeInsets.only(bottom: 5),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0, vertical: 8.0),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(24.0),
+                                      color: const Color(0xFFE5F3FF)),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/svg/calendar_icon.svg",
+                                        color: const Color(0xFF3E78AA),
+                                        height: 18,
+                                      ),
+                                      const SizedBox(
+                                        width: 6.0,
+                                      ),
+                                      Text(
+                                        " End Date ",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
+                                            .merge(
+                                              const TextStyle(
+                                                  fontSize: 18.0,
+                                                  color: Color(0xFF3E78AA)),
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                hintText: 'Select Date',
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               );
       }),
