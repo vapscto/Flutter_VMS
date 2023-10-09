@@ -20,16 +20,11 @@ import 'package:m_skool_flutter/manager/feedemo/screen/fee_home.dart';
 import 'package:m_skool_flutter/manager/feehead/screen/fee_details_home.dart';
 import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/manager/staff_birthday/screens/bday_home.dart';
-import 'package:m_skool_flutter/manager/staff_leave_approval/screen/staff_leave_approval_home.dart';
 import 'package:m_skool_flutter/manager/student_details/screen/student_details_home.dart';
 import 'package:m_skool_flutter/manager/time_table/screen/manager_time_table_home.dart';
 import 'package:m_skool_flutter/model/categories_api_item.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
-import 'package:m_skool_flutter/principal/Fee_collection/screen/fee_collection_home.dart';
-import 'package:m_skool_flutter/principal/class_teacher_report/screen/class_teacher_report_screen_home.dart';
-import 'package:m_skool_flutter/principal/preadmission_module/screens/preAdmissionDetails.dart';
-import 'package:m_skool_flutter/principal/toperWise/screen/examwise_toper.dart';
 import 'package:m_skool_flutter/screens/attachment_viewer.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
@@ -529,38 +524,6 @@ void openMappedPages(
         title: pageName,
       ),
     );
-    return;
-  }
-
-  if (pageName == "Class Teacher Report") {
-    Get.to(() => ClassTeacherHome(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
-    return;
-  }
-
-  if (pageName == "Classwise Topper") {
-    Get.to(() => ClasswiseTopper(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
-    return;
-  }
-
-  if (pageName == "Fee Collection") {
-    Get.to(() => FeeCollectionHomeScreen(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
-    return;
-  }
-
-  if (pageName == "Pre Admission") {
-    Get.to(() => PreAdmissionHomeScreen(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
     return;
   }
 
