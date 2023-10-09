@@ -20,16 +20,11 @@ import 'package:m_skool_flutter/manager/feedemo/screen/fee_home.dart';
 import 'package:m_skool_flutter/manager/feehead/screen/fee_details_home.dart';
 import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/manager/staff_birthday/screens/bday_home.dart';
-import 'package:m_skool_flutter/manager/staff_leave_approval/screen/staff_leave_approval_home.dart';
 import 'package:m_skool_flutter/manager/student_details/screen/student_details_home.dart';
 import 'package:m_skool_flutter/manager/time_table/screen/manager_time_table_home.dart';
 import 'package:m_skool_flutter/model/categories_api_item.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
-import 'package:m_skool_flutter/principal/Fee_collection/screen/fee_collection_home.dart';
-import 'package:m_skool_flutter/principal/class_teacher_report/screen/class_teacher_report_screen_home.dart';
-import 'package:m_skool_flutter/principal/preadmission_module/screens/preAdmissionDetails.dart';
-import 'package:m_skool_flutter/principal/toperWise/screen/examwise_toper.dart';
 import 'package:m_skool_flutter/screens/attachment_viewer.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
@@ -59,9 +54,11 @@ import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.da
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
+import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
 import 'package:m_skool_flutter/vms/petty_cash_requisition/screen/pc_requisition_HOME.dart';
+import 'package:m_skool_flutter/vms/sales_report/screens/sales_report_home_screen.dart';
 import 'package:m_skool_flutter/vms/security/screen/Shome_Screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/screens/tada_advance_aplay_home.dart';
@@ -528,38 +525,6 @@ void openMappedPages(
         title: pageName,
       ),
     );
-    return;
-  }
-
-  if (pageName == "Class Teacher Report") {
-    Get.to(() => ClassTeacherHome(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
-    return;
-  }
-
-  if (pageName == "Classwise Topper") {
-    Get.to(() => ClasswiseTopper(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
-    return;
-  }
-
-  if (pageName == "Fee Collection") {
-    Get.to(() => FeeCollectionHomeScreen(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
-    return;
-  }
-
-  if (pageName == "Pre Admission") {
-    Get.to(() => PreAdmissionHomeScreen(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
     return;
   }
 
@@ -1051,16 +1016,26 @@ void openMappedPages(
 
     return;
   }
+  if (pageName == "Visitor management") {
+    Get.to(() => VisitorManagementHome(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
+    return;
+  }
   if (pageName == "Leave Approval") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return TadaApplyHomeScreen(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-        previousScreen: 0,
-        // title: pageName,
-      );
-    }));
-
+    // Navigator.push(context, MaterialPageRoute(builder: (_) {
+    //   return TadaApplyHomeScreen(
+    //     loginSuccessModel: loginSuccessModel,
+    //     mskoolController: mskoolController,
+    //     previousScreen: 0,
+    //     // title: pageName,
+    //   );
+    // }));
+    Get.to(() => SalesReportHomeScreen(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
     return;
   }
   if (pageName == "Employee Details") {
@@ -1079,7 +1054,6 @@ void openMappedPages(
           title: pageName,
         ));
   }
-
   if (pageName == "Overall Fee") {
     Navigator.push(
       context,

@@ -257,10 +257,10 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                     initialDate: DateTime.now(),
                                     firstDate: DateTime.now(),
                                     lastDate: DateTime(3050),
-                                    selectableDayPredicate: (day) =>
-                                        day.weekday == 7 || day.weekday == 7
-                                            ? false
-                                            : true,
+                                    //   selectableDayPredicate: (day) =>
+                                    //       day.weekday == 7 || day.weekday == 7
+                                    //           ? false
+                                    //           : true,
                                   );
                                   if (fromDate != null) {
                                     setState(() {
@@ -280,10 +280,10 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                         initialDate: DateTime.now(),
                                         firstDate: DateTime.now(),
                                         lastDate: DateTime(3050),
-                                        selectableDayPredicate: (day) =>
-                                            day.weekday == 7 || day.weekday == 7
-                                                ? false
-                                                : true,
+                                        // selectableDayPredicate: (day) =>
+                                        //     day.weekday == 7 || day.weekday == 7
+                                        //         ? false
+                                        //         : true,
                                       );
 
                                       if (fromDate != null) {

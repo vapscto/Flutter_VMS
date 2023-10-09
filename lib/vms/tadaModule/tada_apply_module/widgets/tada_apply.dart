@@ -16,7 +16,6 @@ import 'package:m_skool_flutter/student/homework/model/upload_hw_cw_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/city_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/clint_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/state_list_model.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/applied_deta_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/check_apply_planner_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/city_list_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/state_list_api.dart';
@@ -413,10 +412,10 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 initialDate: DateTime.now(),
                                 firstDate: DateTime(2000),
                                 lastDate: DateTime(3050),
-                                selectableDayPredicate: (day) =>
-                                    day.weekday == 7 || day.weekday == 7
-                                        ? false
-                                        : true,
+                                // selectableDayPredicate: (day) =>
+                                //     day.weekday == 7 || day.weekday == 7
+                                //         ? false
+                                //         : true,
                               );
                               if (fromDate != null) {
                                 setState(() {
@@ -436,10 +435,10 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                     initialDate: DateTime.now(),
                                     firstDate: DateTime(2000),
                                     lastDate: DateTime(3050),
-                                    selectableDayPredicate: (day) =>
-                                        day.weekday == 7 || day.weekday == 7
-                                            ? false
-                                            : true,
+                                    // selectableDayPredicate: (day) =>
+                                    //     day.weekday == 7 || day.weekday == 7
+                                    //         ? false
+                                    //         : true,
                                   );
 
                                   if (fromDate != null) {

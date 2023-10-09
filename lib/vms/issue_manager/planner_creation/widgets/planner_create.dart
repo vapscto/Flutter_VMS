@@ -275,12 +275,12 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               ? const Padding(
                   padding: EdgeInsets.only(top: 8.0, bottom: 30),
                   child: TextScroll(
-                    'YOU CANOT GENERATE PLANNER TODAY!!  ',
+                    "YOU CAN'T GENERATE PLANNER TODAY!!",
                     delayBefore: Duration(milliseconds: 500),
                     mode: TextScrollMode.endless,
                     style: TextStyle(
                         color: Colors.red,
-                        fontSize: 20,
+                        fontSize: 16,
                         fontWeight: FontWeight.w600),
                     textAlign: TextAlign.left,
                     selectable: true,

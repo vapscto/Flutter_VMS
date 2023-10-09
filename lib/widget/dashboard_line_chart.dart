@@ -58,16 +58,16 @@ class ChartDataLoader extends StatefulWidget {
 class _ChartDataLoaderState extends State<ChartDataLoader> {
   @override
   void initState() {
-    DashboardExamApi.instance.loadExamData(
-        miId: widget.loginSuccessModel.mIID!,
-        asmayId: widget.loginSuccessModel.asmaYId!,
-        asmclId: widget.loginSuccessModel.asmcLId!,
-        asmsId: widget.loginSuccessModel.asmSId!,
-        amstId: widget.loginSuccessModel.amsTId!,
-        emeId: widget.selectedExam.eMEId ?? 0,
-        base: baseUrlFromInsCode("portal", widget.mskoolController),
-        dashboardController: widget.dashboardController);
-    super.initState();
+    // DashboardExamApi.instance.loadExamData(
+    //     miId: widget.loginSuccessModel.mIID!,
+    //     asmayId: widget.loginSuccessModel.asmaYId!,
+    //     asmclId: widget.loginSuccessModel.asmcLId!,
+    //     asmsId: widget.loginSuccessModel.asmSId!,
+    //     amstId: widget.loginSuccessModel.amsTId!,
+    //     emeId: widget.selectedExam.eMEId ?? 0,
+    //     base: baseUrlFromInsCode("portal", widget.mskoolController),
+    //     dashboardController: widget.dashboardController);
+    // super.initState();
   }
 
   @override
