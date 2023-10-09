@@ -52,6 +52,7 @@ import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
+import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
@@ -848,7 +849,7 @@ void openMappedPages(
     //   );
     // }));
     // return
-    Get.to(() => ShomeScreen(
+    Get.to(() => GpasHomeScreen(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
         ));
