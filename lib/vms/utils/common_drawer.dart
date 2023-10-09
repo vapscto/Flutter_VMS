@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/screens/forgot_password_screen.dart';
-import 'package:m_skool_flutter/manager/widget/drawer_widget.dart';
+import 'package:m_skool_flutter/vms/utils/drawer_widget.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/theme_switcher.dart';
 import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
-import '../forgotpassword/screens/reset_password.dart';
+import '../../forgotpassword/screens/reset_password.dart';
 
 class CommonDrawer extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;

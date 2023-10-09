@@ -4,7 +4,6 @@ import 'package:m_skool_flutter/apis/dashboard_exam_api.dart';
 import 'package:m_skool_flutter/controller/dynamic_analytics_controller.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/manager/widget/manager_dashboard_container.dart';
 import 'package:m_skool_flutter/model/exam_list.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/widget/punch_lop_analytics.dart';
@@ -43,10 +42,10 @@ class DynamicAnalytics extends StatelessWidget {
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
         ),
-        ManagerDashboardContainer(
-            dashboardController: dashboardController,
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController)
+        // ManagerDashboardContainer(
+        //     dashboardController: dashboardController,
+        //     loginSuccessModel: loginSuccessModel,
+        //     mskoolController: mskoolController)
       ],
     );
   }
@@ -248,28 +247,28 @@ class StudentAnalytics extends StatelessWidget {
                                                         .eMEExamName ??
                                                     "N/a"))),
                                         onChanged: (value) async {
-                                          dashboardController
-                                              .selectedOption.value = value!;
-                                          await DashboardExamApi.instance
-                                              .loadExamData(
-                                                  miId: loginSuccessModel.mIID!,
-                                                  asmayId: loginSuccessModel
-                                                      .asmaYId!,
-                                                  asmclId: loginSuccessModel
-                                                      .asmcLId!,
-                                                  asmsId:
-                                                      loginSuccessModel.asmSId!,
-                                                  amstId:
-                                                      loginSuccessModel.amsTId!,
-                                                  emeId: dashboardController
-                                                      .selectedOption
-                                                      .value
-                                                      .eMEId!,
-                                                  base: baseUrlFromInsCode(
-                                                      "portal",
-                                                      mskoolController),
-                                                  dashboardController:
-                                                      dashboardController);
+                                          // dashboardController
+                                          //     .selectedOption.value = value!;
+                                          // await DashboardExamApi.instance
+                                          //     .loadExamData(
+                                          //         miId: loginSuccessModel.mIID!,
+                                          //         asmayId: loginSuccessModel
+                                          //             .asmaYId!,
+                                          //         asmclId: loginSuccessModel
+                                          //             .asmcLId!,
+                                          //         asmsId:
+                                          //             loginSuccessModel.asmSId!,
+                                          //         amstId:
+                                          //             loginSuccessModel.amsTId!,
+                                          //         emeId: dashboardController
+                                          //             .selectedOption
+                                          //             .value
+                                          //             .eMEId!,
+                                          //         base: baseUrlFromInsCode(
+                                          //             "portal",
+                                          //             mskoolController),
+                                          //         dashboardController:
+                                          //             dashboardController);
                                         },
                                       ),
                                     );

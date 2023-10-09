@@ -58,6 +58,7 @@ import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
+import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
 import 'package:m_skool_flutter/vms/petty_cash_requisition/screen/pc_requisition_HOME.dart';
@@ -67,7 +68,6 @@ import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/screens/tada_advance_aplay_home.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/tada_apply_home_screen.dart';
 import 'package:m_skool_flutter/vms/task%20creation/screens/taskCreationHome.dart';
-import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 

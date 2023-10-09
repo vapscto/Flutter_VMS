@@ -5,7 +5,7 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/manager/coe/screen/manager_coe.dart';
 import 'package:m_skool_flutter/manager/tabs/manager_dashboard.dart';
-import 'package:m_skool_flutter/manager/widget/drawer_widget.dart';
+import 'package:m_skool_flutter/vms/utils/drawer_widget.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/staffs/tabs/staff_profile_tab.dart';
