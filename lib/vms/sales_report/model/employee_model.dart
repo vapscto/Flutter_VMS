@@ -9,13 +9,13 @@ class EmployeeListModel {
     if (json['\$values'] != null) {
       values = <EmployeeListModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(EmployeeListModelValues.fromJson(v));
+        values!.add(new EmployeeListModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = new Map<String, dynamic>();
     data['\$type'] = type;
     if (values != null) {
       data['\$values'] = values!.map((v) => v.toJson()).toList();
@@ -293,7 +293,7 @@ class EmployeeListModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = new Map<String, dynamic>();
     data['hrmE_Id'] = hrmEId;
     data['mI_Id'] = mIId;
     data['hrmeT_Id'] = hrmeTId;

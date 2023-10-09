@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/sales_report/model/department_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/model/designation_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/model/employee_model.dart';
@@ -96,7 +97,7 @@ class SalesController extends GetxController {
     if (employeeListValues.isNotEmpty) {
       employeeListValues.clear();
     }
-    for (int index = 0; index < employeeListValues.length; index++) {
+    for (int index = 0; index < employee.length; index++) {
       employeeListValues.add(employee.elementAt(index));
     }
   }

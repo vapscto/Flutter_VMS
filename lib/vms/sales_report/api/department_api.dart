@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/sales_report/model/department_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/sales_controller/sales_controller.dart';
@@ -22,7 +23,7 @@ class DepartmentAPI {
       }
       salesController.departmentLoading(true);
       var response = await dio.post(url2,
-          // options: Options(headers: getSession()),
+          options: Options(headers: getSession()),
           data: {"MI_Id": miId, "HRMD_Id": hrmdId});
       if (response.statusCode == 200) {
         DepartmentListModel departmentListModel =

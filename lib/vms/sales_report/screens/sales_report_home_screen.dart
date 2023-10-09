@@ -12,11 +12,9 @@ import 'package:m_skool_flutter/vms/sales_report/api/department_api.dart';
 import 'package:m_skool_flutter/vms/sales_report/api/designation_api.dart';
 import 'package:m_skool_flutter/vms/sales_report/api/employee_api.dart';
 import 'package:m_skool_flutter/vms/sales_report/sales_controller/sales_controller.dart';
-import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
-import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import '../../../staffs/gallery_upload/widget/gallery_checkbox.container.dart';
 
 class SalesReportHomeScreen extends StatefulWidget {
@@ -55,6 +53,7 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
   _getDepartment() async {
     salesController.departmentLoading(true);
     salesController.designationListValues.clear();
+    salesController.employeeListValues.clear();
     await DepartmentAPI.instance.departmentAPI(
         base: baseUrlFromInsCode("recruitement", widget.mskoolController),
         miId: widget.loginSuccessModel.mIID!,
@@ -66,6 +65,7 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
 
   _getDegnisation(List<int> hrndId) async {
     salesController.designationLoading(true);
+    salesController.employeeListValues.clear();
     await DesignationAPI.instance.designationAPI(
         base: baseUrlFromInsCode("recruitement", widget.mskoolController),
         miId: widget.loginSuccessModel.mIID!,
@@ -212,6 +212,18 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                                       .departmentSelectedValues
                                                       .addAll(salesController
                                                           .departmentlistValues);
+                                                  if (salesController
+                                                          .departmentSelectedValues
+                                                          .length ==
+                                                      salesController
+                                                          .departmentlistValues
+                                                          .length) {
+                                                    selectAllDepartment.value =
+                                                        true;
+                                                  } else {
+                                                    selectAllDepartment.value =
+                                                        false;
+                                                  }
                                                   for (int i = 0;
                                                       i <
                                                           salesController
@@ -315,9 +327,9 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                   salesController.isDesignationLoading.value
                       ? const Center(
                           child: AnimatedProgressWidget(
-                              title: "Loading Sales report",
+                              title: "Loading Designation List",
                               desc:
-                                  "Please wait while we load Sales report entry and create a view for you.",
+                                  "Please wait while we load Designation List entry and create a view for you.",
                               animationPath: "assets/json/default.json"),
                         )
                       : salesController.designationListValues.isEmpty
@@ -354,7 +366,7 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                       thumbVisibility: true,
                                       controller: _controller1,
                                       child: SingleChildScrollView(
-                                        controller: _controller,
+                                        controller: _controller1,
                                         child: Column(
                                           children: [
                                             SizedBox(
@@ -513,9 +525,9 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                   salesController.isEmployeeLoading.value
                       ? const Center(
                           child: AnimatedProgressWidget(
-                              title: "Loading Sales report",
+                              title: "Loading Employee List",
                               desc:
-                                  "Please wait while we load Sales report entry and create a view for you.",
+                                  "Please wait while we load Employee List entry and create a view for you.",
                               animationPath: "assets/json/default.json"),
                         )
                       : salesController.employeeListValues.isEmpty
@@ -602,9 +614,7 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                                           .selectedEmployeeListValues
                                                           .addAll(salesController
                                                               .employeeListValues);
-                                                      logger.i(salesController
-                                                          .employeeListValues
-                                                          .length);
+
                                                       for (int i = 0;
                                                           i <
                                                               salesController
@@ -636,8 +646,6 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                               physics:
                                                   const NeverScrollableScrollPhysics(),
                                               itemBuilder: (context, index) {
-                                                logger.i(
-                                                    " =========${salesController.employeeListValues.elementAt(index).hrmEEmployeeFirstName}");
                                                 return SizedBox(
                                                   height: 35,
                                                   child: CheckBoxContainer(
@@ -712,7 +720,7 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                               ),
                             ),
                   Container(
-                    margin: const EdgeInsets.only(top: 20, left: 16, right: 16),
+                    margin: const EdgeInsets.only(top: 30, left: 0, right: 0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
