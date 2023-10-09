@@ -57,7 +57,7 @@ class _PcRequisitionDetailsScreenState
                 )
               : requestedDetailsPC.getLoadDataList.isNotEmpty
                   ? Container(
-                      margin: EdgeInsets.only(top: 16.0),
+                      margin: const EdgeInsets.only(top: 16.0),
                       height: Get.height * 0.85,
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -87,43 +87,43 @@ class _PcRequisitionDetailsScreenState
                                           MaterialStateProperty.all(
                                               Theme.of(context).primaryColor),
                                       columns: [
-                                        DataColumn(
+                                        const DataColumn(
                                             label: Text("S No.",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
                                                         FontWeight.w800))),
-                                        DataColumn(
+                                        const DataColumn(
                                             label: Text("Requisition No.",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
                                                         FontWeight.w800))),
-                                        DataColumn(
+                                        const DataColumn(
                                             label: Text("Department",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
                                                         FontWeight.w800))),
-                                        DataColumn(
+                                        const DataColumn(
                                             label: Text("Requested By",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
                                                         FontWeight.w800))),
-                                        DataColumn(
+                                        const DataColumn(
                                             label: Text("Date",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
                                                         FontWeight.w800))),
-                                        DataColumn(
+                                        const DataColumn(
                                             label: Text("Purpose",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
                                                         FontWeight.w800))),
-                                        DataColumn(
+                                        const DataColumn(
                                             label: Text("Action",
                                                 style: TextStyle(
                                                     color: Colors.white,
@@ -199,7 +199,7 @@ class _PcRequisitionDetailsScreenState
                                                       }));
                                                     }
                                                   },
-                                                  child: Icon(Icons
+                                                  child: const Icon(Icons
                                                       .remove_red_eye_rounded)),
                                             ],
                                           )),
@@ -216,7 +216,7 @@ class _PcRequisitionDetailsScreenState
                       child: Visibility(
                         visible:
                             !requestedDetailsPC.isLoadingRequestedDetails.value,
-                        child: AnimatedProgressWidget(
+                        child: const AnimatedProgressWidget(
                           animationPath: 'assets/json/nodata.json',
                           title: 'Select Organization',
                           desc: "Select the Organization to show the Data",

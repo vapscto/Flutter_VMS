@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
@@ -47,6 +48,7 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
       Get.put(CashRequisitionController());
 
   final TextEditingController selectDate = TextEditingController();
+  List<ParticularsPcRequestModelValues> selectedValues = [];
   RxInt changes = RxInt(-1);
 
   DepartmentPcRequestModelValues? selectedDepartment;
@@ -361,7 +363,8 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  border: Border.all(color: const Color.fromARGB(255, 211, 211, 211)),
+                  border: Border.all(
+                      color: const Color.fromARGB(255, 211, 211, 211)),
                 ),
                 child: TextField(
                   controller: purposeController,
@@ -540,7 +543,7 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                                     label: Align(
                                       alignment: Alignment.center,
                                       child: Text(
-                                        "S No.",
+                                        "SLNO",
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w800,
@@ -615,103 +618,129 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                                                 ],
                                               ),
                                               child: DropdownButtonFormField<
-                                                  ParticularsPcRequestModelValues>(
-                                                value: rows[index]
-                                                    .selectedParticular,
-                                                decoration: InputDecoration(
-                                                  focusedBorder:
-                                                      const OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Colors.transparent,
+                                                      ParticularsPcRequestModelValues>(
+                                                  value: rows[index]
+                                                      .selectedParticular,
+                                                  decoration: InputDecoration(
+                                                    focusedBorder:
+                                                        const OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                      ),
+                                                    ),
+                                                    enabledBorder:
+                                                        const OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                      ),
+                                                    ),
+                                                    hintStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .labelSmall!
+                                                        .merge(const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          fontSize: 15.0,
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              133,
+                                                              132,
+                                                              132),
+                                                          letterSpacing: 0.5,
+                                                        )),
+                                                    hintText: cashRequisitionController
+                                                            .itemsParticularList
+                                                            .isNotEmpty
+                                                        ? 'Select Particular'
+                                                        : 'No data available',
+                                                    floatingLabelBehavior:
+                                                        FloatingLabelBehavior
+                                                            .always,
+                                                    isDense: true,
+                                                  ),
+                                                  icon: const Padding(
+                                                    padding:
+                                                        EdgeInsets.only(top: 3),
+                                                    child: Icon(
+                                                      Icons
+                                                          .keyboard_arrow_down_rounded,
+                                                      size: 30,
                                                     ),
                                                   ),
-                                                  enabledBorder:
-                                                      const OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Colors.transparent,
-                                                    ),
-                                                  ),
-                                                  hintStyle: Theme.of(context)
-                                                      .textTheme
-                                                      .labelSmall!
-                                                      .merge(const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        fontSize: 15.0,
-                                                        color: Color.fromARGB(
-                                                            255, 133, 132, 132),
-                                                        letterSpacing: 0.5,
-                                                      )),
-                                                  hintText:
-                                                      cashRequisitionController
-                                                              .itemsParticularList
-                                                              .isNotEmpty
-                                                          ? 'Select Particular'
-                                                          : 'No data available',
-                                                  floatingLabelBehavior:
-                                                      FloatingLabelBehavior
-                                                          .always,
-                                                  isDense: true,
-                                                ),
-                                                icon: const Padding(
-                                                  padding:
-                                                      EdgeInsets.only(top: 3),
-                                                  child: Icon(
-                                                    Icons
-                                                        .keyboard_arrow_down_rounded,
-                                                    size: 30,
-                                                  ),
-                                                ),
-                                                iconSize: 30,
-                                                items: List.generate(
-                                                  cashRequisitionController
-                                                      .itemsParticularList
-                                                      .length,
-                                                  (index) {
-                                                    return DropdownMenuItem(
-                                                      value: cashRequisitionController
-                                                              .itemsParticularList[
-                                                          index],
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                top: 13,
-                                                                left: 5),
-                                                        child: SizedBox(
-                                                          width: 180,
-                                                          child: Text(
-                                                            cashRequisitionController
+                                                  iconSize: 30,
+                                                  items: List.generate(
+                                                    cashRequisitionController
+                                                        .itemsParticularList
+                                                        .length,
+                                                    (index) {
+                                                      return DropdownMenuItem(
+                                                        value: cashRequisitionController
                                                                 .itemsParticularList[
-                                                                    index]
-                                                                .pcmparTParticularName!,
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .labelSmall!
-                                                                .merge(
-                                                                    const TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  fontSize:
-                                                                      16.0,
-                                                                  letterSpacing:
-                                                                      0.3,
-                                                                )),
+                                                            index],
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  top: 13,
+                                                                  left: 5),
+                                                          child: SizedBox(
+                                                            width: 180,
+                                                            child: Text(
+                                                              cashRequisitionController
+                                                                  .itemsParticularList[
+                                                                      index]
+                                                                  .pcmparTParticularName!,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .labelSmall!
+                                                                  .merge(
+                                                                      const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    fontSize:
+                                                                        16.0,
+                                                                    letterSpacing:
+                                                                        0.3,
+                                                                  )),
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                                onChanged: (selected) async {
-                                                  rows[index]
-                                                          .selectedParticular =
-                                                      selected;
-                                                  print(selected!.pcmparTParticularName!);
-                                                },
-                                              ),
+                                                      );
+                                                    },
+                                                  ),
+                                                  onChanged: (selected) async {
+                                                    if (selected != null) {
+                                                      if (selectedValues
+                                                          .contains(selected)) {
+                                                        Fluttertoast.showToast(
+                                                          msg:
+                                                              "Particular already selected",
+                                                          toastLength: Toast
+                                                              .LENGTH_SHORT,
+                                                          gravity: ToastGravity
+                                                              .BOTTOM,
+                                                          timeInSecForIosWeb: 1,
+                                                          backgroundColor:
+                                                              Colors.red,
+                                                          textColor:
+                                                              Colors.white,
+                                                          fontSize: 16.0,
+                                                        );
+                                                      } else {
+                                                        rows[index]
+                                                                .selectedParticular =
+                                                            selected;
+                                                        selectedValues
+                                                            .add(selected);
+                                                        print(selected
+                                                            .pcmparTParticularName!);
+                                                      }
+                                                    }
+                                                  }),
                                             ),
                                           ),
                                         ),
@@ -750,6 +779,7 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                                                 ),
                                                 keyboardType:
                                                     TextInputType.number,
+                                                    inputFormatters: [LengthLimitingTextInputFormatter(7)],
                                               ),
                                             ),
                                           ),
@@ -818,7 +848,8 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                                                 )
                                               else
                                                 IconButton(
-                                                  icon: const Icon(Icons.remove),
+                                                  icon:
+                                                      const Icon(Icons.remove),
                                                   onPressed: () {
                                                     setState(() {
                                                       rows.removeAt(index);
@@ -847,8 +878,8 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                     width: MediaQuery.of(context).size.width / 1.1,
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      border:
-                          Border.all(color: const Color.fromARGB(255, 211, 211, 211)),
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 211, 211, 211)),
                     ),
                     child: TextField(
                       controller: totalAmountController,
@@ -962,8 +993,7 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                         rows.add(
                           DataTableRowModel(
                             sno: 1,
-                            selectedParticular:
-                                null, 
+                            selectedParticular: null,
                             amountCountroller: TextEditingController(),
                             remarksController: TextEditingController(),
                           ),
@@ -1016,6 +1046,6 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
   }
 
   String getDateNeed(DateTime dt) {
-    return "${dt.day.toString().padLeft(2, "0")}-${dt.month.toString().padLeft(2, "0")}-${dt.year}";
+    return "${dt.month.toString().padLeft(2, "0")}-${dt.day.toString().padLeft(2, "0")}-${dt.year}";
   }
 }
