@@ -566,6 +566,7 @@ class URLS {
   static String department = 'api/ISM_Client_ProjectFacade/getcmtrpt_data/';
   static String designation = 'api/ISM_Client_ProjectFacade/get_desig/';
   static String employeeList = 'api/ISM_Client_ProjectFacade/get_employee/';
+  static String salesList = 'api/ISM_Client_ProjectFacade/report_cmtrpt/';
   //
   static String visitormanagementapi =
       "api/AddVisitorsFacade/getAssignDetails/";

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/vms/sales_report/model/lead_list_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/model/department_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/sales_controller/sales_controller.dart';
 
@@ -29,6 +30,12 @@ class DepartmentAPI {
         DepartmentListModel departmentListModel =
             DepartmentListModel.fromJson(response.data['departmentdropdown']);
         salesController.getDepartment(departmentListModel.values!);
+        LeadListModel leadListModel =
+            LeadListModel.fromJson(response.data['leadlist']);
+        logger.i(response.data['leadlist']);
+        if (leadListModel.values != null) {
+          salesController.getLead(leadListModel.values!);
+        }
         salesController.departmentLoading(false);
       }
     } on DioError catch (e) {

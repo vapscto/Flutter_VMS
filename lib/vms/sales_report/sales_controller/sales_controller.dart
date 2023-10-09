@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/vms/sales_report/model/lead_list_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/model/department_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/model/designation_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/model/employee_model.dart';
+import 'package:m_skool_flutter/vms/sales_report/model/sale_list_model.dart';
 
 class SalesController extends GetxController {
   RxBool isErrorLoading = RxBool(false);
@@ -48,13 +50,36 @@ class SalesController extends GetxController {
     departmentSelectedValues.remove(value);
   }
 
-  // void addId(controller) {
-  //   idListController.add(controller);
-  // }
+  //Lead List
+  RxList<LeadListModelValues> leadListmodelValues = <LeadListModelValues>[].obs;
+  RxList<LeadListModelValues> selectedLeadListmodelValues =
+      <LeadListModelValues>[].obs;
+  RxList<int> leadId = <int>[].obs;
+  void getLead(List<LeadListModelValues> lead) {
+    if (leadListmodelValues.isNotEmpty) {
+      leadListmodelValues.clear();
+    }
+    for (int i = 0; i < lead.length; i++) {
+      leadListmodelValues.add(lead.elementAt(i));
+      logger.e(lead.elementAt(i).iSMSLELeadName);
+    }
+  }
 
-  // void removeId(controller) {
-  //   idListController.remove(controller);
-  // }
+  void addLeadId(int value) {
+    leadId.add(value);
+  }
+
+  void removeLeadId(int value) {
+    leadId.removeAt(value);
+  }
+
+  void addSelectedLeadValues(LeadListModelValues value) {
+    selectedLeadListmodelValues.add(value);
+  }
+
+  void removeSelectedLeadValues(LeadListModelValues value) {
+    selectedLeadListmodelValues.remove(value);
+  }
 
   // Designation
   RxList<DesignationListModelValues> designationListValues =
@@ -116,5 +141,22 @@ class SalesController extends GetxController {
 
   void removeEmpId(int value) {
     empId.removeAt(value);
+  }
+
+  //Sales list
+  RxBool isList = RxBool(false);
+  void listLoading(bool loading) {
+    isList.value = loading;
+  }
+
+  RxList<SalesListModelValues> leadListModelValue =
+      <SalesListModelValues>[].obs;
+  void salesList(List<SalesListModelValues> list) {
+    if (leadListModelValue.isNotEmpty) {
+      leadListModelValue.clear();
+    }
+    for (int i = 0; i < list.length; i++) {
+      leadListModelValue.add(list.elementAt(i));
+    }
   }
 }
