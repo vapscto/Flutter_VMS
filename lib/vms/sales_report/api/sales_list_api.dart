@@ -26,43 +26,24 @@ class SalesListAPI {
       salesController.listLoading(true);
       var response =
           await dio.post(url, options: Options(headers: getSession()), data: {
-        "MI_Id": 17,
+        "MI_Id": miId,
         "flag": flag,
-        "User_Id": 60255,
-        "fromdate": "2023-01-01T00:00:00",
-        "todate": "2023-10-31T00:00:00",
-        "leaddatalist": [
-          {"ISMSLE_Id": 4637},
-          {"ISMSLE_Id": 6419}
-        ],
-        "hrmD_IdList": [
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          13,
-          175,
-          180,
-          186,
-          198,
-          216,
-          217,
-          218,
-          227,
-          231,
-          241,
-          253,
-          304,
-          306,
-          307,
-          315,
-          322,
-          324
-        ],
-        "hrmE_IdList": []
+        "User_Id": userId,
+        "fromdate": fromDate,
+        "todate": toDate,
+        "leaddatalist": leadIdList,
+        "hrmD_IdList": hrmdIdList,
+        "hrmE_IdList": hrmeIdList
+      });
+      logger.i({
+        "MI_Id": miId,
+        "flag": flag,
+        "User_Id": userId,
+        "fromdate": fromDate,
+        "todate": toDate,
+        "leaddatalist": leadIdList,
+        "hrmD_IdList": hrmdIdList,
+        "hrmE_IdList": hrmeIdList
       });
       if (response.statusCode == 200) {
         SalesListModel salesListModel =

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/vms/sales_report/api/sales_list_api.dart';
@@ -69,87 +71,107 @@ class _SaleReportListState extends State<SaleReportList> {
     return Scaffold(
       appBar:
           const CustomAppBar(title: "Sales Lead Comments Report").getAppBar(),
-      body: (widget.salesController.isList.value)
-          ? const Center(
-              child: AnimatedProgressWidget(
-                  title: "Loading Sales report",
-                  desc:
-                      "Please wait while we load Sales report entry and create a view for you.",
-                  animationPath: "assets/json/default.json"),
-            )
-          : (widget.salesController.leadListModelValue.isEmpty)
-              ? const Center(
-                  child: AnimatedProgressWidget(
-                      title: "Sales repor is not available",
-                      desc: " ",
-                      animationPath: "assets/json/nodata.json"),
-                )
-              : ListView(
-                  children: [
-                    SingleChildScrollView(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 16, horizontal: 16),
-                      scrollDirection: Axis.horizontal,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: DataTable(
-                          dataRowHeight:
-                              MediaQuery.of(context).size.height * 0.4,
-                          headingRowHeight: 45,
-                          columnSpacing: 10,
-                          headingTextStyle:
-                              const TextStyle(color: Colors.white),
-                          border: TableBorder.all(
-                            color: Colors.black,
-                            width: 0.6,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          headingRowColor: MaterialStateColor.resolveWith(
-                              (states) => Theme.of(context).primaryColor),
-                          columns: const [
-                            DataColumn(label: Text("SL.NO.")),
-                            DataColumn(label: Text("Lead Name")),
-                            DataColumn(label: Text("Comments")),
-                            DataColumn(label: Text("Comments Date")),
-                            DataColumn(label: Text("Comments By")),
-                            DataColumn(label: Text("View")),
-                          ],
-                          rows: List.generate(
-                              widget.salesController.leadListModelValue.length,
-                              (index) {
-                            var date;
-                            var value = index + 1;
-                            if (widget.salesController.leadListModelValue[index]
-                                    .iSMSLECOMCreatedDate !=
-                                null) {
-                              DateTime dt = DateTime.parse(widget
-                                  .salesController
-                                  .leadListModelValue[index]
-                                  .iSMSLECOMCreatedDate!);
-                              date = '${dt.day}-${dt.month}-${dt.year}';
-                            }
-                            return DataRow(cells: [
-                              DataCell(Text(value.toString())),
-                              DataCell(Text(widget
+      body: Obx(() {
+        return (widget.salesController.isList.value)
+            ? const Center(
+                child: AnimatedProgressWidget(
+                    title: "Loading Sales report",
+                    desc:
+                        "Please wait while we load Sales report entry and create a view for you.",
+                    animationPath: "assets/json/default.json"),
+              )
+            : (widget.salesController.leadListModelValue.isEmpty)
+                ? const Center(
+                    child: AnimatedProgressWidget(
+                        title: "Sales repor is not available",
+                        desc: " ",
+                        animationPath: "assets/json/nodata.json"),
+                  )
+                : ListView(
+                    children: [
+                      SingleChildScrollView(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 16),
+                        scrollDirection: Axis.horizontal,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: DataTable(
+                            dataRowHeight:
+                                MediaQuery.of(context).size.height * 0.7,
+                            headingRowHeight: 45,
+                            columnSpacing: 10,
+                            headingTextStyle:
+                                const TextStyle(color: Colors.white),
+                            border: TableBorder.all(
+                              color: Colors.black,
+                              width: 0.6,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            dataTextStyle: Get.textTheme.titleSmall,
+                            headingRowColor: MaterialStateColor.resolveWith(
+                                (states) => Theme.of(context).primaryColor),
+                            columns: const [
+                              DataColumn(label: Text("SL.NO.")),
+                              DataColumn(label: Text("Lead Name")),
+                              DataColumn(label: Text("Comments")),
+                              DataColumn(label: Text("Comments Date")),
+                              DataColumn(label: Text("Comments By")),
+                              DataColumn(label: Text("View")),
+                            ],
+                            rows: List.generate(
+                                widget.salesController.leadListModelValue
+                                    .length, (index) {
+                              var date;
+                              var value = index + 1;
+                              if (widget
                                       .salesController
                                       .leadListModelValue[index]
-                                      .iSMSLELeadName ??
-                                  "")),
-                              DataCell(Text(widget
-                                  .salesController
-                                  .leadListModelValue[index]
-                                  .iSMSLECOMComments!)),
-                              DataCell(Text(date)),
-                              DataCell(Text(widget.salesController
-                                  .leadListModelValue[index].employeename!)),
-                              const DataCell(Text('')),
-                            ]);
-                          }),
+                                      .iSMSLECOMCreatedDate !=
+                                  null) {
+                                DateTime dt = DateTime.parse(widget
+                                    .salesController
+                                    .leadListModelValue[index]
+                                    .iSMSLECOMCreatedDate!);
+                                date = '${dt.day}-${dt.month}-${dt.year}';
+                              }
+                              return DataRow(cells: [
+                                DataCell(Text(value.toString())),
+                                DataCell(SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.35,
+                                  child: Text(widget
+                                          .salesController
+                                          .leadListModelValue[index]
+                                          .iSMSLELeadName ??
+                                      ""),
+                                )),
+                                DataCell(SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                  child: SingleChildScrollView(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 8),
+                                    child: Text(widget
+                                        .salesController
+                                        .leadListModelValue[index]
+                                        .iSMSLECOMComments!),
+                                  ),
+                                )),
+                                DataCell(Text(
+                                  date,
+                                  textAlign: TextAlign.center,
+                                )),
+                                DataCell(Text(widget.salesController
+                                    .leadListModelValue[index].employeename!)),
+                                const DataCell(Text('')),
+                              ]);
+                            }),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  );
+      }),
     );
   }
 }
