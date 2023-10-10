@@ -644,6 +644,12 @@ void openMappedPages(
           mskoolController: mskoolController,
         ));
   }
+  if (pageName == 'sales and report') {
+    Get.to(() => SalesReportHomeScreen(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
+  }
   if (pageName == 'TADA advance apply') {
     Get.to(() => TadaAdvanceApplyScreen(
           loginSuccessModel: loginSuccessModel,
