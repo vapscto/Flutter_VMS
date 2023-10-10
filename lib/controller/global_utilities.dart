@@ -53,6 +53,7 @@ import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_approval_home.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
@@ -323,7 +324,8 @@ String getDashboardIcon(String pageName) {
     return "${icon}Classwork.png";
   }
 
-  if (pageName.toLowerCase().contains("homework")) {
+  if (pageName.toLowerCase().contains("homework") ||
+      pageName.toLowerCase().contains('planner')) {
     return "${icon}Homework.png";
   }
   if (pageName.toLowerCase().contains("library")) {
@@ -680,18 +682,6 @@ void openMappedPages(
     //       mskoolController: mskoolController,
     //     ));
   }
-  if (pageName == "Mark Entry") {
-    // Get.to(
-    //   () => MarksEntryHome(
-    //     loginSuccessModel: loginSuccessModel,
-    //     mskoolController: mskoolController,
-    //   ),
-    // );
-    // Get.to(() => ChequeApproval(
-    //       loginSuccessModel: loginSuccessModel,
-    //       mskoolController: mskoolController,
-    //     ));
-  }
 
   if (pageName == "Salary Details") {
     // Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -1032,10 +1022,24 @@ void openMappedPages(
     //     // title: pageName,
     //   );
     // }));
-    Get.to(() => SalesReportHomeScreen(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
+    // Get.to(() => SalesReportHomeScreen(
+    //       loginSuccessModel: loginSuccessModel,
+    //       mskoolController: mskoolController,
+    //     ));
+    // Get.to(() => PlannerApprovalHomeScreen(
+    //       mskoolController: mskoolController,
+    //       loginSuccessModel: loginSuccessModel,
+    //     ));
+    return;
+  }
+  if (pageName == "Planner Approval") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return PlannerApprovalHomeScreen(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        title: pageName,
+      );
+    }));
     return;
   }
   if (pageName == "Employee Details") {
