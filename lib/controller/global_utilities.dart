@@ -63,7 +63,7 @@ import 'package:m_skool_flutter/vms/sales_report/screens/sales_report_home_scree
 import 'package:m_skool_flutter/vms/security/screen/Shome_Screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/screens/tada_advance_aplay_home.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/tada_apply_home_screen.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/screens/tada_apply_home_screen.dart';
 import 'package:m_skool_flutter/vms/task%20creation/screens/taskCreationHome.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
