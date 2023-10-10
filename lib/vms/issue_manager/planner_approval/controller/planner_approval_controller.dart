@@ -16,6 +16,7 @@ class PlannerApprovalController extends GetxController {
   }
 
   RxList<Map<String, dynamic>> newplannerList = <Map<String, dynamic>>[].obs;
+  RxList<Map<String, dynamic>> notApproveDates = <Map<String, dynamic>>[].obs;
   RxList<PlannerListModelValues> plannerListValues =
       <PlannerListModelValues>[].obs;
   RxList<DrNotApprovedModelValues> drNotApprovedValues =
@@ -35,6 +36,14 @@ class PlannerApprovalController extends GetxController {
         var tempData = [];
         tempData = drNotApprove.where((d) => d.hRMEId == drapp.hRMEId).toList();
         drapp.drappDatecount = tempData.length;
+        // for (int i = 0; i < drNotApprove.length; i++) {
+        //   notApproveDates.add({
+        //     "dailyReportDate": drNotApprove[i].drDate,
+        //     "generatedDate": drNotApprove[i].dRGDate,
+        //     "othersDay": drNotApprove[i].iSMDRPTOrdersDateFlg
+        //   });
+        // }
+
         newplannerList.add({
           "name": drapp.plannedby,
           "day": drapp.drappDatecount,
@@ -44,6 +53,18 @@ class PlannerApprovalController extends GetxController {
           "planner": drapp.iSMTPLPlannerName,
           "category": 'Task Category',
           "plannerView": "View & Approve"
+        });
+      }
+    }
+    if (drNotApprove != null && drNotApprove.isNotEmpty) {
+      for (var index in drNotApprove) {
+        var tempData = [];
+        tempData = plannerList.where((d) => d.hRMEId == index.hRMEId).toList();
+        index.hRMEId = tempData.length;
+        notApproveDates.add({
+          "dailyReportDate": index.drDate,
+          "generatedDate": index.dRGDate,
+          "othersDay": index.iSMDRPTOrdersDateFlg
         });
       }
     }

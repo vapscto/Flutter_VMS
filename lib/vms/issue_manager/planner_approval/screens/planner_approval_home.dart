@@ -158,6 +158,8 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                                                         .loginSuccessModel,
                                                     mskoolController:
                                                         widget.mskoolController,
+                                                    plannerApprovalController:
+                                                        plannerApprovalController,
                                                   ));
                                                 },
                                                 child: Text(
