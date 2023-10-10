@@ -575,5 +575,7 @@ class URLS {
 
   static String saveapi = "api/AddVisitorsFacade/saveAssignedData/";
 
-  static String gpsFeacth = "";
+  static String gpsFeacth ="api/GPSLocationFacade/getalldetails/";
+
+  static String savePunchApi="";
 }
