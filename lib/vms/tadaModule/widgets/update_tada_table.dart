@@ -36,10 +36,11 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
   String toTime = '';
   Map<String, dynamic> headArray = {};
   var days;
+  num amount = 0;
   _getData() async {
     widget.tadaController.updateIsLoading(true);
     TADADetailsAPI.instance.tadaDetails(
-        base: '',
+        base: 'issuemanager',
         userId: widget.values.userId!,
         tadaController: widget.tadaController,
         vtaDaaaId: widget.values.vTADAAAId!);
@@ -47,12 +48,10 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
       widget.tadaController.updateIsLoading(false);
     });
     setState(() {
-      // for (int i = 0; i <= widget.tadaController.tadaEditValues.length; i++) {
       DateTime dt = DateTime.parse(widget.values.vTADAAAFromDate!);
       fromDate = '${dt.day}-${dt.month}-${dt.year}';
       DateTime toDt = DateTime.parse(widget.values.vTADAAAToDate!);
       toDate = '${toDt.day}-${toDt.month}-${toDt.year}';
-      // }
       DateTime dt1 = DateTime.parse(widget.values.vTADAAAFromDate!);
       DateTime dt2 = DateTime.parse(widget.values.vTADAAAToDate!);
 
@@ -67,24 +66,20 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.tadaController.tadaEditValues;
     });
-    for (int index = 0;
-        index < widget.tadaController.tadaEditValues.length;
-        index++) {
-      sanctionController2.text = widget
-          .tadaController.tadaEditValues[index].vTADAAAASactionedAmount
-          .toString();
-      remarkController.text =
-          widget.tadaController.tadaEditValues[index].vTADAAADRemarks ?? "";
-      if (widget.tadaController.tadaEditValues[index].vTADAAAAHStatusFlg!
-          .isNotEmpty) {}
-
-      // setState(() {
-      //   parcentageController.text = (widget.tadaController.tadaEditValues[index]
-      //               .vTADAAATotalAppliedAmount! -
-      //           double.parse(sanctionController.text) % 100)
-      //       .toString();
-      // });
-    }
+    setState(() {
+      for (int index = 0;
+          index < widget.tadaController.tadaEditValues.length;
+          index++) {
+        sanctionController2.text = widget
+            .tadaController.approvalTextEditingControllerList
+            .elementAt(index)
+            .text;
+        remarkController.text =
+            widget.tadaController.tadaEditValues[index].vTADAAADRemarks ?? "";
+        if (widget.tadaController.tadaEditValues[index].vTADAAAAHStatusFlg!
+            .isNotEmpty) {}
+      }
+    });
     super.initState();
   }
 
@@ -128,70 +123,12 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                       style: Get.textTheme.titleSmall,
                     ),
                     Text(
-                      sanctionController2.text,
+                      amount.toString(),
                       style: Get.textTheme.titleSmall!
                           .copyWith(fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
-
-                // const SizedBox(height: 25),
-                // CustomContainer(
-                //     child: TextFormField(
-                //   style: Get.textTheme.titleSmall,
-                //   textInputAction: TextInputAction.next,
-                //   keyboardType: TextInputType.phone,
-                //   controller: sanctionController2,
-                //   readOnly: true,
-                //   decoration: InputDecoration(
-                //     floatingLabelBehavior: FloatingLabelBehavior.always,
-                //     contentPadding: const EdgeInsets.symmetric(
-                //         vertical: 20, horizontal: 12),
-                //     border: const OutlineInputBorder(),
-                //     focusedBorder: const OutlineInputBorder(
-                //       borderSide: BorderSide(
-                //         color: Colors.transparent,
-                //       ),
-                //     ),
-                //     enabledBorder: const OutlineInputBorder(
-                //       borderSide: BorderSide(
-                //         color: Colors.transparent,
-                //       ),
-                //     ),
-                //     hintText: "Total Sanction Amount",
-                //     label: Container(
-                //       decoration: BoxDecoration(
-                //         color: const Color(0xFFDFFBFE),
-                //         borderRadius: BorderRadius.circular(24.0),
-                //       ),
-                //       padding: const EdgeInsets.symmetric(
-                //           horizontal: 8.0, vertical: 8.0),
-                //       child: Row(
-                //         mainAxisSize: MainAxisSize.min,
-                //         children: [
-                //           SvgPicture.asset(
-                //             'assets/svg/noteicon.svg',
-                //             color: const Color.fromRGBO(40, 182, 200, 1),
-                //             height: 24,
-                //           ),
-                //           const SizedBox(
-                //             width: 6.0,
-                //           ),
-                //           Text(
-                //             "Sanction Amount",
-                //             style:
-                //                 Theme.of(context).textTheme.labelMedium!.merge(
-                //                       const TextStyle(
-                //                         fontSize: 20.0,
-                //                         color: Color.fromRGBO(40, 182, 200, 1),
-                //                       ),
-                //                     ),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // )),
                 const SizedBox(height: 25),
                 CustomContainer(
                     child: TextFormField(
@@ -283,7 +220,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                               "sanction amount should be lessthen applied amount");
                     } else {
                       var remark = '';
-                      var amount = '';
+
                       for (int i = 0;
                           i < widget.tadaController.tadaEditValues.length;
                           i++) {
@@ -304,13 +241,14 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                             .tadaController.approvalTextEditingControllerList
                             .elementAt(i)
                             .text;
-                        amount = widget.tadaController.textEditingControllerList
-                            .elementAt(i)
-                            .text;
+                        // amount = widget.tadaController.textEditingControllerList
+                        //     .elementAt(i)
+                        //     .text;
                       }
 
                       logger.i(headArray);
-                      SaveTADAAPI.instance.saveTADA(body: {
+                      SaveTADAAPI.instance
+                          .saveTADA(base: 'issuemanager', body: {
                         'VTADAAA_Remarks': remark,
                         'VTADAAA_TotalSactionedAmount':
                             sanctionController2.text,
@@ -324,8 +262,8 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                       }).then((v) {
                         logger.i("success");
                         TADAApplyListAPI.instance.showApplyList(
-                            base: "",
-                            userId: widget.values.userId.toString(),
+                            base: "issuemanager",
+                            userId: widget.values.userId!,
                             tadaController: widget.tadaController);
                         _getData();
                         Get.back();
@@ -414,6 +352,15 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
             setState(() {
               widget.tadaController.selectedValue[index] = value!;
               logger.e(widget.tadaController.selectedValue);
+              widget.tadaController.textEditingControllerList.add(
+                  TextEditingController(
+                      text: widget.tadaController.tadaEditValues[index]
+                          .vTADAAAASactionedAmount
+                          .toString()));
+              amount += num.parse(widget
+                  .tadaController.textEditingControllerList
+                  .elementAt(index)
+                  .text);
             });
           },
         )),
@@ -426,6 +373,15 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
             setState(() {
               widget.tadaController.selectedValue[index] = value;
               logger.e(widget.tadaController.selectedValue);
+              widget.tadaController.textEditingControllerList.add(
+                  TextEditingController(
+                      text: widget.tadaController.tadaEditValues[index]
+                          .vTADAAAASactionedAmount
+                          .toString()));
+              amount -= num.parse(widget
+                  .tadaController.textEditingControllerList
+                  .elementAt(index)
+                  .text);
             });
           },
         )),

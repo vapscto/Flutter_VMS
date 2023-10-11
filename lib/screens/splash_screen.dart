@@ -252,7 +252,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       height: 12.0,
                     ),
                     Text(
-                      "M Skool",
+                      "Vaps Management System",
                       style: Theme.of(context).textTheme.titleMedium!.merge(
                           const TextStyle(fontSize: 30.0, color: Colors.white)),
                     ),
@@ -295,6 +295,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
       String userName = logInBox!.get("userName");
       String password = logInBox!.get("password");
+      
       int miId = importantIds!.get(URLS.miId);
       String loginBaseUrl = "";
       for (int i = 0; i < codeModel.apiarray.values.length; i++) {

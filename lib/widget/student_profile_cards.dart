@@ -4,8 +4,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/model/student_profile_details_model.dart';
 import 'package:m_skool_flutter/screens/school_details_screen.dart';
-import 'package:m_skool_flutter/student/feedback/screens/feedback_home.dart';
-import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
+
 import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
 import 'package:m_skool_flutter/widget/profile_items_card_widget.dart';
 import 'package:m_skool_flutter/widget/subject_teachers_popup.dart';
@@ -112,18 +111,18 @@ class StudentProfileCards extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: const BoxShadow(),
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) {
-                            return InteractionHomeScreen(
-                              loginSuccessModel: loginSuccessModel,
-                              mskoolController: mskoolController,
-                              role: studentProfileDetails
-                                  .classteacher!.values!.first.classTeacher,
-                              hrmeId: studentProfileDetails
-                                  .classteacher!.values!.first.hRMEId!
-                                  .toInt(),
-                            );
-                          }));
+                          // Navigator.push(context,
+                          //     MaterialPageRoute(builder: (_) {
+                          //   return InteractionHomeScreen(
+                          //     loginSuccessModel: loginSuccessModel,
+                          //     mskoolController: mskoolController,
+                          //     role: studentProfileDetails
+                          //         .classteacher!.values!.first.classTeacher,
+                          //     hrmeId: studentProfileDetails
+                          //         .classteacher!.values!.first.hRMEId!
+                          //         .toInt(),
+                          //   );
+                          // }));
                         },
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(10, 5.0, 10, 5),
@@ -161,12 +160,12 @@ class StudentProfileCards extends StatelessWidget {
           logoAsset: "assets/images/WriteTo.png",
           title: "Write To",
           onTap: () {
-            Get.to(
-              () => FeedBackHome(
-                loginSuccessModel: loginSuccessModel,
-                mskoolController: mskoolController,
-              ),
-            );
+            // Get.to(
+            //   () => FeedBackHome(
+            //     loginSuccessModel: loginSuccessModel,
+            //     mskoolController: mskoolController,
+            //   ),
+            // );
           },
         )
       ],

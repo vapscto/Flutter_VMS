@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/student_dashboard_model.dart';
-import 'package:m_skool_flutter/staffs/model/dashboard_coe_data_model.dart';
 import 'package:m_skool_flutter/widget/bday_slider_item.dart';
 import 'package:m_skool_flutter/widget/coe_slider_item.dart';
 
@@ -11,13 +10,11 @@ import '../model/login_success_model.dart';
 
 class HomePageCarasouel extends StatefulWidget {
   final List<BirthdayListValues> bdayList;
-  final List<DashboardCoeDataModelValues> coeList;
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   const HomePageCarasouel(
       {super.key,
       required this.bdayList,
-      required this.coeList,
       required this.loginSuccessModel,
       required this.mskoolController});
 
@@ -37,17 +34,17 @@ class _HomePageCarasouelState extends State<HomePageCarasouel> {
 
   @override
   void initState() {
-    for (int i = 0; i < widget.bdayList.length; i++) {
-      carasouelList.add({"type": 1, "data": widget.bdayList.elementAt(i)});
-    }
-    for (int i = 0; i < widget.coeList.length; i++) {
-      carasouelList.add(
-        {
-          "type": 0,
-          "data": widget.coeList.elementAt(i),
-        },
-      );
-    }
+    // for (int i = 0; i < widget.bdayList.length; i++) {
+    //   carasouelList.add({"type": 1, "data": widget.bdayList.elementAt(i)});
+    // }
+    // for (int i = 0; i < widget.coeList.length; i++) {
+    //   carasouelList.add(
+    //     {
+    //       "type": 0,
+    //       "data": widget.coeList.elementAt(i),
+    //     },
+    //   );
+    // }
 
     carasouelList.shuffle();
     super.initState();

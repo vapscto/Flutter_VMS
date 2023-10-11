@@ -4,7 +4,6 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/model/student_profile_details_model.dart';
-import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
 
 class SubjectTeachersPopup extends StatefulWidget {
@@ -110,18 +109,18 @@ class _SubjectTeachersPopupState extends State<SubjectTeachersPopup> {
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: const BoxShadow(),
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) {
-                            return InteractionHomeScreen(
-                              loginSuccessModel: widget.loginSuccessModel,
-                              mskoolController: widget.mskoolController,
-                              role: widget.studentProfileDetails.sujectteachers!
-                                  .values![index].subjectTeacher,
-                              hrmeId: widget.studentProfileDetails
-                                  .sujectteachers!.values![index].hRMEId!
-                                  .toInt(),
-                            );
-                          }));
+                          // Navigator.push(context,
+                          //     MaterialPageRoute(builder: (_) {
+                          //   return InteractionHomeScreen(
+                          //     loginSuccessModel: widget.loginSuccessModel,
+                          //     mskoolController: widget.mskoolController,
+                          //     role: widget.studentProfileDetails.sujectteachers!
+                          //         .values![index].subjectTeacher,
+                          //     hrmeId: widget.studentProfileDetails
+                          //         .sujectteachers!.values![index].hRMEId!
+                          //         .toInt(),
+                          //   );
+                          // }));
                         },
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(10, 5.0, 10, 5),
