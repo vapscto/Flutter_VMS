@@ -43,32 +43,46 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
 
   ////*** SAVE VALIDATION ***////
 
-  bool validateFields() {
-    if (selectedIndent == null) {
-      Fluttertoast.showToast(msg: "Please select an Indent.");
-      return false;
-    }
-
-    if (selectCheckBx!.isEmpty) {
-      Fluttertoast.showToast(msg: "Please select at least one checkbox.");
-      return false;
-    }
-    if (_pcapprovalController.eTapprovalAmount
-        .any((controller) => controller.text.isEmpty)) {
-      Fluttertoast.showToast(msg: "Please enter an amount for all fields.");
-      return false;
-    }
-    if (totalAmountController.text.isEmpty) {
-      Fluttertoast.showToast(msg: "Please enter a total approved amount.");
-      return false;
-    }
-    if (descriptionController.text.isEmpty) {
-      Fluttertoast.showToast(msg: "Please enter a description.");
-      return false;
-    }
-
-    return true; // All fields are filled.
+bool validateFields() {
+  if (selectedIndent == null) {
+    Fluttertoast.showToast(msg: "Please select an Indent.");
+    return false;
   }
+
+  if (selectCheckBx!.isEmpty) {
+    Fluttertoast.showToast(msg: "Please select at least one checkbox.");
+    return false;
+  }
+
+  bool showAmountError = false; // Flag to track if any amount is empty
+
+  for (int index = 0; index < _pcapprovalController.eTapprovalAmount.length; index++) {
+    if (_pcapprovalController.checkList.elementAt(index)) {
+      if (_pcapprovalController.eTapprovalAmount.elementAt(index).text.isEmpty) {
+        showAmountError = true; // Set the flag to true if an empty amount is found
+        break; // No need to check further if an empty amount is found
+      }
+    }
+  }
+
+  if (showAmountError) {
+    Fluttertoast.showToast(msg: "Please enter an amount for all selected fields.");
+    return false;
+  }
+
+  if (totalAmountController.text.isEmpty) {
+    Fluttertoast.showToast(msg: "Please enter a total approved amount.");
+    return false;
+  }
+
+  if (descriptionController.text.isEmpty) {
+    Fluttertoast.showToast(msg: "Please enter a description.");
+    return false;
+  }
+
+  return true; // All fields are filled.
+}
+
 
   @override
   void initState() {
@@ -415,7 +429,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
             _pcapprovalController.pcIndentDetails.isNotEmpty
                 ? Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 20.0,
                       ),
 
@@ -543,7 +557,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                       _pcapprovalController.particularIndentDetails.isNotEmpty
                           ? Column(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 35,
                                 ),
 
@@ -557,7 +571,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                           fontWeight: FontWeight.w700,
                                           color: Colors.indigo),
                                     )),
-                                SizedBox(
+                                const SizedBox(
                                   height: 15,
                                 ),
                                 SingleChildScrollView(
@@ -578,7 +592,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                             bottomLeft: Radius.circular(10))),
                                     headingRowColor: MaterialStateProperty.all(
                                         Theme.of(context).primaryColor),
-                                    columns: [
+                                    columns: const [
                                       DataColumn(
                                           label: Text("S No.",
                                               style: TextStyle(
@@ -625,7 +639,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                     rows: [
                                       DataRow(
                                         cells: [
-                                          DataCell(Align(
+                                          const DataCell(Align(
                                             alignment: Alignment.center,
                                             child: Text('1'),
                                           )),
@@ -652,7 +666,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                   ),
                                 ),
 
-                                SizedBox(
+                                const SizedBox(
                                   height: 35,
                                 ),
 
@@ -671,7 +685,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                                 fontWeight: FontWeight.w700,
                                                 color: Colors.indigo),
                                           )),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 15,
                                       ),
                                       SingleChildScrollView(
@@ -752,44 +766,44 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                                   });
                                                 },
                                               )),
-                                              DataColumn(
+                                              const DataColumn(
                                                   label: Text("S No.",
                                                       style: TextStyle(
                                                           color: Colors.white,
                                                           fontWeight: FontWeight
                                                               .w800))),
-                                              DataColumn(
+                                              const DataColumn(
                                                   label: Text("Indent No.",
                                                       style: TextStyle(
                                                           color: Colors.white,
                                                           fontWeight: FontWeight
                                                               .w800))),
-                                              DataColumn(
+                                              const DataColumn(
                                                   label: Text("Particulars",
                                                       style: TextStyle(
                                                           color: Colors.white,
                                                           fontWeight: FontWeight
                                                               .w800))),
-                                              DataColumn(
+                                              const DataColumn(
                                                   label: Text(
                                                       "Indent Requested Amount",
                                                       style: TextStyle(
                                                           color: Colors.white,
                                                           fontWeight: FontWeight
                                                               .w800))),
-                                              DataColumn(
+                                              const DataColumn(
                                                   label: Text("Indent Amount",
                                                       style: TextStyle(
                                                           color: Colors.white,
                                                           fontWeight: FontWeight
                                                               .w800))),
-                                              DataColumn(
+                                              const DataColumn(
                                                   label: Text("Approved Amount",
                                                       style: TextStyle(
                                                           color: Colors.white,
                                                           fontWeight: FontWeight
                                                               .w800))),
-                                              DataColumn(
+                                              const DataColumn(
                                                   label: Text("Remarks",
                                                       style: TextStyle(
                                                           color: Colors.white,
@@ -996,12 +1010,12 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                               );
                                             })),
                                       ),
-                                      SizedBox(height: 35),
+                                      const SizedBox(height: 35),
                                       CustomContainer(
                                           child: Row(
                                         children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
+                                          const Padding(
+                                            padding: EdgeInsets.only(
                                                 top: 22.0,
                                                 bottom: 22,
                                                 left: 16,
@@ -1017,14 +1031,14 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                           ),
                                           Text(
                                             "${selectedIndent?.pcindenTRequestedAmount}",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 17,
                                               fontWeight: FontWeight.w700,
                                             ),
                                           )
                                         ],
                                       )),
-                                      SizedBox(height: 35),
+                                      const SizedBox(height: 35),
                                       Row(
                                         children: [
                                           GestureDetector(
@@ -1036,14 +1050,14 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                               });
                                             },
                                             child: Container(
-                                              padding: EdgeInsets.all(20),
+                                              padding: const EdgeInsets.all(20),
                                               decoration: BoxDecoration(
-                                                color: Color.fromARGB(
+                                                color: const Color.fromARGB(
                                                     255, 255, 214, 212),
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                               ),
-                                              child: Text(
+                                              child: const Text(
                                                 "Calculate",
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w700,
@@ -1051,7 +1065,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                               ),
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 15,
                                           ),
                                           Container(
@@ -1060,10 +1074,10 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                                     .width /
                                                 1.6,
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.all(
+                                              borderRadius: const BorderRadius.all(
                                                   Radius.circular(10)),
                                               border: Border.all(
-                                                  color: Color.fromARGB(
+                                                  color: const Color.fromARGB(
                                                       255, 211, 211, 211)),
                                             ),
                                             child: TextField(
@@ -1082,7 +1096,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                               decoration: InputDecoration(
                                                 hintText:
                                                     "Tap to view Total Amount",
-                                                hintStyle: TextStyle(
+                                                hintStyle: const TextStyle(
                                                     color: Color.fromARGB(
                                                         136, 189, 187, 187),
                                                     fontWeight:
@@ -1147,14 +1161,14 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                           ),
                                         ],
                                       ),
-                                      SizedBox(height: 35),
+                                      const SizedBox(height: 35),
                                       Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
+                                          borderRadius: const BorderRadius.all(
                                               Radius.circular(10)),
                                           border: Border.all(
-                                              color: Color.fromARGB(
+                                              color: const Color.fromARGB(
                                                   255, 211, 211, 211)),
                                         ),
                                         child: TextField(
@@ -1172,7 +1186,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
 
                                           decoration: InputDecoration(
                                             hintText: "Enter Description",
-                                            hintStyle: TextStyle(
+                                            hintStyle: const TextStyle(
                                                 color: Color.fromARGB(
                                                     136, 189, 187, 187),
                                                 fontWeight: FontWeight.w700),
@@ -1187,7 +1201,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(24.0),
-                                                color: Color.fromARGB(
+                                                color: const Color.fromARGB(
                                                     255, 230, 255, 235),
                                               ),
                                               child: Row(
@@ -1233,7 +1247,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                           onChanged: (value) {},
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 35,
                                       ),
                                       CustomContainer(
@@ -1345,7 +1359,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 30,
                                       ),
                                       Center(
@@ -1355,7 +1369,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(6),
                                             ),
-                                            backgroundColor: Color.fromARGB(
+                                            backgroundColor: const Color.fromARGB(
                                                 235, 56, 23, 243),
                                           ),
                                           onPressed: () async {
@@ -1409,17 +1423,24 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                                 isLoading = false;
                                                 // _pcapprovalController.eTapprovalAmount.clear();
                                                 descriptionController.clear();
+                                                
+                                                _pcapprovalController.pcIndentDetails.clear();
+                                                _pcapprovalController.particularIndentDetails.clear();
+                                                _pcapprovalController
+                                                                  .eTapprovalAmount.clear();
+                                                                  _pcapprovalController.pcIndentDetails.clear();
+                                                selectedIndent == null;
+                                                selectCheckBx!.clear();
+                                                totalAmountController.clear();
                                                 fromDate.clear();
                                                 toDate.clear();
-                                                selectedIndent == null;
-                                                totalAmountController.clear();
                                               });
                                               Fluttertoast.showToast(
                                                   msg: "Saved Successfully");
                                             }
                                           },
                                           child: isLoading
-                                              ? SizedBox(
+                                              ? const SizedBox(
                                                   height: 18,
                                                   width: 18,
                                                   child:
@@ -1428,9 +1449,9 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                                     strokeWidth: 2,
                                                   ),
                                                 )
-                                              : Padding(
+                                              : const Padding(
                                                   padding:
-                                                      const EdgeInsets.only(
+                                                      EdgeInsets.only(
                                                     top: 13.0,
                                                     bottom: 13,
                                                     left: 14,
@@ -1445,7 +1466,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                                 ),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 20,
                                       ),
                                     ],
@@ -1456,7 +1477,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                           : Visibility(
                               visible: !_pcapprovalController
                                   .particularIndentDetails.isNotEmpty,
-                              child: AnimatedProgressWidget(
+                              child: const AnimatedProgressWidget(
                                 animationPath: 'assets/json/nodata.json',
                                 title: 'Select Indent No.',
                                 desc: "Select the Indent No. to show the Data",
@@ -1467,7 +1488,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                   )
                 : Visibility(
                     visible: !_pcapprovalController.pcIndentDetails.isNotEmpty,
-                    child: AnimatedProgressWidget(
+                    child: const AnimatedProgressWidget(
                       animationPath: 'assets/json/nodata.json',
                       title: 'Select From and To Date',
                       desc: "Select the From and To Date to show the Data",

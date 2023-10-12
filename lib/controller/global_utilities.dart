@@ -576,6 +576,15 @@ void openMappedPages(
     }));
   }
 
+  if (pageName == "Cash Request") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return PCRequisitionHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+  }
+
   if (pageName == "Petty Cash  Requisition") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return PCRequisitionHome(

@@ -104,20 +104,27 @@ class CashRequisitionController extends GetxController {
   }
 
 
-    /// **  MODAL CONTROLLER VIEW DATA  **  ///
+  //   /// **  MODAL CONTROLLER VIEW DATA  **  ///
 
-  RxBool isErrorOccuredWhileLoadingModalView = RxBool(false);
-  RxBool isLoadingModalView = RxBool(false);
+  // RxBool isErrorOccuredWhileLoadingModalView = RxBool(false);
+  // RxBool isLoadingModalView = RxBool(false);
 
-  final RxList<ModalViewPcReqModelValues> getModalView = RxList();
+  // RxList<ModalViewPcReqModelValues> getModalView = RxList();
+  // void getData(List<ModalViewPcReqModelValues> data){
+  //   if(getModalView.isNotEmpty)
+  //   {
+  //     getModalView.clear();
+  //   }
+  //   getModalView.addAll(data);
+  // }
 
-  updateErrorLoadingModalView(bool val) {
-    isErrorOccuredWhileLoadingModalView.value = val;
-  }
+  // updateErrorLoadingModalView(bool val) {
+  //   isErrorOccuredWhileLoadingModalView.value = val;
+  // }
 
-  updateisLoadingModalView(bool val) {
-    isLoadingModalView.value = val;
-  }
+  // updateisLoadingModalView(bool val) {
+  //   isLoadingModalView.value = val;
+  // }
 
 
 
