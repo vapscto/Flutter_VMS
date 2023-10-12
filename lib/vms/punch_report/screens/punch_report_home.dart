@@ -11,6 +11,7 @@ import 'package:m_skool_flutter/vms/punch_report/controller/punch_filter_control
 import 'package:m_skool_flutter/vms/punch_report/widget/punch_report_item.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 
@@ -18,11 +19,14 @@ class PunchReport extends StatefulWidget {
   final String title;
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  const PunchReport(
-      {super.key,
-      required this.title,
-      required this.loginSuccessModel,
-      required this.mskoolController});
+  final String? previousScreen;
+  const PunchReport({
+    super.key,
+    required this.title,
+    required this.loginSuccessModel,
+    required this.mskoolController,
+    required this.previousScreen,
+  });
 
   @override
   State<PunchReport> createState() => _PunchReportState();
@@ -46,8 +50,20 @@ class _PunchReportState extends State<PunchReport> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: const HomeFab(),
-      appBar: CustomAppBar(
-        title: widget.title,
+      appBar: AppBar(
+        title: Text(
+          widget.title,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.w300,
+          ),
+        ),
+        centerTitle: (widget.previousScreen == '0') ? false : true,
+        // titleSpacing: 0,
+        leading: (widget.previousScreen == '0')
+            ? const CustomGoBackButton()
+            : const SizedBox(),
         bottom: PreferredSize(
             preferredSize: const Size.fromHeight(
               60,
@@ -164,7 +180,126 @@ class _PunchReportState extends State<PunchReport> {
                 ],
               ),
             )),
-      ).getAppBar(),
+      ),
+      // appBar: CustomAppBar(
+      //   title: widget.title,
+      //   bottom: PreferredSize(
+      //       preferredSize: const Size.fromHeight(
+      //         60,
+      //       ),
+      //       child: Padding(
+      //         padding: const EdgeInsets.all(12.0),
+      //         child: Row(
+      //           children: [
+      //             Expanded(
+      //                 child: InkWell(
+      //               onTap: () async {
+      //                 final DateTime? dt = await showDatePicker(
+      //                   context: context,
+      //                   initialDate: punchFilterController.startFrom.value,
+      //                   firstDate: DateTime(2011, 01, 01),
+      //                   lastDate: punchFilterController.endTo.value,
+      //                 );
+
+      //                 if (dt == null) {
+      //                   Fluttertoast.showToast(
+      //                       msg: "Please select Start Date.");
+      //                   return;
+      //                 }
+      //                 punchFilterController.updateDisplayAbleStartFrom(
+      //                     "${dt.day}-${dt.month}-${dt.year}");
+      //                 punchFilterController.updateStartFrom(dt);
+
+      //                 if (punchFilterController.start.value > 0) {
+      //                   await PunchReportApi.instance.pcReports(
+      //                       miId: widget.loginSuccessModel.mIID!,
+      //                       userId: widget.loginSuccessModel.userId!,
+      //                       fromDate: punchFilterController.startFrom.value
+      //                           .toLocal()
+      //                           .toString(),
+      //                       endDate: punchFilterController.endTo.value
+      //                           .toLocal()
+      //                           .toString(),
+      //                       base: baseUrlFromInsCode(
+      //                         "portal",
+      //                         widget.mskoolController,
+      //                       ),
+      //                       controller: punchFilterController);
+      //                 }
+      //               },
+      //               child: Container(
+      //                 padding: const EdgeInsets.all(12.0),
+      //                 alignment: Alignment.centerLeft,
+      //                 decoration: BoxDecoration(
+      //                   borderRadius: BorderRadius.circular(8.0),
+      //                   color: Colors.white,
+      //                 ),
+      //                 width: double.infinity,
+      //                 height: 50,
+      //                 child: Obx(() {
+      //                   return Text(
+      //                       punchFilterController.displayAbleStartFrom.value);
+      //                 }),
+      //               ),
+      //             )),
+      //             const SizedBox(
+      //               width: 12.0,
+      //             ),
+      //             Expanded(
+      //                 child: InkWell(
+      //               onTap: () async {
+      //                 final DateTime? dt = await showDatePicker(
+      //                   context: context,
+      //                   initialDate: punchFilterController.startFrom.value,
+      //                   firstDate: punchFilterController.startFrom.value,
+      //                   lastDate: DateTime.now(),
+      //                 );
+
+      //                 if (dt == null) {
+      //                   Fluttertoast.showToast(
+      //                       msg:
+      //                           "You didn't selected end date to show punch report");
+      //                   return;
+      //                 }
+
+      //                 punchFilterController.updateDisplayAbleEndTo(
+      //                     "${dt.day}-${dt.month}-${dt.year}");
+      //                 punchFilterController.updateEndTo(dt);
+
+      //                 punchFilterController.start.value += 1;
+
+      //                 await PunchReportApi.instance.pcReports(
+      //                     miId: widget.loginSuccessModel.mIID!,
+      //                     userId: widget.loginSuccessModel.userId!,
+      //                     fromDate: punchFilterController.startFrom.value
+      //                         .toLocal()
+      //                         .toString(),
+      //                     endDate: punchFilterController.endTo.value
+      //                         .toLocal()
+      //                         .toString(),
+      //                     base: baseUrlFromInsCode(
+      //                         "portal", widget.mskoolController),
+      //                     controller: punchFilterController);
+      //               },
+      //               child: Container(
+      //                 padding: const EdgeInsets.all(12.0),
+      //                 alignment: Alignment.centerLeft,
+      //                 decoration: BoxDecoration(
+      //                   borderRadius: BorderRadius.circular(8.0),
+      //                   color: Colors.white,
+      //                 ),
+      //                 width: double.infinity,
+      //                 height: 50,
+      //                 child: Obx(() {
+      //                   return Text(
+      //                       punchFilterController.displayAbleEndTo.value);
+      //                 }),
+      //               ),
+      //             )),
+      //           ],
+      //         ),
+      //       )),
+      // ).getAppBar(),
       body: Obx(() {
         logger.d("message");
         return punchFilterController.start.value == 0

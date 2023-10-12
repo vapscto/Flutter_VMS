@@ -15,7 +15,7 @@ class ProfileAPI {
       required int userId,
       required int roleId}) async {
     var dio = Dio();
-    var api = 'https://vmsissuemanager.azurewebsites.net/${URLS.profileData}';
+    var api = base+URLS.profileData;
     try {
       profileController.profileLoading(true);
       var response = await dio.post(api,

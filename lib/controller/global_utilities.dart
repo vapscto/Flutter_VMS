@@ -528,6 +528,14 @@ void openMappedPages(
         ));
     return;
   }
+  if (pageName == "Task Creation") {
+    Get.to(() => TaskCreationHome(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+          previousScreen: '0',
+        ));
+    return;
+  }
   if (pageName == "Cheaque Book Approval") {
     Get.to(() => ChequeApproval(
           loginSuccessModel: loginSuccessModel,

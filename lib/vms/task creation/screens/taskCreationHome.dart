@@ -34,11 +34,13 @@ import 'package:open_filex/open_filex.dart';
 class TaskCreationHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final String previousScreen;
   // final bool showAppBar;
   const TaskCreationHome({
     required this.loginSuccessModel,
     required this.mskoolController,
     super.key,
+    required this.previousScreen,
     // required this.showAppBar
   });
 
@@ -47,20 +49,22 @@ class TaskCreationHome extends StatefulWidget {
 }
 
 class _TaskCreationHomeState extends State<TaskCreationHome> {
-  TaskDepartController _taskDepartController = Get.put(TaskDepartController());
+  final TaskDepartController _taskDepartController =
+      Get.put(TaskDepartController());
   final ImagePicker _imagePicker = ImagePicker();
   DrDetailsCtrlr controller = Get.put(DrDetailsCtrlr());
 
-  TaskProjectsController _taskProjectsController =
+  final TaskProjectsController _taskProjectsController =
       Get.put(TaskProjectsController());
 
-  TaskClientModuleCntroller _taskClientModuleCntroller =
+  final TaskClientModuleCntroller _taskClientModuleCntroller =
       Get.put(TaskClientModuleCntroller());
-  VmsTransationController _vmsTransationController =
+  final VmsTransationController _vmsTransationController =
       Get.put(VmsTransationController());
-  TextEditingController _titleETController = TextEditingController();
-  TextEditingController _descritpionETController = TextEditingController();
-  TextEditingController _etListControllerStatus = TextEditingController();
+  final TextEditingController _titleETController = TextEditingController();
+  final TextEditingController _descritpionETController =
+      TextEditingController();
+  final TextEditingController _etListControllerStatus = TextEditingController();
   TextEditingController selectFromDate = TextEditingController();
   TextEditingController selectToDate = TextEditingController();
   TextEditingController hoursEt = TextEditingController();
@@ -94,7 +98,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   @override
   void initState() {
     logger.d("userId${widget.loginSuccessModel.userId}");
-    if(_taskDepartController.addListBrowser.isNotEmpty){
+    if (_taskDepartController.addListBrowser.isNotEmpty) {
       _taskDepartController.addListBrowser.clear();
     }
     loadCmpny();
@@ -247,12 +251,14 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          titleSpacing: 0,
-          leading: const CustomGoBackButton(),
+          centerTitle: (widget.previousScreen == '0') ? true : false,
+          // titleSpacing: 0,
+          leading: (widget.previousScreen == '0')
+              ? const CustomGoBackButton()
+              : const SizedBox(),
           actions: [
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+              padding: const EdgeInsets.fromLTRB(0, 12, 12, 12),
               child: Obx(
                 () => controller.drIsLoading.value
                     ? const SizedBox()
