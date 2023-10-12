@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_Model.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_getitem.dart';
@@ -61,4 +62,7 @@ class PurchaseRequisitionController extends GetxController {
   void updateIsErrorOccuredRequestGetItem(bool error) {
     isErrorOccuredRequestGetItem.value = error;
   }
+  RxList<String> statusList = <String>[].obs;
+  RxList<TextEditingController> statusET = <TextEditingController>[].obs;
+  
 }

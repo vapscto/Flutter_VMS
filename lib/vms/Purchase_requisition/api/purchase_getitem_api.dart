@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
@@ -23,17 +24,23 @@ getPurchaseRequisitionGetitemApi({
 
   logger.d(api);
 
-  try {
+  try { 
     final Response response =
         await ins.post(api2, options: Options(headers: getSession()), data: {
       "MI_IdNew": miIdnew
-      //  options: Options(headers: getSession())
+   
     });
 
     PurchaseGetItemModel purchaseGetItemModel =
         PurchaseGetItemModel.fromJson(response.data['get_item']);
     controller.getrequestGetItemList.addAll(purchaseGetItemModel.values!);
-
+    if(controller.statusET.isNotEmpty){
+      controller.statusET.clear();
+    }
+    for(int i =0;i<purchaseGetItemModel.values!.length;i++){
+controller.statusET.add(TextEditingController(text:""));
+    }
+// 
     controller.updateIsLoadingRequestRequisition(false);
   } on Exception catch (e) {
     logger.e(e.toString());

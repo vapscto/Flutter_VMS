@@ -13,7 +13,6 @@ import 'package:m_skool_flutter/vms/Purchase_requisition/api/purchase_save_api.d
 import 'package:m_skool_flutter/vms/Purchase_requisition/controller/purchase_controller.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_Model.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_getitem.dart';
-import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_items_model.dart';
 import 'package:m_skool_flutter/vms/api/vms_transation_api.dart';
 import 'package:m_skool_flutter/vms/controller/vms_common_controller.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
@@ -150,7 +149,21 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
       rateController.add(TextEditingController(text: ''));
       amountController.add(TextEditingController(text: ''));
       remarksController.add(TextEditingController(text: ''));
+      amountController[i].addListener(() {
+        addAmount();
+      });
     }
+  }
+
+  void addAmount() {
+    int sum = 0;
+    for (TextEditingController controller in amountController) {
+      int value = int.tryParse(controller.text) ?? 0;
+      sum += value;
+    }
+    setState(() {
+      totalAmount.text = 'Total: $sum';
+    });
   }
 
   removeControllerData(int value) {
@@ -159,7 +172,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
   }
 
   int sum = 0;
-  addAmount(int amount) {
+  addAmountw(int amount) {
     sum += amount;
     totalAmount.text = sum.toString();
     setState(() {});
@@ -461,112 +474,113 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                               },
                             ),
                           ),
-                          (purchaseRequisitionController
-                                  .getrequestGetItemList.isEmpty)
-                              ? const SizedBox()
-                              : Container(
-                                  margin: const EdgeInsets.only(
-                                      top: 30, left: 0, right: 0),
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor,
-                                    borderRadius: BorderRadius.circular(16.0),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        offset: Offset(0, 1),
-                                        blurRadius: 8,
-                                        color: Colors.black12,
-                                      ),
-                                    ],
-                                  ),
-                                  child: DropdownButtonFormField<
-                                      PurchaseGetItemModelValues>(
-                                    value: purchaseRequisitionController
-                                        .getrequestGetItemList.first,
-                                    decoration: InputDecoration(
-                                      focusedBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                        ),
-                                      ),
-                                      enabledBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                        ),
-                                      ),
-                                      isDense: true,
-                                      hintStyle: Theme.of(context)
-                                          .textTheme
-                                          .labelSmall!
-                                          .merge(const TextStyle(
-                                              fontWeight: FontWeight.w300,
-                                              fontSize: 14.0,
-                                              letterSpacing: 0.3)),
-                                      hintText: purchaseRequisitionController
-                                              .getrequestGetItemList.isNotEmpty
-                                          ? 'Select Item'
-                                          : "No data available",
-                                      floatingLabelBehavior:
-                                          FloatingLabelBehavior.always,
-                                      label: const CustomDropDownLabel(
-                                        icon: 'assets/images/hat.png',
-                                        containerColor:
-                                            Color.fromRGBO(10, 4, 182, 1),
-                                        text: 'Item',
-                                        textColor:
-                                            Color.fromRGBO(223, 234, 3, 1),
-                                      ),
-                                    ),
-                                    icon: const Padding(
-                                      padding: EdgeInsets.only(top: 3),
-                                      child: Icon(
-                                        Icons.keyboard_arrow_down_rounded,
-                                        size: 30,
-                                      ),
-                                    ),
-                                    iconSize: 35,
-                                    items: List.generate(
-                                        purchaseRequisitionController
-                                            .getrequestGetItemList
-                                            .length, (index) {
-                                      return DropdownMenuItem(
-                                        value: purchaseRequisitionController
-                                            .getrequestGetItemList[index],
-                                        child: SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.75,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 13, left: 5, bottom: 5),
-                                            child: SizedBox(
-                                              child: Text(
-                                                purchaseRequisitionController
-                                                    .getrequestGetItemList
-                                                    .elementAt(index)
-                                                    .invmIItemName!,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .labelSmall!
-                                                    .merge(const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w100,
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.3)),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }),
-                                    onChanged: (s) {
-                                      setState(() {
-                                        itemList = s!;
-                                      });
-                                    },
-                                  ),
-                                ),
+
+                          // (purchaseRequisitionController
+                          //         .getrequestGetItemList.isEmpty)
+                          //     ? const SizedBox()
+                          //     : Container(
+                          //         margin: const EdgeInsets.only(
+                          //             top: 30, left: 0, right: 0),
+                          //         decoration: BoxDecoration(
+                          //           color: Theme.of(context)
+                          //               .scaffoldBackgroundColor,
+                          //           borderRadius: BorderRadius.circular(16.0),
+                          //           boxShadow: const [
+                          //             BoxShadow(
+                          //               offset: Offset(0, 1),
+                          //               blurRadius: 8,
+                          //               color: Colors.black12,
+                          //             ),
+                          //           ],
+                          //         ),
+                          //         child: DropdownButtonFormField<
+                          //             PurchaseGetItemModelValues>(
+                          //           value: purchaseRequisitionController
+                          //               .getrequestGetItemList.first,
+                          //           decoration: InputDecoration(
+                          //             focusedBorder: const OutlineInputBorder(
+                          //               borderSide: BorderSide(
+                          //                 color: Colors.transparent,
+                          //               ),
+                          //             ),
+                          //             enabledBorder: const OutlineInputBorder(
+                          //               borderSide: BorderSide(
+                          //                 color: Colors.transparent,
+                          //               ),
+                          //             ),
+                          //             isDense: true,
+                          //             hintStyle: Theme.of(context)
+                          //                 .textTheme
+                          //                 .labelSmall!
+                          //                 .merge(const TextStyle(
+                          //                     fontWeight: FontWeight.w300,
+                          //                     fontSize: 14.0,
+                          //                     letterSpacing: 0.3)),
+                          //             hintText: purchaseRequisitionController
+                          //                     .getrequestGetItemList.isNotEmpty
+                          //                 ? 'Select Item'
+                          //                 : "No data available",
+                          //             floatingLabelBehavior:
+                          //                 FloatingLabelBehavior.always,
+                          //             label: const CustomDropDownLabel(
+                          //               icon: 'assets/images/hat.png',
+                          //               containerColor:
+                          //                   Color.fromRGBO(10, 4, 182, 1),
+                          //               text: 'Item',
+                          //               textColor:
+                          //                   Color.fromRGBO(223, 234, 3, 1),
+                          //             ),
+                          //           ),
+                          //           icon: const Padding(
+                          //             padding: EdgeInsets.only(top: 3),
+                          //             child: Icon(
+                          //               Icons.keyboard_arrow_down_rounded,
+                          //               size: 30,
+                          //             ),
+                          //           ),
+                          //           iconSize: 35,
+                          //           items: List.generate(
+                          //               purchaseRequisitionController
+                          //                   .getrequestGetItemList
+                          //                   .length, (index) {
+                          //             return DropdownMenuItem(
+                          //               value: purchaseRequisitionController
+                          //                   .getrequestGetItemList[index],
+                          //               child: SizedBox(
+                          //                 width: MediaQuery.of(context)
+                          //                         .size
+                          //                         .width *
+                          //                     0.75,
+                          //                 child: Padding(
+                          //                   padding: const EdgeInsets.only(
+                          //                       top: 13, left: 5, bottom: 5),
+                          //                   child: SizedBox(
+                          //                     child: Text(
+                          //                       purchaseRequisitionController
+                          //                           .getrequestGetItemList
+                          //                           .elementAt(index)
+                          //                           .invmIItemName!,
+                          //                       style: Theme.of(context)
+                          //                           .textTheme
+                          //                           .labelSmall!
+                          //                           .merge(const TextStyle(
+                          //                               fontWeight:
+                          //                                   FontWeight.w100,
+                          //                               fontSize: 14.0,
+                          //                               letterSpacing: 0.3)),
+                          //                     ),
+                          //                   ),
+                          //                 ),
+                          //               ),
+                          //             );
+                          //           }),
+                          //           onChanged: (s) {
+                          //             setState(() {
+                          //               itemList = s!;
+                          //             });
+                          //           },
+                          //         ),
+                          //       ),
 
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
@@ -578,7 +592,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                     fontSize: 12,
                                     color: Color.fromRGBO(0, 0, 0, 0.95),
                                     fontWeight: FontWeight.w500),
-                                dataRowHeight: 45,
+                                dataRowHeight: 75,
                                 headingRowHeight: 40,
                                 horizontalMargin: 10,
                                 columnSpacing: 40,
@@ -604,6 +618,11 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                       ),
                                     ),
                                   ),
+                                  DataColumn(
+                                      label: Align(
+                                    alignment: Alignment.center,
+                                    child: Text('select item'),
+                                  )),
                                   DataColumn(
                                     label: Align(
                                       alignment: Alignment.center,
@@ -666,6 +685,51 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                       DataCell(Align(
                                           alignment: Alignment.center,
                                           child: Text('$i'))),
+                                      DataCell(Obx(
+                                        () => DropdownMenu<
+                                            PurchaseGetItemModelValues>(
+                                            width: 200,
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .merge(const TextStyle(
+                                                fontWeight: FontWeight.w100,
+                                                fontSize: 14.0,
+                                                letterSpacing: 0.3,
+                                                overflow: TextOverflow.clip,
+                                              )),
+                                          controller:
+                                              purchaseRequisitionController
+                                                  .statusET
+                                                  .elementAt(index),
+                                          initialSelection:
+                                              purchaseRequisitionController
+                                                  .getrequestGetItemList
+                                                  .first,
+                                          onSelected:
+                                              (PurchaseGetItemModelValues?
+                                                  value) {
+                                            purchaseRequisitionController
+                                                    .statusET[index].text =
+                                                value!.invmIItemName!;
+                                          },
+                                          dropdownMenuEntries:
+                                              purchaseRequisitionController
+                                                  .getrequestGetItemList
+                                                  .map<
+                                                          DropdownMenuEntry<
+                                                              PurchaseGetItemModelValues>>(
+                                        
+                                                      (PurchaseGetItemModelValues
+                                                          value) {
+                                            return DropdownMenuEntry<
+                                                    PurchaseGetItemModelValues>(
+                                                value: value,
+                                                label:
+                                                    value.invmIItemName!);
+                                          }).toList(),
+                                        ),
+                                      )),
                                       DataCell(
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -747,10 +811,10 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                                     .elementAt(index)
                                                     .text = amount.toString();
                                                 //
-                                                addAmount(int.parse(
-                                                    amountController
-                                                        .elementAt(index)
-                                                        .text));
+                                                // addAmount(int.parse(
+                                                //     amountController
+                                                //         .elementAt(index)
+                                                //         .text));
                                               });
                                             },
                                             decoration: const InputDecoration(
@@ -785,7 +849,6 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                             keyboardType: TextInputType.number,
                                             decoration: const InputDecoration(
                                               border: OutlineInputBorder(),
-                                              hintText: 'Enter here.',
                                               floatingLabelBehavior:
                                                   FloatingLabelBehavior.always,
                                               enabledBorder: OutlineInputBorder(
