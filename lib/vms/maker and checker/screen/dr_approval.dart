@@ -49,8 +49,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
 
   loadListDr() async {
     getAllDrLists.clear();
-           
-   controller.updateTabLoading(true);
+    controller.updateTabLoading(true);
     double countToatalEffort = 0;
     for (int i = 0; i < controller.etRemakeList.length; i++) {
       getAllDrLists.add({
@@ -65,8 +64,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
         "Remarks": controller.etRemakeList.elementAt(i).text,
         "Task_Response": controller.statusET[i].text == "Approved" ? "" : "Open"
       });
-
-      countToatalEffort +=
+           countToatalEffort +=
           double.parse(controller.etHoursList[i].text.toString());
     }
 
@@ -78,8 +76,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
       "remarks": descTextEditingController.text,
       "selectedapprovaldetails": getAllDrLists
     });
-    // controller.updateTabLoading(true);
-    await submitDrs(
+     await submitDrs(
       base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
       date: widget.date,
       userId: widget.loginSuccessModel.userId!,
