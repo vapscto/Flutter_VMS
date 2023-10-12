@@ -241,7 +241,7 @@ class CurrentemployeeDetails {
     this.hrmEDoj,
     this.hrmEExpectedRetirementDate,
     this.hrmEPfDate,
-    this.hrmEEsiDate,
+    // this.hrmEEsiDate,
     this.hrmEMobileNo,
     this.hrmEEmailId,
     this.hrmEBloodGroup,
@@ -325,7 +325,7 @@ class CurrentemployeeDetails {
   DateTime? hrmEDoj;
   DateTime? hrmEExpectedRetirementDate;
   DateTime? hrmEPfDate;
-  DateTime? hrmEEsiDate;
+  // DateTime? hrmEEsiDate;
   num? hrmEMobileNo;
   String? hrmEEmailId;
   String? hrmEBloodGroup;
@@ -411,7 +411,7 @@ class CurrentemployeeDetails {
         hrmEExpectedRetirementDate:
             DateTime.parse(json["hrmE_ExpectedRetirementDate"]),
         hrmEPfDate: DateTime.parse(json["hrmE_PFDate"]),
-        hrmEEsiDate: DateTime.parse(json["hrmE_ESIDate"]),
+        // hrmEEsiDate: DateTime.parse(json["hrmE_ESIDate"] ?? DateTime.now()),
         hrmEMobileNo: json["hrmE_MobileNo"],
         hrmEEmailId: json["hrmE_EmailId"],
         hrmEBloodGroup: json["hrmE_BloodGroup"],
@@ -498,7 +498,7 @@ class CurrentemployeeDetails {
         "hrmE_ExpectedRetirementDate":
             hrmEExpectedRetirementDate?.toIso8601String(),
         "hrmE_PFDate": hrmEPfDate?.toIso8601String(),
-        "hrmE_ESIDate": hrmEEsiDate?.toIso8601String(),
+        // "hrmE_ESIDate": hrmEEsiDate?.toIso8601String(),
         "hrmE_MobileNo": hrmEMobileNo,
         "hrmE_EmailId": hrmEEmailId,
         "hrmE_BloodGroup": hrmEBloodGroup,

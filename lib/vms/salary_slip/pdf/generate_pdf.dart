@@ -34,7 +34,12 @@ class GenerateSalarySlip {
             .salarySlipDetail.first.employeeSalaryslipDetails!.values!
             .elementAt(i)!
             .amount!;
-      } else {
+      } else if (controller
+              .salarySlipDetail.first.employeeSalaryslipDetails!.values!
+              .elementAt(i)!
+              .hrmedEarnDedFlag!
+              .toLowerCase() ==
+          "deduction") {
         deduction += controller
             .salarySlipDetail.first.employeeSalaryslipDetails!.values!
             .elementAt(i)!
@@ -54,16 +59,6 @@ class GenerateSalarySlip {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image(logo),
-              // Text(
-              //   controller.salarySlipDetail.first.institutionDetails!.mIName
-              //       .toString(),
-              //   style: TextStyle(
-              //     fontSize: 20,
-              //     fontBold: Font.courierBold(),
-              //     color: PdfColor.fromHex("#000000"),
-              //   ),
-              // ),
-              // Text(),
               SizedBox(height: 24.0),
               Text(
                 "Salary Slip : ${controller.salarySlipDetail.first.hreSMonth} ${controller.salarySlipDetail.first.hreSYear}",
@@ -76,7 +71,7 @@ class GenerateSalarySlip {
               Table(children: [
                 TableRow(children: [
                   Text(
-                    'Name  : ${controller.salarySlipDetail.first.currentemployeeDetails!.hrmEEmployeeFirstName} ${controller.salarySlipDetail.first.currentemployeeDetails!.hrmEEmployeeMiddleName} ${controller.salarySlipDetail.first.currentemployeeDetails!.hrmEEmployeeLastName}',
+                    'Name  : ${controller.salarySlipDetail.first.currentemployeeDetails!.hrmEEmployeeFirstName} ${controller.salarySlipDetail.first.currentemployeeDetails!.hrmEEmployeeMiddleName} ${controller.salarySlipDetail.first.currentemployeeDetails!.hrmEEmployeeLastName ?? ''}',
                     style: TextStyle(
                       fontSize: 12,
                       color: PdfColor.fromHex("#000000"),

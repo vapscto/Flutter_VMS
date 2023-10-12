@@ -656,6 +656,9 @@ class ApplyLeaveWidget extends StatelessWidget {
               Fluttertoast.showToast(msg: "Please provide reporting date");
               return;
             }
+            if (values.hrmLLeaveName == 'Casual Leave') {
+              if (int.parse(totalDay.value) > values.hrelTTotDays!.toInt()) {}
+            }
 
             showDialog(
                 context: context,

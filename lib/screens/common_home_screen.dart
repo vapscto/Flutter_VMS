@@ -17,6 +17,7 @@ import 'package:m_skool_flutter/student/fees/tabs/pay_online_tab.dart';
 import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/tabs/dashboard.dart';
 import 'package:m_skool_flutter/tabs/profile_tab.dart';
+import 'package:m_skool_flutter/vms/profile/screens/profile_screen.dart';
 import 'package:m_skool_flutter/vms/task%20creation/screens/taskCreationHome.dart';
 import 'package:m_skool_flutter/vms/utils/common_drawer.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -108,7 +109,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
         HomePageModel(
           title: "Profile",
           icon: 'assets/images/tabprofile.png',
-          page: StaffProfileTab(
+          page: MyProfileScreen(
             loginSuccessModel: widget.loginSuccessModel,
             mskoolController: widget.mskoolController,
           ),

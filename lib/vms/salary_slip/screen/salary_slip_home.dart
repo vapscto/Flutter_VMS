@@ -264,7 +264,10 @@ class _SalarySlipHomeState extends State<SalarySlipHome> {
                             title: 'Generate PDF',
                             onPress: () {
                               if (salarySlipController
-                                  .salarySlipDetail.isEmpty) {
+                                      .salarySlipDetail.isEmpty ||
+                                  salarySlipController.salarySlipDetail.first
+                                          .empsaldetail!.hreSWorkingDays ==
+                                      null) {
                                 Fluttertoast.showToast(
                                     msg:
                                         'No data available select year and month');

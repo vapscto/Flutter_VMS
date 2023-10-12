@@ -28,14 +28,12 @@ class OnlineLeaveApply extends StatefulWidget {
 }
 
 class _OnlineLeaveApplyState extends State<OnlineLeaveApply> {
-  // int color = -1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: const HomeFab(),
       appBar: CustomAppBar(title: widget.title).getAppBar(),
       body: SingleChildScrollView(
-        //padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

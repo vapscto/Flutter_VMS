@@ -12,8 +12,6 @@ import 'package:get_ip_address/get_ip_address.dart';
 import 'package:m_skool_flutter/apis/version_control_api.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/manager/coe/screen/manager_coe.dart';
-import 'package:m_skool_flutter/manager/employee_details/screens/employee_details_home_screen.dart';
 import 'package:m_skool_flutter/manager/employee_punch/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/manager/employee_salary/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/manager/feedemo/screen/fee_home.dart';
@@ -28,24 +26,17 @@ import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/screens/attachment_viewer.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
-import 'package:m_skool_flutter/staffs/gallery_upload/screen/gallery_home.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/screen/hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
-import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dart';
 import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/view_notice/screens/view_notice_home_screen.dart';
 import 'package:m_skool_flutter/student/attendance/screens/home_page.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
-import 'package:m_skool_flutter/student/classwork/screen/classwork_home_screen.dart';
 import 'package:m_skool_flutter/student/coe/screen/video_screen.dart';
 import 'package:m_skool_flutter/student/exam/screen/exam_home.dart';
-import 'package:m_skool_flutter/student/fees/screens/fee_analysis_screen.dart';
 import 'package:m_skool_flutter/student/fees/screens/fee_receipt_home.dart';
-import 'package:m_skool_flutter/student/fees/screens/online_payment_screen.dart';
-import 'package:m_skool_flutter/student/gallery_view/screen/gallery_view.dart';
-import 'package:m_skool_flutter/student/homework/screen/home_work_screen.dart';
 import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/student/library/screen/library_home.dart';
@@ -53,12 +44,12 @@ import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
-import 'package:m_skool_flutter/vms/dr_genration/screens/dailyrpt_home.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_approval_home.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
+import 'package:m_skool_flutter/vms/online_leave/screen/online_leave_home.dart';
+import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/screen/leave_list_home.dart';
-import 'package:m_skool_flutter/vms/staff_leave_approval/screen/staff_leave_approval_home.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
@@ -73,7 +64,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
-import '../staffs/punch_report/screens/punch_report_home.dart';
 
 RxInt currentHomeTab = 0.obs;
 RxList<int> previousHomeTab = [0].obs;
@@ -557,12 +547,12 @@ void openMappedPages(
     );
   }
 
-if (pageName == "GPS attendance") {
-      Get.to(
-      () =>GpasHomeScreen(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-       ),
+  if (pageName == "GPS attendance") {
+    Get.to(
+      () => GpasHomeScreen(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      ),
     );
   }
 
@@ -626,7 +616,7 @@ if (pageName == "GPS attendance") {
   }
   if (pageName == "Salary Slip") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return TaskCreationHome(
+      return SalarySlipHome(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
       );
@@ -691,8 +681,6 @@ if (pageName == "GPS attendance") {
     }));
   }
 
-  ///////////////
-
   if (pageName == "Student Birth Day Report") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return StudentBdayHome(
@@ -703,7 +691,7 @@ if (pageName == "GPS attendance") {
     return;
   }
 
-  if (pageName == "Online Leave Apply") {
+  if (pageName == "Leave Apply") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return OnlineLeaveApply(
         loginSuccessModel: loginSuccessModel,
@@ -764,7 +752,6 @@ if (pageName == "GPS attendance") {
       );
     }));
     return;
-   
   }
 
 // if (pageName == "DR Generation") {
@@ -776,7 +763,7 @@ if (pageName == "GPS attendance") {
 //             loginSuccessModel: loginSuccessModel,
 //             mskoolController: mskoolController,
 //             pageName: pageName,
-            
+
 //           );
 //         },
 //       ),

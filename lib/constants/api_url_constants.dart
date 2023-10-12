@@ -582,4 +582,5 @@ class URLS {
   static String drDetailsGenration =
       "api/ISM_DailyReportGenerationFacade/loaddata/";
   static String plannerList = 'api/ISM_PlannerApprovalFacade/getdetails/';
+  static String profileData = 'api/ISMDashboardFacade/getdetails/';
 }
