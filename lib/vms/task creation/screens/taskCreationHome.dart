@@ -34,10 +34,13 @@ import 'package:open_filex/open_filex.dart';
 class TaskCreationHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  const TaskCreationHome(
-      {required this.loginSuccessModel,
-      required this.mskoolController,
-      super.key});
+  // final bool showAppBar;
+  const TaskCreationHome({
+    required this.loginSuccessModel,
+    required this.mskoolController,
+    super.key,
+    // required this.showAppBar
+  });
 
   @override
   State<TaskCreationHome> createState() => _TaskCreationHomeState();
@@ -47,7 +50,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   TaskDepartController _taskDepartController = Get.put(TaskDepartController());
   final ImagePicker _imagePicker = ImagePicker();
   DrDetailsCtrlr controller = Get.put(DrDetailsCtrlr());
- 
+
   TaskProjectsController _taskProjectsController =
       Get.put(TaskProjectsController());
 
@@ -124,7 +127,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   }
 
   Future<void> loadImages() async {
-     controller.updateTabLoading(true);
+    controller.updateTabLoading(true);
     String? periodicityType;
     var taskDay;
     if (_taskDepartController.typesTask.value == "T") {
@@ -136,7 +139,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
         taskDay = etDayControllers.text;
       } else if (dropdownValue.value == "Yearly Once" ||
           dropdownValue.value == "Specific Day") {
-            int dayNum =0;
+        int dayNum = 0;
         taskDay = dayNum.toInt();
       }
     } else if (_taskDepartController.typesTask.value == "B" ||
@@ -174,8 +177,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
         "ASMAY_Id": 0
       });
     }
-    await 
-    saveTask(
+    await saveTask(
       typeAssign: _taskDepartController.taskAssingn.value,
       base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
       controller: _taskDepartController,
@@ -211,12 +213,14 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       roletype: widget.loginSuccessModel.roleforlogin,
       startdate: selectFromDate.text,
       taskEmpArray: taskEmpArray,
-    ).then((value) {
-      if(value){
-        Get.back();
-        Fluttertoast.showToast(msg: "Task Created successfully");
-      }
-    },);
+    ).then(
+      (value) {
+        if (value) {
+          Get.back();
+          Fluttertoast.showToast(msg: "Task Created successfully");
+        }
+      },
+    );
   }
 
   loadCmpny() async {
@@ -253,18 +257,18 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                 () => controller.drIsLoading.value
                     ? const SizedBox()
                     : BtnSave(
-                        title:  'Submit',
-                        onPress: () async{
-                          if(_formKey.currentState!.validate()){
-                            if(_titleETController.text.isNotEmpty|| _descritpionETController.text.isNotEmpty){
-                           await loadImages();
-                            }else{
-                               Fluttertoast.showToast(msg: " Fill mandatory ");
+                        title: 'Submit',
+                        onPress: () async {
+                          if (_formKey.currentState!.validate()) {
+                            if (_titleETController.text.isNotEmpty ||
+                                _descritpionETController.text.isNotEmpty) {
+                              await loadImages();
+                            } else {
+                              Fluttertoast.showToast(msg: " Fill mandatory ");
                             }
-                          }else{
+                          } else {
                             Fluttertoast.showToast(msg: " Select mandatory ");
                           }
-                          
                         },
                       ),
               ),
@@ -313,13 +317,13 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                           ],
                         ),
                         child: DropdownButtonFormField<GetDeptsValues>(
-                         // value: _taskDepartController.getDeptsList.first,
-                         validator: (value) {
-                           if(value==null){
-                            return "";
-                           }
-                           return null;
-                         },
+                          // value: _taskDepartController.getDeptsList.first,
+                          validator: (value) {
+                            if (value == null) {
+                              return "";
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: const OutlineInputBorder(
@@ -361,11 +365,13 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                           ),
                           iconSize: 30,
                           items: List.generate(
-                              _taskDepartController.getDeptsList.length, (index) {
+                              _taskDepartController.getDeptsList.length,
+                              (index) {
                             return DropdownMenuItem(
                               value: _taskDepartController.getDeptsList[index],
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 13, left: 5),
+                                padding:
+                                    const EdgeInsets.only(top: 13, left: 5),
                                 child: Text(
                                   overflow: TextOverflow.clip,
                                   _taskDepartController
@@ -411,7 +417,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                     ),
                   )
                 : _taskProjectsController.getTaskProjectsList.isEmpty
-                    ?  SizedBox()
+                    ? SizedBox()
                     : _taskProjectsController.tskPrjtloading.value
                         ? const AnimatedProgressWidget(
                             animationPath: 'assets/json/default.json',
@@ -435,12 +441,12 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             child: DropdownButtonFormField<GeTskProjectsValues>(
                               // value: _taskProjectsController
                               //     .getTaskProjectsList.first,
-                                   validator: (value) {
-                                  if(value==null){
-                                    return "";
-                                  }
-                                  return null;
-                                },
+                              validator: (value) {
+                                if (value == null) {
+                                  return "";
+                                }
+                                return null;
+                              },
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 focusedBorder: const OutlineInputBorder(
@@ -509,7 +515,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                 );
                               }),
                               onChanged: (s) async {
-                                _taskClientModuleCntroller.taskClientList.clear();
+                                _taskClientModuleCntroller.taskClientList
+                                    .clear();
                                 _taskClientModuleCntroller.getModuleValuesList
                                     .clear();
                                 projectId = s!.ismmpRId!;
@@ -572,8 +579,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             child: DropdownButtonFormField<GeTskClientValues>(
                               // value:
                               //     _taskClientModuleCntroller.taskClientList.first,
-                                   validator: (value) {
-                                if(value==null){
+                              validator: (value) {
+                                if (value == null) {
                                   return "";
                                 }
                                 return null;
@@ -624,10 +631,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                   _taskClientModuleCntroller
                                       .taskClientList.length, (index) {
                                 return DropdownMenuItem(
-                                  
                                   value: _taskClientModuleCntroller
                                       .taskClientList[index],
-                                      
                                   child: Padding(
                                     padding:
                                         const EdgeInsets.only(top: 13, left: 5),
@@ -670,9 +675,9 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                               },
                             ),
                           )),
-    
+
             // Category Dropdown
-    
+
             Obx(() => _taskProjectsController.getTaskCategoryList.isNotEmpty
                 ? Container(
                     margin: const EdgeInsets.only(
@@ -689,14 +694,13 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                       ],
                     ),
                     child: DropdownButtonFormField<GeTskCategoryValues>(
-                      
-                     // value: _taskProjectsController.getTaskCategoryList.first,
-                       validator: (value) {
-                           if(value==null){
-                            return "";
-                           }
-                           return null;
-                         },
+                      // value: _taskProjectsController.getTaskCategoryList.first,
+                      validator: (value) {
+                        if (value == null) {
+                          return "";
+                        }
+                        return null;
+                      },
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         focusedBorder: const OutlineInputBorder(
@@ -709,15 +713,17 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             color: Colors.transparent,
                           ),
                         ),
-                        hintStyle: Theme.of(context).textTheme.labelSmall!.merge(
-                            const TextStyle(
+                        hintStyle: Theme.of(context)
+                            .textTheme
+                            .labelSmall!
+                            .merge(const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14.0,
                                 letterSpacing: 0.3)),
-                        hintText:
-                            _taskProjectsController.getTaskCategoryList.isNotEmpty
-                                ? 'Select Category'
-                                : 'No data available',
+                        hintText: _taskProjectsController
+                                .getTaskCategoryList.isNotEmpty
+                            ? 'Select Category'
+                            : 'No data available',
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         isDense: true,
                         label: const CustomDropDownLabel(
@@ -739,16 +745,16 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                           _taskProjectsController.getTaskCategoryList.length,
                           (index) {
                         return DropdownMenuItem(
-                          value:
-                              _taskProjectsController.getTaskCategoryList[index],
-                              
+                          value: _taskProjectsController
+                              .getTaskCategoryList[index],
                           child: Padding(
                             padding: const EdgeInsets.only(top: 13, left: 5),
                             child: SizedBox(
                               width: 300,
                               child: Text(
                                 overflow: TextOverflow.clip,
-                                _taskProjectsController.getTaskCategoryList[index]
+                                _taskProjectsController
+                                    .getTaskCategoryList[index]
                                     .ismmtcaTTaskCategoryName!,
                                 style: Theme.of(context)
                                     .textTheme
@@ -768,19 +774,21 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                     ),
                   )
                 : SizedBox()),
-    
+
             // Task Title
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: TextFormField(
-                 maxLines: 6,
-                style:
-                    Theme.of(context).textTheme.titleSmall!.merge(const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                          letterSpacing: 0.3,
-                          overflow: TextOverflow.clip,
-                        )),
+                maxLines: 6,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall!
+                    .merge(const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.0,
+                      letterSpacing: 0.3,
+                      overflow: TextOverflow.clip,
+                    )),
                 decoration: InputDecoration(
                     hintText: 'Enter Task Title',
                     hintStyle: Theme.of(context)
@@ -801,14 +809,16 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: TextFormField(
-                 maxLines: 6,
-                style:
-                    Theme.of(context).textTheme.titleSmall!.merge(const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                          letterSpacing: 0.3,
-                          overflow: TextOverflow.clip,
-                        )),
+                maxLines: 6,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall!
+                    .merge(const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.0,
+                      letterSpacing: 0.3,
+                      overflow: TextOverflow.clip,
+                    )),
                 decoration: InputDecoration(
                     hintText: 'Enter Task Description',
                     hintStyle: Theme.of(context)
@@ -868,12 +878,12 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                               ],
                             ),
                             child: DropdownButtonFormField<GetmoduleValues>(
-                                validator: (value) {
-                                  if(value==null){
-                                    return "";
-                                  }
-                                  return null;
-                                },
+                              validator: (value) {
+                                if (value == null) {
+                                  return "";
+                                }
+                                return null;
+                              },
                               // value: _taskClientModuleCntroller
                               //     .getModuleValuesList.first,
                               decoration: InputDecoration(
@@ -950,7 +960,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                               },
                             ),
                           )),
-    
+
             // Prority List Dropdown
             Obx(() => _taskDepartController.tskDeptErrorLoading.value
                 ? const Center(
@@ -983,13 +993,13 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                           ],
                         ),
                         child: DropdownButtonFormField<GetPriorityModelValues>(
-                            validator: (value) {
-                           if(value==null){
-                            return "";
-                           }
-                           return null;
-                         },
-                         // value: _taskDepartController.getPriorityModelList.first,
+                          validator: (value) {
+                            if (value == null) {
+                              return "";
+                            }
+                            return null;
+                          },
+                          // value: _taskDepartController.getPriorityModelList.first,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: const OutlineInputBorder(
@@ -1037,7 +1047,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                               value: _taskDepartController
                                   .getPriorityModelList[index],
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 13, left: 5),
+                                padding:
+                                    const EdgeInsets.only(top: 13, left: 5),
                                 child: Text(
                                   overflow: TextOverflow.clip,
                                   _taskDepartController
@@ -1079,7 +1090,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             activeColor: Theme.of(context).primaryColor,
                             contentPadding:
                                 const EdgeInsets.symmetric(horizontal: 8),
-                            visualDensity: const VisualDensity(horizontal: -4.0),
+                            visualDensity:
+                                const VisualDensity(horizontal: -4.0),
                             title: Text(
                               "Yes",
                               style: Theme.of(context)
@@ -1104,7 +1116,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             activeColor: Theme.of(context).primaryColor,
                             contentPadding:
                                 const EdgeInsets.symmetric(horizontal: 8),
-                            visualDensity: const VisualDensity(horizontal: -4.0),
+                            visualDensity:
+                                const VisualDensity(horizontal: -4.0),
                             title: Text(
                               "No",
                               style: Theme.of(context)
@@ -1163,7 +1176,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                       child: RadioListTile(
                         dense: true,
                         activeColor: Theme.of(context).primaryColor,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 8),
                         visualDensity: const VisualDensity(horizontal: -4.0),
                         title: Text(
                           "Bugs/Complaint",
@@ -1192,8 +1206,10 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                           visualDensity: const VisualDensity(horizontal: -4.0),
                           title: Text(
                             "Task(Periodicity)",
-                            style: Theme.of(context).textTheme.labelSmall!.merge(
-                                const TextStyle(
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .merge(const TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 16.0,
                                     letterSpacing: 0.3)),
@@ -1213,7 +1229,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                       child: RadioListTile(
                         dense: true,
                         activeColor: Theme.of(context).primaryColor,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 8),
                         visualDensity: const VisualDensity(horizontal: -4.0),
                         title: Text(
                           "Enhancement",
@@ -1235,7 +1252,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                       child: RadioListTile(
                         dense: true,
                         activeColor: Theme.of(context).primaryColor,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 8),
                         visualDensity: const VisualDensity(horizontal: -4.0),
                         title: Text(
                           "Other's",
@@ -1282,7 +1300,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                   width: 0.5),
                               headingRowColor: MaterialStateProperty.all(
                                   Theme.of(context).primaryColor),
-                              columns:const [
+                              columns: const [
                                 // 1
                                 DataColumn(
                                   label: Align(
@@ -1352,8 +1370,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                       alignment: Alignment.center,
                                       child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                Color.fromARGB(255, 27, 59, 238),
+                                            backgroundColor: Color.fromARGB(
+                                                255, 27, 59, 238),
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 14, vertical: 2.0),
                                             shape: RoundedRectangleBorder(
@@ -1384,7 +1402,9 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                       child: InkWell(
                                         onTap: () {
                                           OpenFilex.open(_taskDepartController
-                                              .addListBrowser[index].file!.path);
+                                              .addListBrowser[index]
+                                              .file!
+                                              .path);
                                         },
                                         child: Icon(Icons.visibility),
                                       ))),
@@ -1406,7 +1426,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                     child: Icon(Icons.add)),
                                                 InkWell(
                                                     onTap: () {
-                                                      removeItemListBrowse(index);
+                                                      removeItemListBrowse(
+                                                          index);
                                                     },
                                                     child: Icon(Icons.remove))
                                               ],
@@ -1427,20 +1448,20 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
             Obx(
               () => Visibility(
                 visible: _taskDepartController.taskAssingn.value == "Y",
-                child:const Padding(
-                  padding:
-                        EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "ASSIGN ISSUE/TASK/ENHANCEMENT",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
               ),
             ),
-    
+
             Obx(
               () => Visibility(
                 visible: _taskDepartController.taskAssingn.value == "Y",
@@ -1463,12 +1484,13 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                         child: Container(
                                           width: 250,
                                           height: 40,
-                                          decoration:const  BoxDecoration(
+                                          decoration: const BoxDecoration(
                                               shape: BoxShape.rectangle,
-                                              color:
-                                                  Color.fromRGBO(12, 54, 238, 1),
+                                              color: Color.fromRGBO(
+                                                  12, 54, 238, 1),
                                               borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(10))),
+                                                  topLeft:
+                                                      Radius.circular(10))),
                                           child: const Align(
                                             alignment: Alignment.center,
                                             child: Text(
@@ -1483,30 +1505,33 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                       ),
                                     ),
                                     Obx(() => Visibility(
-                                          visible: dropdownValue.value == "Daily"
-                                              ? false
-                                              : _taskDepartController
-                                                          .typesTask.value ==
-                                                      "T"
-                                                  ? true
-                                                  : false,
+                                          visible:
+                                              dropdownValue.value == "Daily"
+                                                  ? false
+                                                  : _taskDepartController
+                                                              .typesTask
+                                                              .value ==
+                                                          "T"
+                                                      ? true
+                                                      : false,
                                           child: Container(
                                             width: 250,
                                             height: 40,
-                                            decoration:const BoxDecoration(
+                                            decoration: const BoxDecoration(
                                               shape: BoxShape.rectangle,
-                                              color:
-                                                  Color.fromRGBO(12, 54, 238, 1),
+                                              color: Color.fromRGBO(
+                                                  12, 54, 238, 1),
                                             ),
                                             child: Align(
                                               alignment: Alignment.center,
                                               child: Text(
-                                                dropdownValue.value == "Weekly" ||
+                                                dropdownValue.value ==
+                                                            "Weekly" ||
                                                         dropdownValue.value ==
                                                             "Once in Fortnight"
                                                     ? 'Task Day'
                                                     : "Date",
-                                                style:const TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.white),
@@ -1524,11 +1549,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                       .typesTask.value ==
                                                   "T"
                                               ? BorderRadius.zero
-                                              :const  BorderRadius.only(
+                                              : const BorderRadius.only(
                                                   topLeft: Radius.circular(10)),
                                           color: Color.fromRGBO(12, 54, 238, 1),
                                         ),
-                                        child:const Align(
+                                        child: const Align(
                                           alignment: Alignment.center,
                                           child: Text(
                                             'Start and End Date',
@@ -1543,11 +1568,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     Container(
                                       width: 210,
                                       height: 40,
-                                      decoration:const BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         shape: BoxShape.rectangle,
                                         color: Color.fromRGBO(12, 54, 238, 1),
                                       ),
-                                      child:const Align(
+                                      child: const Align(
                                         alignment: Alignment.center,
                                         child: Text(
                                           'Effort for each task',
@@ -1561,11 +1586,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     Container(
                                       width: 250,
                                       height: 40,
-                                      decoration:const BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         shape: BoxShape.rectangle,
                                         color: Color.fromRGBO(12, 54, 238, 1),
                                       ),
-                                      child:const Align(
+                                      child: const Align(
                                         alignment: Alignment.center,
                                         child: Text(
                                           'Assign To',
@@ -1579,7 +1604,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     Container(
                                       width: 250,
                                       height: 40,
-                                      decoration:const BoxDecoration(
+                                      decoration: const BoxDecoration(
                                           shape: BoxShape.rectangle,
                                           color: Color.fromRGBO(12, 54, 238, 1),
                                           borderRadius: BorderRadius.only(
@@ -1598,14 +1623,14 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                   ],
                                 ),
                                 Row(
-                                  children:  [
+                                  children: [
                                     Obx(
                                       () => Visibility(
                                         visible: _taskDepartController
                                                 .typesTask.value ==
                                             "T",
-                                        child:  Container(
-                                          decoration:const BoxDecoration(
+                                        child: Container(
+                                          decoration: const BoxDecoration(
                                             border: Border(
                                                 left: BorderSide(
                                                     width: 0.5,
@@ -1628,16 +1653,19 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                     .textTheme
                                                     .titleSmall!
                                                     .merge(const TextStyle(
-                                                      fontWeight: FontWeight.w100,
+                                                      fontWeight:
+                                                          FontWeight.w100,
                                                       fontSize: 16.0,
                                                       letterSpacing: 0.3,
-                                                      overflow: TextOverflow.clip,
+                                                      overflow:
+                                                          TextOverflow.clip,
                                                     )),
                                                 initialSelection:
                                                     periodicityList.first,
                                                 onSelected: (String? value) {
                                                   setState(() {
-                                                    dropdownValue.value = value!;
+                                                    dropdownValue.value =
+                                                        value!;
                                                   });
                                                 },
                                                 dropdownMenuEntries:
@@ -1647,7 +1675,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                         (String value) {
                                                   return DropdownMenuEntry<
                                                           String>(
-                                                      value: value, label: value);
+                                                      value: value,
+                                                      label: value);
                                                 }).toList(),
                                               ),
                                             ),
@@ -1667,7 +1696,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                         child: Container(
                                             width: 250,
                                             height: 210,
-                                            decoration:const BoxDecoration(
+                                            decoration: const BoxDecoration(
                                                 border: Border(
                                                     right: BorderSide(
                                                         color: Colors.black54,
@@ -1686,7 +1715,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                       child: TextField(
                                                         maxLines: 1,
                                                         keyboardType:
-                                                            TextInputType.number,
+                                                            TextInputType
+                                                                .number,
                                                         decoration: InputDecoration(
                                                             border: OutlineInputBorder(
                                                                 borderRadius:
@@ -1703,7 +1733,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                     child: SizedBox(
                                                       width: 200,
                                                       child: TextField(
-                                                      
                                                         onTap: () async {
                                                           await showDatePicker(
                                                             context: context,
@@ -1725,15 +1754,13 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                         readOnly: true,
                                                         controller:
                                                             etDayControllers,
-                                                            
                                                         decoration:
                                                             InputDecoration(
-                                                          border:
-                                                              OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5)),
+                                                          border: OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5)),
                                                           suffixIcon: Padding(
                                                             padding:
                                                                 const EdgeInsets
@@ -1794,9 +1821,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                             .merge(
                                                                 const TextStyle(
                                                               fontWeight:
-                                                                  FontWeight.w100,
+                                                                  FontWeight
+                                                                      .w100,
                                                               fontSize: 16.0,
-                                                              letterSpacing: 0.3,
+                                                              letterSpacing:
+                                                                  0.3,
                                                               overflow:
                                                                   TextOverflow
                                                                       .clip,
@@ -1816,13 +1845,13 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                           .typesTask.value ==
                                                       "T"
                                                   ? BorderSide.none
-                                                  :const BorderSide(
+                                                  : const BorderSide(
                                                       width: 1,
                                                       color: Colors.black54),
-                                              right:const BorderSide(
+                                              right: const BorderSide(
                                                   width: 1,
                                                   color: Colors.black54),
-                                              bottom:const BorderSide(
+                                              bottom: const BorderSide(
                                                   width: 1,
                                                   color: Colors.black54)),
                                         ),
@@ -1843,8 +1872,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                   decoration: InputDecoration(
                                                     border: OutlineInputBorder(
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                5)),
+                                                            BorderRadius
+                                                                .circular(5)),
                                                     suffixIcon: Padding(
                                                       padding:
                                                           const EdgeInsets.all(
@@ -1860,7 +1889,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                         ),
                                                       ),
                                                     ),
-                                                    hintText: "Select From Date",
+                                                    hintText:
+                                                        "Select From Date",
                                                     hintStyle: Theme.of(context)
                                                         .textTheme
                                                         .titleSmall!
@@ -1886,7 +1916,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                       )),
                                                 ),
                                               ),
-                                            const  SizedBox(
+                                              const SizedBox(
                                                 height: 10,
                                               ),
                                               SizedBox(
@@ -1900,8 +1930,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                   decoration: InputDecoration(
                                                     border: OutlineInputBorder(
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                5)),
+                                                            BorderRadius
+                                                                .circular(5)),
                                                     suffixIcon: Padding(
                                                       padding:
                                                           const EdgeInsets.all(
@@ -1917,7 +1947,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                         ),
                                                       ),
                                                     ),
-                                                    hintText: "Select From Date",
+                                                    hintText:
+                                                        "Select From Date",
                                                     hintStyle: Theme.of(context)
                                                         .textTheme
                                                         .titleSmall!
@@ -1951,12 +1982,14 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     Container(
                                       width: 210,
                                       height: 210,
-                                      decoration:const BoxDecoration(
-                                        border:  Border(
+                                      decoration: const BoxDecoration(
+                                        border: Border(
                                             right: BorderSide(
-                                                width: 1, color: Colors.black54),
+                                                width: 1,
+                                                color: Colors.black54),
                                             bottom: BorderSide(
-                                                width: 1, color: Colors.black54)),
+                                                width: 1,
+                                                color: Colors.black54)),
                                       ),
                                       child: Align(
                                         child: Row(
@@ -1986,21 +2019,20 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                               TextOverflow.clip,
                                                         )),
                                                     decoration: InputDecoration(
-                                                        border:
-                                                            OutlineInputBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5))),
+                                                        border: OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5))),
                                                   ),
                                                 ),
-                                              const  SizedBox(
+                                                const SizedBox(
                                                   height: 5,
                                                 ),
                                                 Text("HH")
                                               ],
                                             ),
-                                          const  SizedBox(
+                                            const SizedBox(
                                               width: 5,
                                             ),
                                             Column(
@@ -2014,12 +2046,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                         TextInputType.number,
                                                     maxLines: 1,
                                                     decoration: InputDecoration(
-                                                        border:
-                                                            OutlineInputBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5))),
+                                                        border: OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5))),
                                                     controller: minutesEt,
                                                     style: Theme.of(context)
                                                         .textTheme
@@ -2034,10 +2065,10 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                         )),
                                                   ),
                                                 ),
-                                              const  SizedBox(
+                                                const SizedBox(
                                                   height: 5,
                                                 ),
-                                               const Text('MM')
+                                                const Text('MM')
                                               ],
                                             ),
                                           ],
@@ -2047,15 +2078,17 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     Container(
                                       width: 250,
                                       height: 210,
-                                      decoration:const BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         border: Border(
                                             right: BorderSide(
-                                                width: 1, color: Colors.black54),
+                                                width: 1,
+                                                color: Colors.black54),
                                             bottom: BorderSide(
-                                                width: 1, color: Colors.black54)),
+                                                width: 1,
+                                                color: Colors.black54)),
                                       ),
                                       child: Padding(
-                                        padding:const EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             vertical: 5, horizontal: 5),
                                         child: Column(
                                           children: [
@@ -2085,33 +2118,39 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                               context)
                                                           .textTheme
                                                           .titleSmall!
-                                                          .merge(const TextStyle(
+                                                          .merge(
+                                                              const TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w100,
                                                             fontSize: 12.0,
                                                             letterSpacing: 0.3,
                                                             overflow:
-                                                                TextOverflow.clip,
+                                                                TextOverflow
+                                                                    .clip,
                                                           )),
-                                                      border: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5))),
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5))),
                                                 )),
-                                           const SizedBox(
+                                            const SizedBox(
                                               height: 10,
                                             ),
-                                             Container(
+                                            Container(
                                               width: 240,
                                               height: 150,
                                               child: Obx(
                                                 () => ListView.builder(
                                                   itemCount:
                                                       taskEmployeeList.length,
-                                                  itemBuilder: (context, index) {
+                                                  itemBuilder:
+                                                      (context, index) {
                                                     return Padding(
                                                       padding: const EdgeInsets
-                                                          .symmetric(vertical: 2),
+                                                              .symmetric(
+                                                          vertical: 2),
                                                       child: Container(
                                                         width: 180,
                                                         height: 30,
@@ -2123,17 +2162,18 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                                       BorderRadius
                                                                           .circular(
                                                                               10)),
-                                                              activeColor:const
-                                                                  Color.fromRGBO(
+                                                              activeColor:
+                                                                  const Color
+                                                                          .fromRGBO(
                                                                       26,
                                                                       48,
                                                                       241,
                                                                       1),
-                                                              value:
-                                                                  _taskDepartController
-                                                                          .checkBox[
-                                                                      index],
-                                                              onChanged: (value) {
+                                                              value: _taskDepartController
+                                                                      .checkBox[
+                                                                  index],
+                                                              onChanged:
+                                                                  (value) {
                                                                 if (employeesID.contains(
                                                                     taskEmployeeList[
                                                                             index]
@@ -2217,12 +2257,14 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     Container(
                                       width: 250,
                                       height: 210,
-                                      decoration:const BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         border: Border(
                                             right: BorderSide(
-                                                width: 1, color: Colors.black54),
+                                                width: 1,
+                                                color: Colors.black54),
                                             bottom: BorderSide(
-                                                width: 1, color: Colors.black54)),
+                                                width: 1,
+                                                color: Colors.black54)),
                                       ),
                                       child: Align(
                                         alignment: Alignment.center,
@@ -2231,18 +2273,14 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                               horizontal: 10),
                                           child: TextField(
                                             style: Theme.of(context)
-                                                            .textTheme
-                                                            .titleSmall!
-                                                            .merge(
-                                                                const TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight.w100,
-                                                              fontSize: 16.0,
-                                                              letterSpacing: 0.3,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .clip,
-                                                            )),
+                                                .textTheme
+                                                .titleSmall!
+                                                .merge(const TextStyle(
+                                                  fontWeight: FontWeight.w100,
+                                                  fontSize: 16.0,
+                                                  letterSpacing: 0.3,
+                                                  overflow: TextOverflow.clip,
+                                                )),
                                             decoration: InputDecoration(
                                                 border: OutlineInputBorder(
                                                     borderRadius:
@@ -2260,11 +2298,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             )))),
               ),
             ),
-           const SizedBox(
+            const SizedBox(
               height: 40,
             ),
-            
-          const  SizedBox(
+
+            const SizedBox(
               height: 40,
             ),
           ]),
@@ -2335,6 +2373,4 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     _taskDepartController.addListBrowser.clear();
     super.dispose();
   }
-
-   
 }
