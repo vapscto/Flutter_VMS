@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/controller/planner_approval_controller.dart';
@@ -16,8 +17,7 @@ class PlannerListAPI {
     required int roleId,
   }) async {
     var dio = Dio();
-    var url =
-        'https://vmsissuemanager.azurewebsites.net/api/ISM_PlannerApprovalFacade/getdetails/';
+    var url = 'https://vmsissuemanager.azurewebsites.net/${URLS.plannerList}';
     try {
       plannerApprovalController.plannerLoading(true);
       var response = await dio.post(url,

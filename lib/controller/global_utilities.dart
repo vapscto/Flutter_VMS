@@ -57,6 +57,8 @@ import 'package:m_skool_flutter/vms/dr_genration/screens/dailyrpt_home.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_approval_home.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
+import 'package:m_skool_flutter/vms/staff_leave_approval/screen/leave_list_home.dart';
+import 'package:m_skool_flutter/vms/staff_leave_approval/screen/staff_leave_approval_home.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
@@ -880,14 +882,13 @@ if (pageName == "GPS attendance") {
     return;
   }
   if (pageName == "Leave Approval") {
-    // Navigator.push(context, MaterialPageRoute(builder: (_) {
-    //   return TadaApplyHomeScreen(
-    //     loginSuccessModel: loginSuccessModel,
-    //     mskoolController: mskoolController,
-    //     previousScreen: 0,
-    //     // title: pageName,
-    //   );
-    // }));
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return ListLeaveHomeScreen(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        title: pageName,
+      );
+    }));
     return;
   }
   if (pageName == "Planner Approval") {

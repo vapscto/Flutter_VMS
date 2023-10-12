@@ -44,7 +44,7 @@ class _StaffLeaveApprovalState extends State<StaffLeaveApproval> {
           future: GetAppliesLeavesApi.instance.getAppliedLeaves(
             base: baseUrlFromInsCode("leave", widget.mskoolController),
             miId: widget.loginSuccessModel.mIID!,
-            loginId: widget.loginSuccessModel.userId!,
+            loginId: 61045, //widget.loginSuccessModel.userId!,
           ),
           builder: (_, snapshot) {
             if (snapshot.hasData) {
@@ -440,9 +440,7 @@ class _StaffLeaveApprovalState extends State<StaffLeaveApproval> {
                     );
             }
             if (snapshot.hasError) {
-              return ErrWidget(
-                err: snapshot.error as Map<String, dynamic>,
-              );
+              Fluttertoast.showToast(msg: 'Something went Wrong');
             }
             return const Center(
               child: AnimatedProgressWidget(
@@ -453,17 +451,6 @@ class _StaffLeaveApprovalState extends State<StaffLeaveApproval> {
               ),
             );
           }),
-      // body: ListView.separated(
-      //     padding: const EdgeInsets.all(16.0),
-      //     itemBuilder: (_, index) {
-      //       return const AppliedLeaveAprovalItem();
-      //     },
-      //     separatorBuilder: (_, index) {
-      //       return const SizedBox(
-      //         height: 16.0,
-      //       );
-      //     },
-      //     itemCount: 10),
     );
   }
 

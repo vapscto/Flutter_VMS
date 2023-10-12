@@ -575,9 +575,10 @@ class URLS {
 
   static String saveapi = "api/AddVisitorsFacade/saveAssignedData/";
 
-  static String gpsFeacth ="api/GPSLocationFacade/getalldetails/";
+  static String gpsFeacth = "api/GPSLocationFacade/getalldetails/";
 
-  static String savePunchApi="api/GPSLocationFacade/savedata/";
+  static String savePunchApi = "api/GPSLocationFacade/savedata/";
 
-  static String drDetailsGenration="api/ISM_DailyReportGenerationFacade/loaddata/";
+  static String drDetailsGenration =
+      "api/ISM_DailyReportGenerationFacade/loaddata/";
 }

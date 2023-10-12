@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -6,6 +7,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/api/approve_leave.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/model/leave_approval_model.dart';
+import 'package:m_skool_flutter/vms/staff_leave_approval/widget/date_picker_widget.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
@@ -19,7 +21,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
   final Function(bool) onSelect;
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  const AppliedLeaveAprovalItem({
+  AppliedLeaveAprovalItem({
     Key? key,
     required this.value,
     required this.selectAll,
@@ -27,7 +29,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
     required this.loginSuccessModel,
     required this.mskoolController,
   }) : super(key: key);
-
+  List<String> leaveDates = [];
   @override
   Widget build(BuildContext context) {
     final RxBool select = RxBool(selectAll);
@@ -153,15 +155,15 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                 //   ),
                 // ),
 
-                CircleAvatar(
-                  radius: 16,
-                  backgroundImage: value.hRMEPhoto == null
-                      ? null
-                      : NetworkImage(value.hRMEPhoto!),
-                ),
-                const SizedBox(
-                  width: 12.0,
-                ),
+                // CircleAvatar(
+                //   radius: 16,
+                //   backgroundImage: value.hRMEPhoto == null
+                //       ? null
+                //       : NetworkImage(value.hRMEPhoto!),
+                // ),
+                // const SizedBox(
+                //   width: 12.0,
+                // ),
                 Row(
                   children: [
                     Text(
@@ -176,7 +178,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      "${value.hRMEEmployeeFirstName ?? "N/a"} | ${value.hRMEEmployeeCode ?? "N/a"} | ${value.hRMDESDesignationName ?? "N/a"}",
+                      "${value.hRMEEmployeeFirstName ?? "N/a"} | ${value.hRMDESDesignationName ?? "N/a"}",
                       style: Theme.of(context).textTheme.titleSmall!.merge(
                             const TextStyle(
                               fontWeight: FontWeight.w600,
@@ -184,6 +186,51 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                           ),
                     )
                   ],
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 8.0,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Do you want reduce leave?",
+                  style: Get.textTheme.titleSmall,
+                ),
+                InkWell(
+                  onTap: () {
+                    Get.dialog(
+                            DatePickerWidget(
+                              endDate: value.hRELAPToDate!,
+                              startDate: value.hRELAPFromDate!,
+                            ),
+                            barrierDismissible: false)
+                        .then((dateList) {
+                      if (leaveDates.isNotEmpty) {
+                        leaveDates.clear();
+                      }
+                      leaveDates.addAll(dateList);
+                      if (leaveDates.isNotEmpty) {
+                        value.hRELAPToDate = leaveDates.first;
+                        value.hRELAPFromDate = leaveDates.last;
+                        value.hRELAPTotalDays = DateTime.parse(leaveDates.last)
+                                .difference(DateTime.parse(leaveDates.first))
+                                .inDays +
+                            1;
+                        value.hRELAPReportingDate = getFormatedDate(
+                            DateTime.parse(DateTime.parse(leaveDates.last)
+                                .add(const Duration(days: 1))
+                                .toString()));
+                      }
+                    });
+                  },
+                  child: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: SvgPicture.asset('assets/svg/calendar_icon.svg')),
                 )
               ],
             ),
@@ -274,15 +321,24 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                                           BorderRadius.circular(
                                                               8.0),
                                                     ),
-                                                    child: Text(
-                                                      value.hRELAPFromDate ==
-                                                              null
-                                                          ? "N/a"
-                                                          : getFormatedDate(
-                                                              DateTime.parse(value
-                                                                  .hRELAPFromDate!),
-                                                            ),
-                                                    ),
+                                                    child:
+                                                        (leaveDates.length >= 2)
+                                                            ? Text(
+                                                                getFormatedDate(
+                                                                  DateTime.parse(
+                                                                      leaveDates
+                                                                          .first),
+                                                                ),
+                                                              )
+                                                            : Text(
+                                                                value.hRELAPFromDate ==
+                                                                        null
+                                                                    ? "N/a"
+                                                                    : getFormatedDate(
+                                                                        DateTime.parse(
+                                                                            value.hRELAPFromDate!),
+                                                                      ),
+                                                              ),
                                                   ),
                                                 ],
                                               ),
@@ -318,13 +374,21 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                                           BorderRadius.circular(
                                                               8.0),
                                                     ),
-                                                    child: Text(value
-                                                                .hRELAPToDate ==
-                                                            null
-                                                        ? "N/a"
-                                                        : getFormatedDate(
-                                                            DateTime.parse(value
-                                                                .hRELAPToDate!))),
+                                                    child: (leaveDates
+                                                            .isNotEmpty)
+                                                        ? Text(
+                                                            getFormatedDate(
+                                                              DateTime.parse(
+                                                                  leaveDates
+                                                                      .last),
+                                                            ),
+                                                          )
+                                                        : Text(value.hRELAPToDate ==
+                                                                null
+                                                            ? "N/a"
+                                                            : getFormatedDate(
+                                                                DateTime.parse(value
+                                                                    .hRELAPToDate!))),
                                                   ),
                                                 ],
                                               ),
