@@ -34,7 +34,6 @@ class AuthenticateUserApi {
       "mobiledeviceid": mobiledeviceid,
     });
 
-
     if (Platform.isAndroid) {
       AndroidDeviceInfo deviceInfo = await deviceInfoPlugin.androidInfo;
       mobileUniqueID = deviceInfo.id;
@@ -55,7 +54,6 @@ class AuthenticateUserApi {
       "Logintype": "Mobile",
       "mobiledeviceid": mobiledeviceid,
     });
-
 
     logger.d({
       "MI_Id": miId,
@@ -137,7 +135,7 @@ class AuthenticateUserApi {
     //logger.d(loginSuccessModel.toJson());
     // logger.d(response.data);
 
-    logger.d(loginSuccessModel.roleId);
+    logger.d('=======${loginSuccessModel.roleId}');
     cookieBox!.put("cookie", response.headers.map['set-cookie']![0]);
     await importantIds!.put(URLS.miId, loginSuccessModel.mIID);
     await importantIds!.put(URLS.userId, loginSuccessModel.userId);

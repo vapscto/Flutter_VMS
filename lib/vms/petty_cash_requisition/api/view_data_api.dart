@@ -56,23 +56,23 @@ Future<int> getviewdataPcReq(
 
 
 
-      //// MODAL VIEW /////
+    //   //// MODAL VIEW /////
 
-     if (response.data['modalview'] == null) {
-      controller.updateErrorLoadingModalView(true);
-      return 0;
-    }   
+    //  if (response.data['modalview'] == null) {
+    //   controller.updateErrorLoadingModalView(true);
+    //   return 0;
+    // }   
     
-     ModalViewPcReqModel modalList =
-        ModalViewPcReqModel.fromJson(response.data['modalview']);
-     controller.getModalView.addAll(modalList.values!);
+    //  ModalViewPcReqModel modalList =
+    //     ModalViewPcReqModel.fromJson(response.data['modalview']);
+    //  controller.getData(modalList.values!);
 
 
    
      return response.statusCode!;
   } on DioError catch (e) {
     controller.updateErrorLoadingViewDataParticular(true);
-    controller.updateErrorLoadingModalView(true);
+    // controller.updateErrorLoadingModalView(true);
       return 0;
   } on Exception catch (e) {
     return 0;

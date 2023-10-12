@@ -11,18 +11,17 @@ import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 class PCRequisitionHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  const PCRequisitionHome({super.key,
-  required this.loginSuccessModel,
-  required this.mskoolController});
+  const PCRequisitionHome(
+      {super.key,
+      required this.loginSuccessModel,
+      required this.mskoolController});
 
   @override
   State<PCRequisitionHome> createState() => _PCRequisitionHomeState();
 }
 
-class _PCRequisitionHomeState extends State<PCRequisitionHome> with SingleTickerProviderStateMixin {
-  
-
-
+class _PCRequisitionHomeState extends State<PCRequisitionHome>
+    with SingleTickerProviderStateMixin {
   TabController? tabController;
 
   @override
@@ -37,12 +36,12 @@ class _PCRequisitionHomeState extends State<PCRequisitionHome> with SingleTicker
     // Get.delete<PettyCashApprovalController>();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: "Petty Cash Requisition").getAppBar(),
       body: Column(
-
         children: [
           Container(
             color: Theme.of(context).scaffoldBackgroundColor,
@@ -51,7 +50,9 @@ class _PCRequisitionHomeState extends State<PCRequisitionHome> with SingleTicker
               tabs: const [
                 CustomTab(
                     name: "Requisition", asset: "assets/svg/calendar.svg"),
-                CustomTab(name: "Requisition Details", asset: "assets/svg/calendar.svg"),
+                CustomTab(
+                    name: "Requisition Details",
+                    asset: "assets/svg/calendar.svg"),
               ],
             ),
           ),
@@ -68,12 +69,10 @@ class _PCRequisitionHomeState extends State<PCRequisitionHome> with SingleTicker
                   loginSuccessModel: widget.loginSuccessModel,
                   mskoolController: widget.mskoolController,
                 ),
-                
               ],
             ),
           ),
         ],
-
       ),
     );
   }

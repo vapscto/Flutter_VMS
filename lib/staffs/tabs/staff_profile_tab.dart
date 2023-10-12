@@ -51,7 +51,7 @@ class StaffProfileTab extends StatelessWidget {
                               height: Get.height * 0.04,
                             ),
                             Text(
-                              snapshot.data!.first.empName ?? "N/A",
+                              loginSuccessModel.userName ?? "N/A",
                               style:
                                   Theme.of(context).textTheme.titleSmall!.merge(
                                         const TextStyle(
@@ -62,7 +62,7 @@ class StaffProfileTab extends StatelessWidget {
                               height: 8.0,
                             ),
                             Text(
-                              " ${snapshot.data!.first.hRMDESDesignationName ?? "N/a"} ",
+                              " ${loginSuccessModel.hrmEEmployeeCode ?? "N/a"} ",
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
                             const SizedBox(
@@ -107,7 +107,7 @@ class StaffProfileTab extends StatelessWidget {
                                 ),
                                 Expanded(
                                     child: Text(
-                                  "${snapshot.data!.first.hRMEMNOMobileNo ?? "N/A"}",
+                                  "${loginSuccessModel.mobno ?? "N/A"}",
                                 )),
                               ],
                             ),

@@ -3,6 +3,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/petty_cash_requisition/controller/cash_requisition_controller.dart';
+import 'package:m_skool_flutter/vms/petty_cash_requisition/controller/modal_view_controller.dart';
 import 'package:m_skool_flutter/vms/petty_cash_requisition/model/modal_view_model.dart';
 
 Future<int> modalViewDetails(
@@ -13,7 +14,7 @@ Future<int> modalViewDetails(
     required int asmaYId,
     required String roleFlag,
     required int pcReqTNid,
-    required CashRequisitionController controller}) async {
+    required ModalViewController controller}) async {
   final Dio ins = getGlobalDio();
   final api = base + URLS.viewDataPcReq;
 
@@ -49,7 +50,8 @@ Future<int> modalViewDetails(
 
     ModalViewPcReqModel modalList =
         ModalViewPcReqModel.fromJson(response.data['modalview']);
-    // controller.getModalView.addAll(modalList.values!);
+    controller.getData(modalList.values!);
+
 
     return response.statusCode!;
   } on DioError catch (e) {

@@ -779,7 +779,10 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                                                 ),
                                                 keyboardType:
                                                     TextInputType.number,
-                                                    inputFormatters: [LengthLimitingTextInputFormatter(7)],
+                                                inputFormatters: [
+                                                  LengthLimitingTextInputFormatter(
+                                                      7)
+                                                ],
                                               ),
                                             ),
                                           ),

@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/vms/gps/api/get_load_data_api.dart';
@@ -27,7 +28,6 @@ class GpasHomeScreen extends StatefulWidget {
       {required this.loginSuccessModel,
       required this.mskoolController,
       super.key});
-
   @override
   State<GpasHomeScreen> createState() => _GpasHomeScreenState();
 }
@@ -43,6 +43,7 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
   int salesId = 0;
   @override
   void initState() {
+     
     intial();
     super.initState();
   }
@@ -91,8 +92,8 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                         title:  'Submit',
                         onPress: () async{
                           if(_fromKey.currentState!.validate()){
-                            if(remarksEtingController.text.isNotEmpty && punchFlag.value){
-                          await  save(
+                            if(punchFlag.isTrue){
+                            await save(
                             base: baseUrlFromInsCode('frontoffice', widget.mskoolController),
                             address: getEmpDetailsController.getGpsLocation.value,
                             clientId: clientId,
@@ -107,13 +108,14 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                             (value) {
                               if(value){
                                    Fluttertoast.showToast(msg: "Punch successfull");
+                                   Get.back();
                               }else{
                                  Fluttertoast.showToast(msg: "Punch not done");
                               }
                             },
                           );
                             }else{
-                               Fluttertoast.showToast(msg: " Fill mandatory ");
+                              Fluttertoast.showToast(msg: " Select Punch checkbox "); 
                             }
                           }else{
                             Fluttertoast.showToast(msg: " Select mandatory ");
@@ -285,7 +287,9 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                                           ),
                                         );
                                       }),
-                                      onChanged: (s) async {},
+                                      onChanged: (s) async {
+                                        clientId=s!.ismmclTId!;
+                                      },
                                     ),
                                   )
                                 : const AnimatedProgressWidget(
@@ -389,7 +393,9 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                                   ),
                                 );
                               }),
-                              onChanged: (s) async {},
+                              onChanged: (s) async {
+                                salesId=s!.ismslEId!;
+                              },
                             ),
                           ),
                         )),
@@ -411,7 +417,7 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                                
                                  },),
                                ),
-                               Text("Punch flag",
+                              const Text("Punch flag",
                                style: TextStyle(
                                 fontSize: 16
                                ),)
@@ -427,8 +433,8 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                               horizontal: 20, vertical: 20),
                           child: TextFormField(
                             validator: (value) {
-                              if (value != null) {
-                                return '';
+                              if (value == null) {
+                                return "";
                               }
                               return null;
                             },

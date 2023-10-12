@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/petty_cash_requisition/model/department_pc_req_model.dart';
 import 'package:m_skool_flutter/vms/petty_cash_requisition/model/employee_list_pc_req_model.dart';
-import 'package:m_skool_flutter/vms/petty_cash_requisition/model/modal_view_model.dart';
 import 'package:m_skool_flutter/vms/petty_cash_requisition/model/particulars_pc_req_model.dart';
 import 'package:m_skool_flutter/vms/petty_cash_requisition/model/requested_details_pc_model.dart';
 import 'package:m_skool_flutter/vms/petty_cash_requisition/model/view_data_model.dart';
@@ -102,23 +101,6 @@ class CashRequisitionController extends GetxController {
   updateisLoadingViewDataParticular(bool val) {
     isLoadingViewDataParticular.value = val;
   }
-
-
-    /// **  MODAL CONTROLLER VIEW DATA  **  ///
-
-  RxBool isErrorOccuredWhileLoadingModalView = RxBool(false);
-  RxBool isLoadingModalView = RxBool(false);
-
-  final RxList<ModalViewPcReqModelValues> getModalView = RxList();
-
-  updateErrorLoadingModalView(bool val) {
-    isErrorOccuredWhileLoadingModalView.value = val;
-  }
-
-  updateisLoadingModalView(bool val) {
-    isLoadingModalView.value = val;
-  }
-
 
 
 }

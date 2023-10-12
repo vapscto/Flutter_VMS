@@ -12,8 +12,6 @@ import 'package:get_ip_address/get_ip_address.dart';
 import 'package:m_skool_flutter/apis/version_control_api.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/manager/coe/screen/manager_coe.dart';
-import 'package:m_skool_flutter/manager/employee_details/screens/employee_details_home_screen.dart';
 import 'package:m_skool_flutter/manager/employee_punch/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/manager/employee_salary/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/manager/feedemo/screen/fee_home.dart';
@@ -28,23 +26,16 @@ import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/screens/attachment_viewer.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
-import 'package:m_skool_flutter/staffs/gallery_upload/screen/gallery_home.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/screen/hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
-import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/view_notice/screens/view_notice_home_screen.dart';
 import 'package:m_skool_flutter/student/attendance/screens/home_page.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
-import 'package:m_skool_flutter/student/classwork/screen/classwork_home_screen.dart';
 import 'package:m_skool_flutter/student/coe/screen/video_screen.dart';
 import 'package:m_skool_flutter/student/exam/screen/exam_home.dart';
-import 'package:m_skool_flutter/student/fees/screens/fee_analysis_screen.dart';
 import 'package:m_skool_flutter/student/fees/screens/fee_receipt_home.dart';
-import 'package:m_skool_flutter/student/fees/screens/online_payment_screen.dart';
-import 'package:m_skool_flutter/student/gallery_view/screen/gallery_view.dart';
-import 'package:m_skool_flutter/student/homework/screen/home_work_screen.dart';
 import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/student/library/screen/library_home.dart';
@@ -55,6 +46,10 @@ import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.da
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_approval_home.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
+import 'package:m_skool_flutter/vms/online_leave/screen/online_leave_home.dart';
+import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart';
+import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
+import 'package:m_skool_flutter/vms/staff_leave_approval/screen/leave_list_home.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
@@ -501,8 +496,6 @@ void version(LoginSuccessModel loginSuccessModel,
       ],
     ));
   }
-
-  // logger.d(version);
 }
 
 void openMappedPages(
@@ -519,50 +512,6 @@ void openMappedPages(
     return;
   }
 
-  if (pageName == "Fee Payment") {
-    Get.to(
-      () => OnlinePaymentScreen(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-        title: pageName,
-      ),
-    );
-    return;
-  }
-
-  if (pageName == "Fee Analysis") {
-    Get.to(
-      () => FeeAnalysisScreen(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-        title: pageName,
-      ),
-    );
-    return;
-  }
-  if (pageName == "Classwork") {
-    Get.to(() => ClassWorkHomeScreen(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-        // hwCwNbController:
-        //     widget.hwCwNbController,
-        title: pageName));
-    return;
-  }
-  if (pageName == "Homework") {
-    Get.to(
-      () => HomeWorkScreen(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-        // hwCwNbController:
-        //     widget.hwCwNbController,
-        title: pageName,
-      ),
-    );
-
-    return;
-  }
-
   if (pageName == "Notice Board") {
     Get.to(() => NoticeHome(
           loginSuccessModel: loginSuccessModel,
@@ -576,8 +525,14 @@ void openMappedPages(
     Get.to(() => MakerCheckerHome(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
-          // hwCwNbController: hwCwNbController,
-          // appBarTitle: pageName,
+        ));
+    return;
+  }
+  if (pageName == "Task Creation") {
+    Get.to(() => TaskCreationHome(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+          previousScreen: '0',
         ));
     return;
   }
@@ -585,12 +540,8 @@ void openMappedPages(
     Get.to(() => ChequeApproval(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
-          // hwCwNbController: hwCwNbController,
-          // appBarTitle: pageName,
         ));
     return;
-  } else {
-    print("show page${pageName}");
   }
   if (pageName == "Library") {
     Get.to(
@@ -600,6 +551,15 @@ void openMappedPages(
         asmtId: loginSuccessModel.amsTId!,
         base: baseUrlFromInsCode("portal", mskoolController),
         title: pageName,
+      ),
+    );
+  }
+
+  if (pageName == "GPS attendance") {
+    Get.to(
+      () => GpasHomeScreen(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
       ),
     );
   }
@@ -627,22 +587,6 @@ void openMappedPages(
     return;
   }
 
-  if (pageName == "Upload Gallery") {
-    Get.to(() => GalleryUploadPage(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
-    return;
-  }
-
-  if (pageName == "View Gallery") {
-    Get.to(() => ViewGallery(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
-    return;
-  }
-
   if (pageName == "Time Table") {
     Get.to(() => TimeTableHome(
           loginSuccessModel: loginSuccessModel,
@@ -664,37 +608,14 @@ void openMappedPages(
 
   if (pageName == "Attendance Entry") {
     Get.to(
-      // () => const MonthWiseAttendanceEntryHomeScreen(),
       () => AttendanceEntryHomeScreen(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
       ),
-      // () => const DayWiseAttendanceEntryHome(),
     );
   }
-  if (pageName == "Student Attendance Staff") {
-    // Get.to(() => StudentAttendanceStaffHome(
-    //       loginSuccessModel: loginSuccessModel,
-    //       mskoolController: mskoolController,
-    //     ));
-    // Get.to(() => TadaShowScreen(
-    //       loginSuccessModel: loginSuccessModel,
-    //       mskoolController: mskoolController,
-    //     ));
-  }
 
-  if (pageName == "Salary Details") {
-    // Navigator.push(context, MaterialPageRoute(builder: (_) {
-    //   return
-    //       // SalarySlipHome(
-    //       //   loginSuccessModel: loginSuccessModel,
-    //       //   mskoolController: mskoolController,
-    //       // );
-    //       SalaryDetails(
-    //     loginSuccessModel: loginSuccessModel,
-    //     mskoolController: mskoolController,
-    //   );
-    // }));
+  if (pageName == "Planner Creation") {
     Get.to(() => PlannerCreateHomeScreen(
           mskoolController: mskoolController,
           loginSuccessModel: loginSuccessModel,
@@ -703,30 +624,46 @@ void openMappedPages(
   }
   if (pageName == "Salary Slip") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return TaskCreationHome(
+      return SalarySlipHome(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
       );
-      //     SalaryDetails(
-      //   loginSuccessModel: loginSuccessModel,
-      //   mskoolController: mskoolController,
-      // );
     }));
-    // Get.to(() => const PlannerCreationScreen());
-    // Get.to(() => TadaAdvanceApplyScreen(
-    //       loginSuccessModel: loginSuccessModel,
-    //     ));
+
     return;
   }
+  // if (pageName == "DR Generation") {
+  //   Navigator.push(context, MaterialPageRoute(builder: (_) {
+  //     return TaskCreationHome(
+  //       loginSuccessModel: loginSuccessModel,
+  //       mskoolController: mskoolController,
+  //     );
+  //   }));
+
+  //   return;
+  // }
   if (pageName == "TADA Apply") {
-    Get.to(() => TadaAdvanceApplyScreen(
+    Get.to(() => TadaApplyHomeScreen(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
+          previousScreen: 0,
         ));
     return;
   }
   if (pageName == 'TADA Approval') {
     Get.to(() => TadaListScreen(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
+  }
+  if (pageName == 'sales and report') {
+    Get.to(() => SalesReportHomeScreen(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
+  }
+  if (pageName == 'TADA advance apply') {
+    Get.to(() => TadaAdvanceApplyScreen(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
         ));
@@ -752,17 +689,6 @@ void openMappedPages(
     }));
   }
 
-  if (pageName == "Cash Request") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return PCRequisitionHome(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-      );
-    }));
-  }
-
-  ///////////////
-
   if (pageName == "Student Birth Day Report") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return StudentBdayHome(
@@ -773,7 +699,7 @@ void openMappedPages(
     return;
   }
 
-  if (pageName == "Online Leave Apply") {
+  if (pageName == "Leave Apply") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return OnlineLeaveApply(
         loginSuccessModel: loginSuccessModel,
@@ -785,18 +711,6 @@ void openMappedPages(
   }
 
   if (pageName == "Staff Notice Board") {
-    // Navigator.push(context, MaterialPageRoute(builder: (_) {
-    //   return ViewNoticeHome(
-    //     loginSuccessModel: loginSuccessModel,
-    //     mskoolController: mskoolController,
-    //     title: loginSuccessModel
-    //         .staffmobileappprivileges!.values!
-    //         .elementAt(index)
-    //         . pageName!,
-    //   );
-    // }));
-
-    // Notice Board Staff
     Get.to(() => NoticeBoardStaffHome(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
@@ -820,6 +734,13 @@ void openMappedPages(
         ));
     return;
   }
+  if (pageName == "Security") {
+    Get.to(() => ShomeScreen(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
+    return;
+  }
 
   if (pageName == "View Notice") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -831,20 +752,33 @@ void openMappedPages(
     }));
   }
   if (pageName == "Punch Report") {
-    // Navigator.push(context, MaterialPageRoute(builder: (_) {
-    //   return PunchReport(
-    //     loginSuccessModel: loginSuccessModel,
-    //     mskoolController: mskoolController,
-    //     title: pageName,
-    //   );
-    // }));
-    // return
-    Get.to(() => GpasHomeScreen(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return PunchReport(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        title: pageName,
+        previousScreen: '0',
+      );
+    }));
+    return;
   }
 
+// if (pageName == "DR Generation") {
+//     Navigator.push(
+//       context,
+//       MaterialPageRoute(
+//         builder: (_) {
+//           return DailyReportGenration(
+//             loginSuccessModel: loginSuccessModel,
+//             mskoolController: mskoolController,
+//             pageName: pageName,
+
+//           );
+//         },
+//       ),
+//     );
+//     return;
+//   }
   if (pageName == "Verify Homework") {
     Navigator.push(
       context,
@@ -925,76 +859,6 @@ void openMappedPages(
     );
   }
 
-  if (pageName == "Staff Interaction") {
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (_) {
-    //       return InteractionHome(
-    //         loginSuccessModel: loginSuccessModel,
-    //         mskoolController: mskoolController,
-    //       );
-    //     },
-    //   ),
-    // );
-    Get.to(() => TadaListScreen(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
-    return;
-  }
-  if (pageName == "Time Table Staff") {
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (_) {
-    //       return StaffTTHome(
-    //         loginSuccessModel: loginSuccessModel,
-    //         mskoolController: mskoolController,
-    //         title: pageName,
-    //         //forHw: true,
-    //       );
-    //     },
-    //   ),
-    // );
-    // Get.to(() => PurchaseIndentHome(
-    //       loginSuccessModel: loginSuccessModel,
-    //       mskoolController: mskoolController,
-    //     ));
-    // return;
-  }
-  if (pageName.toLowerCase() == "coe report") {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) {
-          return ManagerCoeHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            title: pageName, formDashboard: true,
-            //forHw: true,
-          );
-        },
-      ),
-    );
-    return;
-  }
-  if (pageName.toLowerCase() == "coe") {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) {
-          return ManagerCoeHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            title: pageName,
-            formDashboard: true,
-          );
-        },
-      ),
-    );
-    return;
-  }
   if (pageName == "Student") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return ManagerStudentDetails(
@@ -1014,22 +878,13 @@ void openMappedPages(
     return;
   }
   if (pageName == "Leave Approval") {
-    // Navigator.push(context, MaterialPageRoute(builder: (_) {
-    //   return TadaApplyHomeScreen(
-    //     loginSuccessModel: loginSuccessModel,
-    //     mskoolController: mskoolController,
-    //     previousScreen: 0,
-    //     // title: pageName,
-    //   );
-    // }));
-    // Get.to(() => SalesReportHomeScreen(
-    //       loginSuccessModel: loginSuccessModel,
-    //       mskoolController: mskoolController,
-    //     ));
-    // Get.to(() => PlannerApprovalHomeScreen(
-    //       mskoolController: mskoolController,
-    //       loginSuccessModel: loginSuccessModel,
-    //     ));
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return ListLeaveHomeScreen(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        title: pageName,
+      );
+    }));
     return;
   }
   if (pageName == "Planner Approval") {
@@ -1042,15 +897,7 @@ void openMappedPages(
     }));
     return;
   }
-  if (pageName == "Employee Details") {
-    Get.to(
-      () => EmployeeDetailsHomeScreen(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-      ),
-    );
-    return;
-  }
+
   if (pageName == 'Staff Notice Board') {
     Get.to(() => NoticeBoardStaffHome(
           loginSuccessModel: loginSuccessModel,
@@ -1071,18 +918,6 @@ void openMappedPages(
         },
       ),
     );
-
-    return;
-  }
-  if (pageName == "Coe") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return ManagerCoeHome(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-        title: pageName,
-        formDashboard: true,
-      );
-    }));
 
     return;
   }

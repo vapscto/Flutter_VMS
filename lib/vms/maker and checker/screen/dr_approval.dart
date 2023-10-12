@@ -31,7 +31,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
   List<String> statusList = ['Approved', 'Rejected'];
   String? dropdownvalue;
   bool isLoadingTab=false;
-  Map<String, dynamic> selectedemployeedetails = {};
+ List< Map<String, dynamic>> selectedemployeedetails = [];
   List<Map<String, dynamic>> getAllDrLists = [];
   DrDetailsCtrlr controller = Get.put(DrDetailsCtrlr());
   TextEditingController descTextEditingController = TextEditingController();
@@ -49,8 +49,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
 
   loadListDr() async {
     getAllDrLists.clear();
-           
-   controller.updateTabLoading(true);
+    controller.updateTabLoading(true);
     double countToatalEffort = 0;
     for (int i = 0; i < controller.etRemakeList.length; i++) {
       getAllDrLists.add({
@@ -65,12 +64,11 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
         "Remarks": controller.etRemakeList.elementAt(i).text,
         "Task_Response": controller.statusET[i].text == "Approved" ? "" : "Open"
       });
-
-      countToatalEffort +=
+           countToatalEffort +=
           double.parse(controller.etHoursList[i].text.toString());
     }
 
-    selectedemployeedetails.addAll({
+    selectedemployeedetails.add({
       "HRME_Id": controller.empDetails.first.hRMEId,
       "approvedefforts": countToatalEffort,
       "employeename": controller.empDetails.first.empName,
@@ -78,12 +76,14 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
       "remarks": descTextEditingController.text,
       "selectedapprovaldetails": getAllDrLists
     });
-    // controller.updateTabLoading(true);
-    await submitDrs(
+     await submitDrs(
       base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
       date: widget.date,
       userId: widget.loginSuccessModel.userId!,
       mi_id: widget.loginSuccessModel.mIID!,
+      academicYear: widget.loginSuccessModel.asmaYId!,
+      roleflag:  widget.loginSuccessModel.roleforlogin!,
+      roleId: widget.loginSuccessModel.roleId!,
       selectedemployeedetails: selectedemployeedetails,
       controller: controller,
     ).then((value) {
@@ -616,6 +616,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                                     DataCell(Align(
                                       alignment: Alignment.center,
                                       child: DropdownMenu<String>(
+                                        enableSearch: true,
                                         textStyle: Theme.of(context)
                                             .textTheme
                                             .titleSmall!
@@ -627,6 +628,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                                             )),
                                         controller: controller.statusET
                                             .elementAt(index),
+                                           
                                         initialSelection:
                                             controller.sList.first,
                                         onSelected: (String? value) {
