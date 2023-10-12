@@ -577,5 +577,7 @@ class URLS {
 
   static String gpsFeacth ="api/GPSLocationFacade/getalldetails/";
 
-  static String savePunchApi="";
+  static String savePunchApi="api/GPSLocationFacade/savedata/";
+
+  static String drDetailsGenration="api/ISM_DailyReportGenerationFacade/loaddata/";
 }

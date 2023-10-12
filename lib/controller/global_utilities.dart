@@ -52,6 +52,7 @@ import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
+import 'package:m_skool_flutter/vms/dr_genration/screens/dailyrpt_home.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
@@ -68,6 +69,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
+import '../staffs/punch_report/screens/punch_report_home.dart';
 
 RxInt currentHomeTab = 0.obs;
 RxList<int> previousHomeTab = [0].obs;
@@ -602,6 +604,15 @@ void openMappedPages(
     );
   }
 
+if (pageName == "GPS attendance") {
+      Get.to(
+      () =>GpasHomeScreen(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+       ),
+    );
+  }
+
   if (pageName == "Exam") {
     Get.to(() => ExamHome(
           loginSuccessModel: loginSuccessModel,
@@ -841,20 +852,33 @@ void openMappedPages(
     }));
   }
   if (pageName == "Punch Report") {
-    // Navigator.push(context, MaterialPageRoute(builder: (_) {
-    //   return PunchReport(
-    //     loginSuccessModel: loginSuccessModel,
-    //     mskoolController: mskoolController,
-    //     title: pageName,
-    //   );
-    // }));
-    // return
-    Get.to(() => GpasHomeScreen(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return PunchReport(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        title: pageName,
+      );
+    }));
+    return;
+   
   }
 
+// if (pageName == "DR Generation") {
+//     Navigator.push(
+//       context,
+//       MaterialPageRoute(
+//         builder: (_) {
+//           return DailyReportGenration(
+//             loginSuccessModel: loginSuccessModel,
+//             mskoolController: mskoolController,
+//             pageName: pageName,
+            
+//           );
+//         },
+//       ),
+//     );
+//     return;
+//   }
   if (pageName == "Verify Homework") {
     Navigator.push(
       context,
