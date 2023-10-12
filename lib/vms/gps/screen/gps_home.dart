@@ -28,7 +28,6 @@ class GpasHomeScreen extends StatefulWidget {
       {required this.loginSuccessModel,
       required this.mskoolController,
       super.key});
-
   @override
   State<GpasHomeScreen> createState() => _GpasHomeScreenState();
 }
