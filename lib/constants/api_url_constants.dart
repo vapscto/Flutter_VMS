@@ -575,7 +575,9 @@ class URLS {
 
   static String saveapi = "api/AddVisitorsFacade/saveAssignedData/";
 
-  static String gpsFeacth ="api/GPSLocationFacade/getalldetails/";
+  static String gpsFeacth = "api/GPSLocationFacade/getalldetails/";
 
-  static String savePunchApi="";
+  static String savePunchApi = "";
+  // Planner Approval
+  static String plannerList = 'api/ISM_PlannerApprovalFacade/getdetails/';
 }

@@ -16,9 +16,9 @@ class LeaveApprovalModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['$type'] = type;
+    data['\$type'] = type;
     if (values != null) {
-      data['$values'] = values!.map((v) => v.toJson()).toList();
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -27,26 +27,27 @@ class LeaveApprovalModel {
 class LeaveApprovalModelValues {
   String? type;
   String? hRMEEmployeeFirstName;
+  int? hRELAPDId;
   int? hRELAPId;
   String? hRMLLeaveName;
   String? hRELAPFromDate;
   String? hRELAPToDate;
-  num? hRELAPTotalDays;
+  double? hRELAPTotalDays;
   String? hRELAPReportingDate;
   String? hRELAPLeaveReason;
   int? hRMEId;
   int? hRMLId;
   String? hRELAPApplicationID;
-  String? hRELAPSupportingDocument;
-  String? hRELAPARemarks;
+  int? hRELAPSupportingDocument;
+  int? hRELAPARemarks;
   String? hRELAPApplicationDate;
-  String? hRMDESDesignationName;
-  String? hRMEEmployeeCode;
-  String? hRMEPhoto;
+  dynamic proxyName;
+  dynamic hRMDESDesignationName;
 
   LeaveApprovalModelValues(
       {this.type,
       this.hRMEEmployeeFirstName,
+      this.hRELAPDId,
       this.hRELAPId,
       this.hRMLLeaveName,
       this.hRELAPFromDate,
@@ -60,13 +61,13 @@ class LeaveApprovalModelValues {
       this.hRELAPSupportingDocument,
       this.hRELAPARemarks,
       this.hRELAPApplicationDate,
-      this.hRMDESDesignationName,
-      this.hRMEEmployeeCode,
-      this.hRMEPhoto});
+      this.proxyName,
+      this.hRMDESDesignationName});
 
   LeaveApprovalModelValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
     hRMEEmployeeFirstName = json['HRME_EmployeeFirstName'];
+    hRELAPDId = json['HRELAPD_Id'];
     hRELAPId = json['HRELAP_Id'];
     hRMLLeaveName = json['HRML_LeaveName'];
     hRELAPFromDate = json['HRELAP_FromDate'];
@@ -80,15 +81,15 @@ class LeaveApprovalModelValues {
     hRELAPSupportingDocument = json['HRELAP_SupportingDocument'];
     hRELAPARemarks = json['HRELAPA_Remarks'];
     hRELAPApplicationDate = json['HRELAP_ApplicationDate'];
+    proxyName = json['ProxyName'];
     hRMDESDesignationName = json['HRMDES_DesignationName'];
-    hRMEEmployeeCode = json['HRME_EmployeeCode'];
-    hRMEPhoto = json['HRME_Photo'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['$type'] = type;
     data['HRME_EmployeeFirstName'] = hRMEEmployeeFirstName;
+    data['HRELAPD_Id'] = hRELAPDId;
     data['HRELAP_Id'] = hRELAPId;
     data['HRML_LeaveName'] = hRMLLeaveName;
     data['HRELAP_FromDate'] = hRELAPFromDate;
@@ -102,9 +103,8 @@ class LeaveApprovalModelValues {
     data['HRELAP_SupportingDocument'] = hRELAPSupportingDocument;
     data['HRELAPA_Remarks'] = hRELAPARemarks;
     data['HRELAP_ApplicationDate'] = hRELAPApplicationDate;
+    data['ProxyName'] = proxyName;
     data['HRMDES_DesignationName'] = hRMDESDesignationName;
-    data['HRME_EmployeeCode'] = hRMEEmployeeCode;
-    data['HRME_Photo'] = hRMEPhoto;
     return data;
   }
 }
