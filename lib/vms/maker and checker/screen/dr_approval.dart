@@ -31,7 +31,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
   List<String> statusList = ['Approved', 'Rejected'];
   String? dropdownvalue;
   bool isLoadingTab=false;
-  Map<String, dynamic> selectedemployeedetails = {};
+ List< Map<String, dynamic>> selectedemployeedetails = [];
   List<Map<String, dynamic>> getAllDrLists = [];
   DrDetailsCtrlr controller = Get.put(DrDetailsCtrlr());
   TextEditingController descTextEditingController = TextEditingController();
@@ -70,7 +70,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
           double.parse(controller.etHoursList[i].text.toString());
     }
 
-    selectedemployeedetails.addAll({
+    selectedemployeedetails.add({
       "HRME_Id": controller.empDetails.first.hRMEId,
       "approvedefforts": countToatalEffort,
       "employeename": controller.empDetails.first.empName,
@@ -84,6 +84,9 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
       date: widget.date,
       userId: widget.loginSuccessModel.userId!,
       mi_id: widget.loginSuccessModel.mIID!,
+      academicYear: widget.loginSuccessModel.asmaYId!,
+      roleflag:  widget.loginSuccessModel.roleforlogin!,
+      roleId: widget.loginSuccessModel.roleId!,
       selectedemployeedetails: selectedemployeedetails,
       controller: controller,
     ).then((value) {
@@ -616,6 +619,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                                     DataCell(Align(
                                       alignment: Alignment.center,
                                       child: DropdownMenu<String>(
+                                        enableSearch: true,
                                         textStyle: Theme.of(context)
                                             .textTheme
                                             .titleSmall!
@@ -627,6 +631,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                                             )),
                                         controller: controller.statusET
                                             .elementAt(index),
+                                           
                                         initialSelection:
                                             controller.sList.first,
                                         onSelected: (String? value) {
