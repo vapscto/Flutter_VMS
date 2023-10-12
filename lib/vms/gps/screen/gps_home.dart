@@ -417,7 +417,7 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                                
                                  },),
                                ),
-                               Text("Punch flag",
+                              const Text("Punch flag",
                                style: TextStyle(
                                 fontSize: 16
                                ),)
