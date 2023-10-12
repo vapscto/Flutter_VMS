@@ -581,4 +581,6 @@ class URLS {
 
   static String drDetailsGenration =
       "api/ISM_DailyReportGenerationFacade/loaddata/";
+
+  static var plannerList ="";
 }
