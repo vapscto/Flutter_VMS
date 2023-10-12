@@ -33,6 +33,16 @@ Future<bool> save({
       "VMSATGPSL_Remarks": remark,
       "punchflag": pFlag
     });
+    logger.d( {
+      "MI_Id": miId,
+      "UserId": userId,
+      "ISMMCLT_Id": clientId,
+      "ISMSLE_Id": salesId,
+      "VMSATGPSL_Address": address,
+      "VMSATGPSL_LATLONGValue": latlng,
+      "VMSATGPSL_Remarks": remark,
+      "punchflag": pFlag
+    });
  controller. updateTabLoading(false);
 
     return true;

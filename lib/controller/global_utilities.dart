@@ -53,6 +53,7 @@ import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
+import 'package:m_skool_flutter/vms/dr_genration/screens/dailyrpt_home.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_approval_home.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
@@ -72,6 +73,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
+import '../staffs/punch_report/screens/punch_report_home.dart';
 
 RxInt currentHomeTab = 0.obs;
 RxList<int> previousHomeTab = [0].obs;
@@ -554,6 +556,16 @@ void openMappedPages(
       ),
     );
   }
+
+if (pageName == "GPS attendance") {
+      Get.to(
+      () =>GpasHomeScreen(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+       ),
+    );
+  }
+
   if (pageName == "Exam") {
     Get.to(() => ExamHome(
           loginSuccessModel: loginSuccessModel,
@@ -752,15 +764,93 @@ void openMappedPages(
       );
     }));
     return;
-  }
-  if (pageName == "GPS attendance") {
-    Get.to(() => GpasHomeScreen(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
-    return;
+   
   }
 
+// if (pageName == "DR Generation") {
+//     Navigator.push(
+//       context,
+//       MaterialPageRoute(
+//         builder: (_) {
+//           return DailyReportGenration(
+//             loginSuccessModel: loginSuccessModel,
+//             mskoolController: mskoolController,
+//             pageName: pageName,
+            
+//           );
+//         },
+//       ),
+//     );
+//     return;
+//   }
+  if (pageName == "Verify Homework") {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) {
+          return VerifyHwCwHome(
+            loginSuccessModel: loginSuccessModel,
+            mskoolController: mskoolController,
+            title: pageName,
+            forHw: true,
+          );
+        },
+      ),
+    );
+    return;
+  }
+  if (pageName == "Verify Classwork") {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) {
+          return VerifyHwCwHome(
+            loginSuccessModel: loginSuccessModel,
+            mskoolController: mskoolController,
+            title: pageName,
+            forHw: false,
+          );
+        },
+      ),
+    );
+    return;
+  }
+  if (pageName == "Upload Classwork") {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) {
+          return HwCwHome(
+            loginSuccessModel: loginSuccessModel,
+            mskoolController: mskoolController,
+            title: pageName,
+            forHw: false,
+          );
+        },
+      ),
+    );
+    return;
+  }
+  if (pageName == "Upload Homework") {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) {
+          return HwCwHome(
+            loginSuccessModel: loginSuccessModel,
+            mskoolController: mskoolController,
+            title: pageName,
+            forHw: true,
+          );
+        },
+      ),
+    );
+    // Get.to(() => PCHome(
+    //       loginSuccessModel: loginSuccessModel,
+    //       mskoolController: mskoolController,
+    //     ));
+    return;
+  }
   Widget hSize({required double height}) {
     return SizedBox(
       height: height,
