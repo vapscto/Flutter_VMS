@@ -5,30 +5,31 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/petty_cash_requisition/api/modal_view_api.dart';
-import 'package:m_skool_flutter/vms/petty_cash_requisition/api/view_data_api.dart';
 import 'package:m_skool_flutter/vms/petty_cash_requisition/controller/cash_requisition_controller.dart';
+import 'package:m_skool_flutter/vms/petty_cash_requisition/controller/modal_view_controller.dart';
+import 'package:m_skool_flutter/vms/petty_cash_requisition/widget/person_approved_details.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
-class requestedParticularDetailsPC extends StatefulWidget {
+class RequestedParticularDetailsPC extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final CashRequisitionController controller;
-  requestedParticularDetailsPC(
+  const RequestedParticularDetailsPC(
       {super.key,
       required this.loginSuccessModel,
       required this.mskoolController,
       required this.controller});
 
   @override
-  State<requestedParticularDetailsPC> createState() =>
-      _requestedParticularDetailsPCState();
+  State<RequestedParticularDetailsPC> createState() =>
+      _RequestedParticularDetailsPCState();
 }
 
-class _requestedParticularDetailsPCState
-    extends State<requestedParticularDetailsPC> {
-  final CashRequisitionController requestedDetailsPC =
-      Get.put(CashRequisitionController());
+class _RequestedParticularDetailsPCState
+    extends State<RequestedParticularDetailsPC> {
+  final ModalViewController modalViewController =
+      Get.put(ModalViewController());
 
   @override
   void initState() {
@@ -46,11 +47,11 @@ class _requestedParticularDetailsPCState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "REQUISITION DETAILS").getAppBar(),
+      appBar: const CustomAppBar(title: "REQUISITION DETAILS").getAppBar(),
       body: widget.controller.getViewDataParticular.isNotEmpty
           ? Obx(
               () => Container(
-                margin: EdgeInsets.only(top: 16.0),
+                margin: const EdgeInsets.only(top: 16.0),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: SingleChildScrollView(
@@ -120,10 +121,7 @@ class _requestedParticularDetailsPCState
                                     children: [
                                       TextButton(
                                         onPressed: () async {
-
-                                          var selectedData = widget.controller.getViewDataParticular[index]; 
-                                          
-                                          var status = await modalViewDetails(
+                                          await modalViewDetails(
                                             miId:
                                                 widget.loginSuccessModel.mIID!,
                                             base: baseUrlFromInsCode(
@@ -137,41 +135,47 @@ class _requestedParticularDetailsPCState
                                                 .loginSuccessModel.asmaYId!,
                                             roleFlag: widget.loginSuccessModel
                                                 .roleforlogin!,
-                                            pcReqTNid: widget.controller.getViewDataParticular[index].pcreqtNId! ,
-                                            controller: requestedDetailsPC,
+                                            pcReqTNid: widget
+                                                .controller
+                                                .getViewDataParticular[index]
+                                                .pcreqtNId!,
+                                            controller: modalViewController,
                                           );
 
-                                          print(widget
-                                                    .controller
-                                                    .getModalView[0]
-                                                    .firstApprovalperson);
+                                          // if (status == 200) {
 
-
-                                          if (status == 200) {
-
-                                            if (widget
-                                                    .controller
-                                                    .getModalView[0]
-                                                    .firstApprovalperson ==
-                                                null) {
-                                              Fluttertoast.showToast(
-                                                  msg:
-                                                      "First Level is Not Approved !");
-                                            } else {
-                                              widget
-                                                    .controller
-                                                    .getModalView[0]
-                                                    .secondApprovalperson ==
-                                                null ;
-                                            } { 
-                                              Fluttertoast.showToast(
-                                                  msg:
-                                                      " Not ");
-                                            }
+                                          if (modalViewController
+                                              .getModalView.isEmpty) {
+                                            Fluttertoast.showToast(
+                                              msg:
+                                                  "First Level is Not Approved",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.red,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0,
+                                            );
+                                          } else if (modalViewController
+                                                  .getModalView[0]
+                                                  .firstApprovalperson !=
+                                              null) {
+                                            // ignore: use_build_context_synchronously
+                                            Navigator.push(context,
+                                                MaterialPageRoute(builder: (_) {
+                                              return PersonApprovedDetailsScreen(
+                                                loginSuccessModel:
+                                                    widget.loginSuccessModel,
+                                                mskoolController:
+                                                    widget.mskoolController,
+                                                controller: modalViewController,
+                                              );
+                                            }));
                                           }
+                                          // }
                                         },
-                                        child:
-                                            Icon(Icons.remove_red_eye_rounded),
+                                        child: const Icon(
+                                            Icons.remove_red_eye_rounded),
                                       ),
                                     ],
                                   )),
@@ -184,77 +188,12 @@ class _requestedParticularDetailsPCState
                 ),
               ),
             )
-          : AnimatedProgressWidget(
+          : const AnimatedProgressWidget(
               animationPath: 'assets/json/nodata.json',
               title: 'No Details found',
-              desc: "Particular Indent has no data to show",
+              desc: "Particular Requisition has no data to show",
               animatorHeight: 250,
             ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// var status = await modalViewDetails(
-                                                    //     miId: widget
-                                                    //         .loginSuccessModel
-                                                    //         .mIID!,
-                                                    //     base: baseUrlFromInsCode(
-                                                    //         "issuemanager",
-                                                    //         widget
-                                                    //             .mskoolController),
-                                                    //     roleId: widget
-                                                    //         .loginSuccessModel
-                                                    //         .roleId!,
-                                                    //     userId: widget
-                                                    //         .loginSuccessModel
-                                                    //         .userId!,
-                                                    //     asmaYId: widget
-                                                    //         .loginSuccessModel
-                                                    //         .asmaYId!,
-                                                    //     roleFlag: widget
-                                                    //         .loginSuccessModel
-                                                    //         .roleforlogin!,
-                                                    //     pcReqTNid:
-                                                    //         requestedDetailsPC
-                                                    //             .getLoadDataList
-                                                    //             .elementAt(
-                                                    //                 index)
-                                                    //             .pcreqtNId!,
-                                                    //     controller:
-                                                    //         requestedDetailsPC);
-                                                    // if (status == 200) {
-                                                    //   Navigator.push(context,
-                                                    //       MaterialPageRoute(
-                                                    //           builder: (_) {
-                                                    //     return requestedParticularDetailsPC(
-                                                    //       loginSuccessModel: widget
-                                                    //           .loginSuccessModel,
-                                                    //       mskoolController: widget
-                                                    //           .mskoolController,
-                                                    //       controller:
-                                                    //           requestedDetailsPC,
-                                                    //     );
-                                                    //   }));
-                                                    // }

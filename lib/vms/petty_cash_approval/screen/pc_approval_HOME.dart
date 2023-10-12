@@ -7,7 +7,6 @@ import 'package:m_skool_flutter/vms/petty_cash_approval/controller/petty_cash_ap
 import 'package:m_skool_flutter/vms/petty_cash_approval/tabs/approved_indent_details.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/tabs/approval_indent_screen.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
-import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class PCApprovalHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -23,7 +22,8 @@ class PCApprovalHome extends StatefulWidget {
   State<PCApprovalHome> createState() => _PCApprovalHomeState();
 }
 
-class _PCApprovalHomeState extends State<PCApprovalHome> with SingleTickerProviderStateMixin {
+class _PCApprovalHomeState extends State<PCApprovalHome>
+    with SingleTickerProviderStateMixin {
   // final PettyCashApprovalController Controller =
   //     Get.put<PettyCashApprovalController>(PettyCashApprovalController());
 
@@ -46,7 +46,7 @@ class _PCApprovalHomeState extends State<PCApprovalHome> with SingleTickerProvid
   Widget build(BuildContext context) {
     return Scaffold(
       // floatingActionButton: const HomeFab(),
-      appBar: CustomAppBar(title: "Petty Cash Approval").getAppBar(),
+      appBar: const CustomAppBar(title: "Petty Cash Approval").getAppBar(),
       body: Column(
         children: [
           Container(
@@ -54,15 +54,15 @@ class _PCApprovalHomeState extends State<PCApprovalHome> with SingleTickerProvid
             child: CustomTabBar(
               tabController: tabController!,
               tabs: const [
+                CustomTab(name: "Approval", asset: "assets/svg/calendar.svg"),
                 CustomTab(
-                    name: "Approval", asset: "assets/svg/calendar.svg"),
-                CustomTab(name: "Approved Details", asset: "assets/svg/calendar.svg"),
+                    name: "Approved Details", asset: "assets/svg/calendar.svg"),
               ],
             ),
           ),
           Expanded(
             child: TabBarView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               controller: tabController,
               children: [
                 PcIndentApprovalScreen(
@@ -73,7 +73,6 @@ class _PCApprovalHomeState extends State<PCApprovalHome> with SingleTickerProvid
                   loginSuccessModel: widget.loginSuccessModel,
                   mskoolController: widget.mskoolController,
                 ),
-                
               ],
             ),
           ),

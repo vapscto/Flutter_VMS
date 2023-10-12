@@ -86,44 +86,44 @@ class _PcRequisitionDetailsScreenState
                                       headingRowColor:
                                           MaterialStateProperty.all(
                                               Theme.of(context).primaryColor),
-                                      columns: [
-                                        const DataColumn(
+                                      columns: const [
+                                        DataColumn(
                                             label: Text("S No.",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
                                                         FontWeight.w800))),
-                                        const DataColumn(
+                                        DataColumn(
                                             label: Text("Requisition No.",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
                                                         FontWeight.w800))),
-                                        const DataColumn(
+                                        DataColumn(
                                             label: Text("Department",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
                                                         FontWeight.w800))),
-                                        const DataColumn(
+                                        DataColumn(
                                             label: Text("Requested By",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
                                                         FontWeight.w800))),
-                                        const DataColumn(
+                                        DataColumn(
                                             label: Text("Date",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
                                                         FontWeight.w800))),
-                                        const DataColumn(
+                                        DataColumn(
                                             label: Text("Purpose",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
                                                         FontWeight.w800))),
-                                        const DataColumn(
+                                        DataColumn(
                                             label: Text("Action",
                                                 style: TextStyle(
                                                     color: Colors.white,
@@ -188,7 +188,7 @@ class _PcRequisitionDetailsScreenState
                                                       Navigator.push(context,
                                                           MaterialPageRoute(
                                                               builder: (_) {
-                                                        return requestedParticularDetailsPC(
+                                                        return RequestedParticularDetailsPC(
                                                           loginSuccessModel: widget
                                                               .loginSuccessModel,
                                                           mskoolController: widget
