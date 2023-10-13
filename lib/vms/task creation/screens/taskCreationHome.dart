@@ -252,7 +252,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
           centerTitle: (widget.previousScreen == '0') ? true : false,
-          // titleSpacing: 0,
+          titleSpacing: 40,
           leading: (widget.previousScreen == '0')
               ? const CustomGoBackButton()
               : const SizedBox(),

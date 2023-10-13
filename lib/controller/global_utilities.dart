@@ -12,7 +12,6 @@ import 'package:get_ip_address/get_ip_address.dart';
 import 'package:m_skool_flutter/apis/version_control_api.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/manager/employee_punch/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/manager/employee_salary/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/manager/feedemo/screen/fee_home.dart';
 import 'package:m_skool_flutter/manager/feehead/screen/fee_details_home.dart';
@@ -26,10 +25,8 @@ import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/screens/attachment_viewer.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
-import 'package:m_skool_flutter/staffs/homework_classwork/screen/hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
-import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/view_notice/screens/view_notice_home_screen.dart';
 import 'package:m_skool_flutter/student/attendance/screens/home_page.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
@@ -48,6 +45,7 @@ import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/plann
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/online_leave/screen/online_leave_home.dart';
 import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart';
+import 'package:m_skool_flutter/vms/salary_details/screen/salary_det_home.dart';
 import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/screen/leave_list_home.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
@@ -216,7 +214,8 @@ String getStaffDashboardIcon(String pageName) {
     return icon += "staff_stu_attendance.png";
   }
 
-  if (pageName.toLowerCase().contains("attendance")) {
+  if (pageName.toLowerCase().contains("attendance") ||
+      pageName.toLowerCase().contains('petty')) {
     return icon += "staff_attendance.png";
   }
 
@@ -315,19 +314,25 @@ String getDashboardIcon(String pageName) {
     return "${icon}FeeReceipt.png";
   }
 
-  if (pageName.toLowerCase().contains("classwork")) {
+  if (pageName.toLowerCase().contains("classwork") ||
+      pageName.toLowerCase().contains('task')) {
     return "${icon}Classwork.png";
   }
-
+  if (pageName.toLowerCase().contains('sales')) {
+    return "${icon}OnlinePayment.png";
+  }
   if (pageName.toLowerCase().contains("homework") ||
-      pageName.toLowerCase().contains('planner')) {
+      pageName.toLowerCase().contains('planner') ||
+      pageName.toLowerCase().contains('dr')) {
     return "${icon}Homework.png";
   }
-  if (pageName.toLowerCase().contains("library")) {
+  if (pageName.toLowerCase().contains("library") ||
+      pageName.toLowerCase().contains('petty')) {
     return "${icon}Library.png";
   }
 
-  if (pageName.toLowerCase().contains("exam")) {
+  if (pageName.toLowerCase().contains("exam") ||
+      pageName.toLowerCase().contains('tada')) {
     return "${icon}exam.png";
   }
   if (pageName.toLowerCase().contains("certificate")) {
@@ -377,7 +382,8 @@ String getDashboardIcon(String pageName) {
   if (pageName.toLowerCase().contains("leave")) {
     return icon += "staff_olp.png";
   }
-  if (pageName.toLowerCase().contains("coe")) {
+  if (pageName.toLowerCase().contains("coe") ||
+      pageName.toLowerCase().contains('security')) {
     return icon += "staff_coe.png";
   }
 
@@ -385,23 +391,29 @@ String getDashboardIcon(String pageName) {
     return icon += "FeeReceipt.png";
   }
 
-  if (pageName.toLowerCase().contains("student")) {
+  if (pageName.toLowerCase().contains("student") ||
+      pageName.toLowerCase().contains('maker')) {
     return icon += "student_details.png";
   }
-  if (pageName.toLowerCase().contains("interaction")) {
+  if (pageName.toLowerCase().contains("interaction") ||
+      pageName.toLowerCase().contains('visitor')) {
     return icon += "staff_interaction.png";
   }
 
   if (pageName.toLowerCase().contains("slip")) {
     return icon += "FeeReceipt.png";
   }
-  if (pageName.toLowerCase().contains("employee")) {
+  if (pageName.toLowerCase().contains("employee") ||
+      pageName.toLowerCase().contains('purchase')) {
     return icon += "employee_details.png";
   }
-  if (pageName.toLowerCase().contains("fee")) {
+  if (pageName.toLowerCase().contains("fee") ||
+      pageName.toLowerCase().contains('cheaque')) {
     return icon += "manager_fee.png";
   }
-  if (pageName.toLowerCase().contains("notice")) {
+  if (pageName.toLowerCase().contains("notice") ||
+      pageName.toLowerCase().contains('staff') ||
+      pageName.toLowerCase().contains('rating')) {
     return icon += "staff_nb.png";
   }
   return icon += "Timetable.png";
@@ -779,74 +791,7 @@ void openMappedPages(
 //     );
 //     return;
 //   }
-  if (pageName == "Verify Homework") {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) {
-          return VerifyHwCwHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            title: pageName,
-            forHw: true,
-          );
-        },
-      ),
-    );
-    return;
-  }
-  if (pageName == "Verify Classwork") {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) {
-          return VerifyHwCwHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            title: pageName,
-            forHw: false,
-          );
-        },
-      ),
-    );
-    return;
-  }
-  if (pageName == "Upload Classwork") {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) {
-          return HwCwHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            title: pageName,
-            forHw: false,
-          );
-        },
-      ),
-    );
-    return;
-  }
-  if (pageName == "Upload Homework") {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) {
-          return HwCwHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            title: pageName,
-            forHw: true,
-          );
-        },
-      ),
-    );
-    // Get.to(() => PCHome(
-    //       loginSuccessModel: loginSuccessModel,
-    //       mskoolController: mskoolController,
-    //     ));
-    return;
-  }
+
   Widget hSize({required double height}) {
     return SizedBox(
       height: height,
@@ -897,7 +842,13 @@ void openMappedPages(
     }));
     return;
   }
-
+  if (pageName == 'Salary Details') {
+    Get.to(() => SalaryDetails(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+          title: pageName,
+        ));
+  }
   if (pageName == 'Staff Notice Board') {
     Get.to(() => NoticeBoardStaffHome(
           loginSuccessModel: loginSuccessModel,
@@ -962,12 +913,12 @@ void openMappedPages(
     return;
   }
   if (pageName == "Staff In-Out") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return EmployeepunchHome(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-      );
-    }));
+    // Navigator.push(context, MaterialPageRoute(builder: (_) {
+    //   return EmployeepunchHome(
+    //     loginSuccessModel: loginSuccessModel,
+    //     mskoolController: mskoolController,
+    //   );
+    // }));
     return;
   }
 
