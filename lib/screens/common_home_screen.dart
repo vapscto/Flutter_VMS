@@ -217,7 +217,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
             onTap: (v) {
               selectedPage.value = v;
               pageController.animateToPage(v,
-                  duration: const Duration(milliseconds: 800),
+                  duration: const Duration(milliseconds: 500),
                   curve: Curves.fastLinearToSlowEaseIn);
             },
           );
