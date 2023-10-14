@@ -132,3 +132,17 @@ class PurchaseGetItemModelValues {
     return data;
   }
 }
+class PurchaseItemAdd{
+  int? id;
+  int? invmIId;
+  int? invmuomId;
+  bool? activeFlag;
+ PurchaseItemAdd(
+  {
+    required this.id,
+    required this.invmIId,
+    required this.invmuomId,
+    required this.activeFlag
+  }
+ ); 
+}

@@ -20,7 +20,7 @@ getPurchaseRequisitionGetitemApi({
     controller.updateIsErrorOccuredRequestRequisition(false);
   }
 
-  controller.updateIsLoadingRequestRequisition(true);
+ // controller.updateIsLoadingRequestRequisition(true);
 
   logger.d(api);
 
@@ -41,7 +41,7 @@ getPurchaseRequisitionGetitemApi({
 controller.statusET.add(TextEditingController(text:""));
     }
 // 
-    controller.updateIsLoadingRequestRequisition(false);
+  //  controller.updateIsLoadingRequestRequisition(false);
   } on Exception catch (e) {
     logger.e(e.toString());
     controller.updateIsErrorOccuredRequestRequisition(true);

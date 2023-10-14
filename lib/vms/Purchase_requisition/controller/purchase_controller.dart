@@ -64,5 +64,5 @@ class PurchaseRequisitionController extends GetxController {
   }
   RxList<String> statusList = <String>[].obs;
   RxList<TextEditingController> statusET = <TextEditingController>[].obs;
-  
+ 
 }

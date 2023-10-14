@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -42,7 +43,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
   PurchaseRequisitionController purchaseRequisitionController =
       Get.put(PurchaseRequisitionController());
   RxList<int> newWidget = <int>[].obs;
-  final uomController = TextEditingController();
+  RxList<TextEditingController> uomController = <TextEditingController>[].obs;
   RxList<TextEditingController> quantityController =
       <TextEditingController>[].obs;
   RxList<TextEditingController> rateController = <TextEditingController>[].obs;
@@ -50,10 +51,12 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
       <TextEditingController>[].obs;
   RxList<TextEditingController> remarksController =
       <TextEditingController>[].obs;
+  RxList<TextEditingController> selectEt = <TextEditingController>[].obs;
   final totalAmount = TextEditingController();
   int newAmount = 0;
+  List<PurchaseItemAdd> newPurchaseItems = <PurchaseItemAdd>[].obs;
   final commonRemarksController = TextEditingController();
-
+ List<Map<String,dynamic>> list =[];
   VmsTransationController vmsTransationController =
       Get.put(VmsTransationController());
   List<Map<String, dynamic>> arrayPR = [];
@@ -71,48 +74,47 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
         index < vmsTransationController.transationConfigmodel.length;
         index++) {
       transnumbconfigurationsettingsss.addAll({
+        // "IMN_Id": 138,
+        // "MI_Id": 17,
+        // "IMN_AutoManualFlag": "Auto",
+        // "IMN_StartingNo": "1",
+        // "IMN_WidthNumeric": "4",
+        // "IMN_ZeroPrefixFlag": "No",
+        // "IMN_PrefixParticular": "PR",
+        // "IMN_SuffixAcadYearCode": true,
+        // "IMN_SuffixParticular": "",
+        // "IMN_RestartNumFlag": "Never",
+        // "IMN_Flag": "INVPR",
+        // "ASMAY_Id": 0,
+        // "CreatedDate": "2017-05-24T09:35:34.587",
+        // "UpdatedDate": "2017-05-24T09:35:34.587"
         "IMN_Id": vmsTransationController.transationConfigmodel
             .elementAt(index)
             .imNId,
-        "MI_Id":
-            vmsTransationController.transationConfigmodel.elementAt(index).mIId,
-        "IMN_AutoManualFlag": vmsTransationController.transationConfigmodel
-            .elementAt(index)
-            .imNAutoManualFlag,
-        "IMN_StartingNo": vmsTransationController.transationConfigmodel
-            .elementAt(index)
-            .imNStartingNo,
+        "MI_Id": vmsTransationController.transationConfigmodel
+            .elementAt(index).mIId,
+        "IMN_AutoManualFlag":  vmsTransationController.transationConfigmodel
+            .elementAt(index).imNAutoManualFlag,
+        "IMN_StartingNo":  vmsTransationController.transationConfigmodel
+            .elementAt(index).imNStartingNo,
         "IMN_WidthNumeric": vmsTransationController.transationConfigmodel
-            .elementAt(index)
-            .imNWidthNumeric,
-        "IMN_ZeroPrefixFlag": vmsTransationController.transationConfigmodel
-            .elementAt(index)
-            .imNZeroPrefixFlag,
-        "IMN_PrefixAcadYearCode": vmsTransationController.transationConfigmodel
-            .elementAt(index)
-            .imNPrefixAcadYearCode,
+            .elementAt(index).imNWidthNumeric,
+        "IMN_ZeroPrefixFlag":  vmsTransationController.transationConfigmodel
+            .elementAt(index).imNZeroPrefixFlag,
         "IMN_PrefixParticular": vmsTransationController.transationConfigmodel
-            .elementAt(index)
-            .imNPrefixParticular,
-        "IMN_SuffixAcadYearCode": vmsTransationController.transationConfigmodel
-            .elementAt(index)
-            .imNSuffixAcadYearCode,
-        "IMN_SuffixParticular": vmsTransationController.transationConfigmodel
-            .elementAt(index)
-            .imNSuffixParticular,
-        "IMN_RestartNumFlag": vmsTransationController.transationConfigmodel
-            .elementAt(index)
-            .imNRestartNumFlag,
+            .elementAt(index).imNPrefixParticular,
+        "IMN_SuffixAcadYearCode":  vmsTransationController.transationConfigmodel
+            .elementAt(index).imNSuffixAcadYearCode,
+        "IMN_SuffixParticular": "",
+        "IMN_RestartNumFlag":  vmsTransationController.transationConfigmodel
+            .elementAt(index).imNRestartNumFlag,
         "IMN_Flag": vmsTransationController.transationConfigmodel
-            .elementAt(index)
-            .imNFlag,
-        "ASMAY_Id": widget.loginSuccessModel.asmaYId,
+            .elementAt(index).imNFlag,
+        "ASMAY_Id": 0,
         "CreatedDate": vmsTransationController.transationConfigmodel
-            .elementAt(index)
-            .createdDate,
-        "UpdatedDate": vmsTransationController.transationConfigmodel
-            .elementAt(index)
-            .updatedDate,
+            .elementAt(index).createdDate,
+        "UpdatedDate":  vmsTransationController.transationConfigmodel
+            .elementAt(index).updatedDate
       });
     }
   }
@@ -144,7 +146,10 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
 
   addControllerData(int value) {
     newWidget.add(value);
+
     for (int i = 0; i < newWidget.length; i++) {
+      selectEt.add(TextEditingController(text: "Select item"));
+      uomController.add(TextEditingController(text: ''));
       quantityController.add(TextEditingController(text: ''));
       rateController.add(TextEditingController(text: ''));
       amountController.add(TextEditingController(text: ''));
@@ -162,7 +167,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
       sum += value;
     }
     setState(() {
-      totalAmount.text = 'Total: $sum';
+      totalAmount.text = '$sum';
     });
   }
 
@@ -185,6 +190,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
   }
 
   _saveData() async {
+      purchaseRequisitionController.saveLoading(true);
     int miIdNew = 0;
     int hrmdId = 0;
     int invmId = 0;
@@ -195,72 +201,50 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
     double approxAmount = 0.0;
     double approvedQuantity = 0.0;
     double unitRate = 0.0;
-    for (int i = 0;
-        i < purchaseRequisitionController.getrequestGetItemList.length;
-        i++) {
-      miIdNew = purchaseRequisitionController.getrequestGetItemList[i].mIIdNew!;
-      hrmdId = purchaseRequisitionController.getrequestGetItemList[i].hrmDId!;
-      invmId = purchaseRequisitionController.getrequestGetItemList[i].invmIId!;
-      invmprId =
-          purchaseRequisitionController.getrequestGetItemList[i].invmpRId!;
-      invmmouId =
-          purchaseRequisitionController.getrequestGetItemList[i].invmuoMId!;
-      invtprId =
-          purchaseRequisitionController.getrequestGetItemList[i].invtpRId!;
-      quantity =
-          purchaseRequisitionController.getrequestGetItemList[i].invtpRPRQty!;
-      approxAmount = purchaseRequisitionController
-          .getrequestGetItemList[i].invtpRApproxAmount!;
-      approvedQuantity = purchaseRequisitionController
-          .getrequestGetItemList[i].invtpRApprovedQty!;
-      unitRate = purchaseRequisitionController
-          .getrequestGetItemList[i].invtpRPRUnitRate!;
-      //
-      arrayPR.add({
-        "INVTPR_Id":
-            purchaseRequisitionController.getrequestGetItemList[i].invtpRId,
-        "INVMPR_Id":
-            purchaseRequisitionController.getrequestGetItemList[i].invmpRId,
-        "INVMI_Id":
-            purchaseRequisitionController.getrequestGetItemList[i].invmIId,
-        "INVMUOM_Id":
-            purchaseRequisitionController.getrequestGetItemList[i].invmuoMId,
-        "INVTPR_PRQty":
-            purchaseRequisitionController.getrequestGetItemList[i].invtpRPRQty,
-        "INVTPR_ApproxAmount": amountController.elementAt(i).text,
-        "INVTPR_ApprovedQty": quantityController.elementAt(i).text,
-        "INVTPR_PRUnitRate": rateController.elementAt(i).text,
-        "INVTPR_Remarks": remarksController.elementAt(i).text,
-        "INVTPR_ActiveFlg": purchaseRequisitionController
-            .getrequestGetItemList[i].invtpRActiveFlg
-      });
+       for(int i =0;i<newWidget.length;i++){
+     arrayPR.add({
+       "INVTPR_Id":0,
+       "INVMPR_Id":0,
+       "INVMI_Id":newPurchaseItems[i].invmIId,
+       "INVMUOM_Id":newPurchaseItems[i].invmuomId,
+       "INVTPR_PRQty":double.tryParse(quantityController[i].text),
+       "INVTPR_ApproxAmount":double.tryParse(amountController[i].text ),
+       "INVTPR_ApprovedQty":0.0,
+       "INVTPR_PRUnitRate":double.tryParse(rateController[i].text),
+       "INVTPR_Remarks": remarksController[i].text,
+       "INVTPR_ActiveFlg":newPurchaseItems[i].activeFlag
+    });
     }
-    purchaseRequisitionController.saveLoading(true);
+  
     await PurchaseSaveAPI.instance.purchaseSave(
-        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+        base: baseUrlFromInsCode("inventory", widget.mskoolController),
         purchaseRequisitionController: purchaseRequisitionController,
         body: {
           "MI_Id": widget.loginSuccessModel.mIID,
-          "MI_IdNew": miIdNew,
+          "MI_IdNew":  widget.loginSuccessModel.mIID,
           "HRMD_Id": hrmdId,
           "ASMAY_Id": widget.loginSuccessModel.asmaYId,
           "UserId": widget.loginSuccessModel.userId,
           "INVMI_Id": invmId,
           "INVMUOM_Id": invmmouId,
           "INVMPR_Id": invmprId,
-          "INVMPR_PRDate": _dateController.text,
+          "INVMPR_PRDate":  DateTime.now().toString(),
           "INVMPR_Remarks": commonRemarksController.text,
-          "INVMPR_ApproxTotAmount": totalAmount.text,
+          "INVMPR_ApproxTotAmount": double.tryParse(totalAmount.text),
           "INVTPR_Id": invtprId,
           "INVTPR_PRQty": quantity,
           "INVTPR_ApproxAmount": approxAmount,
           "INVTPR_ApprovedQty": approvedQuantity,
           "INVTPR_PRUnitRate": unitRate,
+             "INVTPR_Remarks":null,
           "transnumbconfigurationsettingsss": transnumbconfigurationsettingsss,
           "arrayPR": arrayPR,
-        });
-    purchaseRequisitionController.saveLoading(false);
-    Get.back();
+        }).then((value) {
+          if(value){
+        purchaseRequisitionController.saveLoading(false);
+        }
+        },);
+  
   }
 
   DateTime? selectedDate;
@@ -371,7 +355,6 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                               readOnly: true,
                             ),
                           ),
-
                           Container(
                             margin: const EdgeInsets.only(
                                 top: 30, left: 0, right: 0),
@@ -474,114 +457,6 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                               },
                             ),
                           ),
-
-                          // (purchaseRequisitionController
-                          //         .getrequestGetItemList.isEmpty)
-                          //     ? const SizedBox()
-                          //     : Container(
-                          //         margin: const EdgeInsets.only(
-                          //             top: 30, left: 0, right: 0),
-                          //         decoration: BoxDecoration(
-                          //           color: Theme.of(context)
-                          //               .scaffoldBackgroundColor,
-                          //           borderRadius: BorderRadius.circular(16.0),
-                          //           boxShadow: const [
-                          //             BoxShadow(
-                          //               offset: Offset(0, 1),
-                          //               blurRadius: 8,
-                          //               color: Colors.black12,
-                          //             ),
-                          //           ],
-                          //         ),
-                          //         child: DropdownButtonFormField<
-                          //             PurchaseGetItemModelValues>(
-                          //           value: purchaseRequisitionController
-                          //               .getrequestGetItemList.first,
-                          //           decoration: InputDecoration(
-                          //             focusedBorder: const OutlineInputBorder(
-                          //               borderSide: BorderSide(
-                          //                 color: Colors.transparent,
-                          //               ),
-                          //             ),
-                          //             enabledBorder: const OutlineInputBorder(
-                          //               borderSide: BorderSide(
-                          //                 color: Colors.transparent,
-                          //               ),
-                          //             ),
-                          //             isDense: true,
-                          //             hintStyle: Theme.of(context)
-                          //                 .textTheme
-                          //                 .labelSmall!
-                          //                 .merge(const TextStyle(
-                          //                     fontWeight: FontWeight.w300,
-                          //                     fontSize: 14.0,
-                          //                     letterSpacing: 0.3)),
-                          //             hintText: purchaseRequisitionController
-                          //                     .getrequestGetItemList.isNotEmpty
-                          //                 ? 'Select Item'
-                          //                 : "No data available",
-                          //             floatingLabelBehavior:
-                          //                 FloatingLabelBehavior.always,
-                          //             label: const CustomDropDownLabel(
-                          //               icon: 'assets/images/hat.png',
-                          //               containerColor:
-                          //                   Color.fromRGBO(10, 4, 182, 1),
-                          //               text: 'Item',
-                          //               textColor:
-                          //                   Color.fromRGBO(223, 234, 3, 1),
-                          //             ),
-                          //           ),
-                          //           icon: const Padding(
-                          //             padding: EdgeInsets.only(top: 3),
-                          //             child: Icon(
-                          //               Icons.keyboard_arrow_down_rounded,
-                          //               size: 30,
-                          //             ),
-                          //           ),
-                          //           iconSize: 35,
-                          //           items: List.generate(
-                          //               purchaseRequisitionController
-                          //                   .getrequestGetItemList
-                          //                   .length, (index) {
-                          //             return DropdownMenuItem(
-                          //               value: purchaseRequisitionController
-                          //                   .getrequestGetItemList[index],
-                          //               child: SizedBox(
-                          //                 width: MediaQuery.of(context)
-                          //                         .size
-                          //                         .width *
-                          //                     0.75,
-                          //                 child: Padding(
-                          //                   padding: const EdgeInsets.only(
-                          //                       top: 13, left: 5, bottom: 5),
-                          //                   child: SizedBox(
-                          //                     child: Text(
-                          //                       purchaseRequisitionController
-                          //                           .getrequestGetItemList
-                          //                           .elementAt(index)
-                          //                           .invmIItemName!,
-                          //                       style: Theme.of(context)
-                          //                           .textTheme
-                          //                           .labelSmall!
-                          //                           .merge(const TextStyle(
-                          //                               fontWeight:
-                          //                                   FontWeight.w100,
-                          //                               fontSize: 14.0,
-                          //                               letterSpacing: 0.3)),
-                          //                     ),
-                          //                   ),
-                          //                 ),
-                          //               ),
-                          //             );
-                          //           }),
-                          //           onChanged: (s) {
-                          //             setState(() {
-                          //               itemList = s!;
-                          //             });
-                          //           },
-                          //         ),
-                          //       ),
-
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             padding: const EdgeInsets.only(top: 16),
@@ -595,7 +470,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                 dataRowHeight: 75,
                                 headingRowHeight: 40,
                                 horizontalMargin: 10,
-                                columnSpacing: 40,
+                                columnSpacing: 20,
                                 dividerThickness: 1,
                                 headingTextStyle: const TextStyle(
                                     color: Colors.white,
@@ -686,49 +561,132 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                           alignment: Alignment.center,
                                           child: Text('$i'))),
                                       DataCell(Obx(
-                                        () => DropdownMenu<
-                                            PurchaseGetItemModelValues>(
+                                        () => SizedBox(
                                             width: 200,
-                                          textStyle: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall!
-                                              .merge(const TextStyle(
-                                                fontWeight: FontWeight.w100,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.3,
-                                                overflow: TextOverflow.clip,
-                                              )),
-                                          controller:
-                                              purchaseRequisitionController
-                                                  .statusET
-                                                  .elementAt(index),
-                                          initialSelection:
-                                              purchaseRequisitionController
-                                                  .getrequestGetItemList
-                                                  .first,
-                                          onSelected:
-                                              (PurchaseGetItemModelValues?
-                                                  value) {
-                                            purchaseRequisitionController
-                                                    .statusET[index].text =
-                                                value!.invmIItemName!;
-                                          },
-                                          dropdownMenuEntries:
-                                              purchaseRequisitionController
-                                                  .getrequestGetItemList
-                                                  .map<
-                                                          DropdownMenuEntry<
-                                                              PurchaseGetItemModelValues>>(
-                                        
-                                                      (PurchaseGetItemModelValues
-                                                          value) {
-                                            return DropdownMenuEntry<
-                                                    PurchaseGetItemModelValues>(
-                                                value: value,
-                                                label:
-                                                    value.invmIItemName!);
-                                          }).toList(),
-                                        ),
+                                            child: TextFormField(
+                                              readOnly: true,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall,
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                              ),
+                                              controller: selectEt[index],
+                                              onTap: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog(
+                                                      content: SizedBox(
+                                                        child: Container(
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          child:
+                                                              ListView.builder(
+                                                            itemBuilder:
+                                                                (context, i) {
+                                                              return ListTile(
+                                                                title: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          8.0),
+                                                                  child:
+                                                                      InkWell(
+                                                                    onTap: () {
+                                                                      String
+                                                                          selectedItemName =
+                                                                          purchaseRequisitionController
+                                                                              .getrequestGetItemList[i]
+                                                                              .invmIItemName!;
+                                                                      int selectedItemIndex =
+                                                                          index;
+                                                                      int selectedItemInvmIId = purchaseRequisitionController
+                                                                          .getrequestGetItemList[
+                                                                              i]
+                                                                          .invmIId!;
+                                                                      int selectedItemInvmuomId = purchaseRequisitionController
+                                                                          .getrequestGetItemList[
+                                                                              i]
+                                                                          .invmuoMId!;
+                                                                      bool selectedItemActiveFlag = purchaseRequisitionController
+                                                                          .getrequestGetItemList[
+                                                                              i]
+                                                                          .invmpRActiveFlg!;
+
+                                                                      selectEt[selectedItemIndex]
+                                                                              .text =
+                                                                          selectedItemName;
+
+                                                                      int existingIndex = newPurchaseItems.indexWhere((item) =>
+                                                                          item.id ==
+                                                                          selectedItemIndex);
+
+                                                                      if (existingIndex !=
+                                                                          -1) {
+                                                                        newPurchaseItems[existingIndex].invmIId =
+                                                                            selectedItemInvmIId;
+                                                                        newPurchaseItems[existingIndex].invmuomId =
+                                                                            selectedItemInvmuomId;
+                                                                        newPurchaseItems[existingIndex].activeFlag =
+                                                                            selectedItemActiveFlag;
+                                                                        logger.d(
+                                                                            "update ${newPurchaseItems.elementAt(index)}");
+                                                                      } else {
+                                                                        newPurchaseItems
+                                                                            .add(PurchaseItemAdd(
+                                                                          id: selectedItemIndex,
+                                                                          invmIId:
+                                                                              selectedItemInvmIId,
+                                                                          invmuomId:
+                                                                              selectedItemInvmuomId,
+                                                                          activeFlag:
+                                                                              selectedItemActiveFlag,
+                                                                        ));
+                                                                        logger.d(
+                                                                            "add ${newPurchaseItems.elementAt(index)}");
+                                                                      }
+
+                                                                      setState(
+                                                                          () {});
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop();
+                                                                    },
+                                                                    child: Text(
+                                                                      purchaseRequisitionController
+                                                                          .getrequestGetItemList[
+                                                                              i]
+                                                                          .invmIItemName!,
+                                                                      style: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .titleSmall!
+                                                                          .merge(
+                                                                            const TextStyle(
+                                                                              fontSize: 14,
+                                                                            ),
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                            itemCount:
+                                                                purchaseRequisitionController
+                                                                    .getrequestGetItemList
+                                                                    .length,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            )
+                                         ),
                                       )),
                                       DataCell(
                                         Padding(
@@ -737,7 +695,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleSmall,
-                                            controller: uomController,
+                                            controller: uomController[index],
                                             readOnly: true,
                                             decoration: const InputDecoration(
                                               border: OutlineInputBorder(),
@@ -810,11 +768,6 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                                 amountController
                                                     .elementAt(index)
                                                     .text = amount.toString();
-                                                //
-                                                // addAmount(int.parse(
-                                                //     amountController
-                                                //         .elementAt(index)
-                                                //         .text));
                                               });
                                             },
                                             decoration: const InputDecoration(
@@ -927,46 +880,6 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                               ),
                             ),
                           ),
-                          //    }
-                          //  ),
-                          // const SizedBox(height: 16),
-                          // CustomContainer(
-                          //   child: Column(
-                          //     children: List.generate(
-                          //        newWidget. length, (index) {
-                          //       return Column(
-                          //         children: [
-                          //          Padding(
-                          //            padding: const EdgeInsets.only( right: 10.0,top: 10),
-                          //            child: Align(
-                          //               alignment: Alignment.topRight,
-                          //               child: InkWell(onTap: (){setState(() {
-                          //                (index ==0)?  newWidget.add(const PurchaseItemModel()): newWidget.removeAt(index);
-                          //               });}, child:Container(
-                          //                 decoration: BoxDecoration(shape: BoxShape.circle,color: Theme.of(context).primaryColor,
-                          //                 boxShadow: const [
-                          //                   BoxShadow(
-                          //                     offset: Offset(1, 2),
-                          //                     blurRadius: 4,
-                          //                     spreadRadius: 0,
-                          //                     color: Colors.black12
-                          //                   )
-                          //                 ],),
-                          //                 padding: const EdgeInsets.all(4),
-                          //                 child:  (index ==0)?  const Icon(Icons.add,color: Colors.white,size: 30,):const Icon(Icons.remove,color: Colors.white,size: 30,),
-                          //               )),
-                          //             ),
-                          //          ),
-
-                          //           Padding(padding: const EdgeInsets.only(bottom: 10),
-                          //           child: newWidget[index],
-                          //           ),
-                          //         ],
-                          //       );
-                          //     })
-                          //   ),
-
-                          // ),
                           const SizedBox(height: 16),
                           TextFormField(
                             controller: commonRemarksController,
@@ -1051,8 +964,8 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                 child: MSkollBtn(
                                   size: const Size.fromWidth(100),
                                   title: "Save",
-                                  onPress: () {
-                                    _saveData();
+                                  onPress: () async {
+                                    await _saveData();
                                   },
                                 ),
                               ),
@@ -1075,10 +988,8 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
 
   @override
   void dispose() {
-    // TODO: imple
-    purchaseRequisitionController.getrequestRequisitionList.clear();
+     purchaseRequisitionController.getrequestRequisitionList.clear();
     purchaseRequisitionController.getrequestGetItemList.clear();
-
     super.dispose();
   }
 }
