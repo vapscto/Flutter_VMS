@@ -16,8 +16,11 @@ import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_Model.da
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_getitem.dart';
 import 'package:m_skool_flutter/vms/api/vms_transation_api.dart';
 import 'package:m_skool_flutter/vms/controller/vms_common_controller.dart';
+import 'package:m_skool_flutter/vms/maker%20and%20checker/controller/dr_details_ctrlr.dart';
+import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 
@@ -39,7 +42,7 @@ class PurchaserequisitionHome extends StatefulWidget {
 class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
   PurchaseRequisitionModelValues? selectedcompanyname;
   PurchaseGetItemModelValues? itemList;
-
+  DrDetailsCtrlr drDetailsCtrlr = Get.put(DrDetailsCtrlr());
   PurchaseRequisitionController purchaseRequisitionController =
       Get.put(PurchaseRequisitionController());
   RxList<int> newWidget = <int>[].obs;
@@ -56,7 +59,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
   int newAmount = 0;
   List<PurchaseItemAdd> newPurchaseItems = <PurchaseItemAdd>[].obs;
   final commonRemarksController = TextEditingController();
- List<Map<String,dynamic>> list =[];
+  List<Map<String, dynamic>> list = [];
   VmsTransationController vmsTransationController =
       Get.put(VmsTransationController());
   List<Map<String, dynamic>> arrayPR = [];
@@ -91,30 +94,40 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
         "IMN_Id": vmsTransationController.transationConfigmodel
             .elementAt(index)
             .imNId,
-        "MI_Id": vmsTransationController.transationConfigmodel
-            .elementAt(index).mIId,
-        "IMN_AutoManualFlag":  vmsTransationController.transationConfigmodel
-            .elementAt(index).imNAutoManualFlag,
-        "IMN_StartingNo":  vmsTransationController.transationConfigmodel
-            .elementAt(index).imNStartingNo,
+        "MI_Id":
+            vmsTransationController.transationConfigmodel.elementAt(index).mIId,
+        "IMN_AutoManualFlag": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNAutoManualFlag,
+        "IMN_StartingNo": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNStartingNo,
         "IMN_WidthNumeric": vmsTransationController.transationConfigmodel
-            .elementAt(index).imNWidthNumeric,
-        "IMN_ZeroPrefixFlag":  vmsTransationController.transationConfigmodel
-            .elementAt(index).imNZeroPrefixFlag,
+            .elementAt(index)
+            .imNWidthNumeric,
+        "IMN_ZeroPrefixFlag": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNZeroPrefixFlag,
         "IMN_PrefixParticular": vmsTransationController.transationConfigmodel
-            .elementAt(index).imNPrefixParticular,
-        "IMN_SuffixAcadYearCode":  vmsTransationController.transationConfigmodel
-            .elementAt(index).imNSuffixAcadYearCode,
+            .elementAt(index)
+            .imNPrefixParticular,
+        "IMN_SuffixAcadYearCode": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNSuffixAcadYearCode,
         "IMN_SuffixParticular": "",
-        "IMN_RestartNumFlag":  vmsTransationController.transationConfigmodel
-            .elementAt(index).imNRestartNumFlag,
+        "IMN_RestartNumFlag": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .imNRestartNumFlag,
         "IMN_Flag": vmsTransationController.transationConfigmodel
-            .elementAt(index).imNFlag,
+            .elementAt(index)
+            .imNFlag,
         "ASMAY_Id": 0,
         "CreatedDate": vmsTransationController.transationConfigmodel
-            .elementAt(index).createdDate,
-        "UpdatedDate":  vmsTransationController.transationConfigmodel
-            .elementAt(index).updatedDate
+            .elementAt(index)
+            .createdDate,
+        "UpdatedDate": vmsTransationController.transationConfigmodel
+            .elementAt(index)
+            .updatedDate
       });
     }
   }
@@ -190,7 +203,8 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
   }
 
   _saveData() async {
-      purchaseRequisitionController.saveLoading(true);
+    purchaseRequisitionController.saveLoading(true);
+    drDetailsCtrlr.updateTabLoading(true);
     int miIdNew = 0;
     int hrmdId = 0;
     int invmId = 0;
@@ -201,34 +215,35 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
     double approxAmount = 0.0;
     double approvedQuantity = 0.0;
     double unitRate = 0.0;
-       for(int i =0;i<newWidget.length;i++){
-     arrayPR.add({
-       "INVTPR_Id":0,
-       "INVMPR_Id":0,
-       "INVMI_Id":newPurchaseItems[i].invmIId,
-       "INVMUOM_Id":newPurchaseItems[i].invmuomId,
-       "INVTPR_PRQty":double.tryParse(quantityController[i].text),
-       "INVTPR_ApproxAmount":double.tryParse(amountController[i].text ),
-       "INVTPR_ApprovedQty":0.0,
-       "INVTPR_PRUnitRate":double.tryParse(rateController[i].text),
-       "INVTPR_Remarks": remarksController[i].text,
-       "INVTPR_ActiveFlg":newPurchaseItems[i].activeFlag
-    });
+    for (int i = 0; i < newWidget.length; i++) {
+      arrayPR.add({
+        "INVTPR_Id": 0,
+        "INVMPR_Id": 0,
+        "INVMI_Id": newPurchaseItems[i].invmIId,
+        "INVMUOM_Id": newPurchaseItems[i].invmuomId,
+        "INVTPR_PRQty": double.tryParse(quantityController[i].text),
+        "INVTPR_ApproxAmount": double.tryParse(amountController[i].text),
+        "INVTPR_ApprovedQty": 0.0,
+        "INVTPR_PRUnitRate": double.tryParse(rateController[i].text),
+        "INVTPR_Remarks": remarksController[i].text,
+        "INVTPR_ActiveFlg": newPurchaseItems[i].activeFlag
+      });
     }
-  
+
     await PurchaseSaveAPI.instance.purchaseSave(
         base: baseUrlFromInsCode("inventory", widget.mskoolController),
         purchaseRequisitionController: purchaseRequisitionController,
+        controller: drDetailsCtrlr,
         body: {
           "MI_Id": widget.loginSuccessModel.mIID,
-          "MI_IdNew":  widget.loginSuccessModel.mIID,
+          "MI_IdNew": widget.loginSuccessModel.mIID,
           "HRMD_Id": hrmdId,
           "ASMAY_Id": widget.loginSuccessModel.asmaYId,
           "UserId": widget.loginSuccessModel.userId,
           "INVMI_Id": invmId,
           "INVMUOM_Id": invmmouId,
           "INVMPR_Id": invmprId,
-          "INVMPR_PRDate":  DateTime.now().toString(),
+          "INVMPR_PRDate": DateTime.now().toString(),
           "INVMPR_Remarks": commonRemarksController.text,
           "INVMPR_ApproxTotAmount": double.tryParse(totalAmount.text),
           "INVTPR_Id": invtprId,
@@ -236,15 +251,16 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
           "INVTPR_ApproxAmount": approxAmount,
           "INVTPR_ApprovedQty": approvedQuantity,
           "INVTPR_PRUnitRate": unitRate,
-             "INVTPR_Remarks":null,
+          "INVTPR_Remarks": null,
           "transnumbconfigurationsettingsss": transnumbconfigurationsettingsss,
           "arrayPR": arrayPR,
-        }).then((value) {
-          if(value){
-        purchaseRequisitionController.saveLoading(false);
+        }).then(
+      (value) {
+        if (value) {
+          purchaseRequisitionController.saveLoading(false);
         }
-        },);
-  
+      },
+    );
   }
 
   DateTime? selectedDate;
@@ -253,7 +269,22 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: "Purchase Requisition").getAppBar(),
+        appBar: AppBar(
+          title: Text("Purchase Requisition"),
+          leading:const CustomGoBackButton()  ,
+          titleSpacing: 0,
+          actions: [
+               Padding(
+                 padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                 child: BtnSave(
+                                  onPress: () async {
+                                    await _saveData();
+                                  },
+                                  title: "Save",
+                                ),
+               ),
+          ],
+        ),
         floatingActionButton: const HomeFab(),
         body: Obx(() {
           return SingleChildScrollView(
@@ -371,7 +402,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                             ),
                             child: DropdownButtonFormField<
                                 PurchaseRequisitionModelValues>(
-                              value: selectedcompanyname,
+                              //  value: selectedcompanyname,
                               decoration: InputDecoration(
                                 focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -632,8 +663,6 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                                                             selectedItemInvmuomId;
                                                                         newPurchaseItems[existingIndex].activeFlag =
                                                                             selectedItemActiveFlag;
-                                                                        logger.d(
-                                                                            "update ${newPurchaseItems.elementAt(index)}");
                                                                       } else {
                                                                         newPurchaseItems
                                                                             .add(PurchaseItemAdd(
@@ -645,8 +674,6 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                                                           activeFlag:
                                                                               selectedItemActiveFlag,
                                                                         ));
-                                                                        logger.d(
-                                                                            "add ${newPurchaseItems.elementAt(index)}");
                                                                       }
 
                                                                       setState(
@@ -685,8 +712,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                                   },
                                                 );
                                               },
-                                            )
-                                         ),
+                                            )),
                                       )),
                                       DataCell(
                                         Padding(
@@ -956,30 +982,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                             ),
                           ),
                           const SizedBox(height: 35),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0),
-                                child: MSkollBtn(
-                                  size: const Size.fromWidth(100),
-                                  title: "Save",
-                                  onPress: () async {
-                                    await _saveData();
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 40.0),
-                                child: MSkollBtn(
-                                  size: const Size.fromWidth(100),
-                                  title: "Exit",
-                                  onPress: () {},
-                                ),
-                              ),
-                            ],
-                          )
+                      
                         ],
                       ),
           );
@@ -988,7 +991,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
 
   @override
   void dispose() {
-     purchaseRequisitionController.getrequestRequisitionList.clear();
+    purchaseRequisitionController.getrequestRequisitionList.clear();
     purchaseRequisitionController.getrequestGetItemList.clear();
     super.dispose();
   }

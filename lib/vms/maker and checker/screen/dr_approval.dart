@@ -89,6 +89,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
     ).then((value) {
       if (value) {
         controller.updateTabLoading(false);
+        Get.back();
        }
     });
   }

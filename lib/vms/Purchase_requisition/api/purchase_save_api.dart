@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/controller/purchase_controller.dart';
+import 'package:m_skool_flutter/vms/maker%20and%20checker/controller/dr_details_ctrlr.dart';
 
 class PurchaseSaveAPI {
   PurchaseSaveAPI.init();
@@ -12,6 +13,7 @@ class PurchaseSaveAPI {
   Future<bool>purchaseSave({
     required String base,
     required PurchaseRequisitionController purchaseRequisitionController,
+  required  DrDetailsCtrlr controller,
     required Map<String, dynamic> body,
   }) async {
     var dio = Dio();
@@ -23,7 +25,7 @@ class PurchaseSaveAPI {
       if (purchaseRequisitionController.isErrorLoading.value) {
         purchaseRequisitionController.error(false);
       }
-      purchaseRequisitionController.saveLoading(true);
+       purchaseRequisitionController.saveLoading(true);
       var response = await dio.post(
         url,
         options: Options(headers: getSession()),
@@ -33,6 +35,7 @@ class PurchaseSaveAPI {
         logger.d("show ${response}");
         Fluttertoast.showToast(msg: "Purchase Requisition Saved Successfully");
         purchaseRequisitionController.saveLoading(false);
+        controller.updateTabLoading(false);
         Get.back();
       } else {
         Fluttertoast.showToast(msg: "Something went wrong");
