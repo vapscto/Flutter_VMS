@@ -83,9 +83,11 @@ class _SaleReportListState extends State<SaleReportList> {
             : (widget.salesController.leadListModelValue.isEmpty)
                 ? const Center(
                     child: AnimatedProgressWidget(
-                        title: "Sales repor is not available",
-                        desc: " ",
-                        animationPath: "assets/json/nodata.json"),
+                      title: "Sales repor is not available",
+                      desc: " ",
+                      animationPath: "assets/json/nodata.json",
+                      animatorHeight: 250,
+                    ),
                   )
                 : ListView(
                     children: [
