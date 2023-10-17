@@ -212,7 +212,7 @@ class ApplyLeaveWidget extends StatelessWidget {
                                     DateTime? date = await showDatePicker(
                                       context: context,
                                       initialDate: startDT,
-                                      firstDate: startDT,
+                                      firstDate: DateTime(2000),
                                       lastDate: endDT,
                                     );
                                     if (date == null) {
@@ -655,9 +655,6 @@ class ApplyLeaveWidget extends StatelessWidget {
             if (reportingDate.text.isEmpty) {
               Fluttertoast.showToast(msg: "Please provide reporting date");
               return;
-            }
-            if (values.hrmLLeaveName == 'Casual Leave') {
-              if (int.parse(totalDay.value) > values.hrelTTotDays!.toInt()) {}
             }
 
             showDialog(
