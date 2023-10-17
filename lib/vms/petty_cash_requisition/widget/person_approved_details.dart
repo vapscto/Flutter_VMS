@@ -41,225 +41,228 @@ class _PersonApprovedDetailsScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: "APPROVED DETAILS").getAppBar(),
-      body:  Obx(
-              () => Container(
-                margin: const EdgeInsets.only(top: 16.0),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 6, right: 6),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "FIRST LEVEL",
-                            style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                fontSize: 17,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.indigo),
-                          )),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: DataTable(
-                            dataTextStyle: const TextStyle(
-                                fontSize: 15,
-                                color: Color.fromRGBO(5, 5, 5, 0.945),
-                                fontWeight: FontWeight.w500),
-                            dataRowHeight: 40,
-                            headingRowHeight: 55,
-                            horizontalMargin: 10,
-                            columnSpacing: 40,
-                            dividerThickness: 1,
-                            border: TableBorder.all(
-                                borderRadius: const BorderRadius.only(
-                                    bottomRight: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
-                            headingRowColor: MaterialStateProperty.all(
-                                Theme.of(context).primaryColor),
-                            columns: const [
-                              DataColumn(
-                                  label: Text("S No.",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w800))),
-                              DataColumn(
-                                  label: Text("Approved By",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w800))),
-                              DataColumn(
-                                  label: Text("Approved Date",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w800))),
-                              DataColumn(
-                                  label: Text("Approved Amount",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w800))),
-                              DataColumn(
-                                  label: Text("Remarks",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w800))),
-                            ],
-                            rows: List.generate(
-                                widget.controller.getModalView.length, (index) {
-                              var i = index + 1;
-                              return DataRow(cells: [
-                                DataCell(Align(
+      body:  SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Obx(
+                () => Container(
+                  margin: const EdgeInsets.only(top: 16.0),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 6, right: 6),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "FIRST LEVEL",
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.indigo),
+                            )),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: DataTable(
+                              dataTextStyle: const TextStyle(
+                                  fontSize: 15,
+                                  color: Color.fromRGBO(5, 5, 5, 0.945),
+                                  fontWeight: FontWeight.w500),
+                              dataRowHeight: 40,
+                              headingRowHeight: 55,
+                              horizontalMargin: 10,
+                              columnSpacing: 40,
+                              dividerThickness: 1,
+                              border: TableBorder.all(
+                                  borderRadius: const BorderRadius.only(
+                                      bottomRight: Radius.circular(10),
+                                      bottomLeft: Radius.circular(10))),
+                              headingRowColor: MaterialStateProperty.all(
+                                  Theme.of(context).primaryColor),
+                              columns: const [
+                                DataColumn(
+                                    label: Text("S No.",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w800))),
+                                DataColumn(
+                                    label: Text("Approved By",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w800))),
+                                DataColumn(
+                                    label: Text("Approved Date",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w800))),
+                                DataColumn(
+                                    label: Text("Approved Amount",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w800))),
+                                DataColumn(
+                                    label: Text("Remarks",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w800))),
+                              ],
+                              rows: List.generate(
+                                  widget.controller.getModalView.length, (index) {
+                                var i = index + 1;
+                                return DataRow(cells: [
+                                  DataCell(Align(
+                                      alignment: Alignment.center,
+                                      child: Text('$i'))),
+                                  DataCell(Align(
                                     alignment: Alignment.center,
-                                    child: Text('$i'))),
-                                DataCell(Align(
-                                  alignment: Alignment.center,
-                                  child: Align(
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                          "${widget.controller.getModalView.elementAt(index).firstApprovalperson}"),
+                                    ),
+                                  )),
+                                  DataCell(Align(
+                                    alignment: Alignment.center,
+                                    child: Text(getDateNeed(DateTime.parse(widget
+                                        .controller.getModalView
+                                        .elementAt(index)
+                                        .firstApprovalDate!))),
+                                  )),
+                                  DataCell(Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                        "${widget.controller.getModalView.elementAt(index).firstApprovalperson}"),
-                                  ),
-                                )),
-                                DataCell(Align(
-                                  alignment: Alignment.center,
-                                  child: Text(getDateNeed(DateTime.parse(widget
-                                      .controller.getModalView
-                                      .elementAt(index)
-                                      .firstApprovalDate!))),
-                                )),
-                                DataCell(Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                      "${widget.controller.getModalView.elementAt(index).firstApprovalAmount}"),
-                                )),
-                                DataCell(Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                      "${widget.controller.getModalView.elementAt(index).firstApprovalRemark}"),
-                                )),
-                              ]);
-                            })),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      const Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "SECOND LEVEL",
-                            style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                fontSize: 17,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.indigo),
-                          )),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: DataTable(
-                            dataTextStyle: const TextStyle(
-                                fontSize: 15,
-                                color: Color.fromRGBO(5, 5, 5, 0.945),
-                                fontWeight: FontWeight.w500),
-                            dataRowHeight: 40,
-                            headingRowHeight: 55,
-                            horizontalMargin: 10,
-                            columnSpacing: 40,
-                            dividerThickness: 1,
-                            border: TableBorder.all(
-                                borderRadius: const BorderRadius.only(
-                                    bottomRight: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
-                            headingRowColor: MaterialStateProperty.all(
-                                Theme.of(context).primaryColor),
-                            columns: const [
-                              DataColumn(
-                                  label: Text("S No.",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w800))),
-                              DataColumn(
-                                  label: Text("Approved By",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w800))),
-                              DataColumn(
-                                  label: Text("Approved Date",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w800))),
-                              DataColumn(
-                                  label: Text("Approved Amount",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w800))),
-                              DataColumn(
-                                  label: Text("Remarks",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w800))),
-                            ],
-                            rows: List.generate(
-                                widget.controller.getModalView.length, (index) {
-                              var i = index + 1;
-                              return DataRow(cells: [
-                                DataCell(Align(
+                                        "${widget.controller.getModalView.elementAt(index).firstApprovalAmount}"),
+                                  )),
+                                  DataCell(Align(
                                     alignment: Alignment.center,
-                                    child: Text('$i'))),
-                                DataCell(Align(
-                                  alignment: Alignment.center,
-                                  child: Text(widget.controller.getModalView
-                                          .elementAt(index)
-                                          .secondApprovalperson ??
-                                      "-"),
-                                )),
-                                DataCell(Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    widget.controller.getModalView
-                                                .elementAt(index)
-                                                .secondApprovalDate !=
-                                            null
-                                        ? getDateNeed(DateTime.parse(widget
-                                            .controller.getModalView
+                                    child: Text(
+                                        "${widget.controller.getModalView.elementAt(index).firstApprovalRemark}"),
+                                  )),
+                                ]);
+                              })),
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        const Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "SECOND LEVEL",
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.indigo),
+                            )),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: DataTable(
+                              dataTextStyle: const TextStyle(
+                                  fontSize: 15,
+                                  color: Color.fromRGBO(5, 5, 5, 0.945),
+                                  fontWeight: FontWeight.w500),
+                              dataRowHeight: 40,
+                              headingRowHeight: 55,
+                              horizontalMargin: 10,
+                              columnSpacing: 40,
+                              dividerThickness: 1,
+                              border: TableBorder.all(
+                                  borderRadius: const BorderRadius.only(
+                                      bottomRight: Radius.circular(10),
+                                      bottomLeft: Radius.circular(10))),
+                              headingRowColor: MaterialStateProperty.all(
+                                  Theme.of(context).primaryColor),
+                              columns: const [
+                                DataColumn(
+                                    label: Text("S No.",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w800))),
+                                DataColumn(
+                                    label: Text("Approved By",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w800))),
+                                DataColumn(
+                                    label: Text("Approved Date",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w800))),
+                                DataColumn(
+                                    label: Text("Approved Amount",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w800))),
+                                DataColumn(
+                                    label: Text("Remarks",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w800))),
+                              ],
+                              rows: List.generate(
+                                  widget.controller.getModalView.length, (index) {
+                                var i = index + 1;
+                                return DataRow(cells: [
+                                  DataCell(Align(
+                                      alignment: Alignment.center,
+                                      child: Text('$i'))),
+                                  DataCell(Align(
+                                    alignment: Alignment.center,
+                                    child: Text(widget.controller.getModalView
                                             .elementAt(index)
-                                            .secondApprovalDate
-                                            .toString()))
-                                        : "-",
-                                  ),
-                                )),
-                                DataCell(Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    (widget.controller.getModalView
-                                                .elementAt(index)
-                                                .secondApprovalAmount ??
-                                            0.0)
-                                        .toString(),
-                                  ),
-                                )),
-                                DataCell(Align(
-                                  alignment: Alignment.center,
-                                  child: Text(widget.controller.getModalView
-                                          .elementAt(index)
-                                          .secondApprovalRemark ??
-                                      "-"),
-                                )),
-                              ]);
-                            })),
-                      ),
-                    ],
+                                            .secondApprovalperson ??
+                                        "-"),
+                                  )),
+                                  DataCell(Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      widget.controller.getModalView
+                                                  .elementAt(index)
+                                                  .secondApprovalDate !=
+                                              null
+                                          ? getDateNeed(DateTime.parse(widget
+                                              .controller.getModalView
+                                              .elementAt(index)
+                                              .secondApprovalDate
+                                              .toString()))
+                                          : "-",
+                                    ),
+                                  )),
+                                  DataCell(Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      (widget.controller.getModalView
+                                                  .elementAt(index)
+                                                  .secondApprovalAmount ??
+                                              0.0)
+                                          .toString(),
+                                    ),
+                                  )),
+                                  DataCell(Align(
+                                    alignment: Alignment.center,
+                                    child: Text(widget.controller.getModalView
+                                            .elementAt(index)
+                                            .secondApprovalRemark ??
+                                        "-"),
+                                  )),
+                                ]);
+                              })),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            )
+      )
           
     );
   }

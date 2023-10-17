@@ -88,7 +88,7 @@ class _PcRequisitionDetailsScreenState
                                               Theme.of(context).primaryColor),
                                       columns: const [
                                         DataColumn(
-                                            label: Text("S No.",
+                                            label: Text("SL NO",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
