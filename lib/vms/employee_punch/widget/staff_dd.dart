@@ -5,11 +5,12 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/manager/employee_punch/api/employee_get_staff_api.dart';
-import 'package:m_skool_flutter/manager/employee_punch/controller/employee_salary_controller.dart';
-import 'package:m_skool_flutter/manager/employee_punch/model/staff_list_model.dart';
-import 'package:m_skool_flutter/manager/employee_punch/screen/employee_sal_view_details.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/employee_punch/api/employee_get_staff_api.dart';
+import 'package:m_skool_flutter/vms/employee_punch/controller/employee_salary_controller.dart';
+import 'package:m_skool_flutter/vms/employee_punch/model/staff_list_model.dart';
+import 'package:m_skool_flutter/vms/employee_punch/screen/employee_punch_view.dart';
+import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_view_details.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
@@ -163,16 +164,7 @@ class _StaffDropDownState extends State<StaffDropDown> {
                               ),
                             ),
                             onChanged: (s) async {
-                              // selectedValue = s;
-                              // asmayId.value = s!.asmaYId!;
-                              // setState(() {});
-                              // handler.updateSelectedInDropDown(s!);
-                              // handler.asmayId.value = s.asmaYId!;
-                              // logger.d(s.asmaYId);
-                              // reloadEvent();
-
                               widget.salaryController.selectedStaff = s!;
-                              // await loadOnChange();
                             },
                           ),
                         ),
@@ -368,7 +360,7 @@ class _StaffDropDownState extends State<StaffDropDown> {
                             }
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (_) {
-                              return EmployeeSalDetails(
+                              return EmployeePunchView(
                                 loginSuccessModel: widget.loginSuccessModel,
                                 mskoolController: widget.mskoolController,
                                 salaryController: widget.salaryController,

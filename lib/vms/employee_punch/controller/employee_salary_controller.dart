@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/manager/employee_punch/api/employee_slip_model.dart';
-import 'package:m_skool_flutter/manager/employee_punch/model/designation_dropdown_model.dart';
-import 'package:m_skool_flutter/manager/employee_punch/model/group_type_model.dart';
-import 'package:m_skool_flutter/manager/employee_punch/model/month_list_model.dart';
-import 'package:m_skool_flutter/manager/employee_punch/model/staff_list_model.dart';
-import 'package:m_skool_flutter/manager/employee_punch/model/yearlist_dropdown_model.dart';
+import 'package:m_skool_flutter/vms/employee_punch/api/employee_slip_model.dart';
+import 'package:m_skool_flutter/vms/employee_punch/model/designation_dropdown_model.dart';
+import 'package:m_skool_flutter/vms/employee_punch/model/employee_details.dart';
+import 'package:m_skool_flutter/vms/employee_punch/model/group_type_model.dart';
+import 'package:m_skool_flutter/vms/employee_punch/model/month_list_model.dart';
+import 'package:m_skool_flutter/vms/employee_punch/model/staff_list_model.dart';
+import 'package:m_skool_flutter/vms/employee_punch/model/yearlist_dropdown_model.dart';
 
 class EmployeePunchController extends GetxController {
   final RxList<GroupTypeDropdownValues> department = RxList();
@@ -103,6 +103,21 @@ class EmployeePunchController extends GetxController {
       salarySlip.clear();
     }
     salarySlip.addAll(list);
-    logger.i(salarySlip.first.depname);
+  }
+
+  RxList<EmployeePunchDetailsModelValues> employeePunchDetails =
+      <EmployeePunchDetailsModelValues>[].obs;
+  RxBool isDataLoading = RxBool(false);
+  void loading(bool loading) {
+    isDataLoading.value = loading;
+  }
+
+  getList(List<EmployeePunchDetailsModelValues> list) {
+    if (employeePunchDetails.isNotEmpty) {
+      employeePunchDetails.clear();
+    }
+    for (int index = 0; index < list.length; index++) {
+      employeePunchDetails.add(list.elementAt(index));
+    }
   }
 }

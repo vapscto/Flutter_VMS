@@ -28,7 +28,12 @@ class SalaryDetailsApi {
           "HRMLY_LeaveYear": year,
         },
       );
-
+      logger.i({
+        "MI_Id": miId,
+        "UserId": userId,
+        "HRMLY_LeaveYear": year,
+      });
+      logger.i(apiUrl);
       if (response.data['salarylist'] == null) {
         return Future.error({
           "errorTitle": "Data not available",
@@ -41,7 +46,7 @@ class SalaryDetailsApi {
           SalaryDetailsMonthwise.fromJson(response.data['salarylist']);
 
       final SalaryDetailsGraph graph =
-          SalaryDetailsGraph.fromJson(response.data['salaryDetailslist']);
+          SalaryDetailsGraph.fromJson(response.data['salaryEarningDlist']);
       final SalaryModel model = SalaryModel(
           graphValues: graph.values!, monthwiseValues: monthwise.values!);
 

@@ -54,7 +54,6 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                 ),
               );
             }
-
             if (snapshot.hasData) {
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(16.0),
@@ -150,10 +149,9 @@ class _SalaryDetailsState extends State<SalaryDetails> {
             }
 
             if (snapshot.hasError) {
-              return Container();
-              // return Center(
-              //     child:
-              //         ErrWidget(err: snapshot.error as Map<String, dynamic>));
+              return Center(
+                  child:
+                      ErrWidget(err: snapshot.error as Map<String, dynamic>));
             }
 
             return const AnimatedProgressWidget(
