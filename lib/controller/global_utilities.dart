@@ -40,6 +40,7 @@ import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
+import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_approval_home.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
@@ -912,13 +913,13 @@ void openMappedPages(
     }));
     return;
   }
-  if (pageName == "Staff In-Out") {
-    // Navigator.push(context, MaterialPageRoute(builder: (_) {
-    //   return EmployeepunchHome(
-    //     loginSuccessModel: loginSuccessModel,
-    //     mskoolController: mskoolController,
-    //   );
-    // }));
+  if (pageName == "Staff in and Out") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return EmployeepunchHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
     return;
   }
 

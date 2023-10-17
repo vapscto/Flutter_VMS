@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/manager/employee_punch/api/employee_slip_model.dart';
-import 'package:m_skool_flutter/manager/employee_punch/controller/employee_salary_controller.dart';
+import 'package:m_skool_flutter/vms/employee_punch/api/employee_slip_model.dart';
+import 'package:m_skool_flutter/vms/employee_punch/controller/employee_salary_controller.dart';
 
 class EmployeeSalarySlipApi {
   EmployeeSalarySlipApi.init();
