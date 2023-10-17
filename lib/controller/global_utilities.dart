@@ -702,6 +702,15 @@ void openMappedPages(
     }));
   }
 
+  if (pageName == "Cash Request") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return PCRequisitionHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+  }
+
   if (pageName == "Student Birth Day Report") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return StudentBdayHome(
