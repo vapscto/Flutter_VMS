@@ -45,6 +45,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
   void initState() {
     super.initState();
     load();
+   
   }
 
   load() async {
@@ -85,13 +86,14 @@ class _ChequeApprovalState extends State<ChequeApproval> {
         detailsList: detailsList,
         otp: 1010);
     if (status == 200) {
-      setState(() {
+    Fluttertoast.showToast(msg: " Successfully  submitted ");
+    }
+    loadingCntrl.updateTabLoading(false);
+    setState(() {
         _controller.getTaDaModelList.clear();
       });
     }
-    loadingCntrl.updateTabLoading(false);
-  }
-
+   
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -317,7 +319,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                               alignment: Alignment.center,
                                               child: SizedBox(
                                                 child: Checkbox(
-                                                  activeColor: Color.fromRGBO(
+                                                  activeColor:const Color.fromRGBO(
                                                       0, 4, 250, 0.898),
                                                   shape:
                                                       ContinuousRectangleBorder(
@@ -528,7 +530,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                         ? SizedBox()
                                                         : Checkbox(
                                                             activeColor:
-                                                                Color.fromRGBO(
+                                                            const    Color.fromRGBO(
                                                                     0,
                                                                     4,
                                                                     250,
@@ -606,7 +608,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                     width: 40,
                                                     child: Radio(
                                                       focusColor:
-                                                          Color.fromARGB(255,
+                                                      const    Color.fromARGB(255,
                                                                   182, 180, 180)
                                                               .withOpacity(.1),
                                                       activeColor:
@@ -631,7 +633,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                 alignment: Alignment.center,
                                                 child: SizedBox(
                                                   child: Text(
-                                                      "${_controller.getTaDaModelList.elementAt(index).hRMBDBranchName.toString()}"),
+                                                      "${_controller.getTaDaModelList.elementAt(index).hRMBDBankName} \n ${_controller.getTaDaModelList.elementAt(index).hRMBDBankAddress} "),
                                                 ),
                                               ),
                                             ),
@@ -749,7 +751,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                 padding: const EdgeInsets
                                                     .symmetric(vertical: 8.0),
                                                 child: TextFormField(
-                                                  decoration:InputDecoration(
+                                                  decoration:const InputDecoration(
                                                     border:  InputBorder.none
                                                   ),
                                                   validator: (value) {
@@ -801,7 +803,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                
                                                 child: TextField(
                                                   maxLines: 3,
-                                                  decoration: InputDecoration(
+                                                  decoration:const InputDecoration(
                                                       border: InputBorder.none),
                                                   controller: _controller
                                                       .tEControllerListOfNarration
@@ -829,7 +831,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                   padding: const EdgeInsets.all(8.0),
                                                   child: TextField(
                                                     maxLines: 3,
-                                                     decoration:  InputDecoration(
+                                                     decoration: const InputDecoration(
                                                       border: OutlineInputBorder()
                                                      ),
                                                     controller: _controller
