@@ -26,7 +26,7 @@ class _PurchaseIndentHomeState extends State<PurchaseIndentHome> {
   @override
   void initState() {
     PurchaseIndentApi.instance
-        .getPurchaseIndentApiApi(base: "", userId: "", controller: controller);
+        .getPurchaseIndentApiApi(base: "", userId:widget.loginSuccessModel.userId!, controller: controller);
     super.initState();
   }
 
@@ -230,11 +230,10 @@ class _PurchaseIndentHomeState extends State<PurchaseIndentHome> {
                                   DataCell(IconButton(
                                     onPressed: () {
                                       Get.to(() => PurchaseDetails(
-                                            PurchaseController: controller,
                                             invmpiId: controller
                                                 .purchaseIndentList
                                                 .elementAt(index)
-                                                .iNVMPIId!,
+                                                .iNVMPIId!,  loginSuccessModel: widget.loginSuccessModel,
                                           ));
                                     },
                                     icon: const Icon(Icons.visibility),

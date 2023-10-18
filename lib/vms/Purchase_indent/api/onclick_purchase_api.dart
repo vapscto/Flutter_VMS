@@ -14,7 +14,7 @@ class OnclickPurchaseApi {
 
   getOnclickPurchaseApiApi({
     required String base,
-    required String userId,
+    required int userId,
     required int invmpiId,
     required PurchaseController controller,
   }) async {
@@ -30,13 +30,12 @@ class OnclickPurchaseApi {
     controller.updateIsLoadingOnclick(true);
 
     logger.d(api);
-
+  logger.d("bts nitin");
     try {
       final Response response = await ins.post(api2, data: {
-        "UserId": 60064, "INVMPI_Id": invmpiId
+        "UserId": userId, "INVMPI_Id": invmpiId
         //  options: Options(headers: getSession())
       });
-
       logger.i(response.data['get_pimodel']);
 
       if (response.data['get_pimodel'] != null) {
@@ -49,6 +48,7 @@ class OnclickPurchaseApi {
         ViewCommentModel viewCommentModel =
             ViewCommentModel.fromJson(response.data['viewcomments']);
         controller.getcommentList(viewCommentModel.values);
+        
 ///////////////////////////////////////////////////////////////////////////////
         PurchaseRequestModel purchaseRequestModel =
             PurchaseRequestModel.fromJson(

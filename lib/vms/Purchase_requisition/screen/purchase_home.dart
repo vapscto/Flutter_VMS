@@ -293,7 +293,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                 ? const Center(
                     child: AnimatedProgressWidget(
                         title: "Getting Purchase Requistion",
-                        desc: "We are loading Planner status... Please wait ",
+                        desc: "We are loading Requistion... Please wait ",
                         animationPath: "assets/json/default.json"),
                   )
                 : (purchaseRequisitionController

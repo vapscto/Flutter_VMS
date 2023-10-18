@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/api/onclick_purchase_api.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/api/purchase_save_api.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/controller/purchase_controller.dart';
@@ -15,9 +16,11 @@ import '../../../widget/home_fab.dart';
 
 class PurchaseDetails extends StatefulWidget {
   final int invmpiId;
+  final LoginSuccessModel loginSuccessModel;
+  
   const PurchaseDetails({
     super.key,
-    required PurchaseController PurchaseController,
+    required  this. loginSuccessModel,
     required this.invmpiId,
   });
   @override
@@ -85,20 +88,21 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
   void initState() {
     OnclickPurchaseApi.instance.getOnclickPurchaseApiApi(
         base: "",
-        userId: "",
+        userId: widget.loginSuccessModel.userId!,
         controller: controller,
         invmpiId: widget.invmpiId);
+    amount =   num.parse(controller.purchaseIndentList.first
+                                      .iNVMPIApproxTotAmount.toString())
+                                      ;   
+
+ 
     super.initState();
-    setState(() {
-      for (int i = 0; i < controller.purchaseIndentList.length; i++) {
-        remarkController.text =
-            controller.purchaseIndentList.elementAt(i).iNVMPIRemarks!;
-      }
-    });
+    
   }
 
   @override
   void dispose() {
+   
     controller.getOnclickList.clear();
     super.dispose();
   }
@@ -468,7 +472,11 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                           child: Text(controller.getOnclickList
                                               .elementAt(index)
                                               .iNVTPIPIQty
-                                              .toString()),
+                                              .toString(),
+                                               style: Theme.of(context).textTheme.titleSmall!.merge(TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w100
+                                              ))),
                                         )),
                                         DataCell(Align(
                                           alignment: Alignment.center,
@@ -482,27 +490,44 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                           child: Text(controller.getOnclickList
                                               .elementAt(index)
                                               .iNVTPIAPPApprovedQty
-                                              .toString()),
+                                              .toString(),
+                                              style:  TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500
+                                               ),),
+                                              
                                         )),
                                         DataCell(TextField(
                                           controller: controller
                                               .unitControllerList
                                               .elementAt(index),
                                           keyboardType: TextInputType.number,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w300
+                                          ),
                                         )),
                                         DataCell(Align(
                                           alignment: Alignment.center,
                                           child: Text(controller.getOnclickList
                                               .elementAt(index)
                                               .iNVTPIApproxAmount
-                                              .toString()),
+                                              .toString(),
+                                              style: Theme.of(context).textTheme.titleSmall!.merge(
+                                                const TextStyle(
+                                                fontSize: 14
+                                              )),),
                                         )),
                                         DataCell(Align(
                                           alignment: Alignment.center,
                                           child: TextField(
                                               controller: controller
                                                   .remarkControllerList
-                                                  .elementAt(index)),
+                                                  .elementAt(index),
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w200
+                                                  ),),
                                         )),
                                         DataCell(IconButton(
                                           onPressed: () {
