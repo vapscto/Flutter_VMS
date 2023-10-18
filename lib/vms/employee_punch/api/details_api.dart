@@ -1,14 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/manager/employee_punch/api/employee_slip_model.dart';
-import 'package:m_skool_flutter/manager/employee_punch/controller/employee_salary_controller.dart';
+import 'package:m_skool_flutter/vms/employee_punch/controller/employee_salary_controller.dart';
+import 'package:m_skool_flutter/vms/employee_punch/model/employee_details.dart';
 
-class EmployeeSalarySlipApi {
-  EmployeeSalarySlipApi.init();
-  static final EmployeeSalarySlipApi instance = EmployeeSalarySlipApi.init();
+class EmployeePunchDetailsApi {
+  EmployeePunchDetailsApi.init();
+  static final EmployeePunchDetailsApi instance =
+      EmployeePunchDetailsApi.init();
 
-  Future<List<EmployeeSalarySlipValues>> getSalary({
+  getDetails({
     required int miId,
     required int asmayId,
     required String base,
@@ -18,6 +19,7 @@ class EmployeeSalarySlipApi {
     required EmployeePunchController salaryController,
   }) async {
     try {
+      salaryController.loading(true);
       final Dio ins = getGlobalDio();
       final String api =
           "${base}api/EmployeeLateInEarlyOutReportFacade/getrpt/";
@@ -41,18 +43,12 @@ class EmployeeSalarySlipApi {
         "multiplehrmeid": hrmeId,
         "punchtype": "punch"
       });
-
-      if (response.data['filldata'] == null) {
-        return Future.error({
-          "errorTitle": "No Data found",
-          "errorMsg": "We are unable to get filldata"
-        });
+      if (response.statusCode == 200) {
+        EmployeePunchDetailsModel employeePunchDetailsModel =
+            EmployeePunchDetailsModel.fromJson(response.data['filldata']);
+        salaryController.getList(employeePunchDetailsModel.values!);
+        salaryController.loading(false);
       }
-      final EmployeeSalarySlipModel employees =
-          EmployeeSalarySlipModel.fromJson(response.data['filldata']);
-
-      salaryController.updateSalarySlip(employees.values!);
-      return Future.value(employees.values);
     } on Exception catch (e) {
       logger.e(e.toString());
       return Future.error({

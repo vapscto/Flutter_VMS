@@ -35,7 +35,8 @@ class _ShomeScreenState extends State<ShomeScreen> {
         ivrmrtId: widget.loginSuccessModel.roleId!,
         userId: widget.loginSuccessModel.userId!,
         mi_id: widget.loginSuccessModel.mIID!,
-        controller: controller);
+        controller: controller,
+        loginSuccessModel: widget.loginSuccessModel);
   }
 
   @override
@@ -56,11 +57,11 @@ class _ShomeScreenState extends State<ShomeScreen> {
         child: Column(children: [
           Obx(() => controller.securtyWorkList.isEmpty
               ? const AnimatedProgressWidget(
-                  animationPath: 'assets/json/default.json',
-                  title: 'Loading data',
-                  desc: "Please wait we are loading data",
+                  animationPath: 'assets/json/nodata.json',
+                  title: 'No data',
+                  desc: "there is no data",
                 )
-              : SizedBox(
+              :  SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Center(
                     child: SingleChildScrollView(

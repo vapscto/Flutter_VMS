@@ -45,6 +45,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
   void initState() {
     super.initState();
     load();
+   
   }
 
   load() async {
@@ -85,13 +86,14 @@ class _ChequeApprovalState extends State<ChequeApproval> {
         detailsList: detailsList,
         otp: 1010);
     if (status == 200) {
-      setState(() {
+    Fluttertoast.showToast(msg: " Successfully  submitted ");
+    }
+    loadingCntrl.updateTabLoading(false);
+    setState(() {
         _controller.getTaDaModelList.clear();
       });
     }
-    loadingCntrl.updateTabLoading(false);
-  }
-
+   
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -282,10 +284,10 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                           fontSize: 14,
                                           color: Color.fromRGBO(0, 0, 0, 0.95),
                                           fontWeight: FontWeight.w500),
-                                      dataRowHeight: 60,
+                                      dataRowHeight: 80,
                                       headingRowHeight: 40,
                                       horizontalMargin: 10,
-                                      columnSpacing: 30,
+                                      columnSpacing: 20,
                                       dividerThickness: 1,
                                       headingTextStyle: const TextStyle(
                                           color: Colors.white,
@@ -317,7 +319,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                               alignment: Alignment.center,
                                               child: SizedBox(
                                                 child: Checkbox(
-                                                  activeColor: Color.fromRGBO(
+                                                  activeColor:const Color.fromRGBO(
                                                       0, 4, 250, 0.898),
                                                   shape:
                                                       ContinuousRectangleBorder(
@@ -528,7 +530,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                         ? SizedBox()
                                                         : Checkbox(
                                                             activeColor:
-                                                                Color.fromRGBO(
+                                                            const    Color.fromRGBO(
                                                                     0,
                                                                     4,
                                                                     250,
@@ -606,7 +608,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                     width: 40,
                                                     child: Radio(
                                                       focusColor:
-                                                          Color.fromARGB(255,
+                                                      const    Color.fromARGB(255,
                                                                   182, 180, 180)
                                                               .withOpacity(.1),
                                                       activeColor:
@@ -631,7 +633,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                 alignment: Alignment.center,
                                                 child: SizedBox(
                                                   child: Text(
-                                                      "${_controller.getTaDaModelList.elementAt(index).hRMBDBranchName.toString()}"),
+                                                      "${_controller.getTaDaModelList.elementAt(index).hRMBDBankName} \n ${_controller.getTaDaModelList.elementAt(index).hRMBDBankAddress} "),
                                                 ),
                                               ),
                                             ),
@@ -745,55 +747,52 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                             ),
                                             //b3
                                             DataCell(
-                                              SizedBox(
-                                                width: 100,
-                                                child: Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(vertical: 8.0),
-                                                  child: TextFormField(
-                                                    decoration: InputDecoration(
-                                                        border:
-                                                            InputBorder.none),
-                                                    validator: (value) {
-                                                      if (selectCheckBox
-                                                          .contains(_controller
+                                              Padding(
+                                                padding: const EdgeInsets
+                                                    .symmetric(vertical: 8.0),
+                                                child: TextFormField(
+                                                  decoration:const InputDecoration(
+                                                    border:  InputBorder.none
+                                                  ),
+                                                  validator: (value) {
+                                                    if (selectCheckBox
+                                                        .contains(_controller
+                                                            .getTaDaModelList
+                                                            .indexOf(_controller
+                                                                .getTaDaModelList
+                                                                .elementAt(
+                                                                    index)))) {
+                                                      if (double.parse(
+                                                              value!) >
+                                                          double.parse(_controller
+                                                              .getTaDaModelList
+                                                              .elementAt(
+                                                                  index)
+                                                              .vPAYVOUAppliedAmount
+                                                              .toString())) {
+                                                        return "Amount is greater than";
+                                                      }
+                                                    }
+                                                  },
+                                                  readOnly: _controller
+                                                                      .radioSelect[
+                                                                  index] ==
+                                                              1 &&
+                                                          selectCheckBox.contains(_controller
                                                               .getTaDaModelList
                                                               .indexOf(_controller
                                                                   .getTaDaModelList
                                                                   .elementAt(
-                                                                      index)))) {
-                                                        if (double.parse(
-                                                                value!) >
-                                                            double.parse(_controller
-                                                                .getTaDaModelList
-                                                                .elementAt(
-                                                                    index)
-                                                                .vPAYVOUAppliedAmount
-                                                                .toString())) {
-                                                          return "Amount is greater than";
-                                                        }
-                                                      }
-                                                    },
-                                                    readOnly: _controller
-                                                                        .radioSelect[
-                                                                    index] ==
-                                                                1 &&
-                                                            selectCheckBox.contains(_controller
-                                                                .getTaDaModelList
-                                                                .indexOf(_controller
-                                                                    .getTaDaModelList
-                                                                    .elementAt(
-                                                                        index)))
-                                                        ? false
-                                                        : true,
-                                                    controller: _controller
-                                                        .tEControllerListOfSncAmount
-                                                        .elementAt(index),
-                                                    style: const TextStyle(
-                                                      fontSize: 14,
-                                                    ),
-                                                    textAlign: TextAlign.center,
+                                                                      index)))
+                                                      ? false
+                                                      : true,
+                                                  controller: _controller
+                                                      .tEControllerListOfSncAmount
+                                                      .elementAt(index),
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
                                                   ),
+                                                  textAlign: TextAlign.center,
                                                 ),
                                               ),
                                             ),
@@ -801,10 +800,10 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                             DataCell(
                                               SizedBox(
                                                 width: 150,
-                                                height: 150,
+                                               
                                                 child: TextField(
                                                   maxLines: 3,
-                                                  decoration: InputDecoration(
+                                                  decoration:const InputDecoration(
                                                       border: InputBorder.none),
                                                   controller: _controller
                                                       .tEControllerListOfNarration
@@ -828,24 +827,29 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                             DataCell(
                                               SizedBox(
                                                 width: 150,
-                                                child: TextField(
-                                                  // maxLines: 3,
-
-                                                  controller: _controller
-                                                      .tEControllerListOfApprovalRemark
-                                                      .elementAt(index),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleSmall!
-                                                      .merge(const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.3,
-                                                        overflow:
-                                                            TextOverflow.clip,
-                                                      )),
-                                                  textAlign: TextAlign.start,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: TextField(
+                                                    maxLines: 3,
+                                                     decoration: const InputDecoration(
+                                                      border: OutlineInputBorder()
+                                                     ),
+                                                    controller: _controller
+                                                        .tEControllerListOfApprovalRemark
+                                                        .elementAt(index),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall!
+                                                        .merge(const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w300,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.3,
+                                                          overflow:
+                                                              TextOverflow.clip,
+                                                        )),
+                                                    textAlign: TextAlign.start,
+                                                  ),
                                                 ),
                                               ),
                                             ),

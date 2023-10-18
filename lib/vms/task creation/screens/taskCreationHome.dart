@@ -97,6 +97,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   List<Map<String, dynamic>> taskEmpArray = [];
   @override
   void initState() {
+    hoursEt.text = "0";
+    minutesEt.text =  "0";
     logger.d("userId${widget.loginSuccessModel.userId}");
     if (_taskDepartController.addListBrowser.isNotEmpty) {
       _taskDepartController.addListBrowser.clear();

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/manager/employee_punch/api/employee_get_salary_slip.dart';
-import 'package:m_skool_flutter/manager/employee_punch/controller/employee_salary_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/employee_punch/api/employee_get_salary_slip.dart';
+import 'package:m_skool_flutter/vms/employee_punch/api/employee_slip_model.dart';
+import 'package:m_skool_flutter/vms/employee_punch/controller/employee_salary_controller.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
-import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
 class EmployeeSalDetails extends StatefulWidget {
@@ -159,10 +159,9 @@ class _EmployeeSalDetailsState extends State<EmployeeSalDetails> {
             }
 
             if (snapshot.hasError) {
-              return Container();
-              // ErrWidget(
-              //   err: snapshot.error as Map<String, dynamic>,
-              // );
+              return ErrWidget(
+                err: snapshot.error as Map<String, dynamic>,
+              );
             }
             return const Center(
               child: AnimatedProgressWidget(

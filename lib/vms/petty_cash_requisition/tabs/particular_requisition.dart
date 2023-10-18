@@ -53,7 +53,9 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
 
   DepartmentPcRequestModelValues? selectedDepartment;
   EmployeeListPcReqModelValues? selectedEmployee;
+  
   ParticularsPcRequestModelValues? selectedParticular;
+  
   loadData() async {
     await getPcRequisitionOnLoad(
         miId: widget.loginSuccessModel.mIID!,
@@ -66,6 +68,8 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
   }
 
   /* DataTableRowModel Model LIST */ List<DataTableRowModel> rows = [];
+
+  bool showAddButton = true;
 
   @override
   void initState() {
@@ -148,6 +152,10 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
   bool validateFields() {
     if (selectedDepartment == null) {
       Fluttertoast.showToast(msg: "Select department.");
+      return false;
+    }
+    if (selectDate.text.isEmpty) {
+      Fluttertoast.showToast(msg: "Select Date.");
       return false;
     }
     if (selectedEmployee == null) {
@@ -829,39 +837,34 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                                           ),
                                         ),
                                         DataCell(
-                                          Row(
-                                            children: [
-                                              if (index == rows.length - 1)
-                                                IconButton(
-                                                  icon: const Icon(Icons.add),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      rows.add(
-                                                          DataTableRowModel(
-                                                        sno: rows.length + 1,
-                                                        selectedParticular:
-                                                            selectedParticular,
-                                                        amountCountroller:
-                                                            TextEditingController(),
-                                                        remarksController:
-                                                            TextEditingController(),
-                                                      ));
-                                                    });
-                                                  },
-                                                )
-                                              else
-                                                IconButton(
-                                                  icon:
-                                                      const Icon(Icons.remove),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      rows.removeAt(index);
-                                                    });
-                                                  },
-                                                ),
-                                            ],
-                                          ),
-                                        ),
+  Row(
+    children: [
+      if (index == 0 && showAddButton)
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () {
+            setState(() {
+              rows.add(DataTableRowModel(
+                sno: rows.length + 1,
+                selectedParticular: selectedParticular,
+                amountCountroller: TextEditingController(),
+                remarksController: TextEditingController(),
+              ));
+            });
+          },
+        )
+      else
+        IconButton(
+          icon: const Icon(Icons.remove),
+          onPressed: () {
+            setState(() {
+              rows.removeAt(index);
+            });
+          },
+        ),
+    ],
+  ),
+),
                                       ],
                                     ),
                                 ],
