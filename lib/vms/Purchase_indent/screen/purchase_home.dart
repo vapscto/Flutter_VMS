@@ -173,11 +173,6 @@ class _PurchaseIndentHomeState extends State<PurchaseIndentHome> {
                                   DataCell(Align(
                                       alignment: Alignment.center,
                                       child: Text('$i'))),
-                                  // DataCell(Align(
-                                  //       alignment: Alignment.center,
-                                  //       child: Text( controller.purchaseIndentList.elementAt(index).sanctionLevelNo.toString()),
-                                  //       )
-                                  //       ),
                                   DataCell(Align(
                                     alignment: Alignment.center,
                                     child: Text(controller.purchaseIndentList
