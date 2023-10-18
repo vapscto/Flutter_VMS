@@ -933,15 +933,15 @@ void openMappedPages(
     }));
     return;
   }
-  if (pageName == "Staff in and Out") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return EmployeepunchHome(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-      );
-    }));
-    return;
-  }
+  // if (pageName == "Staff in and Out") {
+  //   Navigator.push(context, MaterialPageRoute(builder: (_) {
+  //     return EmployeepunchHome(
+  //       loginSuccessModel: loginSuccessModel,
+  //       mskoolController: mskoolController,
+  //     );
+  //   }));
+  //   return;
+  // }
 
   if (pageName == "Staff Time Table") {
     Navigator.push(
