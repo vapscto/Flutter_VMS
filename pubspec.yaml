@@ -153,17 +153,17 @@ flutter_icons:
   android: true
   ios: true
   adaptive_icon_background: "#621990"
-  image_path: "assets/images/app_icon.jpeg"
+  image_path: "assets/images/VMSLogo-1.png"
   # min_sdk_android: 20 # android min sdk min:16, default 21
   web:
     generate: true
-    image_path: "assets/images/app_icon.jpeg"
+    image_path: "assets/images/VMSLogo-1.png"
     background_color: "#621990"
     theme_color: "#621990"
   windows:
     generate: true
-    image_path: "assets/images/app_icon.jpeg"
+    image_path: "assets/images/VMSLogo-1.png"
     icon_size: 48 # min:48, max:256, default: 48
   macos:
     generate: true
-    image_path: "assets/images/app_icon.jpeg"
+    image_path: "assets/images/VMSLogo-1.png"
