@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/controller/purchase_controller.dart';
 
@@ -24,7 +25,7 @@ class PurchaseSave {
       controller.saveLoading(true);
       var response = await dio.post(
         url,
-        //  options: Options(headers: getSession()),
+        options: Options(headers: getSession()),
         data: {
           "INVMPI_Remarks": invmpiRemarks,
           "INVMPI_ApproxTotAmount": invmpiAmount,
@@ -42,7 +43,7 @@ class PurchaseSave {
         "MI_Id": miId,
         "approvecnt": approvecent,
       });
-      logger.i("=====+++///${response.statusCode}");
+      logger.i("=====${response.statusCode}");
       if (response.statusCode == 200) {
         controller.saveLoading(false);
         Fluttertoast.showToast(msg: "Update Successfully");
