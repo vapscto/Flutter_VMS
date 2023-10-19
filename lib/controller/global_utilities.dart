@@ -12,7 +12,6 @@ import 'package:get_ip_address/get_ip_address.dart';
 import 'package:m_skool_flutter/apis/version_control_api.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/manager/employee_punch/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/manager/employee_salary/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/manager/feedemo/screen/fee_home.dart';
 import 'package:m_skool_flutter/manager/feehead/screen/fee_details_home.dart';
@@ -835,13 +834,13 @@ void openMappedPages(
     return;
   }
 
-
   if (pageName == "Visitor Approval") {
-    Get.to(() => VisitorApprovalHome(loginSuccessModel: loginSuccessModel, mskoolController: mskoolController,
+    Get.to(() => VisitorApprovalHome(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
         ));
     return;
   }
-
 
   if (pageName == "Leave Approval") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -933,15 +932,15 @@ void openMappedPages(
     }));
     return;
   }
-  // if (pageName == "Staff in and Out") {
-  //   Navigator.push(context, MaterialPageRoute(builder: (_) {
-  //     return EmployeepunchHome(
-  //       loginSuccessModel: loginSuccessModel,
-  //       mskoolController: mskoolController,
-  //     );
-  //   }));
-  //   return;
-  // }
+  if (pageName == "Staff in and Out") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return EmployeepunchHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+    return;
+  }
 
   if (pageName == "Staff Time Table") {
     Navigator.push(
