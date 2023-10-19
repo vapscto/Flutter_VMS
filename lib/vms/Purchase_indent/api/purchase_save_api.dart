@@ -43,7 +43,7 @@ class PurchaseSave {
         "MI_Id": miId,
         "approvecnt": approvecent,
       });
-      logger.i("=====${response.statusCode}");
+      logger.i("=====${response}");
       if (response.statusCode == 200) {
         controller.saveLoading(false);
         Fluttertoast.showToast(msg: "Update Successfully");

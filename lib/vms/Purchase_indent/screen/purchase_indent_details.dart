@@ -71,6 +71,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
         approvecent: 1,
         controller: controller);
     controller.isSaveLoaeding(false);
+    Get.back();
   }
 
   var date;
