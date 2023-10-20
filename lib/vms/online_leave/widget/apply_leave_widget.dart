@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/api/save_leave_application.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
+import 'package:m_skool_flutter/vms/utils/showDatePicker.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
@@ -40,7 +41,32 @@ class ApplyLeaveWidget extends StatelessWidget {
     DateTime endDT = DateTime.now();
     DateTime reportingDT = DateTime.now();
     RxString totalDay = RxString("0");
+   DateTime currentDate = DateTime.now();
 
+   DateTime initialDt =DateTime.now();
+   DateTime firstDt=DateTime.now();
+   DateTime lastDt=DateTime.now();
+    if(values.hrmLLeaveName=="Casual Leave"){
+     initialDt=currentDate.add(Duration(days: 2));
+     firstDt=currentDate.add(Duration(days: 2));
+     lastDt= currentDate.add(Duration(days: 4));
+    }else  if(values.hrmLLeaveName=="Sick Leave"){
+     initialDt = currentDate.subtract(Duration(days:1 ));
+     firstDt = currentDate.subtract(Duration(days: 2));
+     lastDt =  currentDate;
+    }else if(values.hrmLLeaveName=="Comp off" ||values.hrmLLeaveName=="Emergency Leave"){
+     initialDt= currentDate.subtract(Duration(days:1 ));
+     firstDt=currentDate.subtract(Duration(days: 30));
+     lastDt=currentDate;
+    }else if(values.hrmLLeaveName=="Optional Leave"){
+    initialDt= DateTime.now();
+                firstDt = DateTime.now() ;
+                lastDt=DateTime.now().add(Duration(days: 2));
+    }else{
+       initialDt= currentDate;
+                firstDt = DateTime(currentDate.year, currentDate.month +1, currentDate.day);
+                lastDt= DateTime(currentDate.year, currentDate.month - 1, currentDate.day); 
+    }
     return Column(
       children: [
         CustomContainer(
@@ -208,12 +234,15 @@ class ApplyLeaveWidget extends StatelessWidget {
                                     if (startDate.text.isEmpty) {
                                       endDT = DateTime(DateTime.now().year + 1);
                                     }
-
-                                    DateTime? date = await showDatePicker(
+                                //first
+                                    DateTime? date = await showDatePickerLeave(
                                       context: context,
-                                      initialDate: startDT,
-                                      firstDate: DateTime(2000),
-                                      lastDate: endDT,
+                                    initialDate: initialDt,
+                                    firstDate: firstDt,
+                                    lastDate: lastDt,
+                                       selectableDayPredicate: (DateTime date) {
+                                          return true;
+                                        },
                                     );
                                     if (date == null) {
                                       Fluttertoast.showToast(
@@ -308,13 +337,16 @@ class ApplyLeaveWidget extends StatelessWidget {
                                       return;
                                     }
                                     endDT = startDT;
-                                    DateTime? end = await showDatePicker(
+                                    //second
+                                    DateTime? end = await showDatePickerLeave(
                                       context: context,
-                                      initialDate: endDT,
-                                      firstDate: startDT,
-                                      lastDate:
-                                          DateTime(DateTime.now().year + 1),
-                                    );
+                                       initialDate: initialDt,
+                                        firstDate: firstDt,
+                                        lastDate: lastDt,
+                                       selectableDayPredicate: (DateTime date) {
+                                          return true;
+                                        },
+                                        );
 
                                     if (end == null) {
                                       Fluttertoast.showToast(
