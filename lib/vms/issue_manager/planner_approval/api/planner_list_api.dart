@@ -5,6 +5,8 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/controller/planner_approval_controller.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/dr_not_approved_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/planner_list_model.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/planner_status_model.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/planner_status_model.dart';
 
 class PlannerListAPI {
   PlannerListAPI.init();
@@ -17,19 +19,27 @@ class PlannerListAPI {
     required int roleId,
   }) async {
     var dio = Dio();
-    var url = 'https://vmsissuemanager.azurewebsites.net/${URLS.plannerList}';
+    var url = base + URLS.plannerList;
     try {
       plannerApprovalController.plannerLoading(true);
       var response = await dio.post(url,
           options: Options(headers: getSession()),
-          data: {"IVRMRT_Id": 11, "UserId": 60933, "MI_Id": 17});
+          data: {"IVRMRT_Id": roleId, "UserId": userId, "MI_Id": miId});
+      logger.i({"IVRMRT_Id": roleId, "UserId": userId, "MI_Id": miId});
+      logger.i(url);
       if (response.statusCode == 200) {
+        logger.i(response.data['get_plannerlist']);
         PlannerListModel plannerListModel =
             PlannerListModel.fromJson(response.data['get_plannerlist']);
         DrNotApprovedModel drNotApprovedModel =
             DrNotApprovedModel.fromJson(response.data['drnotapprovedmessage']);
+        PlannerStatusModelList plannerStatusModel =
+            PlannerStatusModelList.fromJson(
+                response.data['get_updatedplannerlist']);
+        plannerApprovalController.getStatus(plannerStatusModel.values!);
         plannerApprovalController.getPlanner(
             plannerListModel.values!, drNotApprovedModel.values!);
+
         plannerApprovalController.plannerLoading(false);
       }
     } on DioError catch (e) {
