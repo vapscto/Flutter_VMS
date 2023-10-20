@@ -8,9 +8,9 @@ class SaveTadaModel {
   String? vtadaaAFromDate;
   String? vtadaaAToDate;
   int? vtadaaAClientId;
-  int? vtadaaATotalAppliedAmount;
-  int? vtadaaATotalSactionedAmount;
-  int? vtadaaATotalPaidAmount;
+  dynamic vtadaaATotalAppliedAmount;
+  dynamic vtadaaATotalSactionedAmount;
+  dynamic vtadaaATotalPaidAmount;
   String? vtadaaAToAddress;
   String? vtadaaARemarks;
   int? hrmEId;

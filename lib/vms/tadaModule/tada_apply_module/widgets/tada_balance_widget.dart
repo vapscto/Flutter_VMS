@@ -31,10 +31,9 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
     tadaApplyDataController.appliedData(true);
     await AppliedDataAPI.instance.tadaAppliedListAPI(
         miId: widget.loginSuccessModel.mIID!,
-        userId: 60249, //widget.loginSuccessModel.userId!,
+        userId: widget.loginSuccessModel.userId!,
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         tadaApplyController: tadaApplyDataController);
-
     tadaApplyDataController.appliedData(false);
   }
 

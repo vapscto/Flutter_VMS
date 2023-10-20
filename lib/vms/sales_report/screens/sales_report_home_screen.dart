@@ -693,14 +693,14 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                                         for (int i = 0;
                                                             i <
                                                                 salesController
-                                                                    .selectedEmployeeListValues
+                                                                    .employeeListValues
                                                                     .length;
                                                             i++) {
                                                           salesController.addEmpId(
                                                               salesController
-                                                                  .selectedEmployeeListValues
+                                                                  .employeeListValues
                                                                   .elementAt(i)
-                                                                  .hrmDId!);
+                                                                  .hrmEId!);
                                                           logger.i(
                                                               salesController
                                                                   .empId
@@ -742,7 +742,7 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                                                     .employeeListValues
                                                                     .elementAt(
                                                                         index)
-                                                                    .hrmDId!);
+                                                                    .hrmEId!);
                                                             logger.i(
                                                                 salesController
                                                                     .empId
