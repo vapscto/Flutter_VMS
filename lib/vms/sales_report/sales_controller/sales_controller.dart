@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/vms/sales_report/model/lead_list_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/model/department_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/model/designation_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/model/employee_model.dart';
@@ -48,37 +46,6 @@ class SalesController extends GetxController {
 
   void removeSelectedValues(DepartmentListModelValues value) {
     departmentSelectedValues.remove(value);
-  }
-
-  //Lead List
-  RxList<LeadListModelValues> leadListmodelValues = <LeadListModelValues>[].obs;
-  RxList<LeadListModelValues> selectedLeadListmodelValues =
-      <LeadListModelValues>[].obs;
-  RxList<int> leadId = <int>[].obs;
-  void getLead(List<LeadListModelValues> lead) {
-    if (leadListmodelValues.isNotEmpty) {
-      leadListmodelValues.clear();
-    }
-    for (int i = 0; i < lead.length; i++) {
-      leadListmodelValues.add(lead.elementAt(i));
-      logger.e(lead.elementAt(i).iSMSLELeadName);
-    }
-  }
-
-  void addLeadId(int value) {
-    leadId.add(value);
-  }
-
-  void removeLeadId(int value) {
-    leadId.removeAt(value);
-  }
-
-  void addSelectedLeadValues(LeadListModelValues value) {
-    selectedLeadListmodelValues.add(value);
-  }
-
-  void removeSelectedLeadValues(LeadListModelValues value) {
-    selectedLeadListmodelValues.remove(value);
   }
 
   // Designation
@@ -149,9 +116,9 @@ class SalesController extends GetxController {
     isList.value = loading;
   }
 
-  RxList<SalesListModelValues> leadListModelValue =
-      <SalesListModelValues>[].obs;
-  void salesList(List<SalesListModelValues> list) {
+  RxList<SalesEmployeeListModelValues> leadListModelValue =
+      <SalesEmployeeListModelValues>[].obs;
+  void salesList(List<SalesEmployeeListModelValues> list) {
     if (leadListModelValue.isNotEmpty) {
       leadListModelValue.clear();
     }

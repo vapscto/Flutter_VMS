@@ -181,125 +181,7 @@ class _PunchReportState extends State<PunchReport> {
               ),
             )),
       ),
-      // appBar: CustomAppBar(
-      //   title: widget.title,
-      //   bottom: PreferredSize(
-      //       preferredSize: const Size.fromHeight(
-      //         60,
-      //       ),
-      //       child: Padding(
-      //         padding: const EdgeInsets.all(12.0),
-      //         child: Row(
-      //           children: [
-      //             Expanded(
-      //                 child: InkWell(
-      //               onTap: () async {
-      //                 final DateTime? dt = await showDatePicker(
-      //                   context: context,
-      //                   initialDate: punchFilterController.startFrom.value,
-      //                   firstDate: DateTime(2011, 01, 01),
-      //                   lastDate: punchFilterController.endTo.value,
-      //                 );
 
-      //                 if (dt == null) {
-      //                   Fluttertoast.showToast(
-      //                       msg: "Please select Start Date.");
-      //                   return;
-      //                 }
-      //                 punchFilterController.updateDisplayAbleStartFrom(
-      //                     "${dt.day}-${dt.month}-${dt.year}");
-      //                 punchFilterController.updateStartFrom(dt);
-
-      //                 if (punchFilterController.start.value > 0) {
-      //                   await PunchReportApi.instance.pcReports(
-      //                       miId: widget.loginSuccessModel.mIID!,
-      //                       userId: widget.loginSuccessModel.userId!,
-      //                       fromDate: punchFilterController.startFrom.value
-      //                           .toLocal()
-      //                           .toString(),
-      //                       endDate: punchFilterController.endTo.value
-      //                           .toLocal()
-      //                           .toString(),
-      //                       base: baseUrlFromInsCode(
-      //                         "portal",
-      //                         widget.mskoolController,
-      //                       ),
-      //                       controller: punchFilterController);
-      //                 }
-      //               },
-      //               child: Container(
-      //                 padding: const EdgeInsets.all(12.0),
-      //                 alignment: Alignment.centerLeft,
-      //                 decoration: BoxDecoration(
-      //                   borderRadius: BorderRadius.circular(8.0),
-      //                   color: Colors.white,
-      //                 ),
-      //                 width: double.infinity,
-      //                 height: 50,
-      //                 child: Obx(() {
-      //                   return Text(
-      //                       punchFilterController.displayAbleStartFrom.value);
-      //                 }),
-      //               ),
-      //             )),
-      //             const SizedBox(
-      //               width: 12.0,
-      //             ),
-      //             Expanded(
-      //                 child: InkWell(
-      //               onTap: () async {
-      //                 final DateTime? dt = await showDatePicker(
-      //                   context: context,
-      //                   initialDate: punchFilterController.startFrom.value,
-      //                   firstDate: punchFilterController.startFrom.value,
-      //                   lastDate: DateTime.now(),
-      //                 );
-
-      //                 if (dt == null) {
-      //                   Fluttertoast.showToast(
-      //                       msg:
-      //                           "You didn't selected end date to show punch report");
-      //                   return;
-      //                 }
-
-      //                 punchFilterController.updateDisplayAbleEndTo(
-      //                     "${dt.day}-${dt.month}-${dt.year}");
-      //                 punchFilterController.updateEndTo(dt);
-
-      //                 punchFilterController.start.value += 1;
-
-      //                 await PunchReportApi.instance.pcReports(
-      //                     miId: widget.loginSuccessModel.mIID!,
-      //                     userId: widget.loginSuccessModel.userId!,
-      //                     fromDate: punchFilterController.startFrom.value
-      //                         .toLocal()
-      //                         .toString(),
-      //                     endDate: punchFilterController.endTo.value
-      //                         .toLocal()
-      //                         .toString(),
-      //                     base: baseUrlFromInsCode(
-      //                         "portal", widget.mskoolController),
-      //                     controller: punchFilterController);
-      //               },
-      //               child: Container(
-      //                 padding: const EdgeInsets.all(12.0),
-      //                 alignment: Alignment.centerLeft,
-      //                 decoration: BoxDecoration(
-      //                   borderRadius: BorderRadius.circular(8.0),
-      //                   color: Colors.white,
-      //                 ),
-      //                 width: double.infinity,
-      //                 height: 50,
-      //                 child: Obx(() {
-      //                   return Text(
-      //                       punchFilterController.displayAbleEndTo.value);
-      //                 }),
-      //               ),
-      //             )),
-      //           ],
-      //         ),
-      //       )),
-      // ).getAppBar(),
       body: Obx(() {
         logger.d("message");
         return punchFilterController.start.value == 0
@@ -430,26 +312,26 @@ class _PunchReportState extends State<PunchReport> {
                                     const SizedBox(
                                       height: 12.0,
                                     ),
-                                    PunchReportItem(
-                                      title: "Late In Time",
-                                      time: punchFilterController.reports
-                                              .elementAt(index)
-                                              .lateby ??
-                                          "N/A",
-                                    ),
-                                    const SizedBox(
-                                      height: 12.0,
-                                    ),
-                                    PunchReportItem(
-                                      title: "Early Out",
-                                      time: punchFilterController.reports
-                                              .elementAt(index)
-                                              .earlyby ??
-                                          "N/A",
-                                    ),
-                                    const SizedBox(
-                                      height: 12.0,
-                                    ),
+                                    // PunchReportItem(
+                                    //   title: "Late In Time",
+                                    //   time: punchFilterController.reports
+                                    //           .elementAt(index)
+                                    //           .lateby ??
+                                    //       "N/A",
+                                    // ),
+                                    // const SizedBox(
+                                    //   height: 12.0,
+                                    // ),
+                                    // PunchReportItem(
+                                    //   title: "Early Out",
+                                    //   time: punchFilterController.reports
+                                    //           .elementAt(index)
+                                    //           .earlyby ??
+                                    //       "N/A",
+                                    // ),
+                                    // const SizedBox(
+                                    //   height: 12.0,
+                                    // ),
                                   ],
                                 ),
                               );

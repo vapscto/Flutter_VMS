@@ -17,6 +17,7 @@ class SaleReportList extends StatefulWidget {
   final int userId;
   final List leadId;
   final List departmentId;
+  final List employeeId;
 
   const SaleReportList(
       {super.key,
@@ -28,7 +29,8 @@ class SaleReportList extends StatefulWidget {
       required this.miId,
       required this.userId,
       required this.leadId,
-      required this.departmentId});
+      required this.departmentId,
+      required this.employeeId});
 
   @override
   State<SaleReportList> createState() => _SaleReportListState();
@@ -46,9 +48,9 @@ class _SaleReportListState extends State<SaleReportList> {
         toDate: widget.toDate,
         miId: widget.miId,
         userId: widget.userId,
-        leadIdList: newId,
         hrmdIdList: widget.departmentId,
-        hrmeIdList: []);
+        hrmeIdList: widget.employeeId,
+        designationId: widget.salesController.designationId);
     widget.salesController.listLoading(false);
   }
 
@@ -98,7 +100,7 @@ class _SaleReportListState extends State<SaleReportList> {
                           borderRadius: BorderRadius.circular(10),
                           child: DataTable(
                             dataRowHeight:
-                                MediaQuery.of(context).size.height * 0.7,
+                                MediaQuery.of(context).size.height * 0.05,
                             headingRowHeight: 45,
                             columnSpacing: 10,
                             headingTextStyle:
@@ -113,58 +115,61 @@ class _SaleReportListState extends State<SaleReportList> {
                                 (states) => Theme.of(context).primaryColor),
                             columns: const [
                               DataColumn(label: Text("SL.NO.")),
+                              DataColumn(label: Text("Employee Name")),
                               DataColumn(label: Text("Lead Name")),
-                              DataColumn(label: Text("Comments")),
-                              DataColumn(label: Text("Comments Date")),
-                              DataColumn(label: Text("Comments By")),
-                              DataColumn(label: Text("View")),
+                              DataColumn(label: Text("Visited Date")),
+                              DataColumn(label: Text("Demo Date")),
+                              DataColumn(label: Text("Contact Persion")),
+                              DataColumn(label: Text("Status Name")),
                             ],
                             rows: List.generate(
                                 widget.salesController.leadListModelValue
                                     .length, (index) {
                               var date;
+                              var demoDate;
                               var value = index + 1;
                               if (widget
                                       .salesController
                                       .leadListModelValue[index]
-                                      .iSMSLECOMCreatedDate !=
+                                      .iSMSLEVisitedDate !=
                                   null) {
                                 DateTime dt = DateTime.parse(widget
                                     .salesController
                                     .leadListModelValue[index]
-                                    .iSMSLECOMCreatedDate!);
+                                    .iSMSLEVisitedDate!);
                                 date = '${dt.day}-${dt.month}-${dt.year}';
                               }
+                              DateTime dt2 = DateTime.parse(widget
+                                  .salesController
+                                  .leadListModelValue[index]
+                                  .iSMSLEDMDemoDate!);
+                              demoDate = '${dt2.day}-${dt2.month}-${dt2.year}';
+
                               return DataRow(cells: [
                                 DataCell(Text(value.toString())),
-                                DataCell(SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.35,
-                                  child: Text(widget
-                                          .salesController
-                                          .leadListModelValue[index]
-                                          .iSMSLELeadName ??
-                                      ""),
-                                )),
-                                DataCell(SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.8,
-                                  child: SingleChildScrollView(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 8),
-                                    child: Text(widget
+                                DataCell(Text(widget
                                         .salesController
                                         .leadListModelValue[index]
-                                        .iSMSLECOMComments!),
-                                  ),
-                                )),
+                                        .hRMEEmployeeFirstName ??
+                                    "")),
+                                DataCell(Text(widget
+                                        .salesController
+                                        .leadListModelValue[index]
+                                        .iSMSLELeadName ??
+                                    "")),
                                 DataCell(Text(
                                   date,
                                   textAlign: TextAlign.center,
                                 )),
-                                DataCell(Text(widget.salesController
-                                    .leadListModelValue[index].employeename!)),
-                                const DataCell(Text('')),
+                                DataCell(Text(demoDate)),
+                                DataCell(Text(widget
+                                    .salesController
+                                    .leadListModelValue[index]
+                                    .iSMSLEContactPerson!)),
+                                DataCell(Text(widget
+                                    .salesController
+                                    .leadListModelValue[index]
+                                    .iSMSMSTStatusName!)),
                               ]);
                             }),
                           ),

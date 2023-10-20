@@ -2135,7 +2135,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Planer Is Not Create Between Dates !",
+                "Daily report is not generated between dates !",
                 style: Get.textTheme.titleMedium!.copyWith(
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w400),
@@ -2145,8 +2145,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                   title: "OK",
                   onPress: () {
                     setState(() {
-                      Get.back();
                       getStateList();
+                      Get.back();
                     });
                   })
             ],

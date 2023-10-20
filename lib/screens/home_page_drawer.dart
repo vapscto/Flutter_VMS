@@ -435,7 +435,7 @@ class _DrawerHeaderState extends State<DrawerHeader> {
                     // ),
                     Text(
                       // controller.profileData.elementAt(0).mobileNo ??
-                      widget.loginSuccessModel.amsTAdmNo ?? "N/A",
+                      widget.loginSuccessModel.userId.toString(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.labelSmall!.merge(

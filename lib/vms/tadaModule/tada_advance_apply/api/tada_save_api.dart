@@ -61,31 +61,11 @@ class TadaSaveApi {
         "VTADAAA_ArrivalTime": arrivalTime,
         "VTADAAA_ClientMultiple": clintMultiple,
       });
-      logger.i(response.data);
+      logger.i(response);
       logger.i(response.statusCode);
       if (response.statusCode == 200) {
         SaveTadaModel saveTadaModel = SaveTadaModel.fromJson(response.data);
-        if (saveTadaModel.returnvalue == true) {
-          //   if (saveTadaModel.returnval == "Insert") {
-          //     Fluttertoast.showToast(msg: "Record Saved Successfully");
-          //   } else if (saveTadaModel.returnval == "Failed") {
-          //     showSweetAlert("Record Not saved");
-          //   } else if (saveTadaModel.returnval == "Duplicate") {
-          //     showSweetAlert("Record Already Exist");
-          //   } else if (promise.returnval == "Update") {
-          //     showSweetAlert("Record Update Successfully");
-          //   } else if (promise.returnval == "UpdateFailed") {
-          //     showSweetAlert("Record Not Update");
-          //   } else if (promise.returnval == "") {
-          //     showSweetAlert("please contact administrator !");
-          //   }
-          //   // Reload the state (you should replace this with your actual state management logic)
-          //   $state.reload();
-          // } else if (promise.returnvalue == false) {
-          //   if (promise.returnval == "") {
-          //     showSweetAlert("please contact Administrator !");
-          //   }
-        }
+        if (saveTadaModel.duplicate == '0') {}
 
         tadaApplyController.saveData(false);
         Fluttertoast.showToast(msg: "TA-DA saved successfully");

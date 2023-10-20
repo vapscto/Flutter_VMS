@@ -35,11 +35,9 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
   final _controller = ScrollController();
   final _controller1 = ScrollController();
   final _controller2 = ScrollController();
-  final _controller3 = ScrollController();
   final RxBool selectAllDepartment = RxBool(false);
   final RxBool selectAllDesignation = RxBool(false);
   final RxBool selectAllEmployee = RxBool(false);
-  final RxBool selectedAllLead = RxBool(false);
   final _startDate = TextEditingController();
   final _endDate = TextEditingController();
   DateTime? fromDate;
@@ -113,17 +111,18 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                       elevation: 5,
                       backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10))),
+                          borderRadius: BorderRadius.circular(20))),
                   onPressed: () {
                     Get.to(() => SaleReportList(
                           salesController: salesController,
                           mskoolController: widget.mskoolController,
                           departmentId: idList,
+                          employeeId: salesController.empId,
                           flag: selectedType == 'Given By'
                               ? 'GivenBY'
                               : 'ScheduledBY',
                           fromDate: fromDate!.toIso8601String(),
-                          leadId: salesController.leadId,
+                          leadId: [],
                           miId: widget.loginSuccessModel.mIID!,
                           toDate: toDate!.toIso8601String(),
                           userId: widget.loginSuccessModel.userId!,
@@ -280,9 +279,11 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                                           .length) {
                                                     selectAllDepartment.value =
                                                         true;
+                                                    setState(() {});
                                                   } else {
                                                     selectAllDepartment.value =
                                                         false;
+                                                    setState(() {});
                                                   }
                                                   for (int i = 0;
                                                       i <
@@ -294,6 +295,7 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                                         .departmentlistValues
                                                         .elementAt(i)
                                                         .hrmDId!);
+                                                    logger.i(idList);
                                                     _getDegnisation(idList);
                                                     setState(() {});
                                                   }
@@ -345,12 +347,13 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                                                     .departmentlistValues
                                                                     .elementAt(
                                                                         index));
-                                                        for (int i = 0;
-                                                            i < idList.length;
-                                                            i++) {
-                                                          removeId(
-                                                              idList[index]);
-                                                        }
+
+                                                        removeId(salesController
+                                                            .departmentlistValues
+                                                            .elementAt(index)
+                                                            .hrmDId!);
+                                                        logger.i(idList);
+
                                                         _getDegnisation(idList);
                                                         setState(() {});
                                                       }
@@ -476,6 +479,20 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                                           .selectedDesignationListValues
                                                           .addAll(salesController
                                                               .designationListValues);
+                                                      if (salesController
+                                                              .selectedDesignationListValues
+                                                              .length ==
+                                                          salesController
+                                                              .designationListValues
+                                                              .length) {
+                                                        selectAllDesignation
+                                                            .value = true;
+                                                        setState(() {});
+                                                      } else {
+                                                        selectAllDesignation
+                                                            .value = false;
+                                                        setState(() {});
+                                                      }
                                                       for (int i = 0;
                                                           i <
                                                               salesController
@@ -487,6 +504,9 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                                                 .designationListValues
                                                                 .elementAt(i)
                                                                 .hrmdeSId!);
+                                                        logger.i(salesController
+                                                            .designationId
+                                                            .toList());
                                                         _getEmployee();
                                                         setState(() {});
                                                       }
@@ -539,17 +559,12 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                                                     .designationListValues
                                                                     .elementAt(
                                                                         index));
-                                                            for (int i = 0;
-                                                                i <
+                                                            salesController
+                                                                .removeDegId(
                                                                     salesController
-                                                                        .designationId
-                                                                        .length;
-                                                                i++) {
-                                                              removeId(
-                                                                  salesController
-                                                                          .designationId[
-                                                                      index]);
-                                                            }
+                                                                            .designationId[
+                                                                        index]);
+
                                                             _getEmployee();
                                                             setState(() {});
                                                           }
@@ -663,40 +678,42 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                                   value:
                                                       selectAllEmployee.value,
                                                   onChanged: (value) {
-                                                    selectAllEmployee.value =
-                                                        value!;
-
-                                                    salesController
-                                                        .selectedEmployeeListValues
-                                                        .clear();
-                                                    if (value) {
+                                                    setState(() {
+                                                      selectAllEmployee.value =
+                                                          value!;
                                                       salesController
                                                           .selectedEmployeeListValues
-                                                          .addAll(salesController
-                                                              .employeeListValues);
+                                                          .clear();
+                                                      if (value) {
+                                                        salesController
+                                                            .selectedEmployeeListValues
+                                                            .addAll(salesController
+                                                                .employeeListValues);
 
-                                                      for (int i = 0;
-                                                          i <
+                                                        for (int i = 0;
+                                                            i <
+                                                                salesController
+                                                                    .employeeListValues
+                                                                    .length;
+                                                            i++) {
+                                                          salesController.addEmpId(
                                                               salesController
                                                                   .employeeListValues
-                                                                  .length;
-                                                          i++) {
-                                                        addId(salesController
-                                                            .employeeListValues
-                                                            .elementAt(i)
-                                                            .hrmDId!);
-
-                                                        setState(() {});
+                                                                  .elementAt(i)
+                                                                  .hrmEId!);
+                                                          logger.i(
+                                                              salesController
+                                                                  .empId
+                                                                  .toList());
+                                                        }
+                                                      } else {
+                                                        salesController
+                                                            .selectedEmployeeListValues
+                                                            .clear();
+                                                        salesController.empId
+                                                            .clear();
                                                       }
-                                                    } else {
-                                                      salesController
-                                                          .selectedEmployeeListValues
-                                                          .clear();
-                                                      salesController.empId
-                                                          .clear();
-
-                                                      setState(() {});
-                                                    }
+                                                    });
                                                   }),
                                             ),
                                             ListView.builder(
@@ -725,7 +742,11 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                                                     .employeeListValues
                                                                     .elementAt(
                                                                         index)
-                                                                    .hrmDId!);
+                                                                    .hrmEId!);
+                                                            logger.i(
+                                                                salesController
+                                                                    .empId
+                                                                    .toList());
 
                                                             setState(() {});
                                                           } else {
@@ -736,17 +757,12 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                                                     .employeeListValues
                                                                     .elementAt(
                                                                         index));
-                                                            for (int i = 0;
-                                                                i <
+
+                                                            salesController
+                                                                .removeEmpId(
                                                                     salesController
-                                                                        .empId
-                                                                        .length;
-                                                                i++) {
-                                                              removeId(
-                                                                  salesController
-                                                                          .empId[
-                                                                      index]);
-                                                            }
+                                                                            .empId[
+                                                                        index]);
 
                                                             setState(() {});
                                                           }
@@ -779,202 +795,202 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                 ],
                               ),
                             ),
-                  salesController.leadListmodelValues.isEmpty
-                      ? const SizedBox()
-                      : Container(
-                          margin: const EdgeInsets.only(top: 30),
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              Container(
-                                height: 140,
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 10),
-                                decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  borderRadius: BorderRadius.circular(16.0),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      offset: Offset(0, 1),
-                                      blurRadius: 4,
-                                      color: Colors.black12,
-                                    ),
-                                  ],
-                                ),
-                                child: RawScrollbar(
-                                  thumbColor: const Color(0xFF1E38FC),
-                                  trackColor:
-                                      const Color.fromRGBO(223, 239, 253, 1),
-                                  trackRadius: const Radius.circular(10),
-                                  trackVisibility: true,
-                                  radius: const Radius.circular(10),
-                                  thickness: 14,
-                                  thumbVisibility: true,
-                                  controller: _controller3,
-                                  child: SingleChildScrollView(
-                                    controller: _controller3,
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 30,
-                                          child: CheckboxListTile(
-                                              controlAffinity:
-                                                  ListTileControlAffinity
-                                                      .leading,
-                                              checkboxShape:
-                                                  RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              6)),
-                                              dense: true,
-                                              activeColor: Theme.of(context)
-                                                  .primaryColor,
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 8),
-                                              visualDensity:
-                                                  const VisualDensity(
-                                                      horizontal: -4.0),
-                                              title: Text(
-                                                'Select all',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .labelSmall!
-                                                    .merge(const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.3)),
-                                              ),
-                                              value: selectedAllLead.value,
-                                              onChanged: (value) {
-                                                selectedAllLead.value = value!;
+                  // salesController.leadListmodelValues.isEmpty
+                  //     ? const SizedBox()
+                  //     : Container(
+                  //         margin: const EdgeInsets.only(top: 30),
+                  //         child: Stack(
+                  //           clipBehavior: Clip.none,
+                  //           children: [
+                  //             Container(
+                  //               height: 140,
+                  //               padding:
+                  //                   const EdgeInsets.only(top: 10, bottom: 10),
+                  //               decoration: BoxDecoration(
+                  //                 color:
+                  //                     Theme.of(context).scaffoldBackgroundColor,
+                  //                 borderRadius: BorderRadius.circular(16.0),
+                  //                 boxShadow: const [
+                  //                   BoxShadow(
+                  //                     offset: Offset(0, 1),
+                  //                     blurRadius: 4,
+                  //                     color: Colors.black12,
+                  //                   ),
+                  //                 ],
+                  //               ),
+                  //               child: RawScrollbar(
+                  //                 thumbColor: const Color(0xFF1E38FC),
+                  //                 trackColor:
+                  //                     const Color.fromRGBO(223, 239, 253, 1),
+                  //                 trackRadius: const Radius.circular(10),
+                  //                 trackVisibility: true,
+                  //                 radius: const Radius.circular(10),
+                  //                 thickness: 14,
+                  //                 thumbVisibility: true,
+                  //                 controller: _controller3,
+                  //                 child: SingleChildScrollView(
+                  //                   controller: _controller3,
+                  //                   child: Column(
+                  //                     children: [
+                  //                       SizedBox(
+                  //                         height: 30,
+                  //                         child: CheckboxListTile(
+                  //                             controlAffinity:
+                  //                                 ListTileControlAffinity
+                  //                                     .leading,
+                  //                             checkboxShape:
+                  //                                 RoundedRectangleBorder(
+                  //                                     borderRadius:
+                  //                                         BorderRadius.circular(
+                  //                                             6)),
+                  //                             dense: true,
+                  //                             activeColor: Theme.of(context)
+                  //                                 .primaryColor,
+                  //                             contentPadding:
+                  //                                 const EdgeInsets.symmetric(
+                  //                                     horizontal: 8),
+                  //                             visualDensity:
+                  //                                 const VisualDensity(
+                  //                                     horizontal: -4.0),
+                  //                             title: Text(
+                  //                               'Select all',
+                  //                               style: Theme.of(context)
+                  //                                   .textTheme
+                  //                                   .labelSmall!
+                  //                                   .merge(const TextStyle(
+                  //                                       fontWeight:
+                  //                                           FontWeight.w400,
+                  //                                       fontSize: 14.0,
+                  //                                       letterSpacing: 0.3)),
+                  //                             ),
+                  //                             value: selectedAllLead.value,
+                  //                             onChanged: (value) {
+                  //                               selectedAllLead.value = value!;
 
-                                                salesController
-                                                    .selectedLeadListmodelValues
-                                                    .clear();
-                                                if (value) {
-                                                  salesController
-                                                      .selectedLeadListmodelValues
-                                                      .addAll(salesController
-                                                          .leadListmodelValues);
-                                                  if (salesController
-                                                          .selectedLeadListmodelValues
-                                                          .length ==
-                                                      salesController
-                                                          .leadListmodelValues
-                                                          .length) {
-                                                    selectedAllLead.value =
-                                                        true;
-                                                  } else {
-                                                    selectedAllLead.value =
-                                                        false;
-                                                  }
-                                                  for (int i = 0;
-                                                      i <
-                                                          salesController
-                                                              .leadListmodelValues
-                                                              .length;
-                                                      i++) {
-                                                    salesController.addLeadId(
-                                                        salesController
-                                                            .leadListmodelValues
-                                                            .elementAt(i)
-                                                            .iSMSLEId!);
+                  //                               salesController
+                  //                                   .selectedLeadListmodelValues
+                  //                                   .clear();
+                  //                               if (value) {
+                  //                                 salesController
+                  //                                     .selectedLeadListmodelValues
+                  //                                     .addAll(salesController
+                  //                                         .leadListmodelValues);
+                  //                                 if (salesController
+                  //                                         .selectedLeadListmodelValues
+                  //                                         .length ==
+                  //                                     salesController
+                  //                                         .leadListmodelValues
+                  //                                         .length) {
+                  //                                   selectedAllLead.value =
+                  //                                       true;
+                  //                                 } else {
+                  //                                   selectedAllLead.value =
+                  //                                       false;
+                  //                                 }
+                  //                                 for (int i = 0;
+                  //                                     i <
+                  //                                         salesController
+                  //                                             .leadListmodelValues
+                  //                                             .length;
+                  //                                     i++) {
+                  //                                   salesController.addLeadId(
+                  //                                       salesController
+                  //                                           .leadListmodelValues
+                  //                                           .elementAt(i)
+                  //                                           .iSMSLEId!);
 
-                                                    setState(() {});
-                                                  }
-                                                } else {
-                                                  salesController
-                                                      .departmentSelectedValues
-                                                      .clear();
-                                                  salesController.leadId
-                                                      .clear();
+                  //                                   setState(() {});
+                  //                                 }
+                  //                               } else {
+                  //                                 salesController
+                  //                                     .departmentSelectedValues
+                  //                                     .clear();
+                  //                                 salesController.leadId
+                  //                                     .clear();
 
-                                                  setState(() {});
-                                                }
-                                              }),
-                                        ),
-                                        ListView.builder(
-                                          itemCount: salesController
-                                              .leadListmodelValues.length,
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemBuilder: (context, index) {
-                                            return SizedBox(
-                                              height: 35,
-                                              child: CheckBoxContainer(
-                                                  sectionName:
-                                                      "${salesController.leadListmodelValues.elementAt(index).iSMSLELeadName}",
-                                                  func: (b) {
-                                                    setState(() {
-                                                      if (b) {
-                                                        salesController
-                                                            .addSelectedLeadValues(
-                                                                salesController
-                                                                    .leadListmodelValues
-                                                                    .elementAt(
-                                                                        index));
+                  //                                 setState(() {});
+                  //                               }
+                  //                             }),
+                  //                       ),
+                  //                       ListView.builder(
+                  //                         itemCount: salesController
+                  //                             .leadListmodelValues.length,
+                  //                         shrinkWrap: true,
+                  //                         physics:
+                  //                             const NeverScrollableScrollPhysics(),
+                  //                         itemBuilder: (context, index) {
+                  //                           return SizedBox(
+                  //                             height: 35,
+                  //                             child: CheckBoxContainer(
+                  //                                 sectionName:
+                  //                                     "${salesController.leadListmodelValues.elementAt(index).iSMSLELeadName}",
+                  //                                 func: (b) {
+                  //                                   setState(() {
+                  //                                     if (b) {
+                  //                                       salesController
+                  //                                           .addSelectedLeadValues(
+                  //                                               salesController
+                  //                                                   .leadListmodelValues
+                  //                                                   .elementAt(
+                  //                                                       index));
 
-                                                        salesController.addLeadId(
-                                                            salesController
-                                                                .leadListmodelValues
-                                                                .elementAt(
-                                                                    index)
-                                                                .iSMSLEId!);
+                  //                                       salesController.addLeadId(
+                  //                                           salesController
+                  //                                               .leadListmodelValues
+                  //                                               .elementAt(
+                  //                                                   index)
+                  //                                               .iSMSLEId!);
 
-                                                        setState(() {});
-                                                      } else {
-                                                        selectedAllLead.value =
-                                                            false;
-                                                        salesController
-                                                            .removeSelectedLeadValues(
-                                                                salesController
-                                                                    .leadListmodelValues
-                                                                    .elementAt(
-                                                                        index));
-                                                        for (int i = 0;
-                                                            i < idList.length;
-                                                            i++) {
-                                                          salesController
-                                                              .removeLeadId(
-                                                                  idList[
-                                                                      index]);
-                                                        }
+                  //                                       setState(() {});
+                  //                                     } else {
+                  //                                       selectedAllLead.value =
+                  //                                           false;
+                  //                                       salesController
+                  //                                           .removeSelectedLeadValues(
+                  //                                               salesController
+                  //                                                   .leadListmodelValues
+                  //                                                   .elementAt(
+                  //                                                       index));
+                  //                                       for (int i = 0;
+                  //                                           i < idList.length;
+                  //                                           i++) {
+                  //                                         salesController
+                  //                                             .removeLeadId(
+                  //                                                 idList[
+                  //                                                     index]);
+                  //                                       }
 
-                                                        setState(() {});
-                                                      }
-                                                    });
-                                                  },
-                                                  isChecked: RxBool(
-                                                    salesController
-                                                        .selectedLeadListmodelValues
-                                                        .contains(
-                                                      salesController
-                                                          .leadListmodelValues
-                                                          .elementAt(index),
-                                                    ),
-                                                  )),
-                                              // })
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const ContainerTitle(
-                                iT: Color(0xFFFF6F67),
-                                bg: Color.fromARGB(255, 255, 236, 235),
-                                image: 'assets/images/subjectfielicon.png',
-                                title: 'Select Lead',
-                              ),
-                            ],
-                          ),
-                        ),
+                  //                                       setState(() {});
+                  //                                     }
+                  //                                   });
+                  //                                 },
+                  //                                 isChecked: RxBool(
+                  //                                   salesController
+                  //                                       .selectedLeadListmodelValues
+                  //                                       .contains(
+                  //                                     salesController
+                  //                                         .leadListmodelValues
+                  //                                         .elementAt(index),
+                  //                                   ),
+                  //                                 )),
+                  //                             // })
+                  //                           );
+                  //                         },
+                  //                       ),
+                  //                     ],
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             const ContainerTitle(
+                  //               iT: Color(0xFFFF6F67),
+                  //               bg: Color.fromARGB(255, 255, 236, 235),
+                  //               image: 'assets/images/subjectfielicon.png',
+                  //               title: 'Select Lead',
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
                   Container(
                     margin: const EdgeInsets.only(top: 30, left: 0, right: 0),
                     child: Row(

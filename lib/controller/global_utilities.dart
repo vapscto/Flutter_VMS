@@ -520,6 +520,12 @@ void openMappedPages(
     BuildContext context,
     HwCwNbController hwCwNbController) {
   logger.i(pageName);
+  // if (pageName == "Appointment Approval") {
+  //   Get.to(() => SalesReportHomeScreen(
+  //       loginSuccessModel: loginSuccessModel,
+  //       mskoolController: mskoolController));
+  //   return;
+  // }
   if (pageName == "Attendance") {
     Get.to(() => AttendanceHomeScreen(
         loginSuccessModel: loginSuccessModel,
@@ -835,13 +841,13 @@ void openMappedPages(
     return;
   }
 
-
   if (pageName == "Visitor Approval") {
-    Get.to(() => VisitorApprovalHome(loginSuccessModel: loginSuccessModel, mskoolController: mskoolController,
+    Get.to(() => VisitorApprovalHome(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
         ));
     return;
   }
-
 
   if (pageName == "Leave Approval") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -933,15 +939,15 @@ void openMappedPages(
     }));
     return;
   }
-  // if (pageName == "Staff in and Out") {
-  //   Navigator.push(context, MaterialPageRoute(builder: (_) {
-  //     return EmployeepunchHome(
-  //       loginSuccessModel: loginSuccessModel,
-  //       mskoolController: mskoolController,
-  //     );
-  //   }));
-  //   return;
-  // }
+  if (pageName == "Staff in and Out") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return EmployeepunchHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+    return;
+  }
 
   if (pageName == "Staff Time Table") {
     Navigator.push(

@@ -1,15 +1,15 @@
-class SalesListModel {
+class SalesEmployeeListModel {
   String? type;
-  List<SalesListModelValues>? values;
+  List<SalesEmployeeListModelValues>? values;
 
-  SalesListModel({this.type, this.values});
+  SalesEmployeeListModel({this.type, this.values});
 
-  SalesListModel.fromJson(Map<String, dynamic> json) {
+  SalesEmployeeListModel.fromJson(Map<String, dynamic> json) {
     type = json['\$type'];
     if (json['\$values'] != null) {
-      values = <SalesListModelValues>[];
+      values = <SalesEmployeeListModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(SalesListModelValues.fromJson(v));
+        values!.add(SalesEmployeeListModelValues.fromJson(v));
       });
     }
   }
@@ -24,43 +24,59 @@ class SalesListModel {
   }
 }
 
-class SalesListModelValues {
+class SalesEmployeeListModelValues {
   String? type;
-  int? iSMSLEId;
+  int? hRMEId;
   String? iSMSLELeadName;
-  String? iSMSLECOMComments;
-  String? iSMSLECOMCreatedDate;
-  Null? iSMSLEFilePath;
-  String? employeename;
+  String? iSMSLEVisitedDate;
+  String? iSMSLEContactPerson;
+  String? iSMSMPRProductName;
+  String? hRMEEmployeeFirstName;
+  String? iSMSMSTStatusName;
+  String? iSMSLEDMDemoType;
+  String? iSMSLEDMDemoDate;
+  String? givenflg;
 
-  SalesListModelValues(
+  SalesEmployeeListModelValues(
       {this.type,
-      this.iSMSLEId,
+      this.hRMEId,
       this.iSMSLELeadName,
-      this.iSMSLECOMComments,
-      this.iSMSLECOMCreatedDate,
-      this.iSMSLEFilePath,
-      this.employeename});
+      this.iSMSLEVisitedDate,
+      this.iSMSLEContactPerson,
+      this.iSMSMPRProductName,
+      this.hRMEEmployeeFirstName,
+      this.iSMSMSTStatusName,
+      this.iSMSLEDMDemoType,
+      this.iSMSLEDMDemoDate,
+      this.givenflg});
 
-  SalesListModelValues.fromJson(Map<String, dynamic> json) {
+  SalesEmployeeListModelValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
-    iSMSLEId = json['ISMSLE_Id'];
+    hRMEId = json['HRME_Id'];
     iSMSLELeadName = json['ISMSLE_LeadName'];
-    iSMSLECOMComments = json['ISMSLECOM_Comments'];
-    iSMSLECOMCreatedDate = json['ISMSLECOM_CreatedDate'];
-    iSMSLEFilePath = json['ISMSLE_FilePath'];
-    employeename = json['employeename'];
+    iSMSLEVisitedDate = json['ISMSLE_VisitedDate'];
+    iSMSLEContactPerson = json['ISMSLE_ContactPerson'];
+    iSMSMPRProductName = json['ISMSMPR_ProductName'];
+    hRMEEmployeeFirstName = json['HRME_EmployeeFirstName'];
+    iSMSMSTStatusName = json['ISMSMST_StatusName'];
+    iSMSLEDMDemoType = json['ISMSLEDM_DemoType'];
+    iSMSLEDMDemoDate = json['ISMSLEDM_DemoDate'];
+    givenflg = json['givenflg'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['$type'] = type;
-    data['ISMSLE_Id'] = iSMSLEId;
+    data['HRME_Id'] = hRMEId;
     data['ISMSLE_LeadName'] = iSMSLELeadName;
-    data['ISMSLECOM_Comments'] = iSMSLECOMComments;
-    data['ISMSLECOM_CreatedDate'] = iSMSLECOMCreatedDate;
-    data['ISMSLE_FilePath'] = iSMSLEFilePath;
-    data['employeename'] = employeename;
+    data['ISMSLE_VisitedDate'] = iSMSLEVisitedDate;
+    data['ISMSLE_ContactPerson'] = iSMSLEContactPerson;
+    data['ISMSMPR_ProductName'] = iSMSMPRProductName;
+    data['HRME_EmployeeFirstName'] = hRMEEmployeeFirstName;
+    data['ISMSMST_StatusName'] = iSMSMSTStatusName;
+    data['ISMSLEDM_DemoType'] = iSMSLEDMDemoType;
+    data['ISMSLEDM_DemoDate'] = iSMSLEDMDemoDate;
+    data['givenflg'] = givenflg;
     return data;
   }
 }
