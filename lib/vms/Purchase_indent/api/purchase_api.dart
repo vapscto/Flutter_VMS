@@ -12,7 +12,7 @@ class PurchaseIndentApi {
 
   getPurchaseIndentApiApi({
     required String base,
-    required String userId,
+    required int userId,
     required PurchaseController controller,
   }) async {
     final Dio ins = getGlobalDio();
@@ -27,24 +27,20 @@ class PurchaseIndentApi {
     controller.updateIsLoadingApproval(true);
 
     logger.d(api);
+    logger.d({
+      "UserId": userId,
+    });
 
     try {
       final Response response =
           await ins.post(api2, options: Options(headers: getSession()), data: {
-        "UserId": 60064,
-        //  options: Options(headers: getSession())
+        "UserId": userId,
       });
 
-      logger.i(response.data['get_prNo']);
-
-      if (response.data['get_prNo'] != null) {
-        controller.updateIsErrorOccured(true);
-        controller.updateIsLoadingApproval(false);
-        PurchaseIndentModel purchaseIndentModelValues =
-            PurchaseIndentModel.fromJson(response.data['get_prNo']);
-        controller.purchaseIndentList.addAll(purchaseIndentModelValues.values!);
-        return;
-      }
+      logger.d(response.data['get_prNo']);
+      PurchaseIndentModel purchaseIndentModelValues =
+          PurchaseIndentModel.fromJson(response.data['get_prNo']);
+      controller.purchaseIndentList.addAll(purchaseIndentModelValues.values!);
 
       controller.updateIsLoadingApproval(false);
     } on Exception catch (e) {

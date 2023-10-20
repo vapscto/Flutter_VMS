@@ -24,9 +24,8 @@ class TaskListAPI {
     required String endDate,
   }) async {
     var dio = Dio();
-    var url =
-        //  base + URLS.assignTaskList;
-        'https://vmsissuemanager.azurewebsites.net/${URLS.assignTaskList}';
+    var url = base + URLS.assignTaskList;
+    // 'https://vmsissuemanager.azurewebsites.net/${URLS.assignTaskList}';
     try {
       if (plannerCreationController.isErrorLoading.value) {
         plannerCreationController.errorLoading(false);

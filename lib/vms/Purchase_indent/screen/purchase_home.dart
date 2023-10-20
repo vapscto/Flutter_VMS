@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/api/purchase_api.dart';
@@ -25,8 +26,10 @@ class _PurchaseIndentHomeState extends State<PurchaseIndentHome> {
 
   @override
   void initState() {
-    PurchaseIndentApi.instance
-        .getPurchaseIndentApiApi(base: "", userId: "", controller: controller);
+    PurchaseIndentApi.instance.getPurchaseIndentApiApi(
+        base: baseUrlFromInsCode('inventory', widget.mskoolController),
+        userId: widget.loginSuccessModel.userId!,
+        controller: controller);
     super.initState();
   }
 
@@ -173,11 +176,6 @@ class _PurchaseIndentHomeState extends State<PurchaseIndentHome> {
                                   DataCell(Align(
                                       alignment: Alignment.center,
                                       child: Text('$i'))),
-                                  // DataCell(Align(
-                                  //       alignment: Alignment.center,
-                                  //       child: Text( controller.purchaseIndentList.elementAt(index).sanctionLevelNo.toString()),
-                                  //       )
-                                  //       ),
                                   DataCell(Align(
                                     alignment: Alignment.center,
                                     child: Text(controller.purchaseIndentList
@@ -230,11 +228,17 @@ class _PurchaseIndentHomeState extends State<PurchaseIndentHome> {
                                   DataCell(IconButton(
                                     onPressed: () {
                                       Get.to(() => PurchaseDetails(
-                                            PurchaseController: controller,
                                             invmpiId: controller
                                                 .purchaseIndentList
                                                 .elementAt(index)
                                                 .iNVMPIId!,
+                                            loginSuccessModel:
+                                                widget.loginSuccessModel,
+                                            mskoolController:
+                                                widget.mskoolController,
+                                            values: controller
+                                                .purchaseIndentList
+                                                .elementAt(index),
                                           ));
                                     },
                                     icon: const Icon(Icons.visibility),

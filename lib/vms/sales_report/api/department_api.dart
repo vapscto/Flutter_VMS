@@ -26,16 +26,11 @@ class DepartmentAPI {
       var response = await dio.post(url2,
           options: Options(headers: getSession()),
           data: {"MI_Id": miId, "HRMD_Id": hrmdId});
+      logger.i({"MI_Id": miId, "HRMD_Id": hrmdId});
       if (response.statusCode == 200) {
         DepartmentListModel departmentListModel =
             DepartmentListModel.fromJson(response.data['departmentdropdown']);
         salesController.getDepartment(departmentListModel.values!);
-        LeadListModel leadListModel =
-            LeadListModel.fromJson(response.data['leadlist']);
-        logger.i(response.data['leadlist']);
-        if (leadListModel.values != null) {
-          salesController.getLead(leadListModel.values!);
-        }
         salesController.departmentLoading(false);
       }
     } on DioError catch (e) {

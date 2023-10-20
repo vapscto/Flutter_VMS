@@ -21,7 +21,10 @@ class GetAppliesLeavesApi {
         "MI_Id": miId,
         "LoginId": loginId,
       });
-
+logger.e({
+        "MI_Id": miId,
+        "LoginId": loginId,
+      });
       if (response.data['get_leavestatus'] == null) {
         return Future.error({
           "errorTitle": "No Leave Found",

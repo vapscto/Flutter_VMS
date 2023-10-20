@@ -80,6 +80,14 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
 
   TadaApplyController tadaApplyController = Get.put(TadaApplyController());
   int allAmount = 0;
+  void addAmount(int amount) {
+    allAmount += amount;
+  }
+
+  void removeAmount(int amount) {
+    allAmount -= amount;
+  }
+
   //
   getStateList() async {
     tadaApplyController.stateLoading(true);
@@ -177,6 +185,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
         allowanceArray: allowanceData,
         tadaApplyController: tadaApplyController);
     getStateList();
+    Get.back();
     tadaApplyController.saveData(false);
   }
 
@@ -1251,34 +1260,36 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                     vertical:
                                                                         0),
                                                             onChanged: (value) {
-                                                              if (foodTotalSlotController
-                                                                      .text
-                                                                      .isEmpty ||
-                                                                  foodRemarksController
-                                                                      .text
-                                                                      .isEmpty) {
-                                                                Fluttertoast
-                                                                    .showToast(
-                                                                        msg:
-                                                                            "Please Enter slots and remarks");
-                                                              } else {
-                                                                setState(() {
-                                                                  isFoodSelected =
-                                                                      value!;
+                                                              // if (foodTotalSlotController
+                                                              //         .text
+                                                              //         .isEmpty ||
+                                                              //     foodRemarksController
+                                                              //         .text
+                                                              //         .isEmpty) {
+                                                              //   Fluttertoast
+                                                              //       .showToast(
+                                                              //           msg:
+                                                              //               "Please Enter slots and remarks");
+                                                              // } else {
+                                                              setState(() {
+                                                                isFoodSelected =
+                                                                    value!;
 
-                                                                  if (value) {
-                                                                    allAmount +=
-                                                                        foodAmt;
-                                                                  } else {
-                                                                    allAmount -=
-                                                                        foodAmt;
-                                                                    foodTotalSlotController
-                                                                        .clear();
-                                                                    foodRemarksController
-                                                                        .clear();
-                                                                  }
-                                                                });
-                                                              }
+                                                                if (value) {
+                                                                  // allAmount +=
+                                                                  //     foodAmt;
+                                                                } else {
+                                                                  removeAmount(
+                                                                      foodAmt);
+                                                                  // allAmount -=
+                                                                  //     foodAmt;
+                                                                  foodTotalSlotController
+                                                                      .clear();
+                                                                  foodRemarksController
+                                                                      .clear();
+                                                                }
+                                                              });
+                                                              // }
                                                             },
                                                             value:
                                                                 isFoodSelected,
@@ -1306,11 +1317,16 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                           child: SizedBox(
                                                             width: 150,
                                                             child: TextField(
+                                                              style: Get
+                                                                  .textTheme
+                                                                  .titleSmall,
                                                               controller:
                                                                   foodTotalSlotController,
                                                               onChanged:
                                                                   (value) {
                                                                 setState(() {
+                                                                  foodAmt = 0;
+                                                                  allAmount = 0;
                                                                   foodAmt = (tadaApplyController
                                                                               .foodAmount
                                                                               .value /
@@ -1318,6 +1334,10 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                           num.parse(
                                                                               value))
                                                                       .toInt();
+                                                                  // allAmount +=
+                                                                  //     foodAmt;
+                                                                  addAmount(
+                                                                      foodAmt);
                                                                 });
                                                               },
                                                               keyboardType:
@@ -1345,6 +1365,9 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                           child: SizedBox(
                                                             width: 150,
                                                             child: TextField(
+                                                              style: Get
+                                                                  .textTheme
+                                                                  .titleSmall,
                                                               controller:
                                                                   foodRemarksController,
                                                               keyboardType:
@@ -1376,35 +1399,22 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                     vertical:
                                                                         0),
                                                             onChanged: (value) {
-                                                              if (accommodationTotalSlotController
-                                                                      .text
-                                                                      .isEmpty ||
-                                                                  accommodationRemarksController
-                                                                      .text
-                                                                      .isEmpty) {
-                                                                Fluttertoast
-                                                                    .showToast(
-                                                                        msg:
-                                                                            "Please Enter slots and remarks");
-                                                              } else {
-                                                                setState(() {
-                                                                  isAccommodationSelected =
-                                                                      value!;
+                                                              setState(() {
+                                                                isAccommodationSelected =
+                                                                    value!;
 
-                                                                  if (value ==
-                                                                      true) {
-                                                                    allAmount +=
-                                                                        accommodationAmount;
-                                                                  } else {
-                                                                    allAmount -=
-                                                                        accommodationAmount;
-                                                                    accommodationTotalSlotController
-                                                                        .clear();
-                                                                    accommodationRemarksController
-                                                                        .clear();
-                                                                  }
-                                                                });
-                                                              }
+                                                                if (value ==
+                                                                    true) {
+                                                                } else {
+                                                                  removeAmount(
+                                                                      accommodationAmount);
+
+                                                                  accommodationTotalSlotController
+                                                                      .clear();
+                                                                  accommodationRemarksController
+                                                                      .clear();
+                                                                }
+                                                              });
                                                             },
                                                             value:
                                                                 isAccommodationSelected,
@@ -1433,17 +1443,25 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                           child: SizedBox(
                                                             width: 150,
                                                             child: TextField(
+                                                              style: Get
+                                                                  .textTheme
+                                                                  .titleSmall,
                                                               controller:
                                                                   accommodationTotalSlotController,
                                                               onChanged:
                                                                   (value) {
                                                                 setState(() {
+                                                                  accommodationAmount =
+                                                                      0;
                                                                   accommodationAmount = (tadaApplyController
                                                                               .accomodationAmount
                                                                               .value *
                                                                           num.parse(
                                                                               value))
                                                                       .toInt();
+
+                                                                  addAmount(
+                                                                      accommodationAmount);
                                                                 });
                                                               },
                                                               keyboardType:
@@ -1471,6 +1489,9 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                           child: SizedBox(
                                                             width: 150,
                                                             child: TextField(
+                                                              style: Get
+                                                                  .textTheme
+                                                                  .titleSmall,
                                                               controller:
                                                                   accommodationRemarksController,
                                                               keyboardType:
@@ -1506,15 +1527,15 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                 isOthersSelected =
                                                                     value!;
                                                                 if (value) {
-                                                                  allAmount +=
-                                                                      int.parse(
-                                                                          otherAmountController
-                                                                              .text);
+                                                                  addAmount(int.parse(
+                                                                      otherAmountController
+                                                                          .text));
                                                                 } else {
-                                                                  allAmount -=
+                                                                  removeAmount(
                                                                       int.parse(
                                                                           otherAmountController
-                                                                              .text);
+                                                                              .text));
+
                                                                   otherAmountController
                                                                       .clear();
                                                                   otherremarksController
@@ -1540,8 +1561,19 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                           child: SizedBox(
                                                             width: 150,
                                                             child: TextField(
+                                                              style: Get
+                                                                  .textTheme
+                                                                  .titleSmall,
                                                               controller:
                                                                   otherAmountController,
+                                                              onChanged:
+                                                                  (value) {
+                                                                // setState(() {
+                                                                //   addAmount(
+                                                                //       int.parse(
+                                                                //           value));
+                                                                // });
+                                                              },
                                                               keyboardType:
                                                                   TextInputType
                                                                       .number,
@@ -1569,6 +1601,9 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                           child: SizedBox(
                                                             width: 150,
                                                             child: TextField(
+                                                              style: Get
+                                                                  .textTheme
+                                                                  .titleSmall,
                                                               controller:
                                                                   otherremarksController,
                                                               keyboardType:
@@ -1826,8 +1861,6 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                           true)
                       ? Row(
                           children: [
-                            IconButton(
-                                onPressed: () {}, icon: const Icon(Icons.edit)),
                             Text(
                               "Deactivate",
                               style: Get.textTheme.titleMedium!.copyWith(

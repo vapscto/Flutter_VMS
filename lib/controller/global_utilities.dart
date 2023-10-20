@@ -43,6 +43,7 @@ import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.da
 import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_approval_home.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/online_leave/screen/online_leave_home.dart';
 import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart';
@@ -59,10 +60,12 @@ import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/screens/tada_advance_aplay_home.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/screens/tada_apply_home_screen.dart';
 import 'package:m_skool_flutter/vms/task%20creation/screens/taskCreationHome.dart';
+import 'package:m_skool_flutter/vms/visitor_approval/screen/visitor_home.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
+import '../vms/staff_leave_approval/screen/staff_leave_approval_home.dart';
 
 RxInt currentHomeTab = 0.obs;
 RxList<int> previousHomeTab = [0].obs;
@@ -518,6 +521,12 @@ void openMappedPages(
     BuildContext context,
     HwCwNbController hwCwNbController) {
   logger.i(pageName);
+  // if (pageName == "Appointment Approval") {
+  //   Get.to(() => SalesReportHomeScreen(
+  //       loginSuccessModel: loginSuccessModel,
+  //       mskoolController: mskoolController));
+  //   return;
+  // }
   if (pageName == "Attendance") {
     Get.to(() => AttendanceHomeScreen(
         loginSuccessModel: loginSuccessModel,
@@ -832,9 +841,18 @@ void openMappedPages(
         ));
     return;
   }
+
+  if (pageName == "Visitor Approval") {
+    Get.to(() => VisitorApprovalHome(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
+    return;
+  }
+
   if (pageName == "Leave Approval") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return ListLeaveHomeScreen(
+      return StaffLeaveApproval(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
         title: pageName,
@@ -844,10 +862,9 @@ void openMappedPages(
   }
   if (pageName == "Planner Approval") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return PlannerApprovalHomeScreen(
+      return PlannerApprovalTabScreen(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
-        title: pageName,
       );
     }));
     return;

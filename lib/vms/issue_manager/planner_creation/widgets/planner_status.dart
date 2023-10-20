@@ -27,6 +27,7 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
 
   String fromDate = '';
   String toDate = '';
+  String status = '';
   getPlannerStatus() async {
     plannerCreationController.statusLoading(true);
     await PlannerStatusList.instance.plannerStatusAPI(
@@ -39,6 +40,21 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
       for (int index = 0;
           index < plannerCreationController.plannerStatus.length;
           index++) {
+        var pl = plannerCreationController.plannerStatus.elementAt(index);
+        if (plannerCreationController.plannerStatus.elementAt(index).iSMTPLId ==
+            null) {
+          if (pl.iSMTPLApprovalFlg == true) {
+            status = "Approved";
+          } else {
+            status = "Pending";
+          }
+        } else {
+          if (pl.iSMTPLApprovalFlg == false) {
+            status = "Rejected";
+          } else {
+            status = "Approved";
+          }
+        }
         DateTime dt = DateTime.parse(plannerCreationController.plannerStatus
             .elementAt(index)
             .iSMTPLStartDate!);
@@ -54,22 +70,23 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
             fromDate,
             toDate,
             '${plannerCreationController.plannerStatus.elementAt(index).iSMTPLTotalHrs} Hr',
-            (plannerCreationController.plannerStatus
-                            .elementAt(index)
-                            .iSMTPLApprovalFlg ==
-                        true &&
-                    plannerCreationController.plannerStatus.isNotEmpty)
-                ? 'Approved'
-                : (plannerCreationController.plannerStatus
-                            .elementAt(index)
-                            .iSMTPLApprovalFlg ==
-                        false)
-                    ? 'Rejected'
-                    : 'Pending',
+            status,
+            // (plannerCreationController.plannerStatus
+            //                 .elementAt(index)
+            //                 .iSMTPLApprovalFlg ==
+            //             true &&
+            //         plannerCreationController.plannerStatus.isNotEmpty)
+            //     ? 'Approved'
+            //     : (plannerCreationController.plannerStatus
+            //                 .elementAt(index)
+            //                 .iSMTPLApprovalFlg ==
+            //             false)
+            //         ? 'Rejected'
+            //         : 'Pending',
             plannerCreationController.plannerStatus
                     .elementAt(index)
                     .approvedby ??
-                'N/A',
+                '',
             plannerCreationController.plannerStatus
                     .elementAt(index)
                     .iSMTPLAPRemarks ??

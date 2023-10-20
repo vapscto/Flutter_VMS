@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/api/onclick_purchase_api.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/api/purchase_save_api.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/controller/purchase_controller.dart';
+import 'package:m_skool_flutter/vms/Purchase_indent/model/purchase_indent_model.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/view_comment.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
@@ -15,17 +18,22 @@ import '../../../widget/home_fab.dart';
 
 class PurchaseDetails extends StatefulWidget {
   final int invmpiId;
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  final PurchaseIndentModelValues values;
   const PurchaseDetails({
     super.key,
-    required PurchaseController PurchaseController,
+    required this.loginSuccessModel,
     required this.invmpiId,
+    required this.mskoolController,
+    required this.values,
   });
   @override
   _PurchaseDetailsState createState() => _PurchaseDetailsState();
 }
 
 class _PurchaseDetailsState extends State<PurchaseDetails> {
-  PurchaseController controller = Get.put(PurchaseController());
+  PurchaseController controller = Get.find();
 
   RxString selectedValue = "".obs;
 
@@ -51,50 +59,32 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
             controller.getOnclickList[i].iNVTPIAPPApprovedQty,
         "INVTPI_Remarks": controller.remarkControllerList.elementAt(i).text,
       });
-      // amount = controller.getOnclickList.elementAt(i).iNVTPIApproxAmount;
     }
-    for (int i = 0; i < controller.purchaseIndentList.length; i++) {
-      invmpiAmount = controller.purchaseIndentList
-          .elementAt(i)
-          .iNVMPIApproxTotAmount!
-          .toInt();
-
-      invmpiId = controller.purchaseIndentList.elementAt(i).iNVMPIId;
-    }
-    for (int i = 0; i < transRowEdit.length; i++) {
-      // if(i)
-    }
-    logger.i(transRowEdit);
-    logger.i(invmpiRemarks);
-    logger.i(invmpiAmount);
-    logger.i(invmpiId);
     controller.isSaveLoaeding(true);
     PurchaseSave.instance.purchaseSave(
-        base: '',
+        base: baseUrlFromInsCode('inventory', widget.mskoolController),
         invmpiRemarks: remarkController.text,
-        invmpiAmount: invmpiAmount,
+        invmpiAmount: widget.values.iNVMPIApproxTotAmount!.toInt(),
         arrayList: transRowEdit,
-        invmpiId: invmpiId,
-        miId: 0,
+        invmpiId: widget.values.iNVMPIId!,
+        miId: widget.loginSuccessModel.mIID!,
         approvecent: 1,
         controller: controller);
     controller.isSaveLoaeding(false);
+    Get.back();
   }
 
+  var date;
   @override
   void initState() {
     OnclickPurchaseApi.instance.getOnclickPurchaseApiApi(
-        base: "",
-        userId: "",
+        base: baseUrlFromInsCode('inventory', widget.mskoolController),
+        userId: widget.loginSuccessModel.userId!,
         controller: controller,
         invmpiId: widget.invmpiId);
+    DateTime dt = DateTime.parse(widget.values.iNVMPIPIDate!);
+    date = '${dt.day}-${dt.month}-${dt.year}';
     super.initState();
-    setState(() {
-      for (int i = 0; i < controller.purchaseIndentList.length; i++) {
-        remarkController.text =
-            controller.purchaseIndentList.elementAt(i).iNVMPIRemarks!;
-      }
-    });
   }
 
   @override
@@ -140,8 +130,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                       fontWeight: FontWeight.w600,
                                       color: Theme.of(context).primaryColor)),
                               TextSpan(
-                                  text: controller
-                                      .purchaseIndentList.first.mIName,
+                                  text: widget.values.mIName,
                                   style: Get.textTheme.titleSmall!
                                       .copyWith(fontWeight: FontWeight.w600)),
                             ]),
@@ -155,8 +144,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                       fontWeight: FontWeight.w600,
                                       color: Theme.of(context).primaryColor)),
                               TextSpan(
-                                  text: controller
-                                      .purchaseIndentList.first.iNVMPIPINo,
+                                  text: widget.values.iNVMPIPINo,
                                   style: Get.textTheme.titleSmall!
                                       .copyWith(fontWeight: FontWeight.w400)),
                             ]),
@@ -170,8 +158,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                       fontWeight: FontWeight.w600,
                                       color: Theme.of(context).primaryColor)),
                               TextSpan(
-                                  text: controller.purchaseIndentList.first
-                                      .iNVMPIReferenceNo,
+                                  text: widget.values.iNVMPIReferenceNo,
                                   style: Get.textTheme.titleSmall!
                                       .copyWith(fontWeight: FontWeight.w400)),
                             ]),
@@ -185,8 +172,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                       fontWeight: FontWeight.w600,
                                       color: Theme.of(context).primaryColor)),
                               TextSpan(
-                                  text: controller.purchaseIndentList.first
-                                      .iNVMPIApproxTotAmount
+                                  text: widget.values.iNVMPIApproxTotAmount
                                       .toString(),
                                   style: Get.textTheme.titleSmall!
                                       .copyWith(fontWeight: FontWeight.w400)),
@@ -200,8 +186,9 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                       fontWeight: FontWeight.w600,
                                       color: Theme.of(context).primaryColor)),
                               TextSpan(
-                                  text: controller
-                                      .purchaseIndentList.first.iNVMPIPIDate,
+                                  text: (widget.values.iNVMPIPIDate != null)
+                                      ? date
+                                      : '',
                                   style: Get.textTheme.titleSmall!
                                       .copyWith(fontWeight: FontWeight.w400)),
                             ]),
@@ -215,8 +202,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                       fontWeight: FontWeight.w600,
                                       color: Theme.of(context).primaryColor)),
                               TextSpan(
-                                  text: controller
-                                      .purchaseIndentList.first.indentCreadBy,
+                                  text: widget.values.indentCreadBy,
                                   style: Get.textTheme.titleSmall!
                                       .copyWith(fontWeight: FontWeight.w400)),
                             ]),
@@ -230,8 +216,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                       fontWeight: FontWeight.w600,
                                       color: Theme.of(context).primaryColor)),
                               TextSpan(
-                                  text: controller
-                                      .purchaseIndentList.first.iNVMPIRemarks,
+                                  text: widget.values.iNVMPIRemarks,
                                   style: Get.textTheme.titleSmall!
                                       .copyWith(fontWeight: FontWeight.w400)),
                             ]),
@@ -465,10 +450,18 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                         )),
                                         DataCell(Align(
                                           alignment: Alignment.center,
-                                          child: Text(controller.getOnclickList
-                                              .elementAt(index)
-                                              .iNVTPIPIQty
-                                              .toString()),
+                                          child: Text(
+                                              controller.getOnclickList
+                                                  .elementAt(index)
+                                                  .iNVTPIPIQty
+                                                  .toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .merge(TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w100))),
                                         )),
                                         DataCell(Align(
                                           alignment: Alignment.center,
@@ -479,30 +472,49 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                         )),
                                         DataCell(Align(
                                           alignment: Alignment.center,
-                                          child: Text(controller.getOnclickList
-                                              .elementAt(index)
-                                              .iNVTPIAPPApprovedQty
-                                              .toString()),
+                                          child: Text(
+                                            controller.getOnclickList
+                                                .elementAt(index)
+                                                .iNVTPIAPPApprovedQty
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
+                                          ),
                                         )),
                                         DataCell(TextField(
                                           controller: controller
                                               .unitControllerList
                                               .elementAt(index),
                                           keyboardType: TextInputType.number,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w300),
                                         )),
                                         DataCell(Align(
                                           alignment: Alignment.center,
-                                          child: Text(controller.getOnclickList
-                                              .elementAt(index)
-                                              .iNVTPIApproxAmount
-                                              .toString()),
+                                          child: Text(
+                                            controller.getOnclickList
+                                                .elementAt(index)
+                                                .iNVTPIApproxAmount
+                                                .toString(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .merge(const TextStyle(
+                                                    fontSize: 14)),
+                                          ),
                                         )),
                                         DataCell(Align(
                                           alignment: Alignment.center,
                                           child: TextField(
-                                              controller: controller
-                                                  .remarkControllerList
-                                                  .elementAt(index)),
+                                            controller: controller
+                                                .remarkControllerList
+                                                .elementAt(index),
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w200),
+                                          ),
                                         )),
                                         DataCell(IconButton(
                                           onPressed: () {

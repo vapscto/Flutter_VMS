@@ -351,7 +351,7 @@ class _StaffDrawerHeaderState extends State<StaffDrawerHeader> {
                             ? Column(
                                 children: [
                                   Text(
-                                    widget.loginSuccessModel.amsTAdmNo ?? "N/A",
+                                    widget.loginSuccessModel.userId.toString(),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: Theme.of(context)
@@ -370,13 +370,7 @@ class _StaffDrawerHeaderState extends State<StaffDrawerHeader> {
                               )
                             : const SizedBox(),
                         Text(
-                          // controller.profileData.elementAt(0).mobileNo ??
-                          widget.loginSuccessModel.roleforlogin!
-                                      .toLowerCase() ==
-                                  "student"
-                              ? "${widget.loginSuccessModel.asmcLClassName}|${widget.loginSuccessModel.asmSSectionName}"
-                              : widget.loginSuccessModel.hrmEEmployeeCode ??
-                                  "N/A",
+                          widget.loginSuccessModel.empcode.toString(),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.labelSmall!.merge(

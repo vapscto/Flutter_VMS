@@ -421,7 +421,7 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
                   ? const AnimatedProgressWidget(
                       title: "No Data found",
                       desc:
-                          "There is no corresponding topic available for the selected subject",
+                          "There is no corresponding topic available",
                       animationPath: "assets/json/nodata.json",
                       animatorHeight: 250,
                     )

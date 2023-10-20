@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/api/planner_save_api.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_creation/api/planner_status_api.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/api/task_list_api.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/controller/planner_creation_controller.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/category_plan_table.dart';
@@ -165,8 +166,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               .elementAt(index)
               .iSMTPLTAId!;
           //
-          logger.i('===$id');
-          //
           newTable.add(CreatePlannerTable(
               false,
               '${plannerCreationController.assignedTaskList.elementAt(index).iSMTCRTaskNo}',
@@ -228,6 +227,11 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         });
       }
     }
+    await PlannerStatusList.instance.plannerStatusAPI(
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+        miId: widget.loginSuccessModel.mIID!,
+        userId: widget.loginSuccessModel.userId!,
+        plannerCreationController: plannerCreationController);
     plannerCreationController.taskLoading(false);
   }
 
@@ -271,22 +275,22 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
         children: [
-          (plannerCreationController.isPlannerCreate.value == false)
-              ? const Padding(
-                  padding: EdgeInsets.only(top: 8.0, bottom: 30),
-                  child: TextScroll(
-                    "YOU CAN'T GENERATE PLANNER TODAY!!",
-                    delayBefore: Duration(milliseconds: 500),
-                    mode: TextScrollMode.endless,
-                    style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600),
-                    textAlign: TextAlign.left,
-                    selectable: true,
-                  ),
-                )
-              : const SizedBox(),
+          // (plannerCreationController.isPlannerCreate.value == false)
+          //     ? const Padding(
+          //         padding: EdgeInsets.only(top: 8.0, bottom: 30),
+          //         child: TextScroll(
+          //           "YOU CAN'T GENERATE PLANNER TODAY!!",
+          //           delayBefore: Duration(milliseconds: 500),
+          //           mode: TextScrollMode.endless,
+          //           style: TextStyle(
+          //               color: Colors.red,
+          //               fontSize: 16,
+          //               fontWeight: FontWeight.w600),
+          //           textAlign: TextAlign.left,
+          //           selectable: true,
+          //         ),
+          //       )
+          //     : const SizedBox(),
           Form(
             key: _key,
             child: Column(
@@ -414,16 +418,15 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                             fromDate = await showDatePicker(
                               context: context,
                               helpText: "Select From Data",
-
                               firstDate: DateTime.parse(
-                                  plannerCreationController.assignedTaskList
-                                      .last.iSMTCRASTOEndDate!),
+                                      plannerCreationController
+                                          .plannerStatus.first.iSMTPLEndDate!)
+                                  .add(const Duration(days: 1)),
                               initialDate: DateTime.parse(
-                                  plannerCreationController.assignedTaskList
-                                      .last.iSMTCRASTOEndDate!),
+                                      plannerCreationController
+                                          .plannerStatus.first.iSMTPLEndDate!)
+                                  .add(const Duration(days: 1)),
                               lastDate: DateTime(3050),
-                              // selectableDayPredicate: (day) =>
-                              //     day.weekday == 1 ? false : true,
                             );
                             if (fromDate != null) {
                               setState(() {
@@ -438,16 +441,19 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                 fromDate = await showDatePicker(
                                   helpText: "Select From Data",
                                   context: context,
-
                                   firstDate: DateTime.parse(
-                                      plannerCreationController.assignedTaskList
-                                          .last.iSMTCRASTOEndDate!),
+                                          plannerCreationController
+                                              .plannerStatus
+                                              .first
+                                              .iSMTPLEndDate!)
+                                      .add(const Duration(days: 1)),
                                   initialDate: DateTime.parse(
-                                      plannerCreationController.assignedTaskList
-                                          .last.iSMTCRASTOEndDate!),
+                                          plannerCreationController
+                                              .plannerStatus
+                                              .first
+                                              .iSMTPLEndDate!)
+                                      .add(const Duration(days: 1)),
                                   lastDate: DateTime(3050),
-                                  // selectableDayPredicate: (day) =>
-                                  //     day.weekday == 1 ? false : true,
                                 );
                                 if (fromDate != null) {
                                   setState(() {
@@ -528,13 +534,15 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                               toDate = await showDatePicker(
                                 context: context,
                                 helpText: "Select To Date",
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime.now(),
+                                firstDate: DateTime.parse(
+                                        plannerCreationController
+                                            .plannerStatus.first.iSMTPLEndDate!)
+                                    .add(const Duration(days: 1)),
+                                initialDate: DateTime.parse(
+                                        plannerCreationController
+                                            .plannerStatus.first.iSMTPLEndDate!)
+                                    .add(const Duration(days: 1)),
                                 lastDate: DateTime(3050),
-                                // selectableDayPredicate: (day) =>
-                                //     day.weekday == 7 || day.weekday == 7
-                                //         ? false
-                                //         : true,
                               );
                               if (toDate != null) {
                                 setState(() {
@@ -561,14 +569,20 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                   toDate = await showDatePicker(
                                     context: context,
                                     helpText: "Select To Date",
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime.now(),
+                                    firstDate: DateTime.parse(
+                                            plannerCreationController
+                                                .plannerStatus
+                                                .first
+                                                .iSMTPLEndDate!)
+                                        .add(const Duration(days: 1)),
+                                    initialDate: DateTime.parse(
+                                            plannerCreationController
+                                                .plannerStatus
+                                                .first
+                                                .iSMTPLEndDate!)
+                                        .add(const Duration(days: 1)),
                                     lastDate: DateTime(3050),
                                     fieldHintText: 'Date:Month:Year',
-                                    // selectableDayPredicate: (day) =>
-                                    //     day.weekday == 7 || day.weekday == 7
-                                    //         ? false
-                                    //         : true,
                                   );
                                   if (toDate != null) {
                                     setState(() {
@@ -646,125 +660,123 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               ],
             ),
           ),
-          (plannerCreationController.isAssignedTask.value)
+          // (plannerCreationController.isAssignedTask.value)
+          //     ? const AnimatedProgressWidget(
+          //         animationPath: 'assets/json/default.json',
+          //         title: 'Loading data',
+          //         desc: "Please wait we are loading data",
+          //       ):
+          (plannerCreationController.assignedTaskList.isEmpty ||
+                  isDeta == false)
               ? const AnimatedProgressWidget(
-                  animationPath: 'assets/json/default.json',
-                  title: 'Loading data',
-                  desc: "Please wait we are loading data",
+                  animationPath: 'assets/json/nodata.json',
+                  title: 'No data Available',
+                  desc: " ",
+                  animatorHeight: 250,
                 )
-              : (plannerCreationController.assignedTaskList.isEmpty ||
-                      isDeta == false)
-                  ? const AnimatedProgressWidget(
-                      animationPath: 'assets/json/nodata.json',
-                      title: 'No data Available',
-                      desc: " ",
-                      animatorHeight: 250,
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 16.0),
-                          child: Text(
-                            "Planner Details",
-                            style: Get.textTheme.titleSmall!.copyWith(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        CustomContainer(
-                            child: Container(
-                          margin: const EdgeInsets.all(8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(
-                                    text: 'Total Task: ',
-                                    style: Get.textTheme.titleSmall!.copyWith(
-                                        color: Theme.of(context).primaryColor)),
-                                TextSpan(
-                                    text:
-                                        '${plannerCreationController.assignedTaskList.length} ',
-                                    style:
-                                        Get.textTheme.titleSmall!.copyWith()),
-                              ])),
-                              const SizedBox(height: 6),
-                              RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(
-                                    text: 'Total Working Days: ',
-                                    style: Get.textTheme.titleSmall!.copyWith(
-                                        color: Theme.of(context).primaryColor)),
-                                TextSpan(
-                                    text: '$totalday',
-                                    style:
-                                        Get.textTheme.titleSmall!.copyWith()),
-                              ])),
-                              const SizedBox(height: 6),
-                              RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(
-                                    text: 'Minimum Effort Required: ',
-                                    style: Get.textTheme.titleSmall!.copyWith(
-                                        color: Theme.of(context).primaryColor)),
-                                TextSpan(
-                                    text: '${totalday * 8}',
-                                    style:
-                                        Get.textTheme.titleSmall!.copyWith()),
-                              ])),
-                              const SizedBox(height: 6),
-                              RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(
-                                    text: 'planned Effort: ',
-                                    style: Get.textTheme.titleSmall!.copyWith(
-                                        color: Theme.of(context).primaryColor)),
-                                TextSpan(
-                                    text: '$plannedEffort',
-                                    style:
-                                        Get.textTheme.titleSmall!.copyWith()),
-                              ])),
-                              const SizedBox(height: 6),
-                              RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(
-                                    text: 'Total Effort: ',
-                                    style: Get.textTheme.titleSmall!.copyWith(
-                                        color: Theme.of(context).primaryColor)),
-                                TextSpan(
-                                    text: '$totalHour Hr ',
-                                    style:
-                                        Get.textTheme.titleSmall!.copyWith()),
-                              ])),
-                            ],
-                          ),
-                        )),
-                        (plannerCreationController.categoryWisePlan.isNotEmpty)
-                            ? _createCategortTable()
-                            : const SizedBox(),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 16.0),
-                            child: MSkollBtn(
-                              title: "Save",
-                              onPress: () {
-                                if (_plannerName.text.isEmpty) {
-                                  Fluttertoast.showToast(
-                                      msg: "Please enter plan name");
-                                } else {
-                                  savePlanner();
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                        _createPlannerTable(),
-                      ],
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: Text(
+                        "Planner Details",
+                        style: Get.textTheme.titleSmall!.copyWith(
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.w600),
+                      ),
                     ),
+                    const SizedBox(height: 8),
+                    CustomContainer(
+                        child: Container(
+                      margin: const EdgeInsets.all(8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          RichText(
+                              text: TextSpan(children: [
+                            TextSpan(
+                                text: 'Total Task: ',
+                                style: Get.textTheme.titleSmall!.copyWith(
+                                    color: Theme.of(context).primaryColor)),
+                            TextSpan(
+                                text:
+                                    '${plannerCreationController.assignedTaskList.length} ',
+                                style: Get.textTheme.titleSmall!.copyWith()),
+                          ])),
+                          const SizedBox(height: 6),
+                          RichText(
+                              text: TextSpan(children: [
+                            TextSpan(
+                                text: 'Total Working Days: ',
+                                style: Get.textTheme.titleSmall!.copyWith(
+                                    color: Theme.of(context).primaryColor)),
+                            TextSpan(
+                                text: '$totalday',
+                                style: Get.textTheme.titleSmall!.copyWith()),
+                          ])),
+                          const SizedBox(height: 6),
+                          RichText(
+                              text: TextSpan(children: [
+                            TextSpan(
+                                text: 'Minimum Effort Required: ',
+                                style: Get.textTheme.titleSmall!.copyWith(
+                                    color: Theme.of(context).primaryColor)),
+                            TextSpan(
+                                text: '${totalday * 8}',
+                                style: Get.textTheme.titleSmall!.copyWith()),
+                          ])),
+                          const SizedBox(height: 6),
+                          RichText(
+                              text: TextSpan(children: [
+                            TextSpan(
+                                text: 'planned Effort: ',
+                                style: Get.textTheme.titleSmall!.copyWith(
+                                    color: Theme.of(context).primaryColor)),
+                            TextSpan(
+                                text: '$plannedEffort',
+                                style: Get.textTheme.titleSmall!.copyWith()),
+                          ])),
+                          const SizedBox(height: 6),
+                          RichText(
+                              text: TextSpan(children: [
+                            TextSpan(
+                                text: 'Total Effort: ',
+                                style: Get.textTheme.titleSmall!.copyWith(
+                                    color: Theme.of(context).primaryColor)),
+                            TextSpan(
+                                text: '$totalHour Hr ',
+                                style: Get.textTheme.titleSmall!.copyWith()),
+                          ])),
+                        ],
+                      ),
+                    )),
+                    (plannerCreationController.categoryWisePlan.isNotEmpty)
+                        ? _createCategortTable()
+                        : const SizedBox(),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 16.0),
+                        child: MSkollBtn(
+                          title: "Save",
+                          onPress: () {
+                            if (_plannerName.text.isEmpty) {
+                              Fluttertoast.showToast(
+                                  msg: "Please enter plan name");
+                            } else if (plannedEffort <
+                                double.parse((totalday * 8).toString())) {
+                              Get.dialog(showPopup());
+                            } else {
+                              savePlanner();
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                    _createPlannerTable(),
+                  ],
+                ),
         ],
       ),
     );
@@ -1083,6 +1095,45 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               ]);
             }),
           ],
+        ),
+      ),
+    );
+  }
+
+  showPopup() {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      insetPadding: const EdgeInsets.symmetric(
+        horizontal: 16,
+      ),
+      contentPadding: const EdgeInsets.all(10),
+      content: WillPopScope(
+        onWillPop: () async => false,
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Total Effort must be greater than or equal to ${totalday * 8} Hours ... !!",
+                style: Get.textTheme.titleMedium!.copyWith(
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.w400),
+              ),
+              const SizedBox(height: 40),
+              MSkollBtn(
+                  title: "OK",
+                  onPress: () {
+                    setState(() {
+                      Get.back();
+                      getListData();
+                    });
+                  })
+            ],
+          ),
         ),
       ),
     );
