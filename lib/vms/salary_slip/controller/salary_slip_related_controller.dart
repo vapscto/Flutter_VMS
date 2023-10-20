@@ -9,7 +9,6 @@ class SalarySlipController extends GetxController {
   List<YearDropdownValue> yearList = <YearDropdownValue>[].obs;
   List<MonthDropdownValue> monthList = <MonthDropdownValue>[].obs;
   List<MainListValue> salarySlipDetail = <MainListValue>[].obs;
-
   RxBool showGenerate = RxBool(false);
 
   void showgenerateloading(bool loading) {

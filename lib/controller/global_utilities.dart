@@ -65,6 +65,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
+import '../vms/staff_leave_approval/screen/staff_leave_approval_home.dart';
 
 RxInt currentHomeTab = 0.obs;
 RxList<int> previousHomeTab = [0].obs;
@@ -851,7 +852,7 @@ void openMappedPages(
 
   if (pageName == "Leave Approval") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return ListLeaveHomeScreen(
+      return StaffLeaveApproval(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
         title: pageName,
