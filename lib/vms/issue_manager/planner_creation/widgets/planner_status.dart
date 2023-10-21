@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/api/planner_status_api.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/controller/planner_creation_controller.dart';
@@ -43,17 +44,16 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
         var pl = plannerCreationController.plannerStatus.elementAt(index);
         if (plannerCreationController.plannerStatus.elementAt(index).iSMTPLId ==
             null) {
-          if (pl.iSMTPLApprovalFlg == true) {
+          if (pl.iSMTPLApprovalFlg == true || pl.iSMTPLApprovedBy != 0) {
             status = "Approved";
-          } else {
+          } else if (pl.iSMTPLApprovalFlg == false ||
+              pl.iSMTPLApprovedBy == 0) {
             status = "Pending";
+          } else if (pl.iSMTPLApprovalFlg == false ||
+              pl.iSMTPLApprovedBy != 0) {
+            status = 'Rejected';
           }
-        } else {
-          if (pl.iSMTPLApprovalFlg == false) {
-            status = "Rejected";
-          } else {
-            status = "Approved";
-          }
+          logger.i(status);
         }
         DateTime dt = DateTime.parse(plannerCreationController.plannerStatus
             .elementAt(index)
@@ -70,19 +70,22 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
             fromDate,
             toDate,
             '${plannerCreationController.plannerStatus.elementAt(index).iSMTPLTotalHrs} Hr',
-            status,
-            // (plannerCreationController.plannerStatus
-            //                 .elementAt(index)
-            //                 .iSMTPLApprovalFlg ==
-            //             true &&
-            //         plannerCreationController.plannerStatus.isNotEmpty)
-            //     ? 'Approved'
-            //     : (plannerCreationController.plannerStatus
-            //                 .elementAt(index)
-            //                 .iSMTPLApprovalFlg ==
-            //             false)
-            //         ? 'Rejected'
-            //         : 'Pending',
+            (plannerCreationController.plannerStatus
+                        .elementAt(index)
+                        .iSMTPLApprovalFlg ==
+                    true)
+                ? 'Approved'
+                : (plannerCreationController.plannerStatus
+                            .elementAt(index)
+                            .iSMTPLApprovedBy !=
+                        0)
+                    ? 'Rejected'
+                    : (plannerCreationController.plannerStatus
+                                .elementAt(index)
+                                .iSMTPLApprovedBy ==
+                            0)
+                        ? 'Pending'
+                        : '',
             plannerCreationController.plannerStatus
                     .elementAt(index)
                     .approvedby ??
@@ -198,15 +201,16 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
                                                   style: Get
                                                       .textTheme.titleMedium!
                                                       .copyWith(
-                                                          color: (statusList[
-                                                                          index]
+                                                          color: (statusList[index]
                                                                       .status ==
                                                                   'Rejected')
                                                               ? Colors.red
                                                               : (statusList[index]
                                                                           .status ==
                                                                       'Pending')
-                                                                  ? Colors.grey
+                                                                  ? Theme.of(
+                                                                          context)
+                                                                      .primaryColor
                                                                   : Colors
                                                                       .green)),
                                               (plannerCreationController
