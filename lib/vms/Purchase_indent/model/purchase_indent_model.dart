@@ -32,7 +32,7 @@ class PurchaseIndentModelValues {
   String? iNVMPIPINo;
   String? iNVMPIPIDate;
   String? iNVMPIRemarks;
-  Null? iNVMPIReferenceNo;
+  String? iNVMPIReferenceNo;
   double? iNVMPIApproxTotAmount;
   bool? iNVMPIRejectFlg;
   int? userId;

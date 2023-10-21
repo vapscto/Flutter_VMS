@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:m_skool_flutter/staffs/salary_details/models/salary_det_graph_model.dart';
-import 'package:m_skool_flutter/staffs/salary_details/models/salary_details_graph_model.dart';
+import 'package:m_skool_flutter/vms/salary_details/models/salary_det_graph_model.dart';
+import 'package:m_skool_flutter/vms/salary_details/models/salary_details_graph_model.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 

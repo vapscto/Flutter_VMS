@@ -29,14 +29,6 @@ class _PlannerApprovedStatusWidgetState
   String toDate = '';
   String status = '';
   getplannerStatusModel() async {
-    // widget.plannerApprovalController.plannerStatusLoading(true);
-    // await PlannerListAPI.instance.plannerListAPI(
-    //     base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
-    //     widget.plannerApprovalController: widget.plannerApprovalController,
-    //     userId: widget.loginSuccessModel.userId!,
-    //     miId: widget.loginSuccessModel.mIID!,
-    //     roleId: widget.loginSuccessModel.roleId!);
-    // widget.plannerApprovalController.plannerLoading(false);
     if (widget.plannerApprovalController.plannerStatusModel.isNotEmpty) {
       for (int index = 0;
           index < widget.plannerApprovalController.plannerStatusModel.length;
@@ -222,7 +214,6 @@ class _PlannerApprovedStatusWidgetState
                                                   null)
                                               ? Text(
                                                   'Remarks: ${statusList[index].remarks}',
-                                                  // maxLines: 1,
                                                   overflow: TextOverflow.clip,
                                                 )
                                               : const SizedBox(),

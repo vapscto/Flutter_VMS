@@ -41,6 +41,13 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
   var invmpiAmount;
   var invmpiId;
   num amount = 0;
+  addAmount(num i) {
+    amount += i;
+  }
+
+  removeAmount(num i) {
+    amount -= i;
+  }
 
   void saveData() {
     for (int i = 0; i < controller.getOnclickList.length; i++) {
@@ -401,10 +408,14 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                                           .getOnclickList[index]
                                                           .iNVTPIApproxAmount
                                                           .toString()));
-                                              amount += num.parse(controller
+                                              // amount += num.parse(controller
+                                              //     .totalApproxAmountControllerList
+                                              //     .elementAt(index)
+                                              //     .text);
+                                              addAmount(num.parse(controller
                                                   .totalApproxAmountControllerList
                                                   .elementAt(index)
-                                                  .text);
+                                                  .text));
                                             });
                                           },
                                         )),
@@ -427,10 +438,17 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                                           .getOnclickList[index]
                                                           .iNVTPIApproxAmount
                                                           .toString()));
-                                              amount -= num.parse(controller
-                                                  .totalApproxAmountControllerList
-                                                  .elementAt(index)
-                                                  .text);
+                                              // amount -= num.parse(controller
+                                              //     .totalApproxAmountControllerList
+                                              //     .elementAt(index)
+                                              //     .text);
+                                              (amount <= 0)
+                                                  ? removeAmount(0)
+                                                  : removeAmount(num.parse(
+                                                      controller
+                                                          .totalApproxAmountControllerList
+                                                          .elementAt(index)
+                                                          .text));
                                             });
                                           },
                                         )),
