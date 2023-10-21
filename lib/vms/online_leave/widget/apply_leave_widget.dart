@@ -6,7 +6,9 @@ import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/online_leave/api/ol_featch_api.dart';
 import 'package:m_skool_flutter/vms/online_leave/api/save_leave_application.dart';
+import 'package:m_skool_flutter/vms/online_leave/controller/ol_controller.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
 import 'package:m_skool_flutter/vms/utils/showDatePicker.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
@@ -14,7 +16,7 @@ import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
-class ApplyLeaveWidget extends StatelessWidget {
+class ApplyLeaveWidget extends StatefulWidget {
   final LeaveNamesModelValues values;
   final Color color;
   final LoginSuccessModel loginSuccessModel;
@@ -27,9 +29,29 @@ class ApplyLeaveWidget extends StatelessWidget {
     required this.mskoolController,
   }) : super(key: key);
 
+  @override
+  State<ApplyLeaveWidget> createState() => _ApplyLeaveWidgetState();
+}
+
+class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
+  OpetionLeaveController controllerOL =Get.put(OpetionLeaveController());
   //final RxBool isHalfDay;
 
   @override
+  void initState() {
+     olLoad();
+    super.initState();
+  }
+  olLoad()async{
+   await getOptionalLeave(
+    asmayId: widget.loginSuccessModel.asmaYId!,
+    base: baseUrlFromInsCode('Leave', widget.mskoolController),
+    controller: controllerOL,
+    miId: widget.loginSuccessModel.mIID!,
+    userId: widget.loginSuccessModel.userId!
+   );
+  }
+   @override
   Widget build(BuildContext context) {
     RxBool isHalfDay = RxBool(false);
     final TextEditingController reason = TextEditingController();
@@ -46,20 +68,23 @@ class ApplyLeaveWidget extends StatelessWidget {
     DateTime initialDt = DateTime.now();
     DateTime firstDt = DateTime.now();
     DateTime lastDt = DateTime.now();
-    if (values.hrmLLeaveName == "Casual Leave") {
-      initialDt = currentDate.add(Duration(days: 2));
-      firstDt = currentDate.add(Duration(days: 2));
-      lastDt = currentDate.add(Duration(days: 4));
-    } else if (values.hrmLLeaveName == "Sick Leave") {
+    DateTime initialDt2 = DateTime.now();
+    DateTime firstDt2 = DateTime.now();
+    DateTime lastDt2 = DateTime.now();
+    if (widget.values.hrmLLeaveName == "Casual Leave") {
+      initialDt = currentDate.add(Duration(days: 3));
+      firstDt = currentDate.add(Duration(days: 3));
+      lastDt = currentDate.add(Duration(days: 5));
+    } else if (widget.values.hrmLLeaveName == "Sick Leave") {
       initialDt = currentDate.subtract(Duration(days: 1));
       firstDt = currentDate.subtract(Duration(days: 2));
-      lastDt = currentDate;
-    } else if (values.hrmLLeaveName == "Comp off" ||
-        values.hrmLLeaveName == "Emergency Leave") {
+      lastDt = currentDate.subtract(Duration(days: 1));
+    } else if (widget.values.hrmLLeaveName == "Comp off" ||
+        widget.values.hrmLLeaveName == "Emergency Leave") {
       initialDt = currentDate.subtract(Duration(days: 1));
       firstDt = currentDate.subtract(Duration(days: 30));
       lastDt = currentDate;
-    } else if (values.hrmLLeaveName == "Optional Leave") {
+    } else if (widget.values.hrmLLeaveName == "Optional Leave") {
       initialDt = DateTime.now();
       firstDt = DateTime.now();
       lastDt = DateTime.now().add(Duration(days: 2));
@@ -79,15 +104,15 @@ class ApplyLeaveWidget extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(12.0),
                 decoration: BoxDecoration(
-                    color: color.withOpacity(0.2),
+                    color: widget.color.withOpacity(0.2),
                     borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(8.0),
                     )),
                 child: Text(
-                  "${values.hrmLLeaveName}",
+                  "${widget.values.hrmLLeaveName}",
                   style: Theme.of(context).textTheme.titleMedium!.merge(
                         TextStyle(
-                          color: color,
+                          color: widget.color,
                         ),
                       ),
                 ),
@@ -244,6 +269,12 @@ class ApplyLeaveWidget extends StatelessWidget {
                                       firstDate: firstDt,
                                       lastDate: lastDt,
                                       selectableDayPredicate: (DateTime date) {
+                                        if (widget.values.hrmLLeaveName == "Casual Leave") {
+                                           return true;
+                                        }else if(widget.values.hrmLLeaveName == "Sick Leave"){
+                                         return true;
+                                        }
+
                                         return true;
                                       },
                                     );
@@ -255,7 +286,27 @@ class ApplyLeaveWidget extends StatelessWidget {
                                     }
                                     startDT = date;
                                     startDate.text =
-                                        "${date.day}-${date.month}-${date.year}";
+                                    "${date.day}-${date.month}-${date.year}";
+                                   if (widget.values.hrmLLeaveName == "Casual Leave") {
+                                    initialDt2 = startDT.add(Duration(days: 1));
+                                    firstDt2 = startDT.add(Duration(days: 1));
+                                    lastDt2 =  startDT.add(Duration(days: 1));
+                                   }else if (widget.values.hrmLLeaveName == "Comp off" ||
+                                        widget.values.hrmLLeaveName == "Emergency Leave") {
+                                      initialDt2 = currentDate.subtract(Duration(days: 1));
+                                      firstDt2 = currentDate.subtract(Duration(days: 30));
+                                      lastDt2 = currentDate;
+                                    } else if (widget.values.hrmLLeaveName == "Optional Leave") {
+                                        controllerOL.optionalLeaveList.contains(controllerOL.optionalLeaveList.where((p0) => p0.fOMHWDDFromDate ==""));
+                                       
+                                      initialDt2 = DateTime.now();
+                                      firstDt2 = DateTime.now();
+                                      lastDt2 = DateTime.now().add(Duration(days: 2));
+                                    } else if(widget.values.hrmLLeaveName =="Sick Leave"){
+                                     initialDt2 = initialDt;
+                                     firstDt2 = firstDt;
+                                     lastDt2 = lastDt;
+                                    }
                                   },
                                   icon: SvgPicture.asset(
                                     'assets/svg/calendar_icon.svg',
@@ -343,10 +394,14 @@ class ApplyLeaveWidget extends StatelessWidget {
                                     //second
                                     DateTime? end = await showDatePickerLeave(
                                       context: context,
-                                      initialDate: initialDt,
-                                      firstDate: firstDt,
-                                      lastDate: lastDt,
+                                      initialDate:initialDt2,
+                                      firstDate:firstDt2,
+                                      lastDate:lastDt2,
                                       selectableDayPredicate: (DateTime date) {
+                                          if (widget.values.hrmLLeaveName == "Casual Leave"){
+                                       return date.isAtSameMomentAs(startDT.add(Duration(days: 1)));
+                                          }
+                                       
                                         return true;
                                       },
                                     );
@@ -706,9 +761,9 @@ class ApplyLeaveWidget extends StatelessWidget {
                         children: [
                           FutureBuilder<bool>(
                               future: SaveLeaveApplication.instance.saveNow(
-                                  miId: loginSuccessModel.mIID!,
-                                  userId: loginSuccessModel.userId!,
-                                  asmayId: loginSuccessModel.asmaYId!,
+                                  miId: widget.loginSuccessModel.mIID!,
+                                  userId: widget.loginSuccessModel.userId!,
+                                  asmayId: widget.loginSuccessModel.asmaYId!,
                                   applicationDate:
                                       DateTime.now().toLocal().toString(),
                                   contactNoOnLeave: int.parse(phone.text),
@@ -731,20 +786,20 @@ class ApplyLeaveWidget extends StatelessWidget {
                                   temp: [
                                     {
                                       "fromDate": startDT.toLocal().toString(),
-                                      "hrelS_CBLeaves": values.hrelSCBLeaves,
+                                      "hrelS_CBLeaves": widget.values.hrelSCBLeaves,
                                       "hrelS_CreditedLeaves":
-                                          values.hrelSCreditedLeaves,
+                                          widget.values.hrelSCreditedLeaves,
                                       "hrelS_EncashedLeaves":
-                                          values.hrelSEncashedLeaves,
-                                      "hrelS_Id": values.hrelSId,
-                                      "hrmL_Id": values.hrmLId,
+                                          widget.values.hrelSEncashedLeaves,
+                                      "hrelS_Id": widget.values.hrelSId,
+                                      "hrmL_Id": widget.values.hrmLId,
                                       "hrmL_LeaveCreditFlg":
-                                          values.hrmLLeaveCreditFlg,
-                                      "hrmL_LeaveName": values.hrmLLeaveName,
+                                          widget.values.hrmLLeaveCreditFlg,
+                                      "hrmL_LeaveName": widget.values.hrmLLeaveName,
                                     }
                                   ],
                                   base: baseUrlFromInsCode(
-                                      "leave", mskoolController)),
+                                      "leave", widget.mskoolController)),
                               builder: (_, snapshot) {
                                 if (snapshot.hasData) {
                                   return Column(
@@ -815,3 +870,6 @@ class ApplyLeaveWidget extends StatelessWidget {
     );
   }
 }
+  bool isSameDay(DateTime a, DateTime b) {
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
