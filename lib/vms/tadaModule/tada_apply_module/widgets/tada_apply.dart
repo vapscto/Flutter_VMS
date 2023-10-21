@@ -523,8 +523,10 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 toDate = await showDatePicker(
                                   context: context,
                                   helpText: "Select Date",
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(2000),
+                                  initialDate: DateTime.parse(
+                                      fromDate!.toIso8601String()),
+                                  firstDate: DateTime.parse(
+                                      fromDate!.toIso8601String()),
                                   lastDate: DateTime(3050),
                                 );
                                 if (toDate != null) {
@@ -554,8 +556,10 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                     toDate = await showDatePicker(
                                       context: context,
                                       helpText: "Select Date",
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(2000),
+                                      initialDate: DateTime.parse(
+                                          fromDate!.toIso8601String()),
+                                      firstDate: DateTime.parse(
+                                          fromDate!.toIso8601String()),
                                       lastDate: DateTime(3050),
                                     );
                                     if (toDate != null) {

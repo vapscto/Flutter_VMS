@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/salary_details/api/salary_details_api.dart';
 import 'package:m_skool_flutter/vms/salary_details/models/salary_model.dart';
@@ -79,22 +80,22 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                         ),
                       ],
                     ),
-                    // const SizedBox(
-                    //   height: 4.0,
-                    // ),
-                    // SalaryLineChart(
-                    //   graphValues: snapshot.data!.graphValues,
-                    // ),
-                    // const SizedBox(
-                    //   height: 16.0,
-                    // ),
-                    // Text(
-                    //   "Details",
-                    //   style: Theme.of(context).textTheme.titleSmall!.merge(
-                    //         const TextStyle(
-                    //             fontWeight: FontWeight.w600, fontSize: 16),
-                    //       ),
-                    // ),
+                    const SizedBox(
+                      height: 4.0,
+                    ),
+                    SalaryLineChart(
+                      graphValues: snapshot.data!.graphValues,
+                    ),
+                    const SizedBox(
+                      height: 16.0,
+                    ),
+                    Text(
+                      "Details",
+                      style: Theme.of(context).textTheme.titleSmall!.merge(
+                            const TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 16),
+                          ),
+                    ),
                     const SizedBox(
                       height: 16.0,
                     ),

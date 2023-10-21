@@ -263,8 +263,8 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                   fromDate = await showDatePicker(
                                     context: context,
                                     helpText: "Select Data",
+                                    firstDate: DateTime(2022),
                                     initialDate: DateTime.now(),
-                                    firstDate: DateTime.now(),
                                     lastDate: DateTime(3050),
                                     //   selectableDayPredicate: (day) =>
                                     //       day.weekday == 7 || day.weekday == 7
@@ -286,8 +286,8 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                       fromDate = await showDatePicker(
                                         helpText: "Select Data",
                                         context: context,
+                                        firstDate: DateTime(2022),
                                         initialDate: DateTime.now(),
-                                        firstDate: DateTime.now(),
                                         lastDate: DateTime(3050),
                                         // selectableDayPredicate: (day) =>
                                         //     day.weekday == 7 || day.weekday == 7
@@ -378,8 +378,10 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                     toDate = await showDatePicker(
                                       context: context,
                                       helpText: "Select Date",
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime.now(),
+                                      initialDate: DateTime.parse(
+                                          fromDate!.toIso8601String()),
+                                      firstDate: DateTime.parse(
+                                          fromDate!.toIso8601String()),
                                       lastDate: DateTime(3050),
                                     );
                                     if (toDate != null) {
@@ -410,8 +412,10 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                         toDate = await showDatePicker(
                                           context: context,
                                           helpText: "Select Date",
-                                          initialDate: DateTime.now(),
-                                          firstDate: DateTime.now(),
+                                          initialDate:
+                                              DateTime.parse(_startDate.text),
+                                          firstDate:
+                                              DateTime.parse(_startDate.text),
                                           lastDate: DateTime(3050),
                                         );
                                         if (toDate != null) {
