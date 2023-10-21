@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/staffs/salary_details/models/salary_detail_monthwise_model.dart';
-import 'package:m_skool_flutter/staffs/salary_details/models/salary_details_graph_model.dart';
-import 'package:m_skool_flutter/staffs/salary_details/models/salary_model.dart';
+import 'package:m_skool_flutter/vms/salary_details/models/salary_detail_monthwise_model.dart';
+import 'package:m_skool_flutter/vms/salary_details/models/salary_details_graph_model.dart';
+import 'package:m_skool_flutter/vms/salary_details/models/salary_model.dart';
 
 class SalaryDetailsApi {
   SalaryDetailsApi.init();
@@ -28,7 +28,12 @@ class SalaryDetailsApi {
           "HRMLY_LeaveYear": year,
         },
       );
-
+      logger.i({
+        "MI_Id": miId,
+        "UserId": userId,
+        "HRMLY_LeaveYear": year,
+      });
+      logger.i(apiUrl);
       if (response.data['salarylist'] == null) {
         return Future.error({
           "errorTitle": "Data not available",
@@ -41,7 +46,7 @@ class SalaryDetailsApi {
           SalaryDetailsMonthwise.fromJson(response.data['salarylist']);
 
       final SalaryDetailsGraph graph =
-          SalaryDetailsGraph.fromJson(response.data['salaryDetailslist']);
+          SalaryDetailsGraph.fromJson(response.data['salaryEarningDlist']);
       final SalaryModel model = SalaryModel(
           graphValues: graph.values!, monthwiseValues: monthwise.values!);
 

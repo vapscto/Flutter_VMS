@@ -2,11 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/staffs/salary_details/models/salary_deduction_mode.dart';
-import 'package:m_skool_flutter/staffs/salary_details/models/salary_earning_model.dart';
-import 'package:m_skool_flutter/staffs/salary_details/models/split_salary_model.dart';
-import 'package:m_skool_flutter/staffs/salary_details/models/total_deduction_model.dart';
-import 'package:m_skool_flutter/staffs/salary_details/models/total_earning_model.dart';
+import 'package:m_skool_flutter/vms/salary_details/models/salary_deduction_mode.dart';
+import 'package:m_skool_flutter/vms/salary_details/models/salary_earning_model.dart';
+import 'package:m_skool_flutter/vms/salary_details/models/split_salary_model.dart';
+import 'package:m_skool_flutter/vms/salary_details/models/total_deduction_model.dart';
+import 'package:m_skool_flutter/vms/salary_details/models/total_earning_model.dart';
 
 class SalaryBreakApi {
   SalaryBreakApi.init();
@@ -26,6 +26,8 @@ class SalaryBreakApi {
         options: Options(headers: getSession()),
         data: {"MI_Id": miId, "UserId": userId, "HRES_Id": hresId},
       );
+      logger.i({"MI_Id": miId, "UserId": userId, "HRES_Id": hresId});
+      logger.i(apiUrl);
 
       final TotalEarningModel totalEarning =
           TotalEarningModel.fromJson(response.data['totalEarning']);

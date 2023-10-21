@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:m_skool_flutter/staffs/salary_details/models/salary_detail_monthwise_model.dart';
-import 'package:m_skool_flutter/staffs/salary_details/models/salary_details_graph_model.dart';
+import 'package:m_skool_flutter/vms/salary_details/models/salary_detail_monthwise_model.dart';
+import 'package:m_skool_flutter/vms/salary_details/models/salary_details_graph_model.dart';
 
 class SalaryModel {
   final List<SalaryDetailsGraphValues> graphValues;

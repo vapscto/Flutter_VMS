@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/salary_details/api/salary_details_api.dart';
-import 'package:m_skool_flutter/staffs/salary_details/models/salary_model.dart';
-import 'package:m_skool_flutter/staffs/salary_details/screen/salary_overall_det.dart';
-import 'package:m_skool_flutter/staffs/salary_details/widget/salary_line_chart.dart';
-import 'package:m_skool_flutter/staffs/salary_details/widget/salary_month_item.dart';
+import 'package:m_skool_flutter/vms/salary_details/api/salary_details_api.dart';
+import 'package:m_skool_flutter/vms/salary_details/models/salary_model.dart';
+import 'package:m_skool_flutter/vms/salary_details/screen/salary_overall_det.dart';
+import 'package:m_skool_flutter/vms/salary_details/widget/salary_line_chart.dart';
+import 'package:m_skool_flutter/vms/salary_details/widget/salary_month_item.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
@@ -79,22 +79,22 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 4.0,
-                    ),
-                    SalaryLineChart(
-                      graphValues: snapshot.data!.graphValues,
-                    ),
-                    const SizedBox(
-                      height: 16.0,
-                    ),
-                    Text(
-                      "Details",
-                      style: Theme.of(context).textTheme.titleSmall!.merge(
-                            const TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 16),
-                          ),
-                    ),
+                    // const SizedBox(
+                    //   height: 4.0,
+                    // ),
+                    // SalaryLineChart(
+                    //   graphValues: snapshot.data!.graphValues,
+                    // ),
+                    // const SizedBox(
+                    //   height: 16.0,
+                    // ),
+                    // Text(
+                    //   "Details",
+                    //   style: Theme.of(context).textTheme.titleSmall!.merge(
+                    //         const TextStyle(
+                    //             fontWeight: FontWeight.w600, fontSize: 16),
+                    //       ),
+                    // ),
                     const SizedBox(
                       height: 16.0,
                     ),

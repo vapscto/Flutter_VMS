@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:m_skool_flutter/staffs/salary_details/models/salary_deduction_mode.dart';
-import 'package:m_skool_flutter/staffs/salary_details/models/salary_earning_model.dart';
-import 'package:m_skool_flutter/staffs/salary_details/models/total_deduction_model.dart';
-import 'package:m_skool_flutter/staffs/salary_details/models/total_earning_model.dart';
+import 'package:m_skool_flutter/vms/salary_details/models/salary_deduction_mode.dart';
+import 'package:m_skool_flutter/vms/salary_details/models/salary_earning_model.dart';
+import 'package:m_skool_flutter/vms/salary_details/models/total_deduction_model.dart';
+import 'package:m_skool_flutter/vms/salary_details/models/total_earning_model.dart';
 
 class SplitSalaryModel {
   final TotalEarningModel totalEarningModel;
