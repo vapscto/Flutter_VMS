@@ -41,31 +41,34 @@ class ApplyLeaveWidget extends StatelessWidget {
     DateTime endDT = DateTime.now();
     DateTime reportingDT = DateTime.now();
     RxString totalDay = RxString("0");
-   DateTime currentDate = DateTime.now();
+    DateTime currentDate = DateTime.now();
 
-   DateTime initialDt =DateTime.now();
-   DateTime firstDt=DateTime.now();
-   DateTime lastDt=DateTime.now();
-    if(values.hrmLLeaveName=="Casual Leave"){
-     initialDt=currentDate.add(Duration(days: 2));
-     firstDt=currentDate.add(Duration(days: 2));
-     lastDt= currentDate.add(Duration(days: 4));
-    }else  if(values.hrmLLeaveName=="Sick Leave"){
-     initialDt = currentDate.subtract(Duration(days:1 ));
-     firstDt = currentDate.subtract(Duration(days: 2));
-     lastDt =  currentDate;
-    }else if(values.hrmLLeaveName=="Comp off" ||values.hrmLLeaveName=="Emergency Leave"){
-     initialDt= currentDate.subtract(Duration(days:1 ));
-     firstDt=currentDate.subtract(Duration(days: 30));
-     lastDt=currentDate;
-    }else if(values.hrmLLeaveName=="Optional Leave"){
-    initialDt= DateTime.now();
-                firstDt = DateTime.now() ;
-                lastDt=DateTime.now().add(Duration(days: 2));
-    }else{
-       initialDt= currentDate;
-                firstDt = DateTime(currentDate.year, currentDate.month +1, currentDate.day);
-                lastDt= DateTime(currentDate.year, currentDate.month - 1, currentDate.day); 
+    DateTime initialDt = DateTime.now();
+    DateTime firstDt = DateTime.now();
+    DateTime lastDt = DateTime.now();
+    if (values.hrmLLeaveName == "Casual Leave") {
+      initialDt = currentDate.add(Duration(days: 2));
+      firstDt = currentDate.add(Duration(days: 2));
+      lastDt = currentDate.add(Duration(days: 4));
+    } else if (values.hrmLLeaveName == "Sick Leave") {
+      initialDt = currentDate.subtract(Duration(days: 1));
+      firstDt = currentDate.subtract(Duration(days: 2));
+      lastDt = currentDate;
+    } else if (values.hrmLLeaveName == "Comp off" ||
+        values.hrmLLeaveName == "Emergency Leave") {
+      initialDt = currentDate.subtract(Duration(days: 1));
+      firstDt = currentDate.subtract(Duration(days: 30));
+      lastDt = currentDate;
+    } else if (values.hrmLLeaveName == "Optional Leave") {
+      initialDt = DateTime.now();
+      firstDt = DateTime.now();
+      lastDt = DateTime.now().add(Duration(days: 2));
+    } else {
+      initialDt = currentDate;
+      firstDt =
+          DateTime(currentDate.year, currentDate.month + 1, currentDate.day);
+      lastDt =
+          DateTime(currentDate.year, currentDate.month - 1, currentDate.day);
     }
     return Column(
       children: [
@@ -234,15 +237,15 @@ class ApplyLeaveWidget extends StatelessWidget {
                                     if (startDate.text.isEmpty) {
                                       endDT = DateTime(DateTime.now().year + 1);
                                     }
-                                //first
+                                    //first
                                     DateTime? date = await showDatePickerLeave(
                                       context: context,
-                                    initialDate: initialDt,
-                                    firstDate: firstDt,
-                                    lastDate: lastDt,
-                                       selectableDayPredicate: (DateTime date) {
-                                          return true;
-                                        },
+                                      initialDate: initialDt,
+                                      firstDate: firstDt,
+                                      lastDate: lastDt,
+                                      selectableDayPredicate: (DateTime date) {
+                                        return true;
+                                      },
                                     );
                                     if (date == null) {
                                       Fluttertoast.showToast(
@@ -340,13 +343,13 @@ class ApplyLeaveWidget extends StatelessWidget {
                                     //second
                                     DateTime? end = await showDatePickerLeave(
                                       context: context,
-                                       initialDate: initialDt,
-                                        firstDate: firstDt,
-                                        lastDate: lastDt,
-                                       selectableDayPredicate: (DateTime date) {
-                                          return true;
-                                        },
-                                        );
+                                      initialDate: initialDt,
+                                      firstDate: firstDt,
+                                      lastDate: lastDt,
+                                      selectableDayPredicate: (DateTime date) {
+                                        return true;
+                                      },
+                                    );
 
                                     if (end == null) {
                                       Fluttertoast.showToast(
