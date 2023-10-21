@@ -25,29 +25,14 @@ class PlannerApprovalHomeScreen extends StatefulWidget {
 }
 
 class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
-  // widget.plannerApprovalController widget.plannerApprovalController =
-  //     Get.put(widget.plannerApprovalController());
-  // _getPlannerData() async {
-  //   widget.plannerApprovalController.plannerLoading(true);
-  //   await PlannerListAPI.instance.plannerListAPI(
-  //       base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
-  //       widget.plannerApprovalController: widget.plannerApprovalController,
-  //       userId: widget.loginSuccessModel.userId!,
-  //       miId: widget.loginSuccessModel.mIID!,
-  //       roleId: widget.loginSuccessModel.roleId!);
-  //   widget.plannerApprovalController.plannerLoading(false);
-  // }
-
   @override
   void initState() {
-    // _getPlannerData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: CustomAppBar(title: widget.title).getAppBar(),
       body: Obx(() {
         return ListView(
           padding: const EdgeInsetsDirectional.symmetric(
