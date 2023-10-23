@@ -2,23 +2,26 @@ import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/vms/salary_details/controller/salary_details_controller.dart';
 import 'package:m_skool_flutter/vms/salary_details/models/salary_detail_monthwise_model.dart';
 import 'package:m_skool_flutter/vms/salary_details/models/salary_details_graph_model.dart';
 import 'package:m_skool_flutter/vms/salary_details/models/salary_model.dart';
 
-class SalaryDetailsApi {
-  SalaryDetailsApi.init();
-  static final SalaryDetailsApi instance = SalaryDetailsApi.init();
+class SalaryApi {
+  SalaryApi.init();
+  static final SalaryApi instance = SalaryApi.init();
 
-  Future<SalaryModel> getSalary({
+  getSalary({
     required int miId,
     required int userId,
     required int year,
     required String base,
+    required SalaryDetailsController salaryDetailsController,
   }) async {
     final Dio dio = getGlobalDio();
     final String apiUrl = base + URLS.salaryDetailsApi;
     try {
+      salaryDetailsController.salaryLoading(true);
       final Response response = await dio.post(
         apiUrl,
         options: Options(headers: getSession()),
@@ -34,23 +37,29 @@ class SalaryDetailsApi {
         "HRMLY_LeaveYear": year,
       });
       logger.i(apiUrl);
-      // if (response.data['salarylist'] == null) {
-      //   return Future.error({
-      //     "errorTitle": "Data not available",
-      //     "errorMsg":
-      //         "Sorry! but data is not available in the database, Please contact to your technical team to solve this error\n\n Reference: salarylist is null"
-      //   });
-      // }
+      if (response.data['salarylist'] == null) {
+        return Future.error({
+          "errorTitle": "Data not available",
+          "errorMsg":
+              "Sorry! but data is not available in the database, Please contact to your technical team to solve this error\n\n Reference: salarylist is null"
+        });
+      }
+      if (response.statusCode == 200) {
+        SalaryDetailsMonthwise monthwise =
+            SalaryDetailsMonthwise.fromJson(response.data['salarylist']);
 
-      SalaryDetailsMonthwise monthwise =
-          SalaryDetailsMonthwise.fromJson(response.data['salarylist']);
+        SalaryDetailsGraph graph =
+            SalaryDetailsGraph.fromJson(response.data['salaryDetailslist']);
+        SalaryModel model = SalaryModel(
+            graphValues: graph.values!, monthwiseValues: monthwise.values!);
+        salaryDetailsController.salaryData(model);
+        salaryDetailsController.salaryLoading(false);
+      }
 
-      SalaryDetailsGraph graph =
-          SalaryDetailsGraph.fromJson(response.data['salaryDetailslist']);
-      SalaryModel model = SalaryModel(
-          graphValues: graph.values!, monthwiseValues: monthwise.values!);
+      // SalaryModel model = SalaryModel(
+      //     graphValues: graph.values!, monthwiseValues: monthwise.values!);
 
-      return Future.value(model);
+      // return Future.value(model);
     } on DioError catch (e) {
       logger.e(e.toString());
       return Future.error({

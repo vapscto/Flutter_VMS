@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/salary_details/models/salary_det_graph_model.dart';
 import 'package:m_skool_flutter/vms/salary_details/models/salary_details_graph_model.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -18,10 +19,14 @@ class _SalaryLineChartState extends State<SalaryLineChart> {
   List<SalaryGraphDetModel> deduction = [];
 
   List<SalaryGraphDetModel> lop = [];
-
+  int parsedValue = 0;
   @override
   void initState() {
     for (var e in widget.graphValues) {
+      if (e.lOP == null) {
+        parsedValue = int.parse(e.lOP!);
+        logger.i(parsedValue);
+      }
       salary.add(SalaryGraphDetModel(
           salary: e.earning == null ? 0 : e.earning! / 1000,
           month: e.hRESMonth ?? "N/a",
@@ -33,7 +38,7 @@ class _SalaryLineChartState extends State<SalaryLineChart> {
           type: "Deduction"));
 
       lop.add(SalaryGraphDetModel(
-          salary: e.lOP == null ? 0 : e.lOP! / 1000,
+          salary: e.lOP == null ? 0 : parsedValue / 1000,
           month: e.hRESMonth ?? "N/a",
           type: "LOP"));
     }

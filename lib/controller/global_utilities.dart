@@ -42,14 +42,12 @@ import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.da
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
 import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
-import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_approval_home.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/online_leave/screen/online_leave_home.dart';
 import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart';
-import 'package:m_skool_flutter/vms/salary_details/screen/salary_det_home.dart';
+import 'package:m_skool_flutter/vms/salary_details/screen/salary_home_screen.dart';
 import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
-import 'package:m_skool_flutter/vms/staff_leave_approval/screen/leave_list_home.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
@@ -870,7 +868,7 @@ void openMappedPages(
     return;
   }
   if (pageName == 'Salary Details') {
-    Get.to(() => SalaryDetails(
+    Get.to(() => SalaryHomeScreen(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
           title: pageName,

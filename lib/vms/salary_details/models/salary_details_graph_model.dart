@@ -29,9 +29,9 @@ class SalaryDetailsGraphValues {
   String? hRESYear;
   int? iVRMMonthId;
   String? hRESMonth;
-  dynamic earning;
-  dynamic deduction;
-  int? lOP;
+  double? earning;
+  double? deduction;
+  String? lOP;
 
   SalaryDetailsGraphValues(
       {this.type,
