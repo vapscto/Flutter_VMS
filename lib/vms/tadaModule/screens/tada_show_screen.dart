@@ -56,8 +56,12 @@ class _TadaListScreenState extends State<TadaListScreen> {
                         "Please wait while we load TADA lists and create a view for you.",
                     animationPath: "assets/json/default.json"),
               )
+
+ 
+
             : tadaController.tadaData.isNotEmpty
                 ? ListView(
+
                     padding: const EdgeInsets.symmetric(
                         vertical: 16, horizontal: 16),
                     children: [
