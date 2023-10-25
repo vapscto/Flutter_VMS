@@ -585,4 +585,6 @@ class URLS {
   static String profileData = 'api/ISMDashboardFacade/getdetails/';
 
   static String visitorapprovalapi = 'api/V_AppointmentApprovalStatusFacade/getDetails/';
+
+  static String leaveCountList="api/OnlineLeaveApplicationFacade/getonlineLeave";
 }

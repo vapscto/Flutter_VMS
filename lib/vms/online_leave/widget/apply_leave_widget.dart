@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/api/ol_featch_api.dart';
 import 'package:m_skool_flutter/vms/online_leave/api/save_leave_application.dart';
@@ -45,7 +46,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
   olLoad()async{
    await getOptionalLeave(
     asmayId: widget.loginSuccessModel.asmaYId!,
-    base: baseUrlFromInsCode('Leave', widget.mskoolController),
+    base: baseUrlFromInsCode('leave', widget.mskoolController),
     controller: controllerOL,
     miId: widget.loginSuccessModel.mIID!,
     userId: widget.loginSuccessModel.userId!
@@ -85,15 +86,14 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
       firstDt = currentDate.subtract(Duration(days: 30));
       lastDt = currentDate;
     } else if (widget.values.hrmLLeaveName == "Optional Leave") {
-      initialDt = DateTime.now();
-      firstDt = DateTime.now();
+      initialDt = currentDate.add(Duration(days: 1));
+      firstDt =  currentDate.add(Duration(days: 1));
       lastDt = DateTime.now().add(Duration(days: 2));
-    } else {
-      initialDt = currentDate;
-      firstDt =
-          DateTime(currentDate.year, currentDate.month + 1, currentDate.day);
-      lastDt =
-          DateTime(currentDate.year, currentDate.month - 1, currentDate.day);
+    }  else if (widget.values.hrmLLeaveName == "Privilege Leave") {
+      DateTime subdate = currentDate.add(Duration(days: 10)) ;
+       initialDt = subdate.add(Duration());
+      firstDt = subdate.subtract(Duration(days: 12));
+      lastDt = currentDate.add(Duration(days: 20));
     }
     return Column(
       children: [
@@ -273,9 +273,15 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                            return true;
                                         }else if(widget.values.hrmLLeaveName == "Sick Leave"){
                                          return true;
-                                        }
-
-                                        return true;
+                                        }else if(widget.values.hrmLLeaveName == "Optional Leave"){
+                                         return  date.isAfter(currentDate) && date.isBefore(lastDt.add(Duration(days: 1)));
+   ;
+                                        }else if(widget.values.hrmLLeaveName == "Privilege Leave")
+                                         {
+                                          return date.isAfter(currentDate.add(Duration(days: 9))) && date.isBefore(lastDt);
+   
+                                         }
+                                         return true;
                                       },
                                     );
                                     if (date == null) {
@@ -288,24 +294,54 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                     startDate.text =
                                     "${date.day}-${date.month}-${date.year}";
                                    if (widget.values.hrmLLeaveName == "Casual Leave") {
-                                    initialDt2 = startDT.add(Duration(days: 1));
-                                    firstDt2 = startDT.add(Duration(days: 1));
-                                    lastDt2 =  startDT.add(Duration(days: 1));
+                                      initialDt2 = startDT.add(Duration(days: 1));
+                                      firstDt2 = startDT.add(Duration(days: 1));
+                                      lastDt2 =  startDT.add(Duration(days: 1));
                                    }else if (widget.values.hrmLLeaveName == "Comp off" ||
-                                        widget.values.hrmLLeaveName == "Emergency Leave") {
-                                      initialDt2 = currentDate.subtract(Duration(days: 1));
-                                      firstDt2 = currentDate.subtract(Duration(days: 30));
-                                      lastDt2 = currentDate;
+                                      widget.values.hrmLLeaveName == "Emergency Leave") {
+                                      initialDt2 = startDT.add(Duration(days: 1));
+                                      firstDt2 =  startDT.add(Duration(days: 1));
+                                      lastDt2 = startDT.add(Duration(days:2));
                                     } else if (widget.values.hrmLLeaveName == "Optional Leave") {
-                                        controllerOL.optionalLeaveList.contains(controllerOL.optionalLeaveList.where((p0) => p0.fOMHWDDFromDate ==""));
-                                       
-                                      initialDt2 = DateTime.now();
-                                      firstDt2 = DateTime.now();
-                                      lastDt2 = DateTime.now().add(Duration(days: 2));
-                                    } else if(widget.values.hrmLLeaveName =="Sick Leave"){
-                                     initialDt2 = initialDt;
-                                     firstDt2 = firstDt;
-                                     lastDt2 = lastDt;
+                                      for(int i= 0 ;i<controllerOL.optionalLeaveList.length;i++){
+                                        if(controllerOL.optionalLeaveList[i].fOMHWDDFromDate=="${date.year}-${date.month}-${date.day}T00:00:00"){
+                                         logger.e("found match");
+                                          initialDt2 = DateTime.now();
+                                          firstDt2 = DateTime.now();
+                                          lastDt2 = DateTime.now().add(Duration(days: 2));
+                                        }else{
+                                          Get.back();
+                                          showDialog(context: context, builder: (context) {
+                                         return  AlertDialog(
+                                          shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                          content:Container(
+                                          height: 200,
+                                           child: Center(
+                                              child: Align(
+                                                alignment: Alignment.center,
+                                                child: Text("Selected Date Is\nNot Have Optional\nHoliday",
+                                                style: Theme.of(context).textTheme.bodyLarge!.merge(
+                                                   TextStyle(
+                                                    fontSize: 24,
+                                                     fontWeight:FontWeight.bold,
+                                                     color: Color.fromARGB(255, 22, 35, 216) 
+                                                  )
+                                                ),),
+                                              ),
+                                             ),
+                                         ) ,);
+                                         }, ) ;
+                                        }
+                                      }
+                                     
+                                      } else if(widget.values.hrmLLeaveName =="Sick Leave"){
+                                      initialDt2 = initialDt;
+                                      firstDt2 = firstDt;
+                                      lastDt2 = lastDt;
+                                    }else if(widget.values.hrmLLeaveName =="Privilege Leave"){
+                                     initialDt2 = startDT;
+                                     firstDt2 = startDT;
+                                      lastDt2 =  startDT.add(Duration(days: 10));
                                     }
                                   },
                                   icon: SvgPicture.asset(
@@ -400,6 +436,11 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                       selectableDayPredicate: (DateTime date) {
                                           if (widget.values.hrmLLeaveName == "Casual Leave"){
                                        return date.isAtSameMomentAs(startDT.add(Duration(days: 1)));
+                                          }else if (widget.values.hrmLLeaveName == "Privilege Leave"){
+                                          return date.isAfter(startDT.subtract(Duration(days: 1))) && date.isBefore(lastDt2);
+                                          } else if (widget.values.hrmLLeaveName == "Comp off" ||
+                                          widget.values.hrmLLeaveName == "Emergency Leave"){
+                                          return date.isAfter(startDT) && date.isBefore(lastDt2.add(Duration(days: 1)));
                                           }
                                        
                                         return true;
