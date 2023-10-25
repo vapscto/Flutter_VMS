@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/model/student_dashboard_model.dart';
-import 'package:m_skool_flutter/student/fees/screens/fee_analysis_screen.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -51,11 +50,11 @@ class _DashboardFeeGraphState extends State<DashboardFeeGraph> {
             height: 36,
             child: InkWell(
               onTap: () {
-                Get.to(() => FeeAnalysisScreen(
-                      loginSuccessModel: widget.loginSuccessModel,
-                      mskoolController: widget.mskoolController,
-                      title: 'Fee Analysis',
-                    ));
+                // Get.to(() => FeeAnalysisScreen(
+                //       loginSuccessModel: widget.loginSuccessModel,
+                //       mskoolController: widget.mskoolController,
+                //       title: 'Fee Analysis',
+                //     ));
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 8.0, right: 8.0),

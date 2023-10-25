@@ -71,7 +71,7 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
                       //   width: 12.0,
                       // ),
                       Text(
-                        "I Vidyalaya Resource Management",
+                        "Vaps Management System", //I Vidyalaya Resource Management
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ],

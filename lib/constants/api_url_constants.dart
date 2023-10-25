@@ -381,17 +381,21 @@ class URLS {
 
   static String empGetDepartment = "api/SalaryDetailsFacade/Getdepartment/";
 
-  
 //StaffBirthday
- static String getStaffBday = "api/BirthDayFacade/getstaffdetails/";
+  static String getStaffBday = "api/BirthDayFacade/getstaffdetails/";
 
 //fee section
- static String feeDemoInitialData = "api/PrincipalDefaulterFeeFacade/Getdetails/";
- static String getDemoclassData = "api/PrincipalDefaulterFeeFacade/getclass/";
- static String getDemosectionData = "api/PrincipalDefaulterFeeFacade/Getsection/";
- static String feeAcademicYearData ="api/FEESGroupHeadWiseDetailsSchoolFacade/Getdetails/";
- static String fillgroupfeedata ="api/FEESGroupHeadWiseDetailsSchoolFacade/Getdetails/";
- static String FeeHeadData =  "api/FEESGroupHeadWiseDetailsSchoolFacade/Getdetails/";
+  static String feeDemoInitialData =
+      "api/PrincipalDefaulterFeeFacade/Getdetails/";
+  static String getDemoclassData = "api/PrincipalDefaulterFeeFacade/getclass/";
+  static String getDemosectionData =
+      "api/PrincipalDefaulterFeeFacade/Getsection/";
+  static String feeAcademicYearData =
+      "api/FEESGroupHeadWiseDetailsSchoolFacade/Getdetails/";
+  static String fillgroupfeedata =
+      "api/FEESGroupHeadWiseDetailsSchoolFacade/Getdetails/";
+  static String FeeHeadData =
+      "api/FEESGroupHeadWiseDetailsSchoolFacade/Getdetails/";
   /////MANAGER TIME TABLE ////
 
   static String staffListInitialDataApi = "api/TimeTableFacade/getdata/";
@@ -406,22 +410,23 @@ class URLS {
 
   //***  VIEW & UPLOAD GALLERY ***//
 
-  static String staffGalleryClassApi ="api/IVRM_GalleryFacade/getloaddata";
+  static String staffGalleryClassApi = "api/IVRM_GalleryFacade/getloaddata";
 
-  static String staffGallerySectionApi="api/IVRM_GalleryFacade/get_section";
+  static String staffGallerySectionApi = "api/IVRM_GalleryFacade/get_section";
 
-  static String uploadGallery="api/IVRM_GalleryFacade/savedata";
+  static String uploadGallery = "api/IVRM_GalleryFacade/savedata";
 
-  static String viewGallery="api/StudentDashboardFacade/onclick_Gallery";
+  static String viewGallery = "api/StudentDashboardFacade/onclick_Gallery";
 
-  static String galleryAcademicYearData="api/StudentDashboardFacade/Getdetails";
+  static String galleryAcademicYearData =
+      "api/StudentDashboardFacade/Getdetails";
 
   //****  PRINCIPAL *****//
-  
-  ////PRE-ADMISSION MODULE  ///////
-  
 
-  static String principalYearList = "api/TotalCountReportFacade/Get_Intial_data/";
+  ////PRE-ADMISSION MODULE  ///////
+
+  static String principalYearList =
+      "api/TotalCountReportFacade/Get_Intial_data/";
   static String studentTable = "api/TotalCountReportFacade/Getdetails/";
 
   //** CLASS TEACHER REPORT API **//
@@ -432,19 +437,145 @@ class URLS {
   static String classTeacherList =
       "api/ClassTeacherReportAttendanceFacade/getreport/";
 
-      
-      //** TOPPERWISE RESULT API **//
+  //** TOPPERWISE RESULT API **//
 
-      
-  static String toperWiseSearch="api/ToppersListReportFacade/getdetails";
+  static String toperWiseSearch = "api/ToppersListReportFacade/getdetails";
 
-  static String toperWiseResult="api/ToppersListReportFacade/onreport";
+  static String toperWiseResult = "api/ToppersListReportFacade/onreport";
 
   //** FEE COLLECTION API **//
 
-  static String fillgroupfee="api/FEESTodayCollectionFacade/Getdetails";
+  static String fillgroupfee = "api/FEESTodayCollectionFacade/Getdetails";
 
-  static String  sectionlist="api/FEESTodayCollectionFacade/Getsectionpop/";
+  static String sectionlist = "api/FEESTodayCollectionFacade/Getsectionpop/";
 
+  static String onclickpurchaseapi = "api/IndentApprovalFacade/getpidetails/";
 
+  static String purchaseindentapi = "api/IndentApprovalFacade/getloaddata/";
+  // Maker and checker
+  static String designationsListapi =
+      "api/ISM_DailyReport_ApprovalFacade/GetDetails/";
+
+  static String drDetailsApprove =
+      "api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
+
+  static String employee_model_list =
+      "api/ISM_DailyReport_ApprovalFacade/DesgSelectionDetails/";
+
+  static String getDrs = "api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
+
+  static String DeptList =
+      "api/ISM_DailyReport_ApprovalFacade/DeptSelectionDetails/";
+
+  static String Security = "api/ISMDashboardFacade/getdetails";
+
+  static String submit =
+      "api/ISM_DailyReport_ApprovalFacade/SaveApprovalDetails/";
+
+  static String updateCheck = "api/CheckBookEntryApprovalFacade/ApprovalData/";
+
+  static String getcmpn = "api/CheckBookEntryApprovalFacade/getalldata/";
+
+  static String submitCheck = "api/CheckBookEntryApprovalFacade/Getdata/";
+  // static String designationsListapi =
+  //     "api/ISM_DailyReport_ApprovalFacade/DeptSelectionDetails/";
+
+  // static var employee_model_list =
+  //     "api/ISM_DailyReport_ApprovalFacade/DesgSelectionDetails/";
+
+  // static var drDetailsApprove =
+  //     "api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
+  // static String onclickpurchaseapi = "api/IndentApprovalFacade/getpidetails/";
+
+  // static String purchaseindentapi = "api/IndentApprovalFacade/getloaddata/";
+
+  //** TADA Advance Apply APIS* *//
+  static String stateList = 'api/TADA_Advance_ApplyFacade/getalldata/';
+  static String cityList = 'api/TADA_Advance_ApplyFacade/getstate/';
+  static String allowense = 'api/TADA_Advance_ApplyFacade/TadaAllwence/';
+  static String saveTada = 'api/TADA_Advance_ApplyFacade/savedta/';
+  static String tadaEdit = 'api/TADA_Advance_ApplyFacade/edit/';
+  static String tadaDeactive = 'api/TADA_Advance_ApplyFacade/deactive/';
+  //** TADA Approval APIS **//
+  static String tadaSave = 'api/TADAAdvanceApprovalFacade/savedta';
+  static String tadaList = 'api/TADAAdvanceApprovalFacade/getalldata/';
+  static String tadaDetails = 'api/TADAAdvanceApprovalFacade/edit';
+
+  //TADA Apply Apis
+  static String stateAndClintList = 'api/TADA_ApplyFacade/getalldata/';
+  static String tadaCityList = 'api/TADA_ApplyFacade/getstate/';
+  static String tadaAllowense = 'api/TADA_ApplyFacade/TadaAllwence/';
+  static String tadaApplyDeactive = 'api/TADA_ApplyFacade/deactive/';
+  static String applyTada = 'api/TADA_ApplyFacade/savedta/';
+  static String tadaApplyEdit = 'api/TADA_ApplyFacade/edit/';
+
+  ///***  PETTY CASH APPROVAL  ***///
+
+  static String onChangeInstitution =
+      "api/PC_Indent_ApprovalFacade/OnChangeInstitution";
+
+  static String onLoadPcApproval = "api/PC_Indent_ApprovalFacade/onloaddata";
+
+  static String particularapprovedIndentPC =
+      "api/PC_Indent_ApprovalFacade/Viewdata";
+
+  static String particularIndentDetails =
+      "api/PC_Indent_ApprovalFacade/getindentdetails";
+
+  static String onChangeDatePC = "api/PC_Indent_ApprovalFacade/onchangedate";
+
+  static String saveRecordPC = "api/PC_Indent_ApprovalFacade/saverecord";
+
+  ///*** PETTY CASH REQUISITION ***/
+
+  static String departmentonLoadPCRequest =
+      "api/PC_RequisitionFacade/onloaddata";
+
+  static String employeeListPCRequest = "api/PC_RequisitionFacade/onchangedept";
+
+  static String reqDetailsSaveRecord = "api/PC_RequisitionFacade/saverecord";
+
+  static String viewDataPcReq = "api/PC_RequisitionFacade/Viewdata";
+
+  ///***   ***///
+
+  static String taskGetDetails = "api/ISM_TaskCreationFacade/getdetails/";
+
+  static String taskGetProjects = "api/ISM_TaskCreationFacade/get_category/";
+
+  static String getTskClinet = "api/ISM_TaskCreationFacade/getmodule/";
+  // Planner Creation
+  static String planStatusList = 'api/ISM_PlannerCreationFacade/getdetails/';
+  static String assignTaskList =
+      'api/ISM_PlannerCreationFacade/geteffortdetails';
+
+  static String purchaserequisitionapi =
+      'api/INV_PurchaseRequisitionFacade/GetOnchangeData/';
+  static String purchaseRequisitionSave =
+      'api/INV_PurchaseRequisitionFacade/savedetails/';
+
+  static String savePlanner = 'api/ISM_PlannerCreationFacade/savePlanner/';
+  static String onchangeMoudleChange = "api/ISM_TaskCreationFacade/getIEuser/";
+
+  // VMS common
+  static String logintransation = 'api/LoginFacade/getRoleData';
+
+  static String saveTaskCreation = "api/ISM_TaskCreationFacade/savedata/";
+
+  // Sales Report
+  static String department = 'api/ISM_Client_ProjectFacade/getcmtrpt_data/';
+  static String designation = 'api/ISM_Client_ProjectFacade/get_desig/';
+  static String employeeList = 'api/ISM_Client_ProjectFacade/get_employee/';
+  static String salesList = 'api/ISM_Client_ProjectFacade/report_cmtrpt/';
+  //
+  static String visitormanagementapi =
+      "api/AddVisitorsFacade/getAssignDetails/";
+  static String gridoptionapi =
+      "api/AddVisitorsFacade/getVisitorAssignDetails/";
+
+  static String saveapi = "api/AddVisitorsFacade/saveAssignedData/";
+
+  static String gpsFeacth ="api/GPSLocationFacade/getalldetails/";
+
+  static String savePunchApi="";
 }

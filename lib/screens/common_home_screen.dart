@@ -3,22 +3,15 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/apis/attendance_shortage_api.dart';
 import 'package:m_skool_flutter/apis/fee_reminder_api.dart';
-import 'package:m_skool_flutter/apis/get_analytics_api.dart';
-import 'package:m_skool_flutter/controller/dynamic_analytics_controller.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/manager/coe/screen/manager_coe.dart';
 import 'package:m_skool_flutter/model/home_page_model.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/screens/notification.dart';
-import 'package:m_skool_flutter/staffs/interaction/screen/interaction_home.dart';
-import 'package:m_skool_flutter/staffs/tabs/staff_profile_tab.dart';
-import 'package:m_skool_flutter/student/fees/tabs/pay_online_tab.dart';
-import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
-import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/tabs/dashboard.dart';
-import 'package:m_skool_flutter/tabs/profile_tab.dart';
-import 'package:m_skool_flutter/widget/common_drawer.dart';
+import 'package:m_skool_flutter/vms/profile_tab/screens/profile_home_screen.dart';
+import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart';
+import 'package:m_skool_flutter/vms/task%20creation/screens/taskCreationHome.dart';
+import 'package:m_skool_flutter/vms/utils/common_drawer.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class CommonHomeScreen extends StatefulWidget {
@@ -38,18 +31,10 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
   final PageController pageController = PageController();
   final RxInt selectedPage = RxInt(0);
   final GlobalKey<ScaffoldState> _scaffold = GlobalKey();
-  final HwCwNbController hwCwNbController = Get.put(HwCwNbController());
-  final DynamicAnalyticsController controller =
-      Get.put(DynamicAnalyticsController());
+
   @override
   void initState() {
     version(widget.loginSuccessModel, widget.mskoolController);
-    GetAnalyticsApi.instance.getData(
-        controller: controller,
-        loginSuccessModel: widget.loginSuccessModel,
-        mskoolController: widget.mskoolController,
-        base: baseUrlFromInsCode("portal", widget.mskoolController),
-        context: context);
 
     if (widget.loginSuccessModel.roleforlogin!.toLowerCase() == "student") {
       FeeReminderApi.instance.showFeeReminder(
@@ -80,83 +65,47 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
           page: DashboardTab(
             loginSuccessModel: widget.loginSuccessModel,
             mskoolController: widget.mskoolController,
-            hwcwNbController: hwCwNbController,
-            controller: controller,
+            // hwcwNbController: hwCwNbController,
           ),
           selectedColor: const Color(0xFF9900F0),
         ),
-        widget.loginSuccessModel.roleforlogin!.toLowerCase() == "student"
-            ? HomePageModel(
-                title: "Interaction",
-                icon: 'assets/images/tabinteraction.png',
-                page: InteractionHomeScreen(
-                  loginSuccessModel: widget.loginSuccessModel,
-                  mskoolController: widget.mskoolController,
-                  showAppBar: false,
-                ),
-                selectedColor: const Color(0xFFFF008C),
-              )
-            : HomePageModel(
-                title: "Interaction",
-                icon: 'assets/images/tabinteraction.png',
-                page: InteractionHome(
-                  loginSuccessModel: widget.loginSuccessModel,
-                  mskoolController: widget.mskoolController,
-                  showAppBar: false,
-                ),
-                selectedColor: const Color(0xFFFF008C),
-              ),
-        widget.loginSuccessModel.roleforlogin!.toLowerCase() == "student"
-            ? HomePageModel(
-                title: "Pay Online",
-                icon: 'assets/images/payonlinetabicon.png',
-                page: PayOnlineTab(
-                  loginSuccessModel: widget.loginSuccessModel,
-                  mskoolController: widget.mskoolController,
-                ),
-                selectedColor: const Color(0xFFFFA901),
-              )
-            : HomePageModel(
-                title: "Coe",
-                icon: 'assets/images/calendar.png',
-                page: ManagerCoeHome(
-                  loginSuccessModel: widget.loginSuccessModel,
-                  mskoolController: widget.mskoolController,
-                  title: "Coe",
-                  formDashboard: false,
-                ),
-                selectedColor: const Color(0xFFFFA901),
-                size: 24.0),
-        widget.loginSuccessModel.roleforlogin!.toLowerCase() == "student"
-            ? HomePageModel(
-                title: "Profile",
-                icon: 'assets/images/tabprofile.png',
-                page: ProfileTab(
-                  loginSuccessModel: widget.loginSuccessModel,
-                  mskoolController: widget.mskoolController,
-                  pageController: pageController,
-                ),
-                selectedColor: const Color(0xFF3D9292),
-              )
-            : HomePageModel(
-                title: "Profile",
-                icon: 'assets/images/tabprofile.png',
-                page: StaffProfileTab(
-                  loginSuccessModel: widget.loginSuccessModel,
-                  mskoolController: widget.mskoolController,
-                ),
-                selectedColor: const Color(0xFF3D9292),
-              ),
+        HomePageModel(
+          title: "Task Creation",
+          icon: 'assets/images/tabinteraction.png',
+          page: TaskCreationHome(
+            loginSuccessModel: widget.loginSuccessModel,
+            mskoolController: widget.mskoolController,
+            // showAppBar: false,
+          ),
+          selectedColor: const Color(0xFFFF008C),
+        ),
+        HomePageModel(
+          title: "Punch Report",
+          icon: 'assets/images/calendar.png',
+          page: PunchReport(
+            loginSuccessModel: widget.loginSuccessModel,
+            mskoolController: widget.mskoolController,
+            title: 'Punch Report',
+            // showAppBar: false,
+          ),
+          selectedColor: const Color(0xFFFFA901),
+        ),
+        HomePageModel(
+          title: "Profile",
+          icon: 'assets/images/tabprofile.png',
+          page: ProfileHomeScreen(
+            loginSuccessModel: widget.loginSuccessModel,
+            mskoolController: widget.mskoolController,
+          ),
+          selectedColor: const Color(0xFF3D9292),
+        ),
       ],
     );
-
     super.initState();
   }
 
   @override
   void dispose() {
-    Get.delete<DynamicAnalyticsController>();
-    Get.delete<HwCwNbController>();
     pageController.dispose();
 
     super.dispose();
@@ -166,51 +115,53 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffold,
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
-        leading: IconButton(
-          icon: SvgPicture.asset('assets/svg/menu.svg'),
-          onPressed: () {
-            _scaffold.currentState!.openDrawer();
-          },
-        ),
-        title: Obx(() {
-          return Text(homePage.elementAt(selectedPage.value).title);
-        }),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) {
-                    return NotificationScreen(
-                      // appBarTitle: "Notice",
-                      loginSuccessModel: widget.loginSuccessModel,
-                      mskoolController: widget.mskoolController,
-                      openFor:
-                          widget.loginSuccessModel.roleforlogin!.toLowerCase(),
-                      hwCwNbController: hwCwNbController,
-                    );
-                    // hwCwNbController: hwCwNbController);
+      appBar: (selectedPage.value == 0)
+          ? AppBar(
+              centerTitle: true,
+              elevation: 0,
+              leading: IconButton(
+                icon: SvgPicture.asset('assets/svg/menu.svg'),
+                onPressed: () {
+                  _scaffold.currentState!.openDrawer();
+                },
+              ),
+              title: Obx(() {
+                return Text(homePage.elementAt(selectedPage.value).title);
+              }),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (_) {
+                    //       return NotificationScreen(
+                    //         // appBarTitle: "Notice",
+                    //         loginSuccessModel: widget.loginSuccessModel,
+                    //         mskoolController: widget.mskoolController,
+                    //         openFor: widget.loginSuccessModel.roleforlogin!
+                    //             .toLowerCase(),
+                    //         hwCwNbController: hwCwNbController,
+                    //       );
+                    //       // hwCwNbController: hwCwNbController);
+                    //     },
+                    //   ),
+                    // );
                   },
+                  icon: SvgPicture.asset(
+                    'assets/svg/bell.svg',
+                  ),
                 ),
-              );
-            },
-            icon: SvgPicture.asset(
-              'assets/svg/bell.svg',
-            ),
-          ),
-          const SizedBox(
-            width: 6.0,
-          ),
-        ],
-      ),
+                const SizedBox(
+                  width: 6.0,
+                ),
+              ],
+            )
+          : null,
       drawer: Drawer(
         child: CommonDrawer(
           loginSuccessModel: widget.loginSuccessModel,
-          hwCwNbController: hwCwNbController,
+          // hwCwNbController: hwCwNbController,
           mskoolController: widget.mskoolController,
         ),
       ),
@@ -221,7 +172,9 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
           return homePage.elementAt(index).page;
         },
         onPageChanged: (v) {
-          selectedPage.value = v;
+          setState(() {
+            selectedPage.value = v;
+          });
         },
       ),
       bottomNavigationBar: Material(
@@ -231,51 +184,6 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
           return SalomonBottomBar(
             currentIndex: selectedPage.value,
             items: [
-              // SalomonBottomBarItem(
-              //     unselectedColor: const Color(0xFFC0C0C0),
-              //     selectedColor: const Color(0xFF9900F0),
-              //     icon: Image.asset(
-              //       'assets/images/floatingicon.png',
-              //       height: 30,
-              //       color: (selectedPage.value == 0)
-              //           ? const Color(0xFF9900F0)
-              //           : Colors.grey,
-              //     ),
-              //     title: const Text("Home")),
-              // SalomonBottomBarItem(
-              //     unselectedColor: const Color(0xFFC0C0C0),
-              //     selectedColor: const Color(0xFFFF008C),
-              //     icon: Image.asset(
-              //       'assets/images/tabinteraction.png',
-              //       height: 30,
-              //       color: (selectedPage.value == 1)
-              //           ? const Color(0xFFFF008C)
-              //           : Colors.grey,
-              //     ),
-              //     title: const Text("Interaction")),
-              // SalomonBottomBarItem(
-              //     unselectedColor: const Color(0xFFC0C0C0),
-              //     selectedColor: const Color(0xFFFFA901),
-              //     icon: Image.asset(
-              //       'assets/images/calendar.png',
-              //       height: 24,
-              //       color: (selectedPage.value == 2)
-              //           ? const Color(0xFFFFA901)
-              //           : Colors.grey,
-              //     ),
-              //     title: const Text("COE")),
-              // SalomonBottomBarItem(
-              //     unselectedColor: const Color(0xFFC0C0C0),
-              //     selectedColor: const Color(0xFF3D9292),
-              //     icon: Image.asset(
-              //       'assets/images/tabprofile.png',
-              //       height: 30,
-              //       color: (selectedPage.value == 3)
-              //           ? const Color(0xFF3D9292)
-              //           : Colors.grey,
-              //     ),
-              //     title: const Text("Profile")),
-
               ...List.generate(
                   homePage.length,
                   (index) => SalomonBottomBarItem(
@@ -288,7 +196,10 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
                             ? homePage.elementAt(index).selectedColor
                             : const Color(0xFFC0C0C0),
                       ),
-                      title: Text(homePage.elementAt(index).title)))
+                      title: Text(
+                        homePage.elementAt(index).title,
+                        overflow: TextOverflow.fade,
+                      )))
             ],
             onTap: (v) {
               selectedPage.value = v;
@@ -300,5 +211,14 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
         }),
       ),
     );
+  }
+}
+
+class StaffProfileTab extends StatelessWidget {
+  const StaffProfileTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }

@@ -6,7 +6,6 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/model/student_dashboard_model.dart';
-import 'package:m_skool_flutter/student/coe/screen/coe_home.dart';
 
 class CoeSliderItem extends StatelessWidget {
   final CalListValues coeValue;
@@ -23,13 +22,7 @@ class CoeSliderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return CoeHome(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController);
-        }));
-      },
+      onTap: () {},
       child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),

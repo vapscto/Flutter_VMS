@@ -6,7 +6,6 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/fee_reminder_model.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/student/fees/screens/online_payment_screen.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class FeeReminderApi {
@@ -165,14 +164,14 @@ class FeeReminderApi {
                       child: MSkollBtn(
                           title: "Pay Now",
                           onPress: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) {
-                              return OnlinePaymentScreen(
-                                loginSuccessModel: loginSuccessModel,
-                                mskoolController: mskoolController,
-                                title: 'Online Fee Payment',
-                              );
-                            }));
+                            // Navigator.push(context,
+                            //     MaterialPageRoute(builder: (_) {
+                            //   return OnlinePaymentScreen(
+                            //     loginSuccessModel: loginSuccessModel,
+                            //     mskoolController: mskoolController,
+                            //     title: 'Online Fee Payment',
+                            //   );
+                            // }));
                           }),
                     )
                   ],

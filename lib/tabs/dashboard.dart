@@ -1,47 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:m_skool_flutter/apis/get_analytics_api.dart';
-import 'package:m_skool_flutter/controller/dynamic_analytics_controller.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/manager/employee_details/screens/employee_details_home_screen.dart';
-import 'package:m_skool_flutter/manager/student_details/screen/student_details_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
-import 'package:m_skool_flutter/widget/dynamic_analytics.dart';
 
 class DashboardTab extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  final HwCwNbController hwcwNbController;
-  final DynamicAnalyticsController controller;
-  const DashboardTab(
-      {super.key,
-      required this.loginSuccessModel,
-      required this.mskoolController,
-      required this.hwcwNbController,
-      required this.controller});
+  // final DynamicAnalyticsController controller;
+  const DashboardTab({
+    super.key,
+    required this.loginSuccessModel,
+    required this.mskoolController,
+  });
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        await GetAnalyticsApi.instance.getData(
-            controller: controller,
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            base: baseUrlFromInsCode("portal", mskoolController),
-            context: context);
+        // await GetAnalyticsApi.instance.getData(
+        //     controller: controller,
+        //     loginSuccessModel: loginSuccessModel,
+        //     mskoolController: mskoolController,
+        //     base: baseUrlFromInsCode("portal", mskoolController),
+        //     context: context);
       },
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            DynamicAnalytics(
-              dashboardController: controller,
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-            ),
+            // DynamicAnalytics(
+            //   dashboardController: controller,
+            //   loginSuccessModel: loginSuccessModel,
+            //   mskoolController: mskoolController,
+            // ),
             loginSuccessModel.staffmobileappprivileges == null ||
                     loginSuccessModel.staffmobileappprivileges!.values!.isEmpty
                 ? const SizedBox()
@@ -75,16 +67,16 @@ class DashboardTab extends StatelessWidget {
                                       child: CustomContainer(
                                         child: InkWell(
                                           onTap: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder: (_) {
-                                              return ManagerStudentDetails(
-                                                loginSuccessModel:
-                                                    loginSuccessModel,
-                                                mskoolController:
-                                                    mskoolController,
-                                                title: 'Student Details',
-                                              );
-                                            }));
+                                            // Navigator.push(context,
+                                            //     MaterialPageRoute(builder: (_) {
+                                            //   return ManagerStudentDetails(
+                                            //     loginSuccessModel:
+                                            //         loginSuccessModel,
+                                            //     mskoolController:
+                                            //         mskoolController,
+                                            //     title: 'Student Details',
+                                            //   );
+                                            // }));
                                           },
                                           child: Container(
                                             padding: const EdgeInsets.all(8.0),
@@ -116,15 +108,15 @@ class DashboardTab extends StatelessWidget {
                                       child: CustomContainer(
                                         child: InkWell(
                                           onTap: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder: (_) {
-                                              return EmployeeDetailsHomeScreen(
-                                                loginSuccessModel:
-                                                    loginSuccessModel,
-                                                mskoolController:
-                                                    mskoolController,
-                                              );
-                                            }));
+                                            // Navigator.push(context,
+                                            //     MaterialPageRoute(builder: (_) {
+                                            //   return EmployeeDetailsHomeScreen(
+                                            //     loginSuccessModel:
+                                            //         loginSuccessModel,
+                                            //     mskoolController:
+                                            //         mskoolController,
+                                            //   );
+                                            // }));
                                           },
                                           child: Container(
                                             padding: const EdgeInsets.all(8.0),
@@ -183,14 +175,15 @@ class DashboardTab extends StatelessWidget {
                             child: InkWell(
                               onTap: () {
                                 openMappedPages(
-                                    loginSuccessModel
-                                        .staffmobileappprivileges!.values!
-                                        .elementAt(index)
-                                        .pagename!,
-                                    loginSuccessModel,
-                                    mskoolController,
-                                    context,
-                                    hwcwNbController);
+                                  loginSuccessModel
+                                      .staffmobileappprivileges!.values!
+                                      .elementAt(index)
+                                      .pagename!,
+                                  loginSuccessModel,
+                                  mskoolController,
+                                  context,
+                                  // hwcwNbController
+                                );
                               },
                               child: Column(
                                 children: [
