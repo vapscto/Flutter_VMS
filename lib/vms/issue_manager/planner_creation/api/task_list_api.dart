@@ -52,9 +52,6 @@ class TaskListAPI {
       });
 
       if (response.statusCode == 200) {
-        logger.i('===${response.data['categorylist']}');
-        logger.i('+++${response.data['get_Assignedtasklist']}');
-        logger.i('---${response.data['get_effortdetails']}');
         CategoryWisePlanModel categoryWisePlanModel =
             CategoryWisePlanModel.fromJson(response.data['categorylist']);
         if (categoryWisePlanModel.values!.isNotEmpty) {

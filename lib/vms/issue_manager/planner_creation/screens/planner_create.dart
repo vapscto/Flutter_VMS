@@ -48,8 +48,8 @@ class _PlannerCreateHomeScreenState extends State<PlannerCreateHomeScreen>
             child: CustomTabBar(
               tabController: tabController!,
               tabs: const [
-                CustomTab(name: "Creat Planner", asset: ""),
-                CustomTab(name: "Planner Status", asset: ""),
+                CustomTab(name: "Creat Planner", asset: "assets/svg/bell.svg"),
+                CustomTab(name: "Planner Status", asset: "assets/svg/bell.svg"),
               ],
             ),
           ),
