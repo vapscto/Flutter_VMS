@@ -233,34 +233,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ))),
                       );
                     }),
-                    // TextField(
-                    //   controller: userName,
-                    //   decoration: const InputDecoration(
-                    //     filled: true,
-                    //     label: Text(
-                    //       "Username",
-                    //     ),
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 16.0,
-                    // ),
-                    // TextField(
-                    //   controller: password,
-                    //   obscureText: true,
-                    //   decoration: const InputDecoration(
-                    //     filled: true,
-                    //     label: Text(
-                    //       "Password",
-                    //     ),
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 16.0,
-                    // ),
-                    // const SizedBox(
-                    //   height: 18.0,
-                    // ),
                     Align(
                       alignment: Alignment.topRight,
                       child: TextButton(
@@ -317,7 +289,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   style:
                                       Theme.of(context).textTheme.titleMedium)
                             ]))
-                        //  Text("I agree to all your T&C and Privacy Policy")
                       ],
                     ),
                     const SizedBox(
@@ -342,9 +313,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 msg: "Please accept T&C and Privacy Policy");
                             return;
                           }
-
-                          // AndroidDeviceInfo info = await DeviceInfoPlugin().androidInfo;
-                          // logger.d(info.toMap());
 
                           String loginBaseUrl = "";
                           for (int i = 0;
@@ -465,89 +433,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                                           mskoolController: widget
                                                               .mskoolController,
                                                         ));
-                                                    // Get.offAll(
-                                                    //   () => snapshot.data!
-                                                    //               .roleforlogin!
-                                                    //               .toLowerCase() ==
-                                                    //           URLS.student
-                                                    //               .toLowerCase()
-                                                    //       ? Home(
-                                                    //           loginSuccessModel:
-                                                    //               snapshot
-                                                    //                   .data!,
-                                                    //           mskoolController:
-                                                    //               widget
-                                                    //                   .mskoolController,
-                                                    //         )
-                                                    //       : snapshot.data!.roleforlogin!.toLowerCase() ==
-                                                    //                   URLS.staff
-                                                    //                       .toLowerCase() ||
-                                                    //               snapshot.data!
-                                                    //                       .roleforlogin!
-                                                    //                       .toLowerCase() ==
-                                                    //                   URLS.hod
-                                                    //                       .toLowerCase()
-                                                    //           ? StaffHomeScreen(
-                                                    //               loginSuccessModel:
-                                                    //                   snapshot
-                                                    //                       .data!,
-                                                    //               mskoolController: widget
-                                                    //                   .mskoolController)
-                                                    //           : snapshot.data!.roleforlogin!.toLowerCase() ==
-                                                    //                   URLS.manager
-                                                    //                       .toLowerCase()
-                                                    //               ? ManagerHome(
-                                                    //                   loginSuccessModel: snapshot.data!,
-                                                    //                   mskoolController: widget.mskoolController)
-                                                    //               : Scaffold(
-                                                    //                   body:
-                                                    //                       Center(
-                                                    //                     child:
-                                                    //                         Column(
-                                                    //                       mainAxisSize:
-                                                    //                           MainAxisSize.min,
-                                                    //                       children: [
-                                                    //                         const Text("This app is not used to manage this ID"),
-                                                    //                         Padding(
-                                                    //                           padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                                                    //                           child: SizedBox(
-                                                    //                             width: 180,
-                                                    //                             height: 40,
-                                                    //                             child: CustomElevatedButton(
-                                                    //                                 isGradient: false,
-                                                    //                                 boxShadow: const BoxShadow(),
-                                                    //                                 color: const Color(0xFFFFDFD6),
-                                                    //                                 child: Row(mainAxisSize: MainAxisSize.min, children: const [
-                                                    //                                   Icon(
-                                                    //                                     Icons.logout,
-                                                    //                                     color: Color(0xffF24E1E),
-                                                    //                                   ),
-                                                    //                                   SizedBox(
-                                                    //                                     width: 10,
-                                                    //                                   ),
-                                                    //                                   Text(
-                                                    //                                     "Log Out",
-                                                    //                                     style: TextStyle(color: Color(0xffF24E1E), fontSize: 16, fontWeight: FontWeight.w600),
-                                                    //                                   )
-                                                    //                                 ]),
-                                                    //                                 onPressed: () {
-                                                    //                                   Get.dialog(const LogoutConfirmationPopup());
-                                                    //                                 }),
-                                                    //                           ),
-                                                    //                         ),
-                                                    //                       ],
-                                                    //                     ),
-                                                    //                   ),
-                                                    //                 ),
-                                                    // );
-                                                    // Navigator.pushReplacement(
-                                                    //   context,
-                                                    //   MaterialPageRoute(
-                                                    //     builder: (_) {
-                                                    //       return
-                                                    //     },
-                                                    //   ),
-                                                    // );
                                                   },
                                                   child: Text(
                                                     "Continue",
@@ -635,9 +520,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
+late FirebaseMessaging firebaseMessage;
 Future getDeviceToken() async {
-  FirebaseMessaging firebaseMessage = FirebaseMessaging.instance;
-  String? deviceToken = await firebaseMessage.getToken();
-  logger.d(deviceToken);
-  return (deviceToken == null) ? "" : deviceToken;
+  String deviceToken = '';
+  firebaseMessage = FirebaseMessaging.instance;
+  await firebaseMessage.getToken().then((value) {
+    (value == null) ? "" : deviceToken = value;
+    logger.i('====$deviceToken');
+  });
+  return deviceToken;
 }
