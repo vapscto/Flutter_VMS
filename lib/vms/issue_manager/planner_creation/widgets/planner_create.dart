@@ -60,7 +60,26 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   List<Map<String, dynamic>> categoryArray = [];
   List<Map<String, dynamic>> newCategoryArray = [];
   double totalHour = 0;
-  int id = 0;
+  var id = 0;
+  int calculateWeekdaysDifference(DateTime startDate, DateTime endDate) {
+    var weekdayCount = 0;
+
+    if (startDate.isAfter(endDate)) {
+      final temp = startDate;
+      startDate = endDate;
+      endDate = temp;
+    }
+
+    while (startDate.isBefore(endDate) || startDate.isAtSameMomentAs(endDate)) {
+      if (startDate.weekday != DateTime.sunday) {
+        weekdayCount++;
+      }
+      startDate = startDate.add(const Duration(days: 1));
+    }
+    totalday = weekdayCount;
+
+    return weekdayCount;
+  }
 
   getListData() async {
     plannedEffort = 0.0;
@@ -548,8 +567,10 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                 setState(() {
                                   _endDate.text =
                                       "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
-                                  totalday =
-                                      toDate!.difference(fromDate!).inDays + 1;
+                                  calculateWeekdaysDifference(
+                                      fromDate!, toDate!);
+                                  // totalday =
+                                  //     toDate!.difference(fromDate!).inDays + 1;
                                   getListData();
                                   isDeta = true;
                                 });
@@ -588,9 +609,11 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                     setState(() {
                                       _endDate.text =
                                           "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
-                                      totalday =
-                                          toDate!.difference(fromDate!).inDays +
-                                              1;
+                                      calculateWeekdaysDifference(
+                                          fromDate!, toDate!);
+                                      // totalday =
+                                      //     toDate!.difference(fromDate!).inDays +
+                                      //         1;
                                       getListData();
                                       isDeta = true;
                                     });
