@@ -371,7 +371,7 @@ class URLS {
       'api/EmployeeDetailsReportFacade/getEmployeedetailsBySelection';
 
   static String playStoreLink =
-      "https://play.google.com/store/apps/details?id=com.app.mskool";
+      "https://play.google.com/store/apps/details?id=com.app.vmss";
 
   static String expiredPwd = "api/changepwdFacade/";
 
@@ -584,7 +584,9 @@ class URLS {
   static String plannerList = 'api/ISM_PlannerApprovalFacade/getdetails/';
   static String profileData = 'api/ISMDashboardFacade/getdetails/';
 
-  static String visitorapprovalapi = 'api/V_AppointmentApprovalStatusFacade/getDetails/';
+  static String visitorapprovalapi =
+      'api/V_AppointmentApprovalStatusFacade/getDetails/';
 
-  static String leaveCountList="api/OnlineLeaveApplicationFacade/getonlineLeave";
+  static String leaveCountList =
+      "api/OnlineLeaveApplicationFacade/getonlineLeave";
 }
