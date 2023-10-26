@@ -1264,17 +1264,6 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                     vertical:
                                                                         0),
                                                             onChanged: (value) {
-                                                              // if (foodTotalSlotController
-                                                              //         .text
-                                                              //         .isEmpty ||
-                                                              //     foodRemarksController
-                                                              //         .text
-                                                              //         .isEmpty) {
-                                                              //   Fluttertoast
-                                                              //       .showToast(
-                                                              //           msg:
-                                                              //               "Please Enter slots and remarks");
-                                                              // } else {
                                                               setState(() {
                                                                 isFoodSelected =
                                                                     value!;
@@ -1285,8 +1274,6 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                 } else {
                                                                   removeAmount(
                                                                       foodAmt);
-                                                                  // allAmount -=
-                                                                  //     foodAmt;
                                                                   foodTotalSlotController
                                                                       .clear();
                                                                   foodRemarksController
@@ -1321,6 +1308,11 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                           child: SizedBox(
                                                             width: 150,
                                                             child: TextField(
+                                                              readOnly:
+                                                                  isFoodSelected ==
+                                                                          false
+                                                                      ? true
+                                                                      : false,
                                                               style: Get
                                                                   .textTheme
                                                                   .titleSmall,
@@ -1328,21 +1320,26 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                   foodTotalSlotController,
                                                               onChanged:
                                                                   (value) {
-                                                                setState(() {
-                                                                  foodAmt = 0;
-                                                                  allAmount = 0;
-                                                                  foodAmt = (tadaApplyController
-                                                                              .foodAmount
-                                                                              .value /
-                                                                          3 *
-                                                                          num.parse(
-                                                                              value))
-                                                                      .toInt();
-                                                                  // allAmount +=
-                                                                  //     foodAmt;
-                                                                  addAmount(
-                                                                      foodAmt);
-                                                                });
+                                                                if (isFoodSelected ==
+                                                                    false) {
+                                                                  Fluttertoast
+                                                                      .showToast(
+                                                                          msg:
+                                                                              "Please select checkbox");
+                                                                } else {
+                                                                  setState(() {
+                                                                    foodAmt = 0;
+                                                                    allAmount =
+                                                                        0;
+                                                                    foodAmt = (tadaApplyController.foodAmount.value /
+                                                                            3 *
+                                                                            num.parse(value))
+                                                                        .toInt();
+
+                                                                    addAmount(
+                                                                        foodAmt);
+                                                                  });
+                                                                }
                                                               },
                                                               keyboardType:
                                                                   TextInputType
@@ -1369,6 +1366,21 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                           child: SizedBox(
                                                             width: 150,
                                                             child: TextField(
+                                                              onChanged:
+                                                                  (value) {
+                                                                if (isAccommodationSelected ==
+                                                                    false) {
+                                                                  Fluttertoast
+                                                                      .showToast(
+                                                                          msg:
+                                                                              "Please select checkbox");
+                                                                }
+                                                              },
+                                                              readOnly:
+                                                                  isFoodSelected ==
+                                                                          false
+                                                                      ? true
+                                                                      : false,
                                                               style: Get
                                                                   .textTheme
                                                                   .titleSmall,
@@ -1447,6 +1459,11 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                           child: SizedBox(
                                                             width: 150,
                                                             child: TextField(
+                                                              readOnly:
+                                                                  isAccommodationSelected ==
+                                                                          false
+                                                                      ? true
+                                                                      : false,
                                                               style: Get
                                                                   .textTheme
                                                                   .titleSmall,
@@ -1454,19 +1471,25 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                   accommodationTotalSlotController,
                                                               onChanged:
                                                                   (value) {
-                                                                setState(() {
-                                                                  accommodationAmount =
-                                                                      0;
-                                                                  accommodationAmount = (tadaApplyController
-                                                                              .accomodationAmount
-                                                                              .value *
-                                                                          num.parse(
-                                                                              value))
-                                                                      .toInt();
+                                                                if (isAccommodationSelected ==
+                                                                    false) {
+                                                                  Fluttertoast
+                                                                      .showToast(
+                                                                          msg:
+                                                                              "Please select checkbox");
+                                                                } else {
+                                                                  setState(() {
+                                                                    accommodationAmount =
+                                                                        0;
+                                                                    accommodationAmount =
+                                                                        (tadaApplyController.accomodationAmount.value *
+                                                                                num.parse(value))
+                                                                            .toInt();
 
-                                                                  addAmount(
-                                                                      accommodationAmount);
-                                                                });
+                                                                    addAmount(
+                                                                        accommodationAmount);
+                                                                  });
+                                                                }
                                                               },
                                                               keyboardType:
                                                                   TextInputType
@@ -1493,6 +1516,23 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                           child: SizedBox(
                                                             width: 150,
                                                             child: TextField(
+                                                              onChanged:
+                                                                  (value) {
+                                                                setState(() {
+                                                                  if (isAccommodationSelected ==
+                                                                      false) {
+                                                                    Fluttertoast
+                                                                        .showToast(
+                                                                            msg:
+                                                                                "Please select checkbox");
+                                                                  }
+                                                                });
+                                                              },
+                                                              readOnly:
+                                                                  isAccommodationSelected ==
+                                                                          false
+                                                                      ? true
+                                                                      : false,
                                                               style: Get
                                                                   .textTheme
                                                                   .titleSmall,
@@ -1531,9 +1571,6 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                 isOthersSelected =
                                                                     value!;
                                                                 if (value) {
-                                                                  addAmount(int.parse(
-                                                                      otherAmountController
-                                                                          .text));
                                                                 } else {
                                                                   removeAmount(
                                                                       int.parse(
@@ -1565,6 +1602,11 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                           child: SizedBox(
                                                             width: 150,
                                                             child: TextField(
+                                                              readOnly:
+                                                                  isOthersSelected ==
+                                                                          false
+                                                                      ? true
+                                                                      : false,
                                                               style: Get
                                                                   .textTheme
                                                                   .titleSmall,
@@ -1572,11 +1614,19 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                   otherAmountController,
                                                               onChanged:
                                                                   (value) {
-                                                                // setState(() {
-                                                                //   addAmount(
-                                                                //       int.parse(
-                                                                //           value));
-                                                                // });
+                                                                if (isOthersSelected ==
+                                                                    false) {
+                                                                  Fluttertoast
+                                                                      .showToast(
+                                                                          msg:
+                                                                              "Please select checkbox");
+                                                                } else {
+                                                                  setState(() {
+                                                                    addAmount(int.parse(
+                                                                        otherAmountController
+                                                                            .text));
+                                                                  });
+                                                                }
                                                               },
                                                               keyboardType:
                                                                   TextInputType
@@ -1605,6 +1655,23 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                           child: SizedBox(
                                                             width: 150,
                                                             child: TextField(
+                                                              onChanged:
+                                                                  (value) {
+                                                                setState(() {
+                                                                  if (isOthersSelected ==
+                                                                      false) {
+                                                                    Fluttertoast
+                                                                        .showToast(
+                                                                            msg:
+                                                                                "Please select checkbox");
+                                                                  }
+                                                                });
+                                                              },
+                                                              readOnly:
+                                                                  isOthersSelected ==
+                                                                          false
+                                                                      ? true
+                                                                      : false,
                                                               style: Get
                                                                   .textTheme
                                                                   .titleSmall,
