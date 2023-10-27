@@ -42,6 +42,7 @@ import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.da
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
 import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
+import 'package:m_skool_flutter/vms/health_chequeup/screens/healtha_check_up.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/online_leave/screen/online_leave_home.dart';
@@ -907,7 +908,15 @@ void openMappedPages(
     );
     return;
   }
-
+ if (pageName == "Birthday") {
+    Get.to(
+      () => HomeHCheckup(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      ),
+    );
+    return;
+  }
   if (pageName == "Fee Details") {
     Get.to(
       () => FeeDemoHome(

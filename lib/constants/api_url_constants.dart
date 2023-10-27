@@ -587,4 +587,8 @@ class URLS {
   static String visitorapprovalapi = 'api/V_AppointmentApprovalStatusFacade/getDetails/';
 
   static String leaveCountList="api/OnlineLeaveApplicationFacade/getonlineLeave";
+
+  static String hcClassList="api/HW_HeathCheckUpFacade/OnLoadHWHealthCheckUp";
+
+  static String saveHC="api/HW_HeathCheckUpFacade/SaveHWHealthChekUp";
 }

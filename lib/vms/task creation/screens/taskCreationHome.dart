@@ -413,7 +413,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                 HRMD_Id: s.hrmDId!);
                           },
                         ),
-                      )),
+                      )
+                      ),
             Obx(() => _taskProjectsController.tskPrjErrorLoading.value
                 ? const Center(
                     child: ErrWidget(
