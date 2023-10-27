@@ -12,7 +12,7 @@ import 'package:m_skool_flutter/vms/sales_report/api/department_api.dart';
 import 'package:m_skool_flutter/vms/sales_report/api/designation_api.dart';
 import 'package:m_skool_flutter/vms/sales_report/api/employee_api.dart';
 import 'package:m_skool_flutter/vms/sales_report/sales_controller/sales_controller.dart';
-import 'package:m_skool_flutter/vms/sales_report/screens/sale_repore_list_screen.dart';
+import 'package:m_skool_flutter/vms/sales_report/screens/sale_report_list_screen.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -795,202 +795,6 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                 ],
                               ),
                             ),
-                  // salesController.leadListmodelValues.isEmpty
-                  //     ? const SizedBox()
-                  //     : Container(
-                  //         margin: const EdgeInsets.only(top: 30),
-                  //         child: Stack(
-                  //           clipBehavior: Clip.none,
-                  //           children: [
-                  //             Container(
-                  //               height: 140,
-                  //               padding:
-                  //                   const EdgeInsets.only(top: 10, bottom: 10),
-                  //               decoration: BoxDecoration(
-                  //                 color:
-                  //                     Theme.of(context).scaffoldBackgroundColor,
-                  //                 borderRadius: BorderRadius.circular(16.0),
-                  //                 boxShadow: const [
-                  //                   BoxShadow(
-                  //                     offset: Offset(0, 1),
-                  //                     blurRadius: 4,
-                  //                     color: Colors.black12,
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //               child: RawScrollbar(
-                  //                 thumbColor: const Color(0xFF1E38FC),
-                  //                 trackColor:
-                  //                     const Color.fromRGBO(223, 239, 253, 1),
-                  //                 trackRadius: const Radius.circular(10),
-                  //                 trackVisibility: true,
-                  //                 radius: const Radius.circular(10),
-                  //                 thickness: 14,
-                  //                 thumbVisibility: true,
-                  //                 controller: _controller3,
-                  //                 child: SingleChildScrollView(
-                  //                   controller: _controller3,
-                  //                   child: Column(
-                  //                     children: [
-                  //                       SizedBox(
-                  //                         height: 30,
-                  //                         child: CheckboxListTile(
-                  //                             controlAffinity:
-                  //                                 ListTileControlAffinity
-                  //                                     .leading,
-                  //                             checkboxShape:
-                  //                                 RoundedRectangleBorder(
-                  //                                     borderRadius:
-                  //                                         BorderRadius.circular(
-                  //                                             6)),
-                  //                             dense: true,
-                  //                             activeColor: Theme.of(context)
-                  //                                 .primaryColor,
-                  //                             contentPadding:
-                  //                                 const EdgeInsets.symmetric(
-                  //                                     horizontal: 8),
-                  //                             visualDensity:
-                  //                                 const VisualDensity(
-                  //                                     horizontal: -4.0),
-                  //                             title: Text(
-                  //                               'Select all',
-                  //                               style: Theme.of(context)
-                  //                                   .textTheme
-                  //                                   .labelSmall!
-                  //                                   .merge(const TextStyle(
-                  //                                       fontWeight:
-                  //                                           FontWeight.w400,
-                  //                                       fontSize: 14.0,
-                  //                                       letterSpacing: 0.3)),
-                  //                             ),
-                  //                             value: selectedAllLead.value,
-                  //                             onChanged: (value) {
-                  //                               selectedAllLead.value = value!;
-
-                  //                               salesController
-                  //                                   .selectedLeadListmodelValues
-                  //                                   .clear();
-                  //                               if (value) {
-                  //                                 salesController
-                  //                                     .selectedLeadListmodelValues
-                  //                                     .addAll(salesController
-                  //                                         .leadListmodelValues);
-                  //                                 if (salesController
-                  //                                         .selectedLeadListmodelValues
-                  //                                         .length ==
-                  //                                     salesController
-                  //                                         .leadListmodelValues
-                  //                                         .length) {
-                  //                                   selectedAllLead.value =
-                  //                                       true;
-                  //                                 } else {
-                  //                                   selectedAllLead.value =
-                  //                                       false;
-                  //                                 }
-                  //                                 for (int i = 0;
-                  //                                     i <
-                  //                                         salesController
-                  //                                             .leadListmodelValues
-                  //                                             .length;
-                  //                                     i++) {
-                  //                                   salesController.addLeadId(
-                  //                                       salesController
-                  //                                           .leadListmodelValues
-                  //                                           .elementAt(i)
-                  //                                           .iSMSLEId!);
-
-                  //                                   setState(() {});
-                  //                                 }
-                  //                               } else {
-                  //                                 salesController
-                  //                                     .departmentSelectedValues
-                  //                                     .clear();
-                  //                                 salesController.leadId
-                  //                                     .clear();
-
-                  //                                 setState(() {});
-                  //                               }
-                  //                             }),
-                  //                       ),
-                  //                       ListView.builder(
-                  //                         itemCount: salesController
-                  //                             .leadListmodelValues.length,
-                  //                         shrinkWrap: true,
-                  //                         physics:
-                  //                             const NeverScrollableScrollPhysics(),
-                  //                         itemBuilder: (context, index) {
-                  //                           return SizedBox(
-                  //                             height: 35,
-                  //                             child: CheckBoxContainer(
-                  //                                 sectionName:
-                  //                                     "${salesController.leadListmodelValues.elementAt(index).iSMSLELeadName}",
-                  //                                 func: (b) {
-                  //                                   setState(() {
-                  //                                     if (b) {
-                  //                                       salesController
-                  //                                           .addSelectedLeadValues(
-                  //                                               salesController
-                  //                                                   .leadListmodelValues
-                  //                                                   .elementAt(
-                  //                                                       index));
-
-                  //                                       salesController.addLeadId(
-                  //                                           salesController
-                  //                                               .leadListmodelValues
-                  //                                               .elementAt(
-                  //                                                   index)
-                  //                                               .iSMSLEId!);
-
-                  //                                       setState(() {});
-                  //                                     } else {
-                  //                                       selectedAllLead.value =
-                  //                                           false;
-                  //                                       salesController
-                  //                                           .removeSelectedLeadValues(
-                  //                                               salesController
-                  //                                                   .leadListmodelValues
-                  //                                                   .elementAt(
-                  //                                                       index));
-                  //                                       for (int i = 0;
-                  //                                           i < idList.length;
-                  //                                           i++) {
-                  //                                         salesController
-                  //                                             .removeLeadId(
-                  //                                                 idList[
-                  //                                                     index]);
-                  //                                       }
-
-                  //                                       setState(() {});
-                  //                                     }
-                  //                                   });
-                  //                                 },
-                  //                                 isChecked: RxBool(
-                  //                                   salesController
-                  //                                       .selectedLeadListmodelValues
-                  //                                       .contains(
-                  //                                     salesController
-                  //                                         .leadListmodelValues
-                  //                                         .elementAt(index),
-                  //                                   ),
-                  //                                 )),
-                  //                             // })
-                  //                           );
-                  //                         },
-                  //                       ),
-                  //                     ],
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //             const ContainerTitle(
-                  //               iT: Color(0xFFFF6F67),
-                  //               bg: Color.fromARGB(255, 255, 236, 235),
-                  //               image: 'assets/images/subjectfielicon.png',
-                  //               title: 'Select Lead',
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
                   Container(
                     margin: const EdgeInsets.only(top: 30, left: 0, right: 0),
                     child: Row(
@@ -1010,10 +814,6 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                   initialDate: DateTime.now(),
                                   firstDate: DateTime(2000),
                                   lastDate: DateTime(3050),
-                                  // selectableDayPredicate: (day) =>
-                                  //     day.weekday == 7 || day.weekday == 7
-                                  //         ? false
-                                  //         : true,
                                 );
                                 if (fromDate != null) {
                                   setState(() {
@@ -1031,12 +831,7 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                       initialDate: DateTime.now(),
                                       firstDate: DateTime(2000),
                                       lastDate: DateTime(3050),
-                                      // selectableDayPredicate: (day) =>
-                                      //     day.weekday == 7 || day.weekday == 7
-                                      //         ? false
-                                      //         : true,
                                     );
-
                                     if (fromDate != null) {
                                       setState(() {
                                         _startDate.text =

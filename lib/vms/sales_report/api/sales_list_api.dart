@@ -33,57 +33,8 @@ class SalesListAPI {
         "hrmD_IdList": hrmdIdList,
         "hrmE_IdList": hrmeIdList,
         "hrmdes_IdList": designationId
-      }
-              // data: {
-              //   "MI_Id": miId,
-              //   "flag": flag,
-              //   "User_Id": userId,
-              //   "fromdate": fromDate,
-              //   "todate": toDate,
-              //   "hrmdes_IdList": [
-              //     15,
-              //     23,
-              //     25,
-              //     26,
-              //     31,
-              //     183,
-              //     333,
-              //     440,
-              //     448,
-              //     450,
-              //     470,
-              //     513,
-              //     514,
-              //     520,
-              //     522,
-              //     523,
-              //     538
-              //   ],
-              //   "hrmD_IdList": [231],
-              //   "hrmE_IdList": [
-              //     1452,
-              //     1748,
-              //     1780,
-              //     1840,
-              //     1843,
-              //     1845,
-              //     1847,
-              //     1849,
-              //     1864,
-              //     1865,
-              //     1866,
-              //     1873,
-              //     1874,
-              //     1882,
-              //     1889,
-              //     1932,
-              //     1953,
-              //     1955,
-              //     1957,
-              //     1977
-              //   ]
-              // }
-              );
+      });
+      logger.i(url);
       logger.i({
         "MI_Id": miId,
         "flag": flag,
