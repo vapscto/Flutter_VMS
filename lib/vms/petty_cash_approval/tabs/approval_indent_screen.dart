@@ -1026,7 +1026,7 @@ bool validateFields() {
                                                   fontWeight: FontWeight.w700,
                                                   fontSize: 17,
                                                   color: Color.fromARGB(
-                                                      255, 211, 118, 111)),
+                                                  255, 138, 137, 137)),
                                             ),
                                           ),
                                           Text(
@@ -1052,8 +1052,7 @@ bool validateFields() {
                                             child: Container(
                                               padding: const EdgeInsets.all(20),
                                               decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                    255, 255, 214, 212),
+                                                color: const Color.fromARGB(255, 241, 253, 240),
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                               ),
@@ -1061,6 +1060,8 @@ bool validateFields() {
                                                 "Calculate",
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w700,
+                                                  color: Color.fromARGB(
+                                                            255, 15, 87, 42)
                                                 ),
                                               ),
                                             ),
@@ -1115,14 +1116,14 @@ bool validateFields() {
                                                         BorderRadius.circular(
                                                             24.0),
                                                     color:
-                                                        const Color(0xFFFFEBEA),
+                                                        const Color.fromARGB(255, 241, 253, 240),
                                                   ),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.min,
                                                     children: [
                                                       Image.asset(
-                                                        "assets/images/subjectfielicon.png",
+                                                        "assets/images/money.png",
                                                         height: 24.0,
                                                       ),
                                                       const SizedBox(
@@ -1134,8 +1135,8 @@ bool validateFields() {
                                                             .labelMedium!
                                                             .merge(const TextStyle(
                                                                 fontSize: 20.0,
-                                                                color: Color(
-                                                                    0xFFFF6F67))),
+                                                                color: Color.fromARGB(
+                                                            255, 15, 87, 42))),
                                                       ),
                                                     ],
                                                   ),
@@ -1201,8 +1202,7 @@ bool validateFields() {
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(24.0),
-                                                color: const Color.fromARGB(
-                                                    255, 230, 255, 235),
+                                                color: Color.fromARGB(255, 241, 253, 240),
                                               ),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.min,

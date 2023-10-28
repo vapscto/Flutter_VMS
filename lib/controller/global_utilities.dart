@@ -46,6 +46,7 @@ import 'package:m_skool_flutter/vms/health_chequeup/screens/healtha_check_up.dar
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/online_leave/screen/online_leave_home.dart';
+import 'package:m_skool_flutter/vms/petty_indent_approval/screen/pc_Indent_Approval_HOME.dart';
 import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/vms/salary_details/screen/salary_home_screen.dart';
 import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
@@ -695,6 +696,15 @@ void openMappedPages(
   if (pageName == "Petty Cash Approval") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return PCApprovalHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+  }
+
+  if (pageName == "Petty Indent Approval") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return PcIndentApprovalHome(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
       );

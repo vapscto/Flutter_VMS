@@ -526,6 +526,23 @@ class URLS {
 
   static String saveRecordPC = "api/PC_Indent_ApprovalFacade/saverecord";
 
+    ///***  PETTY INDENT APPROVAL  ***///
+  
+  static String onLoadIndentApproval = "api/PC_IndentFacade/onloaddata";
+
+  static String onChangeIndentapprovalIns =
+      "api/PC_IndentFacade/OnChangeInstitution";
+
+  static String onChangeIndentDatePC = "api/PC_IndentFacade/onchangedate";
+
+  static String particularReqDetails = "api/PC_IndentFacade/getrequisitiondetails";
+
+  static String indentDetailsApproved = "api/PC_IndentFacade/onloaddata";
+
+  static String indentViewData = "api/PC_IndentFacade/Viewdata";
+
+  static String saveRecordIndentPC ="api/PC_IndentFacade/saverecord";
+
   ///*** PETTY CASH REQUISITION ***/
 
   static String departmentonLoadPCRequest =
