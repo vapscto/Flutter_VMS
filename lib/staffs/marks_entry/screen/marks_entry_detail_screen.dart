@@ -11,7 +11,6 @@ import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
-import 'package:m_skool_flutter/widget/staff_home_fab.dart';
 
 class MarksEntryDetailScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;

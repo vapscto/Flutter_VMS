@@ -592,4 +592,6 @@ class URLS {
   static String hcClassList="api/HW_HeathCheckUpFacade/OnLoadHWHealthCheckUp";
 
   static String saveHC="api/HW_HeathCheckUpFacade/SaveHWHealthChekUp";
+
+  static String getdocxApi='api/HW_HeathCheckUpFacade/ViewHealthCheckUpFiles';
 }

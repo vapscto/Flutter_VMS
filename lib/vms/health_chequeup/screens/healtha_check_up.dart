@@ -14,11 +14,13 @@ import 'package:m_skool_flutter/vms/health_chequeup/controlers/health_controler.
 import 'package:m_skool_flutter/vms/health_chequeup/models/client_model_list.dart';
 import 'package:m_skool_flutter/vms/health_chequeup/models/hc_emp_list.dart';
 import 'package:m_skool_flutter/vms/health_chequeup/models/institute_model.dart';
+import 'package:m_skool_flutter/vms/health_chequeup/screens/view_all_data.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/controller/dr_details_ctrlr.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:open_filex/open_filex.dart';
 
 class HomeHCheckup extends StatefulWidget {
@@ -70,8 +72,7 @@ class _HomeHCheckupState extends State<HomeHCheckup> {
             remark: etRemarkControllers.value.text,
             userId: widget.loginSuccessModel.userId!,
             loadingCntrl: loadingCntrl,
-            controller:_controller 
-           )
+            controller: _controller)
         .then(
       (value) {
         Fluttertoast.showToast(msg: " Save successfully ");
@@ -614,16 +615,36 @@ class _HomeHCheckupState extends State<HomeHCheckup> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 20),
                       child: TextFormField(
+                        validator: (value) {
+                          if (value == null) {
+                            return "";
+                          }
+                          return null;
+                        },
                         style: Theme.of(context)
                             .textTheme
                             .titleSmall!
                             .merge(const TextStyle(fontSize: 14)),
                         controller: etRemarkControllers,
                         decoration: InputDecoration(
+                            hintText: "Write Remark",
+                            hintStyle: Theme.of(context).textTheme.titleSmall,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10))),
                         maxLines: 4,
                       ),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    MSkollBtn(
+                      title: "View All",
+                      onPress: () {
+                        Get.to(() => ViewAllHC(
+                              mIID: mIID,
+                              mskoolController: widget.mskoolController,
+                            ));
+                      },
                     )
                   ]),
                 ),
