@@ -18,7 +18,7 @@ class ViewAllHC extends StatefulWidget {
   @override
   State<ViewAllHC> createState() => _ViewAllHCState();
 }
-
+// view all
 class _ViewAllHCState extends State<ViewAllHC> {
   final HealthCheckUpController healthCheckUpController =
       Get.put(HealthCheckUpController());
