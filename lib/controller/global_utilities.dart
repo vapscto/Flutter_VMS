@@ -40,6 +40,7 @@ import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
+import 'package:m_skool_flutter/vms/dr_genration/screens/dailyrpt_home.dart';
 import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/health_chequeup/screens/healtha_check_up.dart';
@@ -820,17 +821,7 @@ void openMappedPages(
 //     return;
 //   }
 
-  Widget hSize({required double height}) {
-    return SizedBox(
-      height: height,
-    );
-  }
-
-  Widget wSize({required double width}) {
-    return SizedBox(
-      height: width,
-    );
-  }
+  
 
   if (pageName == "Student") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -865,6 +856,16 @@ void openMappedPages(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
         title: pageName,
+      );
+    }));
+    return;
+  }
+  if (pageName == "Issue Manager") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return DailyReportGenration(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+     
       );
     }));
     return;

@@ -3,6 +3,8 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/countTask_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_details.dart';
 
 Future<bool> getPlanerdetails({
@@ -13,9 +15,9 @@ Future<bool> getPlanerdetails({
   required int miId,
 }) async {
   final Dio ins = getGlobalDio();
-  base = "https://vmsissuemanager.azurewebsites.net/";
-  final String apiUrl = base + URLS.drDetailsGenration;
-  logger.d(base + URLS.taskGetDetails);
+  String baseApi = "https://vms.vapstech.com:44011/";
+  final String apiUrl = baseApi + URLS.drDetailsGenration;
+  //  print(base);
   controller.updatePlannerDeatails(true);
   try {
     final Response response =
@@ -25,10 +27,14 @@ Future<bool> getPlanerdetails({
       "IVRMRT_Id": ivrmrtId,
     });
     PlanerDeatails planerDeatailsList = PlanerDeatails.fromJson(response.data);
-
+    GetTaskDrListModel taskDrListModel = GetTaskDrListModel.fromJson(response.data['gettasklist']);
+    controller.getTaskDrList.addAll(taskDrListModel.values!);
+    // here add countTask 
+    CloseTaskCoutnModel closeTaskList = CloseTaskCoutnModel.fromJson(response.data['closeTaskCoutnDetails']);
+    controller.closeTaskCoutnList.addAll(closeTaskList.values!);
     controller.plannernameEditingController.value.text =
         planerDeatailsList.plannername!;
-    controller.otherDaysEditingController.value  =
+    controller.otherDaysEditingController.value =
         planerDeatailsList.dailyreportothersdatecount!.toInt().toString();
     controller.updatePlannerDeatails(false);
     return true;
