@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/api/get_planner_details_api.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -120,7 +121,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(24.0),
-                                              color: Color.fromARGB(
+                                              color: const Color.fromARGB(
                                                   255, 234, 239, 255)),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
@@ -297,7 +298,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(24.0),
-                                              color: Color.fromARGB(
+                                              color: const Color.fromARGB(
                                                   255, 212, 245, 206)),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
@@ -385,8 +386,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                         onChanged: (value) {
                                           halfDay.value = value!;
                                         },
-                                        activeColor:
-                                            Color.fromARGB(255, 33, 54, 243),
+                                        activeColor: const Color.fromARGB(
+                                            255, 33, 54, 243),
                                         shape: ContinuousRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(10)),
@@ -429,7 +430,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                               0, 0, 0, 0.95),
                                                           fontWeight:
                                                               FontWeight.w500),
-                                                  dataRowHeight: 130,
+                                                  dataRowHeight: 160,
                                                   headingRowHeight: 40,
                                                   horizontalMargin: 10,
                                                   columnSpacing: 30,
@@ -491,7 +492,19 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                           ),
                                                         ),
                                                       ),
-                                                    )
+                                                    ),
+                                                    DataColumn(
+                                                        label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text("Efforts"),
+                                                    )),
+                                                    DataColumn(
+                                                        label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text("Status"),
+                                                    ))
                                                   ],
                                                   rows: List.generate(
                                                       _plannerDetailsController
@@ -511,89 +524,129 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             onChanged:
                                                                 (value) {},
                                                           ))),
-                                                      DataCell(Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Column(
-                                                            children: [
-                                                              Text(
-                                                                _plannerDetailsController
-                                                                    .getTaskDrList
-                                                                    .elementAt(
-                                                                        index)
-                                                                    .iSMTCRTaskNo!,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .titleSmall!
-                                                                    .merge(const TextStyle(
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontSize:
-                                                                            14)),
-                                                              ),
-                                                              Text(
-                                                                "Category : ${_plannerDetailsController.getTaskDrList.elementAt(index).taskcategoryname}",
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .titleSmall!
-                                                                    .merge(const TextStyle(
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontSize:
-                                                                            14)),
-                                                              ),
-                                                              Text(
-                                                                "Project : ${_plannerDetailsController.getTaskDrList.elementAt(index).projectName}",
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .titleSmall!
-                                                                    .merge(const TextStyle(
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontSize:
-                                                                            14)),
-                                                              ),
-                                                              Text(
-                                                                "Task Start date : ${_plannerDetailsController.getTaskDrList.elementAt(index).iSMTPLStartDate.toString().replaceRange(10, null, '')}",
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .titleSmall!
-                                                                    .merge(const TextStyle(
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontSize:
-                                                                            14,
-                                                                        fontWeight:
-                                                                            FontWeight.w600)),
-                                                              ),
-                                                              Text(
-                                                                "Task End date : ${_plannerDetailsController.getTaskDrList.elementAt(index).iSMTPLEndDate.toString().replaceRange(10, null, '')}",
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .titleSmall!
-                                                                    .merge(const TextStyle(
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w600,
-                                                                        fontSize:
-                                                                            14)),
-                                                              )
-                                                            ],
-                                                          ))),
+                                                      DataCell(Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: [
+                                                          Text(
+                                                            _plannerDetailsController
+                                                                .getTaskDrList
+                                                                .elementAt(
+                                                                    index)
+                                                                .iSMTCRTaskNo!,
+                                                            style: Theme
+                                                                    .of(context)
+                                                                .textTheme
+                                                                .titleSmall!
+                                                                .merge(const TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontSize:
+                                                                        14)),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 200,
+                                                            child: Text(
+                                                              _plannerDetailsController
+                                                                  .getTaskDrList
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .iSMTCRTitle!,
+                                                              maxLines: 3,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .merge(const TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontSize:
+                                                                          14)),
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "Category : ${_plannerDetailsController.getTaskDrList.elementAt(index).taskcategoryname}",
+                                                            style: Theme
+                                                                    .of(context)
+                                                                .textTheme
+                                                                .titleSmall!
+                                                                .merge(const TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontSize:
+                                                                        14)),
+                                                          ),
+                                                          Text(
+                                                            "Project : ${_plannerDetailsController.getTaskDrList.elementAt(index).projectName}",
+                                                            style: Theme
+                                                                    .of(context)
+                                                                .textTheme
+                                                                .titleSmall!
+                                                                .merge(const TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontSize:
+                                                                        14)),
+                                                          ),
+                                                          Text(
+                                                            "Task Start date : ${_plannerDetailsController.getTaskDrList.elementAt(index).iSMTPLStartDate.toString().replaceRange(10, null, '')}",
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .titleSmall!
+                                                                .merge(const TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600)),
+                                                          ),
+                                                          Text(
+                                                            "Task End date : ${_plannerDetailsController.getTaskDrList.elementAt(index).iSMTPLEndDate.toString().replaceRange(10, null, '')}",
+                                                            style: Theme
+                                                                    .of(context)
+                                                                .textTheme
+                                                                .titleSmall!
+                                                                .merge(const TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontSize:
+                                                                        14)),
+                                                          )
+                                                        ],
+                                                      )),
                                                       DataCell(Align(
                                                           alignment:
                                                               Alignment.center,
                                                           child: Padding(
                                                             padding:
                                                                 const EdgeInsets
-                                                                    .all(8.0),
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        0,
+                                                                    vertical:
+                                                                        20),
                                                             child: SizedBox(
                                                               width: 150,
                                                               child:
@@ -615,6 +668,178 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                               ),
                                                             ),
                                                           ))),
+                                                      DataCell(Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              SizedBox(
+                                                                  width: 80,
+                                                                  child:
+                                                                      TextField(
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .titleSmall!
+                                                                        .merge(
+                                                                            const TextStyle(
+                                                                          fontWeight:
+                                                                              FontWeight.w500,
+                                                                          fontSize:
+                                                                              14.0,
+                                                                          letterSpacing:
+                                                                              0.3,
+                                                                          overflow:
+                                                                              TextOverflow.clip,
+                                                                        )),
+                                                                    decoration: InputDecoration(
+                                                                        border: const OutlineInputBorder(),
+                                                                        hintText: " HH ",
+                                                                        hintStyle: Theme.of(context).textTheme.titleSmall!.merge(const TextStyle(
+                                                                              fontWeight: FontWeight.w500,
+                                                                              fontSize: 14.0,
+                                                                              letterSpacing: 0.3,
+                                                                              overflow: TextOverflow.clip,
+                                                                            ))),
+                                                                    controller:
+                                                                        _plannerDetailsController
+                                                                            .hoursEt[index],
+                                                                  )),
+                                                              const SizedBox(
+                                                                width: 5,
+                                                              ),
+                                                              SizedBox(
+                                                                width: 80,
+                                                                child:
+                                                                    TextField(
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .merge(
+                                                                          const TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        fontSize:
+                                                                            14.0,
+                                                                        letterSpacing:
+                                                                            0.3,
+                                                                        overflow:
+                                                                            TextOverflow.clip,
+                                                                      )),
+                                                                  decoration:
+                                                                      InputDecoration(
+                                                                          border:
+                                                                              const OutlineInputBorder(),
+                                                                          hintText:
+                                                                              " MM ",
+                                                                          hintStyle: Theme.of(context)
+                                                                              .textTheme
+                                                                              .titleSmall!
+                                                                              .merge(const TextStyle(
+                                                                                fontWeight: FontWeight.w500,
+                                                                                fontSize: 14.0,
+                                                                                letterSpacing: 0.3,
+                                                                                overflow: TextOverflow.clip,
+                                                                              ))),
+                                                                  controller:
+                                                                      _plannerDetailsController
+                                                                              .minutesEt[
+                                                                          index],
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 3,
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              SizedBox(
+                                                                  width: 80,
+                                                                  child: Align(
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .center,
+                                                                      child:
+                                                                          Text(
+                                                                        "HH",
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .titleSmall!
+                                                                            .merge(const TextStyle(
+                                                                              fontWeight: FontWeight.w500,
+                                                                              fontSize: 14.0,
+                                                                              letterSpacing: 0.3,
+                                                                              overflow: TextOverflow.clip,
+                                                                            )),
+                                                                      ))),
+                                                              const SizedBox(
+                                                                width: 5,
+                                                              ),
+                                                              SizedBox(
+                                                                width: 80,
+                                                                child: Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                    child: Text(
+                                                                      "MM",
+                                                                      style: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .titleSmall!
+                                                                          .merge(
+                                                                              const TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                            fontSize:
+                                                                                14.0,
+                                                                            letterSpacing:
+                                                                                0.3,
+                                                                            overflow:
+                                                                                TextOverflow.clip,
+                                                                          )),
+                                                                    )),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      )),
+                                                       DataCell(Align(
+                                      alignment: Alignment.center,
+                                      child: DropdownMenu<DrstatusListModelValues>(
+                                        enableSearch: true,
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .merge(const TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 14.0,
+                                              letterSpacing: 0.3,
+                                              overflow: TextOverflow.clip,
+                                            )),
+                                        controller: _plannerDetailsController.statusEtField
+                                            .elementAt(index),
+                                           
+                                        initialSelection:
+                                            _plannerDetailsController.statusDrList.first,
+                                        onSelected: (DrstatusListModelValues? value) {
+                                          setState(() {
+                                           _plannerDetailsController.statusEtField[index].text =
+                                                value!.ismmistSStatusName!;
+                                          });
+                                        },
+                                        dropdownMenuEntries: _plannerDetailsController.statusDrList
+                                            .map<DropdownMenuEntry<DrstatusListModelValues>>(
+                                                (DrstatusListModelValues? value) {
+                                          return DropdownMenuEntry<DrstatusListModelValues>(
+                                              value: value!, label: value.ismmistSStatusName!);
+                                        }).toList(),
+                                      ),
+                                    )),
                                                     ]);
                                                   }),
                                                 ))))),
@@ -624,6 +849,12 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
               ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _plannerDetailsController.getTaskDrList.clear();
+    super.dispose();
   }
 }
 
