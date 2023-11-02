@@ -4,6 +4,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/countTask_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
@@ -44,6 +45,9 @@ Future<bool> getPlanerdetails({
     DrstatusListModel drStatusListModel = DrstatusListModel.fromJson(response.data['get_Status']);
     controller.statusDrList.addAll(drStatusListModel.values!);
     // here add countTask
+    // get Deviation task list
+    DepartwisedeviationModel departwisedeviationModel = DepartwisedeviationModel.fromJson(response.data['getdepartwisedeviationremrks']);
+       controller.depWiseDevitnList.addAll(departwisedeviationModel.values!);
     CloseTaskCoutnModel closeTaskList =
         CloseTaskCoutnModel.fromJson(response.data['closeTaskCoutnDetails']);
     controller.closeTaskCoutnList.addAll(closeTaskList.values!);

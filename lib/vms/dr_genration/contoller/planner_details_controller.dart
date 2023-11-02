@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/countTask_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
@@ -26,6 +27,8 @@ class PlannerDetails extends GetxController {
       <TextEditingController>[].obs;
   // adding status in the list
   RxList<DrstatusListModelValues> statusDrList = <DrstatusListModelValues>[].obs;
+  // list of depertment devation list
+  RxList<DepartwisedeviationModelValues> depWiseDevitnList = <DepartwisedeviationModelValues>[].obs;
   RxString day = "today".obs;
   Rx<TextEditingController> plannernameEditingController =
       TextEditingController(text: "").obs;

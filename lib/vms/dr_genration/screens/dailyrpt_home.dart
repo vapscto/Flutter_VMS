@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/api/get_planner_details_api.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
@@ -504,6 +505,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                       alignment:
                                                           Alignment.center,
                                                       child: Text("Status"),
+                                                    )),
+                                                    DataColumn(label: Align(
+                                                      alignment: Alignment.center,
+                                                      child: Text("Deviation Remarks"),
                                                     ))
                                                   ],
                                                   rows: List.generate(
@@ -808,64 +813,126 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                           ),
                                                         ],
                                                       )),
-                                                      DataCell(Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: DropdownMenu<
-                                                            DrstatusListModelValues>(
-                                                           enableSearch: true,
-                                                          textStyle: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .titleSmall!
-                                                              .merge(
-                                                                  const TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                fontSize: 14.0,
-                                                                letterSpacing:
-                                                                    0.3,
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .clip,
-                                                              )),
-                                                          controller:
-                                                              _plannerDetailsController
-                                                                  .statusEtField
-                                                                  .elementAt(
-                                                                      index),
-                                                                      
-                                                          initialSelection:
-                                                              _plannerDetailsController
-                                                                  .statusDrList
-                                                                  .first,
-                                                          onSelected:
-                                                              (DrstatusListModelValues?
-                                                                  value) {
-                                                            setState(() {
-                                                              _plannerDetailsController
-                                                                      .statusEtField[
-                                                                          index]
-                                                                      .text =
-                                                                  value!
-                                                                      .ismmistSStatusName!;
-                                                            });
-                                                          },
-                                                          dropdownMenuEntries:
-                                                              _plannerDetailsController
-                                                                  .statusDrList
-                                                                  .map<DropdownMenuEntry<DrstatusListModelValues>>(
-                                                                      (DrstatusListModelValues?
-                                                                          value) {
-                                                            return DropdownMenuEntry<
-                                                                    DrstatusListModelValues>(
-                                                                value: value!,
-                                                                label: value
-                                                                    .ismmistSStatusName!);
-                                                          }).toList(),
-                                                        ),
-                                                      )),
+                                                      DataCell(SizedBox(
+                                                          width: 180,
+                                                          child: DropdownMenu<
+                                                              DrstatusListModelValues>(
+                                                              width: 180,
+                                                             hintText: "Status",
+                                                            enableSearch: true,
+                                                            textStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .titleSmall!
+                                                                .merge(
+                                                                    const TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  letterSpacing:
+                                                                      0.3,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .clip,
+                                                                )),
+                                                            controller:
+                                                                _plannerDetailsController
+                                                                    .statusEtField
+                                                                    .elementAt(
+                                                                        index),
+                                                            // initialSelection:
+                                                            //     _plannerDetailsController
+                                                            //         .statusDrList
+                                                            //         .first
+                                                            //          ,
+                                                            onSelected:
+                                                                (DrstatusListModelValues?
+                                                                    value) {
+                                                              setState(() {
+                                                                _plannerDetailsController
+                                                                        .statusEtField[
+                                                                            index]
+                                                                        .text =
+                                                                    value!
+                                                                        .ismmistSStatusName!;
+                                                              });
+                                                            },
+                                                            dropdownMenuEntries:
+                                                                _plannerDetailsController
+                                                                    .statusDrList
+                                                                    .map<
+                                                                        DropdownMenuEntry<
+                                                                            DrstatusListModelValues>>((DrstatusListModelValues?
+                                                                        value) {
+                                                              return DropdownMenuEntry<
+                                                                      DrstatusListModelValues>(
+                                                                  value: value!,
+                                                                  label: value
+                                                                      .ismmistSStatusName!);
+                                                            }).toList(),
+                                                          ))),
+                                                           DataCell(SizedBox(
+                                                          width: 180,
+                                                          child: DropdownMenu<
+                                                              DepartwisedeviationModelValues>(
+                                                              width: 180,
+                                                             hintText: "Select Deviation Remark",
+                                                            enableSearch: true,
+                                                            textStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .titleSmall!
+                                                                .merge(
+                                                                    const TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  letterSpacing:
+                                                                      0.3,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .clip,
+                                                                )),
+                                                            controller:
+                                                                _plannerDetailsController
+                                                                    .deveationEtField
+                                                                    .elementAt(
+                                                                        index),
+                                                            // initialSelection:
+                                                            //     _plannerDetailsController
+                                                            //         .statusDrList
+                                                            //         .first
+                                                            //          ,
+                                                            onSelected:
+                                                                (DepartwisedeviationModelValues?
+                                                                    value) {
+                                                              setState(() {
+                                                                _plannerDetailsController
+                                                                        .deveationEtField[
+                                                                            index]
+                                                                        .text =
+                                                                    value!
+                                                                        .ismdRRemarks!;
+                                                              });
+                                                            },
+                                                            dropdownMenuEntries:
+                                                                _plannerDetailsController
+                                                                    .depWiseDevitnList
+                                                                    .map<
+                                                                        DropdownMenuEntry<
+                                                                            DepartwisedeviationModelValues>>((DepartwisedeviationModelValues?
+                                                                        value) {
+                                                              return DropdownMenuEntry<
+                                                                      DepartwisedeviationModelValues>(
+                                                                  value: value!,
+                                                                  label: value
+                                                                      .ismdRRemarks!);
+                                                            }).toList(),
+                                                          )))
                                                     ]);
                                                   }),
                                                 ))))),
@@ -881,6 +948,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   void dispose() {
     _plannerDetailsController.getTaskDrList.clear();
     _plannerDetailsController.statusDrList.clear();
+    _plannerDetailsController.statusEtField.clear();
     super.dispose();
   }
 }
