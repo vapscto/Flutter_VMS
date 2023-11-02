@@ -51,6 +51,8 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
   @override
   void dispose() {
     tabController!.dispose();
+    plannerApprovalController.plannerListModel.clear();
+    plannerApprovalController.newplannerList.clear();
     super.dispose();
   }
 

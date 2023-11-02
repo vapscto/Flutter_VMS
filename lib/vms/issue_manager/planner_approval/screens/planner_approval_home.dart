@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/controller/planner_approval_controller.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/all_planner_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/widgets/dr_not_submit.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -130,8 +131,6 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                                                   label: Text("End Date")),
                                               DataColumn(
                                                   label: Text("Total Effort")),
-                                              // DataColumn(label: Text("Planner")),
-                                              // DataColumn(label: Text("Category")),
                                               DataColumn(
                                                   label: Text("Planner")),
                                             ],
@@ -208,60 +207,6 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                                                         index)['endDate'])),
                                                 DataCell(Text(
                                                     '${widget.plannerApprovalController.newplannerList.elementAt(index)['totalEffort']} Hr')),
-                                                // DataCell(
-                                                //   InkWell(
-                                                //     onTap: () {},
-                                                //     child: Row(
-                                                //       crossAxisAlignment:
-                                                //           CrossAxisAlignment.center,
-                                                //       children: [
-                                                //         Icon(
-                                                //           Icons.visibility,
-                                                //           color: Theme.of(context)
-                                                //               .primaryColor,
-                                                //         ),
-                                                //         Text(
-                                                //           widget.plannerApprovalController
-                                                //               .newplannerList
-                                                //               .elementAt(
-                                                //                   index)['planner'],
-                                                //           style: Get
-                                                //               .textTheme.titleSmall!
-                                                //               .copyWith(
-                                                //                   color: Theme.of(
-                                                //                           context)
-                                                //                       .primaryColor),
-                                                //         ),
-                                                //       ],
-                                                //     ),
-                                                //   ),
-                                                // ),
-                                                // DataCell(InkWell(
-                                                //   onTap: () {},
-                                                //   child: Row(
-                                                //     crossAxisAlignment:
-                                                //         CrossAxisAlignment.center,
-                                                //     children: [
-                                                //       Icon(
-                                                //         Icons.visibility,
-                                                //         color: Theme.of(context)
-                                                //             .primaryColor,
-                                                //       ),
-                                                //       Text(
-                                                //         widget.plannerApprovalController
-                                                //             .newplannerList
-                                                //             .elementAt(
-                                                //                 index)['category'],
-                                                //         style: Get
-                                                //             .textTheme.titleSmall!
-                                                //             .copyWith(
-                                                //                 color: Theme.of(
-                                                //                         context)
-                                                //                     .primaryColor),
-                                                //       ),
-                                                //     ],
-                                                //   ),
-                                                // )),
                                                 DataCell(InkWell(
                                                   onTap: () {},
                                                   child: Row(
@@ -376,7 +321,14 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                                                 DataCell(Text(
                                                     '${widget.plannerApprovalController.plannerListModel.elementAt(index)['totalEffort']} Hr')),
                                                 DataCell(InkWell(
-                                                  onTap: () {},
+                                                  onTap: () {
+                                                    Get.to(() => AllPlanners(
+                                                          loginSuccessModel: widget
+                                                              .loginSuccessModel,
+                                                          mskoolController: widget
+                                                              .mskoolController,
+                                                        ));
+                                                  },
                                                   child: Row(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
