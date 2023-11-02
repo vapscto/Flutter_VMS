@@ -36,12 +36,8 @@ class _AllPlannersState extends State<AllPlanners> {
 
   //
   RxList<String> rowStatus = <String>[].obs;
-  void getStatus(String status) {
-    if (rowStatus.isNotEmpty) {
-      rowStatus.clear();
-    }
-    rowStatus.add("Approved");
-    rowStatus.add(status);
+  void getStatus(List<String> status) {
+    rowStatus.addAll(status);
   }
 
   //remarks
@@ -299,25 +295,11 @@ class _AllPlannersState extends State<AllPlanners> {
                                   headerGroupValue = newValue;
                                   if (headerGroupValue == 'Approve All') {
                                     dataRowGroupValue = 'Approve';
-                                    getStatus(dataRowGroupValue);
+                                    getStatus(['Approve']);
                                   } else if (headerGroupValue == 'Reject All') {
                                     dataRowGroupValue = 'Reject';
-                                    getStatus(dataRowGroupValue);
+                                    getStatus(['Reject']);
                                   }
-                                  // if (selectAll) {
-                                  //   for (var i = 0;
-                                  //       i < allPlannerList.length;
-                                  //       i++) {
-                                  //     checkList.add(i);
-                                  //   }
-                                  // } else {
-                                  //   for (var i = 0;
-                                  //       i < allPlannerList.length;
-                                  //       i++) {
-                                  //     checked = allPlannerList[i].flag = false;
-                                  //   }
-                                  //   checkList.clear();
-                                  // }
                                 });
                               },
                             ),
@@ -473,7 +455,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                   onChanged: (dynamic newValue) {
                                     setState(() {
                                       dataRowGroupValue = newValue;
-                                      getStatus(dataRowGroupValue);
+                                      getStatus([dataRowGroupValue]);
                                     });
                                   },
                                 ),
@@ -488,7 +470,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                   border: Border.all(color: Colors.black)),
                               child: Center(
                                   child: Text(
-                                dataRowGroupValue,
+                                rowStatus.elementAt(index),
                                 style: Get.textTheme.titleSmall,
                               )),
                             )),
