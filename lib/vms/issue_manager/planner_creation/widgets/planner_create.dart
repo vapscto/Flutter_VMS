@@ -868,6 +868,9 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                       if (selectAll) {
                         for (var i = 0; i < newTable.length; i++) {
                           checkList.add(i);
+                          setState(() {
+                            newTable[i].flag = true;
+                          });
                         }
                       } else {
                         for (var i = 0; i < newTable.length; i++) {
