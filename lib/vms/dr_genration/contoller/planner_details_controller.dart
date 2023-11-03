@@ -29,13 +29,15 @@ class PlannerDetails extends GetxController {
   RxList<DrstatusListModelValues> statusDrList = <DrstatusListModelValues>[].obs;
   // list of depertment devation list
   RxList<DepartwisedeviationModelValues> depWiseDevitnList = <DepartwisedeviationModelValues>[].obs;
+  // checkbox List 
+  RxList<bool> checkBoxList = <bool>[].obs;
   RxString day = "today".obs;
   Rx<TextEditingController> plannernameEditingController =
       TextEditingController(text: "").obs;
   Rx<TextEditingController> plannernameDateController =
       TextEditingController(text: "").obs;
   RxString otherDaysEditingController = "".obs;
-
+Rx<TextEditingController> etSearchController =TextEditingController().obs;
   updatePlannerDeatails(bool val) {
     loadPlanerDeatails.value = val;
   }
