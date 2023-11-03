@@ -526,8 +526,8 @@ class URLS {
 
   static String saveRecordPC = "api/PC_Indent_ApprovalFacade/saverecord";
 
-    ///***  PETTY INDENT APPROVAL  ***///
-  
+  ///***  PETTY INDENT APPROVAL  ***///
+
   static String onLoadIndentApproval = "api/PC_IndentFacade/onloaddata";
 
   static String onChangeIndentapprovalIns =
@@ -535,13 +535,14 @@ class URLS {
 
   static String onChangeIndentDatePC = "api/PC_IndentFacade/onchangedate";
 
-  static String particularReqDetails = "api/PC_IndentFacade/getrequisitiondetails";
+  static String particularReqDetails =
+      "api/PC_IndentFacade/getrequisitiondetails";
 
   static String indentDetailsApproved = "api/PC_IndentFacade/onloaddata";
 
   static String indentViewData = "api/PC_IndentFacade/Viewdata";
 
-  static String saveRecordIndentPC ="api/PC_IndentFacade/saverecord";
+  static String saveRecordIndentPC = "api/PC_IndentFacade/saverecord";
 
   ///*** PETTY CASH REQUISITION ***/
 
@@ -599,16 +600,19 @@ class URLS {
   static String drDetailsGenration =
       "api/ISM_DailyReportGenerationFacade/loaddata/";
   static String plannerList = 'api/ISM_PlannerApprovalFacade/getdetails/';
+  static String plannerApprovelist =
+      'api/ISM_PlannerApprovalFacade/getplannerdetails/';
   static String profileData = 'api/ISMDashboardFacade/getdetails/';
 
   static String visitorapprovalapi =
       'api/V_AppointmentApprovalStatusFacade/getDetails/';
 
-  static String leaveCountList="api/OnlineLeaveApplicationFacade/getonlineLeave";
+  static String leaveCountList =
+      "api/OnlineLeaveApplicationFacade/getonlineLeave";
 
-  static String hcClassList="api/HW_HeathCheckUpFacade/OnLoadHWHealthCheckUp";
+  static String hcClassList = "api/HW_HeathCheckUpFacade/OnLoadHWHealthCheckUp";
 
-  static String saveHC="api/HW_HeathCheckUpFacade/SaveHWHealthChekUp";
+  static String saveHC = "api/HW_HeathCheckUpFacade/SaveHWHealthChekUp";
 
-  static String getdocxApi='api/HW_HeathCheckUpFacade/ViewHealthCheckUpFiles';
+  static String getdocxApi = 'api/HW_HeathCheckUpFacade/ViewHealthCheckUpFiles';
 }

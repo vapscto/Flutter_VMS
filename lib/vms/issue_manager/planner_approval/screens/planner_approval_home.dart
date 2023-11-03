@@ -327,6 +327,35 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                                                               .loginSuccessModel,
                                                           mskoolController: widget
                                                               .mskoolController,
+                                                          plannerApprovalController:
+                                                              widget
+                                                                  .plannerApprovalController,
+                                                          ismtplId: widget
+                                                              .plannerApprovalController
+                                                              .plannerListModel
+                                                              .elementAt(
+                                                                  index)['ismtplId'],
+                                                          createdBy: widget
+                                                              .plannerApprovalController
+                                                              .plannerListModel
+                                                              .elementAt(
+                                                                  index)['name'],
+                                                          fromDate: widget
+                                                              .plannerApprovalController
+                                                              .plannerListModel
+                                                              .elementAt(
+                                                                  index)['startDate'],
+                                                          toDate: widget
+                                                              .plannerApprovalController
+                                                              .plannerListModel
+                                                              .elementAt(
+                                                                  index)['endDate'],
+                                                          plannedEffort: widget
+                                                                  .plannerApprovalController
+                                                                  .plannerListModel
+                                                                  .elementAt(
+                                                                      index)[
+                                                              'totalEffort'],
                                                         ));
                                                   },
                                                   child: Row(

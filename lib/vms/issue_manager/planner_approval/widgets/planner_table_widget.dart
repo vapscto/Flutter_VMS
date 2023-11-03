@@ -10,6 +10,7 @@ class AllPlannerTable {
   String createdBy;
   String date;
   String effort;
+  String duration;
   String remarks;
   int ismtpltaId;
   AllPlannerTable(
@@ -25,5 +26,6 @@ class AllPlannerTable {
       this.effort,
       this.remarks,
       this.ismtpltaId,
-      this.createdBy);
+      this.createdBy,
+      this.duration);
 }
