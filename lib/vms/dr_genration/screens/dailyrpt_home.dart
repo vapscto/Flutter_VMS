@@ -30,6 +30,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   RxBool halfDay = RxBool(false);
   List<int> selectCheckbox = [];
   List<GetTaskDrListModelValues> fliteresList = [];
+  bool deviation = false;
   @override
   void initState() {
     init();
@@ -609,8 +610,76 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                     logger.i(
                                                                         selectCheckbox
                                                                             .toString());
+                                                                    String previousDateStr = fliteresList
+                                                                        .elementAt(
+                                                                            index)
+                                                                        .iSMTPLEndDate!;
+                                                                    DateTime
+                                                                        previousDate =
+                                                                        DateTime.parse(
+                                                                            previousDateStr);
+
+                                                                    DateTime
+                                                                        currentDate =
+                                                                        DateTime
+                                                                            .now();
+
+                                                                    if (currentDate
+                                                                        .isAfter(
+                                                                            previousDate)) {
+                                                                              deviation = true;
+                                                                      showDialog(context: context, builder:(context) {
+                                                                        return Center(
+                                                                          child: Container(
+                                                                            padding: EdgeInsets.symmetric(horizontal: 20),
+                                                                            height: 200,
+                                                                            width: 300,
+                                                                            decoration: BoxDecoration(
+                                                                              color: Colors.white,
+                                                                              borderRadius: 
+                                                                            BorderRadius.circular(10),
+                                                                            shape: BoxShape.rectangle
+                                                                            ),
+                                                                            child: Column(
+                                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                                              children: [
+                                                                                Text(
+                                                                                 "Task End Date Is",
+                                                                               style: Theme.of(context).textTheme.titleMedium!.merge(
+                                                                             const   TextStyle(
+                                                                                  fontSize: 24,
+                                                                                  color: Color.fromARGB(255, 7, 85, 255)
+                                                                                )
+                                                                               )
+                                                                              ),
+                                                                               Text(
+                                                                                fliteresList.elementAt(index).iSMTPLEndDate.toString().replaceRange(10, null, ''),
+                                                                               style: Theme.of(context).textTheme.titleMedium!.merge(
+                                                                              const  TextStyle(
+                                                                                  fontSize: 24,
+                                                                                  color: Color.fromARGB(255, 7, 85, 255)
+                                                                                )
+                                                                               )
+                                                                              ),
+                                                                             Text(
+                                                                                "Kindly Select Remarks",
+                                                                               style: Theme.of(context).textTheme.titleMedium!.merge(
+                                                                              const  TextStyle(
+                                                                                  fontSize: 24 ,
+                                                                                  color: Color.fromARGB(255, 7, 85, 255)
+                                                                                )
+                                                                               )
+                                                                              )
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        );
+                                                                      }, );
+                                                                    }
                                                                   }
                                                                 } else {
+                                                                  deviation = false;
                                                                   selectCheckbox
                                                                       .remove(
                                                                           index);
@@ -634,13 +703,17 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                 .elementAt(
                                                                     index)
                                                                 .iSMTCRTaskNo!,
-                                                            style: Theme
-                                                                    .of(context)
+                                                            style: Theme.of(
+                                                                    context)
                                                                 .textTheme
                                                                 .titleSmall!
                                                                 .merge(const TextStyle(
-                                                                    color: Colors
-                                                                        .black,
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            52,
+                                                                            82,
+                                                                            252),
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w600,
@@ -655,13 +728,17 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       index)
                                                                   .iSMTCRTitle!,
                                                               maxLines: 3,
-                                                              style: Theme.of(
-                                                                      context)
+                                                              style: Theme
+                                                                      .of(
+                                                                          context)
                                                                   .textTheme
                                                                   .titleSmall!
                                                                   .merge(const TextStyle(
-                                                                      color: Colors
-                                                                          .black,
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          52,
+                                                                          82,
+                                                                          252),
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w600,
@@ -671,13 +748,17 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                           ),
                                                           Text(
                                                             "Category : ${fliteresList.elementAt(index).taskcategoryname}",
-                                                            style: Theme
-                                                                    .of(context)
+                                                            style: Theme.of(
+                                                                    context)
                                                                 .textTheme
                                                                 .titleSmall!
                                                                 .merge(const TextStyle(
-                                                                    color: Colors
-                                                                        .black,
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            52,
+                                                                            82,
+                                                                            252),
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w600,
@@ -686,13 +767,17 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                           ),
                                                           Text(
                                                             "Project : ${fliteresList.elementAt(index).projectName}",
-                                                            style: Theme
-                                                                    .of(context)
+                                                            style: Theme.of(
+                                                                    context)
                                                                 .textTheme
                                                                 .titleSmall!
                                                                 .merge(const TextStyle(
-                                                                    color: Colors
-                                                                        .black,
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            52,
+                                                                            82,
+                                                                            252),
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w600,
@@ -706,8 +791,12 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                 .textTheme
                                                                 .titleSmall!
                                                                 .merge(const TextStyle(
-                                                                    color: Colors
-                                                                        .black,
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            52,
+                                                                            82,
+                                                                            252),
                                                                     fontSize:
                                                                         14,
                                                                     fontWeight:
@@ -716,13 +805,17 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                           ),
                                                           Text(
                                                             "Task End date : ${fliteresList.elementAt(index).iSMTPLEndDate.toString().replaceRange(10, null, '')}",
-                                                            style: Theme
-                                                                    .of(context)
+                                                            style: Theme.of(
+                                                                    context)
                                                                 .textTheme
                                                                 .titleSmall!
                                                                 .merge(const TextStyle(
-                                                                    color: Colors
-                                                                        .black,
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            52,
+                                                                            82,
+                                                                            252),
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w600,
