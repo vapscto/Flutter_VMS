@@ -27,8 +27,8 @@ Future<bool> getPlanerdetails({
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
       "MI_Id": miId,
-      "UserId": 61035,
-     // "UserId": userId,
+     // "UserId": 61035,
+       "UserId": 60934,
       "IVRMRT_Id": ivrmrtId,
     });
     PlanerDeatails planerDeatailsList = PlanerDeatails.fromJson(response.data);
