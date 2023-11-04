@@ -258,6 +258,8 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                                             columnSpacing: 20,
                                             headingTextStyle: const TextStyle(
                                                 color: Colors.white),
+                                            dataTextStyle:
+                                                Get.textTheme.titleSmall,
                                             border: TableBorder.all(
                                               color: Colors.black,
                                               width: 0.6,
