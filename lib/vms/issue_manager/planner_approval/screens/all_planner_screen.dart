@@ -153,7 +153,12 @@ class _AllPlannersState extends State<AllPlanners> {
           '',
           value.iSMTPLTAId!,
           value.plannedby!,
-          value.iSMMTCATDurationFlg!));
+          value.iSMMTCATDurationFlg!,
+          value.iSMTCRId!,
+          value.iSMTCRStatus!,
+          value.pTSCount!,
+          value.iSMTCRASTOStartDate!,
+          value.iSMTCRASTOEndDate!));
     }
     widget.plannerApprovalController.approvalLoading(false);
   }
@@ -200,18 +205,17 @@ class _AllPlannersState extends State<AllPlanners> {
   List<Map<String, dynamic>> plannerList = [];
   _getPlannerSave() async {
     for (int i = 0; i < checkList.length; i++) {
-      var value = widget.plannerApprovalController.plannerApprovalList
-          .elementAt(checkList[i]);
+      var value = allPlannerList.elementAt(checkList[i]);
       plannerList.add({
-        "ISMTCR_Id": value.iSMTCRId,
-        "ISMTPLAPTA_StartDate": value.iSMTCRASTOStartDate,
-        "ISMTPLAPTA_EndDate": value.iSMTCRASTOEndDate,
-        "ISMTPLAPTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
-        "ISMTPLAPTA_Status": value.iSMTCRStatus,
+        "ISMTCR_Id": value.ismtcrId,
+        "ISMTPLAPTA_StartDate": value.startDate,
+        "ISMTPLAPTA_EndDate": value.endDate,
+        "ISMTPLAPTA_EffortInHrs": value.effort,
+        "ISMTPLAPTA_Status": value.status,
         "plannerStatus": 1,
-        "ISMTPLTA_Id": value.iSMTPLTAId,
+        "ISMTPLTA_Id": value.ismtpltaId,
         "extraflag": 0,
-        "PTSCount": value.pTSCount
+        "PTSCount": value.ptsCount
       });
     }
     await PlannerApprovalSaveAPI.instance.plannerapproval(
