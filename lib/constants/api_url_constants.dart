@@ -602,6 +602,8 @@ class URLS {
   static String plannerList = 'api/ISM_PlannerApprovalFacade/getdetails/';
   static String plannerApprovelist =
       'api/ISM_PlannerApprovalFacade/getplannerdetails/';
+  static String plannerSave =
+      "api/ISM_PlannerApprovalFacade/updateplannerStatus";
   static String profileData = 'api/ISMDashboardFacade/getdetails/';
 
   static String visitorapprovalapi =
