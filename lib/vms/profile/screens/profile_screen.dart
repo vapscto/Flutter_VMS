@@ -200,29 +200,21 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                               //color: Colors.grey.shade100,
                               child: Stack(
                                 children: [
-                                  widget.loginSuccessModel.mIBackgroundImage ==
-                                          null
-                                      ? const Padding(
-                                          padding: EdgeInsets.all(16.0),
-                                          child: Text(
-                                            "No image available",
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        )
-                                      : Image.network(
-                                          widget.loginSuccessModel
-                                              .mIBackgroundImage!,
-                                          height: Get.height * 0.3,
-                                          width: double.infinity,
-                                          fit: BoxFit.cover,
-                                          errorBuilder:
-                                              (context, error, stackTrace) {
-                                            return const Text(
-                                              "No image available",
-                                              textAlign: TextAlign.center,
-                                            );
-                                          },
-                                        ),
+                                  Image.network(
+                                    widget.loginSuccessModel
+                                            .mIBackgroundImage ??
+                                        '',
+                                    height: Get.height * 0.3,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Image.asset(
+                                            "assets/images/vaps_bg_image.jpeg"),
+                                      );
+                                    },
+                                  ),
                                   Align(
                                     alignment: Alignment.bottomCenter,
                                     child: CircleAvatar(
