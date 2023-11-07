@@ -33,6 +33,16 @@ class _SplashScreenState extends State<SplashScreen> {
   final MskoolController mskoolController = Get.put(MskoolController());
   String deviceToken = '';
   late FirebaseMessaging messaging;
+  late FirebaseMessaging firebaseMessage;
+Future getDeviceToken() async {
+  String deviceToken = '';
+  firebaseMessage = FirebaseMessaging.instance;
+  await firebaseMessage.getToken().then((value) {
+    (value == null) ? "" : deviceToken = value;
+    logger.i('====$deviceToken');
+  });
+  return deviceToken;
+}
   @override
   void initState() {
     messaging = FirebaseMessaging.instance;
