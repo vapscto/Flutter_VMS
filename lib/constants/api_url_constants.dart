@@ -555,6 +555,15 @@ class URLS {
 
   static String viewDataPcReq = "api/PC_RequisitionFacade/Viewdata";
 
+    //--- RATING REPORT API ENDPOINT ---//
+
+  static String yearListRatingReport = "api/Rating_TransactionFacade/get_Consolidated_details";
+
+  static String monthRatingReport = "api/Rating_TransactionFacade/get_Consolidated_details";
+
+  static String dataReport = "api/Rating_TransactionFacade/getemployeereport/";
+
+
   ///***   ***///
 
   static String taskGetDetails = "api/ISM_TaskCreationFacade/getdetails/";
