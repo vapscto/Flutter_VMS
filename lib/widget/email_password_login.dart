@@ -6,7 +6,6 @@ import 'package:sms_autofill/sms_autofill.dart';
 import '../controller/auth_controller.dart';
 import '../controller/global_utilities.dart';
 import '../main.dart';
-import '../screens/home.dart';
 import 'card_widget.dart';
 import 'custom_elevated_button.dart';
 
