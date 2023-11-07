@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/dr_not_approved_model.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/planner_approval_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/planner_list_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/planner_status_model.dart';
 
@@ -43,7 +44,8 @@ class PlannerApprovalController extends GetxController {
         "endDate": toDate,
         "totalEffort": drapp.iSMTPLTotalHrs,
         "planner": drapp.iSMTPLPlannerName,
-        "plannerView": "View & Approve"
+        "plannerView": "View & Approve",
+        "ismtplId": drapp.iSMTPLId,
       });
     }
 
@@ -93,6 +95,27 @@ class PlannerApprovalController extends GetxController {
     }
     for (int i = 0; i < status.length; i++) {
       plannerStatusModel.add(status.elementAt(i));
+    }
+  }
+
+  RxBool isPlanner = RxBool(false);
+  void approvalLoading(bool loading) {
+    isPlanner.value = loading;
+  }
+
+  RxList<PlannerApprovalListModelValues> plannerApprovalList =
+      <PlannerApprovalListModelValues>[].obs;
+  int ismmcId = 0;
+  int ivrmrtId = 0;
+  int completedCount = 0;
+  double effort = 0.0;
+  bool flag = false;
+  void getPlannerList(List<PlannerApprovalListModelValues> plannerList) {
+    if (plannerApprovalList.isNotEmpty) {
+      plannerApprovalList.clear();
+    }
+    for (int index = 0; index < plannerList.length; index++) {
+      plannerApprovalList.add(plannerList.elementAt(index));
     }
   }
 }

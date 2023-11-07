@@ -6,7 +6,6 @@ import 'package:m_skool_flutter/vms/issue_manager/planner_approval/controller/pl
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/dr_not_approved_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/planner_list_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/planner_status_model.dart';
-import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/planner_status_model.dart';
 
 class PlannerListAPI {
   PlannerListAPI.init();
@@ -36,9 +35,17 @@ class PlannerListAPI {
         PlannerStatusModelList plannerStatusModel =
             PlannerStatusModelList.fromJson(
                 response.data['get_updatedplannerlist']);
+
         plannerApprovalController.getStatus(plannerStatusModel.values!);
         plannerApprovalController.getPlanner(
             plannerListModel.values!, drNotApprovedModel.values!);
+        plannerApprovalController.completedCount =
+            response.data['completdcount'] ?? 0;
+        plannerApprovalController.ivrmrtId = response.data['ivrmrT_Id'] ?? 0;
+        plannerApprovalController.effort =
+            response.data['ismtcrastO_EffortInHrs'] ?? 0.0;
+        plannerApprovalController.ismmcId = response.data['ismmaC_Id'] ?? 0;
+        plannerApprovalController.flag = response.data['ismtcrastO_ActiveFlg'];
 
         plannerApprovalController.plannerLoading(false);
       }

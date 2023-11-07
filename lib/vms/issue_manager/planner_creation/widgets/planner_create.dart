@@ -60,6 +60,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   List<Map<String, dynamic>> categoryArray = [];
   List<Map<String, dynamic>> newCategoryArray = [];
   double totalHour = 0;
+  DateTime todayDate = DateTime.now();
   var id = 0;
   int calculateWeekdaysDifference(DateTime startDate, DateTime endDate) {
     var weekdayCount = 0;
@@ -251,6 +252,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!,
         plannerCreationController: plannerCreationController);
+    logger.e(
+        '===${plannerCreationController.plannerStatus.first.iSMTPLEndDate!}');
     plannerCreationController.taskLoading(false);
   }
 
@@ -291,175 +294,270 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-        children: [
-          // (plannerCreationController.isPlannerCreate.value == false)
-          //     ? const Padding(
-          //         padding: EdgeInsets.only(top: 8.0, bottom: 30),
-          //         child: TextScroll(
-          //           "YOU CAN'T GENERATE PLANNER TODAY!!",
-          //           delayBefore: Duration(milliseconds: 500),
-          //           mode: TextScrollMode.endless,
-          //           style: TextStyle(
-          //               color: Colors.red,
-          //               fontSize: 16,
-          //               fontWeight: FontWeight.w600),
-          //           textAlign: TextAlign.left,
-          //           selectable: true,
-          //         ),
-          //       )
-          //     : const SizedBox(),
-          Form(
-            key: _key,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomContainer(
-                  child: TextField(
-                    style: Theme.of(context).textTheme.titleSmall,
-                    controller: _plannerName,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      label: Container(
-                        margin: const EdgeInsets.only(bottom: 12),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 6.0),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24.0),
-                            color: const Color(0xFFFFEBEA)),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image.asset(
-                              "assets/images/subjectfielicon.png",
-                              height: 24.0,
-                            ),
-                            const SizedBox(
-                              width: 6.0,
-                            ),
-                            Text(
-                              " Planner Name ",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .merge(
-                                    const TextStyle(
-                                        fontSize: 20.0,
-                                        color: Color(0xFFFF6F67)),
-                                  ),
-                            ),
-                          ],
+      body: Obx(() {
+        return ListView(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          children: [
+            (plannerCreationController.isPlannerCreate.value == false)
+                ? const Padding(
+                    padding: EdgeInsets.only(top: 8.0, bottom: 30),
+                    child: TextScroll(
+                      "YOU CAN'T GENERATE PLANNER TODAY!!",
+                      delayBefore: Duration(milliseconds: 500),
+                      mode: TextScrollMode.endless,
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
+                      textAlign: TextAlign.left,
+                      selectable: true,
+                    ),
+                  )
+                : const SizedBox(),
+            Form(
+              key: _key,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomContainer(
+                    child: TextField(
+                      style: Theme.of(context).textTheme.titleSmall,
+                      controller: _plannerName,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        label: Container(
+                          margin: const EdgeInsets.only(bottom: 12),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 6.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24.0),
+                              color: const Color(0xFFFFEBEA)),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image.asset(
+                                "assets/images/subjectfielicon.png",
+                                height: 24.0,
+                              ),
+                              const SizedBox(
+                                width: 6.0,
+                              ),
+                              Text(
+                                " Planner Name ",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .merge(
+                                      const TextStyle(
+                                          fontSize: 20.0,
+                                          color: Color(0xFFFF6F67)),
+                                    ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      hintText: 'Enter here.',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
+                        hintText: 'Enter here.',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                          ),
                         ),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 25),
-                CustomContainer(
-                  child: TextField(
-                    style: Theme.of(context).textTheme.titleSmall,
-                    controller: _plannerGoal,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: 3,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      label: Container(
-                        margin: const EdgeInsets.only(bottom: 12),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 6.0),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24.0),
-                            color: const Color(0xFFFFEBEA)),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image.asset(
-                              "assets/images/subjectfielicon.png",
-                              height: 24.0,
-                            ),
-                            const SizedBox(
-                              width: 6.0,
-                            ),
-                            Text(
-                              " Planner Goal ",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .merge(
-                                    const TextStyle(
-                                        fontSize: 20.0,
-                                        color: Color(0xFFFF6F67)),
-                                  ),
-                            ),
-                          ],
+                  const SizedBox(height: 25),
+                  CustomContainer(
+                    child: TextField(
+                      style: Theme.of(context).textTheme.titleSmall,
+                      controller: _plannerGoal,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        label: Container(
+                          margin: const EdgeInsets.only(bottom: 12),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 6.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24.0),
+                              color: const Color(0xFFFFEBEA)),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image.asset(
+                                "assets/images/subjectfielicon.png",
+                                height: 24.0,
+                              ),
+                              const SizedBox(
+                                width: 6.0,
+                              ),
+                              Text(
+                                " Planner Goal ",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .merge(
+                                      const TextStyle(
+                                          fontSize: 20.0,
+                                          color: Color(0xFFFF6F67)),
+                                    ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      hintText: 'Enter here.',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
+                        hintText: 'Enter here.',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                          ),
                         ),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 25),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: CustomContainer(
-                        child: TextField(
-                          style: Theme.of(context).textTheme.titleSmall,
-                          readOnly: true,
-                          controller: _startDate,
-                          onTap: () async {
-                            fromDate = await showDatePicker(
-                              context: context,
-                              helpText: "Select From Data",
-                              firstDate: DateTime.parse(
-                                      plannerCreationController
-                                          .plannerStatus.first.iSMTPLEndDate!)
-                                  .add(const Duration(days: 1)),
-                              initialDate: DateTime.parse(
-                                      plannerCreationController
-                                          .plannerStatus.first.iSMTPLEndDate!)
-                                  .add(const Duration(days: 1)),
-                              lastDate: DateTime(3050),
-                            );
-                            if (fromDate != null) {
-                              setState(() {
-                                _startDate.text =
-                                    "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
-                              });
-                            }
-                          },
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              onPressed: () async {
-                                fromDate = await showDatePicker(
-                                  helpText: "Select From Data",
+                  const SizedBox(height: 25),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: CustomContainer(
+                          child: TextField(
+                            style: Theme.of(context).textTheme.titleSmall,
+                            readOnly: true,
+                            controller: _startDate,
+                            onTap: () async {
+                              fromDate = await showDatePicker(
+                                context: context,
+                                helpText: "Select From Data",
+                                firstDate: DateTime.parse(
+                                        plannerCreationController
+                                            .plannerStatus.first.iSMTPLEndDate!)
+                                    .add(const Duration(days: 1)),
+                                initialDate: DateTime.parse(
+                                        plannerCreationController
+                                            .plannerStatus.first.iSMTPLEndDate!)
+                                    .add(const Duration(days: 1)),
+                                lastDate: DateTime(3050),
+                              );
+                              if (fromDate != null) {
+                                setState(() {
+                                  _startDate.text =
+                                      "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
+                                });
+                              }
+                            },
+                            decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                onPressed: () async {
+                                  fromDate = await showDatePicker(
+                                    helpText: "Select From Data",
+                                    context: context,
+                                    firstDate: DateTime.parse(
+                                            plannerCreationController
+                                                .plannerStatus
+                                                .first
+                                                .iSMTPLEndDate!)
+                                        .add(const Duration(days: 1)),
+                                    initialDate: DateTime.parse(
+                                            plannerCreationController
+                                                .plannerStatus
+                                                .first
+                                                .iSMTPLEndDate!)
+                                        .add(const Duration(days: 1)),
+                                    lastDate: DateTime(3050),
+                                  );
+                                  if (fromDate != null) {
+                                    setState(() {
+                                      _startDate.text =
+                                          "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
+                                    });
+                                  }
+                                },
+                                icon: SvgPicture.asset(
+                                  "assets/svg/calendar_icon.svg",
+                                  color: const Color(0xFF3E78AA),
+                                  height: 18,
+                                ),
+                              ),
+                              contentPadding:
+                                  const EdgeInsets.only(top: 40.0, left: 12),
+                              border: const OutlineInputBorder(),
+                              label: Container(
+                                margin: const EdgeInsets.only(bottom: 5),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0, vertical: 8.0),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(24.0),
+                                    color: const Color(0xFFE5F3FF)),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/svg/calendar_icon.svg",
+                                      color: const Color(0xFF3E78AA),
+                                      height: 18,
+                                    ),
+                                    const SizedBox(
+                                      width: 6.0,
+                                    ),
+                                    Text(
+                                      " Start Date ",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
+                                          .merge(
+                                            const TextStyle(
+                                              fontSize: 18.0,
+                                              color: Color(0xFF3E78AA),
+                                            ),
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              hintText: 'Select Date',
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                ),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 12.0,
+                      ),
+                      Expanded(
+                        child: CustomContainer(
+                          child: TextField(
+                            readOnly: true,
+                            style: Theme.of(context).textTheme.titleSmall,
+                            controller: _endDate,
+                            onTap: () async {
+                              if (fromDate != null) {
+                                toDate = await showDatePicker(
                                   context: context,
+                                  helpText: "Select To Date",
                                   firstDate: DateTime.parse(
                                           plannerCreationController
                                               .plannerStatus
@@ -474,334 +572,247 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                       .add(const Duration(days: 1)),
                                   lastDate: DateTime(3050),
                                 );
-                                if (fromDate != null) {
+                                if (toDate != null) {
                                   setState(() {
-                                    _startDate.text =
-                                        "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
+                                    _endDate.text =
+                                        "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                    calculateWeekdaysDifference(
+                                        fromDate!, toDate!);
+                                    // totalday =
+                                    //     toDate!.difference(fromDate!).inDays + 1;
+                                    getListData();
+                                    isDeta = true;
                                   });
                                 }
-                              },
-                              icon: SvgPicture.asset(
-                                "assets/svg/calendar_icon.svg",
-                                color: const Color(0xFF3E78AA),
-                                height: 18,
-                              ),
-                            ),
-                            contentPadding:
-                                const EdgeInsets.only(top: 40.0, left: 12),
-                            border: const OutlineInputBorder(),
-                            label: Container(
-                              margin: const EdgeInsets.only(bottom: 5),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12.0, vertical: 8.0),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(24.0),
-                                  color: const Color(0xFFE5F3FF)),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/svg/calendar_icon.svg",
-                                    color: const Color(0xFF3E78AA),
-                                    height: 18,
-                                  ),
-                                  const SizedBox(
-                                    width: 6.0,
-                                  ),
-                                  Text(
-                                    " Start Date ",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .merge(
-                                          const TextStyle(
-                                            fontSize: 18.0,
-                                            color: Color(0xFF3E78AA),
-                                          ),
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            hintText: 'Select Date',
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                              ),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 12.0,
-                    ),
-                    Expanded(
-                      child: CustomContainer(
-                        child: TextField(
-                          readOnly: true,
-                          style: Theme.of(context).textTheme.titleSmall,
-                          controller: _endDate,
-                          onTap: () async {
-                            if (fromDate != null) {
-                              toDate = await showDatePicker(
-                                context: context,
-                                helpText: "Select To Date",
-                                firstDate: DateTime.parse(
-                                        plannerCreationController
-                                            .plannerStatus.first.iSMTPLEndDate!)
-                                    .add(const Duration(days: 1)),
-                                initialDate: DateTime.parse(
-                                        plannerCreationController
-                                            .plannerStatus.first.iSMTPLEndDate!)
-                                    .add(const Duration(days: 1)),
-                                lastDate: DateTime(3050),
-                              );
-                              if (toDate != null) {
-                                setState(() {
-                                  _endDate.text =
-                                      "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
-                                  calculateWeekdaysDifference(
-                                      fromDate!, toDate!);
-                                  // totalday =
-                                  //     toDate!.difference(fromDate!).inDays + 1;
-                                  getListData();
-                                  isDeta = true;
-                                });
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "Please Select Start Date");
                               }
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "Please Select Start Date");
-                            }
-                          },
-                          decoration: InputDecoration(
-                            isDense: true,
-                            contentPadding:
-                                const EdgeInsets.only(top: 40.0, left: 12),
-                            suffixIcon: IconButton(
-                              onPressed: () async {
-                                if (fromDate != null) {
-                                  toDate = await showDatePicker(
-                                    context: context,
-                                    helpText: "Select To Date",
-                                    firstDate: DateTime.parse(
-                                            plannerCreationController
-                                                .plannerStatus
-                                                .first
-                                                .iSMTPLEndDate!)
-                                        .add(const Duration(days: 1)),
-                                    initialDate: DateTime.parse(
-                                            plannerCreationController
-                                                .plannerStatus
-                                                .first
-                                                .iSMTPLEndDate!)
-                                        .add(const Duration(days: 1)),
-                                    lastDate: DateTime(3050),
-                                    fieldHintText: 'Date:Month:Year',
-                                  );
-                                  if (toDate != null) {
-                                    setState(() {
-                                      _endDate.text =
-                                          "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
-                                      calculateWeekdaysDifference(
-                                          fromDate!, toDate!);
-                                      // totalday =
-                                      //     toDate!.difference(fromDate!).inDays +
-                                      //         1;
-                                      getListData();
-                                      isDeta = true;
-                                    });
+                            },
+                            decoration: InputDecoration(
+                              isDense: true,
+                              contentPadding:
+                                  const EdgeInsets.only(top: 40.0, left: 12),
+                              suffixIcon: IconButton(
+                                onPressed: () async {
+                                  if (fromDate != null) {
+                                    toDate = await showDatePicker(
+                                      context: context,
+                                      helpText: "Select To Date",
+                                      firstDate: DateTime.parse(
+                                              plannerCreationController
+                                                  .plannerStatus
+                                                  .first
+                                                  .iSMTPLEndDate!)
+                                          .add(const Duration(days: 1)),
+                                      initialDate: DateTime.parse(
+                                              plannerCreationController
+                                                  .plannerStatus
+                                                  .first
+                                                  .iSMTPLEndDate!)
+                                          .add(const Duration(days: 1)),
+                                      lastDate: DateTime(3050),
+                                      fieldHintText: 'Date:Month:Year',
+                                    );
+                                    if (toDate != null) {
+                                      setState(() {
+                                        _endDate.text =
+                                            "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                        calculateWeekdaysDifference(
+                                            fromDate!, toDate!);
+                                        // totalday =
+                                        //     toDate!.difference(fromDate!).inDays +
+                                        //         1;
+                                        getListData();
+                                        isDeta = true;
+                                      });
+                                    }
+                                  } else {
+                                    Fluttertoast.showToast(
+                                        msg: "Please Select Start Date");
                                   }
-                                } else {
-                                  Fluttertoast.showToast(
-                                      msg: "Please Select Start Date");
-                                }
-                              },
-                              icon: SvgPicture.asset(
-                                "assets/svg/calendar_icon.svg",
-                                color: const Color(0xFF3E78AA),
-                                height: 18,
+                                },
+                                icon: SvgPicture.asset(
+                                  "assets/svg/calendar_icon.svg",
+                                  color: const Color(0xFF3E78AA),
+                                  height: 18,
+                                ),
                               ),
-                            ),
-                            border: const OutlineInputBorder(),
-                            label: Container(
-                              margin: const EdgeInsets.only(bottom: 5),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12.0, vertical: 8.0),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(24.0),
-                                  color: const Color(0xFFE5F3FF)),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/svg/calendar_icon.svg",
-                                    color: const Color(0xFF3E78AA),
-                                    height: 18,
-                                  ),
-                                  const SizedBox(
-                                    width: 6.0,
-                                  ),
-                                  Text(
-                                    " End Date ",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .merge(
-                                          const TextStyle(
-                                              fontSize: 18.0,
-                                              color: Color(0xFF3E78AA)),
-                                        ),
-                                  ),
-                                ],
+                              border: const OutlineInputBorder(),
+                              label: Container(
+                                margin: const EdgeInsets.only(bottom: 5),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0, vertical: 8.0),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(24.0),
+                                    color: const Color(0xFFE5F3FF)),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/svg/calendar_icon.svg",
+                                      color: const Color(0xFF3E78AA),
+                                      height: 18,
+                                    ),
+                                    const SizedBox(
+                                      width: 6.0,
+                                    ),
+                                    Text(
+                                      " End Date ",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
+                                          .merge(
+                                            const TextStyle(
+                                                fontSize: 18.0,
+                                                color: Color(0xFF3E78AA)),
+                                          ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            hintText: 'Select Date',
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
+                              hintText: 'Select Date',
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                ),
                               ),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          // (plannerCreationController.isAssignedTask.value)
-          //     ? const AnimatedProgressWidget(
-          //         animationPath: 'assets/json/default.json',
-          //         title: 'Loading data',
-          //         desc: "Please wait we are loading data",
-          //       ):
-          (plannerCreationController.assignedTaskList.isEmpty ||
-                  isDeta == false)
-              ? const AnimatedProgressWidget(
-                  animationPath: 'assets/json/nodata.json',
-                  title: 'No data Available',
-                  desc: " ",
-                  animatorHeight: 250,
-                )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
-                      child: Text(
-                        "Planner Details",
-                        style: Get.textTheme.titleSmall!.copyWith(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    CustomContainer(
-                        child: Container(
-                      margin: const EdgeInsets.all(8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                                text: 'Total Task: ',
-                                style: Get.textTheme.titleSmall!.copyWith(
-                                    color: Theme.of(context).primaryColor)),
-                            TextSpan(
-                                text:
-                                    '${plannerCreationController.assignedTaskList.length} ',
-                                style: Get.textTheme.titleSmall!.copyWith()),
-                          ])),
-                          const SizedBox(height: 6),
-                          RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                                text: 'Total Working Days: ',
-                                style: Get.textTheme.titleSmall!.copyWith(
-                                    color: Theme.of(context).primaryColor)),
-                            TextSpan(
-                                text: '$totalday',
-                                style: Get.textTheme.titleSmall!.copyWith()),
-                          ])),
-                          const SizedBox(height: 6),
-                          RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                                text: 'Minimum Effort Required: ',
-                                style: Get.textTheme.titleSmall!.copyWith(
-                                    color: Theme.of(context).primaryColor)),
-                            TextSpan(
-                                text: '${totalday * 8}',
-                                style: Get.textTheme.titleSmall!.copyWith()),
-                          ])),
-                          const SizedBox(height: 6),
-                          RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                                text: 'planned Effort: ',
-                                style: Get.textTheme.titleSmall!.copyWith(
-                                    color: Theme.of(context).primaryColor)),
-                            TextSpan(
-                                text: '$plannedEffort',
-                                style: Get.textTheme.titleSmall!.copyWith()),
-                          ])),
-                          const SizedBox(height: 6),
-                          RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                                text: 'Total Effort: ',
-                                style: Get.textTheme.titleSmall!.copyWith(
-                                    color: Theme.of(context).primaryColor)),
-                            TextSpan(
-                                text: '$totalHour Hr ',
-                                style: Get.textTheme.titleSmall!.copyWith()),
-                          ])),
-                        ],
-                      ),
-                    )),
-                    (plannerCreationController.categoryWisePlan.isNotEmpty)
-                        ? _createCategortTable()
-                        : const SizedBox(),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
+            // (plannerCreationController.isAssignedTask.value)
+            //     ? const AnimatedProgressWidget(
+            //         animationPath: 'assets/json/default.json',
+            //         title: 'Loading data',
+            //         desc: "Please wait we are loading data",
+            //       ):
+            (plannerCreationController.assignedTaskList.isEmpty ||
+                    isDeta == false)
+                ? const AnimatedProgressWidget(
+                    animationPath: 'assets/json/nodata.json',
+                    title: 'No data Available',
+                    desc: " ",
+                    animatorHeight: 250,
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
                         padding: const EdgeInsets.only(top: 16.0),
-                        child: MSkollBtn(
-                          title: "Save",
-                          onPress: () {
-                            if (_plannerName.text.isEmpty) {
-                              Fluttertoast.showToast(
-                                  msg: "Please enter plan name");
-                            } else if (plannedEffort <
-                                double.parse((totalday * 8).toString())) {
-                              Get.dialog(showPopup());
-                            } else {
-                              savePlanner();
-                            }
-                          },
+                        child: Text(
+                          "Planner Details",
+                          style: Get.textTheme.titleSmall!.copyWith(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
-                    ),
-                    _createPlannerTable(),
-                  ],
-                ),
-        ],
-      ),
+                      const SizedBox(height: 8),
+                      CustomContainer(
+                          child: Container(
+                        margin: const EdgeInsets.all(8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            RichText(
+                                text: TextSpan(children: [
+                              TextSpan(
+                                  text: 'Total Task: ',
+                                  style: Get.textTheme.titleSmall!.copyWith(
+                                      color: Theme.of(context).primaryColor)),
+                              TextSpan(
+                                  text:
+                                      '${plannerCreationController.assignedTaskList.length} ',
+                                  style: Get.textTheme.titleSmall!.copyWith()),
+                            ])),
+                            const SizedBox(height: 6),
+                            RichText(
+                                text: TextSpan(children: [
+                              TextSpan(
+                                  text: 'Total Working Days: ',
+                                  style: Get.textTheme.titleSmall!.copyWith(
+                                      color: Theme.of(context).primaryColor)),
+                              TextSpan(
+                                  text: '$totalday',
+                                  style: Get.textTheme.titleSmall!.copyWith()),
+                            ])),
+                            const SizedBox(height: 6),
+                            RichText(
+                                text: TextSpan(children: [
+                              TextSpan(
+                                  text: 'Minimum Effort Required: ',
+                                  style: Get.textTheme.titleSmall!.copyWith(
+                                      color: Theme.of(context).primaryColor)),
+                              TextSpan(
+                                  text: '${totalday * 8}',
+                                  style: Get.textTheme.titleSmall!.copyWith()),
+                            ])),
+                            const SizedBox(height: 6),
+                            RichText(
+                                text: TextSpan(children: [
+                              TextSpan(
+                                  text: 'planned Effort: ',
+                                  style: Get.textTheme.titleSmall!.copyWith(
+                                      color: Theme.of(context).primaryColor)),
+                              TextSpan(
+                                  text: '$plannedEffort',
+                                  style: Get.textTheme.titleSmall!.copyWith()),
+                            ])),
+                            const SizedBox(height: 6),
+                            RichText(
+                                text: TextSpan(children: [
+                              TextSpan(
+                                  text: 'Total Effort: ',
+                                  style: Get.textTheme.titleSmall!.copyWith(
+                                      color: Theme.of(context).primaryColor)),
+                              TextSpan(
+                                  text: '$totalHour Hr ',
+                                  style: Get.textTheme.titleSmall!.copyWith()),
+                            ])),
+                          ],
+                        ),
+                      )),
+                      (plannerCreationController.categoryWisePlan.isNotEmpty)
+                          ? _createCategortTable()
+                          : const SizedBox(),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 16.0),
+                          child: MSkollBtn(
+                            title: "Save",
+                            onPress: () {
+                              if (_plannerName.text.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "Please enter plan name");
+                              } else if (plannedEffort <
+                                  double.parse((totalday * 8).toString())) {
+                                Get.dialog(showPopup());
+                              } else {
+                                savePlanner();
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                      _createPlannerTable(),
+                    ],
+                  ),
+          ],
+        );
+      }),
     );
   }
 
@@ -857,6 +868,9 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                       if (selectAll) {
                         for (var i = 0; i < newTable.length; i++) {
                           checkList.add(i);
+                          setState(() {
+                            newTable[i].flag = true;
+                          });
                         }
                       } else {
                         for (var i = 0; i < newTable.length; i++) {

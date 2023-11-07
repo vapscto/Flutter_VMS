@@ -257,7 +257,7 @@ class _ShomeScreenState extends State<ShomeScreen> {
                                                                 MainAxisAlignment
                                                                     .spaceBetween,
                                                             children: [
-                                                              SizedBox(
+                                                            const  SizedBox(
                                                                  child: Text(
                                                                   "Upload images",
                                                                   style: TextStyle(
@@ -276,7 +276,7 @@ class _ShomeScreenState extends State<ShomeScreen> {
                                                                       () {});
                                                                   Get.back();
                                                                 },
-                                                                child: Icon(
+                                                                child:const Icon(
                                                                   Icons
                                                                       .close_sharp,
                                                                   color: Colors
@@ -293,11 +293,11 @@ class _ShomeScreenState extends State<ShomeScreen> {
                                                               mainAxisAlignment: MainAxisAlignment.center,
                                                               children: [
                                                                 ListTile(
-                                                                  title:Text(controller.securityUploadImage[index],style: TextStyle(
+                                                                  title:Text(controller.securityUploadImage[index],style:const TextStyle(
                                                                      color:Colors.black
                                                                   ),) ,
                                                                 ),
-                                                                SizedBox(height: 20,),
+                                                               const SizedBox(height: 20,),
                                                                  SizedBox(
                                                                   width: 120,
                                                                    child: ElevatedButton(
@@ -306,7 +306,7 @@ class _ShomeScreenState extends State<ShomeScreen> {
                                                                      
                                                                    },
                                                                     
-                                                                   child: Center(child: Text("submit")),),
+                                                                   child:const Center(child: Text("submit")),),
                                                                  )
                                                               ],
                                                             );

@@ -1,8 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/countTask_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_details.dart';
 
 Future<bool> getPlanerdetails({
@@ -13,22 +18,43 @@ Future<bool> getPlanerdetails({
   required int miId,
 }) async {
   final Dio ins = getGlobalDio();
-  base = "https://vmsissuemanager.azurewebsites.net/";
-  final String apiUrl = base + URLS.drDetailsGenration;
-  logger.d(base + URLS.taskGetDetails);
+  String baseApi = "https://vms.vapstech.com:44011/";
+  final String apiUrl = baseApi + URLS.drDetailsGenration;
+  //  print(base);
   controller.updatePlannerDeatails(true);
+  logger.e(userId);
   try {
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
       "MI_Id": miId,
-      "UserId": 61035,
+     // "UserId": 61035,
+       "UserId": 60934,
       "IVRMRT_Id": ivrmrtId,
     });
     PlanerDeatails planerDeatailsList = PlanerDeatails.fromJson(response.data);
-
+    GetTaskDrListModel taskDrListModel =
+        GetTaskDrListModel.fromJson(response.data['gettasklist']);
+    controller.getTaskDrList.addAll(taskDrListModel.values!);
+    for (int i = 0; i < taskDrListModel.values!.length; i++) {
+      controller.hoursEt.add(TextEditingController(text: ''));
+      controller.minutesEt.add(TextEditingController(text: ''));
+      controller.statusEtField.add(TextEditingController(text: ''));
+      controller.deveationEtField.add(TextEditingController(text: ''));
+      controller.checkBoxList.add(false);
+    }
+    // adding status in the list
+    DrstatusListModel drStatusListModel = DrstatusListModel.fromJson(response.data['get_Status']);
+    controller.statusDrList.addAll(drStatusListModel.values!);
+    // here add countTask
+    // get Deviation task list
+    DepartwisedeviationModel departwisedeviationModel = DepartwisedeviationModel.fromJson(response.data['getdepartwisedeviationremrks']);
+       controller.depWiseDevitnList.addAll(departwisedeviationModel.values!);
+    CloseTaskCoutnModel closeTaskList =
+        CloseTaskCoutnModel.fromJson(response.data['closeTaskCoutnDetails']);
+    controller.closeTaskCoutnList.addAll(closeTaskList.values!);
     controller.plannernameEditingController.value.text =
         planerDeatailsList.plannername!;
-    controller.otherDaysEditingController.value  =
+    controller.otherDaysEditingController.value =
         planerDeatailsList.dailyreportothersdatecount!.toInt().toString();
     controller.updatePlannerDeatails(false);
     return true;

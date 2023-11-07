@@ -40,12 +40,16 @@ import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
+import 'package:m_skool_flutter/vms/dr_genration/screens/dailyrpt_home.dart';
 import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
+import 'package:m_skool_flutter/vms/health_chequeup/screens/healtha_check_up.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/online_leave/screen/online_leave_home.dart';
+import 'package:m_skool_flutter/vms/petty_indent_approval/screen/pc_Indent_Approval_HOME.dart';
 import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart';
+import 'package:m_skool_flutter/vms/rating_report/screen/rating_report_home.dart';
 import 'package:m_skool_flutter/vms/salary_details/screen/salary_home_screen.dart';
 import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
@@ -700,6 +704,15 @@ void openMappedPages(
     }));
   }
 
+  if (pageName == "Petty Indent Approval") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return PcIndentApprovalHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+  }
+
   if (pageName == "Petty Cash  Requisition") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return PCRequisitionHome(
@@ -712,6 +725,17 @@ void openMappedPages(
   if (pageName == "Cash Request") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return PCRequisitionHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+  }
+
+  ///   Rating Report   ///
+
+  if (pageName == "Rating Report") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return RatingReportHome(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
       );
@@ -809,17 +833,7 @@ void openMappedPages(
 //     return;
 //   }
 
-  Widget hSize({required double height}) {
-    return SizedBox(
-      height: height,
-    );
-  }
-
-  Widget wSize({required double width}) {
-    return SizedBox(
-      height: width,
-    );
-  }
+  
 
   if (pageName == "Student") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -854,6 +868,16 @@ void openMappedPages(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
         title: pageName,
+      );
+    }));
+    return;
+  }
+  if (pageName == "Issue Manager") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return DailyReportGenration(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+     
       );
     }));
     return;
@@ -907,7 +931,15 @@ void openMappedPages(
     );
     return;
   }
-
+ if (pageName == "Birthday") {
+    Get.to(
+      () => HomeHCheckup(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      ),
+    );
+    return;
+  }
   if (pageName == "Fee Details") {
     Get.to(
       () => FeeDemoHome(

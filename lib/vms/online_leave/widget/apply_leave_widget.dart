@@ -333,14 +333,13 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                          }, ) ;
                                         }
                                       }
-                                     
                                       } else if(widget.values.hrmLLeaveName =="Sick Leave"){
                                       initialDt2 = initialDt;
                                       firstDt2 = firstDt;
                                       lastDt2 = lastDt;
                                     }else if(widget.values.hrmLLeaveName =="Privilege Leave"){
-                                     initialDt2 = startDT;
-                                     firstDt2 = startDT;
+                                      initialDt2 = startDT;
+                                      firstDt2 = startDT;
                                       lastDt2 =  startDT.add(Duration(days: 10));
                                     }
                                   },
@@ -386,7 +385,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                     ],
                                   ),
                                 ),
-                                hintText: 'Select Date',
+                                hintText: ' Select Date ',
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.always,
                                 enabledBorder: const OutlineInputBorder(
@@ -412,8 +411,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                               readOnly: true,
                               controller: endDate,
                               style: Theme.of(context).textTheme.titleSmall,
-
-                              //maxLines: 4,
+                            //maxLines: 4,
                               decoration: InputDecoration(
                                 isDense: true,
                                 contentPadding:
@@ -435,15 +433,14 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                       lastDate:lastDt2,
                                       selectableDayPredicate: (DateTime date) {
                                           if (widget.values.hrmLLeaveName == "Casual Leave"){
-                                       return date.isAtSameMomentAs(startDT.add(Duration(days: 1)));
+                                          return date.isAtSameMomentAs(startDT.add(Duration(days: 1)));
                                           }else if (widget.values.hrmLLeaveName == "Privilege Leave"){
                                           return date.isAfter(startDT.subtract(Duration(days: 1))) && date.isBefore(lastDt2);
                                           } else if (widget.values.hrmLLeaveName == "Comp off" ||
                                           widget.values.hrmLLeaveName == "Emergency Leave"){
                                           return date.isAfter(startDT) && date.isBefore(lastDt2.add(Duration(days: 1)));
                                           }
-                                       
-                                        return true;
+                                         return true;
                                       },
                                     );
 

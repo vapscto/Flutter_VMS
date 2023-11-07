@@ -526,6 +526,24 @@ class URLS {
 
   static String saveRecordPC = "api/PC_Indent_ApprovalFacade/saverecord";
 
+  ///***  PETTY INDENT APPROVAL  ***///
+
+  static String onLoadIndentApproval = "api/PC_IndentFacade/onloaddata";
+
+  static String onChangeIndentapprovalIns =
+      "api/PC_IndentFacade/OnChangeInstitution";
+
+  static String onChangeIndentDatePC = "api/PC_IndentFacade/onchangedate";
+
+  static String particularReqDetails =
+      "api/PC_IndentFacade/getrequisitiondetails";
+
+  static String indentDetailsApproved = "api/PC_IndentFacade/onloaddata";
+
+  static String indentViewData = "api/PC_IndentFacade/Viewdata";
+
+  static String saveRecordIndentPC = "api/PC_IndentFacade/saverecord";
+
   ///*** PETTY CASH REQUISITION ***/
 
   static String departmentonLoadPCRequest =
@@ -536,6 +554,15 @@ class URLS {
   static String reqDetailsSaveRecord = "api/PC_RequisitionFacade/saverecord";
 
   static String viewDataPcReq = "api/PC_RequisitionFacade/Viewdata";
+
+    //--- RATING REPORT API ENDPOINT ---//
+
+  static String yearListRatingReport = "api/Rating_TransactionFacade/get_Consolidated_details";
+
+  static String monthRatingReport = "api/Rating_TransactionFacade/get_Consolidated_details";
+
+  static String dataReport = "api/Rating_TransactionFacade/getemployeereport/";
+
 
   ///***   ***///
 
@@ -582,6 +609,10 @@ class URLS {
   static String drDetailsGenration =
       "api/ISM_DailyReportGenerationFacade/loaddata/";
   static String plannerList = 'api/ISM_PlannerApprovalFacade/getdetails/';
+  static String plannerApprovelist =
+      'api/ISM_PlannerApprovalFacade/getplannerdetails/';
+  static String plannerSave =
+      "api/ISM_PlannerApprovalFacade/updateplannerStatus";
   static String profileData = 'api/ISMDashboardFacade/getdetails/';
 
   static String visitorapprovalapi =
@@ -589,4 +620,10 @@ class URLS {
 
   static String leaveCountList =
       "api/OnlineLeaveApplicationFacade/getonlineLeave";
+
+  static String hcClassList = "api/HW_HeathCheckUpFacade/OnLoadHWHealthCheckUp";
+
+  static String saveHC = "api/HW_HeathCheckUpFacade/SaveHWHealthChekUp";
+
+  static String getdocxApi = 'api/HW_HeathCheckUpFacade/ViewHealthCheckUpFiles';
 }
