@@ -49,6 +49,7 @@ import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/plann
 import 'package:m_skool_flutter/vms/online_leave/screen/online_leave_home.dart';
 import 'package:m_skool_flutter/vms/petty_indent_approval/screen/pc_Indent_Approval_HOME.dart';
 import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart';
+import 'package:m_skool_flutter/vms/rating_report/screen/rating_report_home.dart';
 import 'package:m_skool_flutter/vms/salary_details/screen/salary_home_screen.dart';
 import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
@@ -724,6 +725,17 @@ void openMappedPages(
   if (pageName == "Cash Request") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return PCRequisitionHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+  }
+
+  ///   Rating Report   ///
+
+  if (pageName == "Rating Report") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return RatingReportHome(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
       );

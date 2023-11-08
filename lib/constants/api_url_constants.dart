@@ -555,6 +555,15 @@ class URLS {
 
   static String viewDataPcReq = "api/PC_RequisitionFacade/Viewdata";
 
+    //--- RATING REPORT API ENDPOINT ---//
+
+  static String yearListRatingReport = "api/Rating_TransactionFacade/get_Consolidated_details";
+
+  static String monthRatingReport = "api/Rating_TransactionFacade/get_Consolidated_details";
+
+  static String dataReport = "api/Rating_TransactionFacade/getemployeereport/";
+
+
   ///***   ***///
 
   static String taskGetDetails = "api/ISM_TaskCreationFacade/getdetails/";
@@ -602,6 +611,8 @@ class URLS {
   static String plannerList = 'api/ISM_PlannerApprovalFacade/getdetails/';
   static String plannerApprovelist =
       'api/ISM_PlannerApprovalFacade/getplannerdetails/';
+  static String plannerSave =
+      "api/ISM_PlannerApprovalFacade/updateplannerStatus";
   static String profileData = 'api/ISMDashboardFacade/getdetails/';
 
   static String visitorapprovalapi =

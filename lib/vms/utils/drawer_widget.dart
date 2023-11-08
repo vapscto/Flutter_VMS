@@ -369,16 +369,16 @@ class _StaffDrawerHeaderState extends State<StaffDrawerHeader> {
                                 ],
                               )
                             : const SizedBox(),
-                        Text(
-                          widget.loginSuccessModel.empcode.toString(),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelSmall!.merge(
-                                const TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                        ),
+                        // Text(
+                        //   widget.loginSuccessModel.empcode.toString(),
+                        //   maxLines: 1,
+                        //   overflow: TextOverflow.ellipsis,
+                        //   style: Theme.of(context).textTheme.labelSmall!.merge(
+                        //         const TextStyle(
+                        //           color: Colors.white,
+                        //         ),
+                        //       ),
+                        // ),
                       ],
                     ),
                   ],

@@ -34,18 +34,18 @@ class AuthenticateUserApi {
       "mobiledeviceid": mobiledeviceid,
     });
 
-    if (Platform.isAndroid) {
-      AndroidDeviceInfo deviceInfo = await deviceInfoPlugin.androidInfo;
-      mobileUniqueID = deviceInfo.id;
-      //debugPrint(deviceInfo.toString());
-    } else {
-      IosDeviceInfo deviceInfo = await deviceInfoPlugin.iosInfo;
-      deviceInfo.identifierForVendor!;
-    }
+    // if (Platform.isAndroid) {
+    //   AndroidDeviceInfo deviceInfo = await deviceInfoPlugin.androidInfo;
+    //   mobileUniqueID = deviceInfo.id;
+    //   //debugPrint(deviceInfo.toString());
+    // } else {
+    //   IosDeviceInfo deviceInfo = await deviceInfoPlugin.iosInfo;
+    //   deviceInfo.identifierForVendor!;
+    // }
 
-    if (mobiledeviceid.isEmpty) {
-      mobiledeviceid = await getDeviceToken();
-    }
+    // if (mobiledeviceid.isEmpty) {
+    //   mobiledeviceid = await getDeviceToken();
+    // }
 
     Response response = await ins.post(loginApiUrl, data: {
       "MI_Id": miId,
@@ -149,10 +149,20 @@ class AuthenticateUserApi {
     return Future.value(loginSuccessModel);
   }
 
-  Future getDeviceToken() async {
-    FirebaseMessaging firebaseMessage = FirebaseMessaging.instance;
-    String? deviceToken = await firebaseMessage.getToken();
-    logger.d(deviceToken);
-    return (deviceToken == null) ? "" : deviceToken;
-  }
+  // Future getDeviceToken() async {
+  //   FirebaseMessaging firebaseMessage = FirebaseMessaging.instance;
+  //   String? deviceToken = await firebaseMessage.getToken();
+  //   logger.d(deviceToken);
+  //   return (deviceToken == null) ? "" : deviceToken;
+  // }
+//   late FirebaseMessaging firebaseMessage;
+// Future getDeviceToken() async {
+//   String deviceToken = '';
+//   firebaseMessage = FirebaseMessaging.instance;
+//   await firebaseMessage.getToken().then((value) {
+//     (value == null) ? "" : deviceToken = value;
+//     logger.i('====$deviceToken');
+//   });
+//   return deviceToken;
+// }
 }

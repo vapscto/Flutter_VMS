@@ -13,6 +13,12 @@ class AllPlannerTable {
   String duration;
   String remarks;
   int ismtpltaId;
+  int ismtcrId;
+  String status;
+  int ptsCount;
+  String startDate;
+  String endDate;
+
   AllPlannerTable(
       this.flag,
       this.taskNo,
@@ -27,5 +33,10 @@ class AllPlannerTable {
       this.remarks,
       this.ismtpltaId,
       this.createdBy,
-      this.duration);
+      this.duration,
+      this.ismtcrId,
+      this.status,
+      this.ptsCount,
+      this.startDate,
+      this.endDate);
 }

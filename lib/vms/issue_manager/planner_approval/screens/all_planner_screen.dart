@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_approval/api/planner_approval_save_api.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/api/planner_details_api.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/controller/planner_approval_controller.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/widgets/planner_table_widget.dart';
@@ -152,7 +153,12 @@ class _AllPlannersState extends State<AllPlanners> {
           '',
           value.iSMTPLTAId!,
           value.plannedby!,
-          value.iSMMTCATDurationFlg!));
+          value.iSMMTCATDurationFlg!,
+          value.iSMTCRId!,
+          value.iSMTCRStatus!,
+          value.pTSCount!,
+          value.iSMTCRASTOStartDate!,
+          value.iSMTCRASTOEndDate!));
     }
     widget.plannerApprovalController.approvalLoading(false);
   }
@@ -195,6 +201,42 @@ class _AllPlannersState extends State<AllPlanners> {
 
   List<String> selectedItemValue = <String>[];
 
+  //save planner
+  List<Map<String, dynamic>> plannerList = [];
+  _getPlannerSave() async {
+    for (int i = 0; i < checkList.length; i++) {
+      var value = allPlannerList.elementAt(checkList[i]);
+      plannerList.add({
+        "ISMTCR_Id": value.ismtcrId,
+        "ISMTPLAPTA_StartDate": value.startDate,
+        "ISMTPLAPTA_EndDate": value.endDate,
+        "ISMTPLAPTA_EffortInHrs": value.effort,
+        "ISMTPLAPTA_Status": value.status,
+        "plannerStatus": 1,
+        "ISMTPLTA_Id": value.ismtpltaId,
+        "extraflag": 0,
+        "PTSCount": value.ptsCount
+      });
+    }
+    await PlannerApprovalSaveAPI.instance.plannerapproval(
+      base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+      plannerList: plannerList,
+      userId: widget.loginSuccessModel.userId!,
+      miId: widget.loginSuccessModel.mIID!,
+      roleFlag: "S",
+      ivrmrtId: widget.plannerApprovalController.ivrmrtId,
+      asmayId: widget.loginSuccessModel.asmaYId!,
+      view: 1,
+      ismtplId: widget.ismtplId,
+      remarks: _remarkController.text,
+      totalEffort: widget.plannerApprovalController.effort,
+      // taskPercentage: 0.0,
+      // compulsoryFlag: false
+    );
+    _getData();
+    Get.back();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -208,7 +250,12 @@ class _AllPlannersState extends State<AllPlanners> {
               onPress: () {
                 if (_remarkController.text.isEmpty) {
                   Fluttertoast.showToast(msg: "Please Enter Planner Remarks");
-                } else {}
+                } else if (checkList.isEmpty) {
+                  Fluttertoast.showToast(msg: "Please Select check box");
+                } else {
+                  _getPlannerSave();
+                }
+                setState(() {});
               },
             ),
           ),
