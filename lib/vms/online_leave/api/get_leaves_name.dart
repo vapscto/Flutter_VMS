@@ -35,7 +35,7 @@ class GetLeaveNameApi {
       }
       final LeaveNamesModel leaveNames =
           LeaveNamesModel.fromJson(response.data['leave_name']);
-         logger.e(response.data['leave_name']);
+         logger.i(response.data['leave_name']);
          
       return Future.value(leaveNames.values);
     } on DioError catch (e) {

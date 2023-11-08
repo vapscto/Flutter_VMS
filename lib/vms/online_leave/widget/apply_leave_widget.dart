@@ -10,7 +10,9 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/api/ol_featch_api.dart';
 import 'package:m_skool_flutter/vms/online_leave/api/save_leave_application.dart';
 import 'package:m_skool_flutter/vms/online_leave/controller/ol_controller.dart';
+import 'package:m_skool_flutter/vms/online_leave/model/leave_count_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
+import 'package:m_skool_flutter/vms/online_leave/model/optional_leave_model.dart';
 import 'package:m_skool_flutter/vms/utils/showDatePicker.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -35,24 +37,25 @@ class ApplyLeaveWidget extends StatefulWidget {
 }
 
 class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
-  OpetionLeaveController controllerOL =Get.put(OpetionLeaveController());
-  //final RxBool isHalfDay;
-
+  OpetionLeaveController controllerOL = Get.put(OpetionLeaveController());
+  var addleave = 0;
   @override
   void initState() {
-     olLoad();
+    olLoad();
+    //  logger.e(widget.values.appliedCount);
     super.initState();
   }
-  olLoad()async{
-   await getOptionalLeave(
-    asmayId: widget.loginSuccessModel.asmaYId!,
-    base: baseUrlFromInsCode('leave', widget.mskoolController),
-    controller: controllerOL,
-    miId: widget.loginSuccessModel.mIID!,
-    userId: widget.loginSuccessModel.userId!
-   );
+
+  olLoad() async {
+    await getOptionalLeave(
+        asmayId: widget.loginSuccessModel.asmaYId!,
+        base: baseUrlFromInsCode('leave', widget.mskoolController),
+        controller: controllerOL,
+        miId: widget.loginSuccessModel.mIID!,
+        userId: widget.loginSuccessModel.userId!);
   }
-   @override
+
+  @override
   Widget build(BuildContext context) {
     RxBool isHalfDay = RxBool(false);
     final TextEditingController reason = TextEditingController();
@@ -84,14 +87,14 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
         widget.values.hrmLLeaveName == "Emergency Leave") {
       initialDt = currentDate.subtract(Duration(days: 1));
       firstDt = currentDate.subtract(Duration(days: 30));
-      lastDt = currentDate;
+      lastDt = currentDate.subtract(Duration(days: 1));
     } else if (widget.values.hrmLLeaveName == "Optional Leave") {
       initialDt = currentDate.add(Duration(days: 1));
-      firstDt =  currentDate.add(Duration(days: 1));
+      firstDt = currentDate.add(Duration(days: 1));
       lastDt = DateTime.now().add(Duration(days: 2));
-    }  else if (widget.values.hrmLLeaveName == "Privilege Leave") {
-      DateTime subdate = currentDate.add(Duration(days: 10)) ;
-       initialDt = subdate.add(Duration());
+    } else if (widget.values.hrmLLeaveName == "Privilege Leave") {
+      DateTime subdate = currentDate.add(Duration(days: 10));
+      initialDt = subdate.add(Duration());
       firstDt = subdate.subtract(Duration(days: 12));
       lastDt = currentDate.add(Duration(days: 20));
     }
@@ -269,19 +272,27 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                       firstDate: firstDt,
                                       lastDate: lastDt,
                                       selectableDayPredicate: (DateTime date) {
-                                        if (widget.values.hrmLLeaveName == "Casual Leave") {
-                                           return true;
-                                        }else if(widget.values.hrmLLeaveName == "Sick Leave"){
-                                         return true;
-                                        }else if(widget.values.hrmLLeaveName == "Optional Leave"){
-                                         return  date.isAfter(currentDate) && date.isBefore(lastDt.add(Duration(days: 1)));
-   ;
-                                        }else if(widget.values.hrmLLeaveName == "Privilege Leave")
-                                         {
-                                          return date.isAfter(currentDate.add(Duration(days: 9))) && date.isBefore(lastDt);
-   
-                                         }
-                                         return true;
+                                        if (widget.values.hrmLLeaveName ==
+                                            "Casual Leave") {
+                                          return true;
+                                        } else if (widget
+                                                .values.hrmLLeaveName ==
+                                            "Sick Leave") {
+                                          return true;
+                                        } else if (widget
+                                                .values.hrmLLeaveName ==
+                                            "Optional Leave") {
+                                          return date.isAfter(currentDate) &&
+                                              date.isBefore(lastDt
+                                                  .add(Duration(days: 1)));
+                                        } else if (widget
+                                                .values.hrmLLeaveName ==
+                                            "Privilege Leave") {
+                                          return date.isAfter(currentDate
+                                                  .add(Duration(days: 9))) &&
+                                              date.isBefore(lastDt);
+                                        }
+                                        return true;
                                       },
                                     );
                                     if (date == null) {
@@ -292,55 +303,135 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                     }
                                     startDT = date;
                                     startDate.text =
-                                    "${date.day}-${date.month}-${date.year}";
-                                   if (widget.values.hrmLLeaveName == "Casual Leave") {
-                                      initialDt2 = startDT.add(Duration(days: 1));
+                                        "${date.day}-${date.month}-${date.year}";
+                                    if (widget.values.hrmLLeaveName ==
+                                        "Casual Leave") {
+                                      initialDt2 =
+                                          startDT.add(Duration(days: 1));
                                       firstDt2 = startDT.add(Duration(days: 1));
-                                      lastDt2 =  startDT.add(Duration(days: 1));
-                                   }else if (widget.values.hrmLLeaveName == "Comp off" ||
-                                      widget.values.hrmLLeaveName == "Emergency Leave") {
-                                      initialDt2 = startDT.add(Duration(days: 1));
-                                      firstDt2 =  startDT.add(Duration(days: 1));
-                                      lastDt2 = startDT.add(Duration(days:2));
-                                    } else if (widget.values.hrmLLeaveName == "Optional Leave") {
-                                      for(int i= 0 ;i<controllerOL.optionalLeaveList.length;i++){
-                                        if(controllerOL.optionalLeaveList[i].fOMHWDDFromDate=="${date.year}-${date.month}-${date.day}T00:00:00"){
-                                         logger.e("found match");
+                                      lastDt2 = startDT.add(Duration(days: 1));
+                                    } else if (widget.values.hrmLLeaveName ==
+                                            "Comp off" ||
+                                        widget.values.hrmLLeaveName ==
+                                            "Emergency Leave") {
+                                      initialDt2 =
+                                          startDT.add(Duration(days: 1));
+                                      firstDt2 = startDT.add(Duration(days: 1));
+                                      lastDt2 = startDT.add(Duration(days: 2));
+                                    } else if (widget.values.hrmLLeaveName ==
+                                        "Optional Leave") {
+                                      for (int i = 0;
+                                          i <
+                                              controllerOL
+                                                  .optionalLeaveList.length;
+                                          i++) {
+                                        if (controllerOL.optionalLeaveList[i]
+                                                .fOMHWDDFromDate ==
+                                            "${date.year}-${date.month}-${date.day}T00:00:00") {
+                                          logger.e("found match");
                                           initialDt2 = DateTime.now();
                                           firstDt2 = DateTime.now();
-                                          lastDt2 = DateTime.now().add(Duration(days: 2));
-                                        }else{
+                                          lastDt2 = DateTime.now()
+                                              .add(Duration(days: 2));
+                                        } else {
                                           Get.back();
-                                          showDialog(context: context, builder: (context) {
-                                         return  AlertDialog(
-                                          shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                          content:Container(
-                                          height: 200,
-                                           child: Center(
-                                              child: Align(
-                                                alignment: Alignment.center,
-                                                child: Text("Selected Date Is\nNot Have Optional\nHoliday",
-                                                style: Theme.of(context).textTheme.bodyLarge!.merge(
-                                                   TextStyle(
-                                                    fontSize: 24,
-                                                     fontWeight:FontWeight.bold,
-                                                     color: Color.fromARGB(255, 22, 35, 216) 
-                                                  )
-                                                ),),
-                                              ),
-                                             ),
-                                         ) ,);
-                                         }, ) ;
+                                          // ignore: use_build_context_synchronously
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                shape:
+                                                    ContinuousRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20)),
+                                                content: Container(
+                                                  height: 200,
+                                                  child: Center(
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                              " Selected Date Is ",
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleMedium!
+                                                                  .merge(const TextStyle(
+                                                                      fontSize:
+                                                                          24,
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          7,
+                                                                          85,
+                                                                          255)))),
+                                                          Text(
+                                                              " Not Have Optional ",
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleMedium!
+                                                                  .merge(const TextStyle(
+                                                                      fontSize:
+                                                                          24,
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          7,
+                                                                          85,
+                                                                          255)))),
+                                                          Text(" Holiday ",
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleMedium!
+                                                                  .merge(const TextStyle(
+                                                                      fontSize:
+                                                                          24,
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          7,
+                                                                          85,
+                                                                          255)))),
+                                                          const SizedBox(
+                                                            height: 20,
+                                                          ),
+                                                          MSkollBtn(
+                                                            title: " OK ",
+                                                            onPress: () {
+                                                              startDate.clear();
+                                                              endDate.clear();
+                                                              Get.back();
+                                                            },
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
                                         }
                                       }
-                                      } else if(widget.values.hrmLLeaveName =="Sick Leave"){
+                                    } else if (widget.values.hrmLLeaveName ==
+                                        "Sick Leave") {
                                       initialDt2 = initialDt;
                                       firstDt2 = firstDt;
                                       lastDt2 = lastDt;
-                                    }else if(widget.values.hrmLLeaveName =="Privilege Leave"){
+                                    } else if (widget.values.hrmLLeaveName ==
+                                        "Privilege Leave") {
                                       initialDt2 = startDT;
                                       firstDt2 = startDT;
-                                      lastDt2 =  startDT.add(Duration(days: 10));
+                                      lastDt2 =
+                                          startDT.add(const Duration(days: 10));
                                     }
                                   },
                                   icon: SvgPicture.asset(
@@ -411,7 +502,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                               readOnly: true,
                               controller: endDate,
                               style: Theme.of(context).textTheme.titleSmall,
-                            //maxLines: 4,
+                              //maxLines: 4,
                               decoration: InputDecoration(
                                 isDense: true,
                                 contentPadding:
@@ -428,19 +519,30 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                     //second
                                     DateTime? end = await showDatePickerLeave(
                                       context: context,
-                                      initialDate:initialDt2,
-                                      firstDate:firstDt2,
-                                      lastDate:lastDt2,
+                                      initialDate: initialDt2,
+                                      firstDate: firstDt2,
+                                      lastDate: lastDt2,
                                       selectableDayPredicate: (DateTime date) {
-                                          if (widget.values.hrmLLeaveName == "Casual Leave"){
-                                          return date.isAtSameMomentAs(startDT.add(Duration(days: 1)));
-                                          }else if (widget.values.hrmLLeaveName == "Privilege Leave"){
-                                          return date.isAfter(startDT.subtract(Duration(days: 1))) && date.isBefore(lastDt2);
-                                          } else if (widget.values.hrmLLeaveName == "Comp off" ||
-                                          widget.values.hrmLLeaveName == "Emergency Leave"){
-                                          return date.isAfter(startDT) && date.isBefore(lastDt2.add(Duration(days: 1)));
-                                          }
-                                         return true;
+                                        if (widget.values.hrmLLeaveName ==
+                                            "Casual Leave") {
+                                          return date.isAtSameMomentAs(startDT
+                                              .add(const Duration(days: 1)));
+                                        } else if (widget
+                                                .values.hrmLLeaveName ==
+                                            "Privilege Leave") {
+                                          return date.isAfter(startDT.subtract(
+                                                  const Duration(days: 1))) &&
+                                              date.isBefore(lastDt2);
+                                        } else if (widget
+                                                    .values.hrmLLeaveName ==
+                                                "Comp off" ||
+                                            widget.values.hrmLLeaveName ==
+                                                "Emergency Leave") {
+                                          return date.isAfter(startDT) &&
+                                              date.isBefore(lastDt2.add(
+                                                  const Duration(days: 1)));
+                                        }
+                                        return true;
                                       },
                                     );
 
@@ -456,6 +558,84 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                     Duration difference =
                                         endDT.difference(startDT);
                                     totalDay.value = "${difference.inDays + 1}";
+                                    double count1 =
+                                        widget.values.appliedCount!.toDouble() +
+                                            int.tryParse(totalDay.value)!;
+                                    // if (count1 >=
+                                    //     widget.values.hrelSTotalLeaves!
+                                    //         .toDouble()) {
+                                    //   count1 = 0.5;
+                                    // }
+                                    if (count1 >
+                                        widget.values.hrelSTotalLeaves!
+                                                .toInt() +
+                                            addleave) {
+                                      logger.i(true);
+                                      // ignore: use_build_context_synchronously
+                                      showDialog(
+                                          barrierDismissible: false,
+                                          context: context,
+                                          builder: (context) {
+                                            return Center(
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 20),
+                                                height: 200,
+                                                width: 300,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    shape: BoxShape.rectangle),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Text("Insufficient Leave",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleMedium!
+                                                            .merge(const TextStyle(
+                                                                fontSize: 24,
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        7,
+                                                                        85,
+                                                                        255)))),
+                                                    Text(" Balance",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleMedium!
+                                                            .merge(const TextStyle(
+                                                                fontSize: 24,
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        7,
+                                                                        85,
+                                                                        255)))),
+                                                    const SizedBox(
+                                                      height: 20,
+                                                    ),
+                                                    MSkollBtn(
+                                                      title: " OK ",
+                                                      onPress: () {
+                                                        startDate.clear();
+                                                        endDate.clear();
+                                                        Get.back();
+                                                      },
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          });
+                                    }
                                   },
                                   icon: SvgPicture.asset(
                                     'assets/svg/calendar_icon.svg',
@@ -824,7 +1004,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                   temp: [
                                     {
                                       "fromDate": startDT.toLocal().toString(),
-                                      "hrelS_CBLeaves": widget.values.hrelSCBLeaves,
+                                      "hrelS_CBLeaves":
+                                          widget.values.hrelSCBLeaves,
                                       "hrelS_CreditedLeaves":
                                           widget.values.hrelSCreditedLeaves,
                                       "hrelS_EncashedLeaves":
@@ -833,7 +1014,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                       "hrmL_Id": widget.values.hrmLId,
                                       "hrmL_LeaveCreditFlg":
                                           widget.values.hrmLLeaveCreditFlg,
-                                      "hrmL_LeaveName": widget.values.hrmLLeaveName,
+                                      "hrmL_LeaveName":
+                                          widget.values.hrmLLeaveName,
                                     }
                                   ],
                                   base: baseUrlFromInsCode(
@@ -908,6 +1090,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
     );
   }
 }
-  bool isSameDay(DateTime a, DateTime b) {
-    return a.year == b.year && a.month == b.month && a.day == b.day;
-  }
+
+bool isSameDay(DateTime a, DateTime b) {
+  return a.year == b.year && a.month == b.month && a.day == b.day;
+}

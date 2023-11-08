@@ -8,8 +8,7 @@ import 'package:m_skool_flutter/vms/dr_genration/api/get_planner_details_api.dar
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
-import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
-import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
+ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 

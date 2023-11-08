@@ -129,7 +129,7 @@ class LeaveNamesModelValues {
   bool? editFlag;
   int? asmayId;
   int? ivrmuLId;
-
+  double? appliedCount;
   LeaveNamesModelValues(
       {this.hrmgTId,
       this.mIId,
@@ -234,7 +234,8 @@ class LeaveNamesModelValues {
       this.returnval,
       this.editFlag,
       this.asmayId,
-      this.ivrmuLId});
+      this.ivrmuLId,
+      this.appliedCount});
 
   LeaveNamesModelValues.fromJson(Map<String, dynamic> json) {
     hrmgTId = json['hrmgT_Id'];
@@ -342,6 +343,7 @@ class LeaveNamesModelValues {
     editFlag = json['edit_flag'];
     asmayId = json['asmay_id'];
     ivrmuLId = json['ivrmuL_Id'];
+    appliedCount = json['appliedCount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -451,6 +453,7 @@ class LeaveNamesModelValues {
     data['edit_flag'] = editFlag;
     data['asmay_id'] = asmayId;
     data['ivrmuL_Id'] = ivrmuLId;
+    data['appliedCount'] =appliedCount;
     return data;
   }
 }
