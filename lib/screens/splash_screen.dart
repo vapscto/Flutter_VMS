@@ -34,20 +34,20 @@ class _SplashScreenState extends State<SplashScreen> {
   String deviceToken = '';
   late FirebaseMessaging messaging;
   late FirebaseMessaging firebaseMessage;
-Future getDeviceToken() async {
-  String deviceToken = '';
-  firebaseMessage = FirebaseMessaging.instance;
-  await firebaseMessage.getToken().then((value) {
-    (value == null) ? "" : deviceToken = value;
-    logger.i('====$deviceToken');
-  });
-  return deviceToken;
-}
+  Future getDeviceToken() async {
+    String deviceToken = '';
+    firebaseMessage = FirebaseMessaging.instance;
+    await firebaseMessage.getToken().then((value) {
+      (value == null) ? "" : deviceToken = value;
+      logger.i('====$deviceToken');
+    });
+    return deviceToken;
+  }
+
   @override
   void initState() {
     messaging = FirebaseMessaging.instance;
     // institutionalCode!.delete("institutionalCode");
-
     super.initState();
   }
 
@@ -118,6 +118,8 @@ Future getDeviceToken() async {
         }
       });
       initializeFCMNotification().then((value) => null);
+      FirebaseMessaging.onBackgroundMessage(
+          _firebaseMessagingBackgroundHandler);
       FirebaseMessaging.onMessageOpenedApp.listen(
         (message) {
           messaging = FirebaseMessaging.instance;
@@ -128,6 +130,8 @@ Future getDeviceToken() async {
       );
     });
   }
+
+  Future _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
 
   @override
   Widget build(BuildContext context) {
@@ -305,7 +309,7 @@ Future getDeviceToken() async {
 
       String userName = logInBox!.get("userName");
       String password = logInBox!.get("password");
-      
+
       int miId = importantIds!.get(URLS.miId);
       String loginBaseUrl = "";
       for (int i = 0; i < codeModel.apiarray.values.length; i++) {
