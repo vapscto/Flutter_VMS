@@ -589,6 +589,37 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   index],
                                                               onChanged:
                                                                   (value) {
+                                                                 if(fliteresList
+                                                                .elementAt(
+                                                                    index).taskcategoryname=="New Module Development - Enhancements"){
+                                                                   showDialog(context: context, builder:(context) {
+                                                                        return Center(
+                                                                          child: Container(
+                                                                            padding:const EdgeInsets.symmetric(horizontal: 0),
+                                                                            height: 400,
+                                                                            width: MediaQuery.of(context).size.width/1.1,
+                                                                            decoration: BoxDecoration(
+                                                                             color: Colors.white,
+                                                                              borderRadius: 
+                                                                            BorderRadius.circular(10),
+                                                                            shape: BoxShape.rectangle
+                                                                            ),
+                                                                            child: Align(
+                                                                              alignment: Alignment.center,
+                                                                              child: Text(
+                                                                                   "New Module Enhnacement",
+                                                                                 style: Theme.of(context).textTheme.titleMedium!.merge(
+                                                                               const   TextStyle(
+                                                                                    fontSize: 24,
+                                                                                    color: Color.fromARGB(255, 7, 85, 255)
+                                                                                  )
+                                                                                 )
+                                                                                ),
+                                                                            ),
+                                                                          ),
+                                                                        );
+                                                                   });
+                                                                    }
                                                                 _plannerDetailsController
                                                                         .checkBoxList[
                                                                     index] = value!;
@@ -630,11 +661,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       showDialog(context: context, builder:(context) {
                                                                         return Center(
                                                                           child: Container(
-                                                                            padding: EdgeInsets.symmetric(horizontal: 20),
+                                                                            padding:const EdgeInsets.symmetric(horizontal: 20),
                                                                             height: 200,
                                                                             width: 300,
                                                                             decoration: BoxDecoration(
-                                                                              color: Colors.white,
+                                                                             color: Colors.white,
                                                                               borderRadius: 
                                                                             BorderRadius.circular(10),
                                                                             shape: BoxShape.rectangle
@@ -998,6 +1029,61 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                       DataCell(SizedBox(
                                                         width: 180,
                                                         child: GestureDetector(
+                                                          onTapUp: (details) {
+                                                            final offset = details
+                                                                .globalPosition;
+
+                                                            showMenu(
+                                                                context:
+                                                                    context,
+                                                                position:
+                                                                    RelativeRect
+                                                                        .fromLTRB(
+                                                                  offset.dx,
+                                                                  offset.dy,
+                                                                  MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width -
+                                                            
+                                                                      offset.dx,
+                                                                  MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .height -
+                                                                      offset.dy,
+                                                                ),
+                                                                items: List
+                                                                    .generate(
+                                                                  _plannerDetailsController
+                                                                      .statusDrList
+                                                                      .length,
+                                                                  (i) {
+                                                                    return PopupMenuItem(
+                                                                      onTap:
+                                                                          () {
+                                                                        _plannerDetailsController
+                                                                            .statusEtField[index]
+                                                                            .text = _plannerDetailsController.statusDrList[i].ismmistSStatusName!;
+                                                                        setState(
+                                                                            () {});
+                                                                      },
+                                                                      child:
+                                                                          Text(
+                                                                        _plannerDetailsController
+                                                                            .statusDrList[i]
+                                                                            .ismmistSStatusName!,
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .titleSmall!
+                                                                            .merge(const TextStyle(
+                                                                              fontSize: 16,
+                                                                            )),
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                )); 
+                                                          },
                                                           onTapDown:
                                                               (details) async {
                                                             final offset = details

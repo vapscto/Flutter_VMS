@@ -19,16 +19,20 @@ Future<bool> getPlanerdetails({
 }) async {
   final Dio ins = getGlobalDio();
   String baseApi = "https://vms.vapstech.com:44011/";
-  final String apiUrl = baseApi + URLS.drDetailsGenration;
+  final String apiUrl = base + URLS.drDetailsGenration;
   //  print(base);
   controller.updatePlannerDeatails(true);
-  logger.e(userId);
+  logger.e(apiUrl);
   try {
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
       "MI_Id": miId,
-     // "UserId": 61035,
-       "UserId": 60934,
+      "UserId": 60934,
+      "IVRMRT_Id": 18,
+    });
+    logger.e({
+      "MI_Id": miId,
+      "UserId": userId,
       "IVRMRT_Id": ivrmrtId,
     });
     PlanerDeatails planerDeatailsList = PlanerDeatails.fromJson(response.data);
@@ -43,12 +47,15 @@ Future<bool> getPlanerdetails({
       controller.checkBoxList.add(false);
     }
     // adding status in the list
-    DrstatusListModel drStatusListModel = DrstatusListModel.fromJson(response.data['get_Status']);
+    DrstatusListModel drStatusListModel =
+        DrstatusListModel.fromJson(response.data['get_Status']);
     controller.statusDrList.addAll(drStatusListModel.values!);
     // here add countTask
     // get Deviation task list
-    DepartwisedeviationModel departwisedeviationModel = DepartwisedeviationModel.fromJson(response.data['getdepartwisedeviationremrks']);
-       controller.depWiseDevitnList.addAll(departwisedeviationModel.values!);
+    DepartwisedeviationModel departwisedeviationModel =
+        DepartwisedeviationModel.fromJson(
+            response.data['getdepartwisedeviationremrks']);
+    controller.depWiseDevitnList.addAll(departwisedeviationModel.values!);
     CloseTaskCoutnModel closeTaskList =
         CloseTaskCoutnModel.fromJson(response.data['closeTaskCoutnDetails']);
     controller.closeTaskCoutnList.addAll(closeTaskList.values!);

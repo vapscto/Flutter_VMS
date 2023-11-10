@@ -859,7 +859,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
 
                               DateTime? reporting = await showDatePicker(
                                   context: context,
-                                  initialDate: endDT,
+                                  initialDate: endDT, 
                                   firstDate: endDT,
                                   lastDate: DateTime(DateTime.now().year + 1));
 
