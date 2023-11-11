@@ -361,6 +361,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
+                                                 snapshot.data!
+                                                          .userImagePath !=null?
                                                 CircleAvatar(
                                                   backgroundColor:
                                                       Colors.grey.shade100,
@@ -368,7 +370,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   backgroundImage: NetworkImage(
                                                       snapshot.data!
                                                           .userImagePath!),
-                                                ),
+                                                ):CircleAvatar(
+                                                  backgroundColor:
+                                                      Colors.grey.shade100,
+                                                  radius: 36.0,
+                                                  child: Icon(Icons.person)),
                                                 const SizedBox(
                                                   height: 16.0,
                                                 ),
