@@ -111,16 +111,36 @@ class SalaryOverallDetails extends StatelessWidget {
                           color: const Color(0xFFFFF6F5),
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        child: Wrap(
-                          spacing: Get.width * 0.12,
-                          runSpacing: 36.0,
-                          children: snapshot.data!.salaryDeductionModel.values!
-                              .map((e) => SalaryDeductionItem(
-                                    amt: e.hrmedAmount.toString(),
-                                    title: e.hrmedName ?? "N/a",
-                                  ))
-                              .toList(),
+                        child: ListView.separated(
+                          // padding: const EdgeInsets.all(12.0),
+                          shrinkWrap: true,
+                          itemBuilder: (_, index) {
+                            var value = snapshot
+                                .data!.salaryDeductionModel.values!
+                                .elementAt(index);
+                            return SalaryBreakDown(
+                              amt: value.hrmedAmount.toString(),
+                              title: value.hrmedName ?? "N/a",
+                            );
+                          },
+                          separatorBuilder: (_, index) {
+                            return const SizedBox(
+                              height: 12.0,
+                            );
+                          },
+                          itemCount: snapshot
+                              .data!.salaryDeductionModel.values!.length,
                         ),
+                        // Wrap(
+                        //   spacing: Get.width * 0.12,
+                        //   runSpacing: 36.0,
+                        //   children: snapshot.data!.salaryDeductionModel.values!
+                        //       .map((e) => SalaryDeductionItem(
+                        //             amt: e.hrmedAmount.toString(),
+                        //             title: e.hrmedName ?? "N/a",
+                        //           ))
+                        //       .toList(),
+                        // ),
                       ),
                     ),
                     const SizedBox(
@@ -175,7 +195,7 @@ class SalaryOverallDetails extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(
                                   8.0,
                                 ),
-                                color: const Color(0xFFF9FFEB)),
+                                color: Color.fromARGB(255, 226, 250, 170)),
                             child: Column(
                               children: [
                                 Text(

@@ -20,7 +20,7 @@ class GenerateSalarySlip {
     double netSalary = 0.0;
     double earning = 0.0;
     double deduction = 0.0;
-    var gross ;
+    var gross;
     for (int i = 0;
         i <
             controller.salarySlipDetail.first.employeeSalaryslipDetails!.values!
@@ -50,11 +50,14 @@ class GenerateSalarySlip {
     netSalary = earning - deduction;
     final Document document = Document();
     int i = 0;
-    gross =  controller.salarySlipDetail.first.employeeSalaryslipDetails!.values!.elementAt(
-    controller.salarySlipDetail.first.employeeSalaryslipDetails!.values!.indexWhere((element) => element!.hrmedName =="Gross"))!.amount;
-    
-     controller.salarySlipDetail.first.employeeSalaryslipDetails!
-                        .values!.removeWhere((element) => element!.hrmedName=="Gross");
+    gross = controller.salarySlipDetail.first.employeeSalaryslipDetails!.values!
+        .elementAt(controller
+            .salarySlipDetail.first.employeeSalaryslipDetails!.values!
+            .indexWhere((element) => element!.hrmedName == "Gross"))!
+        .amount;
+
+    controller.salarySlipDetail.first.employeeSalaryslipDetails!.values!
+        .removeWhere((element) => element!.hrmedName == "Gross");
     var logo = await networkImage(
         controller.salarySlipDetail.first.institutionDetails!.mILogo!);
     document.addPage(
@@ -191,15 +194,17 @@ class GenerateSalarySlip {
               Text("Total Deduction : $deduction"),
               SizedBox(height: 8.0),
               Text("Net Salary : $netSalary"),
-              SizedBox(height: 16.0),
-              Text("Gross : $gross"),
               SizedBox(height: 8.0),
-              RichText(text:TextSpan(
-                children: [
-                  const TextSpan(text:"Salary In Words : " ),
-                  TextSpan(text: "${NumberToWordsEnglish.convert(netSalary.toInt())} rupee only".toUpperCase())
-                ]
-              )),
+              // Text("Gross : $gross"),
+              // SizedBox(height: 8.0),
+              RichText(
+                  text: TextSpan(children: [
+                const TextSpan(text: "Salary In Words : "),
+                TextSpan(
+                    text:
+                        "${NumberToWordsEnglish.convert(netSalary.toInt())} rupee only"
+                            .toUpperCase())
+              ])),
               // Text(
               //     "Salary In Words : ${NumberToWordsEnglish.convert(netSalary.toInt())} rupee only"),
               SizedBox(height: 8.0),
