@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
+import 'package:open_filex/open_filex.dart';
 
 import '../../../constants/constants.dart';
 
@@ -297,6 +298,36 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
+                                            // (value.hRELAPSupportingDocument !=
+                                            //             null ||
+                                            //         value.hRELAPSupportingDocument !=
+                                            //             'undefined')
+                                            //     ? InkWell(
+                                            //         onTap: () {
+                                            //           OpenFilex.open(value
+                                            //               .hRELAPSupportingDocument
+                                            //               .toString());
+                                            //         },
+                                            //         child: Container(
+                                            //           decoration: BoxDecoration(
+                                            //               borderRadius:
+                                            //                   BorderRadius
+                                            //                       .circular(10),
+                                            //               color: Colors
+                                            //                   .green[100]),
+                                            //           child: const Padding(
+                                            //             padding:
+                                            //                 EdgeInsets.all(3.0),
+                                            //             child: Center(
+                                            //               child: Icon(
+                                            //                 Icons.visibility,
+                                            //                 color: Colors.green,
+                                            //               ),
+                                            //             ),
+                                            //           ),
+                                            //         ),
+                                            //       )
+                                            //     : const SizedBox(),
                                             Expanded(
                                               child: Column(
                                                 crossAxisAlignment:

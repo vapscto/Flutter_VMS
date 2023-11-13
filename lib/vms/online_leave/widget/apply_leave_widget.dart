@@ -13,6 +13,7 @@ import 'package:m_skool_flutter/vms/online_leave/controller/ol_controller.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_count_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/optional_leave_model.dart';
+import 'package:m_skool_flutter/vms/online_leave/widget/leave_attachment.dart';
 import 'package:m_skool_flutter/vms/profile/api/profile_api.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/vms/utils/showDatePicker.dart';
@@ -951,6 +952,12 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
           ),
         ),
         const SizedBox(
+          height: 20,
+        ),
+        const LeaveAttachmentScreen(
+          login: 'staff',
+        ),
+        const SizedBox(
           height: 16.0,
         ),
         MSkollBtn(
@@ -986,6 +993,10 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                 context: context,
                 barrierDismissible: false,
                 builder: (_) {
+                  // RxList<String> attachment = <String>[].obs;
+                  // for (int i = 0; i < controllerOL.attachment.length; i++) {
+                  //   attachment.add(controllerOL.attachment.elementAt(i)!.path);
+                  // }
                   return Dialog(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0)),
@@ -1005,7 +1016,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                   leaveReason: reason.text,
                                   reportingDate:
                                       reportingDT.toLocal().toString(),
-                                  supportingDocument: "undefined",
+                                  supportingDocument:
+                                      controllerOL.attachment.first!.path,
                                   frmToDate: [
                                     {
                                       "HRELAP_FromDate":

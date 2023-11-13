@@ -1,8 +1,38 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_count_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/optional_leave_model.dart';
 
-class OpetionLeaveController extends GetxController{
-  RxList<OpetionLeaveModelValues> optionalLeaveList = <OpetionLeaveModelValues>[].obs;
+class OpetionLeaveController extends GetxController {
+  RxList<OpetionLeaveModelValues> optionalLeaveList =
+      <OpetionLeaveModelValues>[].obs;
   RxList<LeaveCountModelValues> leaveCountList = <LeaveCountModelValues>[].obs;
+
+  final List<XFile?> attachment = RxList();
+  final List<PlatformFile> attFiles = RxList();
+
+  void addMultipleAttachment(List<XFile?> att) {
+    attachment.addAll(att);
+  }
+
+  void addToAttachment(XFile f) {
+    attachment.add(f);
+  }
+
+  void removeAttachment(int index) {
+    attachment.removeAt(index);
+  }
+
+  void addMultipleAttFiles(List<PlatformFile> att) {
+    attFiles.addAll(att);
+  }
+
+  void addToFile(PlatformFile f) {
+    attFiles.add(f);
+  }
+
+  void removeAtt(int index) {
+    attFiles.removeAt(index);
+  }
 }
