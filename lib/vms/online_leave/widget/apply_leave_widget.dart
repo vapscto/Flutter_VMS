@@ -13,6 +13,8 @@ import 'package:m_skool_flutter/vms/online_leave/controller/ol_controller.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_count_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/optional_leave_model.dart';
+import 'package:m_skool_flutter/vms/profile/api/profile_api.dart';
+import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/vms/utils/showDatePicker.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -39,10 +41,24 @@ class ApplyLeaveWidget extends StatefulWidget {
 class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
   OpetionLeaveController controllerOL = Get.put(OpetionLeaveController());
   var addleave = 0;
+  ProfileController profileController = Get.put(ProfileController());
+  _getProfileData() async {
+    profileController.profileLoading(true);
+    await ProfileAPI.instance.profileData(
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+        profileController: profileController,
+        miId: widget.loginSuccessModel.mIID!,
+        userId: widget.loginSuccessModel.userId!,
+        roleId: widget.loginSuccessModel.roleId!);
+    phone.text =
+        profileController.profileDataValue.first.hRMEMobileNo.toString();
+    profileController.profileLoading(false);
+  }
+
   @override
   void initState() {
     olLoad();
-    //  logger.e(widget.values.appliedCount);
+    _getProfileData();
     super.initState();
   }
 
@@ -55,11 +71,12 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
         userId: widget.loginSuccessModel.userId!);
   }
 
+  final TextEditingController phone = TextEditingController();
   @override
   Widget build(BuildContext context) {
     RxBool isHalfDay = RxBool(false);
     final TextEditingController reason = TextEditingController();
-    final TextEditingController phone = TextEditingController();
+
     final TextEditingController startDate = TextEditingController();
     final TextEditingController endDate = TextEditingController();
     final TextEditingController reportingDate = TextEditingController();
@@ -859,7 +876,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
 
                               DateTime? reporting = await showDatePicker(
                                   context: context,
-                                  initialDate: endDT, 
+                                  initialDate: endDT,
                                   firstDate: endDT,
                                   lastDate: DateTime(DateTime.now().year + 1));
 
