@@ -195,7 +195,8 @@ class SalaryOverallDetails extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(
                                   8.0,
                                 ),
-                                color: Color.fromARGB(255, 226, 250, 170)),
+                                color:
+                                    const Color.fromARGB(255, 226, 250, 170)),
                             child: Column(
                               children: [
                                 Text(

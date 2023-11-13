@@ -291,6 +291,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     super.dispose();
   }
 
+  DateTime today = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -800,6 +802,10 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                               } else if (plannedEffort <
                                   double.parse((totalday * 8).toString())) {
                                 Get.dialog(showPopup());
+                              } else if (plannerCreationController
+                                      .isPlannerCreate.value ==
+                                  false) {
+                                Get.dialog(plannerNotCreate());
                               } else {
                                 savePlanner();
                               }
@@ -1156,6 +1162,45 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             children: [
               Text(
                 "Total Effort must be greater than or equal to ${totalday * 8} Hours ... !!",
+                style: Get.textTheme.titleMedium!.copyWith(
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.w400),
+              ),
+              const SizedBox(height: 40),
+              MSkollBtn(
+                  title: "OK",
+                  onPress: () {
+                    setState(() {
+                      Get.back();
+                      getListData();
+                    });
+                  })
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  plannerNotCreate() {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      insetPadding: const EdgeInsets.symmetric(
+        horizontal: 16,
+      ),
+      contentPadding: const EdgeInsets.all(10),
+      content: WillPopScope(
+        onWillPop: () async => false,
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "YOU CAN'T GENERATE PLANNER TODAY!!",
                 style: Get.textTheme.titleMedium!.copyWith(
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w400),
