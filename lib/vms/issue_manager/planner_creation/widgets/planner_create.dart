@@ -287,7 +287,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     if (plannerCreationController.assignedTaskList.isNotEmpty) {
       plannerCreationController.assignedTaskList.isEmpty;
     }
-
     super.dispose();
   }
 
@@ -802,10 +801,10 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                               } else if (plannedEffort <
                                   double.parse((totalday * 8).toString())) {
                                 Get.dialog(showPopup());
-                                // } else if (plannerCreationController
-                                //         .isPlannerCreate.value ==
-                                //     false) {
-                                //   Get.dialog(plannerNotCreate());
+                              } else if (plannerCreationController
+                                      .isPlannerCreate.value ==
+                                  false) {
+                                Get.dialog(plannerNotCreate());
                               } else {
                                 savePlanner();
                               }
