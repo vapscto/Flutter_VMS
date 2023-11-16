@@ -42,7 +42,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   final _startDate = TextEditingController();
   final _endDate = TextEditingController();
   final _key = GlobalKey<FormState>();
-  bool selectAll = false;
+  bool selectAll = true;
   bool checked = false;
   List<int> checkList = [];
   RxString remark = ''.obs;
@@ -196,7 +196,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               .iSMTPLTAId!;
           //
           newTable.add(CreatePlannerTable(
-              false,
+              true,
               '${plannerCreationController.assignedTaskList.elementAt(index).iSMTCRTaskNo}',
               '${plannerCreationController.assignedTaskList.elementAt(index).iSMTCRTitle}',
               '${plannerCreationController.assignedTaskList.elementAt(index).hRMPName}',
@@ -880,16 +880,13 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                       if (selectAll) {
                         for (var i = 0; i < newTable.length; i++) {
                           checkList.add(i);
-                          setState(() {
-                            newTable[i].flag = true;
-                          });
+                          newTable[i].flag = true;
                         }
                       } else {
                         for (var i = 0; i < newTable.length; i++) {
-                          checked = newTable[i].flag = false;
+                          newTable[i].flag = false;
                         }
                         checkList.clear();
-                        setState(() {});
                       }
                     });
                   },
@@ -963,10 +960,10 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                         onChanged: (newTable[index].ismtpltaId == 0)
                             ? (val) {
                                 setState(() {
-                                  checked = newTable[index].flag = val!;
+                                  newTable[index].flag = val!;
                                   if (checkList.contains(index)) {
                                     checkList.remove(index);
-                                    checked = newTable[index].flag = false;
+                                    newTable[index].flag = false;
                                     if (newTable.length != checkList.length) {
                                       selectAll = false;
                                     }
