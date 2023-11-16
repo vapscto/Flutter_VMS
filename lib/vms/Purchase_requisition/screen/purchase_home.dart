@@ -23,8 +23,6 @@ import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 
-
-
 class PurchaserequisitionHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
@@ -143,7 +141,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
     // purchaseRequisitionController.getrequestGetItemList.clear();
     purchaseRequisitionController.updateIsLoadingRequestGetItem(true);
     await getPurchaseRequisitionApi(
-      base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+      base: baseUrlFromInsCode("inventory", widget.mskoolController),
       miIdnew: id,
       controller: purchaseRequisitionController,
     );
@@ -270,18 +268,18 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Purchase Requisition"),
-          leading:const CustomGoBackButton()  ,
+          leading: const CustomGoBackButton(),
           titleSpacing: 0,
           actions: [
-               Padding(
-                 padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
-                 child: BtnSave(
-                                  onPress: () async {
-                                    await _saveData();
-                                  },
-                                  title: "Save",
-                                ),
-               ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              child: BtnSave(
+                onPress: () async {
+                  await _saveData();
+                },
+                title: "Save",
+              ),
+            ),
           ],
         ),
         floatingActionButton: const HomeFab(),
@@ -480,8 +478,8 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                     .clear();
                                 selectedcompanyname = s;
                                 getPurchaseRequisitionGetitemApi(
-                                    base: baseUrlFromInsCode("issuemanager",
-                                        widget.mskoolController),
+                                    base: baseUrlFromInsCode(
+                                        "inventory", widget.mskoolController),
                                     miIdnew: s!.mIId!,
                                     controller: purchaseRequisitionController);
                               },
@@ -981,7 +979,6 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                             ),
                           ),
                           const SizedBox(height: 35),
-                      
                         ],
                       ),
           );

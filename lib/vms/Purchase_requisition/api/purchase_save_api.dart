@@ -10,22 +10,22 @@ import 'package:m_skool_flutter/vms/maker%20and%20checker/controller/dr_details_
 class PurchaseSaveAPI {
   PurchaseSaveAPI.init();
   static final PurchaseSaveAPI instance = PurchaseSaveAPI.init();
-  Future<bool>purchaseSave({
+  Future<bool> purchaseSave({
     required String base,
     required PurchaseRequisitionController purchaseRequisitionController,
-  required  DrDetailsCtrlr controller,
+    required DrDetailsCtrlr controller,
     required Map<String, dynamic> body,
   }) async {
     var dio = Dio();
-   // var url = base + URLS.purchaseRequisitionSave;
-   var url = "https://vmsstaging.vapssmartecampus.com:40016/api/INV_PurchaseRequisitionFacade/savedetails/";
+    var url = base + URLS.purchaseRequisitionSave;
+    //  var url = "https://vmsstaging.vapssmartecampus.com:40016/api/INV_PurchaseRequisitionFacade/savedetails/";
     logger.d(body);
     logger.d(url);
     try {
       if (purchaseRequisitionController.isErrorLoading.value) {
         purchaseRequisitionController.error(false);
       }
-       purchaseRequisitionController.saveLoading(true);
+      purchaseRequisitionController.saveLoading(true);
       var response = await dio.post(
         url,
         options: Options(headers: getSession()),
@@ -44,7 +44,7 @@ class PurchaseSaveAPI {
     } on DioError catch (e) {
       logger.e(e.message);
       purchaseRequisitionController.error(true);
-       return true;
+      return true;
     } on Exception catch (e) {
       logger.e(e.toString());
       return false;

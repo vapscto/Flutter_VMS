@@ -25,15 +25,8 @@ getPurchaseRequisitionApi({
   logger.d(api);
 
   try {
-    final Response response =
-        await ins.post(api2, options: Options(headers: getSession()), data: {
-      "MI_IdNew": miIdnew
-      //  options: Options(headers: getSession())
-    });
-
-    // logger.i(response.data['get_mi_list']);
-    // logger.i(response.data['get_item']);
-
+    final Response response = await ins.post(api,
+        options: Options(headers: getSession()), data: {"MI_IdNew": miIdnew});
     if (response.data['get_mi_list'] != null) {
       controller.updateIsErrorOccuredRequestRequisition(true);
       controller.updateIsLoadingRequestRequisition(false);
@@ -48,6 +41,5 @@ getPurchaseRequisitionApi({
   } on Exception catch (e) {
     logger.e(e.toString());
     controller.updateIsErrorOccuredRequestRequisition(true);
-    // controller.updateIsLoadingRequestRequisition(false);
   }
 }
