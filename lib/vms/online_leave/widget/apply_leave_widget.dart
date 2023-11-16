@@ -324,9 +324,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                         "${date.day}-${date.month}-${date.year}";
                                     if (widget.values.hrmLLeaveName ==
                                         "Casual Leave") {
-                                      initialDt2 =
-                                          startDT.add(Duration(days: 1));
-                                      firstDt2 = startDT.add(Duration(days: 1));
+                                      initialDt2 = startDT;
+                                      firstDt2 = startDT;
                                       lastDt2 = startDT.add(Duration(days: 1));
                                     } else if (widget.values.hrmLLeaveName ==
                                             "Comp off" ||
@@ -537,14 +536,15 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                     //second
                                     DateTime? end = await showDatePickerLeave(
                                       context: context,
-                                      initialDate: initialDt2,
-                                      firstDate: firstDt2,
-                                      lastDate: lastDt2,
+                                      initialDate: firstDt,
+                                      firstDate: firstDt,
+                                      lastDate: firstDt.add(Duration(days: 2)),
                                       selectableDayPredicate: (DateTime date) {
                                         if (widget.values.hrmLLeaveName ==
                                             "Casual Leave") {
-                                          return date.isAtSameMomentAs(startDT
-                                              .add(const Duration(days: 1)));
+                                          return true;
+                                          // .isAtSameMomentAs(startDT
+                                          //     .add(const Duration(days: 0)));
                                         } else if (widget
                                                 .values.hrmLLeaveName ==
                                             "Privilege Leave") {
