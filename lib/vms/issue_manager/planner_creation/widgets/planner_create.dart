@@ -1168,6 +1168,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             children: [
               Text(
                 "Total Effort must be greater than or equal to ${totalday * 8} Hours ... !!",
+                textAlign: TextAlign.center,
                 style: Get.textTheme.titleMedium!.copyWith(
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w400),
@@ -1207,6 +1208,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             children: [
               Text(
                 "YOU CAN'T GENERATE PLANNER TODAY!!",
+                textAlign: TextAlign.center,
                 style: Get.textTheme.titleMedium!.copyWith(
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w400),
