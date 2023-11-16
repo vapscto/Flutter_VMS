@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
@@ -26,21 +27,23 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     });
   }
 
-  DateTime? startDate;
-  DateTime? endDate;
+  DateTime? minDate;
+  DateTime? maxDate;
   @override
   void initState() {
     selectedDates.add(DateTime.parse(widget.startDate));
     selectedDates.add(DateTime.parse(widget.endDate));
+    maxDate = DateTime.parse(widget.endDate);
+    minDate = DateTime.parse(widget.startDate);
     super.initState();
   }
 
+  List<DateTime> newSelectedDates = [];
   List<DateTime> getSelectedDates(DateTime start, DateTime end) {
-    List<DateTime> selectedDates = [];
     for (int i = start.day; i <= end.day; i++) {
-      selectedDates.add(DateTime(start.year, start.month, i));
+      newSelectedDates.add(DateTime(start.year, start.month, i));
     }
-    return selectedDates;
+    return newSelectedDates;
   }
 
   @override
@@ -57,44 +60,44 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               SfDateRangePicker(
-                  controller: _controller,
-                  key: ValueKey(_controller.selectedDates?.length ?? 0),
-                  onSelectionChanged:
-                      (DateRangePickerSelectionChangedArgs args) {
-                    SchedulerBinding.instance.addPostFrameCallback((duration) {
-                      setState(() {
-                        dates.clear();
-                        List selectedDate = args.value;
-                        logger.d(selectedDate);
-                        for (var i = 0; i < selectedDate.length; i++) {
-                          DateTime date =
-                              DateTime.parse(selectedDate[i].toString());
-                          DateTime utcDate =
-                              DateTime.utc(date.year, date.month, date.day);
-                          dates.add(utcDate.toIso8601String());
-                        }
-                        dates.sort((a, b) {
-                          return a.compareTo(b);
-                        });
-                        logger.e(dates);
+                maxDate: maxDate,
+                controller: _controller,
+                key: ValueKey(_controller.selectedDates?.length ?? 0),
+                view: DateRangePickerView.month,
+                selectionMode: DateRangePickerSelectionMode.multiple,
+                selectionColor: Theme.of(context).primaryColor,
+                backgroundColor: Colors.white,
+                initialSelectedDates: getSelectedDates(
+                    DateTime.parse(widget.startDate),
+                    DateTime.parse(widget.endDate)),
+                initialDisplayDate: DateTime.parse(widget.startDate),
+                initialSelectedDate: DateTime.parse(widget.startDate),
+                enablePastDates: (newSelectedDates.length == 1) ? false : true,
+                onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
+                  SchedulerBinding.instance.addPostFrameCallback((duration) {
+                    setState(() {
+                      dates.clear();
+                      List selectedDate = args.value;
+                      logger.d(selectedDate);
+                      for (var i = 0; i < selectedDate.length; i++) {
+                        DateTime date =
+                            DateTime.parse(selectedDate[i].toString());
+                        DateTime utcDate =
+                            DateTime.utc(date.year, date.month, date.day);
+                        dates.add(utcDate.toIso8601String());
+                      }
+                      dates.sort((a, b) {
+                        return a.compareTo(b);
                       });
+                      logger.e(dates);
                     });
-                  },
-                  onViewChanged: (DateRangePickerViewChangedArgs args) {
-                    final PickerDateRange visibleDates = args.visibleDateRange;
-                    final DateRangePickerView view = args.view;
-                  },
-                  view: DateRangePickerView.month,
-                  selectionMode: DateRangePickerSelectionMode.multiple,
-                  selectionColor: Theme.of(context).primaryColor,
-                  backgroundColor: Colors.white,
-                  // initialSelectedDates: selectedDates,
-                  initialSelectedDates: getSelectedDates(
-                      DateTime.parse(widget.startDate),
-                      DateTime.parse(widget.endDate))
-                  // initialDisplayDate: DateTime.now(),
-                  // minDate: DateTime.now(),
-                  ),
+                  });
+                },
+                onViewChanged: (DateRangePickerViewChangedArgs args) {
+                  final PickerDateRange visibleDates = args.visibleDateRange;
+                  final DateRangePickerView view = args.view;
+                },
+              ),
               Align(
                 alignment: Alignment.center,
                 child: MSkollBtn(

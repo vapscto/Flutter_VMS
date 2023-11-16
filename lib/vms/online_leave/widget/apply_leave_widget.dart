@@ -13,6 +13,9 @@ import 'package:m_skool_flutter/vms/online_leave/controller/ol_controller.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_count_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/optional_leave_model.dart';
+import 'package:m_skool_flutter/vms/online_leave/widget/leave_attachment.dart';
+import 'package:m_skool_flutter/vms/profile/api/profile_api.dart';
+import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/vms/utils/showDatePicker.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -39,10 +42,24 @@ class ApplyLeaveWidget extends StatefulWidget {
 class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
   OpetionLeaveController controllerOL = Get.put(OpetionLeaveController());
   var addleave = 0;
+  ProfileController profileController = Get.put(ProfileController());
+  _getProfileData() async {
+    profileController.profileLoading(true);
+    await ProfileAPI.instance.profileData(
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+        profileController: profileController,
+        miId: widget.loginSuccessModel.mIID!,
+        userId: widget.loginSuccessModel.userId!,
+        roleId: widget.loginSuccessModel.roleId!);
+    phone.text =
+        profileController.profileDataValue.first.hRMEMobileNo.toString();
+    profileController.profileLoading(false);
+  }
+
   @override
   void initState() {
     olLoad();
-    //  logger.e(widget.values.appliedCount);
+    _getProfileData();
     super.initState();
   }
 
@@ -55,11 +72,12 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
         userId: widget.loginSuccessModel.userId!);
   }
 
+  final TextEditingController phone = TextEditingController();
   @override
   Widget build(BuildContext context) {
     RxBool isHalfDay = RxBool(false);
     final TextEditingController reason = TextEditingController();
-    final TextEditingController phone = TextEditingController();
+
     final TextEditingController startDate = TextEditingController();
     final TextEditingController endDate = TextEditingController();
     final TextEditingController reportingDate = TextEditingController();
@@ -306,9 +324,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                         "${date.day}-${date.month}-${date.year}";
                                     if (widget.values.hrmLLeaveName ==
                                         "Casual Leave") {
-                                      initialDt2 =
-                                          startDT.add(Duration(days: 1));
-                                      firstDt2 = startDT.add(Duration(days: 1));
+                                      initialDt2 = startDT;
+                                      firstDt2 = startDT;
                                       lastDt2 = startDT.add(Duration(days: 1));
                                     } else if (widget.values.hrmLLeaveName ==
                                             "Comp off" ||
@@ -519,14 +536,15 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                     //second
                                     DateTime? end = await showDatePickerLeave(
                                       context: context,
-                                      initialDate: initialDt2,
-                                      firstDate: firstDt2,
-                                      lastDate: lastDt2,
+                                      initialDate: firstDt,
+                                      firstDate: firstDt,
+                                      lastDate: firstDt.add(Duration(days: 2)),
                                       selectableDayPredicate: (DateTime date) {
                                         if (widget.values.hrmLLeaveName ==
                                             "Casual Leave") {
-                                          return date.isAtSameMomentAs(startDT
-                                              .add(const Duration(days: 1)));
+                                          return true;
+                                          // .isAtSameMomentAs(startDT
+                                          //     .add(const Duration(days: 0)));
                                         } else if (widget
                                                 .values.hrmLLeaveName ==
                                             "Privilege Leave") {
@@ -934,6 +952,12 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
           ),
         ),
         const SizedBox(
+          height: 20,
+        ),
+        const LeaveAttachmentScreen(
+          login: 'staff',
+        ),
+        const SizedBox(
           height: 16.0,
         ),
         MSkollBtn(
@@ -969,6 +993,10 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                 context: context,
                 barrierDismissible: false,
                 builder: (_) {
+                  // RxList<String> attachment = <String>[].obs;
+                  // for (int i = 0; i < controllerOL.attachment.length; i++) {
+                  //   attachment.add(controllerOL.attachment.elementAt(i)!.path);
+                  // }
                   return Dialog(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0)),
@@ -988,7 +1016,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                   leaveReason: reason.text,
                                   reportingDate:
                                       reportingDT.toLocal().toString(),
-                                  supportingDocument: "undefined",
+                                  supportingDocument:
+                                      controllerOL.attachment.first!.path,
                                   frmToDate: [
                                     {
                                       "HRELAP_FromDate":

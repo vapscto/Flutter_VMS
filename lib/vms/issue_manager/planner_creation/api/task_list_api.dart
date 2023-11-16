@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -7,7 +5,6 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/controller/planner_creation_controller.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/assigned_task_list.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/category_wise_list.dart';
-import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/planner_approval.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/total_effort_data.dart';
 
 class TaskListAPI {
@@ -66,10 +63,12 @@ class TaskListAPI {
         TotalEffortData totalEffortData =
             TotalEffortData.fromJson(response.data['get_effortdetails']);
         plannerCreationController.effortData(totalEffortData.values!);
-        PlannerApproval plannerApproval =
-            PlannerApproval.fromJson(response.data);
+        // PlannerApproval plannerApproval =
+        //     PlannerApproval.fromJson(response.data['plannerextapproval']);
         plannerCreationController.isPlannerCreate.value =
-            plannerApproval.plannerextapproval!;
+            response.data['plannerextapproval'];
+        logger.i('====${response.data['plannerextapproval']}');
+        logger.i(plannerCreationController.isPlannerCreate.value);
       }
     } on DioError catch (e) {
       logger.e(e.message);
