@@ -61,6 +61,16 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   List<Map<String, dynamic>> newCategoryArray = [];
   double totalHour = 0;
   DateTime todayDate = DateTime.now();
+  void addPlannedEffort(var plan) {
+    plannedEffort -= plan;
+    setState(() {});
+  }
+
+  void removePlannedEffort(var plan) {
+    plannedEffort += plan;
+    setState(() {});
+  }
+
   var id = 0;
   int calculateWeekdaysDifference(DateTime startDate, DateTime endDate) {
     var weekdayCount = 0;
@@ -164,7 +174,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             endDate =
                 '${numberList[endDt.day]}:${numberList[endDt.month]}:${endDt.year}';
           }
-          // plannedEffort = 0.0;
           if (plannerCreationController.assignedTaskList
                   .elementAt(index)
                   .iSMTPLTAId !=
@@ -579,8 +588,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                         "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                                     calculateWeekdaysDifference(
                                         fromDate!, toDate!);
-                                    // totalday =
-                                    //     toDate!.difference(fromDate!).inDays + 1;
                                     getListData();
                                     isDeta = true;
                                   });
@@ -621,9 +628,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                             "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                                         calculateWeekdaysDifference(
                                             fromDate!, toDate!);
-                                        // totalday =
-                                        //     toDate!.difference(fromDate!).inDays +
-                                        //         1;
                                         getListData();
                                         isDeta = true;
                                       });
