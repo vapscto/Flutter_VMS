@@ -802,6 +802,9 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                               if (_plannerName.text.isEmpty) {
                                 Fluttertoast.showToast(
                                     msg: "Please enter plan name");
+                              } else if (checkList.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "Please select checkbox");
                               } else if (plannedEffort <
                                   double.parse((totalday * 8).toString())) {
                                 Get.dialog(showPopup());
