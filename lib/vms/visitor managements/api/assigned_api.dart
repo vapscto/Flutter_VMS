@@ -12,29 +12,24 @@ getAssignedManagaementApi({
   required int miId,
   required int userId,
   required VisitorManagementsController controller,
+  required int vmmvId,
 }) async {
   final Dio ins = getGlobalDio();
   final String api = base + URLS.gridoptionapi;
   const String api2 =
       "https://vmsstaging.vapssmartecampus.com:40020/api/AddVisitorsFacade/getVisitorAssignDetails/";
 
-  if (controller.isErrorOccuredassigned.value) {}
-
-  logger.d(api2);
-  logger.i("nitin");
   try {
-    final Response response = await ins.post(api2,
+    final Response response = await ins.post(api,
         options: Options(headers: getSession()),
-        data: {"mI_Id": 24, "UserId": 60415, "VMMV_Id": 20841});
+        data: {"mI_Id": miId, "UserId": userId, "VMMV_Id": vmmvId});
 
-    logger.e({"mI_Id": 24, "UserId": 60415, "VMMV_Id": 20841});
     logger.i(response.data['gridoptions']);
 
     if (response.data['gridoptions'] != null) {
       GridOptionslistModel pValues =
           GridOptionslistModel.fromJson(response.data['gridoptions']);
       controller.getrequestGetgridoptionList.addAll(pValues.values!);
-      ///////////////////////////////////////////////////////////////////////////////////////
     }
   } on Exception catch (e) {
     logger.e(e.toString());

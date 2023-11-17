@@ -13,39 +13,21 @@ getVisitorManagaementApi({
 }) async {
   final Dio ins = getGlobalDio();
   final String api = base + URLS.visitormanagementapi;
-  const String api2 =
-      "https://vmsstaging.vapssmartecampus.com:40020/api/AddVisitorsFacade/getAssignDetails/";
-
-  if (controller.isErrorOccuredVisitor.value) {
-    controller.updateIsErrorOccuredVisitor(false);
-  }
-
-  controller.updateIsLoadingVisitor(true);
-
   logger.d(api);
-
   try {
-    final Response response = await ins.post(api2,
+    controller.updateIsLoadingVisitor(true);
+    final Response response = await ins.post(api,
         options: Options(headers: getSession()),
-        data: {"mI_Id": 24, "UserId": 60415});
-
-    logger.e({"mI_Id": 24, "UserId": 60415});
-    logger.i(response.data['institutionlist']);
+        data: {"mI_Id": miId, "UserId": userId});
 
     if (response.data['institutionlist'] != null) {
-      controller.updateIsErrorOccuredVisitor(true);
       controller.updateIsLoadingVisitor(false);
       InstitutionlistModel pValues =
           InstitutionlistModel.fromJson(response.data['institutionlist']);
       controller.getData(pValues.values!);
-
-      ///////////////////////////////////////////////////////////////////////////////////////
+      controller.updateIsLoadingVisitor(false);
     }
-
-    controller.updateIsLoadingVisitor(false);
   } on Exception catch (e) {
     logger.e(e.toString());
-    controller.updateIsErrorOccuredVisitor(true);
-    controller.updateIsLoadingVisitor(false);
   }
 }

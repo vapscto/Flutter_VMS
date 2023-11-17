@@ -26,7 +26,6 @@ Future<bool> getsavedApi({
   const String api2 =
       "https://vmsstaging.vapssmartecampus.com:40020/api/AddVisitorsFacade/saveAssignedData/";
 
-  if (controller.isErrorOccuredsave.value) {}
   logger.i({
     "MI_Id": miId,
     "UserId": userId,
@@ -43,7 +42,7 @@ Future<bool> getsavedApi({
 
   try {
     final Response response =
-        await ins.post(api2, options: Options(headers: getSession()), data: {
+        await ins.post(api, options: Options(headers: getSession()), data: {
       "MI_Id": miId,
       "UserId": userId,
       "VMMV_Id": vmmvId,

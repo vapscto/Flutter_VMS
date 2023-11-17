@@ -13,21 +13,13 @@ getemployeeManagaementApi({
 }) async {
   final Dio ins = getGlobalDio();
   final String api = base + URLS.visitormanagementapi;
-  const String api2 =
-      "https://vmsstaging.vapssmartecampus.com:40020/api/AddVisitorsFacade/getAssignDetails/";
-
   if (controller.isErrorOccuredassigned.value) {}
 
-  logger.d(api2);
-  logger.i("nitin");
+  logger.d(api);
   try {
-    final Response response = await ins.post(api2,
+    final Response response = await ins.post(api,
         options: Options(headers: getSession()),
-        data: {"mI_Id": 24, "UserId": 60415});
-
-    logger.e({"mI_Id": 24, "UserId": 60415});
-    logger.i(response.data['emplist']);
-
+        data: {"mI_Id": miId, "UserId": userId});
     if (response.data['emplist'] != null) {
       EmployeelistModel pValues =
           EmployeelistModel.fromJson(response.data['emplist']);

@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
@@ -52,17 +53,15 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
 
   load(int id) async {
     await getVisitorManagaementApi(
-        base: "",
-        miId: 24,
-        userId: 60415,
+        base: baseUrlFromInsCode('visitorsmanagement', widget.mskoolController),
+        miId: widget.loginSuccessModel.mIID!,
+        userId: widget.loginSuccessModel.userId!,
         controller: visitorManagementsController);
   }
 
   DateTime? selectedDate;
   final _dateController = TextEditingController();
-
   final _startTime = TextEditingController();
-  // final _endTime = TextEditingController();
   TextEditingController remartEt = TextEditingController();
   TextEditingController locationEt = TextEditingController();
   TimeOfDay? fromTime;
@@ -71,8 +70,7 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Visitor Management").getAppBar(),
-      // floatingActionButton: const HomeFab(),
+      appBar: const CustomAppBar(title: "Assign Visitors").getAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -183,10 +181,12 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
                                 }),
                                 onChanged: (s) async {
                                   await getVisitManagaementApi(
-                                      base: "",
+                                      base: baseUrlFromInsCode(
+                                          'visitorsmanagement',
+                                          widget.mskoolController),
                                       controller: visitorManagementsController,
                                       miId: s!.mIId!,
-                                      userId: 0);
+                                      userId: widget.loginSuccessModel.userId!);
                                 }),
                       ),
                     ),
@@ -284,15 +284,18 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
                           }),
                           onChanged: (s) async {
                             await getAssignedManagaementApi(
-                                base: "",
+                                base: baseUrlFromInsCode('visitorsmanagement',
+                                    widget.mskoolController),
                                 controller: visitorManagementsController,
                                 miId: s!.mIId!,
-                                userId: 0);
+                                userId: s.userId!,
+                                vmmvId: s.vmmVId!);
                             await getemployeeManagaementApi(
-                                base: "",
+                                base: baseUrlFromInsCode('visitorsmanagement',
+                                    widget.mskoolController),
                                 controller: visitorManagementsController,
                                 miId: s.mIId!,
-                                userId: 0);
+                                userId: s.userId!);
                           },
                         ),
                       ),
@@ -420,8 +423,7 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
                       .getrequestGetemployeeList.isEmpty
                   ? const AnimatedProgressWidget(
                       title: "No Data found",
-                      desc:
-                          "There is no corresponding topic available",
+                      desc: "There is no corresponding topic available",
                       animationPath: "assets/json/nodata.json",
                       animatorHeight: 250,
                     )
@@ -839,7 +841,8 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
                       onPress: () async {
                         if (meetFlag.isFalse) {
                           await getsavedApi(
-                                  base: '',
+                                  base: baseUrlFromInsCode('visitorsmanagement',
+                                      widget.mskoolController),
                                   controller: visitorManagementsController,
                                   fhrors: hours,
                                   fminutes: minutes,
@@ -876,8 +879,8 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        fixedSize: Size.fromWidth(100),
-                        backgroundColor: Color.fromRGBO(241, 5, 5, 1),
+                        fixedSize: const Size.fromWidth(100),
+                        backgroundColor: const Color.fromRGBO(241, 5, 5, 1),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 26, vertical: 14.0),
                         shape: RoundedRectangleBorder(
