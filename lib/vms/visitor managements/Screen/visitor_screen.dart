@@ -53,7 +53,8 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
 
   load(int id) async {
     await getVisitorManagaementApi(
-        base: baseUrlFromInsCode('visitorsmanagement', widget.mskoolController),
+        base: baseUrlFromInsCode(
+            'visitorsmanagementservicehub', widget.mskoolController),
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!,
         controller: visitorManagementsController);
@@ -182,7 +183,7 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
                                 onChanged: (s) async {
                                   await getVisitManagaementApi(
                                       base: baseUrlFromInsCode(
-                                          'visitorsmanagement',
+                                          'visitorsmanagementservicehub',
                                           widget.mskoolController),
                                       controller: visitorManagementsController,
                                       miId: s!.mIId!,
@@ -284,14 +285,16 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
                           }),
                           onChanged: (s) async {
                             await getAssignedManagaementApi(
-                                base: baseUrlFromInsCode('visitorsmanagement',
+                                base: baseUrlFromInsCode(
+                                    'visitorsmanagementservicehub',
                                     widget.mskoolController),
                                 controller: visitorManagementsController,
                                 miId: s!.mIId!,
                                 userId: s.userId!,
                                 vmmvId: s.vmmVId!);
                             await getemployeeManagaementApi(
-                                base: baseUrlFromInsCode('visitorsmanagement',
+                                base: baseUrlFromInsCode(
+                                    'visitorsmanagementservicehub',
                                     widget.mskoolController),
                                 controller: visitorManagementsController,
                                 miId: s.mIId!,
@@ -841,7 +844,8 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
                       onPress: () async {
                         if (meetFlag.isFalse) {
                           await getsavedApi(
-                                  base: baseUrlFromInsCode('visitorsmanagement',
+                                  base: baseUrlFromInsCode(
+                                      'visitorsmanagementservicehub',
                                       widget.mskoolController),
                                   controller: visitorManagementsController,
                                   fhrors: hours,
