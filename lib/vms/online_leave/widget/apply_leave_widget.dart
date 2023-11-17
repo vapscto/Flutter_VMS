@@ -326,15 +326,19 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                         "Casual Leave") {
                                       initialDt2 = startDT;
                                       firstDt2 = startDT;
-                                      lastDt2 = startDT.add(Duration(days: 1));
+                                      lastDt2 =
+                                          startDT.add(const Duration(days: 2));
                                     } else if (widget.values.hrmLLeaveName ==
                                             "Comp off" ||
                                         widget.values.hrmLLeaveName ==
                                             "Emergency Leave") {
-                                      initialDt2 =
-                                          startDT.add(Duration(days: 1));
-                                      firstDt2 = startDT.add(Duration(days: 1));
-                                      lastDt2 = startDT.add(Duration(days: 2));
+                                      initialDt2 = startDT;
+                                      firstDt2 = startDT;
+                                      lastDt2 =
+                                          (date.day == currentDate.day - 1)
+                                              ? startDT
+                                              : startDT
+                                                  .add(const Duration(days: 2));
                                     } else if (widget.values.hrmLLeaveName ==
                                         "Optional Leave") {
                                       for (int i = 0;
@@ -536,9 +540,9 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                     //second
                                     DateTime? end = await showDatePickerLeave(
                                       context: context,
-                                      initialDate: firstDt,
-                                      firstDate: firstDt,
-                                      lastDate: firstDt.add(Duration(days: 2)),
+                                      initialDate: firstDt2,
+                                      firstDate: firstDt2,
+                                      lastDate: lastDt2,
                                       selectableDayPredicate: (DateTime date) {
                                         if (widget.values.hrmLLeaveName ==
                                             "Casual Leave") {
@@ -556,9 +560,11 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                                 "Comp off" ||
                                             widget.values.hrmLLeaveName ==
                                                 "Emergency Leave") {
-                                          return date.isAfter(startDT) &&
-                                              date.isBefore(lastDt2.add(
-                                                  const Duration(days: 1)));
+                                          return true
+                                              // date.isAfter(startDT) &&
+                                              //     date.isBefore(lastDt2.add(
+                                              //         const Duration(days: 1)))
+                                              ;
                                         }
                                         return true;
                                       },
