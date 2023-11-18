@@ -12,7 +12,6 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
-import 'package:open_filex/open_filex.dart';
 
 import '../../../constants/constants.dart';
 
@@ -36,6 +35,17 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
     final RxBool select = RxBool(selectAll);
     final RxBool showCheckBox = RxBool(selectAll);
     final TextEditingController remark = TextEditingController();
+    String fromDate = '';
+    String toDate = '';
+    if (value.hRELAPFromDate != null) {
+      var dt = DateTime.parse(value.hRELAPFromDate!);
+      fromDate = '${numberList[dt.day]} ${shortMonth[dt.month - 1]} ${dt.year}';
+    }
+    if (value.hRELAPToDate != null) {
+      var dt2 = DateTime.parse(value.hRELAPToDate!);
+      toDate =
+          '${numberList[dt2.day]} ${shortMonth[dt2.month - 1]} ${dt2.year}';
+    }
     return CustomContainer(
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -111,32 +121,39 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                         ),
                 ),
                 const SizedBox(
-                  width: 12.0,
+                  width: 8.0,
                 ),
-                Row(
-                  children: [
-                    Text(
-                      "Leave From : ",
-                      style: Theme.of(context).textTheme.titleSmall!.merge(
-                            TextStyle(
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .color,
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: Wrap(
+                    runSpacing: 8,
+                    spacing: 8,
+                    children: [
+                      Text(
+                        "Leave From : ",
+                        style: Theme.of(context).textTheme.titleSmall!.merge(
+                              TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .color,
+                              ),
                             ),
-                          ),
-                    ),
-                    Text(
-                      value.hRELAPFromDate == null || value.hRELAPToDate == null
-                          ? "N/a"
-                          : "${getFormatedDate(DateTime.parse(value.hRELAPFromDate!)).substring(0, getFormatedDate(DateTime.parse(value.hRELAPFromDate!)).length - 2)} - ${getFormatedDate(DateTime.parse(value.hRELAPToDate!)).substring(0, getFormatedDate(DateTime.parse(value.hRELAPToDate!)).length - 2)}",
-                      style: Theme.of(context).textTheme.titleSmall!.merge(
-                            const TextStyle(
-                              fontWeight: FontWeight.w600,
+                      ),
+                      Text(
+                        value.hRELAPFromDate == null ||
+                                value.hRELAPToDate == null
+                            ? "N/a"
+                            : "$fromDate TO $toDate",
+                        //  "${getFormatedDate(DateTime.parse(value.hRELAPFromDate!)).substring(0, getFormatedDate(DateTime.parse(value.hRELAPFromDate!)).length - 2)} - ${getFormatedDate(DateTime.parse(value.hRELAPToDate!)).substring(0, getFormatedDate(DateTime.parse(value.hRELAPToDate!)).length - 2)}",
+                        style: Theme.of(context).textTheme.titleSmall!.merge(
+                              const TextStyle(
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 )
               ],
             ),
