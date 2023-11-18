@@ -325,7 +325,7 @@ class AppliedLeaveModelValues {
     hrelaPId = json['hrelaP_Id'];
     hrelaPFromDate = json['hrelaP_FromDate'];
     hrelaPToDate = json['hrelaP_ToDate'];
-    hrelaPTotalDays = json['hrelaP_TotalDays'];
+    hrelaPTotalDays = json['hreltD_TotDays'];
     hrelaPLeaveReason = json['hrelaP_LeaveReason'];
     hrelaPContactNoOnLeave = json['hrelaP_ContactNoOnLeave'];
     hrelaPApplicationStatus = json['hrelaP_ApplicationStatus'];
@@ -439,7 +439,7 @@ class AppliedLeaveModelValues {
     data['hrelaP_Id'] = hrelaPId;
     data['hrelaP_FromDate'] = hrelaPFromDate;
     data['hrelaP_ToDate'] = hrelaPToDate;
-    data['hrelaP_TotalDays'] = hrelaPTotalDays;
+    data['hreltD_TotDays'] = hrelaPTotalDays;
     data['hrelaP_LeaveReason'] = hrelaPLeaveReason;
     data['hrelaP_ContactNoOnLeave'] = hrelaPContactNoOnLeave;
     data['hrelaP_ApplicationStatus'] = hrelaPApplicationStatus;

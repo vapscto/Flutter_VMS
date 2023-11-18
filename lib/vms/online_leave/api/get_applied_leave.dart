@@ -15,6 +15,11 @@ class GetAppliedLeave {
   }) async {
     final Dio ins = getGlobalDio();
     final String apiUrl = base + URLS.appliedLeaves;
+    logger.i(apiUrl);
+    logger.i({
+      "MI_Id": miId,
+      "UserId": userId,
+    });
     try {
       final Response response = await ins
           .post(apiUrl, options: Options(headers: getSession()), data: {
