@@ -579,6 +579,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                     endDT = end;
                                     endDate.text =
                                         "${end.day}-${end.month}-${end.year}";
+                                    reportingDate.text =
+                                        "${end.day + 1}-${end.month}-${end.year}";
                                     Duration difference =
                                         endDT.difference(startDT);
                                     totalDay.value = "${difference.inDays + 1}";
@@ -979,6 +981,11 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                   msg: "Please provide a valid phone number");
               return;
             }
+            if (!RegExp(r'^[6789]\d{9}$').hasMatch(phone.text)) {
+              Fluttertoast.showToast(
+                  msg: "Please provide a valid phone number");
+              return;
+            }
 
             if (startDate.text.isEmpty) {
               Fluttertoast.showToast(msg: "Please provide start date");
@@ -1023,7 +1030,9 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                   reportingDate:
                                       reportingDT.toLocal().toString(),
                                   supportingDocument:
-                                      controllerOL.attachment.first!.path,
+                                      (controllerOL.attachment.isNotEmpty)
+                                          ? controllerOL.attachment.first!.path
+                                          : "undefined",
                                   frmToDate: [
                                     {
                                       "HRELAP_FromDate":
