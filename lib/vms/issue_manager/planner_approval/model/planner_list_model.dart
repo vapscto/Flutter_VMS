@@ -30,7 +30,7 @@ class PlannerListModelValues {
   int? hRMEId;
   int? iSMTPLPlannedBy;
   String? iSMTPLPlannerName;
-  Null? iSMTPLRemarks;
+  String? iSMTPLRemarks;
   String? iSMTPLStartDate;
   String? iSMTPLEndDate;
   double? iSMTPLTotalHrs;

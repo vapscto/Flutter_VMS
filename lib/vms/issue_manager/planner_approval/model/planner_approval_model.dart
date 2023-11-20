@@ -49,7 +49,7 @@ class PlannerApprovalListModelValues {
   String? iSMTPLTAStatus;
   int? iSMTPLPlannedBy;
   String? iSMTPLPlannerName;
-  Null? iSMTPLRemarks;
+  String? iSMTPLRemarks;
   String? iSMTPLStartDate;
   String? iSMTPLEndDate;
   double? iSMTPLTotalHrs;
@@ -62,7 +62,7 @@ class PlannerApprovalListModelValues {
   String? iSMTCRASTOStartDate;
   String? iSMTCRASTOEndDate;
   double? iSMTPLTAEffortInHrs;
-  Null? iSMTPLTARemarks;
+  String? iSMTPLTARemarks;
   int? mIId;
   String? plannedby;
   bool? iSMTPLTAPreviousTask;

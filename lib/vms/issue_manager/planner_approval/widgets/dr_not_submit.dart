@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/controller/planner_approval_controller.dart';
+import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 
 class DrNotSubmitWidget extends StatelessWidget {
@@ -44,7 +45,12 @@ class DrNotSubmitWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => MakerCheckerHome(
+                              loginSuccessModel: loginSuccessModel,
+                              mskoolController: mskoolController,
+                            ));
+                      },
                       child: const Icon(
                         Icons.arrow_back,
                         color: Colors.white,
