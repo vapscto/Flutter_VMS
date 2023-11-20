@@ -146,7 +146,6 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                 value.hRELAPToDate == null
                             ? "N/a"
                             : "$fromDate TO $toDate",
-                        //  "${getFormatedDate(DateTime.parse(value.hRELAPFromDate!)).substring(0, getFormatedDate(DateTime.parse(value.hRELAPFromDate!)).length - 2)} - ${getFormatedDate(DateTime.parse(value.hRELAPToDate!)).substring(0, getFormatedDate(DateTime.parse(value.hRELAPToDate!)).length - 2)}",
                         style: Theme.of(context).textTheme.titleSmall!.merge(
                               const TextStyle(
                                 fontWeight: FontWeight.w600,
@@ -163,26 +162,6 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
             ),
             Row(
               children: [
-                // Container(
-                //   padding: const EdgeInsets.all(8.0),
-                //   decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(8.0),
-                //       color: noticeBackgroundColor.last),
-                //   child: SvgPicture.asset(
-                //     'assets/svg/medication.svg',
-                //     color: noticeColor.last,
-                //   ),
-                // ),
-
-                // CircleAvatar(
-                //   radius: 16,
-                //   backgroundImage: value.hRMEPhoto == null
-                //       ? null
-                //       : NetworkImage(value.hRMEPhoto!),
-                // ),
-                // const SizedBox(
-                //   width: 12.0,
-                // ),
                 Row(
                   children: [
                     Text(
