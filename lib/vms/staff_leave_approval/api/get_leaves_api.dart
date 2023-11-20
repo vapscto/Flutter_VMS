@@ -8,7 +8,7 @@ class GetAppliesLeavesApi {
   GetAppliesLeavesApi.init();
   static final GetAppliesLeavesApi instance = GetAppliesLeavesApi.init();
 
-  Future<List<LeaveApprovalModelValues>> getAppliedLeaves({
+  Future<List<LeaveApprovalModelValues>?> getAppliedLeaves({
     required String base,
     required int miId,
     required int loginId,
@@ -26,10 +26,12 @@ class GetAppliesLeavesApi {
         "MI_Id": miId,
         "LoginId": loginId,
       });
-      LeaveApprovalModel appliedLeaves =
-          LeaveApprovalModel.fromJson(response.data['get_leavestatus']);
-      logger.i(response.data['get_leavestatus']);
-      return Future.value(appliedLeaves.values);
+      if (response.statusCode == 200) {
+        LeaveApprovalModel appliedLeaves =
+            LeaveApprovalModel.fromJson(response.data['get_leavestatus']);
+        logger.i(response.data['get_leavestatus']);
+        return Future.value(appliedLeaves.values);
+      }
 
       // if (response.data['get_leavestatus'] == null) {
       //   return Future.error({

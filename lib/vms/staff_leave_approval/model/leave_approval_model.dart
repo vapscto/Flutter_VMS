@@ -38,7 +38,7 @@ class LeaveApprovalModelValues {
   int? hRMEId;
   int? hRMLId;
   String? hRELAPApplicationID;
-  int? hRELAPSupportingDocument;
+  dynamic hRELAPSupportingDocument;
   int? hRELAPARemarks;
   String? hRELAPApplicationDate;
   dynamic proxyName;

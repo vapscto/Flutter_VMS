@@ -1013,9 +1013,12 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                 barrierDismissible: false,
                 builder: (_) {
                   // RxList<String> attachment = <String>[].obs;
-                  // for (int i = 0; i < controllerOL.attachment.length; i++) {
+                  // if(controllerOL.attachment.isNotEmpty){
+                  //    for (int i = 0; i < controllerOL.attachment.length; i++) {
                   //   attachment.add(controllerOL.attachment.elementAt(i)!.path);
                   // }
+                  // }
+
                   return Dialog(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0)),
@@ -1036,7 +1039,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                   reportingDate:
                                       reportingDT.toLocal().toString(),
                                   supportingDocument:
-                                      (controllerOL.attachment.isNotEmpty)
+                                      (controllerOL.attachment.first != null)
                                           ? controllerOL.attachment.first!.path
                                           : "undefined",
                                   frmToDate: [
