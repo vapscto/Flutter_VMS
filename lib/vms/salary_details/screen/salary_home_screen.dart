@@ -15,12 +15,14 @@ import 'package:m_skool_flutter/widget/home_fab.dart';
 class SalaryHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final int index;
   final String title;
   const SalaryHomeScreen(
       {super.key,
       required this.loginSuccessModel,
       required this.mskoolController,
-      required this.title});
+      required this.title,
+      required this.index});
 
   @override
   State<SalaryHomeScreen> createState() => _SalaryHomeScreenState();
@@ -51,7 +53,15 @@ class _SalaryHomeScreenState extends State<SalaryHomeScreen> {
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
-        appBar: CustomAppBar(title: widget.title).getAppBar(),
+        appBar: (widget.index == 0)
+            ? CustomAppBar(title: widget.title).getAppBar()
+            : AppBar(
+                backgroundColor: Theme.of(context).primaryColor,
+                centerTitle: true,
+                title: Text(
+                  widget.title,
+                ),
+              ),
         floatingActionButton: const HomeFab(),
         body: salaryDetailsController.isLoading.value
             ? const AnimatedProgressWidget(

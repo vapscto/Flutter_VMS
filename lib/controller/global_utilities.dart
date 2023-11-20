@@ -833,8 +833,6 @@ void openMappedPages(
 //     return;
 //   }
 
-  
-
   if (pageName == "Student") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return ManagerStudentDetails(
@@ -877,7 +875,6 @@ void openMappedPages(
       return DailyReportGenration(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
-     
       );
     }));
     return;
@@ -893,10 +890,10 @@ void openMappedPages(
   }
   if (pageName == 'Salary Details') {
     Get.to(() => SalaryHomeScreen(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-          title: pageName,
-        ));
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        title: pageName,
+        index: 0));
   }
   if (pageName == 'Staff Notice Board') {
     Get.to(() => NoticeBoardStaffHome(
@@ -931,7 +928,7 @@ void openMappedPages(
     );
     return;
   }
- if (pageName == "Birthday") {
+  if (pageName == "Birthday") {
     Get.to(
       () => HomeHCheckup(
         loginSuccessModel: loginSuccessModel,

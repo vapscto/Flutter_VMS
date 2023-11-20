@@ -14,6 +14,7 @@ import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller
 import 'package:m_skool_flutter/tabs/dashboard.dart';
 import 'package:m_skool_flutter/vms/profile/screens/profile_screen.dart';
 import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart';
+import 'package:m_skool_flutter/vms/salary_details/screen/salary_home_screen.dart';
 import 'package:m_skool_flutter/vms/task%20creation/screens/taskCreationHome.dart';
 import 'package:m_skool_flutter/vms/utils/common_drawer.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -83,12 +84,14 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
           selectedColor: const Color(0xFF9900F0),
         ),
         HomePageModel(
-          title: "Task Creation",
+          title: "Salary Details",
           icon: 'assets/images/tabinteraction.png',
-          page: TaskCreationHome(
+          page: SalaryHomeScreen(
             loginSuccessModel: widget.loginSuccessModel,
             mskoolController: widget.mskoolController,
-            previousScreen: '1',
+            index: 1,
+            // previousScreen: '1',
+            title: 'Salary Details',
             // showAppBar: false,
           ),
           selectedColor: const Color(0xFFFF008C),
