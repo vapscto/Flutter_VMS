@@ -161,29 +161,47 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
               height: 6.0,
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      "Name : ",
-                      style: Theme.of(context).textTheme.titleSmall!.merge(
-                            TextStyle(
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .color,
-                            ),
-                          ),
-                    ),
-                    Text(
-                      "${value.hRMEEmployeeFirstName ?? "N/a"} | ${value.hRMDESDesignationName ?? "N/a"}",
-                      style: Theme.of(context).textTheme.titleSmall!.merge(
-                            const TextStyle(
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                    )
-                  ],
+                Text(
+                  "Name : ",
+                  style: Theme.of(context).textTheme.titleSmall!.merge(
+                        TextStyle(
+                          color: Theme.of(context).textTheme.labelMedium!.color,
+                        ),
+                      ),
+                ),
+                Text(
+                  "${value.hRMEEmployeeFirstName ?? "N/a"} ",
+                  style: Theme.of(context).textTheme.titleSmall!.merge(
+                        const TextStyle(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 6.0,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Designation : ",
+                  style: Theme.of(context).textTheme.titleSmall!.merge(
+                        TextStyle(
+                          color: Theme.of(context).textTheme.labelMedium!.color,
+                        ),
+                      ),
+                ),
+                Text(
+                  "${value.hRMDESDesignationName ?? "N/a"}",
+                  style: Theme.of(context).textTheme.titleSmall!.merge(
+                        const TextStyle(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                 )
               ],
             ),
