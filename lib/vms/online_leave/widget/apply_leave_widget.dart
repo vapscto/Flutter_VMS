@@ -769,22 +769,21 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                             msg: "Please provide leave days");
                                         return;
                                       }
-                                      // if (endDT.difference(startDT).inDays >=
-                                      //     1) {
-                                      //   Fluttertoast.showToast(
-                                      //       msg:
-                                      //           "You can't apply for half day, because you are applying for more than 1 day");
-                                      //   return;
-                                      // }
+                                      if (endDT.difference(startDT).inDays >=
+                                          1) {
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "You can't apply for half day, because you are applying for more than 1 day");
+                                        return;
+                                      }
                                       var difference =
                                           endDT.difference(startDT).inDays + 1;
                                       isHalfDay.value = true;
-                                      if (difference == 1) {
-                                        totalDay.value = "${difference / 2}";
-                                      } else if (difference > 1) {
-                                        totalDay.value = "${difference - 0.5}";
-                                      }
-                                      logger.e("===${totalDay.value}");
+                                      // if (difference == 1) {
+                                      totalDay.value = "${difference / 2}";
+                                      // } else if (difference > 1) {
+                                      //   totalDay.value = "${difference - 0.5}";
+                                      // }
                                     },
                                     child: AnimatedContainer(
                                         alignment: Alignment.center,
