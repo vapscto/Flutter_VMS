@@ -21,6 +21,7 @@ class PlannerDetailsAPI {
     required int asmayId,
     required double effort,
     required int ismtplId,
+    required int view,
   }) async {
     var url = base + URLS.plannerApprovelist;
     var dio = Dio();
@@ -37,8 +38,22 @@ class PlannerDetailsAPI {
         "ASMAY_Id": asmayId,
         "ISMTCRASTO_EffortInHrs": effort,
         "ISMTCRASTO_ActiveFlg": flag,
+        "ISMTPL_Id": ismtplId,
+        "view": view,
+      });
+      logger.i({
+        "UserId": userId,
+        "ISMMAC_Id": ismmacId,
+        "MI_Id": miId,
+        "completdcount": completedCount,
+        "Role_flag": "S",
+        "IVRMRT_Id": ivrmrtId,
+        "ASMAY_Id": asmayId,
+        "ISMTCRASTO_EffortInHrs": effort,
+        "ISMTCRASTO_ActiveFlg": flag,
         "ISMTPL_Id": ismtplId
       });
+      logger.i(url);
       if (response.statusCode == 200) {
         PlannerApprovalListModel plannerApprovalListModel =
             PlannerApprovalListModel.fromJson(

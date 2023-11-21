@@ -43,7 +43,7 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
     await GetAppliedLeavesApi.instance.getAppliedLeaves(
         base: baseUrlFromInsCode("leave", widget.mskoolController),
         miId: widget.loginSuccessModel.mIID!,
-        loginId: 61045, //widget.loginSuccessModel.userId!,
+        loginId: widget.loginSuccessModel.userId!,
         leaveApproveController: leaveApproveController);
     leaveApproveController.leaveLoading(false);
   }

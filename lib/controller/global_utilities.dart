@@ -52,6 +52,7 @@ import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart'
 import 'package:m_skool_flutter/vms/rating_report/screen/rating_report_home.dart';
 import 'package:m_skool_flutter/vms/salary_details/screen/salary_home_screen.dart';
 import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
+import 'package:m_skool_flutter/vms/staff_leave_approval/screen/leave_list_home.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
@@ -870,7 +871,7 @@ void openMappedPages(
 
   if (pageName == "Leave Approval") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return StaffLeaveApproval(
+      return ListLeaveHomeScreen(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
         title: pageName,

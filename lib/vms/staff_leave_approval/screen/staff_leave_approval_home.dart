@@ -40,11 +40,11 @@ class _StaffLeaveApprovalState extends State<StaffLeaveApproval> {
     return Scaffold(
       appBar: CustomAppBar(title: widget.title).getAppBar(),
       floatingActionButton: const HomeFab(),
-      body: FutureBuilder<List<LeaveApprovalModelValues>>(
+      body: FutureBuilder<List<LeaveApprovalModelValues>?>(
           future: GetAppliesLeavesApi.instance.getAppliedLeaves(
             base: baseUrlFromInsCode("leave", widget.mskoolController),
             miId: widget.loginSuccessModel.mIID!,
-            loginId: 61045, //widget.loginSuccessModel.userId!,
+            loginId: widget.loginSuccessModel.userId!,
           ),
           builder: (_, snapshot) {
             if (snapshot.hasData) {

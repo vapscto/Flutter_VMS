@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
+import 'package:open_filex/open_filex.dart';
 
 import '../../../constants/constants.dart';
 
@@ -145,7 +146,6 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                 value.hRELAPToDate == null
                             ? "N/a"
                             : "$fromDate TO $toDate",
-                        //  "${getFormatedDate(DateTime.parse(value.hRELAPFromDate!)).substring(0, getFormatedDate(DateTime.parse(value.hRELAPFromDate!)).length - 2)} - ${getFormatedDate(DateTime.parse(value.hRELAPToDate!)).substring(0, getFormatedDate(DateTime.parse(value.hRELAPToDate!)).length - 2)}",
                         style: Theme.of(context).textTheme.titleSmall!.merge(
                               const TextStyle(
                                 fontWeight: FontWeight.w600,
@@ -161,49 +161,47 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
               height: 6.0,
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Container(
-                //   padding: const EdgeInsets.all(8.0),
-                //   decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(8.0),
-                //       color: noticeBackgroundColor.last),
-                //   child: SvgPicture.asset(
-                //     'assets/svg/medication.svg',
-                //     color: noticeColor.last,
-                //   ),
-                // ),
-
-                // CircleAvatar(
-                //   radius: 16,
-                //   backgroundImage: value.hRMEPhoto == null
-                //       ? null
-                //       : NetworkImage(value.hRMEPhoto!),
-                // ),
-                // const SizedBox(
-                //   width: 12.0,
-                // ),
-                Row(
-                  children: [
-                    Text(
-                      "Name : ",
-                      style: Theme.of(context).textTheme.titleSmall!.merge(
-                            TextStyle(
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .color,
-                            ),
-                          ),
-                    ),
-                    Text(
-                      "${value.hRMEEmployeeFirstName ?? "N/a"} | ${value.hRMDESDesignationName ?? "N/a"}",
-                      style: Theme.of(context).textTheme.titleSmall!.merge(
-                            const TextStyle(
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                    )
-                  ],
+                Text(
+                  "Name : ",
+                  style: Theme.of(context).textTheme.titleSmall!.merge(
+                        TextStyle(
+                          color: Theme.of(context).textTheme.labelMedium!.color,
+                        ),
+                      ),
+                ),
+                Text(
+                  "${value.hRMEEmployeeFirstName ?? "N/a"} ",
+                  style: Theme.of(context).textTheme.titleSmall!.merge(
+                        const TextStyle(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 6.0,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Designation : ",
+                  style: Theme.of(context).textTheme.titleSmall!.merge(
+                        TextStyle(
+                          color: Theme.of(context).textTheme.labelMedium!.color,
+                        ),
+                      ),
+                ),
+                Text(
+                  "${value.hRMDESDesignationName ?? "N/a"}",
+                  style: Theme.of(context).textTheme.titleSmall!.merge(
+                        const TextStyle(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                 )
               ],
             ),
@@ -315,36 +313,36 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            // (value.hRELAPSupportingDocument !=
-                                            //             null ||
-                                            //         value.hRELAPSupportingDocument !=
-                                            //             'undefined')
-                                            //     ? InkWell(
-                                            //         onTap: () {
-                                            //           OpenFilex.open(value
-                                            //               .hRELAPSupportingDocument
-                                            //               .toString());
-                                            //         },
-                                            //         child: Container(
-                                            //           decoration: BoxDecoration(
-                                            //               borderRadius:
-                                            //                   BorderRadius
-                                            //                       .circular(10),
-                                            //               color: Colors
-                                            //                   .green[100]),
-                                            //           child: const Padding(
-                                            //             padding:
-                                            //                 EdgeInsets.all(3.0),
-                                            //             child: Center(
-                                            //               child: Icon(
-                                            //                 Icons.visibility,
-                                            //                 color: Colors.green,
-                                            //               ),
-                                            //             ),
-                                            //           ),
-                                            //         ),
-                                            //       )
-                                            //     : const SizedBox(),
+                                            (value.hRELAPSupportingDocument !=
+                                                        null ||
+                                                    value.hRELAPSupportingDocument !=
+                                                        'undefined')
+                                                ? InkWell(
+                                                    onTap: () {
+                                                      OpenFilex.open(value
+                                                          .hRELAPSupportingDocument
+                                                          .toString());
+                                                    },
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          color: Colors
+                                                              .green[100]),
+                                                      child: const Padding(
+                                                        padding:
+                                                            EdgeInsets.all(3.0),
+                                                        child: Center(
+                                                          child: Icon(
+                                                            Icons.visibility,
+                                                            color: Colors.green,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                : const SizedBox(),
                                             Expanded(
                                               child: Column(
                                                 crossAxisAlignment:

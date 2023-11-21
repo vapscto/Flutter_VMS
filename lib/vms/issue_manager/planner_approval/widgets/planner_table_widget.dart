@@ -18,25 +18,28 @@ class AllPlannerTable {
   int ptsCount;
   String startDate;
   String endDate;
+  // int ismtplId;
 
   AllPlannerTable(
-      this.flag,
-      this.taskNo,
-      this.taskName,
-      this.taskType,
-      this.clint,
-      this.category,
-      this.periodicity,
-      this.plannedDate,
-      this.date,
-      this.effort,
-      this.remarks,
-      this.ismtpltaId,
-      this.createdBy,
-      this.duration,
-      this.ismtcrId,
-      this.status,
-      this.ptsCount,
-      this.startDate,
-      this.endDate);
+    this.flag,
+    this.taskNo,
+    this.taskName,
+    this.taskType,
+    this.clint,
+    this.category,
+    this.periodicity,
+    this.plannedDate,
+    this.date,
+    this.effort,
+    this.remarks,
+    this.ismtpltaId,
+    this.createdBy,
+    this.duration,
+    this.ismtcrId,
+    this.status,
+    this.ptsCount,
+    this.startDate,
+    this.endDate,
+    // this.ismtplId
+  );
 }
