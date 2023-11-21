@@ -18,7 +18,7 @@ Future<bool> getPlanerdetails({
   required int miId,
 }) async {
   final Dio ins = getGlobalDio();
-  String baseApi = "https://vms.vapstech.com:44011/";
+ // String baseApi = "https://vms.vapstech.com:44011/";
   final String apiUrl = base + URLS.drDetailsGenration;
   //  print(base);
   controller.updatePlannerDeatails(true);
@@ -27,8 +27,8 @@ Future<bool> getPlanerdetails({
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
       "MI_Id": miId,
-      "UserId": 60934,
-      "IVRMRT_Id": 18,
+      "UserId": userId,
+      "IVRMRT_Id": ivrmrtId,
     });
     logger.e({
       "MI_Id": miId,

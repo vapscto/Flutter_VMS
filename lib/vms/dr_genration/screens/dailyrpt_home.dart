@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/api/get_planner_details_api.dart';
+import 'package:m_skool_flutter/vms/dr_genration/api/get_task_check_list.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
@@ -25,7 +26,7 @@ class DailyReportGenration extends StatefulWidget {
 }
 
 class _DailyReportGenrationState extends State<DailyReportGenration> {
-  PlannerDetails _plannerDetailsController = Get.put(PlannerDetails());
+  final PlannerDetails _plannerDetailsController = Get.put(PlannerDetails());
   RxBool halfDay = RxBool(false);
   List<int> selectCheckbox = [];
   List<GetTaskDrListModelValues> fliteresList = [];
@@ -588,11 +589,18 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       .checkBoxList[
                                                                   index],
                                                               onChanged:
-                                                                  (value) {
-                                                                 if(fliteresList
+                                                                  (value)  {
+                                                                      getCategoryChecklistDetails(base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+                                                                    controller: _plannerDetailsController,
+                                                                    ismctrId: fliteresList
                                                                 .elementAt(
-                                                                    index).taskcategoryname=="New Module Development - Enhancements"){
-                                                                   showDialog(context: context, builder:(context) {
+                                                                    index).iSMTCRId!,
+                                                                    ismmcatId: fliteresList
+                                                                .elementAt(
+                                                                    index).iSMMTCATId!
+                                                                   ).then((value) {
+                                                                      if(value!.values!.isNotEmpty){
+                                                                    showDialog(context: context, builder:(context) {
                                                                         return Center(
                                                                           child: Container(
                                                                             padding:const EdgeInsets.symmetric(horizontal: 0),
@@ -620,6 +628,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                         );
                                                                    });
                                                                     }
+                                                                   },);
+                                                                
                                                                 _plannerDetailsController
                                                                         .checkBoxList[
                                                                     index] = value!;
