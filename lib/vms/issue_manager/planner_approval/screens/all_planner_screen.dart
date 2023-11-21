@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/api/planner_approval_save_api.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/api/planner_details_api.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_approval/api/planner_list_api.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/controller/planner_approval_controller.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/widgets/planner_table_widget.dart';
 import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
@@ -108,7 +109,8 @@ class _AllPlannersState extends State<AllPlanners> {
         ivrmrtId: widget.plannerApprovalController.ivrmrtId,
         asmayId: widget.loginSuccessModel.asmaYId!,
         effort: widget.plannerApprovalController.effort,
-        ismtplId: widget.ismtplId);
+        ismtplId: widget.ismtplId,
+        view: 1);
     for (int i = 0;
         i < widget.plannerApprovalController.plannerApprovalList.length;
         i++) {
@@ -130,9 +132,9 @@ class _AllPlannersState extends State<AllPlanners> {
               .elementAt(i)
               .iSMTPLTAPreviousTask ==
           true) {
-        deviatedEffort += widget.plannerApprovalController.plannerApprovalList
+        deviatedEffort += (widget.plannerApprovalController.plannerApprovalList
             .elementAt(i)
-            .iSMTPLTAEffortInHrs!;
+            .iSMTPLTAEffortInHrs!);
       }
       var value =
           widget.plannerApprovalController.plannerApprovalList.elementAt(i);
@@ -211,7 +213,7 @@ class _AllPlannersState extends State<AllPlanners> {
         "ISMTPLAPTA_StartDate": value.startDate,
         "ISMTPLAPTA_EndDate": value.endDate,
         "ISMTPLAPTA_EffortInHrs": value.effort,
-        "ISMTPLAPTA_Status": selectedItemValue, //value.status,
+        "ISMTPLAPTA_Status": selectedItemValue[i], //value.status,
         "plannerStatus": 1,
         "ISMTPLTA_Id": value.ismtpltaId,
         "ISMTPL_Id": widget.ismtplId,
@@ -230,12 +232,24 @@ class _AllPlannersState extends State<AllPlanners> {
       view: 1,
       ismtplId: widget.ismtplId,
       remarks: _remarkController.text,
-      totalEffort: approveEffort, //widget.plannerApprovalController.effort,
-      // taskPercentage: 0.0,
-      // compulsoryFlag: false
+      totalEffort: approveEffort,
     );
     _getData();
+    // _getPlannerData();
     Get.back();
+    Get.back();
+  }
+
+  int visibleRowCount = 10;
+  _getPlannerData() async {
+    widget.plannerApprovalController.plannerLoading(true);
+    await PlannerListAPI.instance.plannerListAPI(
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+        plannerApprovalController: widget.plannerApprovalController,
+        userId: widget.loginSuccessModel.userId!,
+        miId: widget.loginSuccessModel.mIID!,
+        roleId: widget.loginSuccessModel.roleId!);
+    widget.plannerApprovalController.plannerLoading(false);
   }
 
   @override
@@ -417,7 +431,8 @@ class _AllPlannersState extends State<AllPlanners> {
                                     style: Get.textTheme.titleSmall!.copyWith(
                                         color: Theme.of(context).primaryColor)),
                                 TextSpan(
-                                    text: '$deviatedEffort Hr',
+                                    text:
+                                        '${deviatedEffort.toStringAsFixed(1)} Hr',
                                     style:
                                         Get.textTheme.titleSmall!.copyWith()),
                               ])),
@@ -429,7 +444,8 @@ class _AllPlannersState extends State<AllPlanners> {
                                     style: Get.textTheme.titleSmall!.copyWith(
                                         color: Theme.of(context).primaryColor)),
                                 TextSpan(
-                                    text: '$approveEffort Hr ',
+                                    text:
+                                        '${approveEffort.toStringAsFixed(1)} Hr ',
                                     style:
                                         Get.textTheme.titleSmall!.copyWith()),
                               ])),
@@ -441,7 +457,8 @@ class _AllPlannersState extends State<AllPlanners> {
                                     style: Get.textTheme.titleSmall!.copyWith(
                                         color: Theme.of(context).primaryColor)),
                                 TextSpan(
-                                    text: '$rejectEffort Hr ',
+                                    text:
+                                        '${rejectEffort.toStringAsFixed(1)} Hr ',
                                     style:
                                         Get.textTheme.titleSmall!.copyWith()),
                               ])),
@@ -456,431 +473,483 @@ class _AllPlannersState extends State<AllPlanners> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: DataTable(
-                            showCheckboxColumn: true,
-                            headingRowColor: MaterialStatePropertyAll(
-                                Theme.of(context).primaryColor),
-                            headingTextStyle: Get.textTheme.titleSmall!
-                                .copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600),
-                            dataTextStyle: Get.textTheme.titleSmall!,
-                            dataRowHeight:
-                                MediaQuery.of(context).size.height * 0.26,
-                            headingRowHeight:
-                                MediaQuery.of(context).size.height * 0.08,
-                            horizontalMargin: 10,
-                            columnSpacing:
-                                MediaQuery.of(context).size.width * 0.08,
-                            dividerThickness: 1,
-                            border: TableBorder.all(
-                                borderRadius: BorderRadius.circular(10),
-                                width: 0.5),
-                            columns: [
-                              const DataColumn(
-                                  label: Text(
-                                "Sl No.",
-                                textAlign: TextAlign.center,
-                              )),
-                              DataColumn(
-                                  numeric: true,
-                                  label: Align(
-                                    alignment: Alignment.center,
-                                    child: Checkbox(
-                                        checkColor: Colors.indigo,
-                                        shape: ContinuousRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        value: selectAll,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            selectAll = value!;
-                                            if (selectAll) {
-                                              for (var i = 0;
-                                                  i < allPlannerList.length;
-                                                  i++) {
-                                                checkList.add(i);
-                                                setState(() {
-                                                  allPlannerList
-                                                      .elementAt(i)
-                                                      .flag = true;
-                                                  if (headerGroupValue ==
-                                                      'Approve All') {
-                                                    addApproveEffort(
-                                                        double.parse(
-                                                            allPlannerList[i]
-                                                                .effort));
-                                                  } else if (headerGroupValue ==
-                                                      'Reject All') {
-                                                    addRejectEffort(
-                                                        double.parse(
-                                                            allPlannerList[i]
-                                                                .effort));
-                                                  }
-                                                });
+                              showCheckboxColumn: true,
+                              headingRowColor: MaterialStatePropertyAll(
+                                  Theme.of(context).primaryColor),
+                              headingTextStyle: Get.textTheme.titleSmall!
+                                  .copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600),
+                              dataTextStyle: Get.textTheme.titleSmall!,
+                              dataRowHeight:
+                                  MediaQuery.of(context).size.height * 0.26,
+                              headingRowHeight:
+                                  MediaQuery.of(context).size.height * 0.08,
+                              horizontalMargin: 10,
+                              columnSpacing:
+                                  MediaQuery.of(context).size.width * 0.08,
+                              dividerThickness: 1,
+                              border: TableBorder.all(
+                                  borderRadius: BorderRadius.circular(10),
+                                  width: 0.5),
+                              columns: [
+                                const DataColumn(
+                                    label: Text(
+                                  "Sl No.",
+                                  textAlign: TextAlign.center,
+                                )),
+                                DataColumn(
+                                    numeric: true,
+                                    label: Align(
+                                      alignment: Alignment.center,
+                                      child: Checkbox(
+                                          checkColor: Colors.indigo,
+                                          shape: ContinuousRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          value: selectAll,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              selectAll = value!;
+                                              if (selectAll) {
+                                                for (var i = 0;
+                                                    i < allPlannerList.length;
+                                                    i++) {
+                                                  checkList.add(i);
+                                                  setState(() {
+                                                    allPlannerList
+                                                        .elementAt(i)
+                                                        .flag = true;
+                                                    if (headerGroupValue ==
+                                                        'Approve All') {
+                                                      addApproveEffort(
+                                                          double.parse(
+                                                              allPlannerList[i]
+                                                                  .effort));
+                                                    } else if (headerGroupValue ==
+                                                        'Reject All') {
+                                                      addRejectEffort(
+                                                          double.parse(
+                                                              allPlannerList[i]
+                                                                  .effort));
+                                                    }
+                                                  });
+                                                }
+                                              } else {
+                                                for (var i = 0;
+                                                    i < allPlannerList.length;
+                                                    i++) {
+                                                  checked = allPlannerList[i]
+                                                      .flag = false;
+                                                  for (int i = 0;
+                                                      i < checkList.length;
+                                                      i++) {}
+                                                  rejectEffort = 0.0;
+                                                  approveEffort = 0.0;
+                                                }
+
+                                                checkList.clear();
+                                                setState(() {});
                                               }
-                                            } else {
-                                              for (var i = 0;
-                                                  i < allPlannerList.length;
-                                                  i++) {
-                                                checked = allPlannerList[i]
+                                            });
+                                          }),
+                                    )),
+                                const DataColumn(
+                                    numeric: true,
+                                    label: Text(
+                                      "Issue/Task Details",
+                                      textAlign: TextAlign.center,
+                                    )),
+                                DataColumn(
+                                    numeric: true,
+                                    label: Container(
+                                      width: 140,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border:
+                                              Border.all(color: Colors.black)),
+                                      child: Center(
+                                        child: DropdownButton<dynamic>(
+                                          underline: Container(),
+                                          elevation: 0,
+                                          iconSize: 0,
+                                          icon: Icon(
+                                            Icons.keyboard_arrow_down,
+                                            size: 30,
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                          ),
+                                          dropdownColor: Colors.white,
+                                          value: headerGroupValue,
+                                          items: dropdownMenuItems,
+                                          style: Get.textTheme.titleSmall,
+                                          onChanged: (dynamic newValue) {
+                                            setState(() {
+                                              headerGroupValue = newValue;
+                                              if (headerGroupValue ==
+                                                  'Approve All') {
+                                                dataRowGroupValue = 'Approve';
+                                              } else if (headerGroupValue ==
+                                                  'Reject All') {
+                                                dataRowGroupValue = 'Reject';
+                                              }
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                    )),
+                                const DataColumn(
+                                    numeric: true,
+                                    label: Text(
+                                      "Effort",
+                                      textAlign: TextAlign.center,
+                                    )),
+                                const DataColumn(
+                                    numeric: true,
+                                    label: Text(
+                                      "Remarks",
+                                    )),
+                              ],
+                              rows:
+                                  List.generate(allPlannerList.length, (index) {
+                                var v = index + 1;
+                                for (int i = 0;
+                                    i < allPlannerList.length;
+                                    i++) {
+                                  selectedItemValue.add(dataRowGroupValue);
+                                }
+                                addRemarks(TextEditingController(
+                                    text: allPlannerList[index].remarks));
+                                return DataRow(
+                                    color: (widget.plannerApprovalController
+                                                .plannerApprovalList
+                                                .elementAt(index)
+                                                .iSMTPLTAPreviousTask ==
+                                            false)
+                                        ? const MaterialStatePropertyAll(
+                                            Colors.white)
+                                        : MaterialStatePropertyAll(
+                                            Colors.indigo.withOpacity(0.3)),
+                                    cells: [
+                                      DataCell(
+                                        Text(v.toString()),
+                                      ),
+                                      DataCell(Checkbox(
+                                          checkColor:
+                                              Theme.of(context).primaryColor,
+                                          shape: ContinuousRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          value: allPlannerList
+                                              .elementAt(index)
+                                              .flag,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              checked = allPlannerList
+                                                  .elementAt(index)
+                                                  .flag = value!;
+                                              if (checkList.contains(index)) {
+                                                checkList.remove(index);
+                                                checked = allPlannerList[index]
                                                     .flag = false;
-                                                for (int i = 0;
-                                                    i < checkList.length;
-                                                    i++) {}
+                                                if (allPlannerList.length !=
+                                                    checkList.length) {
+                                                  selectAll = false;
+                                                }
+                                              } else {
+                                                checkList.add(index);
+                                                if (allPlannerList.length ==
+                                                    checkList.length) {
+                                                  selectAll = true;
+                                                }
+                                              }
+                                              if (value == false) {
                                                 rejectEffort = 0.0;
                                                 approveEffort = 0.0;
                                               }
-
-                                              checkList.clear();
-                                              setState(() {});
-                                            }
-                                          });
-                                        }),
-                                  )),
-                              const DataColumn(
-                                  numeric: true,
-                                  label: Text(
-                                    "Issue/Task Details",
-                                    textAlign: TextAlign.center,
-                                  )),
-                              DataColumn(
-                                  numeric: true,
-                                  label: Container(
-                                    width: 140,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
-                                        border:
-                                            Border.all(color: Colors.black)),
-                                    child: Center(
-                                      child: DropdownButton<dynamic>(
-                                        underline: Container(),
-                                        elevation: 0,
-                                        iconSize: 0,
-                                        icon: Icon(
-                                          Icons.keyboard_arrow_down,
-                                          size: 30,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                        dropdownColor: Colors.white,
-                                        value: headerGroupValue,
-                                        items: dropdownMenuItems,
-                                        style: Get.textTheme.titleSmall,
-                                        onChanged: (dynamic newValue) {
-                                          setState(() {
-                                            headerGroupValue = newValue;
-                                            if (headerGroupValue ==
-                                                'Approve All') {
-                                              dataRowGroupValue = 'Approve';
-                                            } else if (headerGroupValue ==
-                                                'Reject All') {
-                                              dataRowGroupValue = 'Reject';
-                                            }
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  )),
-                              const DataColumn(
-                                  numeric: true,
-                                  label: Text(
-                                    "Effort",
-                                    textAlign: TextAlign.center,
-                                  )),
-                              const DataColumn(
-                                  numeric: true,
-                                  label: Text(
-                                    "Remarks",
-                                  )),
-                            ],
-                            rows: List.generate(allPlannerList.length, (index) {
-                              var v = index + 1;
-                              for (int i = 0; i < allPlannerList.length; i++) {
-                                selectedItemValue.add(dataRowGroupValue);
-                              }
-                              addRemarks(TextEditingController(
-                                  text: allPlannerList[index].remarks));
-                              return DataRow(
-                                  color: (widget.plannerApprovalController
-                                              .plannerApprovalList
-                                              .elementAt(index)
-                                              .iSMTPLTAPreviousTask ==
-                                          false)
-                                      ? const MaterialStatePropertyAll(
-                                          Colors.white)
-                                      : MaterialStatePropertyAll(
-                                          Colors.indigo.withOpacity(0.3)),
-                                  cells: [
-                                    DataCell(
-                                      Text(v.toString()),
-                                    ),
-                                    DataCell(Checkbox(
-                                        checkColor:
-                                            Theme.of(context).primaryColor,
-                                        shape: ContinuousRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        value: allPlannerList
-                                            .elementAt(index)
-                                            .flag,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            checked = allPlannerList
-                                                .elementAt(index)
-                                                .flag = value!;
-                                            if (checkList.contains(index)) {
-                                              checkList.remove(index);
-                                              checked = allPlannerList[index]
-                                                  .flag = false;
-                                              if (allPlannerList.length !=
-                                                  checkList.length) {
-                                                selectAll = false;
-                                              }
-                                            } else {
-                                              checkList.add(index);
-                                              if (allPlannerList.length ==
-                                                  checkList.length) {
-                                                selectAll = true;
-                                              }
-                                            }
-                                            if (value == false) {
-                                              rejectEffort = 0.0;
-                                              approveEffort = 0.0;
-                                            }
-                                          });
-                                        })),
-                                    DataCell(SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.65,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            allPlannerList[index].taskNo,
-                                            style: Get.textTheme.titleSmall!
-                                                .copyWith(
-                                                    color: Theme.of(context)
-                                                        .primaryColor),
-                                          ),
-                                          Text(
-                                            allPlannerList[index].taskName,
-                                            maxLines: 2,
-                                            style: Get.textTheme.titleSmall!
-                                                .copyWith(
-                                                    color: Theme.of(context)
-                                                        .primaryColor),
-                                          ),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: 'Type Task: ',
-                                                style: Get.textTheme.titleSmall!
-                                                    .copyWith(
-                                                        color: (allPlannerList[
-                                                                        index]
-                                                                    .ismtpltaId ==
-                                                                0)
-                                                            ? Theme.of(context)
-                                                                .primaryColor
-                                                            : Colors.red)),
-                                            TextSpan(
-                                                text: allPlannerList[index]
-                                                    .taskType,
-                                                style: Get.textTheme.titleSmall!
-                                                    .copyWith()),
-                                          ])),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: 'Clint: ',
-                                                style: Get.textTheme.titleSmall!
-                                                    .copyWith(
-                                                        color: Theme.of(context)
-                                                            .primaryColor)),
-                                            TextSpan(
-                                                text:
-                                                    allPlannerList[index].clint,
-                                                style: Get.textTheme.titleSmall!
-                                                    .copyWith()),
-                                          ])),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: 'Category: ',
-                                                style: Get.textTheme.titleSmall!
-                                                    .copyWith(
-                                                        color: Theme.of(context)
-                                                            .primaryColor)),
-                                            TextSpan(
-                                                text: allPlannerList[index]
-                                                    .category,
-                                                style: Get.textTheme.titleSmall!
-                                                    .copyWith()),
-                                          ])),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: 'Periodicity: ',
-                                                style: Get.textTheme.titleSmall!
-                                                    .copyWith(
-                                                        color: Theme.of(context)
-                                                            .primaryColor)),
-                                            TextSpan(
-                                                text: allPlannerList[index]
-                                                    .periodicity,
-                                                style: Get.textTheme.titleSmall!
-                                                    .copyWith()),
-                                          ])),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: 'Assigned Date: ',
-                                                style: Get.textTheme.titleSmall!
-                                                    .copyWith(
-                                                        color: Theme.of(context)
-                                                            .primaryColor)),
-                                            TextSpan(
-                                                text: allPlannerList[index]
-                                                    .plannedDate,
-                                                style: Get.textTheme.titleSmall!
-                                                    .copyWith()),
-                                          ])),
-                                        ],
-                                      ),
-                                    )),
-                                    DataCell((allPlannerList
-                                                .elementAt(index)
-                                                .flag ==
-                                            true)
-                                        ? Container(
-                                            width: 120,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                border: Border.all(
-                                                    color: Colors.black)),
-                                            child: Center(
-                                                child: DropdownButton(
-                                              value: selectedItemValue[index]
-                                                  .toString(),
-                                              items: _dropDownItem(),
-                                              onChanged: (value) {
-                                                selectedItemValue[index] =
-                                                    value!;
-                                                if (selectedItemValue[index] ==
-                                                    'Approve') {
-                                                  addApproveEffort(double.parse(
-                                                      allPlannerList
-                                                          .elementAt(index)
-                                                          .effort));
-                                                  if (rejectEffort > 0) {
-                                                    removeRejectEffort(double
-                                                        .parse(allPlannerList
-                                                            .elementAt(index)
-                                                            .effort));
-                                                  }
-                                                } else if (selectedItemValue[
-                                                        index] ==
-                                                    'Reject') {
-                                                  addRejectEffort(double.parse(
-                                                      allPlannerList
-                                                          .elementAt(index)
-                                                          .effort));
-                                                  if (approveEffort > 0) {
-                                                    removeApproveEffort(double
-                                                        .parse(allPlannerList
-                                                            .elementAt(index)
-                                                            .effort));
-                                                  }
-                                                }
-                                                setState(() {});
-                                              },
-                                            )),
-                                          )
-                                        : Container(
-                                            width: 120,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                border: Border.all(
-                                                    color: Colors.black)),
-                                            child: Center(
-                                                child: Text(
-                                              dataRowGroupValue,
-                                              style: Get.textTheme.titleSmall,
-                                            )),
-                                          )),
-                                    DataCell((allPlannerList
-                                                .elementAt(index)
-                                                .flag ==
-                                            true)
-                                        ? SizedBox(
-                                            height: 40,
-                                            width: 100,
-                                            child: TextFormField(
-                                              style: Get.textTheme.titleSmall,
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              controller: effortController
-                                                  .elementAt(index),
-                                              decoration: InputDecoration(
-                                                  hintText: 'Effort',
-                                                  hintStyle:
-                                                      Get.textTheme.titleSmall,
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      borderSide:
-                                                          const BorderSide(
-                                                              color: Colors
-                                                                  .black))),
+                                            });
+                                          })),
+                                      DataCell(SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.65,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              allPlannerList[index].taskNo,
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .primaryColor),
                                             ),
-                                          )
-                                        : Text(
-                                            '${allPlannerList[index].effort} ${(allPlannerList[index].duration == 'HOURS') ? 'Hr' : "Min"}')),
-                                    DataCell(Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8),
-                                      child: TextFormField(
-                                        readOnly: (allPlannerList
-                                                    .elementAt(index)
-                                                    .flag ==
-                                                true)
-                                            ? false
-                                            : true,
-                                        style: Get.textTheme.titleSmall,
-                                        keyboardType: TextInputType.text,
-                                        maxLines: 2,
-                                        initialValue:
-                                            allPlannerList[index].remarks,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            allPlannerList[index].remarks =
-                                                value;
-                                          });
-                                        },
-                                        decoration: InputDecoration(
-                                            hintText: 'Task Remarks',
-                                            hintStyle: Get.textTheme.titleSmall,
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                borderSide: const BorderSide(
-                                                    color: Colors.black))),
-                                      ),
-                                    )),
-                                  ]);
-                            }),
-                          ),
+                                            Text(
+                                              allPlannerList[index].taskName,
+                                              maxLines: 2,
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .primaryColor),
+                                            ),
+                                            RichText(
+                                                text: TextSpan(children: [
+                                              TextSpan(
+                                                  text: 'Type Task: ',
+                                                  style: Get
+                                                      .textTheme.titleSmall!
+                                                      .copyWith(
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .primaryColor)),
+                                              TextSpan(
+                                                  text: allPlannerList[index]
+                                                      .taskType,
+                                                  style: Get
+                                                      .textTheme.titleSmall!
+                                                      .copyWith()),
+                                            ])),
+                                            RichText(
+                                                text: TextSpan(children: [
+                                              TextSpan(
+                                                  text: 'Clint: ',
+                                                  style: Get
+                                                      .textTheme.titleSmall!
+                                                      .copyWith(
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .primaryColor)),
+                                              TextSpan(
+                                                  text: allPlannerList[index]
+                                                      .clint,
+                                                  style: Get
+                                                      .textTheme.titleSmall!
+                                                      .copyWith()),
+                                            ])),
+                                            RichText(
+                                                text: TextSpan(children: [
+                                              TextSpan(
+                                                  text: 'Category: ',
+                                                  style: Get
+                                                      .textTheme.titleSmall!
+                                                      .copyWith(
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .primaryColor)),
+                                              TextSpan(
+                                                  text: allPlannerList[index]
+                                                      .category,
+                                                  style: Get
+                                                      .textTheme.titleSmall!
+                                                      .copyWith()),
+                                            ])),
+                                            RichText(
+                                                text: TextSpan(children: [
+                                              TextSpan(
+                                                  text: 'Periodicity: ',
+                                                  style: Get
+                                                      .textTheme.titleSmall!
+                                                      .copyWith(
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .primaryColor)),
+                                              TextSpan(
+                                                  text: allPlannerList[index]
+                                                      .periodicity,
+                                                  style: Get
+                                                      .textTheme.titleSmall!
+                                                      .copyWith()),
+                                            ])),
+                                            RichText(
+                                                text: TextSpan(children: [
+                                              TextSpan(
+                                                  text: 'Assigned Date: ',
+                                                  style: Get
+                                                      .textTheme.titleSmall!
+                                                      .copyWith(
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .primaryColor)),
+                                              TextSpan(
+                                                  text: allPlannerList[index]
+                                                      .plannedDate,
+                                                  style: Get
+                                                      .textTheme.titleSmall!
+                                                      .copyWith()),
+                                            ])),
+                                          ],
+                                        ),
+                                      )),
+                                      DataCell((allPlannerList
+                                                  .elementAt(index)
+                                                  .flag ==
+                                              true)
+                                          ? Container(
+                                              width: 120,
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                      color: Colors.black)),
+                                              child: Center(
+                                                  child: DropdownButton(
+                                                value: selectedItemValue[index]
+                                                    .toString(),
+                                                items: _dropDownItem(),
+                                                onChanged: (value) {
+                                                  selectedItemValue[index] =
+                                                      value!;
+                                                  if (selectedItemValue[
+                                                          index] ==
+                                                      'Approve') {
+                                                    addApproveEffort(double
+                                                        .parse(allPlannerList
+                                                            .elementAt(index)
+                                                            .effort));
+                                                    if (rejectEffort > 0) {
+                                                      removeRejectEffort(double
+                                                          .parse(allPlannerList
+                                                              .elementAt(index)
+                                                              .effort));
+                                                    }
+                                                  } else if (selectedItemValue[
+                                                          index] ==
+                                                      'Reject') {
+                                                    addRejectEffort(double
+                                                        .parse(allPlannerList
+                                                            .elementAt(index)
+                                                            .effort));
+                                                    if (approveEffort > 0) {
+                                                      removeApproveEffort(double
+                                                          .parse(allPlannerList
+                                                              .elementAt(index)
+                                                              .effort));
+                                                    }
+                                                  }
+                                                  setState(() {});
+                                                },
+                                              )),
+                                            )
+                                          : Container(
+                                              width: 120,
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                      color: Colors.black)),
+                                              child: Center(
+                                                  child: Text(
+                                                dataRowGroupValue,
+                                                style: Get.textTheme.titleSmall,
+                                              )),
+                                            )),
+                                      DataCell((allPlannerList
+                                                  .elementAt(index)
+                                                  .flag ==
+                                              true)
+                                          ? SizedBox(
+                                              height: 40,
+                                              width: 100,
+                                              child: TextFormField(
+                                                style: Get.textTheme.titleSmall,
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                controller: effortController
+                                                    .elementAt(index),
+                                                decoration: InputDecoration(
+                                                    hintText: 'Effort',
+                                                    hintStyle: Get
+                                                        .textTheme.titleSmall,
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        borderSide:
+                                                            const BorderSide(
+                                                                color: Colors
+                                                                    .black))),
+                                              ),
+                                            )
+                                          : Text(
+                                              '${allPlannerList[index].effort} ${(allPlannerList[index].duration == 'HOURS') ? 'Hr' : "Min"}')),
+                                      DataCell(Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8),
+                                        child: TextFormField(
+                                          readOnly: (allPlannerList
+                                                      .elementAt(index)
+                                                      .flag ==
+                                                  true)
+                                              ? false
+                                              : true,
+                                          style: Get.textTheme.titleSmall,
+                                          keyboardType: TextInputType.text,
+                                          maxLines: 2,
+                                          initialValue:
+                                              allPlannerList[index].remarks,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              allPlannerList[index].remarks =
+                                                  value;
+                                            });
+                                          },
+                                          decoration: InputDecoration(
+                                              hintText: 'Task Remarks',
+                                              hintStyle:
+                                                  Get.textTheme.titleSmall,
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  borderSide: const BorderSide(
+                                                      color: Colors.black))),
+                                        ),
+                                      )),
+                                    ]);
+                              })
+                              // .sublist(0, visibleRowCount),
+                              ),
                         ),
                       ),
+                      // (allPlannerList.isEmpty)
+                      //     ? const SizedBox()
+                      //     : Padding(
+                      //         padding:
+                      //             const EdgeInsets.only(bottom: 8.0, left: 16),
+                      //         child: Align(
+                      //           alignment: Alignment.bottomLeft,
+                      //           child: InkWell(
+                      //             onTap: () {
+                      //               setState(() {
+                      //                 visibleRowCount = (visibleRowCount + 10 <=
+                      //                         allPlannerList.length)
+                      //                     ? visibleRowCount + 10
+                      //                     : allPlannerList.length;
+                      //               });
+                      //             },
+                      //             child: Container(
+                      //               height: 35,
+                      //               width: 75,
+                      //               decoration: BoxDecoration(
+                      //                 borderRadius: BorderRadius.circular(10),
+                      //                 color: Theme.of(context).primaryColor,
+                      //               ),
+                      //               child: Center(
+                      //                   child: Text(
+                      //                 "Next",
+                      //                 style: Get.textTheme.titleSmall!
+                      //                     .copyWith(color: Colors.white),
+                      //               )),
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ),
                     ],
                   );
       }),

@@ -32,7 +32,7 @@ class PlannerApprovalListModelValues {
   int? hRMPRId;
   String? hRMPName;
   String? bugOREnhancementFlg;
-  Null? iSMTPLAPId;
+  int? iSMTPLAPId;
   String? iSMTCRBugOREnhancement;
   String? iSMTCRCreationDate;
   String? iSMTCRTitle;
@@ -40,7 +40,7 @@ class PlannerApprovalListModelValues {
   String? createdDate;
   String? iSMTCRStatus;
   bool? iSMTCRReOpenFlg;
-  Null? iSMTCRReOpenDate;
+  dynamic iSMTCRReOpenDate;
   String? iSMTCRTaskNo;
   int? iSMMCLTId;
   String? iSMMCLTClientName;
@@ -165,8 +165,8 @@ class PlannerApprovalListModelValues {
     iSMTPLTAApprovalFlg = json['ISMTPLTA_ApprovalFlg'];
     iSMTPLTAStartDate = json['ISMTPLTA_StartDate'];
     iSMTPLTAEndDate = json['ISMTPLTA_EndDate'];
-    iSMTCRASTOStartDate = json['ISMTCRASTO_StartDate'];
-    iSMTCRASTOEndDate = json['ISMTCRASTO_EndDate'];
+    iSMTCRASTOStartDate = json['ISMTPL_StartDate'];
+    iSMTCRASTOEndDate = json['ISMTPL_EndDate'];
     iSMTPLTAEffortInHrs = json['ISMTPLTA_EffortInHrs'];
     iSMTPLTARemarks = json['ISMTPLTA_Remarks'];
     mIId = json['MI_Id'];
@@ -220,8 +220,8 @@ class PlannerApprovalListModelValues {
     data['ISMTPLTA_ApprovalFlg'] = iSMTPLTAApprovalFlg;
     data['ISMTPLTA_StartDate'] = iSMTPLTAStartDate;
     data['ISMTPLTA_EndDate'] = iSMTPLTAEndDate;
-    data['ISMTCRASTO_StartDate'] = iSMTCRASTOStartDate;
-    data['ISMTCRASTO_EndDate'] = iSMTCRASTOEndDate;
+    data['ISMTPL_StartDate'] = iSMTCRASTOStartDate;
+    data['ISMTPL_EndDate'] = iSMTCRASTOEndDate;
     data['ISMTPLTA_EffortInHrs'] = iSMTPLTAEffortInHrs;
     data['ISMTPLTA_Remarks'] = iSMTPLTARemarks;
     data['MI_Id'] = mIId;

@@ -21,6 +21,7 @@ class PlannerDetailsAPI {
     required int asmayId,
     required double effort,
     required int ismtplId,
+    required int view,
   }) async {
     var url = base + URLS.plannerApprovelist;
     var dio = Dio();
@@ -37,7 +38,8 @@ class PlannerDetailsAPI {
         "ASMAY_Id": asmayId,
         "ISMTCRASTO_EffortInHrs": effort,
         "ISMTCRASTO_ActiveFlg": flag,
-        "ISMTPL_Id": ismtplId
+        "ISMTPL_Id": ismtplId,
+        "view": view,
       });
       logger.i({
         "UserId": userId,
