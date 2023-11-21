@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/vms/dr_genration/api/get_planner_details_api.dar
 import 'package:m_skool_flutter/vms/dr_genration/api/get_task_check_list.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
  import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
@@ -602,27 +603,31 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       if(value!.values!.isNotEmpty){
                                                                     showDialog(context: context, builder:(context) {
                                                                         return Center(
-                                                                          child: Container(
-                                                                            padding:const EdgeInsets.symmetric(horizontal: 0),
-                                                                            height: 400,
-                                                                            width: MediaQuery.of(context).size.width/1.1,
-                                                                            decoration: BoxDecoration(
-                                                                             color: Colors.white,
-                                                                              borderRadius: 
-                                                                            BorderRadius.circular(10),
-                                                                            shape: BoxShape.rectangle
-                                                                            ),
-                                                                            child: Align(
-                                                                              alignment: Alignment.center,
-                                                                              child: Text(
-                                                                                   "New Module Enhnacement",
-                                                                                 style: Theme.of(context).textTheme.titleMedium!.merge(
-                                                                               const   TextStyle(
-                                                                                    fontSize: 24,
-                                                                                    color: Color.fromARGB(255, 7, 85, 255)
-                                                                                  )
-                                                                                 )
-                                                                                ),
+                                                                          child: AlertDialog(
+                                                                            content: Container(
+                                                                              padding:const EdgeInsets.symmetric(horizontal: 0),
+                                                                              height: 400,
+                                                                              width: MediaQuery.of(context).size.width/1.1,
+                                                                              decoration: BoxDecoration(
+                                                                               color: Colors.white,
+                                                                                borderRadius: 
+                                                                              BorderRadius.circular(10),
+                                                                              shape: BoxShape.rectangle
+                                                                              ),
+                                                                              child: Column(
+                                                                                children: [
+                                                                                  DropdownMenu<CategoryCheckListModelValues>(
+                                                                                initialSelection: value.values!.first,
+                                                                                onSelected: (CategoryCheckListModelValues? value) {
+                                                                                   setState(() {
+                                                                                   });
+                                                                                },
+                                                                                dropdownMenuEntries: value.values!.map<DropdownMenuEntry<CategoryCheckListModelValues>>((CategoryCheckListModelValues value) {
+                                                                                  return DropdownMenuEntry<CategoryCheckListModelValues>(value: value, label: value.ismmtcatcLCheckListName!);
+                                                                                }).toList(),
+                                                                              )
+                                                                                ],
+                                                                              ),
                                                                             ),
                                                                           ),
                                                                         );
