@@ -1039,7 +1039,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                   reportingDate:
                                       reportingDT.toLocal().toString(),
                                   supportingDocument:
-                                      (controllerOL.attachment.first != null)
+                                      (controllerOL.attachment.isNotEmpty)
                                           ? controllerOL.attachment.first!.path
                                           : "undefined",
                                   frmToDate: [

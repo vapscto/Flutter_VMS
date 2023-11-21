@@ -211,9 +211,10 @@ class _AllPlannersState extends State<AllPlanners> {
         "ISMTPLAPTA_StartDate": value.startDate,
         "ISMTPLAPTA_EndDate": value.endDate,
         "ISMTPLAPTA_EffortInHrs": value.effort,
-        "ISMTPLAPTA_Status": value.status,
+        "ISMTPLAPTA_Status": selectedItemValue, //value.status,
         "plannerStatus": 1,
         "ISMTPLTA_Id": value.ismtpltaId,
+        "ISMTPL_Id": widget.ismtplId,
         "extraflag": 0,
         "PTSCount": value.ptsCount
       });
@@ -229,7 +230,7 @@ class _AllPlannersState extends State<AllPlanners> {
       view: 1,
       ismtplId: widget.ismtplId,
       remarks: _remarkController.text,
-      totalEffort: widget.plannerApprovalController.effort,
+      totalEffort: approveEffort, //widget.plannerApprovalController.effort,
       // taskPercentage: 0.0,
       // compulsoryFlag: false
     );

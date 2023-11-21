@@ -1220,7 +1220,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                         bg: Color.fromARGB(255, 255, 236, 235),
                                         image:
                                             'assets/images/subjectfielicon.png',
-                                        title: 'Select Clint',
+                                        title: 'Select Client',
                                       ),
                                     ],
                                   ),
