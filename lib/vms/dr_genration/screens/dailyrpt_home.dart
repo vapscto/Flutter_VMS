@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -10,9 +11,12 @@ import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_contr
 import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/screens/widget/category_checkList.dart';
+import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:open_filex/open_filex.dart';
 
 class DailyReportGenration extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -32,11 +36,14 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   List<int> selectCheckbox = [];
   List<GetTaskDrListModelValues> fliteresList = [];
   bool deviation = false;
+  
+
   @override
   void initState() {
     init();
     // _plannerDetailsController.plannernameDateController.value.text;
     fliteresList = _plannerDetailsController.getTaskDrList;
+    
     super.initState();
   }
 
@@ -620,22 +627,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                                 content: Container(
                                                                                   padding: const EdgeInsets.symmetric(horizontal: 0),
                                                                                   height: 400,
-                                                                                  width: MediaQuery.of(context).size.width / 1.1,
+                                                                                  width: MediaQuery.of(context).size.width,
                                                                                   decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), shape: BoxShape.rectangle),
-                                                                                  child: Column(
-                                                                                    children: [
-                                                                                      DropdownMenu<CategoryCheckListModelValues>(
-                                                                                        initialSelection: value.values!.first,
-                                                                                        width: MediaQuery.of(context).size.width /2,
-                                                                                        onSelected: (CategoryCheckListModelValues? value) {
-                                                                                          setState(() {});
-                                                                                        },
-                                                                                        dropdownMenuEntries: value.values!.map<DropdownMenuEntry<CategoryCheckListModelValues>>((CategoryCheckListModelValues value) {
-                                                                                          return DropdownMenuEntry<CategoryCheckListModelValues>(value: value, label: value.ismmtcatcLCheckListName!);
-                                                                                        }).toList(),
-                                                                                      )
-                                                                                    ],
-                                                                                  ),
+                                                                                  child: CategoryCheckList(value: value ,),
                                                                                 ),
                                                                               ),
                                                                             );
@@ -1316,6 +1310,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
     _plannerDetailsController.deveationEtField.clear();
     super.dispose();
   }
+
+
 }
 
 Future<String> getDateNeed(DateTime dt) async {

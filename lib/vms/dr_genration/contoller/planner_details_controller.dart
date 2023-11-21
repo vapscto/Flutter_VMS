@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/vms/dr_genration/model/countTask_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_details.dart';
+import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 
 class PlannerDetails extends GetxController {
   RxList<PlanerDeatails> planerDeatails = <PlanerDeatails>[].obs;
@@ -48,4 +49,6 @@ Rx<TextEditingController> etSearchController =TextEditingController().obs;
   updateDayRadio(String val) {
     day.value = val;
   }
+  RxList<AtachmentFile> addListBrowser = <AtachmentFile>[].obs ;
+
 }
