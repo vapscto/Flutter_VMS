@@ -83,48 +83,52 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
         title: const Text('Gps Attendence'),
         actions: [
           Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
-              child: Obx(
-                () => controller.drIsLoading.value
-                    ? const SizedBox()
-                    : BtnSave(
-                        title:  'Submit',
-                        onPress: () async{
-                          if(_fromKey.currentState!.validate()){
-                            if(punchFlag.isTrue){
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+            child: Obx(
+              () => controller.drIsLoading.value
+                  ? const SizedBox()
+                  : BtnSave(
+                      title: 'Submit',
+                      onPress: () async {
+                        if (_fromKey.currentState!.validate()) {
+                          if (punchFlag.isTrue) {
                             await save(
-                            base: baseUrlFromInsCode('frontoffice', widget.mskoolController),
-                            address: getEmpDetailsController.getGpsLocation.value,
-                            clientId: clientId,
-                            salesId: salesId,
-                            latlng: "${getEmpDetailsController.latitude}+${getEmpDetailsController.longitude}",
-                            controller: controller,
-                            miId: widget.loginSuccessModel.mIID!,
-                            userId: widget.loginSuccessModel.userId!,
-                            pFlag: punchFlag.value,
-                            remark: remarksEtingController.text
-                          ).then(
-                            (value) {
-                              if(value){
-                                   Fluttertoast.showToast(msg: "Punch successfull");
-                                   Get.back();
-                              }else{
-                                 Fluttertoast.showToast(msg: "Punch not done");
-                              }
-                            },
-                          );
-                            }else{
-                              Fluttertoast.showToast(msg: " Select Punch checkbox "); 
-                            }
-                          }else{
-                            Fluttertoast.showToast(msg: " Select mandatory ");
+                                    base: baseUrlFromInsCode(
+                                        'frontoffice', widget.mskoolController),
+                                    address: getEmpDetailsController
+                                        .getGpsLocation.value,
+                                    clientId: clientId,
+                                    salesId: salesId,
+                                    latlng:
+                                        "${getEmpDetailsController.latitude}+${getEmpDetailsController.longitude}",
+                                    controller: controller,
+                                    miId: widget.loginSuccessModel.mIID!,
+                                    userId: widget.loginSuccessModel.userId!,
+                                    pFlag: punchFlag.value,
+                                    remark: remarksEtingController.text)
+                                .then(
+                              (value) {
+                                if (value) {
+                                  Fluttertoast.showToast(
+                                      msg: "Punch successfull");
+                                  Get.back();
+                                } else {
+                                  Fluttertoast.showToast(msg: "Punch not done");
+                                }
+                              },
+                            );
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: " Select Punch checkbox ");
                           }
-                          
-                        },
-                      ),
-              ),
-            )
+                        } else {
+                          Fluttertoast.showToast(msg: " Select mandatory ");
+                        }
+                      },
+                    ),
+            ),
+          )
         ],
       ),
       body: Obx(() => getEmpDetailsController.mapLoading.value
@@ -288,7 +292,7 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                                         );
                                       }),
                                       onChanged: (s) async {
-                                        clientId=s!.ismmclTId!;
+                                        clientId = s!.ismmclTId!;
                                       },
                                     ),
                                   )
@@ -394,37 +398,37 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                                 );
                               }),
                               onChanged: (s) async {
-                                salesId=s!.ismslEId!;
+                                salesId = s!.ismslEId!;
                               },
                             ),
                           ),
                         )),
-                        Obx(() => 
-                        Visibility(
-                          visible: getEmpDetailsController.gpsClientList.isNotEmpty,
+                    Obx(() => Visibility(
+                          visible:
+                              getEmpDetailsController.gpsClientList.isNotEmpty,
                           child: Row(
                             children: [
-                              
-                               Padding(
-                                 padding: const EdgeInsets.only(left: 10,),
-                                 child: Checkbox(value:punchFlag.value ,
-                                 activeColor: Color.fromARGB(255, 33, 54, 243),
-                                 shape: ContinuousRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)
-                                 ),
-                                 onChanged: (value) {
-                                   punchFlag.value = value!;
-                               
-                                 },),
-                               ),
-                              const Text("Punch flag",
-                               style: TextStyle(
-                                fontSize: 16
-                               ),)
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 10,
+                                ),
+                                child: Checkbox(
+                                  value: punchFlag.value,
+                                  activeColor: Color.fromARGB(255, 33, 54, 243),
+                                  shape: ContinuousRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  onChanged: (value) {
+                                    punchFlag.value = value!;
+                                  },
+                                ),
+                              ),
+                              const Text(
+                                "Punch flag",
+                                style: TextStyle(fontSize: 16),
+                              )
                             ],
                           ),
-                        )
-                        ),
+                        )),
                     Obx(() => Visibility(
                         visible:
                             getEmpDetailsController.gpsClientList.isNotEmpty,

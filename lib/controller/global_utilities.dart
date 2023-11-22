@@ -547,6 +547,14 @@ void openMappedPages(
         ));
     return;
   }
+  
+  if (pageName == "DR Generation") {
+    Get.to(() => DailyReportGenration(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+         ));
+    return;
+  }
   if (pageName == "Maker and Checker") {
     Get.to(() => MakerCheckerHome(
           loginSuccessModel: loginSuccessModel,

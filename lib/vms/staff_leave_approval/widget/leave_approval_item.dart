@@ -545,8 +545,8 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                                                               context);
                                                                           Navigator.pop(
                                                                               context);
-                                                                          Navigator.pop(
-                                                                              context);
+                                                                          // Navigator.pop(
+                                                                          //     context);
                                                                         })
                                                                   ],
                                                                 ),

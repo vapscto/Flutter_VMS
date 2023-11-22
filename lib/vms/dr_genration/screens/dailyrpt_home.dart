@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/api/get_planner_details_api.dart';
+import 'package:m_skool_flutter/vms/dr_genration/api/get_task_check_list.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
- import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
+import 'package:m_skool_flutter/vms/dr_genration/screens/widget/category_checkList.dart';
+import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:open_filex/open_filex.dart';
 
 class DailyReportGenration extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -25,16 +31,19 @@ class DailyReportGenration extends StatefulWidget {
 }
 
 class _DailyReportGenrationState extends State<DailyReportGenration> {
-  PlannerDetails _plannerDetailsController = Get.put(PlannerDetails());
+  final PlannerDetails _plannerDetailsController = Get.put(PlannerDetails());
   RxBool halfDay = RxBool(false);
   List<int> selectCheckbox = [];
   List<GetTaskDrListModelValues> fliteresList = [];
   bool deviation = false;
+  
+
   @override
   void initState() {
     init();
     // _plannerDetailsController.plannernameDateController.value.text;
     fliteresList = _plannerDetailsController.getTaskDrList;
+    
     super.initState();
   }
 
@@ -589,37 +598,46 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   index],
                                                               onChanged:
                                                                   (value) {
-                                                                 if(fliteresList
-                                                                .elementAt(
-                                                                    index).taskcategoryname=="New Module Development - Enhancements"){
-                                                                   showDialog(context: context, builder:(context) {
-                                                                        return Center(
-                                                                          child: Container(
-                                                                            padding:const EdgeInsets.symmetric(horizontal: 0),
-                                                                            height: 400,
-                                                                            width: MediaQuery.of(context).size.width/1.1,
-                                                                            decoration: BoxDecoration(
-                                                                             color: Colors.white,
-                                                                              borderRadius: 
-                                                                            BorderRadius.circular(10),
-                                                                            shape: BoxShape.rectangle
-                                                                            ),
-                                                                            child: Align(
-                                                                              alignment: Alignment.center,
-                                                                              child: Text(
-                                                                                   "New Module Enhnacement",
-                                                                                 style: Theme.of(context).textTheme.titleMedium!.merge(
-                                                                               const   TextStyle(
-                                                                                    fontSize: 24,
-                                                                                    color: Color.fromARGB(255, 7, 85, 255)
-                                                                                  )
-                                                                                 )
+                                                                getCategoryChecklistDetails(
+                                                                        base: baseUrlFromInsCode(
+                                                                            "issuemanager",
+                                                                            widget
+                                                                                .mskoolController),
+                                                                        controller:
+                                                                            _plannerDetailsController,
+                                                                        ismctrId: fliteresList
+                                                                            .elementAt(
+                                                                                index)
+                                                                            .iSMTCRId!,
+                                                                        ismmcatId: fliteresList
+                                                                            .elementAt(index)
+                                                                            .iSMMTCATId!)
+                                                                    .then(
+                                                                  (value) {
+                                                                    if (value!
+                                                                        .values!
+                                                                        .isNotEmpty) {
+                                                                      showDialog(
+                                                                          context:
+                                                                              context,
+                                                                          builder:
+                                                                              (context) {
+                                                                            return Center(
+                                                                              child: AlertDialog(
+                                                                                content: Container(
+                                                                                  padding: const EdgeInsets.symmetric(horizontal: 0),
+                                                                                  height: 400,
+                                                                                  width: MediaQuery.of(context).size.width,
+                                                                                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), shape: BoxShape.rectangle),
+                                                                                  child: CategoryCheckList(value: value ,),
                                                                                 ),
-                                                                            ),
-                                                                          ),
-                                                                        );
-                                                                   });
+                                                                              ),
+                                                                            );
+                                                                          });
                                                                     }
+                                                                  },
+                                                                );
+
                                                                 _plannerDetailsController
                                                                         .checkBoxList[
                                                                     index] = value!;
@@ -657,59 +675,38 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                     if (currentDate
                                                                         .isAfter(
                                                                             previousDate)) {
-                                                                              deviation = true;
-                                                                      showDialog(context: context, builder:(context) {
-                                                                        return Center(
-                                                                          child: Container(
-                                                                            padding:const EdgeInsets.symmetric(horizontal: 20),
-                                                                            height: 200,
-                                                                            width: 300,
-                                                                            decoration: BoxDecoration(
-                                                                             color: Colors.white,
-                                                                              borderRadius: 
-                                                                            BorderRadius.circular(10),
-                                                                            shape: BoxShape.rectangle
-                                                                            ),
-                                                                            child: Column(
-                                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                                                              children: [
-                                                                                Text(
-                                                                                 "Task End Date Is",
-                                                                               style: Theme.of(context).textTheme.titleMedium!.merge(
-                                                                             const   TextStyle(
-                                                                                  fontSize: 24,
-                                                                                  color: Color.fromARGB(255, 7, 85, 255)
-                                                                                )
-                                                                               )
+                                                                      deviation =
+                                                                          true;
+                                                                      showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (context) {
+                                                                          return Center(
+                                                                            child:
+                                                                                Container(
+                                                                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                                                                              height: 200,
+                                                                              width: 300,
+                                                                              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), shape: BoxShape.rectangle),
+                                                                              child: Column(
+                                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                children: [
+                                                                                  Text("Task End Date Is", style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255)))),
+                                                                                  Text(fliteresList.elementAt(index).iSMTPLEndDate.toString().replaceRange(10, null, ''), style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255)))),
+                                                                                  Text("Kindly Select Remarks", style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255))))
+                                                                                ],
                                                                               ),
-                                                                               Text(
-                                                                                fliteresList.elementAt(index).iSMTPLEndDate.toString().replaceRange(10, null, ''),
-                                                                               style: Theme.of(context).textTheme.titleMedium!.merge(
-                                                                              const  TextStyle(
-                                                                                  fontSize: 24,
-                                                                                  color: Color.fromARGB(255, 7, 85, 255)
-                                                                                )
-                                                                               )
-                                                                              ),
-                                                                             Text(
-                                                                                "Kindly Select Remarks",
-                                                                               style: Theme.of(context).textTheme.titleMedium!.merge(
-                                                                              const  TextStyle(
-                                                                                  fontSize: 24 ,
-                                                                                  color: Color.fromARGB(255, 7, 85, 255)
-                                                                                )
-                                                                               )
-                                                                              )
-                                                                              ],
                                                                             ),
-                                                                          ),
-                                                                        );
-                                                                      }, );
+                                                                          );
+                                                                        },
+                                                                      );
                                                                     }
                                                                   }
                                                                 } else {
-                                                                  deviation = false;
+                                                                  deviation =
+                                                                      false;
                                                                   selectCheckbox
                                                                       .remove(
                                                                           index);
@@ -1045,7 +1042,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                               context)
                                                                           .size
                                                                           .width -
-                                                            
                                                                       offset.dx,
                                                                   MediaQuery.of(
                                                                               context)
@@ -1082,7 +1078,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       ),
                                                                     );
                                                                   },
-                                                                )); 
+                                                                ));
                                                           },
                                                           onTapDown:
                                                               (details) async {
@@ -1314,6 +1310,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
     _plannerDetailsController.deveationEtField.clear();
     super.dispose();
   }
+
+
 }
 
 Future<String> getDateNeed(DateTime dt) async {

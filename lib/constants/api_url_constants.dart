@@ -626,4 +626,6 @@ class URLS {
   static String saveHC = "api/HW_HeathCheckUpFacade/SaveHWHealthChekUp";
 
   static String getdocxApi = 'api/HW_HeathCheckUpFacade/ViewHealthCheckUpFiles';
+
+  static String getTaskCheckList="api/ISM_DailyReportGenerationFacade/GetCategoryChecklistDetails";
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/countTask_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_details.dart';
+import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 
 class PlannerDetails extends GetxController {
   RxList<PlanerDeatails> planerDeatails = <PlanerDeatails>[].obs;
@@ -31,6 +33,8 @@ class PlannerDetails extends GetxController {
   RxList<DepartwisedeviationModelValues> depWiseDevitnList = <DepartwisedeviationModelValues>[].obs;
   // checkbox List 
   RxList<bool> checkBoxList = <bool>[].obs;
+  // category checklist array
+  RxList<CategoryCheckListModelValues> categoryCheckList = <CategoryCheckListModelValues>[].obs;
   RxString day = "today".obs;
   Rx<TextEditingController> plannernameEditingController =
       TextEditingController(text: "").obs;
@@ -45,4 +49,6 @@ Rx<TextEditingController> etSearchController =TextEditingController().obs;
   updateDayRadio(String val) {
     day.value = val;
   }
+  RxList<AtachmentFile> addListBrowser = <AtachmentFile>[].obs ;
+
 }
