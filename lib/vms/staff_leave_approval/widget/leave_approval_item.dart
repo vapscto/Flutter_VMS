@@ -515,7 +515,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                                                           12.0,
                                                                     ),
                                                                     Text(
-                                                                      "All Leaves Approved",
+                                                                      "Leave Approved",
                                                                       style: Theme.of(
                                                                               context)
                                                                           .textTheme

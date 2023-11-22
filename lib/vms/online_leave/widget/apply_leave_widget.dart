@@ -81,6 +81,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
     final TextEditingController startDate = TextEditingController();
     final TextEditingController endDate = TextEditingController();
     final TextEditingController reportingDate = TextEditingController();
+    int myInt = widget.values.hrmLNoOfDays.round();
     DateTime startDT = DateTime.now();
     DateTime endDT = DateTime.now();
     DateTime reportingDT = DateTime.now();
@@ -96,25 +97,25 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
     if (widget.values.hrmLLeaveName == "Casual Leave") {
       initialDt = currentDate.add(Duration(days: 3));
       firstDt = currentDate.add(Duration(days: 3));
-      lastDt = currentDate.add(Duration(days: 5));
+      lastDt = currentDate.add(Duration(days: myInt));
     } else if (widget.values.hrmLLeaveName == "Sick Leave") {
-      initialDt = currentDate.subtract(Duration(days: 1));
+      initialDt = currentDate.subtract(Duration(days: 2));
       firstDt = currentDate.subtract(Duration(days: 2));
-      lastDt = currentDate.subtract(Duration(days: 1));
+      lastDt = currentDate.subtract(Duration(days: myInt));
     } else if (widget.values.hrmLLeaveName == "Comp off" ||
         widget.values.hrmLLeaveName == "Emergency Leave") {
-      initialDt = currentDate.subtract(Duration(days: 1));
-      firstDt = currentDate.subtract(Duration(days: 30));
+      initialDt = currentDate.subtract(Duration(days: myInt));
+      firstDt = currentDate.subtract(Duration(days: myInt));
       lastDt = currentDate.subtract(Duration(days: 1));
     } else if (widget.values.hrmLLeaveName == "Optional Leave") {
       initialDt = currentDate.add(Duration(days: 1));
       firstDt = currentDate.add(Duration(days: 1));
-      lastDt = DateTime.now().add(Duration(days: 2));
+      lastDt = DateTime.now().add(Duration(days: myInt));
     } else if (widget.values.hrmLLeaveName == "Privilege Leave") {
       DateTime subdate = currentDate.add(Duration(days: 10));
       initialDt = subdate.add(Duration());
-      firstDt = subdate.subtract(Duration(days: 12));
-      lastDt = currentDate.add(Duration(days: 20));
+      firstDt = subdate.subtract(Duration(days: myInt));
+      lastDt = currentDate.add(Duration(days: myInt));
     }
     return Column(
       children: [
@@ -334,11 +335,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                             "Emergency Leave") {
                                       initialDt2 = startDT;
                                       firstDt2 = startDT;
-                                      lastDt2 =
-                                          (date.day == currentDate.day - 1)
-                                              ? startDT
-                                              : startDT
-                                                  .add(const Duration(days: 2));
+                                      lastDt2 = lastDt
+                                          .add(Duration(days: myInt - 18));
                                     } else if (widget.values.hrmLLeaveName ==
                                         "Optional Leave") {
                                       for (int i = 0;
@@ -446,13 +444,14 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                         "Sick Leave") {
                                       initialDt2 = initialDt;
                                       firstDt2 = firstDt;
-                                      lastDt2 = lastDt;
+                                      lastDt2 = initialDt
+                                          .add(Duration(days: myInt - 1));
                                     } else if (widget.values.hrmLLeaveName ==
                                         "Privilege Leave") {
                                       initialDt2 = startDT;
                                       firstDt2 = startDT;
                                       lastDt2 =
-                                          startDT.add(const Duration(days: 10));
+                                          startDT.add(Duration(days: myInt));
                                     }
                                   },
                                   icon: SvgPicture.asset(
@@ -1060,12 +1059,10 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                           widget.values.hrelSCBLeaves,
                                       "hrelS_CreditedLeaves":
                                           widget.values.hrelSCreditedLeaves,
-                                      "hrelS_EncashedLeaves":
-                                          widget.values.hrelSEncashedLeaves,
+                                      // "hrelS_EncashedLeaves":widget.values.hrelSEncashedLeaves,
                                       "hrelS_Id": widget.values.hrelSId,
                                       "hrmL_Id": widget.values.hrmLId,
-                                      "hrmL_LeaveCreditFlg":
-                                          widget.values.hrmLLeaveCreditFlg,
+                                      // "hrmL_LeaveCreditFlg":widget.values.hrmLLeaveCreditFlg,
                                       "hrmL_LeaveName":
                                           widget.values.hrmLLeaveName,
                                     }

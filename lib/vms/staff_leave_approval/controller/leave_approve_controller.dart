@@ -18,6 +18,8 @@ class LeaveApproveController extends GetxController {
     if (leaveApprovesList.isNotEmpty) {
       leaveApprovesList.clear();
     }
+    leaves.sort(
+        ((a, b) => b.hRELAPReportingDate!.compareTo(a.hRELAPReportingDate!)));
     for (int i = 0; i < leaves.length; i++) {
       leaveApprovesList.add(leaves.elementAt(i));
     }
