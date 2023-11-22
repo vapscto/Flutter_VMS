@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/api/approve_leave.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/model/leave_approval_model.dart';
@@ -31,8 +32,25 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
     required this.mskoolController,
   }) : super(key: key);
   List<String> leaveDates = [];
+  List<Map<String, dynamic>> newList = [];
   @override
   Widget build(BuildContext context) {
+    newList.add({
+      "HRME_Id": value.hRMEId,
+      "HRELAP_ApplicationID": value.hRELAPApplicationID,
+      "HRELAP_LeaveReason": value.hRELAPLeaveReason,
+      "HRELAPA_Remarks": value.hRELAPARemarks,
+      "HRELAP_FromDateapprv": value.hRELAPFromDate,
+      "HRELAP_ToDateapprv": value.hRELAPToDate,
+      "HRELAP_FromDate": value.hRELAPFromDate,
+      "HRELAP_ToDate": value.hRELAPToDate,
+      "HRELAP_TotalDays": value.hRELAPTotalDays,
+      "HRELAP_TotalDaysapprv": value.hRELAPTotalDays,
+      // "HRMLY_Id": 0,
+      "HRML_Id": value.hRMLId
+      // "Reason": null,
+      // "Type": null
+    });
     final RxBool select = RxBool(selectAll);
     final RxBool showCheckBox = RxBool(selectAll);
     final TextEditingController remark = TextEditingController();
@@ -253,378 +271,65 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
             const SizedBox(
               height: 12.0,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: Get.width * 0.1),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                (value.hRELAPSupportingDocument != 'undefined' ||
+                        value.hRELAPSupportingDocument != 0)
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: InkWell(
+                          onTap: () {
+                            logger.i(value.hRELAPSupportingDocument);
+                            if (value.hRELAPSupportingDocument
+                                .toString()
+                                .contains('https://')) {
+                              createPreview(
+                                  context, value.hRELAPSupportingDocument);
+                            } else {
+                              OpenFilex.open(value.hRELAPSupportingDocument);
+                            }
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.green[100]),
+                            child: const Padding(
+                              padding: EdgeInsets.all(5.0),
+                              child: Center(
+                                child: Icon(
+                                  Icons.visibility,
+                                  color: Colors.green,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                        backgroundColor: Colors.green,
-                        minimumSize: const Size.fromHeight(40),
+                      )
+                    : const SizedBox(),
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24.0),
                       ),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (_) {
-                              return Dialog(
-                                insetPadding: const EdgeInsets.all(16.0),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Leave Approval for ${value.hRMEEmployeeFirstName ?? "N/a"}",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall!
-                                                  .merge(
-                                                    const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                                  ),
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: const Icon(Icons.close),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 16.0,
-                                        ),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            (value.hRELAPSupportingDocument !=
-                                                        null ||
-                                                    value.hRELAPSupportingDocument !=
-                                                        'undefined')
-                                                ? InkWell(
-                                                    onTap: () {
-                                                      OpenFilex.open(value
-                                                          .hRELAPSupportingDocument
-                                                          .toString());
-                                                    },
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                          color: Colors
-                                                              .green[100]),
-                                                      child: const Padding(
-                                                        padding:
-                                                            EdgeInsets.all(3.0),
-                                                        child: Center(
-                                                          child: Icon(
-                                                            Icons.visibility,
-                                                            color: Colors.green,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                : const SizedBox(),
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  const Text("From Date"),
-                                                  const SizedBox(
-                                                    height: 8.0,
-                                                  ),
-                                                  Container(
-                                                    width: double.infinity,
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 12.0,
-                                                        vertical: 12.0),
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                        color: Colors
-                                                            .grey.shade500,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    child:
-                                                        (leaveDates.length >= 2)
-                                                            ? Text(
-                                                                getFormatedDate(
-                                                                  DateTime.parse(
-                                                                      leaveDates
-                                                                          .first),
-                                                                ),
-                                                              )
-                                                            : Text(
-                                                                value.hRELAPFromDate ==
-                                                                        null
-                                                                    ? "N/a"
-                                                                    : getFormatedDate(
-                                                                        DateTime.parse(
-                                                                            value.hRELAPFromDate!),
-                                                                      ),
-                                                              ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            const Center(
-                                              child: Text(
-                                                "  \u2212  ",
-                                                style:
-                                                    TextStyle(fontSize: 20.0),
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  const Text("End Date"),
-                                                  const SizedBox(
-                                                    height: 8.0,
-                                                  ),
-                                                  Container(
-                                                    width: double.infinity,
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 12.0,
-                                                        vertical: 12.0),
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                        color: Colors
-                                                            .grey.shade500,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    child: (leaveDates
-                                                            .isNotEmpty)
-                                                        ? Text(
-                                                            getFormatedDate(
-                                                              DateTime.parse(
-                                                                  leaveDates
-                                                                      .last),
-                                                            ),
-                                                          )
-                                                        : Text(value.hRELAPToDate ==
-                                                                null
-                                                            ? "N/a"
-                                                            : getFormatedDate(
-                                                                DateTime.parse(value
-                                                                    .hRELAPToDate!))),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 16.0,
-                                        ),
-                                        Center(
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(24.0),
-                                              ),
-                                              backgroundColor: Colors.green,
-                                              minimumSize:
-                                                  Size(Get.width * 0.5, 40),
-                                            ),
-                                            onPressed: () {
-                                              showDialog(
-                                                context: context,
-                                                barrierDismissible: false,
-                                                builder: (_) {
-                                                  return Dialog(
-                                                    child: FutureBuilder<bool>(
-                                                        future: ApproveLeaveApi
-                                                            .instance
-                                                            .approveNow(
-                                                          remark:
-                                                              "Leave Approved",
-                                                          status: "Approved",
-                                                          base: baseUrlFromInsCode(
-                                                              "leave",
-                                                              mskoolController),
-                                                          miId:
-                                                              loginSuccessModel
-                                                                  .mIID!,
-                                                          loginId:
-                                                              loginSuccessModel
-                                                                  .userId!,
-                                                          getLeaveStatus: [
-                                                            value.toJson()
-                                                          ],
-                                                        ),
-                                                        builder: (_, snapshot) {
-                                                          if (snapshot
-                                                              .hasData) {
-                                                            if (snapshot
-                                                                .data!) {
-                                                              return Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        12.0),
-                                                                child: Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .min,
-                                                                  children: [
-                                                                    const CircleAvatar(
-                                                                      minRadius:
-                                                                          30.0,
-                                                                      backgroundColor:
-                                                                          Colors
-                                                                              .green,
-                                                                      child:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .check,
-                                                                        color: Colors
-                                                                            .white,
-                                                                      ),
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      height:
-                                                                          12.0,
-                                                                    ),
-                                                                    Text(
-                                                                      "All Leaves Approved",
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .titleSmall!
-                                                                          .merge(
-                                                                            const TextStyle(
-                                                                              fontWeight: FontWeight.w600,
-                                                                            ),
-                                                                          ),
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      height:
-                                                                          6.0,
-                                                                    ),
-                                                                    const Text(
-                                                                        "I approved all leaves that you told me to do.. "),
-                                                                    const SizedBox(
-                                                                      height:
-                                                                          6.0,
-                                                                    ),
-                                                                    MSkollBtn(
-                                                                        title:
-                                                                            "Ok UnderStood",
-                                                                        onPress:
-                                                                            () {
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                          // Navigator.pop(
-                                                                          //     context);
-                                                                        })
-                                                                  ],
-                                                                ),
-                                                              );
-                                                            }
-
-                                                            return const ErrWidget(
-                                                                err: {
-                                                                  "errorTitle":
-                                                                      "Server Error Occured",
-                                                                  "errorMsg":
-                                                                      "Currenlty i'm unable to approve leave due to some server issue .. Server not returning 200",
-                                                                });
-                                                          }
-
-                                                          if (snapshot
-                                                              .hasError) {
-                                                            return ErrWidget(
-                                                                err: snapshot
-                                                                        .error
-                                                                    as Map<
-                                                                        String,
-                                                                        dynamic>);
-                                                          }
-                                                          return Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            children: const [
-                                                              AnimatedProgressWidget(
-                                                                  title:
-                                                                      "Approving Leave",
-                                                                  desc:
-                                                                      "We are in process to approve the leaves...",
-                                                                  animationPath:
-                                                                      "assets/json/default.json"),
-                                                            ],
-                                                          );
-                                                        }),
-                                                  );
-                                                },
-                                              );
-                                            },
-                                            child: const Text("Approval"),
-                                          ),
-                                        ),
-                                      ]),
-                                ),
-                              );
-                            });
-                      },
-                      child: const Text("Approval"),
+                      backgroundColor: Colors.green,
+                      minimumSize: const Size.fromHeight(40),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 8.0,
-                  ),
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24.0),
-                        ),
-                        backgroundColor: Colors.red,
-                        minimumSize: const Size.fromHeight(40),
-                      ),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (_) {
-                              return Dialog(
-                                insetPadding: const EdgeInsets.all(16.0),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Column(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return Dialog(
+                              insetPadding: const EdgeInsets.all(16.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Row(
@@ -632,7 +337,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "Reason for Rejection",
+                                            "Leave Approval for ${value.hRMEEmployeeFirstName ?? "N/a"}",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleSmall!
@@ -651,107 +356,404 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                         ],
                                       ),
                                       const SizedBox(
-                                        height: 32.0,
+                                        height: 16.0,
                                       ),
-                                      CustomContainer(
-                                        child: TextField(
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall,
-                                          controller: remark,
-                                          maxLines: 2,
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.only(
-                                                    top: 48.0, left: 12),
-                                            border: const OutlineInputBorder(),
-                                            label: Container(
-                                              margin: const EdgeInsets.only(
-                                                  bottom: 5),
-                                              padding:
-                                                  const EdgeInsets.symmetric(
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Text("From Date"),
+                                                const SizedBox(
+                                                  height: 8.0,
+                                                ),
+                                                Container(
+                                                  width: double.infinity,
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
                                                       horizontal: 12.0,
-                                                      vertical: 8.0),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          24.0),
-                                                  color:
-                                                      const Color(0xFFFFEBEA)),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Image.asset(
-                                                    "assets/images/reason.png",
-                                                    height: 24.0,
+                                                      vertical: 12.0),
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color:
+                                                          Colors.grey.shade500,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
                                                   ),
-                                                  const SizedBox(
-                                                    width: 6.0,
-                                                  ),
-                                                  Text(
-                                                    " Reason ".tr,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .labelMedium!
-                                                        .merge(
-                                                          const TextStyle(
-                                                              fontSize: 20.0,
-                                                              color: Color(
-                                                                  0xFFFF6F67)),
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            hintText:
-                                                'Type your reason here.'.tr,
-                                            floatingLabelBehavior:
-                                                FloatingLabelBehavior.always,
-                                            enabledBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Colors.transparent,
-                                              ),
-                                            ),
-                                            focusedBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Colors.transparent,
-                                              ),
+                                                  child:
+                                                      (leaveDates.length >= 2)
+                                                          ? Text(
+                                                              getFormatedDate(
+                                                                DateTime.parse(
+                                                                    leaveDates
+                                                                        .first),
+                                                              ),
+                                                            )
+                                                          : Text(
+                                                              value.hRELAPFromDate ==
+                                                                      null
+                                                                  ? "N/a"
+                                                                  : getFormatedDate(
+                                                                      DateTime.parse(
+                                                                          value
+                                                                              .hRELAPFromDate!),
+                                                                    ),
+                                                            ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        ),
+                                          const Center(
+                                            child: Text(
+                                              "  \u2212  ",
+                                              style: TextStyle(fontSize: 20.0),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Text("End Date"),
+                                                const SizedBox(
+                                                  height: 8.0,
+                                                ),
+                                                Container(
+                                                  width: double.infinity,
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 12.0,
+                                                      vertical: 12.0),
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color:
+                                                          Colors.grey.shade500,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  child: (leaveDates.isNotEmpty)
+                                                      ? Text(
+                                                          getFormatedDate(
+                                                            DateTime.parse(
+                                                                leaveDates
+                                                                    .last),
+                                                          ),
+                                                        )
+                                                      : Text(value.hRELAPToDate ==
+                                                              null
+                                                          ? "N/a"
+                                                          : getFormatedDate(
+                                                              DateTime.parse(value
+                                                                  .hRELAPToDate!))),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       const SizedBox(
                                         height: 16.0,
                                       ),
                                       Center(
-                                        child: MSkollBtn(
-                                          title: "Done",
-                                          onPress: () {
-                                            if (remark.text.isEmpty) {
-                                              Fluttertoast.showToast(
-                                                  msg:
-                                                      "Please provide remark before rejecting");
-                                              return;
-                                            }
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(24.0),
+                                            ),
+                                            backgroundColor: Colors.green,
+                                            minimumSize:
+                                                Size(Get.width * 0.5, 40),
+                                          ),
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              barrierDismissible: false,
+                                              builder: (_) {
+                                                return Dialog(
+                                                  child: FutureBuilder<bool>(
+                                                      future: ApproveLeaveApi
+                                                          .instance
+                                                          .approveNow(
+                                                        remark:
+                                                            "Leave Approved",
+                                                        status: "Approved",
+                                                        base: baseUrlFromInsCode(
+                                                            "leave",
+                                                            mskoolController),
+                                                        miId: loginSuccessModel
+                                                            .mIID!,
+                                                        loginId:
+                                                            loginSuccessModel
+                                                                .userId!,
+                                                        getLeaveStatus: newList,
+                                                      ),
+                                                      builder: (_, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          if (snapshot.data!) {
+                                                            return Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .all(
+                                                                      12.0),
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .min,
+                                                                children: [
+                                                                  const CircleAvatar(
+                                                                    minRadius:
+                                                                        30.0,
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .green,
+                                                                    child: Icon(
+                                                                      Icons
+                                                                          .check,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    height:
+                                                                        12.0,
+                                                                  ),
+                                                                  Text(
+                                                                    "Leave Approved",
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .titleSmall!
+                                                                        .merge(
+                                                                          const TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                          ),
+                                                                        ),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    height: 6.0,
+                                                                  ),
+                                                                  const Text(
+                                                                      "I approved all leaves that you told me to do.. "),
+                                                                  const SizedBox(
+                                                                    height: 6.0,
+                                                                  ),
+                                                                  MSkollBtn(
+                                                                      title:
+                                                                          "Ok UnderStood",
+                                                                      onPress:
+                                                                          () {
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                        // Navigator.pop(
+                                                                        //     context);
+                                                                      })
+                                                                ],
+                                                              ),
+                                                            );
+                                                          }
 
-                                            acceptOrReject(context, remark.text,
-                                                "Rejected", true, value);
+                                                          return const ErrWidget(
+                                                              err: {
+                                                                "errorTitle":
+                                                                    "Server Error Occured",
+                                                                "errorMsg":
+                                                                    "Currenlty i'm unable to approve leave due to some server issue .. Server not returning 200",
+                                                              });
+                                                        }
+
+                                                        if (snapshot.hasError) {
+                                                          return ErrWidget(
+                                                              err: snapshot
+                                                                      .error
+                                                                  as Map<String,
+                                                                      dynamic>);
+                                                        }
+                                                        return Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: const [
+                                                            AnimatedProgressWidget(
+                                                                title:
+                                                                    "Approving Leave",
+                                                                desc:
+                                                                    "We are in process to approve the leaves...",
+                                                                animationPath:
+                                                                    "assets/json/default.json"),
+                                                          ],
+                                                        );
+                                                      }),
+                                                );
+                                              },
+                                            );
                                           },
+                                          child: const Text("Approval"),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            });
-                      },
-                      child: const Text("Reject"),
-                    ),
+                                    ]),
+                              ),
+                            );
+                          });
+                    },
+                    child: const Text("Approval"),
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  width: 8.0,
+                ),
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24.0),
+                      ),
+                      backgroundColor: Colors.red,
+                      minimumSize: const Size.fromHeight(40),
+                    ),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return Dialog(
+                              insetPadding: const EdgeInsets.all(16.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Reason for Rejection",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .merge(
+                                                const TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Icon(Icons.close),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 32.0,
+                                    ),
+                                    CustomContainer(
+                                      child: TextField(
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                        controller: remark,
+                                        maxLines: 2,
+                                        decoration: InputDecoration(
+                                          contentPadding: const EdgeInsets.only(
+                                              top: 48.0, left: 12),
+                                          border: const OutlineInputBorder(),
+                                          label: Container(
+                                            margin: const EdgeInsets.only(
+                                                bottom: 5),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 12.0,
+                                                vertical: 8.0),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(24.0),
+                                                color: const Color(0xFFFFEBEA)),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Image.asset(
+                                                  "assets/images/reason.png",
+                                                  height: 24.0,
+                                                ),
+                                                const SizedBox(
+                                                  width: 6.0,
+                                                ),
+                                                Text(
+                                                  " Reason ".tr,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .labelMedium!
+                                                      .merge(
+                                                        const TextStyle(
+                                                            fontSize: 20.0,
+                                                            color: Color(
+                                                                0xFFFF6F67)),
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          hintText: 'Type your reason here.'.tr,
+                                          floatingLabelBehavior:
+                                              FloatingLabelBehavior.always,
+                                          enabledBorder:
+                                              const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.transparent,
+                                            ),
+                                          ),
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.transparent,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 16.0,
+                                    ),
+                                    Center(
+                                      child: MSkollBtn(
+                                        title: "Done",
+                                        onPress: () {
+                                          if (remark.text.isEmpty) {
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    "Please provide remark before rejecting");
+                                            return;
+                                          }
+
+                                          acceptOrReject(context, remark.text,
+                                              "Rejected", true, value);
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                    },
+                    child: const Text("Reject"),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -774,7 +776,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                 base: baseUrlFromInsCode("leave", mskoolController),
                 miId: loginSuccessModel.mIID!,
                 loginId: loginSuccessModel.userId!,
-                getLeaveStatus: [value.toJson()],
+                getLeaveStatus: newList,
               ),
               builder: (_, snapshot) {
                 if (snapshot.hasData) {
@@ -827,7 +829,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                   return const ErrWidget(err: {
                     "errorTitle": "Server Error Occured",
                     "errorMsg":
-                        "Currenlty i'm unable to approve leave due to some server issue .. Server not returning 200",
+                        "Currenlty i'm unable to reject  leave due to some server issue .. Server not returning 200",
                   });
                 }
 
@@ -838,8 +840,8 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: const [
                     AnimatedProgressWidget(
-                        title: "Approving All Leaves",
-                        desc: "We are in process to approve all the leaves...",
+                        title: "Rejecting All Leaves",
+                        desc: "We are in process to reject all the leaves...",
                         animationPath: "assets/json/default.json"),
                   ],
                 );

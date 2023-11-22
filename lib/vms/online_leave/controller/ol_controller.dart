@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_count_model.dart';
+import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/optional_leave_model.dart';
 
 class OpetionLeaveController extends GetxController {
@@ -34,5 +35,20 @@ class OpetionLeaveController extends GetxController {
 
   void removeAtt(int index) {
     attFiles.removeAt(index);
+  }
+
+  List<LeaveNamesModelValues> leaveNameList = <LeaveNamesModelValues>[].obs;
+  RxBool isLeaveloading = RxBool(false);
+  void leaveloading(bool loading) {
+    isLeaveloading.value = loading;
+  }
+
+  void leaveName(List<LeaveNamesModelValues> leaveName) {
+    if (leaveNameList.isNotEmpty) {
+      leaveNameList.clear();
+    }
+    for (int i = 0; i < leaveName.length; i++) {
+      leaveNameList.add(leaveName.elementAt(i));
+    }
   }
 }

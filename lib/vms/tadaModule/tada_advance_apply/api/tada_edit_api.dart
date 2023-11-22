@@ -28,11 +28,15 @@ class TadaEditAPI {
         data: {"UserId": userId, "MI_Id": miId, "VTADAAA_Id": vtadaaaId},
       );
       logger.i({"UserId": userId, "MI_Id": miId, "VTADAAA_Id": vtadaaaId});
+      logger.i(api);
       logger.i(response.statusCode);
       logger.i(response.data);
       if (response.statusCode == 200) {
         // EditModel editModel = EditModel.fromJson(response.data['editArray']);
-        Fluttertoast.showToast(msg: "TA-DA Deactivated successfully");
+        if (response.data['returnvalue'] == true) {
+          Fluttertoast.showToast(msg: "TA-DA Deactivated successfully");
+        }
+
         tadaApplyController.editData(false);
       }
     } on DioError catch (e) {

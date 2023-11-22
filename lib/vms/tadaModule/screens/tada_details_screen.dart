@@ -210,7 +210,7 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
                           RichText(
                             text: TextSpan(children: <TextSpan>[
                               TextSpan(
-                                  text: "Clint Name: ",
+                                  text: "Client Name: ",
                                   style: Get.textTheme.titleSmall!.copyWith(
                                       fontWeight: FontWeight.w600,
                                       color: Theme.of(context).primaryColor)),
@@ -272,6 +272,7 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
                                   amount:
                                       widget.values.vTADAAAASactionedAmount!,
                                   values: widget.values,
+                                  mskoolController: widget.mskoolController,
                                 ),
                               ],
                             ),

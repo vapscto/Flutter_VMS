@@ -27,6 +27,14 @@ class ApproveLeaveApi {
         "LoginId": loginId,
         "get_leave_status": getLeaveStatus
       });
+      logger.i({
+        "HRELAPA_Remarks": remark,
+        "HRELT_Status": status,
+        "MI_Id": miId,
+        "LoginId": loginId,
+        "get_leave_status": getLeaveStatus
+      });
+      logger.i(api);
 
       logger.d(response.statusCode);
 
