@@ -840,8 +840,8 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: const [
                     AnimatedProgressWidget(
-                        title: "Approving All Leaves",
-                        desc: "We are in process to approve all the leaves...",
+                        title: "Rejecting All Leaves",
+                        desc: "We are in process to reject all the leaves...",
                         animationPath: "assets/json/default.json"),
                   ],
                 );
