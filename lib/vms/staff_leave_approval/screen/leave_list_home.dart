@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -38,6 +36,7 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
   final List<LeaveApprovalModelValues> selected = [];
 
   final TextEditingController remark = TextEditingController();
+  List<Map<String, dynamic>> newList = [];
   _getLeave() async {
     leaveApproveController.leaveLoading(true);
     await GetAppliedLeavesApi.instance.getAppliedLeaves(
@@ -45,6 +44,7 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
         miId: widget.loginSuccessModel.mIID!,
         loginId: widget.loginSuccessModel.userId!,
         leaveApproveController: leaveApproveController);
+
     leaveApproveController.leaveLoading(false);
   }
 
@@ -87,11 +87,38 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
                             onChanged: (b) {
                               selectAll.value = b!;
                               if (b) {
-                                if (selected.isNotEmpty) {
-                                  selected.clear();
+                                if (newList.isNotEmpty) {
+                                  newList.clear();
                                 }
-                                selected.addAll(
-                                    leaveApproveController.leaveApprovesList);
+                                for (int i = 0;
+                                    i <
+                                        leaveApproveController
+                                            .leaveApprovesList.length;
+                                    i++) {
+                                  var value = leaveApproveController
+                                      .leaveApprovesList
+                                      .elementAt(i);
+                                  newList.add({
+                                    "HRME_Id": value.hRMEId,
+                                    "HRELAP_ApplicationID":
+                                        value.hRELAPApplicationID,
+                                    "HRELAP_LeaveReason":
+                                        value.hRELAPLeaveReason,
+                                    "HRELAPA_Remarks": value.hRELAPARemarks,
+                                    "HRELAP_FromDateapprv":
+                                        value.hRELAPFromDate,
+                                    "HRELAP_ToDateapprv": value.hRELAPToDate,
+                                    "HRELAP_FromDate": value.hRELAPFromDate,
+                                    "HRELAP_ToDate": value.hRELAPToDate,
+                                    "HRELAP_TotalDays": value.hRELAPTotalDays,
+                                    "HRELAP_TotalDaysapprv":
+                                        value.hRELAPTotalDays,
+                                    // "HRMLY_Id": 0,
+                                    "HRML_Id": value.hRMLId
+                                    // "Reason": null,
+                                    // "Type": null
+                                  });
+                                }
 
                                 showDialog(
                                     context: context,
@@ -125,7 +152,7 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
                                                     onTap: () {
                                                       Navigator.pop(context);
                                                       selectAll.value = false;
-                                                      selected.clear();
+                                                      newList.clear();
                                                     },
                                                     child:
                                                         const Icon(Icons.close),
@@ -175,9 +202,13 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
                                                                       miId: widget
                                                                           .loginSuccessModel
                                                                           .mIID!,
-                                                                      loginId: widget.loginSuccessModel.userId!,
-                                                                      getLeaveStatus: selected.expand<Map<String, dynamic>>((element) => [element.toJson()]).toList()),
-                                                                  builder: (_, snapshot) {
+                                                                      loginId: widget
+                                                                          .loginSuccessModel
+                                                                          .userId!,
+                                                                      getLeaveStatus:
+                                                                          newList),
+                                                                  builder: (_,
+                                                                      snapshot) {
                                                                     if (snapshot
                                                                         .hasData) {
                                                                       if (snapshot
@@ -433,7 +464,7 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
                                       );
                                     });
                               } else {
-                                selected.clear();
+                                newList.clear();
                               }
                             }),
                         ListView.separated(
@@ -496,10 +527,11 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
                   base: baseUrlFromInsCode("leave", widget.mskoolController),
                   miId: widget.loginSuccessModel.mIID!,
                   loginId: widget.loginSuccessModel.userId!,
-                  getLeaveStatus: selected
-                      .expand<Map<String, dynamic>>(
-                          (element) => [element.toJson()])
-                      .toList()),
+                  getLeaveStatus: newList
+                  // .expand<Map<String, dynamic>>(
+                  //     (element) => [element.toJson()])
+                  // .toList()
+                  ),
               builder: (_, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data!) {
