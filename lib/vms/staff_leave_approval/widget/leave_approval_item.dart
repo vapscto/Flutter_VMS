@@ -829,7 +829,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                   return const ErrWidget(err: {
                     "errorTitle": "Server Error Occured",
                     "errorMsg":
-                        "Currenlty i'm unable to approve leave due to some server issue .. Server not returning 200",
+                        "Currenlty i'm unable to reject  leave due to some server issue .. Server not returning 200",
                   });
                 }
 

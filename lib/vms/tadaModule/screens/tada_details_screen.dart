@@ -272,6 +272,7 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
                                   amount:
                                       widget.values.vTADAAAASactionedAmount!,
                                   values: widget.values,
+                                  mskoolController: widget.mskoolController,
                                 ),
                               ],
                             ),

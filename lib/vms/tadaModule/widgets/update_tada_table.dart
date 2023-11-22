@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/tadaModule/apis/save_tada_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/apis/tada_apply_list_api.dart';
@@ -14,12 +16,14 @@ class UpdateTADATable extends StatefulWidget {
   final TADAController tadaController;
   final double amount;
   final GetadvancetadaValues values;
+  final MskoolController mskoolController;
 
   const UpdateTADATable(
       {super.key,
       required this.tadaController,
       required this.amount,
-      required this.values});
+      required this.values,
+      required this.mskoolController});
 
   @override
   State<UpdateTADATable> createState() => _UpdateTADATableState();
@@ -34,13 +38,13 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
   String toDate = '';
   String fromTime = '';
   String toTime = '';
-  Map<String, dynamic> headArray = {};
+  List<Map<String, dynamic>> headArray = [];
   var days;
   num amount = 0;
   _getData() async {
     widget.tadaController.updateIsLoading(true);
     TADADetailsAPI.instance.tadaDetails(
-        base: 'issuemanager',
+        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         userId: widget.values.userId!,
         tadaController: widget.tadaController,
         vtaDaaaId: widget.values.vTADAAAId!);
@@ -193,113 +197,112 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
         const SizedBox(height: 20),
         Align(
           alignment: Alignment.bottomCenter,
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      // elevation: 30,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      minimumSize: Size(Get.width * 0.25, 40)),
-                  onPressed: () {
-                    if (widget.tadaController.selectedValue.isEmpty) {
-                      Fluttertoast.showToast(msg: "Please Select Status");
-                    } else if (widget
-                        .tadaController.textEditingControllerList.isEmpty) {
-                      Fluttertoast.showToast(
-                          msg: "Please Enter sanction amount");
-                    } else if (widget.values.vTADAAATotalAppliedAmount! <
-                        num.parse(widget
-                            .tadaController.textEditingControllerList.length
-                            .toString())) {
-                      Fluttertoast.showToast(
-                          msg:
-                              "sanction amount should be lessthen applied amount");
-                    } else {
-                      var remark = '';
-
-                      for (int i = 0;
-                          i < widget.tadaController.tadaEditValues.length;
-                          i++) {
-                        headArray.addAll({
-                          'VTADAAAD_Id': widget.values.vTADAAAId,
-                          "VTADAAAAH_SactionedAmount": widget
-                              .tadaController.textEditingControllerList
-                              .elementAt(i)
-                              .text,
-                          'VTADAAAAH_Remarks': widget
-                              .tadaController.approvalTextEditingControllerList
-                              .elementAt(i)
-                              .text,
-                          'flag':
-                              widget.tadaController.selectedValue.elementAt(i),
-                        });
-                        remark = widget
-                            .tadaController.approvalTextEditingControllerList
-                            .elementAt(i)
-                            .text;
-                        // amount = widget.tadaController.textEditingControllerList
-                        //     .elementAt(i)
-                        //     .text;
-                      }
-
-                      logger.i(headArray);
-                      SaveTADAAPI.instance
-                          .saveTADA(base: 'issuemanager', body: {
-                        'VTADAAA_Remarks': remark,
-                        'VTADAAA_TotalSactionedAmount':
-                            sanctionController2.text,
-                        'headarray': [headArray],
-                        'VTADAAA_Id': widget.values.vTADAAAId,
-                        "MI_Id": widget.values.mIId,
-                        "approvecnt": 0,
-                        "level": 0,
-                        "HRME_Id": widget.values.hRMEId,
-                        'UserId': widget.values.userId
-                      }).then((v) {
-                        logger.i("success");
-                        TADAApplyListAPI.instance.showApplyList(
-                            base: "issuemanager",
-                            userId: widget.values.userId!,
-                            tadaController: widget.tadaController);
-                        _getData();
-                        Get.back();
-                      });
-                    }
-                  },
-                  child: Center(
-                    child: Text(
-                      "Save",
-                      style: Get.textTheme.titleMedium!
-                          .copyWith(color: Colors.white),
-                    ),
-                  ),
+          child:
+              //  Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children: [
+              ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                // elevation: 30,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      // elevation: 30,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      backgroundColor: const Color(0xFFFF5252),
-                      minimumSize: Size(Get.width * 0.25, 40)),
-                  onPressed: () {
-                    setState(() {
-                      _getData();
-                    });
-                  },
-                  child: Center(
-                    child: Text(
-                      "Cancel",
-                      style: Get.textTheme.titleMedium!
-                          .copyWith(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ]),
+                minimumSize: Size(Get.width * 0.25, 40)),
+            onPressed: () {
+              if (widget.tadaController.selectedValue.isEmpty) {
+                Fluttertoast.showToast(msg: "Please Select Status");
+              } else if (widget
+                  .tadaController.textEditingControllerList.isEmpty) {
+                Fluttertoast.showToast(msg: "Please Enter sanction amount");
+              } else if (widget.values.vTADAAATotalAppliedAmount! <
+                  num.parse(widget
+                      .tadaController.textEditingControllerList.length
+                      .toString())) {
+                Fluttertoast.showToast(
+                    msg: "sanction amount should be lessthen applied amount");
+              } else {
+                var remark = '';
+
+                for (int i = 0;
+                    i < widget.tadaController.tadaEditValues.length;
+                    i++) {
+                  headArray.add({
+                    'VTADAAAD_Id': widget.values.vTADAAAId,
+                    "VTADAAAAH_SactionedAmount": widget
+                        .tadaController.textEditingControllerList
+                        .elementAt(i)
+                        .text,
+                    'VTADAAAAH_Remarks': widget
+                        .tadaController.approvalTextEditingControllerList
+                        .elementAt(i)
+                        .text,
+                    'flag': widget.tadaController.selectedValue.elementAt(i),
+                  });
+                  remark = widget
+                      .tadaController.approvalTextEditingControllerList
+                      .elementAt(i)
+                      .text;
+                  // amount = widget.tadaController.textEditingControllerList
+                  //     .elementAt(i)
+                  //     .text;
+                }
+
+                logger.i(headArray);
+                SaveTADAAPI.instance.saveTADA(
+                    base: baseUrlFromInsCode(
+                        'issuemanager', widget.mskoolController),
+                    body: {
+                      'VTADAAA_Remarks': remark,
+                      'VTADAAA_TotalSactionedAmount': sanctionController2.text,
+                      'headarray': headArray,
+                      'VTADAAA_Id': widget.values.vTADAAAId,
+                      "MI_Id": widget.values.mIId,
+                      "approvecnt": 0,
+                      "level": 0,
+                      "HRME_Id": widget.values.hRMEId,
+                      'UserId': widget.values.userId
+                    }).then((v) {
+                  logger.i("success");
+                  TADAApplyListAPI.instance.showApplyList(
+                      base: baseUrlFromInsCode(
+                          'issuemanager', widget.mskoolController),
+                      userId: widget.values.userId!,
+                      tadaController: widget.tadaController);
+                  _getData();
+                  Get.back();
+                });
+              }
+            },
+            child: Center(
+              child: Text(
+                "Save",
+                style: Get.textTheme.titleMedium!.copyWith(color: Colors.white),
+              ),
+            ),
+          ),
+          // ElevatedButton(
+          //   style: ElevatedButton.styleFrom(
+          //       // elevation: 30,
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(10.0),
+          //       ),
+          //       backgroundColor: const Color(0xFFFF5252),
+          //       minimumSize: Size(Get.width * 0.25, 40)),
+          //   onPressed: () {
+          //     setState(() {
+          //       _getData();
+          //     });
+          //   },
+          //   child: Center(
+          //     child: Text(
+          //       "Cancel",
+          //       style: Get.textTheme.titleMedium!
+          //           .copyWith(color: Colors.white),
+          //     ),
+          //   ),
+          // ),
+          // ]),
         ),
       ],
     );

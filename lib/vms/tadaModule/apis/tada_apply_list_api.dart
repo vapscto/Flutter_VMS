@@ -15,7 +15,6 @@ class TADAApplyListAPI {
       required int userId,
       required TADAController tadaController}) async {
     final dio = Dio();
-    // var url = base + APIConstant().tadaShow;
     var url2 = base + URLS.tadaList;
 
     try {
