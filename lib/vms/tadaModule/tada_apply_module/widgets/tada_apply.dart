@@ -671,7 +671,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 }
                               } else {
                                 Fluttertoast.showToast(
-                                    msg: "Please select Data");
+                                    msg: "Please select Date");
                               }
                             },
                             decoration: InputDecoration(

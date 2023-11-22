@@ -526,7 +526,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                     }
                                   } else {
                                     Fluttertoast.showToast(
-                                        msg: "Please select Data");
+                                        msg: "Please select Date");
                                   }
                                 },
                                 decoration: InputDecoration(
