@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/api/approve_leave.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/model/leave_approval_model.dart';
@@ -279,8 +280,15 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: InkWell(
                           onTap: () {
-                            OpenFilex.open(
-                                value.hRELAPSupportingDocument.toString());
+                            logger.i(value.hRELAPSupportingDocument);
+                            if (value.hRELAPSupportingDocument
+                                .toString()
+                                .contains('https://')) {
+                              createPreview(
+                                  context, value.hRELAPSupportingDocument);
+                            } else {
+                              OpenFilex.open(value.hRELAPSupportingDocument);
+                            }
                           },
                           child: Container(
                             decoration: BoxDecoration(
