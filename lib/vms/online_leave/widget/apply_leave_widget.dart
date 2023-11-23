@@ -104,8 +104,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
       lastDt = currentDate.subtract(Duration(days: myInt));
     } else if (widget.values.hrmLLeaveName == "Comp off" ||
         widget.values.hrmLLeaveName == "Emergency Leave") {
-      initialDt = currentDate.subtract(Duration(days: myInt));
-      firstDt = currentDate.subtract(Duration(days: myInt));
+      initialDt = currentDate.subtract(Duration(days: 1));
+      firstDt = currentDate.subtract(Duration(days: 30));
       lastDt = currentDate.subtract(Duration(days: 1));
     } else if (widget.values.hrmLLeaveName == "Optional Leave") {
       initialDt = currentDate.add(Duration(days: 1));
@@ -335,8 +335,10 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                             "Emergency Leave") {
                                       initialDt2 = startDT;
                                       firstDt2 = startDT;
-                                      lastDt2 = lastDt
-                                          .add(Duration(days: myInt - 18));
+                                      lastDt2 =
+                                          (lastDt.day == currentDate.day - 1)
+                                              ? lastDt
+                                              : lastDt.add(Duration(days: 3));
                                     } else if (widget.values.hrmLLeaveName ==
                                         "Optional Leave") {
                                       for (int i = 0;
