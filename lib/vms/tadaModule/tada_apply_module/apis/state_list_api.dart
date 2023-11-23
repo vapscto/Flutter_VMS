@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/vms/tadaModule/model/get_save_data_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/clint_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/state_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
@@ -29,8 +28,8 @@ class StateListAPI {
         data: {"UserId": userId, "MI_Id": miId},
       );
       if (response.statusCode == 200) {
-        // logger.i(api);
-        // logger.i(response.data['state']);
+        logger.i(api);
+        logger.i({"UserId": userId, "MI_Id": miId});
         StateListModel stateListModel =
             StateListModel.fromJson(response.data['state']);
         tadaApplyController.getStateList(stateListModel.values!);
@@ -41,6 +40,10 @@ class StateListAPI {
           TadaSavedModel getSaveDataModel =
               TadaSavedModel.fromJson(response.data['getReport']);
           tadaApplyController.getSavedDataValue(getSaveDataModel.values!);
+        }
+        if (response.data['vtadaA_ActiveFlg'] != null) {
+          tadaApplyController.isDocumentUpload.value =
+              response.data['vtadaA_ActiveFlg'];
         }
         tadaApplyController.stateLoading(false);
       }

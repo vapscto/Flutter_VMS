@@ -19,6 +19,7 @@ class TadaApplyDataController extends GetxController {
   RxBool isEdit = RxBool(false);
   RxBool isPlannerCreate = RxBool(false);
   RxBool isAppliedDataLoading = RxBool(false);
+  RxBool isDocumentUpload = RxBool(false);
 
   void appliedData(bool loading) {
     isAppliedDataLoading.value = loading;
