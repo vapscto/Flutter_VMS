@@ -919,7 +919,9 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                           const SizedBox(height: 30),
                           CustomContainer(
                             child: TextField(
+                              // readOnly: true,
                               style: Theme.of(context).textTheme.titleSmall,
+                              keyboardType: TextInputType.number,
                               controller: totalAmount,
                               decoration: InputDecoration(
                                 label: Container(

@@ -32,9 +32,16 @@ class TadaEditAPI {
       logger.i(response.statusCode);
       logger.i(response.data);
       if (response.statusCode == 200) {
-        // EditModel editModel = EditModel.fromJson(response.data['editArray']);
         if (response.data['returnvalue'] == true) {
-          Fluttertoast.showToast(msg: "TA-DA Deactivated successfully");
+          if (response.data['returnval'] == 'Delete') {
+            Fluttertoast.showToast(msg: "Record Deactivated successfully");
+          } else if (response.data['returnval'] == 'NotDelete') {
+            Fluttertoast.showToast(msg: "Record Activated successfully");
+          } else if (response.data['returnval'] == 'Firststage') {
+            Fluttertoast.showToast(msg: "Result is Waiting for Authrization!");
+          }
+        } else {
+          Fluttertoast.showToast(msg: "Please Contact Administrator!!!");
         }
 
         tadaApplyController.editData(false);

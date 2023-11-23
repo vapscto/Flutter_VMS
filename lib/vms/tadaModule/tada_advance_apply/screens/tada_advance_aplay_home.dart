@@ -110,11 +110,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
     _addressController.clear();
     tadaApplyController.addressListController.clear();
     tadaApplyController.allowenseData.clear();
-    // for (int i = 0; i < tadaApplyController.getSavedData.length; i++) {
-    //   if (tadaApplyController.getSavedData.elementAt(i).countBalance == false) {
-    //     Get.dialog(_getPopUp());
-    //   }
-    // }
+
     tadaApplyController.stateLoading(false);
   }
 
@@ -227,6 +223,9 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
     setState(() {
       getStateList();
     });
+    if (tadaApplyController.isDocumentUpload.value == true) {
+      _getPopUp();
+    }
     super.initState();
   }
 
@@ -251,6 +250,17 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                 child: ListView(
                   padding: const EdgeInsets.all(16),
                   children: [
+                    (tadaApplyController.isDocumentUpload.value == true)
+                        ? Padding(
+                            padding: const EdgeInsets.only(
+                                top: 16, left: 16, right: 16),
+                            child: Text(
+                              "Previous TA-DA Adavance Is Pending, Document Not Upload",
+                              style: Get.textTheme.titleSmall!
+                                  .copyWith(color: Colors.red),
+                            ),
+                          )
+                        : const SizedBox(),
                     Container(
                       margin: const EdgeInsets.only(top: 20),
                       child: Row(
@@ -267,12 +277,27 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                   fromDate = await showDatePicker(
                                     context: context,
                                     helpText: "Select Data",
-                                    firstDate: DateTime(2022),
+                                    firstDate: DateTime.now()
+                                        .subtract(const Duration(days: 30)),
                                     initialDate: DateTime.now(),
                                     lastDate: DateTime(3050),
                                   );
                                   if (fromDate != null) {
                                     setState(() {
+                                      _endDate.clear();
+                                      _startTime.clear();
+                                      _endTime.clear();
+                                      tadaApplyController.cityListValues
+                                          .clear();
+                                      _addressController.clear();
+                                      _remarkController.clear();
+                                      allAmount = 0;
+                                      foodTotalSlotController.clear();
+                                      foodRemarksController.clear();
+                                      accommodationRemarksController.clear();
+                                      accommodationRemarksController.clear();
+                                      tadaApplyController.allowenseData.clear();
+                                      tadaApplyController.stateList.first;
                                       _startDate.text =
                                           "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
                                       fromSelectedDate =
@@ -286,13 +311,30 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                       fromDate = await showDatePicker(
                                         helpText: "Select Data",
                                         context: context,
-                                        firstDate: DateTime(2022),
+                                        firstDate: DateTime.now()
+                                            .subtract(const Duration(days: 30)),
                                         initialDate: DateTime.now(),
                                         lastDate: DateTime(3050),
                                       );
-
                                       if (fromDate != null) {
                                         setState(() {
+                                          _endDate.clear();
+                                          _startTime.clear();
+                                          _endTime.clear();
+                                          tadaApplyController.cityListValues
+                                              .clear();
+                                          _addressController.clear();
+                                          _remarkController.clear();
+                                          allAmount = 0;
+                                          foodTotalSlotController.clear();
+                                          foodRemarksController.clear();
+                                          accommodationRemarksController
+                                              .clear();
+                                          accommodationRemarksController
+                                              .clear();
+                                          tadaApplyController.allowenseData
+                                              .clear();
+                                          tadaApplyController.stateList.first;
                                           _startDate.text =
                                               "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
                                           fromSelectedDate =
@@ -382,6 +424,20 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                     );
                                     if (toDate != null) {
                                       setState(() {
+                                        _startTime.clear();
+                                        _endTime.clear();
+                                        tadaApplyController.cityListValues
+                                            .clear();
+                                        _addressController.clear();
+                                        _remarkController.clear();
+                                        allAmount = 0;
+                                        foodTotalSlotController.clear();
+                                        foodRemarksController.clear();
+                                        accommodationRemarksController.clear();
+                                        accommodationRemarksController.clear();
+                                        tadaApplyController.allowenseData
+                                            .clear();
+                                        tadaApplyController.stateList.first;
                                         _endDate.text =
                                             "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                                         dayCount = toDate!
@@ -416,6 +472,22 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                         );
                                         if (toDate != null) {
                                           setState(() {
+                                            _startTime.clear();
+                                            _endTime.clear();
+                                            tadaApplyController.cityListValues
+                                                .clear();
+                                            _addressController.clear();
+                                            _remarkController.clear();
+                                            allAmount = 0;
+                                            foodTotalSlotController.clear();
+                                            foodRemarksController.clear();
+                                            accommodationRemarksController
+                                                .clear();
+                                            accommodationRemarksController
+                                                .clear();
+                                            tadaApplyController.allowenseData
+                                                .clear();
+                                            tadaApplyController.stateList.first;
                                             _endDate.text =
                                                 "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                                             dayCount = toDate!
@@ -1265,7 +1337,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                     value!;
 
                                                                 if (value) {
-                                                                  allAmount = 0;
+                                                                  // allAmount = 0;
 
                                                                   addAmount(
                                                                       foodAmt);
@@ -1387,8 +1459,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                 isAccommodationSelected =
                                                                     value!;
 
-                                                                if (value ==
-                                                                    true) {
+                                                                if (value) {
                                                                   addAmount(
                                                                       accommodationAmount);
                                                                 } else {

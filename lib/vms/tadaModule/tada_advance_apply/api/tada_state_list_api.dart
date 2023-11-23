@@ -40,6 +40,9 @@ class TadaStateListAPI {
           GetSaveDataModel getSaveDataModel =
               GetSaveDataModel.fromJson(response.data['getReport']);
           tadaApplyController.getSavedDataValue(getSaveDataModel.values!);
+          tadaApplyController.isDocumentUpload.value =
+              response.data['countBalance'];
+          logger.i('====+++---//${tadaApplyController.isDocumentUpload.value}');
         }
         tadaApplyController.stateLoading(false);
       }

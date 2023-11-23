@@ -417,12 +417,27 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                               fromDate = await showDatePicker(
                                 context: context,
                                 helpText: "Select Data",
+                                firstDate: DateTime.now()
+                                    .subtract(const Duration(days: 30)),
                                 initialDate: DateTime.now(),
-                                firstDate: DateTime(2000),
                                 lastDate: DateTime(3050),
                               );
                               if (fromDate != null) {
                                 setState(() {
+                                  _endDate.clear();
+                                  _startTime.clear();
+                                  _endTime.clear();
+                                  tadaApplyDataController.cityListValues
+                                      .clear();
+                                  _addressController.clear();
+                                  _remarkController.clear();
+                                  allAmount = 0;
+                                  foodTotalSlotController.clear();
+                                  foodRemarksController.clear();
+                                  accommodationRemarksController.clear();
+                                  accommodationRemarksController.clear();
+                                  tadaApplyDataController.allowenseData.clear();
+                                  tadaApplyDataController.stateList.first;
                                   _startDate.text =
                                       "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
                                   fromSelectedDate =
@@ -436,13 +451,29 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                   fromDate = await showDatePicker(
                                     helpText: "Select Data",
                                     context: context,
+                                    firstDate: DateTime.now()
+                                        .subtract(const Duration(days: 30)),
                                     initialDate: DateTime.now(),
-                                    firstDate: DateTime(2000),
                                     lastDate: DateTime(3050),
                                   );
 
                                   if (fromDate != null) {
                                     setState(() {
+                                      _endDate.clear();
+                                      _startTime.clear();
+                                      _endTime.clear();
+                                      tadaApplyDataController.cityListValues
+                                          .clear();
+                                      _addressController.clear();
+                                      _remarkController.clear();
+                                      allAmount = 0;
+                                      foodTotalSlotController.clear();
+                                      foodRemarksController.clear();
+                                      accommodationRemarksController.clear();
+                                      accommodationRemarksController.clear();
+                                      tadaApplyDataController.allowenseData
+                                          .clear();
+                                      tadaApplyDataController.stateList.first;
                                       _startDate.text =
                                           "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
                                       fromSelectedDate =
@@ -531,6 +562,20 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 );
                                 if (toDate != null) {
                                   setState(() {
+                                    _startTime.clear();
+                                    _endTime.clear();
+                                    tadaApplyDataController.cityListValues
+                                        .clear();
+                                    _addressController.clear();
+                                    _remarkController.clear();
+                                    allAmount = 0;
+                                    foodTotalSlotController.clear();
+                                    foodRemarksController.clear();
+                                    accommodationRemarksController.clear();
+                                    accommodationRemarksController.clear();
+                                    tadaApplyDataController.allowenseData
+                                        .clear();
+                                    tadaApplyDataController.stateList.first;
                                     _endDate.text =
                                         "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                                     dayCount =
@@ -564,6 +609,20 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                     );
                                     if (toDate != null) {
                                       setState(() {
+                                        _startTime.clear();
+                                        _endTime.clear();
+                                        tadaApplyDataController.cityListValues
+                                            .clear();
+                                        _addressController.clear();
+                                        _remarkController.clear();
+                                        allAmount = 0;
+                                        foodTotalSlotController.clear();
+                                        foodRemarksController.clear();
+                                        accommodationRemarksController.clear();
+                                        accommodationRemarksController.clear();
+                                        tadaApplyDataController.allowenseData
+                                            .clear();
+                                        tadaApplyDataController.stateList.first;
                                         _endDate.text =
                                             "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                                         dayCount = toDate!
@@ -1384,8 +1443,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                         isFoodSelected = value!;
 
                                                         if (value) {
-                                                          allAmount = 0;
-
                                                           addAmount(foodAmt);
                                                         } else {
                                                           removeAmount(foodAmt);
@@ -1496,7 +1553,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                         isAccommodationSelected =
                                                             value!;
 
-                                                        if (value == true) {
+                                                        if (value) {
                                                           addAmount(
                                                               accommodationAmount);
                                                         } else {

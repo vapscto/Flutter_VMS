@@ -51,6 +51,7 @@ class TadaApplyController extends GetxController {
   //**State List* *//
   RxList<StateListModelValues> stateList = <StateListModelValues>[].obs;
   RxList<GetSaveDataModelValues> getSavedData = <GetSaveDataModelValues>[].obs;
+  RxBool isDocumentUpload = RxBool(false);
 
   void getStateList(List<StateListModelValues> states) {
     if (stateList.isNotEmpty) {
