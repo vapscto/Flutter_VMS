@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_contr
 import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:open_filex/open_filex.dart';
 
 class CategoryCheckList extends StatefulWidget {
@@ -167,7 +168,7 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                                       alignment: Alignment.center,
                                       child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor: Color.fromARGB(
+                                            backgroundColor:const Color.fromARGB(
                                                 255, 27, 59, 238),
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 14, vertical: 2.0),
@@ -243,9 +244,17 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                                 ]);
                               }),
                             ))))),
-          )
+          ),
+          MSkollBtn(title: "Save", onPress:  () {
+            
+          },)
         ],
       ),
     );
+  }
+  @override
+  void dispose() {
+    _plannerDetailsController.addListBrowser.clear();
+    super.dispose();
   }
 }

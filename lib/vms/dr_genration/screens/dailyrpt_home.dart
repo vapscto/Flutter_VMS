@@ -51,7 +51,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
     await getPlanerdetails(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         controller: _plannerDetailsController,
-        ivrmrtId: widget.loginSuccessModel.roleId!,
+        ivrmrtId:widget.loginSuccessModel.roleId!,
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!);
   }
