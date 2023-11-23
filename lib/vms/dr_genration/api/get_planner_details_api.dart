@@ -8,6 +8,8 @@ import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.
 import 'package:m_skool_flutter/vms/dr_genration/model/countTask_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/drnotapprovedmessage_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/drnotsent_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_details.dart';
 
 Future<bool> getPlanerdetails({
@@ -18,7 +20,7 @@ Future<bool> getPlanerdetails({
   required int miId,
 }) async {
   final Dio ins = getGlobalDio();
- // String baseApi = "https://vms.vapstech.com:44011/";
+  String base = "https://vms.vapstech.com:44011/";
   final String apiUrl = base + URLS.drDetailsGenration;
   //  print(base);
   controller.updatePlannerDeatails(true);
@@ -27,8 +29,8 @@ Future<bool> getPlanerdetails({
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
       "MI_Id": miId,
-      "UserId": userId,
-      "IVRMRT_Id": ivrmrtId,
+      "UserId": 60241,
+      "IVRMRT_Id": 11,
     });
     logger.e({
       "MI_Id": miId,
@@ -63,6 +65,14 @@ Future<bool> getPlanerdetails({
         planerDeatailsList.plannername!;
     controller.otherDaysEditingController.value =
         planerDeatailsList.dailyreportothersdatecount!.toInt().toString();
+    Drnotapprovedmessage drnotapprovedmessage =
+        Drnotapprovedmessage.fromJson(response.data['drnotapprovedmessage']);
+    controller.drnotapprovedList.addAll(drnotapprovedmessage.values!);
+    Getdrnotsentdetails getdrnotsentdetails = Getdrnotsentdetails.fromJson(response.data['getdrnotsentdetails']);
+  controller.drnotSentdetailsList.addAll(getdrnotsentdetails.values!);
+  for(var a =0;a<getdrnotsentdetails.values!.length;a++){
+    controller.etRemark.add(TextEditingController(text: ""));
+  }
     controller.updatePlannerDeatails(false);
     return true;
   } on DioError catch (e) {

@@ -5,6 +5,8 @@ import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model
 import 'package:m_skool_flutter/vms/dr_genration/model/countTask_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/drnotapprovedmessage_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/drnotsent_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_details.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 
@@ -35,6 +37,12 @@ class PlannerDetails extends GetxController {
   RxList<bool> checkBoxList = <bool>[].obs;
   // category checklist array
   RxList<CategoryCheckListModelValues> categoryCheckList = <CategoryCheckListModelValues>[].obs;
+  // drnotapproved list
+  RxList<DrnotapprovedmessageValues> drnotapprovedList = <DrnotapprovedmessageValues>[].obs;
+  // drnotset list
+  RxList<GetdrnotsentdetailsValues> drnotSentdetailsList = <GetdrnotsentdetailsValues>[].obs;
+  // drnotsent remarks list
+  RxList<TextEditingController> etRemark = <TextEditingController>[].obs;
   RxString day = "today".obs;
   Rx<TextEditingController> plannernameEditingController =
       TextEditingController(text: "").obs;
