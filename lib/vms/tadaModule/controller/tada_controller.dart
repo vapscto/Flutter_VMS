@@ -66,8 +66,8 @@ class TADAController {
       textEditingControllerList.add(TextEditingController(
           text: editArray[i].vTADAAAAHSactionedAmount.toString()));
       selectedValue.add(editArray[i].vTADAAAAHStatusFlg.toString());
-      approvalTextEditingControllerList.add(
-          TextEditingController(text: editArray[i].vTADAAADRemarks.toString()));
+      approvalTextEditingControllerList
+          .add(TextEditingController(text: editArray[i].vTADAAADRemarks ?? ''));
     }
   }
 }

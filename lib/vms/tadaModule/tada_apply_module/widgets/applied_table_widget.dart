@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/tada_apply_edit_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
 
 class AppliedTableWidget extends StatelessWidget {
+  final MskoolController mskoolController;
+  final LoginSuccessModel loginSuccessModel;
   final TadaApplyDataController tadaApplyDataController;
   AppliedTableWidget({
     super.key,
     required this.tadaApplyDataController,
+    required this.mskoolController,
+    required this.loginSuccessModel,
   });
   var date = '';
   var time = '';
@@ -16,6 +25,17 @@ class AppliedTableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    editData(int id) {
+      tadaApplyDataController.editData(true);
+      TadaEditAPI.instance.tadaApplyEditData(
+          base: baseUrlFromInsCode('issuemanager', mskoolController),
+          userId: loginSuccessModel.userId!,
+          miId: loginSuccessModel.mIID!,
+          vtadaaaId: id,
+          tadaApplyController: tadaApplyDataController);
+      tadaApplyDataController.editData(false);
+    }
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -98,9 +118,38 @@ class AppliedTableWidget extends StatelessWidget {
               DataCell(Text(tadaApplyDataController
                   .getSavedData[index].vtadaATotalAppliedAmount
                   .toString())),
-              DataCell(Text(
-                  tadaApplyDataController.getSavedData[index].vtadaAStatusFlg ??
-                      "")),
+              DataCell(InkWell(
+                  onTap: () {
+                    // if (tadaApplyDataController.isDocumentUpload.value == true) {
+                    //   Fluttertoast.showToast(
+                    //       msg: "Previous TA-DA Adavance Is Pending,");
+                    // } else {
+                    editData(
+                        tadaApplyDataController.getSavedData[index].vtadaAId!);
+                    // }
+                  },
+                  child: (tadaApplyDataController.getSavedData
+                              .elementAt(index)
+                              .vtadaAActiveFlg! ==
+                          true)
+                      ? Row(
+                          children: [
+                            Text(
+                              "Deactivate",
+                              style: Get.textTheme.titleMedium!.copyWith(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.w200,
+                                  fontStyle: FontStyle.italic),
+                            ),
+                          ],
+                        )
+                      : Text(
+                          "Activate",
+                          style: Get.textTheme.titleMedium!.copyWith(
+                              color: Colors.green,
+                              fontWeight: FontWeight.w200,
+                              fontStyle: FontStyle.italic),
+                        ))),
             ]);
           }),
         ),

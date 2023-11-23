@@ -521,7 +521,7 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
       builder: (_) {
         return Dialog(
           child: FutureBuilder<bool>(
-              future: ApproveLeaveApi.instance.approveNow(
+              future: ApproveLeaveApi.instance.rejectNow(
                   remark: remark,
                   status: status,
                   base: baseUrlFromInsCode("leave", widget.mskoolController),

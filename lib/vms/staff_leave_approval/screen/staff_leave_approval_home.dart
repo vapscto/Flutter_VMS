@@ -466,7 +466,7 @@ class _StaffLeaveApprovalState extends State<StaffLeaveApproval> {
       builder: (_) {
         return Dialog(
           child: FutureBuilder<bool>(
-              future: ApproveLeaveApi.instance.approveNow(
+              future: ApproveLeaveApi.instance.rejectNow(
                   remark: remark,
                   status: status,
                   base: baseUrlFromInsCode("leave", widget.mskoolController),

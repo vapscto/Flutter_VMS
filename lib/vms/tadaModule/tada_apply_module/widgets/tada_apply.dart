@@ -2170,6 +2170,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                         ),
                         child: AppliedTableWidget(
                           tadaApplyDataController: tadaApplyDataController,
+                          loginSuccessModel: widget.loginSuccessModel,
+                          mskoolController: widget.mskoolController,
                         ),
                       ),
               ],
@@ -2182,9 +2184,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      insetPadding: const EdgeInsets.symmetric(
-        horizontal: 16,
-      ),
       contentPadding: const EdgeInsets.all(10),
       content: WillPopScope(
         onWillPop: () async => false,
@@ -2196,6 +2195,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
             children: [
               Text(
                 "Daily report is not generated between dates !",
+                textAlign: TextAlign.center,
                 style: Get.textTheme.titleMedium!.copyWith(
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w400),

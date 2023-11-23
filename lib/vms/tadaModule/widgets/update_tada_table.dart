@@ -11,6 +11,7 @@ import 'package:m_skool_flutter/vms/tadaModule/apis/tada_details_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/controller/tada_controller.dart';
 import 'package:m_skool_flutter/vms/tadaModule/model/tada_apply_list.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class UpdateTADATable extends StatefulWidget {
   final TADAController tadaController;
@@ -41,6 +42,14 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
   List<Map<String, dynamic>> headArray = [];
   var days;
   num amount = 0;
+  void addAmount(int a) {
+    amount += a;
+  }
+
+  void removeAmount(int a) {
+    amount -= a;
+  }
+
   _getData() async {
     widget.tadaController.updateIsLoading(true);
     TADADetailsAPI.instance.tadaDetails(
@@ -196,114 +205,66 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
         ),
         const SizedBox(height: 20),
         Align(
-          alignment: Alignment.bottomCenter,
-          child:
-              //  Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //     crossAxisAlignment: CrossAxisAlignment.center,
-              //     children: [
-              ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                // elevation: 30,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                minimumSize: Size(Get.width * 0.25, 40)),
-            onPressed: () {
-              if (widget.tadaController.selectedValue.isEmpty) {
-                Fluttertoast.showToast(msg: "Please Select Status");
-              } else if (widget
-                  .tadaController.textEditingControllerList.isEmpty) {
-                Fluttertoast.showToast(msg: "Please Enter sanction amount");
-              } else if (widget.values.vTADAAATotalAppliedAmount! <
-                  num.parse(widget
-                      .tadaController.textEditingControllerList.length
-                      .toString())) {
-                Fluttertoast.showToast(
-                    msg: "sanction amount should be lessthen applied amount");
-              } else {
-                var remark = '';
+            alignment: Alignment.bottomCenter,
+            child: MSkollBtn(
+                title: "Save",
+                onPress: () {
+                  if (widget.tadaController.selectedValue.isEmpty) {
+                    Fluttertoast.showToast(msg: "Please Select Status");
+                  } else if (widget
+                      .tadaController.textEditingControllerList.isEmpty) {
+                    Fluttertoast.showToast(msg: "Please Enter sanction amount");
+                  } else if (amount >
+                      widget.values.vTADAAATotalAppliedAmount!) {
+                    Fluttertoast.showToast(
+                        msg:
+                            "sanction amount should be lessthen applied amount");
+                  } else {
+                    for (int i = 0;
+                        i < widget.tadaController.tadaEditValues.length;
+                        i++) {
+                      headArray.add({
+                        'VTADAAAD_Id': widget.values.vTADAAAId,
+                        "VTADAAAAH_SactionedAmount": widget
+                            .tadaController.textEditingControllerList
+                            .elementAt(i)
+                            .text,
+                        'VTADAAAAH_Remarks': widget
+                            .tadaController.approvalTextEditingControllerList
+                            .elementAt(i)
+                            .text,
+                        'flag':
+                            widget.tadaController.selectedValue.elementAt(i),
+                      });
+                    }
 
-                for (int i = 0;
-                    i < widget.tadaController.tadaEditValues.length;
-                    i++) {
-                  headArray.add({
-                    'VTADAAAD_Id': widget.values.vTADAAAId,
-                    "VTADAAAAH_SactionedAmount": widget
-                        .tadaController.textEditingControllerList
-                        .elementAt(i)
-                        .text,
-                    'VTADAAAAH_Remarks': widget
-                        .tadaController.approvalTextEditingControllerList
-                        .elementAt(i)
-                        .text,
-                    'flag': widget.tadaController.selectedValue.elementAt(i),
-                  });
-                  remark = widget
-                      .tadaController.approvalTextEditingControllerList
-                      .elementAt(i)
-                      .text;
-                  // amount = widget.tadaController.textEditingControllerList
-                  //     .elementAt(i)
-                  //     .text;
-                }
-
-                logger.i(headArray);
-                SaveTADAAPI.instance.saveTADA(
-                    base: baseUrlFromInsCode(
-                        'issuemanager', widget.mskoolController),
-                    body: {
-                      'VTADAAA_Remarks': remark,
-                      'VTADAAA_TotalSactionedAmount': sanctionController2.text,
-                      'headarray': headArray,
-                      'VTADAAA_Id': widget.values.vTADAAAId,
-                      "MI_Id": widget.values.mIId,
-                      "approvecnt": 0,
-                      "level": 0,
-                      "HRME_Id": widget.values.hRMEId,
-                      'UserId': widget.values.userId
-                    }).then((v) {
-                  logger.i("success");
-                  TADAApplyListAPI.instance.showApplyList(
-                      base: baseUrlFromInsCode(
-                          'issuemanager', widget.mskoolController),
-                      userId: widget.values.userId!,
-                      tadaController: widget.tadaController);
-                  _getData();
-                  Get.back();
-                });
-              }
-            },
-            child: Center(
-              child: Text(
-                "Save",
-                style: Get.textTheme.titleMedium!.copyWith(color: Colors.white),
-              ),
-            ),
-          ),
-          // ElevatedButton(
-          //   style: ElevatedButton.styleFrom(
-          //       // elevation: 30,
-          //       shape: RoundedRectangleBorder(
-          //         borderRadius: BorderRadius.circular(10.0),
-          //       ),
-          //       backgroundColor: const Color(0xFFFF5252),
-          //       minimumSize: Size(Get.width * 0.25, 40)),
-          //   onPressed: () {
-          //     setState(() {
-          //       _getData();
-          //     });
-          //   },
-          //   child: Center(
-          //     child: Text(
-          //       "Cancel",
-          //       style: Get.textTheme.titleMedium!
-          //           .copyWith(color: Colors.white),
-          //     ),
-          //   ),
-          // ),
-          // ]),
-        ),
+                    logger.i(headArray);
+                    SaveTADAAPI.instance.saveTADA(
+                        base: baseUrlFromInsCode(
+                            'issuemanager', widget.mskoolController),
+                        body: {
+                          'VTADAAA_Remarks': remarkController.text,
+                          'VTADAAA_TotalSactionedAmount':
+                              sanctionController2.text,
+                          'headarray': headArray,
+                          'VTADAAA_Id': widget.values.vTADAAAId,
+                          "MI_Id": widget.values.mIId,
+                          "approvecnt": 0,
+                          "level": 0,
+                          "HRME_Id": widget.values.hRMEId,
+                          'UserId': widget.values.userId
+                        }).then((v) {
+                      logger.i("success");
+                      TADAApplyListAPI.instance.showApplyList(
+                          base: baseUrlFromInsCode(
+                              'issuemanager', widget.mskoolController),
+                          userId: widget.values.userId!,
+                          tadaController: widget.tadaController);
+                      _getData();
+                      Get.back();
+                    });
+                  }
+                })),
       ],
     );
   }
@@ -360,10 +321,14 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                       text: widget.tadaController.tadaEditValues[index]
                           .vTADAAAASactionedAmount
                           .toString()));
-              amount += num.parse(widget
+              // amount += num.parse(widget
+              //     .tadaController.textEditingControllerList
+              //     .elementAt(index)
+              //     .text);
+              addAmount(int.parse(widget
                   .tadaController.textEditingControllerList
                   .elementAt(index)
-                  .text);
+                  .text));
             });
           },
         )),
@@ -381,23 +346,26 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                       text: widget.tadaController.tadaEditValues[index]
                           .vTADAAAASactionedAmount
                           .toString()));
-              amount -= num.parse(widget
+              // amount -= num.parse(widget
+              //     .tadaController.textEditingControllerList
+              //     .elementAt(index)
+              //     .text);
+              removeAmount(int.parse(widget
                   .tadaController.textEditingControllerList
                   .elementAt(index)
-                  .text);
+                  .text));
             });
           },
         )),
         DataCell(Text(widget
                 .tadaController.tadaEditValues[index].vTADAAADExpenditureHead ??
             "")),
-        DataCell(Text(widget
-            .tadaController.tadaEditValues[index].vTADAAADTotalSlots
-            .toString())),
-        DataCell(Text(widget.tadaController.tadaEditValues[index].vTADAAADSlots
-            .toString())),
-        DataCell(Text(widget.tadaController.tadaEditValues[index].vTADAAADAmount
-            .toString())),
+        DataCell(Text(
+            '${widget.tadaController.tadaEditValues[index].vTADAAADTotalSlots ?? ' '}')),
+        DataCell(Text(
+            '${widget.tadaController.tadaEditValues[index].vTADAAADSlots ?? " "}')),
+        DataCell(Text(
+            "${widget.tadaController.tadaEditValues[index].vTADAAADAmount ?? ''}")),
         DataCell(Padding(
           padding: const EdgeInsets.only(bottom: 4.0),
           child: TextFormField(
@@ -413,7 +381,6 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
         DataCell(Padding(
           padding: const EdgeInsets.only(bottom: 4.0),
           child: TextFormField(
-            readOnly: false,
             style: Get.textTheme.titleSmall,
             controller: widget.tadaController.textEditingControllerList
                 .elementAt(index),

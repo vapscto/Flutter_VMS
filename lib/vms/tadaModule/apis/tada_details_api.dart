@@ -30,6 +30,8 @@ class TADADetailsAPI {
           data: {"UserId": userId, "VTADAAA_Id": vtaDaaaId},
           options: Options(headers: getSession()) //60064 71
           );
+      logger.i(url2);
+      logger.i({"UserId": userId, "VTADAAA_Id": vtaDaaaId});
       if (response.statusCode == 200) {
         logger.d(response.data);
         TimeArrayTADAData timeArrayDADADataValues =

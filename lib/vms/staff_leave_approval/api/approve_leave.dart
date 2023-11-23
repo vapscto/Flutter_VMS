@@ -25,6 +25,7 @@ class ApproveLeaveApi {
         "HRELT_Status": status,
         "MI_Id": miId,
         "LoginId": loginId,
+        // "status": status,
         "get_leave_status": getLeaveStatus
       });
       logger.i({
@@ -32,6 +33,57 @@ class ApproveLeaveApi {
         "HRELT_Status": status,
         "MI_Id": miId,
         "LoginId": loginId,
+        // "status": status,
+        "get_leave_status": getLeaveStatus
+      });
+      logger.i(api);
+
+      logger.d(response.statusCode);
+
+      if (response.statusCode == 200) {
+        logger.d(response.data);
+
+        Fluttertoast.showToast(msg: "What you want is done...");
+        return Future.value(true);
+      }
+
+      return Future.value(false);
+    } on DioError catch (e) {
+      logger.e(e.stackTrace);
+      logger.e(e.error);
+      return Future.error({
+        "errorTitle": "Server Error Occured",
+        "errorMsg": e.message,
+      });
+    }
+  }
+
+  Future<bool> rejectNow({
+    required String remark,
+    required String status,
+    required String base,
+    required int miId,
+    required int loginId,
+    required List<Map<String, dynamic>> getLeaveStatus,
+  }) async {
+    final String api = base + URLS.approveLeave;
+    final Dio ins = getGlobalDio();
+    try {
+      final Response response =
+          await ins.post(api, options: Options(headers: getSession()), data: {
+        "HRELAPA_Remarks": remark,
+        // "HRELT_Status": status,
+        "MI_Id": miId,
+        "LoginId": loginId,
+        "status": status,
+        "get_leave_status": getLeaveStatus
+      });
+      logger.i({
+        "HRELAPA_Remarks": remark,
+        // "HRELT_Status": status,
+        "MI_Id": miId,
+        "LoginId": loginId,
+        "status": status,
         "get_leave_status": getLeaveStatus
       });
       logger.i(api);

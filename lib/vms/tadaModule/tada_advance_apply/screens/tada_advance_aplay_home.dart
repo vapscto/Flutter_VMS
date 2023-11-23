@@ -224,7 +224,45 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
       getStateList();
     });
     if (tadaApplyController.isDocumentUpload.value == true) {
-      _getPopUp();
+      // ignore: use_build_context_synchronously
+      showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              iconPadding: const EdgeInsets.symmetric(horizontal: 16),
+              contentPadding: const EdgeInsets.all(12),
+              backgroundColor: Colors.white,
+              content: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Previous  TA-DA Adavance Is  Pending, Document Not Upload  !",
+                      style: Get.textTheme.titleMedium!
+                          .copyWith(color: Theme.of(context).primaryColor),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          setState(() {
+                            Get.back();
+                          });
+                        },
+                        child: Text(
+                          "OK",
+                          style: Get.textTheme.titleMedium,
+                        ))
+                  ],
+                ),
+              ),
+            );
+          });
     }
     super.initState();
   }
@@ -251,14 +289,10 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                   padding: const EdgeInsets.all(16),
                   children: [
                     (tadaApplyController.isDocumentUpload.value == true)
-                        ? Padding(
-                            padding: const EdgeInsets.only(
-                                top: 16, left: 16, right: 16),
-                            child: Text(
-                              "Previous TA-DA Adavance Is Pending, Document Not Upload",
-                              style: Get.textTheme.titleSmall!
-                                  .copyWith(color: Colors.red),
-                            ),
+                        ? Text(
+                            "Previous TA-DA Adavance Is Pending, Document Not Upload",
+                            style: Get.textTheme.titleSmall!
+                                .copyWith(color: Colors.red),
                           )
                         : const SizedBox(),
                     Container(
@@ -1683,89 +1717,107 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                     style: Get.textTheme.titleSmall),
                               ])),
                               const SizedBox(height: 30),
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: MSkollBtn(
-                                  title: "Save",
-                                  onPress: (_remarkController.text.isNotEmpty ||
-                                          _addressController.text.isNotEmpty ||
-                                          _startDate.text.isNotEmpty ||
-                                          _endDate.text.isNotEmpty ||
-                                          _startTime.text.isNotEmpty ||
-                                          _endTime.text.isNotEmpty)
-                                      ? () {
-                                          if (allAmount == 0) {
-                                            Fluttertoast.showToast(
-                                                msg: "Please Add Amount");
-                                          } else {
-                                            int foodamountId = 0;
-                                            int accamountId = 0;
-                                            int othersamountId = 0;
+                              (tadaApplyController.isDocumentUpload.value ==
+                                      true)
+                                  ? const SizedBox()
+                                  : Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: MSkollBtn(
+                                        title: "Save",
+                                        onPress: (_remarkController
+                                                    .text.isNotEmpty ||
+                                                _addressController
+                                                    .text.isNotEmpty ||
+                                                _startDate.text.isNotEmpty ||
+                                                _endDate.text.isNotEmpty ||
+                                                _startTime.text.isNotEmpty ||
+                                                _endTime.text.isNotEmpty)
+                                            ? () {
+                                                if (allAmount == 0) {
+                                                  Fluttertoast.showToast(
+                                                      msg: "Please Add Amount");
+                                                } else {
+                                                  int foodamountId = 0;
+                                                  int accamountId = 0;
+                                                  int othersamountId = 0;
 
-                                            if (isFoodSelected == true) {
-                                              foodamountId =
-                                                  (foodamountId == null ||
-                                                          foodamountId == "")
-                                                      ? 0
-                                                      : foodamountId;
-                                              allowanceData.add({
-                                                "Type": "Food",
-                                                "Amount": foodAmt,
-                                                "Remarks":
-                                                    foodRemarksController.text,
-                                                "VTADAAAD_Id": foodamountId,
-                                                "VTADAAAD_TotalSlots": foodSlot,
-                                                "VTADAAAD_Slots":
-                                                    foodTotalSlotController
-                                                        .text,
-                                              });
-                                            }
+                                                  if (isFoodSelected == true) {
+                                                    foodamountId =
+                                                        (foodamountId == null ||
+                                                                foodamountId ==
+                                                                    "")
+                                                            ? 0
+                                                            : foodamountId;
+                                                    allowanceData.add({
+                                                      "Type": "Food",
+                                                      "Amount": foodAmt,
+                                                      "Remarks":
+                                                          foodRemarksController
+                                                              .text,
+                                                      "VTADAAAD_Id":
+                                                          foodamountId,
+                                                      "VTADAAAD_TotalSlots":
+                                                          foodSlot,
+                                                      "VTADAAAD_Slots":
+                                                          foodTotalSlotController
+                                                              .text,
+                                                    });
+                                                  }
 
-                                            if (isAccommodationSelected ==
-                                                true) {
-                                              accamountId =
-                                                  (accamountId == null ||
-                                                          accamountId == "")
-                                                      ? 0
-                                                      : accamountId;
-                                              allowanceData.add({
-                                                "Type": "Accommodation",
-                                                "Amount": accommodationAmount,
-                                                "Remarks":
-                                                    accommodationRemarksController
-                                                        .text,
-                                                "VTADAAAD_Id": accamountId,
-                                                "VTADAAAD_TotalSlots":
-                                                    accommudationSlot,
-                                                "VTADAAAD_Slots":
-                                                    accommodationTotalSlotController
-                                                        .text,
-                                              });
-                                            }
-                                            if (isOthersSelected == true) {
-                                              othersamountId =
-                                                  (othersamountId == null ||
-                                                          othersamountId == "")
-                                                      ? 0
-                                                      : othersamountId;
-                                              allowanceData.add({
-                                                "Type": "Other",
-                                                "Amount":
-                                                    otherAmountController.text,
-                                                "Remarks":
-                                                    otherremarksController.text,
-                                                "VTADAAAD_Id": othersamountId,
-                                              });
-                                            }
+                                                  if (isAccommodationSelected ==
+                                                      true) {
+                                                    accamountId =
+                                                        (accamountId == null ||
+                                                                accamountId ==
+                                                                    "")
+                                                            ? 0
+                                                            : accamountId;
+                                                    allowanceData.add({
+                                                      "Type": "Accommodation",
+                                                      "Amount":
+                                                          accommodationAmount,
+                                                      "Remarks":
+                                                          accommodationRemarksController
+                                                              .text,
+                                                      "VTADAAAD_Id":
+                                                          accamountId,
+                                                      "VTADAAAD_TotalSlots":
+                                                          accommudationSlot,
+                                                      "VTADAAAD_Slots":
+                                                          accommodationTotalSlotController
+                                                              .text,
+                                                    });
+                                                  }
+                                                  if (isOthersSelected ==
+                                                      true) {
+                                                    othersamountId =
+                                                        (othersamountId ==
+                                                                    null ||
+                                                                othersamountId ==
+                                                                    "")
+                                                            ? 0
+                                                            : othersamountId;
+                                                    allowanceData.add({
+                                                      "Type": "Other",
+                                                      "Amount":
+                                                          otherAmountController
+                                                              .text,
+                                                      "Remarks":
+                                                          otherremarksController
+                                                              .text,
+                                                      "VTADAAAD_Id":
+                                                          othersamountId,
+                                                    });
+                                                  }
 
-                                            saveData(int.parse(clintId));
-                                            Get.back();
-                                          }
-                                        }
-                                      : () => Fluttertoast.showToast(
-                                          msg: "Enter all Fields"),
-                                ),
-                              ),
+                                                  saveData(int.parse(clintId));
+                                                  Get.back();
+                                                }
+                                              }
+                                            : () => Fluttertoast.showToast(
+                                                msg: "Enter all Fields"),
+                                      ),
+                                    ),
                               const SizedBox(
                                 height: 20,
                               ),
@@ -1794,9 +1846,6 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      insetPadding: const EdgeInsets.symmetric(
-        horizontal: 16,
-      ),
       contentPadding: const EdgeInsets.all(10),
       content: WillPopScope(
         onWillPop: () async => false,
@@ -1808,6 +1857,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
             children: [
               Text(
                 "Planer Is Not Create Between Dates !",
+                textAlign: TextAlign.center,
                 style: Get.textTheme.titleMedium!.copyWith(
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w400),
@@ -1903,8 +1953,13 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
               DataCell(InkWell(
                   onTap: () {
                     setState(() {
-                      editData(
-                          tadaApplyController.getSavedData[index].vtadaaAId!);
+                      if (tadaApplyController.isDocumentUpload.value == true) {
+                        Fluttertoast.showToast(
+                            msg: "Previous TA-DA Adavance Is Pending,");
+                      } else {
+                        editData(
+                            tadaApplyController.getSavedData[index].vtadaaAId!);
+                      }
                     });
                   },
                   child: (tadaApplyController.getSavedData
