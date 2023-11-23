@@ -18,9 +18,13 @@ class SaveTADAAPI {
         data: body,
       );
       logger.d(body);
-      logger.i(response.data);
+      logger.i(url);
       if (response.statusCode == 200) {
-        Fluttertoast.showToast(msg: "TADA Saved Successfully");
+        if (response.data['returnvalue'] == true) {
+          Fluttertoast.showToast(msg: "TADA Saved Successfully");
+        } else {
+          Fluttertoast.showToast(msg: "Something went wrong");
+        }
       } else {
         Fluttertoast.showToast(msg: "Something went wrong");
       }

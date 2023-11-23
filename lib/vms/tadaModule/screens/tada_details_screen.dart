@@ -43,27 +43,22 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
   var day;
   _getData() async {
     widget.tadaController.updateIsLoading(true);
-    TADADetailsAPI.instance.tadaDetails(
+    await TADADetailsAPI.instance.tadaDetails(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         userId: widget.values.userId!,
         tadaController: widget.tadaController,
         vtaDaaaId: widget.vtadaaaId);
-    Future.delayed(const Duration(seconds: 3)).then((value) {
-      widget.tadaController.updateIsLoading(false);
-    });
     setState(() {
-      // for (int i = 0; i <= widget.tadaController.tadaEditValues.length; i++) {
       DateTime dt = DateTime.parse(widget.values.vTADAAAFromDate!);
       fromDate = '${dt.day}-${dt.month}-${dt.year}';
       DateTime toDt = DateTime.parse(widget.values.vTADAAAToDate!);
       toDate = '${toDt.day}-${toDt.month}-${toDt.year}';
-      // }
       DateTime dt1 = DateTime.parse(widget.values.vTADAAAFromDate!);
       DateTime dt2 = DateTime.parse(widget.values.vTADAAAToDate!);
-
       Duration diff = dt1.difference(dt2);
       day = diff.inDays;
     });
+    widget.tadaController.updateIsLoading(false);
   }
 
   @override
