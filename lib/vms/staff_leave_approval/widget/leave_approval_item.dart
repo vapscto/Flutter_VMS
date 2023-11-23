@@ -770,7 +770,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
       builder: (_) {
         return Dialog(
           child: FutureBuilder<bool>(
-              future: ApproveLeaveApi.instance.approveNow(
+              future: ApproveLeaveApi.instance.rejectNow(
                 remark: remark,
                 status: status,
                 base: baseUrlFromInsCode("leave", mskoolController),
@@ -840,7 +840,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: const [
                     AnimatedProgressWidget(
-                        title: "Rejecting All Leaves",
+                        title: "Rejecting  Leave",
                         desc: "We are in process to reject all the leaves...",
                         animationPath: "assets/json/default.json"),
                   ],

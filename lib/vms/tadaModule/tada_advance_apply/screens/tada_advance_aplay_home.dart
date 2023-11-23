@@ -101,7 +101,47 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
       stateLists = tadaApplyController.stateList.first;
       getCity(stateLists!.ivrmmCId!, stateLists!.ivrmmSId!);
     }
-
+    if (tadaApplyController.isDocumentUpload.value == true) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              iconPadding: const EdgeInsets.symmetric(horizontal: 16),
+              contentPadding: const EdgeInsets.all(12),
+              backgroundColor: Colors.white,
+              content: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Previous  TA-DA Adavance Is  Pending, Document Not Upload  !",
+                      style: Get.textTheme.titleMedium!
+                          .copyWith(color: Theme.of(context).primaryColor),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          setState(() {
+                            Get.back();
+                          });
+                        },
+                        child: Text(
+                          "OK",
+                          style: Get.textTheme.titleMedium,
+                        ))
+                  ],
+                ),
+              ),
+            );
+          });
+    }
     _startDate.clear();
     _startTime.clear();
     _endDate.clear();
@@ -223,9 +263,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
     setState(() {
       getStateList();
     });
-    if (tadaApplyController.isDocumentUpload.value == true) {
-      _getPopUp();
-    }
+
     super.initState();
   }
 
