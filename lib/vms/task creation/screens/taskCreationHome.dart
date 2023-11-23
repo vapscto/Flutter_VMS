@@ -98,7 +98,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   @override
   void initState() {
     hoursEt.text = "0";
-    minutesEt.text =  "0";
+    minutesEt.text = "0";
     logger.d("userId${widget.loginSuccessModel.userId}");
     if (_taskDepartController.addListBrowser.isNotEmpty) {
       _taskDepartController.addListBrowser.clear();
@@ -222,8 +222,44 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     ).then(
       (value) {
         if (value) {
-          Get.back();
-          Fluttertoast.showToast(msg: "Task Created successfully");
+        //  Get.back();
+      employeesID.clear();
+      taskEmployeeList.clear();
+      _taskDepartController.getDeptsList.clear();
+      _taskDepartController.getTaskEmployeeList.clear();
+      selectFromDate.clear();
+      selectToDate.clear();
+     hoursEt.text = "0";
+      minutesEt.text = "0";
+      remarksEt.clear();
+      etDayControllers.clear();
+      etRemarkControllers.clear();
+      _taskProjectsController.getTaskProjectsList.clear();
+     _taskProjectsController.getTaskCategoryList.clear();
+     _taskClientModuleCntroller.getModuleValuesList.clear();
+     _taskDepartController.getPriorityModelList.clear();
+      _taskDepartController.addListBrowser.clear();
+      _taskClientModuleCntroller.taskClientList.clear();
+      _titleETController.clear();
+      _descritpionETController.clear();
+          loadCmpny();
+           showDialog(context: context, builder: (context) {
+             return   AlertDialog(
+            title:   Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Align(
+              alignment:   Alignment.center,
+                child: Text('Task Created successfully',
+                style: Theme.of(context).textTheme.titleMedium!.merge( 
+                    TextStyle(
+                    color: Theme.of(context).primaryColor
+                  )
+                ),),
+              ),
+            ),
+              );
+           },);
+    
         }
       },
     );
@@ -290,6 +326,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
               fontWeight: FontWeight.w300,
             ),
           ),
+          titleSpacing: 0,
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -413,8 +450,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                 HRMD_Id: s.hrmDId!);
                           },
                         ),
-                      )
-                      ),
+                      )),
             Obx(() => _taskProjectsController.tskPrjErrorLoading.value
                 ? const Center(
                     child: ErrWidget(
@@ -557,133 +593,118 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                       },
                     ),
                   )
-                : _taskClientModuleCntroller.taskClientList.isEmpty
-                    ? const AnimatedProgressWidget(
-                        title: "No Data found",
-                        desc:
-                            "There is no corresponding topic available for the selected subject",
-                        animationPath: "assets/json/nodata.json",
-                        animatorHeight: 250,
-                      )
-                    : _taskClientModuleCntroller.clientLoading.value
-                        ? const AnimatedProgressWidget(
-                            animationPath: 'assets/json/default.json',
-                            title: 'Loading data',
-                            desc: "Please wait we are loading data",
-                          )
-                        : Container(
-                            margin: const EdgeInsets.only(
-                                top: 20, left: 16, right: 16, bottom: 16),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                              borderRadius: BorderRadius.circular(16.0),
-                              boxShadow: const [
-                                BoxShadow(
-                                  offset: Offset(0, 1),
-                                  blurRadius: 8,
-                                  color: Colors.black12,
-                                ),
-                              ],
+                : Visibility(
+                    visible:
+                        _taskClientModuleCntroller.taskClientList.isNotEmpty,
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                          top: 20, left: 16, right: 16, bottom: 16),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius: BorderRadius.circular(16.0),
+                        boxShadow: const [
+                          BoxShadow(
+                            offset: Offset(0, 1),
+                            blurRadius: 8,
+                            color: Colors.black12,
+                          ),
+                        ],
+                      ),
+                      child: DropdownButtonFormField<GeTskClientValues>(
+                        // value:
+                        //     _taskClientModuleCntroller.taskClientList.first,
+                        validator: (value) {
+                          if (value == null) {
+                            return "";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
                             ),
-                            child: DropdownButtonFormField<GeTskClientValues>(
-                              // value:
-                              //     _taskClientModuleCntroller.taskClientList.first,
-                              validator: (value) {
-                                if (value == null) {
-                                  return "";
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .merge(const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.3)),
-                                hintText: _taskClientModuleCntroller
-                                        .taskClientList.isNotEmpty
-                                    ? 'Select Client'
-                                    : 'No data available',
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.always,
-                                isDense: true,
-                                label: const CustomDropDownLabel(
-                                  icon: 'assets/images/hat.png',
-                                  containerColor:
-                                      Color.fromRGBO(223, 251, 254, 1),
-                                  text: 'Client',
-                                  textColor: Color.fromRGBO(40, 182, 200, 1),
-                                ),
-                              ),
-                              icon: const Padding(
-                                padding: EdgeInsets.only(top: 3),
-                                child: Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  size: 30,
-                                ),
-                              ),
-                              iconSize: 30,
-                              items: List.generate(
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .labelSmall!
+                              .merge(const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                  letterSpacing: 0.3)),
+                          hintText: _taskClientModuleCntroller
+                                  .taskClientList.isNotEmpty
+                              ? 'Select Client'
+                              : 'No data available',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          isDense: true,
+                          label: const CustomDropDownLabel(
+                            icon: 'assets/images/hat.png',
+                            containerColor: Color.fromRGBO(223, 251, 254, 1),
+                            text: 'Client',
+                            textColor: Color.fromRGBO(40, 182, 200, 1),
+                          ),
+                        ),
+                        icon: const Padding(
+                          padding: EdgeInsets.only(top: 3),
+                          child: Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            size: 30,
+                          ),
+                        ),
+                        iconSize: 30,
+                        items: List.generate(
+                            _taskClientModuleCntroller.taskClientList.length,
+                            (index) {
+                          return DropdownMenuItem(
+                            value: _taskClientModuleCntroller
+                                .taskClientList[index],
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 13, left: 5),
+                              child: SizedBox(
+                                width: 300,
+                                child: Text(
+                                  overflow: TextOverflow.clip,
                                   _taskClientModuleCntroller
-                                      .taskClientList.length, (index) {
-                                return DropdownMenuItem(
-                                  value: _taskClientModuleCntroller
-                                      .taskClientList[index],
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 13, left: 5),
-                                    child: SizedBox(
-                                      width: 300,
-                                      child: Text(
-                                        overflow: TextOverflow.clip,
-                                        _taskClientModuleCntroller
-                                            .taskClientList[index]
-                                            .ismmclTClientName!,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .merge(const TextStyle(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 12.0,
-                                                letterSpacing: 0.3)),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }),
-                              onChanged: (s) async {
-                                clinetId = s!.ismmclTId!;
-                                await onChangeModuleListApi(
-                                    base: baseUrlFromInsCode(
-                                      "issuemanager",
-                                      widget.mskoolController,
-                                    ),
-                                    controller: _taskDepartController,
-                                    userId: widget.loginSuccessModel.userId!,
-                                    ivrmrtId: widget.loginSuccessModel.roleId!,
-                                    miId: widget.loginSuccessModel.mIID!,
-                                    HRME_Id: logInBox!.get("EmpId"),
-                                    hrmdId: logInBox!.get("HRMDID"),
-                                    roleType:
-                                        widget.loginSuccessModel.roleforlogin!,
-                                    ismmprId: s.ismmpRId!,
-                                    ismmcltId: s.ismmclTId!);
-                              },
+                                      .taskClientList[index].ismmclTClientName!,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .merge(const TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.3)),
+                                ),
+                              ),
                             ),
-                          )),
+                          );
+                        }),
+                        onChanged: (s) async {
+                          clinetId = s!.ismmclTId!;
+                          await onChangeModuleListApi(
+                              base: baseUrlFromInsCode(
+                                "issuemanager",
+                                widget.mskoolController,
+                              ),
+                              controller: _taskDepartController,
+                              userId: widget.loginSuccessModel.userId!,
+                              ivrmrtId: widget.loginSuccessModel.roleId!,
+                              miId: widget.loginSuccessModel.mIID!,
+                              HRME_Id: logInBox!.get("EmpId"),
+                              hrmdId: logInBox!.get("HRMDID"),
+                              roleType: widget.loginSuccessModel.roleforlogin!,
+                              ismmprId: s.ismmpRId!,
+                              ismmcltId: s.ismmclTId!);
+                        },
+                      ),
+                    ),
+                  )),
 
             // Category Dropdown
 
@@ -858,117 +879,104 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                       },
                     ),
                   )
-                : _taskClientModuleCntroller.getModuleValuesList.isEmpty
-                    ? const AnimatedProgressWidget(
-                        title: "No Data found",
-                        desc:
-                            "There is no corresponding topic available for the selected subject",
-                        animationPath: "assets/json/nodata.json",
-                        animatorHeight: 250,
-                      )
-                    : _taskClientModuleCntroller.clientLoading.value
-                        ? const AnimatedProgressWidget(
-                            animationPath: 'assets/json/default.json',
-                            title: 'Loading data',
-                            desc: "Please wait we are loading data",
-                          )
-                        : Container(
-                            margin: const EdgeInsets.only(
-                                top: 20, left: 16, right: 16, bottom: 16),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                              borderRadius: BorderRadius.circular(16.0),
-                              boxShadow: const [
-                                BoxShadow(
-                                  offset: Offset(0, 1),
-                                  blurRadius: 8,
-                                  color: Colors.black12,
-                                ),
-                              ],
+                : Visibility(
+                    visible: _taskClientModuleCntroller
+                        .getModuleValuesList.isNotEmpty,
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                          top: 20, left: 16, right: 16, bottom: 16),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius: BorderRadius.circular(16.0),
+                        boxShadow: const [
+                          BoxShadow(
+                            offset: Offset(0, 1),
+                            blurRadius: 8,
+                            color: Colors.black12,
+                          ),
+                        ],
+                      ),
+                      child: DropdownButtonFormField<GetmoduleValues>(
+                        validator: (value) {
+                          if (value == null) {
+                            return "";
+                          }
+                          return null;
+                        },
+                        // value: _taskClientModuleCntroller
+                        //     .getModuleValuesList.first,
+                        decoration: InputDecoration(
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
                             ),
-                            child: DropdownButtonFormField<GetmoduleValues>(
-                              validator: (value) {
-                                if (value == null) {
-                                  return "";
-                                }
-                                return null;
-                              },
-                              // value: _taskClientModuleCntroller
-                              //     .getModuleValuesList.first,
-                              decoration: InputDecoration(
-                                focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .merge(const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.3)),
-                                hintText: _taskClientModuleCntroller
-                                        .getModuleValuesList.isNotEmpty
-                                    ? 'Select Module'
-                                    : 'No data available',
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.always,
-                                isDense: true,
-                                label: const CustomDropDownLabel(
-                                  icon: 'assets/images/hat.png',
-                                  containerColor:
-                                      Color.fromRGBO(223, 251, 254, 1),
-                                  text: 'Module',
-                                  textColor: Color.fromRGBO(40, 182, 200, 1),
-                                ),
-                              ),
-                              icon: const Padding(
-                                padding: EdgeInsets.only(top: 3),
-                                child: Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  size: 30,
-                                ),
-                              ),
-                              iconSize: 30,
-                              items: List.generate(
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .labelSmall!
+                              .merge(const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                  letterSpacing: 0.3)),
+                          hintText: _taskClientModuleCntroller
+                                  .getModuleValuesList.isNotEmpty
+                              ? 'Select Module'
+                              : 'No data available',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          isDense: true,
+                          label: const CustomDropDownLabel(
+                            icon: 'assets/images/hat.png',
+                            containerColor: Color.fromRGBO(223, 251, 254, 1),
+                            text: 'Module',
+                            textColor: Color.fromRGBO(40, 182, 200, 1),
+                          ),
+                        ),
+                        icon: const Padding(
+                          padding: EdgeInsets.only(top: 3),
+                          child: Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            size: 30,
+                          ),
+                        ),
+                        iconSize: 30,
+                        items: List.generate(
+                            _taskClientModuleCntroller
+                                .getModuleValuesList.length, (index) {
+                          return DropdownMenuItem(
+                            value: _taskClientModuleCntroller
+                                .getModuleValuesList[index],
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 13, left: 5),
+                              child: SizedBox(
+                                width: 300,
+                                child: Text(
+                                  overflow: TextOverflow.clip,
                                   _taskClientModuleCntroller
-                                      .getModuleValuesList.length, (index) {
-                                return DropdownMenuItem(
-                                  value: _taskClientModuleCntroller
-                                      .getModuleValuesList[index],
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 13, left: 5),
-                                    child: SizedBox(
-                                      width: 300,
-                                      child: Text(
-                                        overflow: TextOverflow.clip,
-                                        _taskClientModuleCntroller
-                                            .getModuleValuesList[index]
-                                            .ivrmMModuleName!,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .merge(const TextStyle(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 12.0,
-                                                letterSpacing: 0.3)),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }),
-                              onChanged: (s) async {
-                                moduleId = s!.ivrmMId;
-                              },
+                                      .getModuleValuesList[index]
+                                      .ivrmMModuleName!,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .merge(const TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.3)),
+                                ),
+                              ),
                             ),
-                          )),
+                          );
+                        }),
+                        onChanged: (s) async {
+                          moduleId = s!.ivrmMId;
+                        },
+                      ),
+                    ),
+                  )),
 
             // Prority List Dropdown
             Obx(() => _taskDepartController.tskDeptErrorLoading.value
