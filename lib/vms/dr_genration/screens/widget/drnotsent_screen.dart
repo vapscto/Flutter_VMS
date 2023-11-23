@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
-class DrnotApprovedScreen extends StatelessWidget {
-  DrnotApprovedScreen({super.key});
+class DrnotsentScreen extends StatelessWidget {
+  DrnotsentScreen({super.key});
   final PlannerDetails _plannerDetailsController = Get.put(PlannerDetails());
 
   @override
@@ -13,6 +14,13 @@ class DrnotApprovedScreen extends StatelessWidget {
       scrollDirection: Axis.vertical,
       child: Column(
         children: [
+          Text(
+            "DAILY REPORT NOT SENT DATES",
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .merge(TextStyle(color: Theme.of(context).primaryColor)),
+          ),
           Obx(
             () => SizedBox(
                 width: MediaQuery.of(context).size.width,
@@ -23,21 +31,9 @@ class DrnotApprovedScreen extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         child: Column(
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "DAILY REPORT NOT SENT DATES",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .merge(TextStyle(
-                                          color:
-                                              Theme.of(context).primaryColor)),
-                                )
-                              ],
+                            const SizedBox(
+                              height: 20,
                             ),
-                            SizedBox(height: 20,),
                             ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: DataTable(
@@ -45,7 +41,7 @@ class DrnotApprovedScreen extends StatelessWidget {
                                       fontSize: 14,
                                       color: Color.fromRGBO(0, 0, 0, 0.95),
                                       fontWeight: FontWeight.w500),
-                                  dataRowHeight: 50,
+                                  dataRowHeight: 100,
                                   headingRowHeight: 40,
                                   horizontalMargin: 10,
                                   columnSpacing: 30,
@@ -89,15 +85,15 @@ class DrnotApprovedScreen extends StatelessWidget {
                                           'Remarks',
                                           style: TextStyle(
                                             fontSize: 14,
-                                          ),  
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  
                                   ],
                                   rows: List.generate(
                                       _plannerDetailsController
-                                          .drnotSentdetailsList.length, (index) {
+                                          .drnotSentdetailsList
+                                          .length, (index) {
                                     int i = index + 1;
                                     return DataRow(cells: [
                                       DataCell(Align(
@@ -105,36 +101,50 @@ class DrnotApprovedScreen extends StatelessWidget {
                                           child: Text('$i'))),
                                       DataCell(Align(
                                           alignment: Alignment.center,
-                                          child: Text( 
-                                            DateTime.parse( _plannerDetailsController
-                                              .drnotSentdetailsList
-                                              .elementAt(index)
-                                              .fromDate!).toString()
-                                          ))),
-                                     
+                                          child: Text(getDate(DateTime.parse(
+                                              _plannerDetailsController
+                                                  .drnotSentdetailsList
+                                                  .elementAt(index)
+                                                  .fromDate!))))),
                                       DataCell(Align(
                                           alignment: Alignment.center,
-                                          child:TextField(
-                                            maxLines: 3,
-                                           style: Theme.of(context).textTheme.titleSmall,
-                                            controller: _plannerDetailsController.etRemark.elementAt(index),
-                                            decoration: InputDecoration(
-                                              hintText: "Enter Remark",
-                                              hintStyle: Theme.of(context).textTheme.titleSmall,
-                                              border: OutlineInputBorder()
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                            child: SizedBox(
+                                              width: 150,
+                                              child: TextField(
+                                                maxLines: 3,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall,
+                                                controller:
+                                                    _plannerDetailsController
+                                                        .etRemark
+                                                        .elementAt(index),
+                                                decoration: InputDecoration(
+                                                    hintText: "Enter Remark",
+                                                    hintStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall,
+                                                    border:
+                                                        OutlineInputBorder()),
+                                              ),
                                             ),
-                                          )
-                                            )),
+                                          ))),
                                     ]);
                                   }),
                                 )),
-                                MSkollBtn(title: "Save", onPress: 
-                                () {
-                                  
-                                },)
                           ],
                         )))),
           ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: MSkollBtn(
+              title: "Save",
+              onPress: () {},
+            ),
+          )
         ],
       ),
     );

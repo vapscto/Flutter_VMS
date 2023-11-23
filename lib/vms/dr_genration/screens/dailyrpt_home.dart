@@ -13,6 +13,7 @@ import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/category_checkList.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/drnotApprovedScreen.dart';
+import 'package:m_skool_flutter/vms/dr_genration/screens/widget/drnotsent_screen.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
@@ -54,35 +55,42 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         ivrmrtId: widget.loginSuccessModel.roleId!,
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!);
-    _plannerDetailsController.closeTaskCoutnList[0].iSMEDWTCCTaskCount! != 0
-         ? Get.dialog(
+    // _plannerDetailsController.closeTaskCoutnList[0].iSMEDWTCCTaskCount! != 0
+    //      ? Get.dialog(
+    //       barrierDismissible :false,
+    //         AlertDialog(
+    //           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    //         title:    Align(
+    //           alignment: Alignment.center,
+    //           child: Text("Update Task",
+    //           style:   Theme.of(context).textTheme.titleLarge!.merge(
+    //             TextStyle(
+    //               color:  Theme.of(context).primaryColor
+    //             )
+    //           ),)),
+    //         content:   Text(
+    //           "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Close The Completed Task",
+    //           style:Theme.of(context).textTheme.titleSmall!.merge(
+    //             TextStyle(
+    //               color: Theme.of(context).primaryColor
+    //             )
+    //           )  ,
+    //         ),
+    //       ))
+    //     : 
+    //      _plannerDetailsController.drnotapprovedList.isNotEmpty ?
+    //      Get.dialog(
+    //       barrierDismissible :false,
+    //         AlertDialog(
+    //           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    //          content: DrnotApprovedScreen(),
+    //       )):
+          _plannerDetailsController.drnotSentdetailsList.isNotEmpty ?
+          Get.dialog(
           barrierDismissible :false,
             AlertDialog(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            title:    Align(
-              alignment: Alignment.center,
-              child: Text("Update Task",
-              style:   Theme.of(context).textTheme.titleLarge!.merge(
-                TextStyle(
-                  color:  Theme.of(context).primaryColor
-                )
-              ),)),
-            content:   Text(
-              "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Close The Completed Task",
-              style:Theme.of(context).textTheme.titleSmall!.merge(
-                TextStyle(
-                  color: Theme.of(context).primaryColor
-                )
-              )  ,
-            ),
-          ))
-        : 
-         _plannerDetailsController.drnotapprovedList.isNotEmpty ?
-         Get.dialog(
-          barrierDismissible :false,
-            AlertDialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-             content: DrnotApprovedScreen(),
+             content: DrnotsentScreen(),
           )):
         null;
   }
