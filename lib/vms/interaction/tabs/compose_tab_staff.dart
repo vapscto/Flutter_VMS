@@ -522,9 +522,9 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
             //     },
             //   ),
             // ),
-            const SizedBox(
-              height: 20,
-            ),
+            // const SizedBox(
+            //   height: 20,
+            // ),
             staffInteractionComposeController.selectedradio.value.isNotEmpty
                 ? staffInteractionComposeController.isGetDetail.value
                     ? const Center(
