@@ -78,17 +78,17 @@ class DrnotsentScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    DataColumn(
-                                      label: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Remarks',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                    // DataColumn(
+                                    //   label: Align(
+                                    //     alignment: Alignment.center,
+                                    //     child: Text(
+                                    //       'Remarks',
+                                    //       style: TextStyle(
+                                    //         fontSize: 14,
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
                                   ],
                                   rows: List.generate(
                                       _plannerDetailsController
@@ -106,45 +106,46 @@ class DrnotsentScreen extends StatelessWidget {
                                                   .drnotSentdetailsList
                                                   .elementAt(index)
                                                   .fromDate!))))),
-                                      DataCell(Align(
-                                          alignment: Alignment.center,
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 10),
-                                            child: SizedBox(
-                                              width: 150,
-                                              child: TextField(
-                                                maxLines: 3,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleSmall,
-                                                controller:
-                                                    _plannerDetailsController
-                                                        .etRemark
-                                                        .elementAt(index),
-                                                decoration: InputDecoration(
-                                                    hintText: "Enter Remark",
-                                                    hintStyle: Theme.of(context)
-                                                        .textTheme
-                                                        .titleSmall,
-                                                    border:
-                                                        OutlineInputBorder()),
-                                              ),
-                                            ),
-                                          ))),
+                                      // DataCell(Align(
+                                      //     alignment: Alignment.center,
+                                      //     child: Padding(
+                                      //       padding: const EdgeInsets.symmetric(
+                                      //           vertical: 10),
+                                      //       child: SizedBox(
+                                      //         width: 150,
+                                      //         child: TextField(
+                                      //           maxLines: 3,
+                                      //           style: Theme.of(context)
+                                      //               .textTheme
+                                      //               .titleSmall,
+                                      //           controller:
+                                      //               _plannerDetailsController
+                                      //                   .etRemark
+                                      //                   .elementAt(index),
+                                      //           decoration: InputDecoration(
+                                      //               hintText: "Enter Remark",
+                                      //               hintStyle: Theme.of(context)
+                                      //                   .textTheme
+                                      //                   .titleSmall,
+                                      //               border:
+                                      //                   OutlineInputBorder()),
+                                      //         ),
+                                      //       ),
+                                      //     ))),
                                     ]);
                                   }),
                                 )),
                           ],
                         )))),
           ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: MSkollBtn(
-              title: "Save",
-              onPress: () {},
-            ),
-          )
+          // need to integrate api  holded beacuse of need create sencriao  test
+          // Padding(
+          //   padding: const EdgeInsets.all(10.0),
+          //   child: MSkollBtn(
+          //     title: "Save",
+          //     onPress: () {},
+          //   ),
+          // )
         ],
       ),
     );

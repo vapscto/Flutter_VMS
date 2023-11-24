@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dar
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/drnotapprovedmessage_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/drnotsent_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/hrplannerdetails_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_details.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 
@@ -43,13 +44,15 @@ class PlannerDetails extends GetxController {
   RxList<GetdrnotsentdetailsValues> drnotSentdetailsList = <GetdrnotsentdetailsValues>[].obs;
   // drnotsent remarks list
   RxList<TextEditingController> etRemark = <TextEditingController>[].obs;
+  // hrplannerDetails
+  RxList<HrplannerdetailsValues> hrplannerDetailsList = <HrplannerdetailsValues>[].obs;
   RxString day = "today".obs;
   Rx<TextEditingController> plannernameEditingController =
       TextEditingController(text: "").obs;
   Rx<TextEditingController> plannernameDateController =
       TextEditingController(text: "").obs;
   RxString otherDaysEditingController = "".obs;
-Rx<TextEditingController> etSearchController =TextEditingController().obs;
+  Rx<TextEditingController> etSearchController =TextEditingController().obs;
   updatePlannerDeatails(bool val) {
     loadPlanerDeatails.value = val;
   }
