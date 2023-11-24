@@ -145,16 +145,19 @@ class _StaffDropDownState extends State<StaffDropDown> {
                                     .elementAt(index),
                                 child: Padding(
                                   padding: const EdgeInsets.only(
-                                      top: 1.0, left: 8, right: 8),
-                                  child: Text(
-                                    "${widget.salaryController.staffs.elementAt(index).ename}",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall!
-                                        .merge(const TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.3)),
+                                      top: 5.0, left: 8, right: 8),
+                                  child: SizedBox(
+                                    width: MediaQuery.of(context).size.width / 1.65,
+                                    child: Text(
+                                      "${widget.salaryController.staffs.elementAt(index).ename}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall!
+                                          .merge(const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 16.0,
+                                              letterSpacing: 0.3)),
+                                    ),
                                   ),
                                 ),
                               ),
