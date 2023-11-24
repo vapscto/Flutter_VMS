@@ -25,6 +25,7 @@ import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/screens/attachment_viewer.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
+import 'package:m_skool_flutter/staffs/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/staffs/view_notice/screens/view_notice_home_screen.dart';
@@ -525,12 +526,12 @@ void openMappedPages(
     BuildContext context,
     HwCwNbController hwCwNbController) {
   logger.i(pageName);
-  // if (pageName == "Appointment Approval") {
-  // Get.to(() => SalesReportHomeScreen(
-  //     loginSuccessModel: loginSuccessModel,
-  //     mskoolController: mskoolController));
-  // return;
-  // }
+  if (pageName == "Appointment Approval") {
+    Get.to(() => InteractionHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController));
+    return;
+  }
   if (pageName == "Attendance") {
     Get.to(() => AttendanceHomeScreen(
         loginSuccessModel: loginSuccessModel,
@@ -547,12 +548,12 @@ void openMappedPages(
         ));
     return;
   }
-  
+
   if (pageName == "DR Generation") {
     Get.to(() => DailyReportGenration(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
-         ));
+        ));
     return;
   }
   if (pageName == "Maker and Checker") {

@@ -183,7 +183,47 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         countryId: countryId,
         stateId: stateId,
         tadaApplyController: tadaApplyDataController);
-    if (tadaApplyDataController.cityListValues.isNotEmpty) {
+    if (tadaApplyDataController.cityListValues.isEmpty) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              iconPadding: const EdgeInsets.symmetric(horizontal: 16),
+              contentPadding: const EdgeInsets.all(12),
+              backgroundColor: Colors.white,
+              content: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "City is not Mapped !",
+                      style: Get.textTheme.titleMedium!
+                          .copyWith(color: Theme.of(context).primaryColor),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          setState(() {
+                            Get.back();
+                          });
+                        },
+                        child: Text(
+                          "OK",
+                          style: Get.textTheme.titleMedium,
+                        ))
+                  ],
+                ),
+              ),
+            );
+          });
+    } else if (tadaApplyDataController.cityListValues.isNotEmpty) {
       citySelectedValue = tadaApplyDataController.cityListValues.last;
       getAllowenseData(citySelectedValue!.ivrmmcTId!);
     }
