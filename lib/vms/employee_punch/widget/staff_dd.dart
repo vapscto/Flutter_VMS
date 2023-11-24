@@ -132,16 +132,12 @@ class _StaffDropDownState extends State<StaffDropDown> {
                                 ),
                               ),
                             ),
-                            icon: const Padding(
-                              padding: EdgeInsets.only(top: 8.0),
-                              child: Expanded(
-                                child: Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  size: 30,
-                                ),
-                              ),
+                            icon: const Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              size: 30,
                             ),
-                            iconSize: 30,
+                            iconSize: 0,
+                            // isDense: true,
                             items: List.generate(
                               widget.salaryController.staffs.length,
                               (index) => DropdownMenuItem<StaffListValues>(
@@ -149,7 +145,7 @@ class _StaffDropDownState extends State<StaffDropDown> {
                                     .elementAt(index),
                                 child: Padding(
                                   padding: const EdgeInsets.only(
-                                      top: 12.0, left: 8, right: 8),
+                                      top: 1.0, left: 8, right: 8),
                                   child: Text(
                                     "${widget.salaryController.staffs.elementAt(index).ename}",
                                     style: Theme.of(context)
