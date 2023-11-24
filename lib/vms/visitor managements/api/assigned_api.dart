@@ -18,7 +18,8 @@ getAssignedManagaementApi({
   final String api = base + URLS.gridoptionapi;
   const String api2 =
       "https://vmsstaging.vapssmartecampus.com:40020/api/AddVisitorsFacade/getVisitorAssignDetails/";
-
+  logger.w(api);
+  logger.w({"mI_Id": miId, "UserId": userId, "VMMV_Id": vmmvId});
   try {
     final Response response = await ins.post(api,
         options: Options(headers: getSession()),
