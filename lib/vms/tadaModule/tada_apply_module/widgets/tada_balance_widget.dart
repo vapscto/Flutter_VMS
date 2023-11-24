@@ -182,15 +182,8 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
                                           tadaApplyDataController.tadaSavedData
                                               .add(tadaApplyDataController
                                                   .tadaSavedDataValues[index]);
-                                          Get.off(() => TadaApplyHomeScreen(
-                                                mskoolController:
-                                                    widget.mskoolController,
-                                                loginSuccessModel:
-                                                    widget.loginSuccessModel,
-                                                previousScreen: 1,
-                                              ));
-                                          // widget.tabController.index = 0;
-                                          // currentTab.value = 1;
+
+                                          widget.tabController.index = 0;
                                         });
                                       },
                                       icon: Icon(

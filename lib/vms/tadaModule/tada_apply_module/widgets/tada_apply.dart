@@ -33,8 +33,8 @@ import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 class TadaApplyWidget extends StatefulWidget {
   final MskoolController mskoolController;
   final LoginSuccessModel loginSuccessModel;
-  final int previousScreen;
-  const TadaApplyWidget(
+  int previousScreen;
+  TadaApplyWidget(
       {super.key,
       required this.mskoolController,
       required this.loginSuccessModel,
@@ -356,6 +356,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   @override
   void dispose() {
     tadaApplyDataController.tadaSavedData.clear();
+    widget.previousScreen = 0;
     super.dispose();
   }
 
@@ -888,7 +889,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                     ],
                   ),
                 ),
-                (widget.previousScreen == 0)
+                (tadaApplyDataController.tadaSavedData.isEmpty)
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -1920,96 +1921,11 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 )),
                               ),
                             ),
-                            SizedBox(
-                              height: 60,
-                              width: MediaQuery.of(context).size.width,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(6)),
-                                          fillColor: MaterialStatePropertyAll(
-                                              Theme.of(context).primaryColor),
-                                          visualDensity: const VisualDensity(
-                                              horizontal: 0),
-                                          value: amountSelectedValue1,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              amountSelectedValue1 = value!;
-                                              amountSelectedValue2 = false;
-                                              if (amountSelectedValue1 ==
-                                                  true) {
-                                                allAmount += int.parse(
-                                                    _extraAmountController
-                                                        .text);
-                                              }
-                                            });
-                                          }),
-                                      Text(
-                                        addAmountType[0],
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall!
-                                            .merge(TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.3,
-                                                color: Theme.of(context)
-                                                    .primaryColor)),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(6)),
-                                          fillColor: MaterialStatePropertyAll(
-                                              Theme.of(context).primaryColor),
-                                          visualDensity: const VisualDensity(
-                                              horizontal: 0),
-                                          value: amountSelectedValue2,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              amountSelectedValue2 = value!;
-                                              amountSelectedValue1 = false;
-                                              if (amountSelectedValue2 ==
-                                                  true) {
-                                                allAmount -= int.parse(
-                                                    _extraAmountController
-                                                        .text);
-                                              }
-                                            });
-                                          }),
-                                      Text(
-                                        addAmountType[1],
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall!
-                                            .merge(TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.3,
-                                                color: Theme.of(context)
-                                                    .primaryColor)),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 16),
+                            const SizedBox(height: 30),
                             CustomContainer(
                               child: TextFormField(
                                 controller: _extraAmountController,
-                                onChanged: (value) {},
-                                keyboardType: TextInputType.multiline,
+                                keyboardType: TextInputType.number,
                                 style: Get.textTheme.titleSmall!
                                     .copyWith(fontSize: 15),
                                 decoration: InputDecoration(
@@ -2052,6 +1968,102 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                     ),
                                   ),
                                 ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 40,
+                              width: MediaQuery.of(context).size.width,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Checkbox(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(6)),
+                                          fillColor: MaterialStatePropertyAll(
+                                              Theme.of(context).primaryColor),
+                                          visualDensity: const VisualDensity(
+                                              horizontal: 0, vertical: 0),
+                                          value: amountSelectedValue1,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              if (_extraAmountController
+                                                  .text.isEmpty) {
+                                                Fluttertoast.showToast(
+                                                    msg: "Please Enter Amount");
+                                              } else {
+                                                amountSelectedValue1 = value!;
+                                                amountSelectedValue2 = false;
+                                                if (amountSelectedValue1 ==
+                                                    true) {
+                                                  allAmount += int.parse(
+                                                      _extraAmountController
+                                                          .text);
+                                                }
+                                              }
+                                            });
+                                          }),
+                                      Text(
+                                        addAmountType[0],
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .merge(TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14.0,
+                                                letterSpacing: 0.3,
+                                                color: Theme.of(context)
+                                                    .primaryColor)),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Checkbox(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(6)),
+                                          fillColor: MaterialStatePropertyAll(
+                                              Theme.of(context).primaryColor),
+                                          visualDensity: const VisualDensity(
+                                              horizontal: 0, vertical: 0),
+                                          value: amountSelectedValue2,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              if (_extraAmountController
+                                                  .text.isEmpty) {
+                                                Fluttertoast.showToast(
+                                                    msg: "Please Enter Amount");
+                                              } else {
+                                                amountSelectedValue2 = value!;
+                                                amountSelectedValue1 = false;
+                                                if (amountSelectedValue2 ==
+                                                    true) {
+                                                  allAmount -= int.parse(
+                                                      _extraAmountController
+                                                          .text);
+                                                }
+                                              }
+                                            });
+                                          }),
+                                      Text(
+                                        addAmountType[1],
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .merge(TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14.0,
+                                                letterSpacing: 0.3,
+                                                color: Theme.of(context)
+                                                    .primaryColor)),
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
                             ),
                           ],
@@ -2136,25 +2148,25 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                   "VTADAAAD_Id": othersamountId,
                                 });
                               }
-                              if (tadaApplyDataController
-                                  .addListBrowser.isNotEmpty) {
-                                for (int i = 0;
-                                    i <
-                                        tadaApplyDataController
-                                            .addListBrowser.length;
-                                    i++) {
-                                  uploadArray.add({
-                                    // "VTADAAF_FileName": tadaApplyDataController
-                                    //     .addListBrowser[i].file!.name,
-                                    // "VTADAAF_FilePath": tadaApplyDataController
-                                    //     .addListBrowser[i].file!.path,
-                                    "VTADAAF_Remarks": tadaApplyDataController
-                                        .newRemarksController
-                                        .elementAt(i)
-                                        .text
-                                  });
-                                }
-                              }
+                              // if (tadaApplyDataController
+                              //     .addListBrowser.isNotEmpty) {
+                              //   for (int i = 0;
+                              //       i <
+                              //           tadaApplyDataController
+                              //               .addListBrowser.length;
+                              //       i++) {
+                              //     uploadArray.add({
+                              //       "VTADAAF_FileName": tadaApplyDataController
+                              //           .addListBrowser[i].file!.name,
+                              //       "VTADAAF_FilePath": tadaApplyDataController
+                              //           .addListBrowser[i].file!.path,
+                              //       "VTADAAF_Remarks": tadaApplyDataController
+                              //           .newRemarksController
+                              //           .elementAt(i)
+                              //           .text
+                              //     });
+                              //   }
+                              // }
                               saveData(int.parse(clintId));
                             }
                           : () =>
@@ -2162,7 +2174,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                     ),
                   ),
                 ),
-                (tadaApplyDataController.getSavedData.isEmpty)
+                (tadaApplyDataController.tadaSavedData.isEmpty)
                     ? const SizedBox()
                     : Padding(
                         padding: const EdgeInsets.symmetric(
