@@ -156,7 +156,7 @@ class _EmployeepunchHomeState extends State<EmployeepunchHome> {
                                                         .selectedDepartment
                                                         .clear();
                                                     selectAllDepartment.value =
-                                                        !value!;
+                                                        value!;
                                                     if (value) {
                                                       salaryController
                                                           .selectedDepartment
@@ -164,7 +164,6 @@ class _EmployeepunchHomeState extends State<EmployeepunchHome> {
                                                               salaryController
                                                                   .department);
                                                     }
-
                                                     loadDesignation();
                                                   },
                                                 );

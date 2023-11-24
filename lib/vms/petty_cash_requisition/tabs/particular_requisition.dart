@@ -84,7 +84,7 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
 
     totalAmountController.text = totalAmount.toStringAsFixed(2);
 
-    selectDate.text = getDateNeed(DateTime.now());
+    selectDate.text = getDateSelect(DateTime.now());
     super.initState();
   }
 
@@ -1049,6 +1049,10 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
     cashRequisitionController.particularsList.clear();
 
     super.dispose();
+  }
+
+  String getDateSelect(DateTime dt) {
+    return "${dt.day.toString().padLeft(2, "0")}-${dt.month.toString().padLeft(2, "0")}-${dt.year}";
   }
 
   String getDateNeed(DateTime dt) {

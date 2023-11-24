@@ -123,7 +123,47 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
         countryId: countryId,
         stateId: stateId,
         tadaApplyController: tadaApplyController);
-    if (tadaApplyController.cityListValues.isNotEmpty) {
+    if (tadaApplyController.cityListValues.isEmpty) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              iconPadding: const EdgeInsets.symmetric(horizontal: 16),
+              contentPadding: const EdgeInsets.all(12),
+              backgroundColor: Colors.white,
+              content: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "City is not Mapped !",
+                      style: Get.textTheme.titleMedium!
+                          .copyWith(color: Theme.of(context).primaryColor),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          setState(() {
+                            Get.back();
+                          });
+                        },
+                        child: Text(
+                          "OK",
+                          style: Get.textTheme.titleMedium,
+                        ))
+                  ],
+                ),
+              ),
+            );
+          });
+    } else if (tadaApplyController.cityListValues.isNotEmpty) {
       citySelectedValue = tadaApplyController.cityListValues.last;
       getAllowenseData(citySelectedValue!.ivrmmcTId!);
     }
@@ -223,47 +263,47 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
     setState(() {
       getStateList();
     });
-    if (tadaApplyController.isDocumentUpload.value == true) {
-      // ignore: use_build_context_synchronously
-      showDialog(
-          context: context,
-          builder: (_) {
-            return AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              iconPadding: const EdgeInsets.symmetric(horizontal: 16),
-              contentPadding: const EdgeInsets.all(12),
-              backgroundColor: Colors.white,
-              content: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "Previous  TA-DA Adavance Is  Pending, Document Not Upload  !",
-                      style: Get.textTheme.titleMedium!
-                          .copyWith(color: Theme.of(context).primaryColor),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          setState(() {
-                            Get.back();
-                          });
-                        },
-                        child: Text(
-                          "OK",
-                          style: Get.textTheme.titleMedium,
-                        ))
-                  ],
-                ),
-              ),
-            );
-          });
-    }
+    // if (tadaApplyController.isDocumentUpload.value == true) {
+    //   // ignore: use_build_context_synchronously
+    //   showDialog(
+    //       context: context,
+    //       builder: (_) {
+    //         return AlertDialog(
+    //           shape: RoundedRectangleBorder(
+    //               borderRadius: BorderRadius.circular(10)),
+    //           iconPadding: const EdgeInsets.symmetric(horizontal: 16),
+    //           contentPadding: const EdgeInsets.all(12),
+    //           backgroundColor: Colors.white,
+    //           content: SizedBox(
+    //             width: MediaQuery.of(context).size.width,
+    //             child: Column(
+    //               mainAxisAlignment: MainAxisAlignment.center,
+    //               mainAxisSize: MainAxisSize.min,
+    //               children: [
+    //                 Text(
+    //                   "Previous  TA-DA Adavance Is  Pending, Document Not Upload  !",
+    //                   style: Get.textTheme.titleMedium!
+    //                       .copyWith(color: Theme.of(context).primaryColor),
+    //                 ),
+    //                 const SizedBox(
+    //                   height: 16,
+    //                 ),
+    //                 TextButton(
+    //                     onPressed: () {
+    //                       setState(() {
+    //                         Get.back();
+    //                       });
+    //                     },
+    //                     child: Text(
+    //                       "OK",
+    //                       style: Get.textTheme.titleMedium,
+    //                     ))
+    //               ],
+    //             ),
+    //           ),
+    //         );
+    //       });
+    // }
     super.initState();
   }
 
@@ -912,6 +952,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                   }),
                                   onChanged: (s) {
                                     stateLists = s!;
+                                    tadaApplyController.cityListValues.clear;
                                     getCity(stateLists!.ivrmmCId!,
                                         stateLists!.ivrmmSId!);
                                   },

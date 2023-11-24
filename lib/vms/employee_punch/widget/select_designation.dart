@@ -152,7 +152,7 @@ class _EmpSelectDesignationState extends State<EmpSelectDesignation> {
                                                     .selectedDesignation
                                                     .clear();
                                                 selectAllDesignation.value =
-                                                    !value!;
+                                                    value!;
                                                 if (value) {
                                                   widget.salaryController
                                                       .selectedDesignation
