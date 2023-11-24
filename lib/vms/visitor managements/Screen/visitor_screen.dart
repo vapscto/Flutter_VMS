@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/api/assigned_api.dart';
@@ -234,7 +235,7 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
                                     fontSize: 14.0,
                                     letterSpacing: 0.3)),
                             hintText: visitorManagementsController
-                                    .getrequestGetVisitList.isEmpty
+                                    .getrequestGetVisitList.isNotEmpty
                                 ? 'Select Visitor'
                                 : "No data available",
                             floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -290,7 +291,7 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
                                     widget.mskoolController),
                                 controller: visitorManagementsController,
                                 miId: s!.mIId!,
-                                userId: s.userId!,
+                                userId:  widget.loginSuccessModel.userId!,
                                 vmmvId: s.vmmVId!);
                             await getemployeeManagaementApi(
                                 base: baseUrlFromInsCode(
@@ -298,7 +299,7 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
                                     widget.mskoolController),
                                 controller: visitorManagementsController,
                                 miId: s.mIId!,
-                                userId: s.userId!);
+                                userId:widget.loginSuccessModel.userId!);
                           },
                         ),
                       ),
@@ -842,7 +843,26 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
                       size: const Size.fromWidth(100),
                       title: "Save",
                       onPress: () async {
-                        if (meetFlag.isFalse) {
+                        if (meetFlag.isTrue) {
+                          logger.w({
+                                 "fhrors": hours,
+                                  "fminutes": minutes,
+                                  "miId": widget.loginSuccessModel.mIID!,
+                                  "userId": widget.loginSuccessModel.userId!,
+                                  "vmmvId": visitorManagementsController
+                                      .getrequestGetgridoptionList
+                                      .first
+                                      .vMMVId!,
+                                  "vmvtmtId": visitorManagementsController
+                                      .getrequestGetgridoptionList
+                                      .first
+                                      .vMVTMTId!,
+                                  "vmvtmtdate": _dateController.text,
+                                  "vmvtmtlocation": locationEt.text,
+                                  "vmvtmtmetflag": meetFlag.value,
+                                  "vmvtmtremarks": remartEt.text,
+                                  "vmvtmttomeethrmeId": toMeetId!  
+                          });
                           await getsavedApi(
                                   base: baseUrlFromInsCode(
                                       'visitorsmanagementservicehub',
