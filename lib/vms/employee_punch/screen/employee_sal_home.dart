@@ -43,6 +43,12 @@ class _EmployeepunchHomeState extends State<EmployeepunchHome> {
     super.initState();
   }
 
+  // void disposal() {
+  //   salaryController.department.clear();
+  //   salaryController.selectedDepartment.clear();
+  //   super.dispose();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,58 +122,61 @@ class _EmployeepunchHomeState extends State<EmployeepunchHome> {
                                       child: Column(
                                         children: [
                                           SizedBox(
-                                              height: 30,
-                                              child: Obx(() {
-                                                return CheckboxListTile(
-                                                  controlAffinity:
-                                                      ListTileControlAffinity
-                                                          .leading,
-                                                  checkboxShape:
-                                                      RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(6)),
-                                                  dense: true,
-                                                  activeColor: Theme.of(context)
-                                                      .primaryColor,
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 8),
-                                                  visualDensity:
-                                                      const VisualDensity(
-                                                          horizontal: -4.0),
-                                                  title: Text(
-                                                    "Select All",
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .labelSmall!
-                                                        .merge(const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            fontSize: 14.0,
-                                                            letterSpacing:
-                                                                0.3)),
-                                                  ),
-                                                  value:
-                                                      selectAllDepartment.value,
-                                                  onChanged: (bool? value) {
+                                            height: 30,
+                                            child: Obx(() {
+                                              bool allSelected =
+                                                  salaryController
+                                                          .selectedDepartment
+                                                          .length ==
+                                                      salaryController
+                                                          .department.length;
+
+                                              return CheckboxListTile(
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .leading,
+                                                checkboxShape:
+                                                    RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(6),
+                                                ),
+                                                dense: true,
+                                                activeColor: Theme.of(context)
+                                                    .primaryColor,
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8),
+                                                visualDensity:
+                                                    const VisualDensity(
+                                                        horizontal: -4.0),
+                                                title: Text(
+                                                  "Select All",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .labelSmall!
+                                                      .merge(const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.3,
+                                                      )),
+                                                ),
+                                                value: allSelected,
+                                                onChanged: (bool? value) {
+                                                  salaryController
+                                                      .selectedDepartment
+                                                      .clear();
+                                                  if (value!) {
                                                     salaryController
                                                         .selectedDepartment
-                                                        .clear();
-                                                    selectAllDepartment.value =
-                                                        value!;
-                                                    if (value) {
-                                                      salaryController
-                                                          .selectedDepartment
-                                                          .addAll(
-                                                              salaryController
-                                                                  .department);
-                                                    }
-                                                    loadDesignation();
-                                                  },
-                                                );
-                                              })),
+                                                        .addAll(salaryController
+                                                            .department);
+                                                  }
+                                                  loadDesignation();
+                                                },
+                                              );
+                                            }),
+                                          ),
                                           const SizedBox(
                                             height: 6.0,
                                           ),
@@ -182,36 +191,38 @@ class _EmployeepunchHomeState extends State<EmployeepunchHome> {
                                                   height: 35,
                                                   child: Obx(() {
                                                     return CheckBoxContainer(
-                                                        sectionName:
-                                                            "${salaryController.department.elementAt(index).hrmDDepartmentName}",
-                                                        func: (b) {
-                                                          if (b) {
-                                                            salaryController.addToSelectedDepartment(
-                                                                salaryController
-                                                                    .department
-                                                                    .elementAt(
-                                                                        index));
-                                                          } else {
-                                                            selectAllDepartment
-                                                                .value = false;
-                                                            salaryController.removeFromSelectedDepartment(
-                                                                salaryController
-                                                                    .department
-                                                                    .elementAt(
-                                                                        index));
-                                                          }
-                                                          loadDesignation();
-                                                        },
-                                                        isChecked: RxBool(
+                                                      sectionName:
+                                                          "${salaryController.department.elementAt(index).hrmDDepartmentName}",
+                                                      func: (b) {
+                                                        if (b) {
                                                           salaryController
-                                                              .selectedDepartment
-                                                              .contains(
-                                                            salaryController
-                                                                .department
-                                                                .elementAt(
-                                                                    index),
-                                                          ),
-                                                        ));
+                                                              .addToSelectedDepartment(
+                                                                  salaryController
+                                                                      .department
+                                                                      .elementAt(
+                                                                          index));
+                                                        } else {
+                                                          selectAllDepartment
+                                                              .value = false;
+                                                          salaryController
+                                                              .removeFromSelectedDepartment(
+                                                                  salaryController
+                                                                      .department
+                                                                      .elementAt(
+                                                                          index));
+                                                        }
+                                                        loadDesignation();
+                                                      },
+                                                      isChecked: RxBool(
+                                                        salaryController
+                                                            .selectedDepartment
+                                                            .contains(
+                                                          salaryController
+                                                              .department
+                                                              .elementAt(index),
+                                                        ),
+                                                      ),
+                                                    );
                                                   }));
                                             },
                                           ),

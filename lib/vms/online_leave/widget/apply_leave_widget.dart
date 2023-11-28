@@ -1015,7 +1015,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
 
             showDialog(
                 context: context,
-                barrierDismissible: false,
+                barrierDismissible: true,
                 builder: (_) {
                   // RxList<String> attachment = <String>[].obs;
                   // if(controllerOL.attachment.isNotEmpty){
@@ -1115,7 +1115,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                         onPress: () {
                                           Navigator.pop(context);
                                           Navigator.pop(context);
-                                          Navigator.pop(context);
+                                          // Navigator.pop(context);
                                         },
                                       )
                                     ],
