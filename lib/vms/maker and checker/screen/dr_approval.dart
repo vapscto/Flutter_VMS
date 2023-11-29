@@ -101,7 +101,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
               title:    Align(
                 alignment: Alignment.center,
-                child: Text("Update Task",
+                child: Text("Record saved successfully",
                 style:   Theme.of(context).textTheme.titleLarge!.merge(
                   TextStyle(
                     color:  Theme.of(context).primaryColor
@@ -109,11 +109,11 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                 ),)),
                content:  MSkollBtn(title: "Close", onPress: () {
                       Get.back();
-                      
+                       Get.back(); 
                     },),
                       ),
             )) ;
-        Get.back();
+       
        }
     });
   }

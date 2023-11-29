@@ -58,7 +58,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
   @override
   void initState() {
     load();
-    todayDate.text = getDateNeed(selecteddate);
+    todayDate.text = "${selecteddate.year}-${numberList[selecteddate.month]}-${numberList[selecteddate.day]}";
    
     super.initState();
   }
@@ -551,7 +551,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                             // getDate =
                             //     "${selecteddate.year}/${numberList[selecteddate.month]}/${numberList[selecteddate.day]}";
 
-                          todayDate.text = "${selecteddate.year}/${numberList[selecteddate.month]}/${numberList[selecteddate.day]}";
+                          todayDate.text = "${selecteddate.year}-${numberList[selecteddate.month]}-${numberList[selecteddate.day]}";
 
                             getDateNeed(selecteddate);
                           });
