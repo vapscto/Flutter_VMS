@@ -40,6 +40,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
   @override
   void initState() {
     load();
+    logger.d(widget.date);
     super.initState();
   }
 
