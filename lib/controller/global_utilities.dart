@@ -53,6 +53,7 @@ import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart'
 import 'package:m_skool_flutter/vms/rating_report/screen/rating_report_home.dart';
 import 'package:m_skool_flutter/vms/salary_details/screen/salary_home_screen.dart';
 import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
+import 'package:m_skool_flutter/vms/sales_report/pre_sales/screens/pre_sale_home.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/screen/leave_list_home.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
@@ -123,25 +124,11 @@ Map<String, String> getSession() {
   return header;
 }
 
-// Map<String,dynamic> getInsSession(){
-//   Map<String, dynamic> header = {
-//     "cookie": cookieBox!.get("session"),
-//   };
-//   return header;
-// }
-
 DateTime getDateTimeFromSeconds(
   int seconds,
 ) {
   return DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
 }
-
-// String getTimeFromSecond(int seconds, {bool withTime = false}) {
-//   String time = "";
-//   time =
-//       "${(withTime) ? DateTime.fromMillisecondsSinceEpoch(seconds * 1000).hour : ""}${(withTime) ? ":" : ""}${(withTime) ? numberList.elementAt(DateTime.fromMillisecondsSinceEpoch(seconds * 1000).minute) : ""}${(withTime) ? "," : ""}${DateTime.fromMillisecondsSinceEpoch(seconds * 1000).day} ${months.elementAt(DateTime.fromMillisecondsSinceEpoch(seconds * 1000).month - 1)} ${DateTime.fromMillisecondsSinceEpoch(seconds * 1000).year}";
-//   return time;
-// }
 
 toCapitalized(String value) {
   return value.capitalize;
@@ -527,7 +514,7 @@ void openMappedPages(
     HwCwNbController hwCwNbController) {
   logger.i(pageName);
   // if (pageName == "Appointment Approval") {
-  //   Get.to(() => InteractionHome(
+  //   Get.to(() => PreSaleHomeScreen(
   //       loginSuccessModel: loginSuccessModel,
   //       mskoolController: mskoolController));
   //   return;
@@ -667,16 +654,7 @@ void openMappedPages(
 
     return;
   }
-  // if (pageName == "DR Generation") {
-  //   Navigator.push(context, MaterialPageRoute(builder: (_) {
-  //     return TaskCreationHome(
-  //       loginSuccessModel: loginSuccessModel,
-  //       mskoolController: mskoolController,
-  //     );
-  //   }));
 
-  //   return;
-  // }
   if (pageName == "TADA Apply") {
     Get.to(() => TadaApplyHomeScreen(
           loginSuccessModel: loginSuccessModel,
@@ -703,8 +681,6 @@ void openMappedPages(
           mskoolController: mskoolController,
         ));
   }
-
-  ///PETTY CASH ///
 
   if (pageName == "Petty Cash Approval") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -741,8 +717,6 @@ void openMappedPages(
       );
     }));
   }
-
-  ///   Rating Report   ///
 
   if (pageName == "Rating Report") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -826,23 +800,6 @@ void openMappedPages(
     }));
     return;
   }
-
-// if (pageName == "DR Generation") {
-//     Navigator.push(
-//       context,
-//       MaterialPageRoute(
-//         builder: (_) {
-//           return DailyReportGenration(
-//             loginSuccessModel: loginSuccessModel,
-//             mskoolController: mskoolController,
-//             pageName: pageName,
-
-//           );
-//         },
-//       ),
-//     );
-//     return;
-//   }
 
   if (pageName == "Student") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {

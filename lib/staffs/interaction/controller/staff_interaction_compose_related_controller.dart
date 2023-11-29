@@ -16,7 +16,7 @@ class StaffInteractionComposeController extends GetxController {
   RxList<GetStudentValue> studentList = <GetStudentValue>[].obs;
 
   RxString selectedradio = ''.obs;
-  RxString grpOrInd = 'Group'.obs;
+  RxString grpOrInd = 'Individual'.obs;
 
   RxBool isInteraction = RxBool(false);
   RxBool isGetDetail = RxBool(false);

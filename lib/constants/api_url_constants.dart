@@ -555,14 +555,15 @@ class URLS {
 
   static String viewDataPcReq = "api/PC_RequisitionFacade/Viewdata";
 
-    //--- RATING REPORT API ENDPOINT ---//
+  //--- RATING REPORT API ENDPOINT ---//
 
-  static String yearListRatingReport = "api/Rating_TransactionFacade/get_Consolidated_details";
+  static String yearListRatingReport =
+      "api/Rating_TransactionFacade/get_Consolidated_details";
 
-  static String monthRatingReport = "api/Rating_TransactionFacade/get_Consolidated_details";
+  static String monthRatingReport =
+      "api/Rating_TransactionFacade/get_Consolidated_details";
 
   static String dataReport = "api/Rating_TransactionFacade/getemployeereport/";
-
 
   ///***   ***///
 
@@ -594,6 +595,9 @@ class URLS {
   static String designation = 'api/ISM_Client_ProjectFacade/get_desig/';
   static String employeeList = 'api/ISM_Client_ProjectFacade/get_employee/';
   static String salesList = 'api/ISM_Client_ProjectFacade/report_cmtrpt/';
+  // Pre sales
+  static String preSalesList = 'api/Sales_Lead_Facade/get_load_lead_demo/';
+  static String priSalesView = 'api/Sales_Lead_Facade/view_lead_demo/';
   //
   static String visitormanagementapi =
       "api/AddVisitorsFacade/getAssignDetails/";
@@ -627,5 +631,6 @@ class URLS {
 
   static String getdocxApi = 'api/HW_HeathCheckUpFacade/ViewHealthCheckUpFiles';
 
-  static String getTaskCheckList="api/ISM_DailyReportGenerationFacade/GetCategoryChecklistDetails";
+  static String getTaskCheckList =
+      "api/ISM_DailyReportGenerationFacade/GetCategoryChecklistDetails";
 }
