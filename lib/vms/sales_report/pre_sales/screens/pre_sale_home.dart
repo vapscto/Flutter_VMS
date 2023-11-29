@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/pre_sales/api/pre_sales_api.dart';
 import 'package:m_skool_flutter/vms/sales_report/pre_sales/controller/pre_sales_controller.dart';
 import 'package:m_skool_flutter/vms/sales_report/pre_sales/widgets/completed_data_popup.dart';
+import 'package:m_skool_flutter/vms/sales_report/pre_sales/widgets/demo_response.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
@@ -80,27 +81,30 @@ class _PreSaleHomeScreenState extends State<PreSaleHomeScreen> {
         return Column(
           children: [
             Container(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 1),
-              child: TextFormField(
-                style: Get.textTheme.titleSmall!.copyWith(fontSize: 15),
-                onChanged: (value) {
-                  setState(() {
-                    _onSearchTextChanged(value);
-                  });
-                },
-                controller: _searchController,
-                decoration: InputDecoration(
-                    hintText: "Search...",
-                    hintStyle: Get.textTheme.titleSmall!
-                        .copyWith(color: Colors.grey, fontSize: 15),
-                    suffixIcon: const Icon(
-                      Icons.search,
-                      color: Colors.grey,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(color: Colors.grey),
-                    )),
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+              child: SizedBox(
+                height: 50,
+                child: TextFormField(
+                  style: Get.textTheme.titleSmall!.copyWith(fontSize: 15),
+                  onChanged: (value) {
+                    setState(() {
+                      _onSearchTextChanged(value);
+                    });
+                  },
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                      hintText: "Search...",
+                      hintStyle: Get.textTheme.titleSmall!
+                          .copyWith(color: Colors.grey, fontSize: 15),
+                      suffixIcon: const Icon(
+                        Icons.search,
+                        color: Colors.grey,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(color: Colors.grey),
+                      )),
+                ),
               ),
             ),
             (preSalesController.isPreSalesLoading.value)
@@ -126,10 +130,12 @@ class _PreSaleHomeScreenState extends State<PreSaleHomeScreen> {
                           scrollDirection: Axis.vertical,
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
-                            padding: const EdgeInsets.all(16),
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: DataTable(
+                                  headingRowHeight: 38,
+                                  dataRowHeight: 38,
                                   headingRowColor: MaterialStatePropertyAll(
                                       Theme.of(context).primaryColor),
                                   dataTextStyle: const TextStyle(
@@ -266,7 +272,18 @@ class _PreSaleHomeScreenState extends State<PreSaleHomeScreen> {
                                                   ),
                                                 ),
                                                 InkWell(
-                                                    onTap: () {},
+                                                    onTap: () {
+                                                      Get.to(() =>
+                                                          DemoResponseScreen(
+                                                            loginSuccessModel:
+                                                                widget
+                                                                    .loginSuccessModel,
+                                                            mskoolController: widget
+                                                                .mskoolController,
+                                                            preSalesController:
+                                                                preSalesController,
+                                                          ));
+                                                    },
                                                     child: Text(
                                                       "Demo Response",
                                                       style: Get.textTheme
