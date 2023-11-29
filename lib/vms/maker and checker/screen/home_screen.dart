@@ -504,7 +504,9 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                             // getDate =
                             //     "${selecteddate.year}/${numberList[selecteddate.month]}/${numberList[selecteddate.day]}";
 
-                            todayDate.text = getDateNeed(selecteddate);
+                          todayDate.text = "${selecteddate.year}/${numberList[selecteddate.month]}/${numberList[selecteddate.day]}";
+
+                            getDateNeed(selecteddate);
                           });
                         } else {
                           Fluttertoast.showToast(msg: "Please select date");
@@ -603,7 +605,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                         Get.to(() => DRApprovalScreen(
                               loginSuccessModel: widget.loginSuccessModel,
                               mskoolController: widget.mskoolController,
-                              date: todayDate.text.toString(),
+                              date: getDateNeed(selecteddate),
                             ));
                       }
                     } else {
