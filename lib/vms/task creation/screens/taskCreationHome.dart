@@ -437,7 +437,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             _taskProjectsController.getTaskProjectsList.clear();
                             _taskProjectsController.getTaskCategoryList.clear();
                             hrmdIds = s!.hrmDId!;
-                            filterEmployees("Developer");
+                            filterEmployees("");
                             await getTskPrjtCatgryList(
                                 base: baseUrlFromInsCode(
                                   'issuemanager',
