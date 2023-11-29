@@ -10,6 +10,7 @@ import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dar
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/drnotapprovedmessage_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/drnotsent_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/hrplannerdetails_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_details.dart';
 
 Future<bool> getPlanerdetails({
@@ -70,7 +71,9 @@ Future<bool> getPlanerdetails({
     controller.drnotapprovedList.addAll(drnotapprovedmessage.values!);
     Getdrnotsentdetails getdrnotsentdetails = Getdrnotsentdetails.fromJson(response.data['getdrnotsentdetails']);
   controller.drnotSentdetailsList.addAll(getdrnotsentdetails.values!);
-  for(var a =0;a<getdrnotsentdetails.values!.length;a++){
+  Hrplannerdetails hrplannerdetails = Hrplannerdetails.fromJson(response.data['hrplannerdetails']);
+  controller.hrplannerDetailsList.addAll(hrplannerdetails.values!);
+   for(var a =0;a<getdrnotsentdetails.values!.length;a++){
     controller.etRemark.add(TextEditingController(text: ""));
   }
     controller.updatePlannerDeatails(false);

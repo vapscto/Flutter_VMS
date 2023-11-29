@@ -45,7 +45,7 @@ class _PurchaseIndentHomeState extends State<PurchaseIndentHome> {
                 child: AnimatedProgressWidget(
                   animationPath: "assets/json/nodata.json",
                   animatorHeight: 300,
-                  title: "Loading Purchase Indent",
+                  title: "No Data Available",
                   desc:
                       "Please wait while we load detail table and create a view for you.",
                 ),

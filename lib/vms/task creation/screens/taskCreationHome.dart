@@ -437,7 +437,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             _taskProjectsController.getTaskProjectsList.clear();
                             _taskProjectsController.getTaskCategoryList.clear();
                             hrmdIds = s!.hrmDId!;
-                            filterEmployees("Developer");
+                            filterEmployees("");
                             await getTskPrjtCatgryList(
                                 base: baseUrlFromInsCode(
                                   'issuemanager',
@@ -1665,39 +1665,55 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                           child: Align(
                                             alignment: Alignment.center,
                                             child: SizedBox(
-                                              child: DropdownMenu<String>(
-                                                width: 200,
-                                                textStyle: Theme.of(context)
-                                                    .textTheme
-                                                    .titleSmall!
-                                                    .merge(const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w100,
-                                                      fontSize: 16.0,
-                                                      letterSpacing: 0.3,
-                                                      overflow:
-                                                          TextOverflow.clip,
-                                                    )),
-                                                initialSelection:
-                                                    periodicityList.first,
-                                                onSelected: (String? value) {
+                                                child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10),
+                                              child: DropdownButtonFormField(
+                                                decoration:
+                                                    const InputDecoration(
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Color.fromARGB(
+                                                            255, 201, 201, 199),
+                                                        width: 1),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Color.fromARGB(
+                                                            255, 201, 200, 199),
+                                                        width: 1),
+                                                  ),
+                                                  filled: true,
+                                                  fillColor: Colors.white,
+                                                ),
+                                                dropdownColor: Colors.white,
+                                                value: periodicityList.first,
+                                                onChanged: (String? value) {
                                                   setState(() {
                                                     dropdownValue.value =
                                                         value!;
                                                   });
                                                 },
-                                                dropdownMenuEntries:
-                                                    periodicityList.map<
-                                                            DropdownMenuEntry<
-                                                                String>>(
-                                                        (String value) {
-                                                  return DropdownMenuEntry<
-                                                          String>(
-                                                      value: value,
-                                                      label: value);
+                                                items: periodicityList.map<
+                                                        DropdownMenuItem<
+                                                            String>>(
+                                                    (String value) {
+                                                  return DropdownMenuItem<
+                                                      String>(
+                                                    value: value,
+                                                    child: Text(
+                                                      value,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .titleSmall,
+                                                    ),
+                                                  );
                                                 }).toList(),
                                               ),
-                                            ),
+                                            )),
                                           ),
                                         ),
                                       ),

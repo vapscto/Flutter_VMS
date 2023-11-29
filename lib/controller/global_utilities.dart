@@ -896,7 +896,7 @@ void openMappedPages(
     );
     return;
   }
-  if (pageName == "Birthday") {
+  if (pageName == "Health Checkup") {
     Get.to(
       () => HomeHCheckup(
         loginSuccessModel: loginSuccessModel,
