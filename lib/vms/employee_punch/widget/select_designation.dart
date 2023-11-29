@@ -31,6 +31,9 @@ class _EmpSelectDesignationState extends State<EmpSelectDesignation> {
   final ScrollController _controller = ScrollController();
   final RxBool selectAllDesignation = RxBool(false);
 
+    final EmployeePunchController salaryController =
+      Get.put(EmployeePunchController());
+
   @override
   void initState() {
     String department = "";
@@ -117,6 +120,16 @@ class _EmpSelectDesignationState extends State<EmpSelectDesignation> {
                                       SizedBox(
                                           height: 30,
                                           child: Obx(() {
+
+
+                                            bool allSelected =
+                                                  salaryController
+                                                          .selectedDesignation
+                                                          .length ==
+                                                      salaryController
+                                                          .designation.length;
+
+
                                             return CheckboxListTile(
                                               controlAffinity:
                                                   ListTileControlAffinity
@@ -146,7 +159,7 @@ class _EmpSelectDesignationState extends State<EmpSelectDesignation> {
                                                         fontSize: 14.0,
                                                         letterSpacing: 0.3)),
                                               ),
-                                              value: selectAllDesignation.value,
+                                              value: allSelected,
                                               onChanged: (bool? value) {
                                                 widget.salaryController
                                                     .selectedDesignation

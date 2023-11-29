@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -118,52 +119,71 @@ class AppliedTableWidget extends StatelessWidget {
               DataCell(Text(tadaApplyDataController
                   .getSavedData[index].vtadaATotalAppliedAmount
                   .toString())),
-              DataCell(Text(
-                  tadaApplyDataController.getSavedData[index].vtadaAStatusFlg ??
-                      ' ',
-                  style: TextStyle(
-                    color: (tadaApplyDataController
-                                .getSavedData[index].vtadaAStatusFlg ==
-                            'Rejected')
-                        ? Colors.red
-                        : (tadaApplyDataController
+              // DataCell(Text(
+              //     tadaApplyDataController.getSavedData[index].vtadaAStatusFlg ??
+              //         ' ',
+              //     style: TextStyle(
+              //       color: (tadaApplyDataController
+              //                   .getSavedData[index].vtadaAStatusFlg ==
+              //               'Rejected')
+              //           ? Colors.red
+              //           : (tadaApplyDataController
+              //                       .getSavedData[index].vtadaAStatusFlg ==
+              //                   'Approved')
+              //               ? Colors.green
+              //               : Colors.black,
+              //     ))),
+              DataCell((tadaApplyDataController
+                          .getSavedData[index].vtadaAStatusFlg !=
+                      'Pending')
+                  ? Text(
+                      tadaApplyDataController
+                              .getSavedData[index].vtadaAStatusFlg ??
+                          '',
+                      style: TextStyle(
+                        color: (tadaApplyDataController
                                     .getSavedData[index].vtadaAStatusFlg ==
-                                'Approved')
-                            ? Colors.green
-                            : Colors.black,
-                  ))),
-              // DataCell(InkWell(
-              //     onTap: () {
-              //       // if (tadaApplyDataController.isDocumentUpload.value == true) {
-              //       //   Fluttertoast.showToast(
-              //       //       msg: "Previous TA-DA Adavance Is Pending,");
-              //       // } else {
-              //       editData(
-              //           tadaApplyDataController.getSavedData[index].vtadaAId!);
-              //       // }
-              //     },
-              //     child: (tadaApplyDataController.getSavedData
-              //                 .elementAt(index)
-              //                 .vtadaAActiveFlg! ==
-              //             true)
-              //         ? Row(
-              //             children: [
-              //               Text(
-              //                 "Deactivate",
-              //                 style: Get.textTheme.titleMedium!.copyWith(
-              //                     color: Colors.red,
-              //                     fontWeight: FontWeight.w200,
-              //                     fontStyle: FontStyle.italic),
-              //               ),
-              //             ],
-              //           )
-              //         : Text(
-              //             "Activate",
-              //             style: Get.textTheme.titleMedium!.copyWith(
-              //                 color: Colors.green,
-              //                 fontWeight: FontWeight.w200,
-              //                 fontStyle: FontStyle.italic),
-              //           ))),
+                                'Rejected')
+                            ? Colors.red
+                            : (tadaApplyDataController
+                                        .getSavedData[index].vtadaAStatusFlg ==
+                                    'Approved')
+                                ? Colors.green
+                                : Colors.black,
+                      ),
+                    )
+                  : InkWell(
+                      onTap: () {
+                        if (tadaApplyDataController.isDocumentUpload.isTrue) {
+                          Fluttertoast.showToast(
+                              msg: "Previous TA-DA Adavance Is Pending,");
+                        } else {
+                          editData(tadaApplyDataController
+                              .getSavedData[index].vtadaAId!);
+                        }
+                      },
+                      child: (tadaApplyDataController.getSavedData
+                                  .elementAt(index)
+                                  .vtadaAActiveFlg! ==
+                              true)
+                          ? Row(
+                              children: [
+                                Text(
+                                  "Deactivate",
+                                  style: Get.textTheme.titleMedium!.copyWith(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.w200,
+                                      fontStyle: FontStyle.italic),
+                                ),
+                              ],
+                            )
+                          : Text(
+                              "Activate",
+                              style: Get.textTheme.titleMedium!.copyWith(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.w200,
+                                  fontStyle: FontStyle.italic),
+                            ))),
             ]);
           }),
         ),

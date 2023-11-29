@@ -187,12 +187,6 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
   }
 
   int sum = 0;
-  addAmountw(int amount) {
-    sum += amount;
-    totalAmount.text = sum.toString();
-    setState(() {});
-  }
-
   removeAmount(int amount) {
     sum -= amount;
     totalAmount.text = sum.toString();
@@ -871,17 +865,18 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                       ),
                                       DataCell(IconButton(
                                         onPressed: () {
-                                          setState(() {
-                                            (index == 0)
-                                                ? addControllerData(index + 1)
-                                                : removeControllerData(index);
-                                            (index == 0)
-                                                ? null
-                                                : removeAmount(int.parse(
-                                                    amountController
-                                                        .elementAt(index)
-                                                        .text));
-                                          });
+                                          if (index == 0) {
+                                            addControllerData(index + 1);
+                                            addAmount();
+                                          } else {
+                                            removeControllerData(index);
+                                            totalAmount.text = (int.parse(
+                                                        totalAmount.text) -
+                                                    int.parse(
+                                                        amountController[index]
+                                                            .text))
+                                                .toString();
+                                          }
                                         },
                                         icon: (index == 0)
                                             ? Icon(

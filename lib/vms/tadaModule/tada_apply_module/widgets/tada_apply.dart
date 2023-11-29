@@ -183,50 +183,53 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         countryId: countryId,
         stateId: stateId,
         tadaApplyController: tadaApplyDataController);
-    if (tadaApplyDataController.cityListValues.isEmpty) {
-      // ignore: use_build_context_synchronously
-      showDialog(
-          context: context,
-          builder: (_) {
-            return AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              iconPadding: const EdgeInsets.symmetric(horizontal: 16),
-              contentPadding: const EdgeInsets.all(12),
-              backgroundColor: Colors.white,
-              content: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "City is not Mapped !",
-                      style: Get.textTheme.titleMedium!
-                          .copyWith(color: Theme.of(context).primaryColor),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          setState(() {
-                            Get.back();
-                          });
-                        },
-                        child: Text(
-                          "OK",
-                          style: Get.textTheme.titleMedium,
-                        ))
-                  ],
+    if (tadaApplyDataController.tadaSavedData.isEmpty) {
+      if (tadaApplyDataController.cityListValues.isEmpty) {
+        // ignore: use_build_context_synchronously
+        showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                iconPadding: const EdgeInsets.symmetric(horizontal: 16),
+                contentPadding: const EdgeInsets.all(12),
+                backgroundColor: Colors.white,
+                content: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "City is not Mapped !",
+                        style: Get.textTheme.titleMedium!
+                            .copyWith(color: Theme.of(context).primaryColor),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            setState(() {
+                              Get.back();
+                            });
+                          },
+                          child: Text(
+                            "OK",
+                            style: Get.textTheme.titleMedium,
+                          ))
+                    ],
+                  ),
                 ),
-              ),
-            );
-          });
-    } else if (tadaApplyDataController.cityListValues.isNotEmpty) {
-      citySelectedValue = tadaApplyDataController.cityListValues.last;
-      getAllowenseData(citySelectedValue!.ivrmmcTId!);
+              );
+            });
+      } else if (tadaApplyDataController.cityListValues.isNotEmpty) {
+        citySelectedValue = tadaApplyDataController.cityListValues.last;
+        getAllowenseData(citySelectedValue!.ivrmmcTId!);
+      }
     }
+
     tadaApplyDataController.cityLoading(false);
   }
 
@@ -388,7 +391,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   @override
   void initState() {
     getStateList();
-    logger.e("===${widget.previousScreen}");
     savedDataListAPI();
     super.initState();
   }
@@ -2214,16 +2216,31 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                     ),
                   ),
                 ),
-                (tadaApplyDataController.tadaSavedData.isEmpty)
+                (tadaApplyDataController.getSavedData.isEmpty)
                     ? const SizedBox()
                     : Padding(
                         padding: const EdgeInsets.symmetric(
                           vertical: 16,
                         ),
-                        child: AppliedTableWidget(
-                          tadaApplyDataController: tadaApplyDataController,
-                          loginSuccessModel: widget.loginSuccessModel,
-                          mskoolController: widget.mskoolController,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 16, bottom: 8),
+                              child: Text(
+                                "TA-DA Details",
+                                style: Get.textTheme.titleSmall!.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                            ),
+                            AppliedTableWidget(
+                              tadaApplyDataController: tadaApplyDataController,
+                              loginSuccessModel: widget.loginSuccessModel,
+                              mskoolController: widget.mskoolController,
+                            ),
+                          ],
                         ),
                       ),
               ],

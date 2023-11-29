@@ -25,7 +25,6 @@ import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/screens/attachment_viewer.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
-import 'package:m_skool_flutter/staffs/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/staffs/view_notice/screens/view_notice_home_screen.dart';
@@ -70,6 +69,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
+import '../vms/interaction/screen/interaction_home.dart';
 import '../vms/staff_leave_approval/screen/staff_leave_approval_home.dart';
 
 RxInt currentHomeTab = 0.obs;
@@ -526,12 +526,12 @@ void openMappedPages(
     BuildContext context,
     HwCwNbController hwCwNbController) {
   logger.i(pageName);
-  if (pageName == "Appointment Approval") {
-    Get.to(() => InteractionHome(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController));
-    return;
-  }
+  // if (pageName == "Appointment Approval") {
+  //   Get.to(() => InteractionHome(
+  //       loginSuccessModel: loginSuccessModel,
+  //       mskoolController: mskoolController));
+  //   return;
+  // }
   if (pageName == "Attendance") {
     Get.to(() => AttendanceHomeScreen(
         loginSuccessModel: loginSuccessModel,

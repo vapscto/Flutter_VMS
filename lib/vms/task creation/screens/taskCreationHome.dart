@@ -222,44 +222,45 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     ).then(
       (value) {
         if (value) {
-        //  Get.back();
-      employeesID.clear();
-      taskEmployeeList.clear();
-      _taskDepartController.getDeptsList.clear();
-      _taskDepartController.getTaskEmployeeList.clear();
-      selectFromDate.clear();
-      selectToDate.clear();
-     hoursEt.text = "0";
-      minutesEt.text = "0";
-      remarksEt.clear();
-      etDayControllers.clear();
-      etRemarkControllers.clear();
-      _taskProjectsController.getTaskProjectsList.clear();
-     _taskProjectsController.getTaskCategoryList.clear();
-     _taskClientModuleCntroller.getModuleValuesList.clear();
-     _taskDepartController.getPriorityModelList.clear();
-      _taskDepartController.addListBrowser.clear();
-      _taskClientModuleCntroller.taskClientList.clear();
-      _titleETController.clear();
-      _descritpionETController.clear();
+          //  Get.back();
+          employeesID.clear();
+          taskEmployeeList.clear();
+          _taskDepartController.getDeptsList.clear();
+          _taskDepartController.getTaskEmployeeList.clear();
+          selectFromDate.clear();
+          selectToDate.clear();
+          hoursEt.text = "0";
+          minutesEt.text = "0";
+          remarksEt.clear();
+          etDayControllers.clear();
+          etRemarkControllers.clear();
+          _taskProjectsController.getTaskProjectsList.clear();
+          _taskProjectsController.getTaskCategoryList.clear();
+          _taskClientModuleCntroller.getModuleValuesList.clear();
+          _taskDepartController.getPriorityModelList.clear();
+          _taskDepartController.addListBrowser.clear();
+          _taskClientModuleCntroller.taskClientList.clear();
+          _titleETController.clear();
+          _descritpionETController.clear();
           loadCmpny();
-           showDialog(context: context, builder: (context) {
-             return   AlertDialog(
-            title:   Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Align(
-              alignment:   Alignment.center,
-                child: Text('Task Created successfully',
-                style: Theme.of(context).textTheme.titleMedium!.merge( 
-                    TextStyle(
-                    color: Theme.of(context).primaryColor
-                  )
-                ),),
-              ),
-            ),
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Task Created successfully',
+                      style: Theme.of(context).textTheme.titleMedium!.merge(
+                          TextStyle(color: Theme.of(context).primaryColor)),
+                    ),
+                  ),
+                ),
               );
-           },);
-    
+            },
+          );
         }
       },
     );
@@ -1897,7 +1898,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                               12),
                                                       child: InkWell(
                                                         onTap: () async {
-                                                          toDate();
+                                                          fromDate();
                                                         },
                                                         child: SvgPicture.asset(
                                                           "assets/svg/calendar_icon.svg",

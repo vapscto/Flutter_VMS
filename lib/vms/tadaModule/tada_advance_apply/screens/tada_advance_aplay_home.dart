@@ -1991,40 +1991,48 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
               DataCell(Text(tadaApplyController
                   .getSavedData[index].vtadaaATotalAppliedAmount
                   .toString())),
-              DataCell(InkWell(
-                  onTap: () {
-                    setState(() {
-                      if (tadaApplyController.isDocumentUpload.value == true) {
-                        Fluttertoast.showToast(
-                            msg: "Previous TA-DA Adavance Is Pending,");
-                      } else {
-                        editData(
-                            tadaApplyController.getSavedData[index].vtadaaAId!);
-                      }
-                    });
-                  },
-                  child: (tadaApplyController.getSavedData
-                              .elementAt(index)
-                              .vtadaaAActiveFlg! ==
-                          true)
-                      ? Row(
-                          children: [
-                            Text(
-                              "Deactivate",
+              DataCell((tadaApplyController.getSavedData
+                          .elementAt(index)
+                          .vtadaaAStatusFlg!
+                          .toLowerCase() !=
+                      "pending")
+                  ? Text(
+                      tadaApplyController.getSavedData[index].vtadaaAStatusFlg!)
+                  : InkWell(
+                      onTap: () {
+                        setState(() {
+                          if (tadaApplyController.isDocumentUpload.value ==
+                              true) {
+                            Fluttertoast.showToast(
+                                msg: "Previous TA-DA Adavance Is Pending,");
+                          } else {
+                            editData(tadaApplyController
+                                .getSavedData[index].vtadaaAId!);
+                          }
+                        });
+                      },
+                      child: (tadaApplyController.getSavedData
+                                  .elementAt(index)
+                                  .vtadaaAActiveFlg! ==
+                              true)
+                          ? Row(
+                              children: [
+                                Text(
+                                  "Deactivate",
+                                  style: Get.textTheme.titleMedium!.copyWith(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.w200,
+                                      fontStyle: FontStyle.italic),
+                                ),
+                              ],
+                            )
+                          : Text(
+                              "Activate",
                               style: Get.textTheme.titleMedium!.copyWith(
-                                  color: Colors.red,
+                                  color: Colors.green,
                                   fontWeight: FontWeight.w200,
                                   fontStyle: FontStyle.italic),
-                            ),
-                          ],
-                        )
-                      : Text(
-                          "Activate",
-                          style: Get.textTheme.titleMedium!.copyWith(
-                              color: Colors.green,
-                              fontWeight: FontWeight.w200,
-                              fontStyle: FontStyle.italic),
-                        ))),
+                            ))),
             ]);
           }),
         ),
