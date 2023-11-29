@@ -80,7 +80,7 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
                     height: 36.0,
                   ),
                   Text(
-                    "INSTITUTE ID",
+                    "COMPANY ID",
                     style: Theme.of(context).textTheme.labelSmall,
                   ),
                   const SizedBox(
@@ -110,7 +110,7 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
                         borderRadius: BorderRadius.circular(14.0),
                         borderSide: const BorderSide(color: Colors.transparent),
                       ),
-                      hintText: 'Institute Id',
+                      hintText: 'Company Id',
                       //label: Text("Institutional Code"),
                       prefixIcon: Padding(
                         padding: const EdgeInsets.all(12.0),
@@ -144,7 +144,7 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
                         onPressed: () {
                           if (insCode.text.isEmpty) {
                             Fluttertoast.showToast(
-                                msg: "Please provide an institutional code".tr);
+                                msg: "Please provide an company code".tr);
                             return;
                           }
 
@@ -197,7 +197,7 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
                                                 height: 8.0,
                                               ),
                                               Text(
-                                                "We successfully found institution with this code, you can now continue with next step",
+                                                "We successfully found company with this code, you can now continue with next step",
                                                 textAlign: TextAlign.center,
                                                 style: Theme.of(context)
                                                     .textTheme
