@@ -20,6 +20,7 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 import '../api/fetach_user_details.dart';
 import '../controller/mc_home_screen.dart';
@@ -58,6 +59,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
   void initState() {
     load();
     todayDate.text = getDateNeed(selecteddate);
+   
     super.initState();
   }
 
@@ -89,6 +91,51 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
         });
       }
     }
+     controller.adavanceListModel.isNotEmpty ||  controller.applyListModel.isNotEmpty 
+     ?
+    Get.dialog(
+          barrierDismissible :false,
+            WillPopScope(
+              onWillPop: () {
+                return Future.value(false);
+              },
+              child: AlertDialog(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              title:    Align(
+                alignment: Alignment.center,
+                child: Text("Update Task",
+                style:   Theme.of(context).textTheme.titleLarge!.merge(
+                  TextStyle(
+                    color:  Theme.of(context).primaryColor
+                  )
+                ),)),
+              content:   Container(
+                height: 120,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                   children: [
+                   Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Kindly Approved TA-DA List, Then only can Approved DR",
+                        style:Theme.of(context).textTheme.titleSmall!.merge(
+                          TextStyle(
+                            color: Theme.of(context).primaryColor
+                          )
+                        )  ,
+                      ),
+                    ),
+                    SizedBox(height: 20,),
+                    MSkollBtn(title: "Close", onPress: () {
+                      Get.back();
+                       Get.back();
+                    },)
+                  ],
+                ),
+              ),
+                      ),
+            )) 
+          :null;
   }
 
   @override
