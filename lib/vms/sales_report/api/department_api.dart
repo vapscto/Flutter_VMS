@@ -17,13 +17,15 @@ class DepartmentAPI {
     var dio = Dio();
 
     var url2 = base + URLS.department;
+    var url =
+        "https://vmsstaging.vapssmartecampus.com:40019/${URLS.department}";
     logger.i(url2);
     try {
       if (salesController.isErrorLoading.value) {
         salesController.error(false);
       }
       salesController.departmentLoading(true);
-      var response = await dio.post(url2,
+      var response = await dio.post(url,
           options: Options(headers: getSession()),
           data: {"MI_Id": miId, "HRMD_Id": hrmdId});
       logger.i({"MI_Id": miId, "HRMD_Id": hrmdId});
