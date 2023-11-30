@@ -77,7 +77,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
       for (int i = 0; i < tadaApplyDataController.stateList.length; i++) {
         stateId = tadaApplyDataController.stateList.elementAt(i).ivrmmSId!;
       }
-      getCity(stateListModelValues!.ivrmmCId!, stateListModelValues!.ivrmmSId!);
+      // getCity(stateListModelValues!.ivrmmCId!, stateListModelValues!.ivrmmSId!);
     }
     tadaApplyDataController.stateLoading(false);
   }
@@ -243,14 +243,17 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   final foodTotalSlotController = TextEditingController();
   final foodRemarksController = TextEditingController();
   bool isFoodSelected = false;
+  bool isFoodTextField = false;
   //Accommodation
   final accommodationTotalSlotController = TextEditingController();
   final accommodationRemarksController = TextEditingController();
   bool isAccommodationSelected = false;
+  bool isAccommodationTextField = false;
   //others
   final otherAmountController = TextEditingController();
   final otherremarksController = TextEditingController();
   bool isOthersSelected = false;
+  bool isOthetrsTextField = false;
   //Date and time
   DateTime? fromDate;
   DateTime? toDate;
@@ -273,6 +276,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
 //
   int foodAmt = 0;
   int accommodationAmount = 0;
+  int otherAmount = 0;
   getAllowenseData(int ctId) async {
     tadaApplyDataController.allowenseLoading(true);
     await TadaAllowenceAPI.instance.getApplyAllowense(
@@ -308,9 +312,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   List<UploadHwCwModel> uploadAttachment = [];
 
 //
-  saveData(
-    int clintId,
-  ) async {
+  saveData() async {
     tadaApplyDataController.saveData(true);
 
     for (var element in tadaApplyDataController.addListBrowser) {
@@ -346,9 +348,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         clintMultiple: clintName,
         allowanceArray: allowanceData,
         tadaApplyController: tadaApplyDataController,
-        fileList: uploadArray);
-
-    getStateList();
+        fileList: uploadArray,
+        vtadaaId: tadaApplyDataController.getSavedData.first.vtadaAId!);
     tadaApplyDataController.saveData(false);
   }
 
@@ -385,7 +386,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
 
   //
   bool checked = false;
-  String clintId = '';
+  int clintId = 0;
   String clintName = '';
   //
   @override
@@ -1248,8 +1249,11 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                                         .clintListValues
                                                                         .elementAt(
                                                                             index));
-                                                                clintId =
-                                                                    '${tadaApplyDataController.clintListValues.elementAt(index).ismmclTId!}';
+                                                                clintId = (tadaApplyDataController
+                                                                    .clintListValues
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .ismmclTId!);
                                                                 clintName +=
                                                                     '${index + 1} ) ${tadaApplyDataController.clintListValues.elementAt(index).ismmclTClientName} ';
 
@@ -1435,368 +1439,530 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             ),
                           ),
                           tadaApplyDataController.allowenseData.isNotEmpty
-                              ? SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  padding: const EdgeInsets.only(
-                                      top: 20, left: 16, right: 16),
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: DataTable(
-                                          dataRowHeight: 50,
-                                          headingRowHeight: 40,
-                                          columnSpacing: 20,
-                                          headingTextStyle: const TextStyle(
-                                              color: Colors.white),
-                                          border: TableBorder.all(
-                                            color: Colors.black,
-                                            width: 0.6,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          headingRowColor:
-                                              MaterialStateColor.resolveWith(
-                                                  (states) => Theme.of(context)
-                                                      .primaryColor),
-                                          columns: const [
-                                            DataColumn(label: Text("Select")),
-                                            DataColumn(
-                                                label: Text("Particulars")),
-                                            DataColumn(label: Text("Amount")),
-                                            DataColumn(label: Text("Days")),
-                                            DataColumn(
-                                                label: Text("Total Sots")),
-                                            DataColumn(label: Text("Slots")),
-                                            DataColumn(
-                                                label: Text("Total Amount")),
-                                            DataColumn(label: Text("Remark")),
-                                          ],
-                                          rows: [
-                                            DataRow(cells: [
-                                              DataCell(
-                                                SizedBox(
-                                                  height: 30,
-                                                  width: 30,
-                                                  child: Checkbox(
-                                                    visualDensity:
-                                                        const VisualDensity(
-                                                            horizontal: 0,
-                                                            vertical: 0),
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        isFoodSelected = value!;
-
-                                                        if (value) {
-                                                          addAmount(foodAmt);
-                                                        } else {
-                                                          removeAmount(foodAmt);
-                                                          foodTotalSlotController
-                                                              .clear();
-                                                          foodRemarksController
-                                                              .clear();
-                                                        }
-                                                      });
-                                                    },
-                                                    value: isFoodSelected,
-                                                    activeColor:
-                                                        Theme.of(context)
-                                                            .primaryColor,
-                                                  ),
-                                                ),
+                              ? Column(
+                                  children: [
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      padding: const EdgeInsets.only(
+                                          top: 20, left: 16, right: 16),
+                                      child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: DataTable(
+                                              dataRowHeight: 50,
+                                              headingRowHeight: 40,
+                                              columnSpacing: 20,
+                                              headingTextStyle: const TextStyle(
+                                                  color: Colors.white),
+                                              border: TableBorder.all(
+                                                color: Colors.black,
+                                                width: 0.6,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
                                               ),
-                                              const DataCell(Text('Food')),
-                                              DataCell(Text(
-                                                  tadaApplyDataController
-                                                      .foodAmount.value
-                                                      .toString())),
-                                              DataCell(
-                                                  Text(dayCount.toString())),
-                                              DataCell(Text('$foodSlot')),
-                                              DataCell(
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(4.0),
-                                                  child: SizedBox(
-                                                    width: 150,
-                                                    child: TextField(
-                                                      style: Get
-                                                          .textTheme.titleSmall,
-                                                      controller:
-                                                          foodTotalSlotController,
-                                                      onChanged: (value) {
-                                                        setState(() {
-                                                          foodAmt = 0;
+                                              headingRowColor:
+                                                  MaterialStateColor
+                                                      .resolveWith((states) =>
+                                                          Theme.of(context)
+                                                              .primaryColor),
+                                              columns: const [
+                                                DataColumn(
+                                                    label: Text("Select")),
+                                                DataColumn(
+                                                    label: Text("Particulars")),
+                                                DataColumn(
+                                                    label: Text("Amount")),
+                                                DataColumn(label: Text("Days")),
+                                                DataColumn(
+                                                    label: Text("Total Sots")),
+                                                DataColumn(
+                                                    label: Text("Slots")),
+                                                DataColumn(
+                                                    label:
+                                                        Text("Total Amount")),
+                                                DataColumn(
+                                                    label: Text("Remark")),
+                                              ],
+                                              rows: [
+                                                DataRow(cells: [
+                                                  DataCell(
+                                                    SizedBox(
+                                                      height: 30,
+                                                      width: 30,
+                                                      child: Checkbox(
+                                                        visualDensity:
+                                                            const VisualDensity(
+                                                                horizontal: 0,
+                                                                vertical: 0),
+                                                        onChanged: (value) {
+                                                          setState(() {
+                                                            isFoodSelected =
+                                                                value!;
 
-                                                          foodAmt = (tadaApplyDataController
-                                                                      .foodAmount
-                                                                      .value /
-                                                                  3 *
-                                                                  num.parse(
-                                                                      value))
-                                                              .toInt();
-                                                        });
-                                                      },
-                                                      keyboardType:
-                                                          TextInputType.number,
-                                                      decoration: InputDecoration(
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                              borderSide: BorderSide(
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .primaryColor))),
+                                                            if (value) {
+                                                              isFoodTextField =
+                                                                  true;
+                                                              // addAmount(foodAmt);
+                                                            } else {
+                                                              isFoodTextField =
+                                                                  false;
+                                                              foodAmt = 0;
+                                                              removeAmount(
+                                                                  foodAmt);
+                                                              foodTotalSlotController
+                                                                  .clear();
+                                                              foodRemarksController
+                                                                  .clear();
+                                                            }
+                                                          });
+                                                        },
+                                                        value: isFoodSelected,
+                                                        activeColor:
+                                                            Theme.of(context)
+                                                                .primaryColor,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              ),
-                                              DataCell(
-                                                  Text(foodAmt.toString())),
-                                              DataCell(
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(4.0),
-                                                  child: SizedBox(
-                                                    width: 150,
-                                                    child: TextField(
-                                                      style: Get
-                                                          .textTheme.titleSmall,
-                                                      controller:
-                                                          foodRemarksController,
-                                                      keyboardType:
-                                                          TextInputType.text,
-                                                      decoration: InputDecoration(
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                              borderSide: BorderSide(
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .primaryColor))),
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ]),
-                                            DataRow(cells: [
-                                              DataCell(
-                                                SizedBox(
-                                                  height: 30,
-                                                  width: 30,
-                                                  child: Checkbox(
-                                                    visualDensity:
-                                                        const VisualDensity(
-                                                            horizontal: 0,
-                                                            vertical: 0),
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        isAccommodationSelected =
-                                                            value!;
+                                                  const DataCell(Text('Food')),
+                                                  DataCell(Text(
+                                                      tadaApplyDataController
+                                                          .foodAmount.value
+                                                          .toString())),
+                                                  DataCell(Text(
+                                                      dayCount.toString())),
+                                                  DataCell(Text('$foodSlot')),
+                                                  DataCell(
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              4.0),
+                                                      child: SizedBox(
+                                                        width: 150,
+                                                        child: TextField(
+                                                          onTap: () {
+                                                            if (isFoodTextField ==
+                                                                false) {
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg:
+                                                                          "Please Select Check Box");
+                                                            }
+                                                          },
+                                                          readOnly:
+                                                              (isFoodTextField ==
+                                                                      false)
+                                                                  ? true
+                                                                  : false,
+                                                          style: Get.textTheme
+                                                              .titleSmall,
+                                                          controller:
+                                                              foodTotalSlotController,
+                                                          onChanged: (value) {
+                                                            setState(() {
+                                                              if (isFoodTextField ==
+                                                                  true) {
+                                                                foodAmt = 0;
+                                                                foodAmt = (tadaApplyDataController
+                                                                            .foodAmount
+                                                                            .value /
+                                                                        3 *
+                                                                        num.parse(
+                                                                            value))
+                                                                    .toInt();
 
-                                                        if (value) {
-                                                          addAmount(
-                                                              accommodationAmount);
-                                                        } else {
-                                                          removeAmount(
-                                                              accommodationAmount);
+                                                                addAmount(
+                                                                    foodAmt);
+                                                              } else {
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                        msg:
+                                                                            "Please Select Check Box");
+                                                              }
+                                                            });
+                                                          },
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                          decoration: InputDecoration(
+                                                              border: OutlineInputBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                          color:
+                                                                              Theme.of(context).primaryColor))),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  DataCell(
+                                                      Text(foodAmt.toString())),
+                                                  DataCell(
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              4.0),
+                                                      child: SizedBox(
+                                                        width: 150,
+                                                        child: TextField(
+                                                          onTap: () {
+                                                            if (isFoodTextField ==
+                                                                false) {
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg:
+                                                                          "Please Select Check Box");
+                                                            }
+                                                          },
+                                                          readOnly:
+                                                              (isFoodTextField ==
+                                                                      false)
+                                                                  ? true
+                                                                  : false,
+                                                          style: Get.textTheme
+                                                              .titleSmall,
+                                                          controller:
+                                                              foodRemarksController,
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .text,
+                                                          decoration: InputDecoration(
+                                                              border: OutlineInputBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                          color:
+                                                                              Theme.of(context).primaryColor))),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ]),
+                                                DataRow(cells: [
+                                                  DataCell(
+                                                    SizedBox(
+                                                      height: 30,
+                                                      width: 30,
+                                                      child: Checkbox(
+                                                        visualDensity:
+                                                            const VisualDensity(
+                                                                horizontal: 0,
+                                                                vertical: 0),
+                                                        onChanged: (value) {
+                                                          setState(() {
+                                                            isAccommodationSelected =
+                                                                value!;
 
-                                                          accommodationTotalSlotController
-                                                              .clear();
-                                                          accommodationRemarksController
-                                                              .clear();
-                                                        }
-                                                      });
-                                                    },
-                                                    value:
-                                                        isAccommodationSelected,
-                                                    activeColor:
-                                                        Theme.of(context)
-                                                            .primaryColor,
-                                                  ),
-                                                ),
-                                              ),
-                                              const DataCell(
-                                                  Text('Accommodation Amount')),
-                                              DataCell(Text(
-                                                  tadaApplyDataController
-                                                      .accomodationAmount.value
-                                                      .toString())),
-                                              DataCell(
-                                                  Text(dayCount.toString())),
-                                              DataCell(
-                                                  Text('$accommudationSlot')),
-                                              DataCell(
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(4.0),
-                                                  child: SizedBox(
-                                                    width: 150,
-                                                    child: TextField(
-                                                      style: Get
-                                                          .textTheme.titleSmall,
-                                                      controller:
-                                                          accommodationTotalSlotController,
-                                                      onChanged: (value) {
-                                                        setState(() {
-                                                          accommodationAmount =
-                                                              0;
-                                                          accommodationAmount =
-                                                              (tadaApplyDataController
-                                                                          .accomodationAmount
-                                                                          .value *
-                                                                      num.parse(
-                                                                          value))
-                                                                  .toInt();
-                                                        });
-                                                      },
-                                                      keyboardType:
-                                                          TextInputType.number,
-                                                      decoration: InputDecoration(
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                              borderSide: BorderSide(
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .primaryColor))),
+                                                            if (value) {
+                                                              isAccommodationTextField =
+                                                                  true;
+                                                            } else {
+                                                              accommodationAmount =
+                                                                  0;
+                                                              isAccommodationTextField =
+                                                                  false;
+                                                              removeAmount(
+                                                                  accommodationAmount);
+
+                                                              accommodationTotalSlotController
+                                                                  .clear();
+                                                              accommodationRemarksController
+                                                                  .clear();
+                                                            }
+                                                          });
+                                                        },
+                                                        value:
+                                                            isAccommodationSelected,
+                                                        activeColor:
+                                                            Theme.of(context)
+                                                                .primaryColor,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              ),
-                                              DataCell(
-                                                  Text('$accommodationAmount')),
-                                              DataCell(
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(4.0),
-                                                  child: SizedBox(
-                                                    width: 150,
-                                                    child: TextField(
-                                                      style: Get
-                                                          .textTheme.titleSmall,
-                                                      controller:
-                                                          accommodationRemarksController,
-                                                      keyboardType:
-                                                          TextInputType.text,
-                                                      decoration: InputDecoration(
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                              borderSide: BorderSide(
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .primaryColor))),
+                                                  const DataCell(Text(
+                                                      'Accommodation Amount')),
+                                                  DataCell(Text(
+                                                      tadaApplyDataController
+                                                          .accomodationAmount
+                                                          .value
+                                                          .toString())),
+                                                  DataCell(Text(
+                                                      dayCount.toString())),
+                                                  DataCell(Text(
+                                                      '$accommudationSlot')),
+                                                  DataCell(
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              4.0),
+                                                      child: SizedBox(
+                                                        width: 150,
+                                                        child: TextField(
+                                                          onTap: () {
+                                                            if (isAccommodationTextField ==
+                                                                false) {
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg:
+                                                                          "Please Select Check Box");
+                                                            }
+                                                          },
+                                                          readOnly:
+                                                              (isAccommodationTextField ==
+                                                                      true)
+                                                                  ? false
+                                                                  : true,
+                                                          style: Get.textTheme
+                                                              .titleSmall,
+                                                          controller:
+                                                              accommodationTotalSlotController,
+                                                          onChanged: (value) {
+                                                            if (isAccommodationTextField ==
+                                                                true) {
+                                                              setState(() {
+                                                                accommodationAmount =
+                                                                    0;
+                                                                accommodationAmount = (tadaApplyDataController
+                                                                            .accomodationAmount
+                                                                            .value *
+                                                                        num.parse(
+                                                                            value))
+                                                                    .toInt();
+                                                                addAmount(
+                                                                    accommodationAmount);
+                                                              });
+                                                            }
+                                                          },
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                          decoration: InputDecoration(
+                                                              border: OutlineInputBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                          color:
+                                                                              Theme.of(context).primaryColor))),
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              )
-                                            ]),
-                                            DataRow(cells: [
-                                              DataCell(
-                                                SizedBox(
-                                                  height: 30,
-                                                  width: 30,
-                                                  child: Checkbox(
-                                                    visualDensity:
-                                                        const VisualDensity(
-                                                            horizontal: 0,
-                                                            vertical: 0),
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        isOthersSelected =
-                                                            value!;
-                                                        if (value) {
-                                                          addAmount(int.parse(
+                                                  DataCell(Text(
+                                                      '$accommodationAmount')),
+                                                  DataCell(
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              4.0),
+                                                      child: SizedBox(
+                                                        width: 150,
+                                                        child: TextField(
+                                                          onTap: () {
+                                                            if (isAccommodationTextField ==
+                                                                false) {
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg:
+                                                                          "Please Select Check Box");
+                                                            }
+                                                          },
+                                                          readOnly:
+                                                              (isAccommodationTextField ==
+                                                                      true)
+                                                                  ? false
+                                                                  : true,
+                                                          style: Get.textTheme
+                                                              .titleSmall,
+                                                          controller:
+                                                              accommodationRemarksController,
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .text,
+                                                          decoration: InputDecoration(
+                                                              border: OutlineInputBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                          color:
+                                                                              Theme.of(context).primaryColor))),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ]),
+                                                DataRow(cells: [
+                                                  DataCell(
+                                                    SizedBox(
+                                                      height: 30,
+                                                      width: 30,
+                                                      child: Checkbox(
+                                                        visualDensity:
+                                                            const VisualDensity(
+                                                                horizontal: 0,
+                                                                vertical: 0),
+                                                        onChanged: (value) {
+                                                          setState(() {
+                                                            isOthersSelected =
+                                                                value!;
+                                                            if (value) {
+                                                              isOthetrsTextField =
+                                                                  true;
+                                                            } else {
+                                                              isOthetrsTextField =
+                                                                  false;
+                                                              removeAmount(int.parse(
+                                                                  otherAmountController
+                                                                      .text));
+
                                                               otherAmountController
-                                                                  .text));
-                                                        } else {
-                                                          removeAmount(int.parse(
-                                                              otherAmountController
-                                                                  .text));
-
-                                                          otherAmountController
-                                                              .clear();
-                                                          otherremarksController
-                                                              .clear();
-                                                        }
-                                                      });
-                                                    },
-                                                    value: isOthersSelected,
-                                                    activeColor:
-                                                        Theme.of(context)
-                                                            .primaryColor,
-                                                  ),
-                                                ),
-                                              ),
-                                              const DataCell(
-                                                  Text('Other Amount')),
-                                              DataCell(
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(4.0),
-                                                  child: SizedBox(
-                                                    width: 150,
-                                                    child: TextField(
-                                                      style: Get
-                                                          .textTheme.titleSmall,
-                                                      controller:
-                                                          otherAmountController,
-                                                      keyboardType:
-                                                          TextInputType.number,
-                                                      decoration: InputDecoration(
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                              borderSide: BorderSide(
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .primaryColor))),
+                                                                  .clear();
+                                                              otherremarksController
+                                                                  .clear();
+                                                            }
+                                                          });
+                                                        },
+                                                        value: isOthersSelected,
+                                                        activeColor:
+                                                            Theme.of(context)
+                                                                .primaryColor,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              ),
-                                              const DataCell(Text('')),
-                                              const DataCell(Text('')),
-                                              const DataCell(Text('')),
-                                              const DataCell(Text('')),
-                                              DataCell(
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(4.0),
-                                                  child: SizedBox(
-                                                    width: 150,
-                                                    child: TextField(
-                                                      style: Get
-                                                          .textTheme.titleSmall,
-                                                      controller:
-                                                          otherremarksController,
-                                                      keyboardType:
-                                                          TextInputType.text,
-                                                      decoration: InputDecoration(
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                              borderSide: BorderSide(
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .primaryColor))),
+                                                  const DataCell(
+                                                      Text('Other Amount')),
+                                                  DataCell(
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              4.0),
+                                                      child: SizedBox(
+                                                        width: 150,
+                                                        child: TextField(
+                                                          onTap: () {
+                                                            if (isOthetrsTextField ==
+                                                                false) {
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg:
+                                                                          "Please Select Check Box");
+                                                            }
+                                                          },
+                                                          readOnly:
+                                                              (isOthetrsTextField ==
+                                                                      true)
+                                                                  ? false
+                                                                  : true,
+                                                          controller:
+                                                              otherAmountController,
+                                                          onChanged: (value) {
+                                                            if (isOthetrsTextField ==
+                                                                true) {
+                                                              setState(() {
+                                                                otherAmount = 0;
+                                                                otherAmount =
+                                                                    int.parse(
+                                                                        value);
+                                                              });
+                                                            }
+                                                          },
+                                                          style: Get.textTheme
+                                                              .titleSmall,
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                          decoration: InputDecoration(
+                                                              border: OutlineInputBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                          color:
+                                                                              Theme.of(context).primaryColor))),
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              )
-                                            ]),
-                                          ])),
+                                                  const DataCell(Text('')),
+                                                  const DataCell(Text('')),
+                                                  const DataCell(Text('')),
+                                                  const DataCell(Text('')),
+                                                  DataCell(
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              4.0),
+                                                      child: SizedBox(
+                                                        width: 150,
+                                                        child: TextField(
+                                                          onTap: () {
+                                                            if (isOthetrsTextField ==
+                                                                false) {
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg:
+                                                                          "Please Select Check Box");
+                                                            }
+                                                          },
+                                                          readOnly:
+                                                              (isOthetrsTextField ==
+                                                                      true)
+                                                                  ? false
+                                                                  : true,
+                                                          style: Get.textTheme
+                                                              .titleSmall,
+                                                          controller:
+                                                              otherremarksController,
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .text,
+                                                          decoration: InputDecoration(
+                                                              border: OutlineInputBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                          color:
+                                                                              Theme.of(context).primaryColor))),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ]),
+                                              ])),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 16, left: 16, right: 16),
+                                      child: Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: MSkollBtn(
+                                          onPress: () {
+                                            setState(() {
+                                              allAmount = foodAmt +
+                                                  accommodationAmount +
+                                                  otherAmount;
+                                            });
+                                          },
+                                          title: "Calculate Total Amount",
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 )
                               : const SizedBox(),
                         ],
@@ -2134,86 +2300,89 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: MSkollBtn(
-                      title: "Save",
-                      onPress: (_remarkController.text.isNotEmpty ||
-                              _addressController.text.isNotEmpty ||
-                              _startDate.text.isNotEmpty ||
-                              _endDate.text.isNotEmpty ||
-                              _startTime.text.isNotEmpty ||
-                              _endTime.text.isNotEmpty)
-                          ? () {
-                              int foodamountId = 0;
-                              int accamountId = 0;
-                              int othersamountId = 0;
+                        title: "Save",
+                        onPress: () {
+                          if (_remarkController.text.isEmpty) {
+                            Fluttertoast.showToast(msg: "Please Enter Remarks");
+                          } else if (_addressController.text.isEmpty) {
+                            Fluttertoast.showToast(msg: "Please Enter Address");
+                          } else if (int.parse(foodTotalSlotController.text) >
+                              int.parse(foodSlot)) {
+                            Fluttertoast.showToast(
+                                msg:
+                                    " Food Slot count should be lessthen total slot");
+                            return;
+                          } else if (int.parse(
+                                  accommodationTotalSlotController.text) >
+                              int.parse(accommudationSlot)) {
+                            Fluttertoast.showToast(
+                                msg:
+                                    " Accommodation Slot count should be lessthen total slot");
+                          } else {
+                            int foodamountId = 0;
+                            int accamountId = 0;
+                            int othersamountId = 0;
 
-                              if (isFoodSelected == true) {
-                                foodamountId =
-                                    (foodamountId == null || foodamountId == "")
-                                        ? 0
-                                        : foodamountId;
-                                allowanceData.add({
-                                  "Type": "Food",
-                                  "Amount": foodAmt,
-                                  "Remarks": foodRemarksController.text,
-                                  "VTADAAAD_Id": foodamountId,
-                                  "VTADAAAD_TotalSlots": foodSlot,
-                                  "VTADAAAD_Slots":
-                                      foodTotalSlotController.text,
-                                });
-                              }
-
-                              if (isAccommodationSelected == true) {
-                                accamountId =
-                                    (accamountId == null || accamountId == "")
-                                        ? 0
-                                        : accamountId;
-                                allowanceData.add({
-                                  "Type": "Accommodation",
-                                  "Amount": accommodationAmount,
-                                  "Remarks":
-                                      accommodationRemarksController.text,
-                                  "VTADAAAD_Id": accamountId,
-                                  "VTADAAAD_TotalSlots": accommudationSlot,
-                                  "VTADAAAD_Slots":
-                                      accommodationTotalSlotController.text,
-                                });
-                              }
-                              if (isOthersSelected == true) {
-                                othersamountId = (othersamountId == null ||
-                                        othersamountId == "")
-                                    ? 0
-                                    : othersamountId;
-                                allowanceData.add({
-                                  "Type": "Other",
-                                  "Amount": otherAmountController.text,
-                                  "Remarks": otherremarksController.text,
-                                  "VTADAAAD_Id": othersamountId,
-                                });
-                              }
-                              // if (tadaApplyDataController
-                              //     .addListBrowser.isNotEmpty) {
-                              //   for (int i = 0;
-                              //       i <
-                              //           tadaApplyDataController
-                              //               .addListBrowser.length;
-                              //       i++) {
-                              //     uploadArray.add({
-                              //       "VTADAAF_FileName": tadaApplyDataController
-                              //           .addListBrowser[i].file!.name,
-                              //       "VTADAAF_FilePath": tadaApplyDataController
-                              //           .addListBrowser[i].file!.path,
-                              //       "VTADAAF_Remarks": tadaApplyDataController
-                              //           .newRemarksController
-                              //           .elementAt(i)
-                              //           .text
-                              //     });
-                              //   }
-                              // }
-                              saveData(int.parse(clintId));
+                            if (isFoodSelected == true) {
+                              foodamountId =
+                                  (foodamountId == null || foodamountId == "")
+                                      ? 0
+                                      : foodamountId;
+                              allowanceData.add({
+                                "Type": "Food",
+                                "Amount": foodAmt,
+                                "Remarks": foodRemarksController.text,
+                                "VTADAAD_Id": foodamountId,
+                                "VTADAAD_TotalSlots": foodSlot,
+                                "VTADAAD_Slots": foodTotalSlotController.text,
+                              });
                             }
-                          : () =>
-                              Fluttertoast.showToast(msg: "Enter all Fields"),
-                    ),
+
+                            if (isAccommodationSelected == true) {
+                              accamountId =
+                                  (accamountId == null || accamountId == "")
+                                      ? 0
+                                      : accamountId;
+                              allowanceData.add({
+                                "Type": "Accommodation",
+                                "Amount": accommodationAmount,
+                                "Remarks": accommodationRemarksController.text,
+                                "VTADAAD_Id": accamountId,
+                                "VTADAAD_TotalSlots": accommudationSlot,
+                                "VTADAAD_Slots":
+                                    accommodationTotalSlotController.text,
+                              });
+                            }
+                            if (isOthersSelected == true) {
+                              othersamountId = (othersamountId == null ||
+                                      othersamountId == "")
+                                  ? 0
+                                  : othersamountId;
+                              allowanceData.add({
+                                "Type": "Other",
+                                "Amount": otherAmountController.text,
+                                "Remarks": otherremarksController.text,
+                                "VTADAAD_Id": othersamountId,
+                              });
+                            }
+                            if (tadaApplyDataController
+                                .addListBrowser.isNotEmpty) {
+                              for (int i = 0;
+                                  i <
+                                      tadaApplyDataController
+                                          .addListBrowser.length;
+                                  i++) {
+                                uploadArray.add({
+                                  "VTADAAF_Remarks": tadaApplyDataController
+                                      .newRemarksController
+                                      .elementAt(i)
+                                      .text
+                                });
+                              }
+                            }
+                            saveData();
+                          }
+                        }),
                   ),
                 ),
                 (tadaApplyDataController.getSavedData.isEmpty)

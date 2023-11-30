@@ -99,7 +99,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
         tadaApplyController: tadaApplyController);
     if (tadaApplyController.stateList.isNotEmpty) {
       stateLists = tadaApplyController.stateList.first;
-      getCity(stateLists!.ivrmmCId!, stateLists!.ivrmmSId!);
+      // getCity(stateLists!.ivrmmCId!, stateLists!.ivrmmSId!);
     }
 
     _startDate.clear();
@@ -1768,15 +1768,37 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                         onPress: (_remarkController
                                                     .text.isNotEmpty ||
                                                 _addressController
-                                                    .text.isNotEmpty ||
-                                                _startDate.text.isNotEmpty ||
-                                                _endDate.text.isNotEmpty ||
-                                                _startTime.text.isNotEmpty ||
-                                                _endTime.text.isNotEmpty)
+                                                    .text.isNotEmpty)
                                             ? () {
                                                 if (allAmount == 0) {
                                                   Fluttertoast.showToast(
                                                       msg: "Please Add Amount");
+                                                } else if (_remarkController
+                                                    .text.isEmpty) {
+                                                  Fluttertoast.showToast(
+                                                      msg:
+                                                          "Please Enter Remarks");
+                                                } else if (_addressController
+                                                    .text.isEmpty) {
+                                                  Fluttertoast.showToast(
+                                                      msg:
+                                                          "Please Enter Address");
+                                                } else if (int.parse(
+                                                        foodTotalSlotController
+                                                            .text) >
+                                                    int.parse(foodSlot)) {
+                                                  Fluttertoast.showToast(
+                                                      msg:
+                                                          " Food Slot count should be lessthen total slot");
+                                                  return;
+                                                } else if (int.parse(
+                                                        accommodationTotalSlotController
+                                                            .text) >
+                                                    int.parse(
+                                                        accommudationSlot)) {
+                                                  Fluttertoast.showToast(
+                                                      msg:
+                                                          " Accommodation Slot count should be lessthen total slot");
                                                 } else {
                                                   int foodamountId = 0;
                                                   int accamountId = 0;

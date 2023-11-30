@@ -25,6 +25,8 @@ class AppliedDataAPI {
         options: Options(headers: getSession()),
         data: {"UserId": userId, "MI_Id": miId},
       );
+      logger.i(api);
+      logger.i({"UserId": userId, "MI_Id": miId});
       if (response.statusCode == 200) {
         logger.i(response.data['getArray']);
         TadaSavedDataModel tadaSavedDataModel =

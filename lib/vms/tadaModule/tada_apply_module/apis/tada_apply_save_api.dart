@@ -19,6 +19,7 @@ class TadaSaveApi {
     required String toAddress,
     required String remarks,
     required int vtadaaaId,
+    required int vtadaaId,
     required String departureTime,
     required String arrivalTime,
     required String clintMultiple,
@@ -36,39 +37,43 @@ class TadaSaveApi {
       var response =
           await dio.post(url, options: Options(headers: getSession()), data: {
         "IVRMMCT_Id": ctId,
-        "VTADAAA_FromDate": fromDate,
-        "VTADAAA_ToDate": toDate,
-        "VTADAAA_ClientId": clintId,
-        "VTADAAA_TotalAppliedAmount": totalAppliedAmount,
-        "VTADAAA_ToAddress": toAddress,
-        "VTADAAA_Remarks": remarks,
+        "VTADAA_FromDate": fromDate,
+        "VTADAA_ToDate": toDate,
+        "VTADAA_ClientId": clintId,
+        "VTADAA_TotalAppliedAmount": totalAppliedAmount,
+        "VTADAA_ToAddress": toAddress,
+        "VTADAA_Remarks": remarks,
         "AllowenceArray": allowanceArray,
         "VTADAAA_Id": vtadaaaId,
-        "VTADAAA_DepartureTime": departureTime,
-        "VTADAAA_ArrivalTime": arrivalTime,
-        "VTADAAA_ClientMultiple": clintMultiple,
+        "VTADAA_Id": vtadaaId,
+        "VTADAA_DepartureTime": departureTime,
+        "VTADAA_ArrivalTime": arrivalTime,
+        "vtadaaA_ClientMultiple": clintMultiple,
         "filelist": fileList
       });
       logger.i({
         "IVRMMCT_Id": ctId,
-        "VTADAAA_FromDate": fromDate,
-        "VTADAAA_ToDate": toDate,
-        "VTADAAA_ClientId": clintId,
-        "VTADAAA_TotalAppliedAmount": totalAppliedAmount,
-        "VTADAAA_ToAddress": toAddress,
-        "VTADAAA_Remarks": remarks,
+        "VTADAA_FromDate": fromDate,
+        "VTADAA_ToDate": toDate,
+        "VTADAA_ClientId": clintId,
+        "VTADAA_TotalAppliedAmount": totalAppliedAmount,
+        "VTADAA_ToAddress": toAddress,
+        "VTADAA_Remarks": remarks,
         "AllowenceArray": allowanceArray,
         "VTADAAA_Id": vtadaaaId,
-        "VTADAAA_DepartureTime": departureTime,
-        "VTADAAA_ArrivalTime": arrivalTime,
-        "VTADAAA_ClientMultiple": clintMultiple,
+        "VTADAA_Id": vtadaaId,
+        "VTADAA_DepartureTime": departureTime,
+        "VTADAA_ArrivalTime": arrivalTime,
+        "vtadaaA_ClientMultiple": clintMultiple,
         "filelist": fileList
       });
+      logger.i(url);
       logger.i(response.data);
       logger.i(response.statusCode);
       if (response.statusCode == 200) {
         SaveTadaModel saveTadaModel = SaveTadaModel.fromJson(response.data);
-        if (saveTadaModel.returnvalue == true) {
+        // if (saveTadaModel.returnvalue == true) {
+        if (response.data['returnvalue'] == true) {
           if (response.data['returnval'] == "Insert") {
             Fluttertoast.showToast(msg: "Record Saved Successfully");
           } else if (response.data['returnval'] == "Failed") {
@@ -81,7 +86,11 @@ class TadaSaveApi {
             Fluttertoast.showToast(msg: "Record Not Update");
           } else if (response.data['returnval'] == "") {
             Fluttertoast.showToast(msg: "please contact administrator !");
+          } else {
+            Fluttertoast.showToast(msg: "Record is not Saved");
           }
+
+          // }
         }
         tadaApplyController.saveData(false);
       }

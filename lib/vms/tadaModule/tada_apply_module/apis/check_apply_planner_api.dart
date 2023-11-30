@@ -12,7 +12,6 @@ class CheckPlannerAPI {
     required String base,
     required int userId,
     required int miId,
-    // required int ivrmCtId,
     required String fromDate,
     required String toDate,
     required TadaApplyDataController tadaApplyController,
@@ -30,15 +29,13 @@ class CheckPlannerAPI {
         data: {
           "UserId": userId,
           "MI_Id": miId,
-          // "IVRMMCT_Id": 122,
-          "VTADAAA_FromDate": fromDate,
-          "VTADAAA_ToDate": toDate,
+          "VTADAA_FromDate": fromDate,
+          "VTADAA_ToDate": toDate,
         },
       );
-
       if (response.statusCode == 200) {
         CheckPlannerModel checkPlannerModel =
-            CheckPlannerModel.fromJson(response.data['client_Master']);
+            CheckPlannerModel.fromJson(response.data['getArray']);
         tadaApplyController.checkPlan(checkPlannerModel.values!);
         tadaApplyController.plannerCreate(false);
       }

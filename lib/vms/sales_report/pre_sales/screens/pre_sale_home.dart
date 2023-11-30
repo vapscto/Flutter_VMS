@@ -56,19 +56,8 @@ class _PreSaleHomeScreenState extends State<PreSaleHomeScreen> {
           ? _getData()
           : preSalesController.preSaleList
               .where((item) => item.ismslELeadName!
-                      .toLowerCase()
-                      .contains(text.toLowerCase())
-                  //     ||
-                  // item.ismsledMDemoType!
-                  //     .toLowerCase()
-                  //     .contains(text.toLowerCase()) ||
-                  // item.ismsmsTStatusName!
-                  //     .toLowerCase()
-                  //     .contains(text.toLowerCase()) ||
-                  // item.ismsledMContactPerson!
-                  //     .toLowerCase()
-                  //     .contains(text.toLowerCase())
-                  )
+                  .toLowerCase()
+                  .contains(text.toLowerCase()))
               .toList();
     });
   }
@@ -85,6 +74,7 @@ class _PreSaleHomeScreenState extends State<PreSaleHomeScreen> {
               child: SizedBox(
                 height: 50,
                 child: TextFormField(
+                  autofocus: false,
                   style: Get.textTheme.titleSmall!.copyWith(fontSize: 15),
                   onChanged: (value) {
                     setState(() {
@@ -115,7 +105,7 @@ class _PreSaleHomeScreenState extends State<PreSaleHomeScreen> {
                             "Please wait while we load pre sales  and create a view for you.",
                         animationPath: "assets/json/default.json"),
                   )
-                : (preSalesController.preSaleList.isEmpty)
+                : (preSalesController.filterPreSaleList.isEmpty)
                     ? const Center(
                         child: AnimatedProgressWidget(
                           animationPath: "assets/json/nodata.json",

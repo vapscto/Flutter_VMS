@@ -26,21 +26,19 @@ class TadaEditAPI {
       var response = await dio.post(
         api,
         options: Options(headers: getSession()),
-        data: {"UserId": userId, "MI_Id": miId, "VTADAAA_Id": vtadaaaId},
+        data: {"UserId": userId, "MI_Id": miId, "VTADAA_Id": vtadaaaId},
       );
-      logger.i({"UserId": userId, "MI_Id": miId, "VTADAAA_Id": vtadaaaId});
-      logger.i(response.statusCode);
-      logger.i(response.data);
       if (response.statusCode == 200) {
         if (response.data['returnvalue'] == true) {
           if (response.data['returnval'] == 'Delete') {
-            Fluttertoast.showToast(msg: "Record Deactivated successfully");
-            Get.back();
-          } else if (response.data['returnval'] == 'NotDelete') {
-            Fluttertoast.showToast(msg: "Record Activated successfully");
+            Fluttertoast.showToast(msg: "Record Updated successfully");
             Get.back();
           } else if (response.data['returnval'] == 'Firststage') {
             Fluttertoast.showToast(msg: "Result is Waiting for Authrization!");
+          } else {
+            //if (response.data['returnval'] == 'NotDelete')
+            Fluttertoast.showToast(msg: "Record Updated successfully");
+            Get.back();
           }
         } else {
           Fluttertoast.showToast(msg: "Please Contact Administrator!!!");

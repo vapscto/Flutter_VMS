@@ -156,7 +156,7 @@ class AppliedTableWidget extends StatelessWidget {
                       onTap: () {
                         if (tadaApplyDataController.isDocumentUpload.isTrue) {
                           Fluttertoast.showToast(
-                              msg: "Previous TA-DA Adavance Is Pending,");
+                              msg: "Previous TA-DA Is Pending,");
                         } else {
                           editData(tadaApplyDataController
                               .getSavedData[index].vtadaAId!);

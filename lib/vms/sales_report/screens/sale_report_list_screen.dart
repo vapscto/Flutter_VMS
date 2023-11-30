@@ -135,7 +135,12 @@ class _SaleReportListState extends State<SaleReportList> {
                                 DataCell(Text(v.toString())),
                                 DataCell(Text(data.empName.toString())),
                                 DataCell(InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Get.to(() => LeadDetailsScreen(
+                                            mskoolController:
+                                                widget.mskoolController,
+                                          ));
+                                    },
                                     child: Text(data.totalLeads.toString()))),
                                 DataCell(InkWell(
                                     onTap: () {
