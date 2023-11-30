@@ -3,6 +3,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/sales_report/model/sale_list_model.dart';
+import 'package:m_skool_flutter/vms/sales_report/model/salse_total_list_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/sales_controller/sales_controller.dart';
 
 class SalesListAPI {
@@ -21,13 +22,15 @@ class SalesListAPI {
       required List designationId}) async {
     var dio = Dio();
     var url = base + URLS.salesList;
+    var url2 =
+        "https://vmsstaging.vapssmartecampus.com:40019/${URLS.salesList}";
     try {
       salesController.listLoading(true);
       var response =
-          await dio.post(url, options: Options(headers: getSession()), data: {
+          await dio.post(url2, options: Options(headers: getSession()), data: {
         "MI_Id": miId,
         "flag": flag,
-        "User_Id": userId,
+        "User_Id": 60255,
         "fromdate": fromDate,
         "todate": toDate,
         "hrmD_IdList": hrmdIdList,
@@ -49,6 +52,9 @@ class SalesListAPI {
         SalesEmployeeListModel salesListModel = SalesEmployeeListModel.fromJson(
             response.data['leadcommentsreport']);
         salesController.salesList(salesListModel.values!);
+        SalseTotalListModel salseTotalListModel =
+            SalseTotalListModel.fromJson(response.data['leadcommentsreport']);
+        salesController.getSalse(salseTotalListModel.values!);
         salesController.listLoading(false);
       }
     } on DioError catch (e) {

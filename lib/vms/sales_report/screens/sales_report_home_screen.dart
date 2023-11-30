@@ -260,53 +260,50 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                               ),
                                               value: selectAllDepartment.value,
                                               onChanged: (value) {
-                                                selectAllDepartment.value =
-                                                    value!;
-
-                                                salesController
-                                                    .departmentSelectedValues
-                                                    .clear();
-                                                if (value) {
-                                                  salesController
-                                                      .departmentSelectedValues
-                                                      .addAll(salesController
-                                                          .departmentlistValues);
-                                                  if (salesController
-                                                          .departmentSelectedValues
-                                                          .length ==
-                                                      salesController
-                                                          .departmentlistValues
-                                                          .length) {
-                                                    selectAllDepartment.value =
-                                                        true;
-                                                    setState(() {});
-                                                  } else {
-                                                    selectAllDepartment.value =
-                                                        false;
-                                                    setState(() {});
-                                                  }
-                                                  for (int i = 0;
-                                                      i <
-                                                          salesController
-                                                              .departmentlistValues
-                                                              .length;
-                                                      i++) {
-                                                    addId(salesController
-                                                        .departmentlistValues
-                                                        .elementAt(i)
-                                                        .hrmDId!);
-                                                    logger.i(idList);
-                                                    _getDegnisation(idList);
-                                                    setState(() {});
-                                                  }
-                                                } else {
+                                                setState(() {
+                                                  selectAllDepartment.value =
+                                                      value!;
                                                   salesController
                                                       .departmentSelectedValues
                                                       .clear();
-                                                  idList.clear();
-                                                  _getDegnisation(idList);
-                                                  setState(() {});
-                                                }
+                                                  if (value) {
+                                                    salesController
+                                                        .departmentSelectedValues
+                                                        .addAll(salesController
+                                                            .departmentlistValues);
+                                                    if (salesController
+                                                            .departmentSelectedValues
+                                                            .length ==
+                                                        salesController
+                                                            .departmentlistValues
+                                                            .length) {
+                                                      selectAllDepartment
+                                                          .value = true;
+                                                    } else {
+                                                      selectAllDepartment
+                                                          .value = false;
+                                                    }
+                                                    for (int i = 0;
+                                                        i <
+                                                            salesController
+                                                                .departmentlistValues
+                                                                .length;
+                                                        i++) {
+                                                      addId(salesController
+                                                          .departmentlistValues
+                                                          .elementAt(i)
+                                                          .hrmDId!);
+                                                      logger.i(idList);
+                                                      _getDegnisation(idList);
+                                                    }
+                                                  } else {
+                                                    salesController
+                                                        .departmentSelectedValues
+                                                        .clear();
+                                                    idList.clear();
+                                                    _getDegnisation(idList);
+                                                  }
+                                                });
                                               }),
                                         ),
                                         ListView.builder(
@@ -468,58 +465,57 @@ class _SalesReportHomeScreenState extends State<SalesReportHomeScreen> {
                                                   value: selectAllDesignation
                                                       .value,
                                                   onChanged: (value) {
-                                                    selectAllDesignation.value =
-                                                        value!;
+                                                    setState(() {
+                                                      selectAllDesignation
+                                                          .value = value!;
 
-                                                    salesController
-                                                        .selectedDesignationListValues
-                                                        .clear();
-                                                    if (value) {
                                                       salesController
                                                           .selectedDesignationListValues
-                                                          .addAll(salesController
-                                                              .designationListValues);
-                                                      if (salesController
-                                                              .selectedDesignationListValues
-                                                              .length ==
-                                                          salesController
-                                                              .designationListValues
-                                                              .length) {
-                                                        selectAllDesignation
-                                                            .value = true;
-                                                        setState(() {});
-                                                      } else {
-                                                        selectAllDesignation
-                                                            .value = false;
-                                                        setState(() {});
-                                                      }
-                                                      for (int i = 0;
-                                                          i <
-                                                              salesController
-                                                                  .designationListValues
-                                                                  .length;
-                                                          i++) {
-                                                        salesController.addDegId(
+                                                          .clear();
+                                                      if (value) {
+                                                        salesController
+                                                            .selectedDesignationListValues
+                                                            .addAll(salesController
+                                                                .designationListValues);
+                                                        if (salesController
+                                                                .selectedDesignationListValues
+                                                                .length ==
                                                             salesController
                                                                 .designationListValues
-                                                                .elementAt(i)
-                                                                .hrmdeSId!);
-                                                        logger.i(salesController
+                                                                .length) {
+                                                          selectAllDesignation
+                                                              .value = true;
+                                                        } else {
+                                                          selectAllDesignation
+                                                              .value = false;
+                                                        }
+                                                        for (int i = 0;
+                                                            i <
+                                                                salesController
+                                                                    .designationListValues
+                                                                    .length;
+                                                            i++) {
+                                                          salesController.addDegId(
+                                                              salesController
+                                                                  .designationListValues
+                                                                  .elementAt(i)
+                                                                  .hrmdeSId!);
+                                                          logger.i(
+                                                              salesController
+                                                                  .designationId
+                                                                  .toList());
+                                                          _getEmployee();
+                                                        }
+                                                      } else {
+                                                        salesController
+                                                            .selectedDesignationListValues
+                                                            .clear();
+                                                        salesController
                                                             .designationId
-                                                            .toList());
+                                                            .clear();
                                                         _getEmployee();
-                                                        setState(() {});
                                                       }
-                                                    } else {
-                                                      salesController
-                                                          .selectedDesignationListValues
-                                                          .clear();
-                                                      salesController
-                                                          .designationId
-                                                          .clear();
-                                                      _getEmployee();
-                                                      setState(() {});
-                                                    }
+                                                    });
                                                   }),
                                             ),
                                             ListView.builder(

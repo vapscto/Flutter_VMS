@@ -17,9 +17,11 @@ class EmployeeListAPI {
       required SalesController salesController}) async {
     var dio = Dio();
     var url = base + URLS.employeeList;
+    var url2 =
+        "https://vmsstaging.vapssmartecampus.com:40019/${URLS.employeeList}";
     try {
       salesController.employeeLoading(true);
-      var response = await dio.post(url,
+      var response = await dio.post(url2,
           options: Options(headers: getSession()),
           data: {
             "MI_Id": miId,

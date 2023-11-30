@@ -3,6 +3,7 @@ import 'package:m_skool_flutter/vms/sales_report/model/department_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/model/designation_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/model/employee_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/model/sale_list_model.dart';
+import 'package:m_skool_flutter/vms/sales_report/model/salse_total_list_model.dart';
 
 class SalesController extends GetxController {
   RxBool isErrorLoading = RxBool(false);
@@ -124,6 +125,17 @@ class SalesController extends GetxController {
     }
     for (int i = 0; i < list.length; i++) {
       leadListModelValue.add(list.elementAt(i));
+    }
+  }
+
+  RxList<SalseTotalListModelValues> salseListModel =
+      <SalseTotalListModelValues>[].obs;
+  void getSalse(List<SalseTotalListModelValues> salse) {
+    if (salseListModel.isNotEmpty) {
+      salseListModel.clear();
+    }
+    for (int i = 0; i < salse.length; i++) {
+      salseListModel.add(salse.elementAt(i));
     }
   }
 }

@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/vms/maker%20and%20checker/controller/dr_details_
 import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class DRApprovalScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -90,7 +91,29 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
     ).then((value) {
       if (value) {
         controller.updateTabLoading(false);
-        Get.back();
+            Get.dialog(
+          barrierDismissible :false,
+            WillPopScope(
+              onWillPop: () {
+                return Future.value(false);
+              },
+              child: AlertDialog(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              title:    Align(
+                alignment: Alignment.center,
+                child: Text("Record saved successfully",
+                style:   Theme.of(context).textTheme.titleLarge!.merge(
+                  TextStyle(
+                    color:  Theme.of(context).primaryColor
+                  )
+                ),)),
+               content:  MSkollBtn(title: "Close", onPress: () {
+                      Get.back();
+                       Get.back(); 
+                    },),
+                      ),
+            )) ;
+       
        }
     });
   }
@@ -157,11 +180,19 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
               const SizedBox(
                 height: 5,
               ),
-              Obx(() => controller.drdList.isEmpty
-                  ? const AnimatedProgressWidget(
+              Obx(() =>
+              controller.drIsLoading.isTrue
+              ? const
+              AnimatedProgressWidget(
                       animationPath: 'assets/json/default.json',
                       title: 'Loading data',
                       desc: "Please wait we are loading data",
+                    ):
+               controller.drdList.isEmpty
+                  ? const AnimatedProgressWidget(
+                      animationPath: 'assets/json/nodata.json',
+                      title: 'No data available',
+                      desc: "No data available",
                     )
                   : SizedBox(
                       width: MediaQuery.of(context).size.width,

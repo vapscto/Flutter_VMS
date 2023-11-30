@@ -4,6 +4,8 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/controller/mc_home_screen.dart';
+import 'package:m_skool_flutter/vms/maker%20and%20checker/model/adavnceList_mode.dart';
+import 'package:m_skool_flutter/vms/maker%20and%20checker/model/applyList_model.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/department_list.dart';
 
 Future<int> feacthUserApi({
@@ -25,8 +27,16 @@ Future<int> feacthUserApi({
       "UserId": userId,
       "MI_Id": mi_id,
       "DRApprovalTypeFlag": "DRApproval"
-    });
-
+    }); 
+  logger.i(apiUrl);
+  logger.w(
+    {
+      "IVRMRT_Id": ivrmrtId,
+      "UserId": userId,
+      "MI_Id": mi_id,
+      "DRApprovalTypeFlag": "DRApproval"
+    }
+  );
     if (response.data['get_leaveDetails'] == null ||
         response.data['compoffdetails'] == null) {
       controller.checkLeaveandCompoff(true);
@@ -39,7 +49,17 @@ Future<int> feacthUserApi({
       DepartmentModelList deptList =
           DepartmentModelList.fromJson(response.data['departmentList']);
       controller.departmentList.addAll(deptList.values!);
-      //       DesignationsModel dsgnList = DesignationsModel.fromJson(response.data['designation']);
+      
+      AdavanceListModel adavanceListModel = AdavanceListModel.fromJson(response.data['adavanceList']);
+      controller.adavanceListModel.addAll(adavanceListModel.values!);
+      ApplyListModel applyListModel = ApplyListModel.fromJson(response.data['applyList']);
+      controller.applyListModel.addAll(applyListModel.values!);
+      if(adavanceListModel.values!.isNotEmpty && applyListModel.values!.isNotEmpty)
+      {
+        logger.w( 
+          "Fuked up"
+        );
+      }      //       DesignationsModel dsgnList = DesignationsModel.fromJson(response.data['designation']);
 
       //  controller.designationList.addAll(dsgnList.values!);
       return response.statusCode!;
