@@ -70,6 +70,7 @@ class _IndentApprovalState extends State<IndentApproval> {
 
   @override
   void dispose() {
+    indentApprovalController.organizationList.clear();
     allSelected.dispose();
     textEditingCtrlParticularAmt.forEach((key, controller) {
       controller.dispose();
@@ -80,7 +81,7 @@ class _IndentApprovalState extends State<IndentApproval> {
   @override
   void initState() {
     indentApprovalController = Get.put(PettyIndentApprovalController());
-
+    selectDate.text = getDate(DateTime.now());
     onLoadData();
     super.initState();
   }
@@ -178,6 +179,7 @@ class _IndentApprovalState extends State<IndentApproval> {
 
   @override
   Widget build(BuildContext context) {
+    print("$totalRequestedAmount");
     return Obx(() {
       return SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -371,7 +373,7 @@ class _IndentApprovalState extends State<IndentApproval> {
                                 }
                                 changes.value += 1;
 
-                                selectDate.text = getDate(selectedDT);
+                                fromDate.text = getDate(selectedDT);
 
                                 indentApprovalController
                                     .fromSelectedDate.value = selectedDT;
@@ -516,7 +518,6 @@ class _IndentApprovalState extends State<IndentApproval> {
                                           indentApprovalController
                                               .toSelectedDate.value),
                                       controller: indentApprovalController);
-
                                 }
                               },
                               child: Padding(
@@ -600,7 +601,9 @@ class _IndentApprovalState extends State<IndentApproval> {
                                       } else {
                                         selectedRows.clear();
                                       }
+
                                       selectedRequisitionIds.clear();
+                                      totalRequestedAmount = 0.0;
                                       tempRequisitionId.clear();
                                       for (int i = 0;
                                           i < selectedRows.length;
@@ -695,15 +698,19 @@ class _IndentApprovalState extends State<IndentApproval> {
                                               selectedRequisitionIds.add(index);
                                               totalRequestedAmount +=
                                                   indentApprovalController
-                                                      .requisitiondetais[index]
-                                                      .pcreqtNTotAmount!;
+                                                          .requisitiondetais[
+                                                              index]
+                                                          .pcreqtNTotAmount ??
+                                                      0.0;
                                             } else {
                                               selectedRequisitionIds
                                                   .remove(index);
                                               totalRequestedAmount -=
                                                   indentApprovalController
-                                                      .requisitiondetais[index]
-                                                      .pcreqtNTotAmount!;
+                                                          .requisitiondetais[
+                                                              index]
+                                                          .pcreqtNTotAmount ??
+                                                      0;
                                             }
                                             tempRequisitionId.clear();
                                             for (int i = 0;
@@ -1016,7 +1023,6 @@ class _IndentApprovalState extends State<IndentApproval> {
                                                             .elementAt(index)
                                                             .text = '';
 
-
                                                         selectCheckBx!
                                                             .remove(index);
                                                         print(selectCheckBx
@@ -1100,6 +1106,19 @@ class _IndentApprovalState extends State<IndentApproval> {
                                                             }
                                                             return null;
                                                           },
+                                                          // onChanged: (text) {
+                                                          //   if (!indentApprovalController
+                                                          //       .checkBoxList
+                                                          //       .elementAt(
+                                                          //           index)) {
+                                                          //     indentApprovalController
+                                                          //         .eTapprovalAmount
+                                                          //         .elementAt(
+                                                          //             index)
+                                                          //         .text = '';
+                                                          //   }
+                                                          // },
+
                                                           onChanged: (text) {
                                                             if (!indentApprovalController
                                                                 .checkBoxList
@@ -1110,6 +1129,28 @@ class _IndentApprovalState extends State<IndentApproval> {
                                                                   .elementAt(
                                                                       index)
                                                                   .text = '';
+                                                            } else {
+                                                              double
+                                                                  approvalAmount =
+                                                                  double.tryParse(
+                                                                          text) ??
+                                                                      0.0;
+                                                              double requestedAmount = double.tryParse(indentApprovalController
+                                                                      .particularRequisitionDetais
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .pcreqtndeTAmount
+                                                                      .toString()) ??
+                                                                  0.0;
+
+                                                              if (approvalAmount >
+                                                                  requestedAmount) {
+                                                                // indentApprovalController.eTapprovalAmount.elementAt(index).text = '';
+
+                                                                // Show a popup message
+                                                                showPopup(
+                                                                    "Approved amount should not be greater than requested amount");
+                                                              }
                                                             }
                                                           },
                                                         ),
@@ -1168,17 +1209,17 @@ class _IndentApprovalState extends State<IndentApproval> {
                                         child: Container(
                                           padding: const EdgeInsets.all(20),
                                           decoration: BoxDecoration(
-                                            color: Color.fromARGB(255, 241, 253, 240),
+                                            color: const Color.fromARGB(
+                                                255, 241, 253, 240),
                                             borderRadius:
                                                 BorderRadius.circular(10),
                                           ),
                                           child: const Text(
                                             "Calculate",
                                             style: TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              color: Color.fromARGB(
-                                                            255, 15, 87, 42)
-                                            ),
+                                                fontWeight: FontWeight.w700,
+                                                color: Color.fromARGB(
+                                                    255, 15, 87, 42)),
                                           ),
                                         ),
                                       ),
@@ -1226,7 +1267,8 @@ class _IndentApprovalState extends State<IndentApproval> {
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(24.0),
-                                                color: Color.fromARGB(255, 241, 253, 240),
+                                                color: const Color.fromARGB(
+                                                    255, 241, 253, 240),
                                               ),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.min,
@@ -1243,8 +1285,12 @@ class _IndentApprovalState extends State<IndentApproval> {
                                                         .labelMedium!
                                                         .merge(const TextStyle(
                                                             fontSize: 20.0,
-                                                            color: Color.fromARGB(
-                                                            255, 15, 87, 42))),
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    15,
+                                                                    87,
+                                                                    42))),
                                                   ),
                                                 ],
                                               ),
@@ -1307,7 +1353,8 @@ class _IndentApprovalState extends State<IndentApproval> {
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(24.0),
-                                            color: Color.fromARGB(255, 241, 253, 240),
+                                            color: const Color.fromARGB(
+                                                255, 241, 253, 240),
                                           ),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
@@ -1413,12 +1460,7 @@ class _IndentApprovalState extends State<IndentApproval> {
                                             DateTime? selectedDT =
                                                 await showDatePicker(
                                               context: context,
-                                              initialDate: selectDate
-                                                      .text.isNotEmpty
-                                                  ? DateTime.parse(
-                                                      selectDate.text)
-                                                  : DateTime
-                                                      .now(), // Use current date if text is empty
+                                              initialDate: DateTime.now(),
                                               firstDate: DateTime(1000),
                                               lastDate: DateTime(
                                                   DateTime.now().year, 12, 31),
@@ -1554,11 +1596,35 @@ class _IndentApprovalState extends State<IndentApproval> {
                             ),
                     ],
                   )
-                : SizedBox(),
+                : const SizedBox(),
           ],
         ),
       );
     });
+  }
+
+  void showPopup(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Approval Amount",
+              style: TextStyle(
+                  color: Color.fromARGB(255, 69, 86, 236),
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700)),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   String getDateNeed(DateTime dt) {
