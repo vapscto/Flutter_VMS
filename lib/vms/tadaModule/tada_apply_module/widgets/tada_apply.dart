@@ -1570,8 +1570,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                                             value))
                                                                     .toInt();
 
-                                                                addAmount(
-                                                                    foodAmt);
+                                                                // addAmount(
+                                                                //     foodAmt);
                                                               } else {
                                                                 Fluttertoast
                                                                     .showToast(
@@ -1733,8 +1733,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                                         num.parse(
                                                                             value))
                                                                     .toInt();
-                                                                addAmount(
-                                                                    accommodationAmount);
+                                                                // addAmount(
+                                                                //     accommodationAmount);
                                                               });
                                                             }
                                                           },
