@@ -48,7 +48,16 @@ class PlannerSaveAPI {
         "catlistid": catListId
       });
       if (response.statusCode == 200) {
-        Fluttertoast.showToast(msg: "Planner Created Successfully");
+        if (response.data['returnval'] == true) {
+          if (response.data['ismtpL_Id'] == 0 ||
+              response.data['ismtpL_Id'] < 0) {
+            Fluttertoast.showToast(
+                msg:
+                    "Planner Saved successfully ... !!', 'Approval has to be given by your department head");
+          } else if (response.data['ismtpL_Id'] > 0) {
+            Fluttertoast.showToast(msg: "Record updated successfully");
+          }
+        }
       } else {
         Fluttertoast.showToast(msg: "Something Went Wrong");
       }

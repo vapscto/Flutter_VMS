@@ -513,12 +513,12 @@ void openMappedPages(
     BuildContext context,
     HwCwNbController hwCwNbController) {
   logger.i(pageName);
-  // if (pageName == "Appointment Approval") {
-  //   Get.to(() => PreSaleHomeScreen(
-  //       loginSuccessModel: loginSuccessModel,
-  //       mskoolController: mskoolController));
-  //   return;
-  // }
+  if (pageName == "Appointment Approval") {
+    Get.to(() => PreSaleHomeScreen(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController));
+    return;
+  }
   if (pageName == "Attendance") {
     Get.to(() => AttendanceHomeScreen(
         loginSuccessModel: loginSuccessModel,

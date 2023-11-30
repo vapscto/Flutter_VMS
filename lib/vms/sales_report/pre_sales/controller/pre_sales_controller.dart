@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/sales_report/pre_sales/model/demo_response_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/pre_sales/model/product_details_model.dart';
@@ -57,5 +58,11 @@ class PreSalesController extends GetxController {
     for (int i = 0; i < demoResponse.length; i++) {
       demoResponseList.add(demoResponse.elementAt(i));
     }
+  }
+
+  RxList<TextEditingController> remarkController =
+      <TextEditingController>[].obs;
+  void addRemarks(TextEditingController text) {
+    remarkController.add(text);
   }
 }

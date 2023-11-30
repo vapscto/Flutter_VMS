@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/sales_report/pre_sales/controller/pre_sales_controller.dart';
@@ -22,6 +23,21 @@ class DemoResponseScreen extends StatefulWidget {
 class _DemoResponseScreenState extends State<DemoResponseScreen> {
   bool selectAll = false;
   List<bool> newList = [];
+  String selectedStatus = 'Select';
+  List<String> selectedItemValue = <String>[];
+  List<String> items = ['Select', 'HOT', 'WARM', 'COLD'];
+  List<DropdownMenuItem<String>> _getDropDownItem() {
+    return items
+        .map((e) => DropdownMenuItem(
+              value: e,
+              child: Text(
+                e,
+                style: Get.textTheme.titleSmall,
+              ),
+            ))
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,62 +45,59 @@ class _DemoResponseScreenState extends State<DemoResponseScreen> {
       body: ListView(
         children: [
           SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.all(16),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: DataTable(
-                    headingRowHeight: 45,
-                    dataRowHeight: 45,
-                    headingRowColor: MaterialStatePropertyAll(
-                        Theme.of(context).primaryColor),
-                    dataTextStyle: const TextStyle(
-                        fontSize: 14,
-                        color: Color.fromRGBO(0, 0, 0, 0.95),
-                        fontWeight: FontWeight.w400),
-                    horizontalMargin: 10,
-                    headingTextStyle: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w700),
-                    border: TableBorder.all(
-                        borderRadius: BorderRadius.circular(10), width: 0.5),
-                    columns: [
-                      DataColumn(
-                          numeric: true,
-                          label: Align(
-                            alignment: Alignment.center,
-                            child: Checkbox(
-                                checkColor: Colors.indigo,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                side: const BorderSide(color: Colors.white),
-                                value: selectAll,
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectAll = value!;
-                                  });
-                                }),
-                          )),
-                      const DataColumn(
-                        label: Text('S.No'),
-                      ),
-                      const DataColumn(
-                        label: Text("Product"),
-                      ),
-                      const DataColumn(
-                        label: Text('Discussion Points'),
-                      ),
-                      const DataColumn(
-                        label: Text('Status'),
-                      ),
-                      const DataColumn(
-                        label: Text('Remark'),
-                      ),
-                    ],
-                    rows: []),
-              ),
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.all(16),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: DataTable(
+                  headingRowHeight: 45,
+                  dataRowHeight: 45,
+                  headingRowColor:
+                      MaterialStatePropertyAll(Theme.of(context).primaryColor),
+                  dataTextStyle: const TextStyle(
+                      fontSize: 14,
+                      color: Color.fromRGBO(0, 0, 0, 0.95),
+                      fontWeight: FontWeight.w400),
+                  horizontalMargin: 10,
+                  headingTextStyle: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w700),
+                  border: TableBorder.all(
+                      borderRadius: BorderRadius.circular(10), width: 0.5),
+                  columns: [
+                    DataColumn(
+                        numeric: true,
+                        label: Align(
+                          alignment: Alignment.center,
+                          child: Checkbox(
+                              checkColor: Colors.indigo,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              side: const BorderSide(color: Colors.white),
+                              value: selectAll,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectAll = value!;
+                                });
+                              }),
+                        )),
+                    const DataColumn(
+                      label: Text('S.No'),
+                    ),
+                    const DataColumn(
+                      label: Text("Product"),
+                    ),
+                    const DataColumn(
+                      label: Text('Discussion Points'),
+                    ),
+                    const DataColumn(
+                      label: Text('Status'),
+                    ),
+                    const DataColumn(
+                      label: Text('Remark'),
+                    ),
+                  ],
+                  rows: []),
             ),
           ),
         ],

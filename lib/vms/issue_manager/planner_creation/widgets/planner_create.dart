@@ -460,6 +460,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                             .plannerStatus.first.iSMTPLEndDate!)
                                     .add(const Duration(days: 1)),
                                 lastDate: DateTime(3050),
+                                selectableDayPredicate: (DateTime val) =>
+                                    val.weekday == 7 ? false : true,
                               );
                               if (fromDate != null) {
                                 setState(() {
@@ -487,6 +489,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                                 .iSMTPLEndDate!)
                                         .add(const Duration(days: 1)),
                                     lastDate: DateTime(3050),
+                                    selectableDayPredicate: (DateTime val) =>
+                                        val.weekday == 7 ? false : true,
                                   );
                                   if (fromDate != null) {
                                     setState(() {
@@ -568,18 +572,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                 toDate = await showDatePicker(
                                   context: context,
                                   helpText: "Select To Date",
-                                  firstDate: DateTime.parse(
-                                          plannerCreationController
-                                              .plannerStatus
-                                              .first
-                                              .iSMTPLEndDate!)
-                                      .add(const Duration(days: 1)),
-                                  initialDate: DateTime.parse(
-                                          plannerCreationController
-                                              .plannerStatus
-                                              .first
-                                              .iSMTPLEndDate!)
-                                      .add(const Duration(days: 1)),
+                                  firstDate: fromDate!,
+                                  initialDate: fromDate!,
                                   lastDate: DateTime(3050),
                                 );
                                 if (toDate != null) {
@@ -607,18 +601,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                     toDate = await showDatePicker(
                                       context: context,
                                       helpText: "Select To Date",
-                                      firstDate: DateTime.parse(
-                                              plannerCreationController
-                                                  .plannerStatus
-                                                  .first
-                                                  .iSMTPLEndDate!)
-                                          .add(const Duration(days: 1)),
-                                      initialDate: DateTime.parse(
-                                              plannerCreationController
-                                                  .plannerStatus
-                                                  .first
-                                                  .iSMTPLEndDate!)
-                                          .add(const Duration(days: 1)),
+                                      firstDate: fromDate!,
+                                      initialDate: fromDate!,
                                       lastDate: DateTime(3050),
                                       fieldHintText: 'Date:Month:Year',
                                     );
@@ -792,33 +776,36 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                       (plannerCreationController.categoryWisePlan.isNotEmpty)
                           ? _createCategortTable()
                           : const SizedBox(),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 16.0),
-                          child: MSkollBtn(
-                            title: "Save",
-                            onPress: () {
-                              if (_plannerName.text.isEmpty) {
-                                Fluttertoast.showToast(
-                                    msg: "Please enter plan name");
-                              } else if (checkList.isEmpty) {
-                                Fluttertoast.showToast(
-                                    msg: "Please select checkbox");
-                              } else if (plannedEffort <
-                                  double.parse((totalday * 8).toString())) {
-                                Get.dialog(showPopup());
-                              } else if (plannerCreationController
-                                      .isPlannerCreate.value ==
-                                  false) {
-                                Get.dialog(plannerNotCreate());
-                              } else {
-                                savePlanner();
-                              }
-                            },
-                          ),
-                        ),
-                      ),
+                      (plannerCreationController.isPlannerCreate.value == false)
+                          ? const SizedBox()
+                          : Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 16.0),
+                                child: MSkollBtn(
+                                  title: "Save",
+                                  onPress: () {
+                                    if (_plannerName.text.isEmpty) {
+                                      Fluttertoast.showToast(
+                                          msg: "Please enter plan name");
+                                    } else if (checkList.isEmpty) {
+                                      Fluttertoast.showToast(
+                                          msg: "Please select checkbox");
+                                    } else if (plannedEffort <
+                                        double.parse(
+                                            (totalday * 8).toString())) {
+                                      Get.dialog(showPopup());
+                                    } else if (plannerCreationController
+                                            .isPlannerCreate.value ==
+                                        false) {
+                                      Get.dialog(plannerNotCreate());
+                                    } else {
+                                      savePlanner();
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
                       _createPlannerTable(),
                     ],
                   ),
