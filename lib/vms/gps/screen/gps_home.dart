@@ -37,13 +37,12 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
   GetEmpDetailsController getEmpDetailsController =
       Get.put(GetEmpDetailsController());
   final GlobalKey<FormState> _fromKey = GlobalKey<FormState>();
-   DrDetailsCtrlr controller = Get.put(DrDetailsCtrlr());
+  DrDetailsCtrlr controller = Get.put(DrDetailsCtrlr());
   RxBool punchFlag = RxBool(false);
   int clientId = 0;
   int salesId = 0;
   @override
   void initState() {
-     
     intial();
     super.initState();
   }
@@ -91,40 +90,74 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                   : BtnSave(
                       title: 'Submit',
                       onPress: () async {
-                        if (_fromKey.currentState!.validate()) {
-                          if (punchFlag.isTrue) {
-                            await save(
-                                    base: baseUrlFromInsCode(
-                                        'frontoffice', widget.mskoolController),
-                                    address: getEmpDetailsController
-                                        .getGpsLocation.value,
-                                    clientId: clientId,
-                                    salesId: salesId,
-                                    latlng:
-                                        "${getEmpDetailsController.latitude}+${getEmpDetailsController.longitude}",
-                                    controller: controller,
-                                    miId: widget.loginSuccessModel.mIID!,
-                                    userId: widget.loginSuccessModel.userId!,
-                                    pFlag: punchFlag.value,
-                                    remark: remarksEtingController.text)
-                                .then(
-                              (value) {
-                                if (value) {
-                                  Fluttertoast.showToast(
-                                      msg: "Punch successfull");
-                                  Get.back();
-                                } else {
-                                  Fluttertoast.showToast(msg: "Punch not done");
-                                }
-                              },
-                            );
-                          } else {
-                            Fluttertoast.showToast(
-                                msg: " Select Punch checkbox ");
-                          }
+                        // if (_fromKey.currentState!.validate()) {
+                        if (clientId == 0) {
+                          Fluttertoast.showToast(msg: "Select Client");
+                        } else if (punchFlag.isFalse) {
+                          Fluttertoast.showToast(
+                              msg: " Select Punch checkbox ");
+                        } else if (remarksEtingController.text.isEmpty) {
+                          Fluttertoast.showToast(msg: "Enter Remarks");
                         } else {
-                          Fluttertoast.showToast(msg: " Select mandatory ");
+                          await save(
+                                  base: baseUrlFromInsCode(
+                                      'frontoffice', widget.mskoolController),
+                                  address: getEmpDetailsController
+                                      .getGpsLocation.value,
+                                  clientId: clientId,
+                                  salesId: salesId,
+                                  latlng:
+                                      "${getEmpDetailsController.latitude}+${getEmpDetailsController.longitude}",
+                                  controller: controller,
+                                  miId: widget.loginSuccessModel.mIID!,
+                                  userId: widget.loginSuccessModel.userId!,
+                                  pFlag: punchFlag.value,
+                                  remark: remarksEtingController.text)
+                              .then(
+                            (value) {
+                              if (value) {
+                                Fluttertoast.showToast(
+                                    msg: "Punch successfull");
+                                Get.back();
+                              } else {
+                                Fluttertoast.showToast(msg: "Punch not done");
+                              }
+                            },
+                          );
                         }
+                        // if (punchFlag.isTrue) {
+                        //   await save(
+                        //           base: baseUrlFromInsCode(
+                        //               'frontoffice', widget.mskoolController),
+                        //           address: getEmpDetailsController
+                        //               .getGpsLocation.value,
+                        //           clientId: clientId,
+                        //           salesId: salesId,
+                        //           latlng:
+                        //               "${getEmpDetailsController.latitude}+${getEmpDetailsController.longitude}",
+                        //           controller: controller,
+                        //           miId: widget.loginSuccessModel.mIID!,
+                        //           userId: widget.loginSuccessModel.userId!,
+                        //           pFlag: punchFlag.value,
+                        //           remark: remarksEtingController.text)
+                        //       .then(
+                        //     (value) {
+                        //       if (value) {
+                        //         Fluttertoast.showToast(
+                        //             msg: "Punch successfull");
+                        //         Get.back();
+                        //       } else {
+                        //         Fluttertoast.showToast(msg: "Punch not done");
+                        //       }
+                        //     },
+                        //   );
+                        // } else {
+                        //   Fluttertoast.showToast(
+                        //       msg: " Select Punch checkbox ");
+                        // }
+                        // } else {
+                        //   Fluttertoast.showToast(msg: " Select mandatory ");
+                        // }
                       },
                     ),
             ),
