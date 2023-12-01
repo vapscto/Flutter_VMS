@@ -48,7 +48,7 @@ class TadaSaveApi {
         "VTADAA_Id": vtadaaId,
         "VTADAA_DepartureTime": departureTime,
         "VTADAA_ArrivalTime": arrivalTime,
-        "vtadaaA_ClientMultiple": clintMultiple,
+        // "vtadaaA_ClientMultiple": clintMultiple,
         "filelist": fileList
       });
       logger.i({
@@ -64,7 +64,7 @@ class TadaSaveApi {
         "VTADAA_Id": vtadaaId,
         "VTADAA_DepartureTime": departureTime,
         "VTADAA_ArrivalTime": arrivalTime,
-        "vtadaaA_ClientMultiple": clintMultiple,
+        // "vtadaaA_ClientMultiple": clintMultiple,
         "filelist": fileList
       });
       logger.i(url);

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:m_skool_flutter/vms/tadaModule/model/check_planner.dart';
 import 'package:m_skool_flutter/vms/tadaModule/model/get_save_data_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/allowence_table_model.dart';
@@ -186,5 +187,38 @@ class TadaApplyDataController extends GetxController {
     for (int i = 0; i < values.length; i++) {
       tadaSavedDataValues.add(values.elementAt(i));
     }
+  }
+}
+
+class AtachmentFile {
+  int? id;
+  String? FileName;
+  XFile? file;
+  AtachmentFile({required this.id, required this.FileName, this.file});
+}
+
+class UploadAttachment {
+  String? iSMTCRATAttatchment;
+  String? iSMTCRATFile;
+
+  UploadAttachment(
+      {required this.iSMTCRATAttatchment, required this.iSMTCRATFile});
+
+  UploadAttachment.fromJson(Map<String, dynamic> json) {
+    iSMTCRATAttatchment = json['ISMTCRAT_Attatchment'];
+    iSMTCRATFile = json['ISMTCRAT_File'];
+  }
+
+  factory UploadAttachment.fromMap(Map<String, dynamic> map) {
+    return UploadAttachment(
+        iSMTCRATAttatchment: map['ISMTCRAT_Attatchment'] as String,
+        iSMTCRATFile: map['ISMTCRAT_File'] as String);
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['ISMTCRAT_Attatchment'] = this.iSMTCRATAttatchment;
+    data['ISMTCRAT_File'] = this.iSMTCRATFile;
+    return data;
   }
 }

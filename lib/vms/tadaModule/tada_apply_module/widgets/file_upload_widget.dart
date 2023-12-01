@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -34,12 +35,14 @@ class _FileUploadWidgetState extends State<FileUploadWidget> {
   @override
   void initState() {
     addRow(1);
+    addItemListBrowse(0, '');
     super.initState();
   }
 
   @override
   void dispose() {
     widget.tadaApplyDataController.newList.clear();
+    widget.tadaApplyDataController.addListBrowser.clear();
     super.dispose();
   }
 
@@ -70,7 +73,8 @@ class _FileUploadWidgetState extends State<FileUploadWidget> {
                 DataColumn(label: Text("Remarks")),
                 DataColumn(label: Text("Action")),
               ],
-              rows: List.generate(widget.tadaApplyDataController.newList.length,
+              rows: List.generate(
+                  widget.tadaApplyDataController.addListBrowser.length,
                   (index) {
                 var value = index + 1;
                 return DataRow(cells: [
@@ -96,12 +100,20 @@ class _FileUploadWidgetState extends State<FileUploadWidget> {
                   )),
                   DataCell(Align(
                     alignment: Alignment.center,
-                    child: InkWell(
-                      onTap: () {
-                        OpenFilex.open(widget.tadaApplyDataController
-                            .addListBrowser[index].file!.path);
-                      },
-                      child: const Icon(Icons.visibility),
+                    child: Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            OpenFilex.open(widget.tadaApplyDataController
+                                .addListBrowser[index].file!.path);
+                          },
+                          child: (widget.tadaApplyDataController
+                                      .addListBrowser[index].file ==
+                                  null)
+                              ? const Icon(Icons.visibility_off)
+                              : const Icon(Icons.visibility),
+                        ),
+                      ],
                     ),
                   )),
                   DataCell(Padding(
@@ -117,45 +129,30 @@ class _FileUploadWidgetState extends State<FileUploadWidget> {
                       ),
                     ),
                   )),
-                  DataCell((index == 0)
-                      ? IconButton(
-                          onPressed: () {
-                            setState(() {
-                              addRow(index + 1);
-                            });
-                            setState(() {});
-                          },
-                          icon: Icon(
-                            Icons.add,
-                            color: Theme.of(context).primaryColor,
-                          ))
-                      : Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    addRow(index + 1);
-                                  });
-                                  setState(() {});
-                                },
-                                icon: Icon(
-                                  Icons.add,
-                                  color: Theme.of(context).primaryColor,
-                                )),
-                            IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    removeRow(index);
-                                  });
-                                  setState(() {});
-                                },
-                                icon: Icon(
-                                  Icons.remove,
-                                  color: Theme.of(context).primaryColor,
-                                )),
-                          ],
-                        )),
+                  DataCell(Align(
+                      alignment: Alignment.center,
+                      child: index ==
+                              widget.tadaApplyDataController.addListBrowser
+                                      .length -
+                                  1
+                          ? InkWell(
+                              onTap: () {
+                                addItemListBrowse(
+                                  index++,
+                                  "",
+                                );
+                                setState(() {});
+                              },
+                              child: const Icon(Icons.add))
+                          : index <
+                                  widget.tadaApplyDataController.addListBrowser
+                                      .length
+                              ? InkWell(
+                                  onTap: () {
+                                    removeItemListBrowse(index);
+                                  },
+                                  child: const Icon(Icons.remove))
+                              : null)),
                 ]);
               })),
         ),
@@ -164,13 +161,29 @@ class _FileUploadWidgetState extends State<FileUploadWidget> {
   }
 
   Future<void> pickImage(int index) async {
-    final pickedImage =
-        await _imagePicker.pickImage(source: ImageSource.gallery);
+    final pickedImage = await _imagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 25);
     if (pickedImage != null) {
       widget.tadaApplyDataController.addListBrowser[index].file = pickedImage;
       widget.tadaApplyDataController.addListBrowser[index].FileName =
           pickedImage.name;
       setState(() {});
+    } else {
+      Fluttertoast.showToast(msg: "Image Is not Uploaded Please try Again");
     }
+  }
+
+  addItemListBrowse(int val, String name) {
+    widget.tadaApplyDataController.addListBrowser.add(AtachmentFile(
+      id: val,
+      FileName: name,
+    ));
+
+    setState(() {});
+  }
+
+  removeItemListBrowse(int val) {
+    widget.tadaApplyDataController.addListBrowser.removeAt(val);
+    setState(() {});
   }
 }

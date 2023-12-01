@@ -111,6 +111,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   String date2 = '';
   String time2 = '';
   bool a = false;
+  int vtadaaaId = 0;
 
   savedDataListAPI() async {
     if (tadaApplyDataController.tadaSavedData.isNotEmpty) {
@@ -169,6 +170,11 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
             '${tadaApplyDataController.tadaSavedData.elementAt(index).vtadaaAToAddress}';
         remarks =
             '${tadaApplyDataController.tadaSavedData.elementAt(index).vtadaaARemarks}';
+        clintId = tadaApplyDataController.tadaSavedData
+            .elementAt(index)
+            .vtadaaAClientId!;
+        vtadaaaId =
+            tadaApplyDataController.tadaSavedData.elementAt(index).vtadaaAId!;
       }
     }
   }
@@ -338,11 +344,11 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         ctId: citySelectedValue!.ivrmmcTId!,
         fromDate: fromDate!.toIso8601String(),
         toDate: toDate!.toIso8601String(),
-        clintId: 0,
+        clintId: clintId,
         totalAppliedAmount: double.parse(allAmount.toString()),
         toAddress: _addressController.text,
         remarks: _remarkController.text,
-        vtadaaaId: citySelectedValue!.vtadaaAId!,
+        vtadaaaId: vtadaaaId,
         departureTime: _startTime.text,
         arrivalTime: _endTime.text,
         clintMultiple: clintName,
@@ -1249,11 +1255,11 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                                         .clintListValues
                                                                         .elementAt(
                                                                             index));
-                                                                clintId = (tadaApplyDataController
+                                                                clintId = tadaApplyDataController
                                                                     .clintListValues
                                                                     .elementAt(
                                                                         index)
-                                                                    .ismmclTId!);
+                                                                    .ismmclTId!;
                                                                 clintName +=
                                                                     '${index + 1} ) ${tadaApplyDataController.clintListValues.elementAt(index).ismmclTClientName} ';
 
@@ -2318,6 +2324,9 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             Fluttertoast.showToast(
                                 msg:
                                     " Accommodation Slot count should be lessthen total slot");
+                          } else if (tadaApplyDataController
+                              .addListBrowser.isEmpty) {
+                            Fluttertoast.showToast(msg: "Please Upload Image");
                           } else {
                             int foodamountId = 0;
                             int accamountId = 0;
