@@ -1827,6 +1827,9 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                             } else {
                                                               isOthetrsTextField =
                                                                   false;
+                                                              otherAmount = 0;
+                                                              otherAmountController
+                                                                  .text = '0';
                                                               removeAmount(int.parse(
                                                                   otherAmountController
                                                                       .text));
@@ -1904,7 +1907,9 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                   const DataCell(Text('')),
                                                   const DataCell(Text('')),
                                                   const DataCell(Text('')),
-                                                  const DataCell(Text('')),
+                                                  DataCell(Text(
+                                                      otherAmountController
+                                                          .text)),
                                                   DataCell(
                                                     Padding(
                                                       padding:
@@ -2312,6 +2317,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             Fluttertoast.showToast(msg: "Please Enter Remarks");
                           } else if (_addressController.text.isEmpty) {
                             Fluttertoast.showToast(msg: "Please Enter Address");
+                          } else if (allAmount == 0) {
+                            Fluttertoast.showToast(msg: "Please Add Amount");
                           } else if (int.parse(foodTotalSlotController.text) >
                               int.parse(foodSlot)) {
                             Fluttertoast.showToast(
