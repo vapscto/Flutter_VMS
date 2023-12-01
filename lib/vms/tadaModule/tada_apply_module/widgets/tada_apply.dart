@@ -136,8 +136,16 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
             minute: int.parse(tadaApplyDataController
                 .tadaSavedData[index].vtadaaADepartureTime!
                 .split(":")[1]));
+        fromTime = startTime;
         _startTime.text =
             '${startTime.hourOfPeriod}:${startTime.minute} ${startTime.period.name.toUpperCase()}';
+        fromDate = DateTime.parse(tadaApplyDataController.tadaSavedData
+            .elementAt(index)
+            .vtadaaAFromDate!);
+        toDate = DateTime.parse(tadaApplyDataController.tadaSavedData
+            .elementAt(index)
+            .vtadaaAToDate!);
+
         //
         TimeOfDay startTime2 = TimeOfDay(
             hour: int.parse(tadaApplyDataController
@@ -146,6 +154,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
             minute: int.parse(tadaApplyDataController
                 .tadaSavedData[index].vtadaaADepartureTime!
                 .split(":")[1]));
+        toTime = startTime2;
         _endTime.text =
             '${startTime2.hourOfPeriod}:${startTime2.minute} ${startTime2.period.name.toUpperCase()}';
         //
@@ -325,33 +334,31 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
 //
   saveData() async {
     tadaApplyDataController.saveData(true);
-    if (tadaApplyDataController.addListBrowser.isNotEmpty) {
-      for (var element in tadaApplyDataController.addListBrowser) {
-        try {
-          uploadAttachment.add(await uploadAtt(
-              miId: widget.loginSuccessModel.mIID!,
-              file: File(element.file!.path)));
-        } catch (e) {
-          return Future.error({
-            "errorTitle": "An Error Occured",
-            "errorMsg":
-                "While trying to upload attchement, we encountered an error"
-          });
-        }
-      }
-      for (var element in uploadAttachment) {
-        uploadArray.add({
-          "VTADAAF_FilePath": element.path,
-          "VTADAAF_FileName": element.name
-        });
-      }
-      for (int i = 0; i < tadaApplyDataController.addListBrowser.length; i++) {
-        uploadArray.add({
-          "VTADAAF_Remarks":
-              tadaApplyDataController.newRemarksController.elementAt(i).text
+    for (var element in tadaApplyDataController.addListBrowser) {
+      try {
+        uploadAttachment.add(await uploadAtt(
+            miId: widget.loginSuccessModel.mIID!,
+            file: File(element.file!.path)));
+      } catch (e) {
+        Fluttertoast.showToast(msg: "Please Upload Image");
+        return Future.error({
+          "errorTitle": "An Error Occured",
+          "errorMsg":
+              "While trying to upload attchement, we encountered an error"
         });
       }
     }
+    for (var element in uploadAttachment) {
+      uploadArray.add(
+          {"VTADAAF_FilePath": element.path, "VTADAAF_FileName": element.name});
+    }
+    for (int i = 0; i < tadaApplyDataController.addListBrowser.length; i++) {
+      uploadArray.add({
+        "VTADAAF_Remarks":
+            tadaApplyDataController.newRemarksController.elementAt(i).text
+      });
+    }
+
     TadaSaveApi.instance.tadaApplySave(
         userId: widget.loginSuccessModel.userId!,
         miId: widget.loginSuccessModel.mIID!,
@@ -376,7 +383,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
 
     tadaApplyDataController.saveData(false);
     getStateList();
-    Get.back();
+    // Get.back();
   }
 
 //

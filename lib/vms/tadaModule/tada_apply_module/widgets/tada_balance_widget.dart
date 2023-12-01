@@ -4,8 +4,10 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/applied_deta_api.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/check_apply_planner_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/screens/tada_apply_home_screen.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 import '../../../../widget/animated_progress_widget.dart';
 
@@ -34,7 +36,20 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
         userId: widget.loginSuccessModel.userId!,
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         tadaApplyController: tadaApplyDataController);
+    checkPlanner();
     tadaApplyDataController.appliedData(false);
+  }
+
+  checkPlanner() async {
+    tadaApplyDataController.plannerCreate(true);
+    await CheckPlannerAPI.instance.applyCheckPlannerAPI(
+        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
+        userId: widget.loginSuccessModel.userId!,
+        miId: widget.loginSuccessModel.mIID!,
+        fromDate: date,
+        toDate: toDate,
+        tadaApplyController: tadaApplyDataController);
+    tadaApplyDataController.plannerCreate(false);
   }
 
   @override
@@ -134,8 +149,7 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
                                   tadaApplyDataController
                                       .tadaSavedDataValues.length, (index) {
                                 var value = index + 1;
-                                var date = '';
-                                var toDate = '';
+
                                 if (tadaApplyDataController
                                         .tadaSavedDataValues[index]
                                         .vtadaaAFromDate !=
@@ -179,11 +193,17 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
                                   DataCell(IconButton(
                                       onPressed: () {
                                         setState(() {
-                                          tadaApplyDataController.tadaSavedData
-                                              .add(tadaApplyDataController
-                                                  .tadaSavedDataValues[index]);
-
-                                          widget.tabController.index = 0;
+                                          if (tadaApplyDataController
+                                              .checkPlanner.isEmpty) {
+                                            Get.dialog(showPopup());
+                                          } else {
+                                            tadaApplyDataController
+                                                .tadaSavedData
+                                                .add(tadaApplyDataController
+                                                        .tadaSavedDataValues[
+                                                    index]);
+                                            widget.tabController.index = 0;
+                                          }
                                         });
                                       },
                                       icon: Icon(
@@ -202,5 +222,43 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
               ],
             );
     });
+  }
+
+  var date = '';
+  var toDate = '';
+  showPopup() {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      contentPadding: const EdgeInsets.all(10),
+      content: WillPopScope(
+        onWillPop: () async => false,
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Daily report is not generated between dates !",
+                textAlign: TextAlign.center,
+                style: Get.textTheme.titleMedium!.copyWith(
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.w400),
+              ),
+              const SizedBox(height: 40),
+              MSkollBtn(
+                  title: "OK",
+                  onPress: () {
+                    setState(() {
+                      Get.back();
+                    });
+                  })
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

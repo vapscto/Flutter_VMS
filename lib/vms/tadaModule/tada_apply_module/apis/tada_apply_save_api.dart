@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -81,12 +82,14 @@ class TadaSaveApi {
         if (response.data['returnvalue'] == true) {
           if (response.data['returnval'] == "Insert") {
             Fluttertoast.showToast(msg: "Record Saved Successfully");
+            return Get.back();
           } else if (response.data['returnval'] == "Failed") {
             Fluttertoast.showToast(msg: "Record Not saved");
           } else if (response.data['returnval'] == "Duplicate") {
             Fluttertoast.showToast(msg: "Record Already Exist");
           } else if (response.data['returnval'] == "Update") {
             Fluttertoast.showToast(msg: "Record Update Successfully");
+            return Get.back();
           } else if (response.data['returnval'] == "UpdateFailed") {
             Fluttertoast.showToast(msg: "Record Not Update");
           } else if (response.data['returnval'] == "") {
