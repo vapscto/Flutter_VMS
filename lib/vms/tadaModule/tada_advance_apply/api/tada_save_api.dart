@@ -24,6 +24,8 @@ class TadaSaveApi {
     required String clintMultiple,
     required List<Map<String, dynamic>> allowanceArray,
     required TadaApplyController tadaApplyController,
+    required int userId,
+    required int miId,
   }) async {
     var dio = Dio();
     var url = base + URLS.saveTada;
@@ -34,6 +36,8 @@ class TadaSaveApi {
       tadaApplyController.saveData(true);
       var response =
           await dio.post(url, options: Options(headers: getSession()), data: {
+        "UserId": userId,
+        "MI_Id": miId,
         "IVRMMCT_Id": ctId,
         "VTADAAA_FromDate": fromDate,
         "VTADAAA_ToDate": toDate,

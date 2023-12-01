@@ -26,6 +26,8 @@ class TadaSaveApi {
     required List<Map<String, dynamic>> allowanceArray,
     required TadaApplyDataController tadaApplyController,
     required List<Map<String, dynamic>> fileList,
+    required int userId,
+    required int miId,
   }) async {
     var dio = Dio();
     var url = base + URLS.applyTada;
@@ -36,6 +38,8 @@ class TadaSaveApi {
       tadaApplyController.saveData(true);
       var response =
           await dio.post(url, options: Options(headers: getSession()), data: {
+        "UserId": userId,
+        "MI_Id": miId,
         "IVRMMCT_Id": ctId,
         "VTADAA_FromDate": fromDate,
         "VTADAA_ToDate": toDate,
@@ -52,6 +56,8 @@ class TadaSaveApi {
         "filelist": fileList
       });
       logger.i({
+        "UserId": userId,
+        "MI_Id": miId,
         "IVRMMCT_Id": ctId,
         "VTADAA_FromDate": fromDate,
         "VTADAA_ToDate": toDate,
@@ -72,7 +78,6 @@ class TadaSaveApi {
       logger.i(response.statusCode);
       if (response.statusCode == 200) {
         SaveTadaModel saveTadaModel = SaveTadaModel.fromJson(response.data);
-        // if (saveTadaModel.returnvalue == true) {
         if (response.data['returnvalue'] == true) {
           if (response.data['returnval'] == "Insert") {
             Fluttertoast.showToast(msg: "Record Saved Successfully");
@@ -89,8 +94,6 @@ class TadaSaveApi {
           } else {
             Fluttertoast.showToast(msg: "Record is not Saved");
           }
-
-          // }
         }
         tadaApplyController.saveData(false);
       }

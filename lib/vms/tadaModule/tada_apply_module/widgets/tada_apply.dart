@@ -112,6 +112,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   String time2 = '';
   bool a = false;
   int vtadaaaId = 0;
+  int ctId = 0;
 
   savedDataListAPI() async {
     if (tadaApplyDataController.tadaSavedData.isNotEmpty) {
@@ -155,7 +156,9 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
             .vtadaaAClientId!);
         city =
             tadaApplyDataController.tadaSavedData.elementAt(index).ivrmmcTName!;
-
+        clintName = city;
+        ctId =
+            tadaApplyDataController.tadaSavedData.elementAt(index).ivrmmcTId!;
         advanceAmount = tadaApplyDataController.tadaSavedData
             .elementAt(index)
             .vtadaaATotalAppliedAmount!
@@ -170,6 +173,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
             '${tadaApplyDataController.tadaSavedData.elementAt(index).vtadaaAToAddress}';
         remarks =
             '${tadaApplyDataController.tadaSavedData.elementAt(index).vtadaaARemarks}';
+        _remarkController.text = remarks;
+        _addressController.text = address;
         clintId = tadaApplyDataController.tadaSavedData
             .elementAt(index)
             .vtadaaAClientId!;
@@ -320,28 +325,40 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
 //
   saveData() async {
     tadaApplyDataController.saveData(true);
-
-    for (var element in tadaApplyDataController.addListBrowser) {
-      try {
-        uploadAttachment.add(await uploadAtt(
-            miId: widget.loginSuccessModel.mIID!,
-            file: File(element.file!.path)));
-      } catch (e) {
-        return Future.error({
-          "errorTitle": "An Error Occured",
-          "errorMsg":
-              "While trying to upload attchement, we encountered an error"
+    if (tadaApplyDataController.addListBrowser.isNotEmpty) {
+      for (var element in tadaApplyDataController.addListBrowser) {
+        try {
+          uploadAttachment.add(await uploadAtt(
+              miId: widget.loginSuccessModel.mIID!,
+              file: File(element.file!.path)));
+        } catch (e) {
+          return Future.error({
+            "errorTitle": "An Error Occured",
+            "errorMsg":
+                "While trying to upload attchement, we encountered an error"
+          });
+        }
+      }
+      for (var element in uploadAttachment) {
+        uploadArray.add({
+          "VTADAAF_FilePath": element.path,
+          "VTADAAF_FileName": element.name
+        });
+      }
+      for (int i = 0; i < tadaApplyDataController.addListBrowser.length; i++) {
+        uploadArray.add({
+          "VTADAAF_Remarks":
+              tadaApplyDataController.newRemarksController.elementAt(i).text
         });
       }
     }
-    for (var element in uploadAttachment) {
-      uploadArray.add(
-          {"VTADAAF_FilePath": element.path, "VTADAAF_FileName": element.name});
-    }
-
     TadaSaveApi.instance.tadaApplySave(
+        userId: widget.loginSuccessModel.userId!,
+        miId: widget.loginSuccessModel.mIID!,
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
-        ctId: citySelectedValue!.ivrmmcTId!,
+        ctId: ((tadaApplyDataController.tadaSavedData.isEmpty))
+            ? citySelectedValue!.ivrmmcTId!
+            : ctId,
         fromDate: fromDate!.toIso8601String(),
         toDate: toDate!.toIso8601String(),
         clintId: clintId,
@@ -356,7 +373,10 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         tadaApplyController: tadaApplyDataController,
         fileList: uploadArray,
         vtadaaId: tadaApplyDataController.getSavedData.first.vtadaAId!);
+
     tadaApplyDataController.saveData(false);
+    getStateList();
+    Get.back();
   }
 
 //
@@ -1964,9 +1984,27 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                         child: MSkollBtn(
                                           onPress: () {
                                             setState(() {
-                                              allAmount = foodAmt +
-                                                  accommodationAmount +
-                                                  otherAmount;
+                                              if (int.parse(
+                                                      foodTotalSlotController
+                                                          .text) >
+                                                  int.parse(foodSlot)) {
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        " Food Slot count should be lessthen total slot");
+                                                return;
+                                              } else if (int.parse(
+                                                      accommodationTotalSlotController
+                                                          .text) >
+                                                  int.parse(
+                                                      accommudationSlot)) {
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        " Accommodation Slot count should be lessthen total slot");
+                                              } else {
+                                                allAmount = foodAmt +
+                                                    accommodationAmount +
+                                                    otherAmount;
+                                              }
                                             });
                                           },
                                           title: "Calculate Total Amount",
@@ -2313,32 +2351,14 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                     child: MSkollBtn(
                         title: "Save",
                         onPress: () {
-                          if (_remarkController.text.isEmpty) {
-                            Fluttertoast.showToast(msg: "Please Enter Remarks");
-                          } else if (_addressController.text.isEmpty) {
+                          if (_addressController.text.isEmpty) {
                             Fluttertoast.showToast(msg: "Please Enter Address");
                           } else if (allAmount == 0) {
                             Fluttertoast.showToast(msg: "Please Add Amount");
-                          } else if (int.parse(foodTotalSlotController.text) >
-                              int.parse(foodSlot)) {
-                            Fluttertoast.showToast(
-                                msg:
-                                    " Food Slot count should be lessthen total slot");
-                            return;
-                          } else if (int.parse(
-                                  accommodationTotalSlotController.text) >
-                              int.parse(accommudationSlot)) {
-                            Fluttertoast.showToast(
-                                msg:
-                                    " Accommodation Slot count should be lessthen total slot");
-                          } else if (tadaApplyDataController
-                              .addListBrowser.isEmpty) {
-                            Fluttertoast.showToast(msg: "Please Upload Image");
                           } else {
                             int foodamountId = 0;
                             int accamountId = 0;
                             int othersamountId = 0;
-
                             if (isFoodSelected == true) {
                               foodamountId =
                                   (foodamountId == null || foodamountId == "")
@@ -2381,21 +2401,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 "VTADAAD_Id": othersamountId,
                               });
                             }
-                            if (tadaApplyDataController
-                                .addListBrowser.isNotEmpty) {
-                              for (int i = 0;
-                                  i <
-                                      tadaApplyDataController
-                                          .addListBrowser.length;
-                                  i++) {
-                                uploadArray.add({
-                                  "VTADAAF_Remarks": tadaApplyDataController
-                                      .newRemarksController
-                                      .elementAt(i)
-                                      .text
-                                });
-                              }
-                            }
+
                             saveData();
                           }
                         }),
