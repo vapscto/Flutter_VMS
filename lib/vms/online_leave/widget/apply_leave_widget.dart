@@ -97,7 +97,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
     if (widget.values.hrmLLeaveName == "Casual Leave") {
       initialDt = currentDate.add(Duration(days: 3));
       firstDt = currentDate.add(Duration(days: 3));
-      lastDt = currentDate.add(Duration(days: myInt));
+      lastDt = currentDate.add(Duration(days: 5));
     } else if (widget.values.hrmLLeaveName == "Sick Leave") {
       initialDt = currentDate.subtract(Duration(days: 2));
       firstDt = currentDate.subtract(Duration(days: 2));
@@ -330,8 +330,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                         "Casual Leave") {
                                       initialDt2 = startDT;
                                       firstDt2 = startDT;
-                                      lastDt2 =
-                                          startDT.add(Duration(days: myInt));
+                                      lastDt2 = startDT
+                                          .add(Duration(days: myInt - 2));
                                     } else if (widget.values.hrmLLeaveName ==
                                             "Comp off" ||
                                         widget.values.hrmLLeaveName ==
