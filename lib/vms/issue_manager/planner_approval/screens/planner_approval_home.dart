@@ -82,14 +82,6 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                                   "We are loading Planner List... Please wait ",
                               animationPath: "assets/json/default.json"),
                         )
-                      // : (widget.plannerApprovalController.newplannerList.isEmpty &&
-                      //         widget.plannerApprovalController
-                      //             .plannerListModel.isEmpty)
-                      //     ? const Center(
-                      //         child: AnimatedProgressWidget(
-                      //             title: "Planners not Found",
-                      //             desc: " ",
-                      //             animationPath: "assets/json/nodata.json"))
                       : Column(
                           children: [
                             (widget.plannerApprovalController.newplannerList
@@ -131,8 +123,8 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                                                   label: Text("End Date")),
                                               DataColumn(
                                                   label: Text("Total Effort")),
-                                              DataColumn(
-                                                  label: Text("Planner")),
+                                              // DataColumn(
+                                              //     label: Text("Planner")),
                                             ],
                                             rows: List.generate(
                                                 widget
@@ -147,23 +139,32 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                                                       CrossAxisAlignment.center,
                                                   children: [
                                                     InkWell(
-                                                      onTap: () {
-                                                        Get.dialog(
-                                                            DrNotSubmitWidget(
-                                                          name: widget
-                                                              .plannerApprovalController
-                                                              .newplannerList
-                                                              .elementAt(
-                                                                  index)['name'],
-                                                          loginSuccessModel: widget
-                                                              .loginSuccessModel,
-                                                          mskoolController: widget
-                                                              .mskoolController,
-                                                          plannerApprovalController:
-                                                              widget
-                                                                  .plannerApprovalController,
-                                                        ));
-                                                      },
+                                                      onTap: widget
+                                                                  .plannerApprovalController
+                                                                  .newplannerList
+                                                                  .elementAt(
+                                                                      index)['day'] !=
+                                                              0
+                                                          ? () {
+                                                              Get.dialog(
+                                                                  DrNotSubmitWidget(
+                                                                name: widget
+                                                                    .plannerApprovalController
+                                                                    .newplannerList
+                                                                    .elementAt(
+                                                                        index)['name'],
+                                                                loginSuccessModel:
+                                                                    widget
+                                                                        .loginSuccessModel,
+                                                                mskoolController:
+                                                                    widget
+                                                                        .mskoolController,
+                                                                plannerApprovalController:
+                                                                    widget
+                                                                        .plannerApprovalController,
+                                                              ));
+                                                            }
+                                                          : () {},
                                                       child: Text(
                                                         widget
                                                             .plannerApprovalController
@@ -175,7 +176,7 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                                                                             .newplannerList
                                                                             .elementAt(index)[
                                                                         'day'] ==
-                                                                    null)
+                                                                    0)
                                                                 ? Theme.of(
                                                                         context)
                                                                     .primaryColor
@@ -188,7 +189,7 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                                                                     .elementAt(
                                                                         index)[
                                                                 'day'] !=
-                                                            null)
+                                                            0)
                                                         ? Text(
                                                             '(${widget.plannerApprovalController.newplannerList.elementAt(index)['day']})',
                                                           )
@@ -207,33 +208,33 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                                                         index)['endDate'])),
                                                 DataCell(Text(
                                                     '${widget.plannerApprovalController.newplannerList.elementAt(index)['totalEffort']} Hr')),
-                                                DataCell(InkWell(
-                                                  onTap: () {},
-                                                  child: Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      const Icon(
-                                                        Icons
-                                                            .arrow_right_alt_outlined,
-                                                        color: Colors.green,
-                                                      ),
-                                                      Text(
-                                                        widget.plannerApprovalController
-                                                                .newplannerList
-                                                                .elementAt(
-                                                                    index)[
-                                                            'plannerView'],
-                                                        style: Get.textTheme
-                                                            .titleSmall!
-                                                            .copyWith(
-                                                                color: Colors
-                                                                    .green),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )),
+                                                // DataCell(InkWell(
+                                                //   onTap: () {},
+                                                //   child: Row(
+                                                //     crossAxisAlignment:
+                                                //         CrossAxisAlignment
+                                                //             .center,
+                                                //     children: [
+                                                //       const Icon(
+                                                //         Icons
+                                                //             .arrow_right_alt_outlined,
+                                                //         color: Colors.green,
+                                                //       ),
+                                                //       Text(
+                                                //         widget.plannerApprovalController
+                                                //                 .newplannerList
+                                                //                 .elementAt(
+                                                //                     index)[
+                                                //             'plannerView'],
+                                                //         style: Get.textTheme
+                                                //             .titleSmall!
+                                                //             .copyWith(
+                                                //                 color: Colors
+                                                //                     .green),
+                                                //       ),
+                                                //     ],
+                                                //   ),
+                                                // )),
                                               ]);
                                             })),
                                       ),
