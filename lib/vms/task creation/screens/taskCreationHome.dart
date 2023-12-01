@@ -2382,7 +2382,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   }
 
   String getDateFrom(DateTime? dt) {
-    return "${dt!.year}-${dt.month.toString().padLeft(2, "0")}-${dt.day.toString().padLeft(2, "0")}";
+    return "${dt!.day.toString().padLeft(2, "0")}-${dt.month.toString().padLeft(2, "0")}-${dt.year}";
   }
 
   Future<void> pickImage(int index) async {
