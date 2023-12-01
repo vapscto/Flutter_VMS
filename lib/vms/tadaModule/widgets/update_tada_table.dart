@@ -42,11 +42,11 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
   List<Map<String, dynamic>> headArray = [];
   var days;
   num amount = 0;
-  void addAmount(int a) {
+  void addAmount(double a) {
     amount += a;
   }
 
-  void removeAmount(int a) {
+  void removeAmount(double a) {
     amount -= a;
   }
 
@@ -219,6 +219,12 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                     Fluttertoast.showToast(
                         msg:
                             "sanction amount should be lessthen applied amount");
+                  } else if (remarkController.text.isEmpty) {
+                    Fluttertoast.showToast(msg: "Please Enter Remarks");
+                  } else if (widget.tadaController
+                      .approvalTextEditingControllerList.isEmpty) {
+                    Fluttertoast.showToast(
+                        msg: "Please Enter Approval or Reject Remarks");
                   } else {
                     for (int i = 0;
                         i < widget.tadaController.tadaEditValues.length;
@@ -315,17 +321,8 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
           onChanged: (value) {
             setState(() {
               widget.tadaController.selectedValue[index] = value!;
-              logger.e(widget.tadaController.selectedValue);
-              widget.tadaController.textEditingControllerList.add(
-                  TextEditingController(
-                      text: widget.tadaController.tadaEditValues[index]
-                          .vTADAAAASactionedAmount
-                          .toString()));
-              // amount += num.parse(widget
-              //     .tadaController.textEditingControllerList
-              //     .elementAt(index)
-              //     .text);
-              addAmount(int.parse(widget
+
+              addAmount(double.parse(widget
                   .tadaController.textEditingControllerList
                   .elementAt(index)
                   .text));
@@ -340,20 +337,15 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
           onChanged: (dynamic value) {
             setState(() {
               widget.tadaController.selectedValue[index] = value;
-              logger.e(widget.tadaController.selectedValue);
-              widget.tadaController.textEditingControllerList.add(
-                  TextEditingController(
-                      text: widget.tadaController.tadaEditValues[index]
-                          .vTADAAAASactionedAmount
-                          .toString()));
-              // amount -= num.parse(widget
-              //     .tadaController.textEditingControllerList
-              //     .elementAt(index)
-              //     .text);
-              removeAmount(int.parse(widget
-                  .tadaController.textEditingControllerList
-                  .elementAt(index)
-                  .text));
+              if (amount >=
+                  double.parse(widget.tadaController.textEditingControllerList
+                      .elementAt(index)
+                      .text)) {
+                removeAmount(double.parse(widget
+                    .tadaController.textEditingControllerList
+                    .elementAt(index)
+                    .text));
+              }
             });
           },
         )),

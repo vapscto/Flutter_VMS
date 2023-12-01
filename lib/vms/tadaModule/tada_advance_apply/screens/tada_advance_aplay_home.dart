@@ -348,72 +348,182 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                 readOnly: true,
                                 controller: _startDate,
                                 onTap: () async {
-                                  fromDate = await showDatePicker(
-                                    context: context,
-                                    helpText: "Select Data",
-                                    firstDate: DateTime.now()
-                                        .subtract(const Duration(days: 30)),
-                                    initialDate: DateTime.now(),
-                                    lastDate: DateTime(3050),
-                                  );
-                                  if (fromDate != null) {
-                                    setState(() {
-                                      _endDate.clear();
-                                      _startTime.clear();
-                                      _endTime.clear();
-                                      tadaApplyController.cityListValues
-                                          .clear();
-                                      _addressController.clear();
-                                      _remarkController.clear();
-                                      allAmount = 0;
-                                      foodTotalSlotController.clear();
-                                      foodRemarksController.clear();
-                                      accommodationRemarksController.clear();
-                                      accommodationRemarksController.clear();
-                                      tadaApplyController.allowenseData.clear();
-                                      tadaApplyController.stateList.first;
-                                      _startDate.text =
-                                          "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
-                                      fromSelectedDate =
-                                          '${numberList[fromDate!.month]}-${numberList[fromDate!.day]}-${fromDate!.year}';
-                                    });
+                                  if (tadaApplyController
+                                          .isDocumentUpload.value ==
+                                      true) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) {
+                                          return AlertDialog(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            iconPadding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 16),
+                                            contentPadding:
+                                                const EdgeInsets.all(12),
+                                            backgroundColor: Colors.white,
+                                            content: SizedBox(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Text(
+                                                    "Previous  TA-DA Adavance Is  Pending, Document Not Upload  !",
+                                                    style: Get
+                                                        .textTheme.titleMedium!
+                                                        .copyWith(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .primaryColor),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 16,
+                                                  ),
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Get.back();
+                                                      },
+                                                      child: Text(
+                                                        "OK",
+                                                        style: Get.textTheme
+                                                            .titleMedium,
+                                                      ))
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                  } else {
+                                    fromDate = await showDatePicker(
+                                      context: context,
+                                      helpText: "Select Data",
+                                      firstDate: DateTime.now()
+                                          .subtract(const Duration(days: 30)),
+                                      initialDate: DateTime.now(),
+                                      lastDate: DateTime(3050),
+                                    );
+                                    if (fromDate != null) {
+                                      setState(() {
+                                        _endDate.clear();
+                                        _startTime.clear();
+                                        _endTime.clear();
+                                        tadaApplyController.cityListValues
+                                            .clear();
+                                        _addressController.clear();
+                                        _remarkController.clear();
+                                        allAmount = 0;
+                                        foodTotalSlotController.clear();
+                                        foodRemarksController.clear();
+                                        accommodationRemarksController.clear();
+                                        accommodationRemarksController.clear();
+                                        tadaApplyController.allowenseData
+                                            .clear();
+                                        tadaApplyController.stateList.first;
+                                        _startDate.text =
+                                            "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
+                                        fromSelectedDate =
+                                            '${numberList[fromDate!.month]}-${numberList[fromDate!.day]}-${fromDate!.year}';
+                                      });
+                                    }
                                   }
                                 },
                                 decoration: InputDecoration(
                                   suffixIcon: IconButton(
                                     onPressed: () async {
-                                      fromDate = await showDatePicker(
-                                        helpText: "Select Data",
-                                        context: context,
-                                        firstDate: DateTime.now()
-                                            .subtract(const Duration(days: 30)),
-                                        initialDate: DateTime.now(),
-                                        lastDate: DateTime(3050),
-                                      );
-                                      if (fromDate != null) {
-                                        setState(() {
-                                          _endDate.clear();
-                                          _startTime.clear();
-                                          _endTime.clear();
-                                          tadaApplyController.cityListValues
-                                              .clear();
-                                          _addressController.clear();
-                                          _remarkController.clear();
-                                          allAmount = 0;
-                                          foodTotalSlotController.clear();
-                                          foodRemarksController.clear();
-                                          accommodationRemarksController
-                                              .clear();
-                                          accommodationRemarksController
-                                              .clear();
-                                          tadaApplyController.allowenseData
-                                              .clear();
-                                          tadaApplyController.stateList.first;
-                                          _startDate.text =
-                                              "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
-                                          fromSelectedDate =
-                                              '${numberList[fromDate!.month]}-${numberList[fromDate!.day]}-${fromDate!.year}';
-                                        });
+                                      if (tadaApplyController
+                                              .isDocumentUpload.value ==
+                                          true) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) {
+                                              return AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                iconPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 16),
+                                                contentPadding:
+                                                    const EdgeInsets.all(12),
+                                                backgroundColor: Colors.white,
+                                                content: SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Text(
+                                                        "Previous  TA-DA Adavance Is  Pending, Document Not Upload  !",
+                                                        style: Get.textTheme
+                                                            .titleMedium!
+                                                            .copyWith(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .primaryColor),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 16,
+                                                      ),
+                                                      TextButton(
+                                                          onPressed: () {
+                                                            Get.back();
+                                                          },
+                                                          child: Text(
+                                                            "OK",
+                                                            style: Get.textTheme
+                                                                .titleMedium,
+                                                          ))
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            });
+                                      } else {
+                                        fromDate = await showDatePicker(
+                                          context: context,
+                                          helpText: "Select Data",
+                                          firstDate: DateTime.now().subtract(
+                                              const Duration(days: 30)),
+                                          initialDate: DateTime.now(),
+                                          lastDate: DateTime(3050),
+                                        );
+                                        if (fromDate != null) {
+                                          setState(() {
+                                            _endDate.clear();
+                                            _startTime.clear();
+                                            _endTime.clear();
+                                            tadaApplyController.cityListValues
+                                                .clear();
+                                            _addressController.clear();
+                                            _remarkController.clear();
+                                            allAmount = 0;
+                                            foodTotalSlotController.clear();
+                                            foodRemarksController.clear();
+                                            accommodationRemarksController
+                                                .clear();
+                                            accommodationRemarksController
+                                                .clear();
+                                            tadaApplyController.allowenseData
+                                                .clear();
+                                            tadaApplyController.stateList.first;
+                                            _startDate.text =
+                                                "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
+                                            fromSelectedDate =
+                                                '${numberList[fromDate!.month]}-${numberList[fromDate!.day]}-${fromDate!.year}';
+                                          });
+                                        }
                                       }
                                     },
                                     icon: SvgPicture.asset(
