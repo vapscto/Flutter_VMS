@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -2037,6 +2038,10 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                 SizedBox(
                                                   width: 60,
                                                   child: TextField(
+                                                    inputFormatters: [
+                                                      LengthLimitingTextInputFormatter(
+                                                          2),
+                                                    ],
                                                     keyboardType:
                                                         TextInputType.number,
                                                     maxLines: 1,
@@ -2076,6 +2081,10 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                 SizedBox(
                                                   width: 60,
                                                   child: TextField(
+                                                    inputFormatters: [
+                                                      LengthLimitingTextInputFormatter(
+                                                          2),
+                                                    ],
                                                     keyboardType:
                                                         TextInputType.number,
                                                     maxLines: 1,
