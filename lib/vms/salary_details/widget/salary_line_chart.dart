@@ -18,6 +18,8 @@ class _SalaryLineChartState extends State<SalaryLineChart> {
 
   List<SalaryGraphDetModel> deduction = [];
 
+  late TooltipBehavior _tooltipBehavior;
+
   List<SalaryGraphDetModel> lop = [];
   int parsedValue = 0;
   @override
@@ -45,6 +47,26 @@ class _SalaryLineChartState extends State<SalaryLineChart> {
     widget.graphValues.map((e) {
       setState(() {});
     });
+
+    _tooltipBehavior = TooltipBehavior(
+      enable: true,
+      builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
+          int seriesIndex) {
+        return Container(
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: Colors.grey),
+          ),
+          child: Text(
+            'Month: ${data.month}\n${series.name}: ${data.salary}k',
+            style: TextStyle(fontSize: 12),
+          ),
+        );
+      },
+    );
+
     super.initState();
   }
 
@@ -58,39 +80,46 @@ class _SalaryLineChartState extends State<SalaryLineChart> {
             const SizedBox(
               height: 4.0,
             ),
-            SfCartesianChart(
-              primaryYAxis: NumericAxis(labelFormat: "{value}K"),
-              primaryXAxis: CategoryAxis(name: "Months"),
-              tooltipBehavior: TooltipBehavior(enable: true),
-              series: <LineSeries>[
-                LineSeries<SalaryGraphDetModel, String>(
-                    name: "Salary",
-                    isVisible: true,
-                    markerSettings: const MarkerSettings(isVisible: true),
-                    enableTooltip: true,
-                    color: const Color.fromARGB(255, 74, 173, 212),
-                    dataSource: salary,
-                    xValueMapper: ((datum, index) => datum.month),
-                    yValueMapper: (datum, index) => datum.salary),
-                LineSeries<SalaryGraphDetModel, String>(
-                    name: "Deduction",
-                    enableTooltip: true,
-                    isVisible: true,
-                    markerSettings: const MarkerSettings(isVisible: true),
-                    color: const Color(0xFFD0F801),
-                    dataSource: deduction,
-                    xValueMapper: ((datum, index) => datum.month),
-                    yValueMapper: (datum, index) => datum.salary),
-                LineSeries<SalaryGraphDetModel, String>(
-                    dataSource: lop,
-                    enableTooltip: true,
-                    color: const Color(0xFFFF828A),
-                    name: "LOP",
-                    isVisible: true,
-                    markerSettings: const MarkerSettings(isVisible: true),
-                    xValueMapper: ((datum, index) => datum.month),
-                    yValueMapper: (datum, index) => datum.salary)
-              ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width / 1,
+                child: SfCartesianChart(
+                  primaryYAxis: NumericAxis(labelFormat: "{value}K"),
+                  primaryXAxis: CategoryAxis(
+                      name: "Months", labelStyle: TextStyle(fontSize: 9)),
+                  tooltipBehavior: _tooltipBehavior,
+                  series: <LineSeries>[
+                    LineSeries<SalaryGraphDetModel, String>(
+                        name: "Salary",
+                        isVisible: true,
+                        markerSettings: const MarkerSettings(isVisible: true),
+                        enableTooltip: true,
+                        color: const Color.fromARGB(255, 74, 173, 212),
+                        dataSource: salary,
+                        xValueMapper: ((datum, index) => datum.month),
+                        yValueMapper: (datum, index) => datum.salary),
+                    LineSeries<SalaryGraphDetModel, String>(
+                        name: "Deduction",
+                        enableTooltip: true,
+                        isVisible: true,
+                        markerSettings: const MarkerSettings(isVisible: true),
+                        color: const Color(0xFFD0F801),
+                        dataSource: deduction,
+                        xValueMapper: ((datum, index) => datum.month),
+                        yValueMapper: (datum, index) => datum.salary),
+                    LineSeries<SalaryGraphDetModel, String>(
+                        dataSource: lop,
+                        enableTooltip: true,
+                        color: const Color(0xFFFF828A),
+                        name: "LOP",
+                        isVisible: true,
+                        markerSettings: const MarkerSettings(isVisible: true),
+                        xValueMapper: ((datum, index) => datum.month),
+                        yValueMapper: (datum, index) => datum.salary)
+                  ],
+                ),
+              ),
             ),
             const SizedBox(
               height: 4.0,
