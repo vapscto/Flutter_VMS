@@ -776,36 +776,33 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                       (plannerCreationController.categoryWisePlan.isNotEmpty)
                           ? _createCategortTable()
                           : const SizedBox(),
-                      (plannerCreationController.isPlannerCreate.value == false)
-                          ? const SizedBox()
-                          : Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 16.0),
-                                child: MSkollBtn(
-                                  title: "Save",
-                                  onPress: () {
-                                    if (_plannerName.text.isEmpty) {
-                                      Fluttertoast.showToast(
-                                          msg: "Please enter plan name");
-                                    } else if (checkList.isEmpty) {
-                                      Fluttertoast.showToast(
-                                          msg: "Please select checkbox");
-                                    } else if (plannedEffort <
-                                        double.parse(
-                                            (totalday * 8).toString())) {
-                                      Get.dialog(showPopup());
-                                    } else if (plannerCreationController
-                                            .isPlannerCreate.value ==
-                                        false) {
-                                      Get.dialog(plannerNotCreate());
-                                    } else {
-                                      savePlanner();
-                                    }
-                                  },
-                                ),
-                              ),
-                            ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 16.0),
+                          child: MSkollBtn(
+                            title: "Save",
+                            onPress: () {
+                              if (_plannerName.text.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "Please enter plan name");
+                              } else if (checkList.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "Please select checkbox");
+                              } else if (plannedEffort <
+                                  double.parse((totalday * 8).toString())) {
+                                Get.dialog(showPopup());
+                              } else if (plannerCreationController
+                                      .isPlannerCreate.value ==
+                                  false) {
+                                Get.dialog(plannerNotCreate());
+                              } else {
+                                savePlanner();
+                              }
+                            },
+                          ),
+                        ),
+                      ),
                       _createPlannerTable(),
                     ],
                   ),

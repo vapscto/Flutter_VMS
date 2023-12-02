@@ -83,17 +83,41 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
       for (int index = 0;
           index < widget.tadaController.tadaEditValues.length;
           index++) {
-        sanctionController2.text = widget
-            .tadaController.approvalTextEditingControllerList
-            .elementAt(index)
-            .text;
-        remarkController.text =
-            widget.tadaController.tadaEditValues[index].vTADAAADRemarks ?? "";
-        if (widget.tadaController.tadaEditValues[index].vTADAAAAHStatusFlg!
-            .isNotEmpty) {}
+        widget.tadaController.textEditingControllerList
+            .add(TextEditingController(text: '0.0'));
+        widget.tadaController.approvalTextEditingControllerList
+            .add(TextEditingController(text: ''));
+        widget.tadaController.textEditingControllerList[index].addListener(() {
+          addAllAmount();
+        });
+        // sanctionController2.text = widget
+        //     .tadaController.approvalTextEditingControllerList
+        //     .elementAt(index)
+        //     .text;
+        // remarkController.text =
+        //     widget.tadaController.tadaEditValues[index].vTADAAADRemarks ?? "";
       }
     });
     super.initState();
+  }
+
+  void addAllAmount() {
+    double sum = 0;
+    for (TextEditingController controller
+        in widget.tadaController.textEditingControllerList) {
+      double value = double.tryParse(controller.text) ?? 0;
+      sum += value;
+    }
+    setState(() {
+      sanctionController2.text = '$sum';
+    });
+  }
+
+  double sum = 0;
+  removeAllAmount(double amount) {
+    sum -= amount;
+    sanctionController2.text = sum.toString();
+    setState(() {});
   }
 
   @override
@@ -321,11 +345,11 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
           onChanged: (value) {
             setState(() {
               widget.tadaController.selectedValue[index] = value!;
-
-              addAmount(double.parse(widget
-                  .tadaController.textEditingControllerList
-                  .elementAt(index)
-                  .text));
+              addAllAmount();
+              // addAmount(double.parse(widget
+              //     .tadaController.textEditingControllerList
+              //     .elementAt(index)
+              //     .text));
             });
           },
         )),
@@ -341,7 +365,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                   double.parse(widget.tadaController.textEditingControllerList
                       .elementAt(index)
                       .text)) {
-                removeAmount(double.parse(widget
+                removeAllAmount(double.parse(widget
                     .tadaController.textEditingControllerList
                     .elementAt(index)
                     .text));
@@ -373,6 +397,16 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
         DataCell(Padding(
           padding: const EdgeInsets.only(bottom: 4.0),
           child: TextFormField(
+            onChanged: (value) {
+              setState(() {
+                if (widget.tadaController.selectedValue[index] == 'Approved') {
+                  addAllAmount();
+                } else if (widget.tadaController.selectedValue[index] ==
+                    'Rejected') {
+                  removeAllAmount(double.parse(value));
+                }
+              });
+            },
             style: Get.textTheme.titleSmall,
             controller: widget.tadaController.textEditingControllerList
                 .elementAt(index),

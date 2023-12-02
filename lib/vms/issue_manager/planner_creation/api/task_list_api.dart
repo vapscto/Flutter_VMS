@@ -63,12 +63,6 @@ class TaskListAPI {
         TotalEffortData totalEffortData =
             TotalEffortData.fromJson(response.data['get_effortdetails']);
         plannerCreationController.effortData(totalEffortData.values!);
-        // PlannerApproval plannerApproval =
-        //     PlannerApproval.fromJson(response.data['plannerextapproval']);
-        plannerCreationController.isPlannerCreate.value =
-            response.data['plannerextapproval'];
-        logger.i('====${response.data['plannerextapproval']}');
-        logger.i(plannerCreationController.isPlannerCreate.value);
       }
     } on DioError catch (e) {
       logger.e(e.message);

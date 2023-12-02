@@ -30,6 +30,10 @@ class PlannerStatusList {
         PlannerStatusListModel plannerStatusList =
             PlannerStatusListModel.fromJson(response.data['get_plannerlist']);
         plannerCreationController.getPlannerStatus(plannerStatusList.values!);
+        plannerCreationController.isPlannerCreate.value =
+            response.data['plannerextapproval'];
+
+        logger.i(plannerCreationController.isPlannerCreate.value);
         plannerCreationController.statusLoading(false);
       }
     } on DioError catch (e) {
