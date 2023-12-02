@@ -554,8 +554,8 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                                                           () {
                                                                         Navigator.pop(
                                                                             context);
-                                                                        Navigator.pop(
-                                                                            context);
+                                                                        //Navigator.pop(
+                                                                            //context);
                                                                         // Navigator.pop(
                                                                         //     context);
                                                                       })
@@ -819,7 +819,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                               title: "Ok UnderStood",
                               onPress: () {
                                 Navigator.pop(context);
-                                Navigator.pop(context);
+                                // Navigator.pop(context);
                               })
                         ],
                       ),

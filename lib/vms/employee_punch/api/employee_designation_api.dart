@@ -50,7 +50,7 @@ class EmployeeDesignationApi {
 
       salaryController.updateDesignation(designation.values!);
       if (designation.values!.isNotEmpty) {
-        salaryController.addToSelectedDesignation(designation.values!.first);
+        //salaryController.addToSelectedDesignation(designation.values!.first);
       }
       salaryController.updateIsErrorOccuredWhileLoadongDesignation(false);
       salaryController.updateIsLoadingDesignation(false);
