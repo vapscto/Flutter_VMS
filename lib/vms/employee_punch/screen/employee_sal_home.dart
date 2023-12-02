@@ -43,12 +43,6 @@ class _EmployeepunchHomeState extends State<EmployeepunchHome> {
     super.initState();
   }
 
-  // void disposal() {
-  //   salaryController.department.clear();
-  //   salaryController.selectedDepartment.clear();
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -257,6 +251,12 @@ class _EmployeepunchHomeState extends State<EmployeepunchHome> {
     );
   }
 
+  @override
+  void dispose() {
+  salaryController.department.clear();
+  salaryController.selectedDepartment.clear();
+    super.dispose();
+  }
   void loadDesignation() {
     String department = "";
     for (var element in salaryController.selectedDepartment) {

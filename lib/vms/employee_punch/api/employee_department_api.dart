@@ -52,7 +52,7 @@ class EmployeeDepartmentApi {
 
       salaryController.updateDepartment(department.values!);
       if (department.values!.isNotEmpty) {
-        salaryController.addToSelectedDepartment(department.values!.first);
+       // salaryController.addToSelectedDepartment(department.values!.first);
       }
       salaryController.updateIsErrorOccuredWhileLoadongDepartment(false);
       salaryController.updateIsLoadingDepartment(false);

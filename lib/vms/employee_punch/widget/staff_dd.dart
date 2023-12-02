@@ -374,4 +374,11 @@ class _StaffDropDownState extends State<StaffDropDown> {
                     );
     });
   }
+
+@override
+  void dispose() {
+    widget.salaryController.selectedStaff == null ;
+    super.dispose();
+  }
+
 }
