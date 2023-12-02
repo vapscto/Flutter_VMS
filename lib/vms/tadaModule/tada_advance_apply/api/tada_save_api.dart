@@ -69,21 +69,24 @@ class TadaSaveApi {
       logger.i(response.statusCode);
       if (response.statusCode == 200) {
         SaveTadaModel saveTadaModel = SaveTadaModel.fromJson(response.data);
-        if (response.data['returnval'] == "Insert") {
-          Fluttertoast.showToast(msg: "Record Saved Successfully");
-        } else if (response.data['returnval'] == "Failed") {
-          Fluttertoast.showToast(msg: "Record Not saved");
-        } else if (response.data['returnval'] == "Duplicate") {
-          Fluttertoast.showToast(msg: "Record Already Exist");
-        } else if (response.data['returnval'] == "Update") {
-          Fluttertoast.showToast(msg: "Record Update Successfully");
-        } else if (response.data['returnval'] == "UpdateFailed") {
-          Fluttertoast.showToast(msg: "Record Not Update");
-        } else if (response.data['returnval'] == "") {
+        if (response.data['returnvalue'] == true) {
+          if (response.data['returnval'] == "Insert") {
+            Fluttertoast.showToast(msg: "Record Saved Successfully");
+          } else if (response.data['returnval'] == "Failed") {
+            Fluttertoast.showToast(msg: "Record Not saved");
+          } else if (response.data['returnval'] == "Duplicate") {
+            Fluttertoast.showToast(msg: "Record Already Exist");
+          } else if (response.data['returnval'] == "Update") {
+            Fluttertoast.showToast(msg: "Record Update Successfully");
+          } else if (response.data['returnval'] == "UpdateFailed") {
+            Fluttertoast.showToast(msg: "Record Not Update");
+          } else if (response.data['returnval'] == "") {
+            Fluttertoast.showToast(msg: "Please contact administrator!");
+          }
+        } else {
           Fluttertoast.showToast(msg: "Please contact administrator!");
         }
         tadaApplyController.saveData(false);
-        return;
       }
     } on DioError catch (e) {
       tadaApplyController.errorLoading(true);

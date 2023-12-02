@@ -267,47 +267,6 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
     setState(() {
       getStateList();
     });
-    // if (tadaApplyController.isDocumentUpload.value == true) {
-    //   // ignore: use_build_context_synchronously
-    //   showDialog(
-    //       context: context,
-    //       builder: (_) {
-    //         return AlertDialog(
-    //           shape: RoundedRectangleBorder(
-    //               borderRadius: BorderRadius.circular(10)),
-    //           iconPadding: const EdgeInsets.symmetric(horizontal: 16),
-    //           contentPadding: const EdgeInsets.all(12),
-    //           backgroundColor: Colors.white,
-    //           content: SizedBox(
-    //             width: MediaQuery.of(context).size.width,
-    //             child: Column(
-    //               mainAxisAlignment: MainAxisAlignment.center,
-    //               mainAxisSize: MainAxisSize.min,
-    //               children: [
-    //                 Text(
-    //                   "Previous  TA-DA Adavance Is  Pending, Document Not Upload  !",
-    //                   style: Get.textTheme.titleMedium!
-    //                       .copyWith(color: Theme.of(context).primaryColor),
-    //                 ),
-    //                 const SizedBox(
-    //                   height: 16,
-    //                 ),
-    //                 TextButton(
-    //                     onPressed: () {
-    //                       setState(() {
-    //                         Get.back();
-    //                       });
-    //                     },
-    //                     child: Text(
-    //                       "OK",
-    //                       style: Get.textTheme.titleMedium,
-    //                     ))
-    //               ],
-    //             ),
-    //           ),
-    //         );
-    //       });
-    // }
     super.initState();
   }
 
@@ -1995,7 +1954,6 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                         Fluttertoast.showToast(
                                                             msg:
                                                                 " Food Slot count should be lessthen total slot");
-                                                        return;
                                                       } else if (int.parse(
                                                               accommodationTotalSlotController
                                                                   .text) >
@@ -2005,9 +1963,9 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                             msg:
                                                                 " Accommodation Slot count should be lessthen total slot");
                                                       } else {
-                                                        // allAmount = foodAmt +
-                                                        //     accommodationAmount +
-                                                        //     otherAmount;
+                                                        allAmount = foodAmt +
+                                                            accommodationAmount +
+                                                            otherAmount;
                                                       }
                                                     });
                                                   },
@@ -2131,7 +2089,6 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                   }
 
                                                   saveData();
-                                                  Get.back();
                                                 }
                                               }
                                             : () => Fluttertoast.showToast(
@@ -2238,26 +2195,26 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                   tadaApplyController.getSavedData[index].vtadaaAToDate!);
               toSelectedDate = '${dt.day}-${dt.month}-${dt.year}';
             }
-            TimeOfDay startTime = TimeOfDay(
-                hour: int.parse(tadaApplyController
-                    .getSavedData[index].vtadaaADepartureTime!
-                    .split(":")[0]),
-                minute: int.parse(tadaApplyController
-                    .getSavedData[index].vtadaaADepartureTime!
-                    .split(":")[1]));
+            // TimeOfDay startTime = TimeOfDay(
+            //     hour: int.parse(tadaApplyController
+            //         .getSavedData[index].vtadaaADepartureTime!
+            //         .split(":")[0]),
+            //     minute: int.parse(tadaApplyController
+            //         .getSavedData[index].vtadaaADepartureTime!
+            //         .split(":")[1]));
             time =
-                '${startTime.hourOfPeriod}:${startTime.minute} ${startTime.period.name.toUpperCase()}';
+                '${tadaApplyController.getSavedData[index].vtadaaADepartureTime}';
 
             //
-            TimeOfDay startToTime = TimeOfDay(
-                hour: int.parse(tadaApplyController
-                    .getSavedData[index].vtadaaAArrivalTime!
-                    .split(":")[0]),
-                minute: int.parse(tadaApplyController
-                    .getSavedData[index].vtadaaAArrivalTime!
-                    .split(":")[1]));
+            // TimeOfDay startToTime = TimeOfDay(
+            //     hour: int.parse(tadaApplyController
+            //         .getSavedData[index].vtadaaAArrivalTime!
+            //         .split(":")[0]),
+            //     minute: int.parse(tadaApplyController
+            //         .getSavedData[index].vtadaaAArrivalTime!
+            //         .split(":")[1]));
             toSavedTime =
-                '${startToTime.hourOfPeriod}:${startToTime.minute} ${startToTime.period.name.toUpperCase()}';
+                '${tadaApplyController.getSavedData[index].vtadaaAArrivalTime}';
 
             return DataRow(cells: [
               DataCell(Text(value.toString())),

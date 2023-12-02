@@ -34,10 +34,17 @@ class CheckPlannerAPI {
           "VTADAAA_ToDate": toDate,
         },
       );
+      logger.i(url);
+      logger.i({
+        "UserId": userId,
+        "MI_Id": miId,
+        "VTADAAA_FromDate": fromDate,
+        "VTADAAA_ToDate": toDate,
+      });
 
       if (response.statusCode == 200) {
         CheckPlannerModel checkPlannerModel =
-            CheckPlannerModel.fromJson(response.data['getArray']);
+            CheckPlannerModel.fromJson(response.data['client_Master']);
         tadaApplyController.checkPlan(checkPlannerModel.values!);
         tadaApplyController.plannerCreate(false);
       }
