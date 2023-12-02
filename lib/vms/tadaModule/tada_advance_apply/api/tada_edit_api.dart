@@ -34,9 +34,9 @@ class TadaEditAPI {
       if (response.statusCode == 200) {
         if (response.data['returnvalue'] == true) {
           if (response.data['returnval'] == 'Delete') {
-            Fluttertoast.showToast(msg: "Record Deactivated successfully");
-          } else if (response.data['returnval'] == 'NotDelete') {
             Fluttertoast.showToast(msg: "Record Activated successfully");
+          } else if (response.data['returnval'] == 'NotDelete') {
+            Fluttertoast.showToast(msg: "Record Deactivated successfully");
           } else if (response.data['returnval'] == 'Firststage') {
             Fluttertoast.showToast(msg: "Result is Waiting for Authrization!");
           }

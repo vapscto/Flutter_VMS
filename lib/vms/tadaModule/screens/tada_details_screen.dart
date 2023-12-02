@@ -311,24 +311,24 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
   List<DataRow> createRow() {
     return List.generate(widget.tadaController.newTimeArray.length, (index) {
       var value = index + 1;
-      TimeOfDay startTime = TimeOfDay(
-          hour: int.parse(widget
-              .tadaController.newTimeArray[index].vtadaaADepartureTime!
-              .split(":")[0]),
-          minute: int.parse(widget
-              .tadaController.newTimeArray[index].vtadaaADepartureTime!
-              .split(":")[1]));
+      // TimeOfDay startTime = TimeOfDay(
+      //     hour: int.parse(widget
+      //         .tadaController.newTimeArray[index].vtadaaADepartureTime!
+      //         .split(":")[0]),
+      //     minute: int.parse(widget
+      //         .tadaController.newTimeArray[index].vtadaaADepartureTime!
+      //         .split(":")[1]));
       var dTime =
-          '${startTime.hourOfPeriod}:${startTime.minute} ${startTime.period.name.toUpperCase()}';
-      TimeOfDay endTime0 = TimeOfDay(
-          hour: int.parse(widget
-              .tadaController.newTimeArray[index].vtadaaAArrivalTime!
-              .split(":")[0]),
-          minute: int.parse(widget
-              .tadaController.newTimeArray[index].vtadaaAArrivalTime!
-              .split(":")[1]));
+          '${widget.tadaController.newTimeArray[index].vtadaaADepartureTime}';
+      // TimeOfDay endTime0 = TimeOfDay(
+      //     hour: int.parse(widget
+      //         .tadaController.newTimeArray[index].vtadaaAArrivalTime!
+      //         .split(":")[0]),
+      //     minute: int.parse(widget
+      //         .tadaController.newTimeArray[index].vtadaaAArrivalTime!
+      //         .split(":")[1]));
       var endTime =
-          '${endTime0.hourOfPeriod}:${endTime0.minute} ${endTime0.period.name.toUpperCase()}';
+          '${widget.tadaController.newTimeArray[index].vtadaaAArrivalTime}';
       return DataRow(cells: [
         DataCell(Text(value.toString())),
         DataCell(Text(widget.values.cityName ?? "")),

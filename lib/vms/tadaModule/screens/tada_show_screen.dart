@@ -10,19 +10,20 @@ import 'package:m_skool_flutter/vms/tadaModule/screens/tada_details_screen.dart'
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
-class TadaListScreen extends StatefulWidget {
+class TadaAdvanceApproveScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  const TadaListScreen(
+  const TadaAdvanceApproveScreen(
       {super.key,
       required this.loginSuccessModel,
       required this.mskoolController});
 
   @override
-  State<TadaListScreen> createState() => _TadaListScreenState();
+  State<TadaAdvanceApproveScreen> createState() =>
+      _TadaAdvanceApproveScreenState();
 }
 
-class _TadaListScreenState extends State<TadaListScreen> {
+class _TadaAdvanceApproveScreenState extends State<TadaAdvanceApproveScreen> {
   TADAController tadaController = Get.put(TADAController());
 
   _getAPIData() async {
@@ -125,8 +126,8 @@ class _TadaListScreenState extends State<TadaListScreen> {
                                   DataCell(Text(tadaController
                                       .tadaData[index].vTADAAATotalAppliedAmount
                                       .toString())),
-                                  DataCell(Text(tadaController
-                                      .tadaData[index].vTADAAAASactionedAmount
+                                  DataCell(Text(tadaController.tadaData[index]
+                                      .vTADAAATotalSactionedAmount
                                       .toString())),
                                   DataCell(Text(tadaController
                                           .tadaData[index].vTADAAARemarks ??

@@ -2237,14 +2237,14 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                   : InkWell(
                       onTap: () {
                         setState(() {
-                          if (tadaApplyController.isDocumentUpload.value ==
-                              true) {
-                            Fluttertoast.showToast(
-                                msg: "Previous TA-DA Adavance Is Pending,");
-                          } else {
-                            editData(tadaApplyController
-                                .getSavedData[index].vtadaaAId!);
-                          }
+                          // if (tadaApplyController.isDocumentUpload.value ==
+                          //     true) {
+                          //   Fluttertoast.showToast(
+                          //       msg: "Previous TA-DA Adavance Is Pending,");
+                          // } else {
+                          editData(tadaApplyController
+                              .getSavedData[index].vtadaaAId!);
+                          // }
                         });
                       },
                       child: (tadaApplyController.getSavedData

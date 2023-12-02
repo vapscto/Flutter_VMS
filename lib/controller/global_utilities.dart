@@ -664,7 +664,7 @@ void openMappedPages(
     return;
   }
   if (pageName == 'TADA Approval') {
-    Get.to(() => TadaListScreen(
+    Get.to(() => TadaAdvanceApproveScreen(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
         ));

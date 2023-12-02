@@ -16,6 +16,8 @@ class TADAController {
       <TextEditingController>[].obs;
   RxList<TextEditingController> approvalTextEditingControllerList =
       <TextEditingController>[].obs;
+  RxList<TextEditingController> percentageListController =
+      <TextEditingController>[].obs;
   List<String> selectedValue = [];
 
   void updateIsLoading(bool b) {
@@ -66,8 +68,6 @@ class TADAController {
       textEditingControllerList.add(TextEditingController(
           text: editArray[i].vTADAAAAHSactionedAmount.toString()));
       selectedValue.add(editArray[i].vTADAAAAHStatusFlg.toString());
-      approvalTextEditingControllerList
-          .add(TextEditingController(text: editArray[i].vTADAAADRemarks ?? ''));
     }
   }
 }

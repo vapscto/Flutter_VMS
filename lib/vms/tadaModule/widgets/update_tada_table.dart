@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -32,7 +33,6 @@ class UpdateTADATable extends StatefulWidget {
 
 class _UpdateTADATableState extends State<UpdateTADATable> {
   final remarkController = TextEditingController();
-  // final sanctionController = TextEditingController();
   final sanctionController2 = TextEditingController();
   final parcentageController = TextEditingController();
   String fromDate = '';
@@ -83,40 +83,35 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
       for (int index = 0;
           index < widget.tadaController.tadaEditValues.length;
           index++) {
-        widget.tadaController.textEditingControllerList
-            .add(TextEditingController(text: '0.0'));
         widget.tadaController.approvalTextEditingControllerList
             .add(TextEditingController(text: ''));
         widget.tadaController.textEditingControllerList[index].addListener(() {
-          addAllAmount();
+          addAllAmount(0);
         });
-        // sanctionController2.text = widget
-        //     .tadaController.approvalTextEditingControllerList
-        //     .elementAt(index)
-        //     .text;
-        // remarkController.text =
-        //     widget.tadaController.tadaEditValues[index].vTADAAADRemarks ?? "";
+        sanctionController2.text = widget
+            .tadaController.textEditingControllerList
+            .elementAt(index)
+            .text;
       }
     });
     super.initState();
   }
 
-  void addAllAmount() {
-    double sum = 0;
+  void addAllAmount(double sum) {
     for (TextEditingController controller
         in widget.tadaController.textEditingControllerList) {
       double value = double.tryParse(controller.text) ?? 0;
       sum += value;
     }
     setState(() {
-      sanctionController2.text = '$sum';
+      amount = sum;
     });
   }
 
   double sum = 0;
   removeAllAmount(double amount) {
     sum -= amount;
-    sanctionController2.text = sum.toString();
+    amount = sum;
     setState(() {});
   }
 
@@ -274,8 +269,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                             'issuemanager', widget.mskoolController),
                         body: {
                           'VTADAAA_Remarks': remarkController.text,
-                          'VTADAAA_TotalSactionedAmount':
-                              sanctionController2.text,
+                          'VTADAAA_TotalSactionedAmount': amount,
                           'headarray': headArray,
                           'VTADAAA_Id': widget.values.vTADAAAId,
                           "MI_Id": widget.values.mIId,
@@ -297,6 +291,16 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                 })),
       ],
     );
+  }
+
+  double calculatePercentage(double amount, double percentage) {
+    if (percentage != null && percentage > 0) {
+      double a = percentage / 100;
+      double result = amount * a;
+      return result;
+    } else {
+      return amount;
+    }
   }
 
   DataTable _createTable() {
@@ -345,11 +349,13 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
           onChanged: (value) {
             setState(() {
               widget.tadaController.selectedValue[index] = value!;
-              addAllAmount();
-              // addAmount(double.parse(widget
-              //     .tadaController.textEditingControllerList
-              //     .elementAt(index)
-              //     .text));
+
+              if (widget.tadaController.selectedValue[index] == 'Approved') {
+                addAmount(double.parse(widget
+                    .tadaController.textEditingControllerList
+                    .elementAt(index)
+                    .text));
+              }
             });
           },
         )),
@@ -365,7 +371,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                   double.parse(widget.tadaController.textEditingControllerList
                       .elementAt(index)
                       .text)) {
-                removeAllAmount(double.parse(widget
+                removeAmount(double.parse(widget
                     .tadaController.textEditingControllerList
                     .elementAt(index)
                     .text));
@@ -385,6 +391,21 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
         DataCell(Padding(
           padding: const EdgeInsets.only(bottom: 4.0),
           child: TextFormField(
+            inputFormatters: [LengthLimitingTextInputFormatter(2)],
+            readOnly: (widget.tadaController.selectedValue[index] == 'Approved')
+                ? false
+                : true,
+            // onChanged: (value) {
+            //   setState(() {
+            //     widget.tadaController.textEditingControllerList
+            //         .elementAt(index)
+            //         .text = calculatePercentage(
+            //             widget.tadaController.tadaEditValues[index]
+            //                 .vTADAAADAmount!,
+            //             double.parse(value))
+            //         .toString();
+            //   });
+            // },
             style: Get.textTheme.titleSmall,
             controller: parcentageController,
             keyboardType: TextInputType.phone,
@@ -397,16 +418,9 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
         DataCell(Padding(
           padding: const EdgeInsets.only(bottom: 4.0),
           child: TextFormField(
-            onChanged: (value) {
-              setState(() {
-                if (widget.tadaController.selectedValue[index] == 'Approved') {
-                  addAllAmount();
-                } else if (widget.tadaController.selectedValue[index] ==
-                    'Rejected') {
-                  removeAllAmount(double.parse(value));
-                }
-              });
-            },
+            readOnly: (widget.tadaController.selectedValue[index] == 'Approved')
+                ? false
+                : true,
             style: Get.textTheme.titleSmall,
             controller: widget.tadaController.textEditingControllerList
                 .elementAt(index),
@@ -420,6 +434,9 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
         DataCell(Padding(
           padding: const EdgeInsets.only(bottom: 4.0),
           child: TextFormField(
+            readOnly: (widget.tadaController.selectedValue[index] == 'Approved')
+                ? false
+                : true,
             style: Get.textTheme.titleSmall,
             controller: widget.tadaController.approvalTextEditingControllerList
                 .elementAt(index),
