@@ -47,13 +47,14 @@ class _TadaAdvanceApproveScreenState extends State<TadaAdvanceApproveScreen> {
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
-        appBar: const CustomAppBar(title: 'TADA List').getAppBar(),
+        appBar:
+            const CustomAppBar(title: 'TADA Details For Approval').getAppBar(),
         body: tadaController.isLoading.value
             ? const Center(
                 child: AnimatedProgressWidget(
                     title: "Loading",
                     desc:
-                        "Please wait while we load TADA lists and create a view for you.",
+                        "Please wait while we load TADA details and create a view for you.",
                     animationPath: "assets/json/default.json"),
               )
             : tadaController.tadaData.isNotEmpty

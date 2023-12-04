@@ -74,7 +74,7 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
-        appBar: const CustomAppBar(title: "TADA advance details").getAppBar(),
+        appBar: const CustomAppBar(title: "TADA Advance Details").getAppBar(),
         body: widget.tadaController.isLoading.value
             ? const Center(
                 child: AnimatedProgressWidget(
