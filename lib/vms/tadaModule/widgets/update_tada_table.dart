@@ -329,7 +329,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
       DataColumn(label: Text("Total Slots")),
       DataColumn(label: Text("Slots")),
       DataColumn(label: Text("Amount")),
-      DataColumn(label: Text("Percentage")),
+      // DataColumn(label: Text("Percentage")),
       DataColumn(label: Text("Sanction Amount")),
       DataColumn(label: Text("Approval Remarks")),
     ];
@@ -388,33 +388,38 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
             '${widget.tadaController.tadaEditValues[index].vTADAAADSlots ?? " "}')),
         DataCell(Text(
             "${widget.tadaController.tadaEditValues[index].vTADAAADAmount ?? ''}")),
-        DataCell(Padding(
-          padding: const EdgeInsets.only(bottom: 4.0),
-          child: TextFormField(
-            inputFormatters: [LengthLimitingTextInputFormatter(2)],
-            readOnly: (widget.tadaController.selectedValue[index] == 'Approved')
-                ? false
-                : true,
-            // onChanged: (value) {
-            //   setState(() {
-            //     widget.tadaController.textEditingControllerList
-            //         .elementAt(index)
-            //         .text = calculatePercentage(
-            //             widget.tadaController.tadaEditValues[index]
-            //                 .vTADAAADAmount!,
-            //             double.parse(value))
-            //         .toString();
-            //   });
-            // },
-            style: Get.textTheme.titleSmall,
-            controller: parcentageController,
-            keyboardType: TextInputType.phone,
-            decoration: const InputDecoration(
-              hintText: " ",
-              contentPadding: EdgeInsets.symmetric(horizontal: 8),
-            ),
-          ),
-        )),
+        // DataCell(Padding(
+        //   padding: const EdgeInsets.only(bottom: 4.0),
+        //   child: TextFormField(
+        //     inputFormatters: [LengthLimitingTextInputFormatter(2)],
+        //     readOnly: (widget.tadaController.selectedValue[index] == 'Approved')
+        //         ? false
+        //         : true,
+        //     onChanged: (value) {
+        //       setState(() {
+        //         if (value != null && value != "" && double.parse(value) > 0) {
+        //           double a = 0;
+        //           double b = 0;
+        //           a = double.parse(value) / 100;
+        //           b = double.parse(widget
+        //                   .tadaController.tadaEditValues[index].vTADAAADAmount
+        //                   .toString()) *
+        //               a;
+        //           widget.tadaController.textEditingControllerList
+        //               .elementAt(index)
+        //               .text = b.toStringAsFixed(2);
+        //         }
+        //       });
+        //     },
+        //     style: Get.textTheme.titleSmall,
+        //     controller: parcentageController,
+        //     keyboardType: TextInputType.phone,
+        //     decoration: const InputDecoration(
+        //       hintText: " ",
+        //       contentPadding: EdgeInsets.symmetric(horizontal: 8),
+        //     ),
+        //   ),
+        // )),
         DataCell(Padding(
           padding: const EdgeInsets.only(bottom: 4.0),
           child: TextFormField(
