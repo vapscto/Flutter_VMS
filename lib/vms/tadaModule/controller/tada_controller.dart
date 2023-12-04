@@ -56,12 +56,17 @@ class TADAController {
     approvalTextEditingControllerList.add(textEditingController);
   }
 
+  void addApprovalPercentageList(TextEditingController textEditingController) {
+    percentageListController.add(textEditingController);
+  }
+
   void getEditArray(List<EditArrayTADADataValues> editArray) async {
     if (tadaEditValues.isNotEmpty) {
       tadaEditValues.clear();
       selectedValue.clear();
       textEditingControllerList.clear();
       approvalTextEditingControllerList.clear();
+      percentageListController.clear();
     }
     tadaEditValues.addAll(editArray);
     for (int i = 0; i < editArray.length; i++) {

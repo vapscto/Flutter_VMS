@@ -421,6 +421,42 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
             readOnly: (widget.tadaController.selectedValue[index] == 'Approved')
                 ? false
                 : true,
+            onChanged: (value) {
+              setState(() {
+                if (double.parse(widget
+                        .tadaController.tadaEditValues[index].vTADAAADAmount
+                        .toString()) >=
+                    double.parse(value)) {
+                  double totalAmount = 0;
+                  double totalSactionedAmount = totalAmount;
+                  value = totalSactionedAmount.toStringAsFixed(2);
+                } else {
+                  widget.tadaController.textEditingControllerList
+                      .elementAt(index)
+                      .text = (widget
+                          .tadaController.tadaEditValues[index].vTADAAADAmount)
+                      .toString();
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('Error'),
+                        content: const Text(
+                            'Sanction Amount should not exceed Actual Amount'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              });
+            },
             style: Get.textTheme.titleSmall,
             controller: widget.tadaController.textEditingControllerList
                 .elementAt(index),
