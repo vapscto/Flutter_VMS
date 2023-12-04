@@ -25,7 +25,6 @@ class ApproveLeaveApi {
         "HRELT_Status": status,
         "MI_Id": miId,
         "LoginId": loginId,
-        // "status": status,
         "get_leave_status": getLeaveStatus
       });
       logger.i({
@@ -33,7 +32,6 @@ class ApproveLeaveApi {
         "HRELT_Status": status,
         "MI_Id": miId,
         "LoginId": loginId,
-        // "status": status,
         "get_leave_status": getLeaveStatus
       });
       logger.i(api);
@@ -71,14 +69,12 @@ class ApproveLeaveApi {
     try {
       final Response response =
           await ins.post(api, options: Options(headers: getSession()), data: {
-        "HRELAPA_Remarks": remark,
         "MI_Id": miId,
         "LoginId": loginId,
         "status": status,
         "get_leave_status": getLeaveStatus
       });
       logger.i({
-        "HRELAPA_Remarks": remark,
         "MI_Id": miId,
         "LoginId": loginId,
         "status": status,
