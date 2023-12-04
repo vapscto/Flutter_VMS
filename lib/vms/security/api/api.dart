@@ -19,6 +19,12 @@ Future<int> feacthSecurityApi({
   final String apiUrl =
        base+URLS.Security;
     logger.d("damn ${apiUrl}");
+    logger.d({
+       "UserId": loginSuccessModel.userId,
+      "MI_Id": loginSuccessModel.mIID,
+      "IVRMRT_Id":loginSuccessModel.roleId,
+      "ASMAY_Id": loginSuccessModel.asmaYId,
+     });
    try {
     controller.updateLoading(true);
  
