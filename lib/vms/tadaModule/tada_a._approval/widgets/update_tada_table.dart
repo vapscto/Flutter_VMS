@@ -276,8 +276,8 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                           'headarray': headArray,
                           'VTADAAA_Id': widget.values.vTADAAAId,
                           "MI_Id": widget.values.mIId,
-                          "approvecnt": 1,
-                          "level": 0,
+                          "approvecnt": 0,
+                          "level": widget.values.sanctionLevelNo,
                           "HRME_Id": widget.values.hRMEId,
                           'UserId': widget.values.userId
                         }).then((v) {

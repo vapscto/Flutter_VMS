@@ -265,8 +265,8 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
                       'headarray': headArray,
                       'VTADAA_Id': widget.values.vTADAAId,
                       "MI_Id": widget.values.mIId,
-                      "approvecnt": 1,
-                      "level": 0,
+                      "approvecnt": 0,
+                      "level": widget.values.sanctionLevelNo,
                       "HRME_Id": widget.values.hRMEId,
                       'UserId': widget.values.userId
                     });
@@ -279,8 +279,8 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
                           'headarray': headArray,
                           'VTADAA_Id': widget.values.vTADAAAId,
                           "MI_Id": widget.values.mIId,
-                          "approvecnt": 1,
-                          "level": 0,
+                          "approvecnt": 0,
+                          "level": widget.values.sanctionLevelNo,
                           "HRME_Id": widget.values.hRMEId,
                           'UserId': widget.values.userId
                         }).then((v) {
