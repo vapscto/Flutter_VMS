@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/vms/tadaModule/controller/tada_controller.dart';
-import 'package:m_skool_flutter/vms/tadaModule/model/edit_array_tada.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/controller/tada_controller.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/model/edit_array_tada.dart';
 import '../model/time_array_tada.dart';
 
 class TADADetailsAPI {

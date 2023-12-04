@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/vms/tadaModule/model/check_planner.dart';
-import 'package:m_skool_flutter/vms/tadaModule/model/get_save_data_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/allowence_table_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/city_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/clint_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/state_list_model.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/model/check_planner.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/model/get_save_data_model.dart';
 
 class TadaApplyController extends GetxController {
   RxBool isStateLoading = RxBool(false);

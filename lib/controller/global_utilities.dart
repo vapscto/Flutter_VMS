@@ -55,13 +55,13 @@ import 'package:m_skool_flutter/vms/salary_details/screen/salary_home_screen.dar
 import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
 import 'package:m_skool_flutter/vms/sales_report/pre_sales/screens/pre_sale_home.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/screen/leave_list_home.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_approval/screens/tada_approval_home.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
 import 'package:m_skool_flutter/vms/petty_cash_requisition/screen/pc_requisition_HOME.dart';
 import 'package:m_skool_flutter/vms/sales_report/screens/sales_report_home_screen.dart';
 import 'package:m_skool_flutter/vms/security/screen/Shome_Screen.dart';
-import 'package:m_skool_flutter/vms/tadaModule/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/screens/tada_advance_aplay_home.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/screens/tada_apply_home_screen.dart';
 import 'package:m_skool_flutter/vms/task%20creation/screens/taskCreationHome.dart';
@@ -70,8 +70,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
-import '../vms/interaction/screen/interaction_home.dart';
-import '../vms/staff_leave_approval/screen/staff_leave_approval_home.dart';
 
 RxInt currentHomeTab = 0.obs;
 RxList<int> previousHomeTab = [0].obs;
@@ -663,8 +661,14 @@ void openMappedPages(
         ));
     return;
   }
+  // if (pageName == 'TADA Approval') {
+  //   Get.to(() => TadaAdvanceApproveScreen(
+  //         loginSuccessModel: loginSuccessModel,
+  //         mskoolController: mskoolController,
+  //       ));
+  // }
   if (pageName == 'TADA Approval') {
-    Get.to(() => TadaAdvanceApproveScreen(
+    Get.to(() => TadaApproveHomeScreen(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
         ));

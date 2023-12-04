@@ -496,10 +496,13 @@ class URLS {
   static String saveTada = 'api/TADA_Advance_ApplyFacade/savedta/';
   static String tadaEdit = 'api/TADA_Advance_ApplyFacade/edit/';
   static String tadaDeactive = 'api/TADA_Advance_ApplyFacade/deactive/';
-  //** TADA Approval APIS **//
+  //** TADA Advance Approval APIS **//
   static String tadaSave = 'api/TADAAdvanceApprovalFacade/savedta';
   static String tadaList = 'api/TADAAdvanceApprovalFacade/getalldata/';
   static String tadaDetails = 'api/TADAAdvanceApprovalFacade/edit';
+  // ** TADA Approval **//
+  static String tadaApprovalList = 'api/TADAApprovalFacade/getalldata/';
+  static String tadaApprovalDetails = 'api/TADAApprovalFacade/edit';
 
   //TADA Apply Apis
   static String stateAndClintList = 'api/TADA_ApplyFacade/getalldata/';

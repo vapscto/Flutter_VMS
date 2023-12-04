@@ -6,11 +6,11 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/vms/tadaModule/apis/save_tada_api.dart';
-import 'package:m_skool_flutter/vms/tadaModule/apis/tada_apply_list_api.dart';
-import 'package:m_skool_flutter/vms/tadaModule/apis/tada_details_api.dart';
-import 'package:m_skool_flutter/vms/tadaModule/controller/tada_controller.dart';
-import 'package:m_skool_flutter/vms/tadaModule/model/tada_apply_list.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/apis/save_tada_api.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/apis/tada_apply_list_api.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/apis/tada_details_api.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/controller/tada_controller.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/model/tada_apply_list.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 

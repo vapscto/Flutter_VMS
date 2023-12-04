@@ -3,36 +3,37 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/vms/tadaModule/apis/tada_details_api.dart';
-import 'package:m_skool_flutter/vms/tadaModule/controller/tada_controller.dart';
-import 'package:m_skool_flutter/vms/tadaModule/model/tada_apply_list.dart';
-import 'package:m_skool_flutter/vms/tadaModule/widgets/update_tada_table.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/widgets/update_tada_table.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_approval/api/tada_approval_details.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_approval/controller/tada_approval_controller.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_list_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
-class TADADetailsScreen extends StatefulWidget {
+class TADAApprovalDetailsScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  final TADAController tadaController;
-  final int vtadaaaId;
-  final GetadvancetadaValues values;
+  final TadaApprovalController tadaController;
+  final int vtadaaId;
+  final TadaApprovalListModelValues values;
 
   final String date;
-  const TADADetailsScreen(
+  const TADAApprovalDetailsScreen(
       {super.key,
       required this.tadaController,
       required this.date,
-      required this.vtadaaaId,
+      required this.vtadaaId,
       required this.values,
       required this.loginSuccessModel,
       required this.mskoolController});
 
   @override
-  State<TADADetailsScreen> createState() => _TADADetailsScreenState();
+  State<TADAApprovalDetailsScreen> createState() =>
+      _TADAApprovalDetailsScreenState();
 }
 
-class _TADADetailsScreenState extends State<TADADetailsScreen> {
+class _TADAApprovalDetailsScreenState extends State<TADAApprovalDetailsScreen> {
   final remarkController = TextEditingController();
   final sanctionController = TextEditingController();
   String fromDate = '';
@@ -43,20 +44,20 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
   var day;
   _getData() async {
     widget.tadaController.updateIsLoading(true);
-    await TADADetailsAPI.instance.tadaDetails(
+    await TADAApprovalDetailsAPI.instance.tadaDetails(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         userId: widget.values.userId!,
         tadaController: widget.tadaController,
-        vtaDaaaId: widget.vtadaaaId);
+        vtaDaaId: widget.vtadaaId);
     setState(() {
-      DateTime dt = DateTime.parse(widget.values.vTADAAAFromDate!);
+      DateTime dt = DateTime.parse(widget.values.vTADAAFromDate!);
       fromDate = '${dt.day}-${dt.month}-${dt.year}';
-      DateTime toDt = DateTime.parse(widget.values.vTADAAAToDate!);
+      DateTime toDt = DateTime.parse(widget.values.vTADAAToDate!);
       toDate = '${toDt.day}-${toDt.month}-${toDt.year}';
-      DateTime dt1 = DateTime.parse(widget.values.vTADAAAFromDate!);
-      DateTime dt2 = DateTime.parse(widget.values.vTADAAAToDate!);
+      DateTime dt1 = DateTime.parse(widget.values.vTADAAFromDate!);
+      DateTime dt2 = DateTime.parse(widget.values.vTADAAToDate!);
       Duration diff = dt1.difference(dt2);
-      day = diff.inDays;
+      day = diff.inDays + 1;
     });
     widget.tadaController.updateIsLoading(false);
   }
@@ -75,7 +76,7 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
     return Obx(() {
       return Scaffold(
         appBar: const CustomAppBar(title: "TADA advance details").getAppBar(),
-        body: widget.tadaController.isLoading.value
+        body: widget.tadaController.isDetailsLoading.value
             ? const Center(
                 child: AnimatedProgressWidget(
                     title: "Loading",
@@ -181,7 +182,7 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
                                       fontWeight: FontWeight.w600,
                                       color: Theme.of(context).primaryColor)),
                               TextSpan(
-                                  text: widget.values.vTADAAATotalAppliedAmount
+                                  text: widget.values.vTADAATotalAppliedAmount
                                       .toString(),
                                   style: Get.textTheme.titleSmall!
                                       .copyWith(fontWeight: FontWeight.w400)),
@@ -196,7 +197,7 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
                                       fontWeight: FontWeight.w600,
                                       color: Theme.of(context).primaryColor)),
                               TextSpan(
-                                  text: widget.values.vTADAAARemarks ?? "N/a",
+                                  text: widget.values.vTADAARemarks ?? "N/a",
                                   style: Get.textTheme.titleSmall!
                                       .copyWith(fontWeight: FontWeight.w400)),
                             ]),
@@ -224,13 +225,13 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
                                       fontWeight: FontWeight.w600,
                                       color: Theme.of(context).primaryColor)),
                               TextSpan(
-                                  text: widget.values.vTADAAAToAddress ?? "N/a",
+                                  text: widget.values.vTADAAToAddress ?? "N/a",
                                   style: Get.textTheme.titleSmall!
                                       .copyWith(fontWeight: FontWeight.w400)),
                             ]),
                           ),
                           const SizedBox(height: 10),
-                          widget.tadaController.newTimeArray.isNotEmpty
+                          widget.tadaController.timeArray.isNotEmpty
                               ? Obx(() {
                                   return SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
@@ -254,7 +255,7 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
                   const SizedBox(
                     height: 16,
                   ),
-                  (widget.tadaController.tadaEditValues.isEmpty)
+                  (widget.tadaController.timeArray.isEmpty)
                       ? const SizedBox()
                       : SizedBox(
                           width: MediaQuery.of(context).size.width,
@@ -262,13 +263,13 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
                             padding: const EdgeInsets.all(12.0),
                             child: Column(
                               children: [
-                                UpdateTADATable(
-                                  tadaController: widget.tadaController,
-                                  amount:
-                                      widget.values.vTADAAAASactionedAmount!,
-                                  values: widget.values,
-                                  mskoolController: widget.mskoolController,
-                                ),
+                                // UpdateTADATable(
+                                //   tadaController: widget.tadaController,
+                                //   amount:
+                                //       widget.values.vTADAAAASactionedAmount!,
+                                //   values: widget.values,
+                                //   mskoolController: widget.mskoolController,
+                                // ),
                               ],
                             ),
                           ),
@@ -309,26 +310,14 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
   }
 
   List<DataRow> createRow() {
-    return List.generate(widget.tadaController.newTimeArray.length, (index) {
+    return List.generate(widget.tadaController.timeArray.length, (index) {
       var value = index + 1;
-      // TimeOfDay startTime = TimeOfDay(
-      //     hour: int.parse(widget
-      //         .tadaController.newTimeArray[index].vtadaaADepartureTime!
-      //         .split(":")[0]),
-      //     minute: int.parse(widget
-      //         .tadaController.newTimeArray[index].vtadaaADepartureTime!
-      //         .split(":")[1]));
+
       var dTime =
-          '${widget.tadaController.newTimeArray[index].vtadaaADepartureTime}';
-      // TimeOfDay endTime0 = TimeOfDay(
-      //     hour: int.parse(widget
-      //         .tadaController.newTimeArray[index].vtadaaAArrivalTime!
-      //         .split(":")[0]),
-      //     minute: int.parse(widget
-      //         .tadaController.newTimeArray[index].vtadaaAArrivalTime!
-      //         .split(":")[1]));
+          '${widget.tadaController.timeArray[index].vtadaADepartureTime}';
+
       var endTime =
-          '${widget.tadaController.newTimeArray[index].vtadaaAArrivalTime}';
+          '${widget.tadaController.timeArray[index].vtadaAArrivalTime}';
       return DataRow(cells: [
         DataCell(Text(value.toString())),
         DataCell(Text(widget.values.cityName ?? "")),
