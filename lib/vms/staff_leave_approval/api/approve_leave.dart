@@ -72,7 +72,6 @@ class ApproveLeaveApi {
       final Response response =
           await ins.post(api, options: Options(headers: getSession()), data: {
         "HRELAPA_Remarks": remark,
-        // "HRELT_Status": status,
         "MI_Id": miId,
         "LoginId": loginId,
         "status": status,
@@ -80,7 +79,6 @@ class ApproveLeaveApi {
       });
       logger.i({
         "HRELAPA_Remarks": remark,
-        // "HRELT_Status": status,
         "MI_Id": miId,
         "LoginId": loginId,
         "status": status,

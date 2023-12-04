@@ -274,8 +274,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                (value.hRELAPSupportingDocument != 'undefined' ||
-                        value.hRELAPSupportingDocument != 0)
+                (value.hRELAPSupportingDocument != 'undefined')
                     ? Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: InkWell(
@@ -543,7 +542,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                                                     height: 6.0,
                                                                   ),
                                                                   const Text(
-                                                                      "I approved all leaves that you told me to do.. "),
+                                                                      "I approved leaves that you told me to do.. "),
                                                                   const SizedBox(
                                                                     height: 6.0,
                                                                   ),
@@ -554,10 +553,10 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                                                           () {
                                                                         Navigator.pop(
                                                                             context);
-                                                                        //Navigator.pop(
-                                                                        //context);
-                                                                        // Navigator.pop(
-                                                                        //     context);
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                        Navigator.pop(
+                                                                            context);
                                                                       })
                                                                 ],
                                                               ),
@@ -819,7 +818,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                               title: "Ok UnderStood",
                               onPress: () {
                                 Navigator.pop(context);
-                                // Navigator.pop(context);
+                                Navigator.pop(context);
                               })
                         ],
                       ),
@@ -841,7 +840,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                   children: const [
                     AnimatedProgressWidget(
                         title: "Rejecting  Leave",
-                        desc: "We are in process to reject all the leaves...",
+                        desc: "We are in process to reject  the leave...",
                         animationPath: "assets/json/default.json"),
                   ],
                 );

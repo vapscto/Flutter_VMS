@@ -574,7 +574,7 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
                               onPress: () {
                                 Navigator.pop(context);
                                 Navigator.pop(context);
-                                Navigator.pop(context);
+                                // Navigator.pop(context);
                               })
                         ],
                       ),
@@ -595,8 +595,8 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: const [
                     AnimatedProgressWidget(
-                        title: "Approving All Leaves",
-                        desc: "We are in process to approve all the leaves...",
+                        title: "Rejecting All Leaves",
+                        desc: "We are in process to reject all the leaves...",
                         animationPath: "assets/json/default.json"),
                   ],
                 );
