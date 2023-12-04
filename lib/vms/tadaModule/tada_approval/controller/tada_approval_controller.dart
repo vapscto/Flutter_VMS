@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/file_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_edit_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_time.dart';
@@ -41,9 +43,50 @@ class TadaApprovalController extends GetxController {
   void getEditArray(List<TadaApprovaEditArrayModelValues> time) {
     if (editArrayList.isNotEmpty) {
       editArrayList.clear();
+      selectedValue.clear();
+      textEditingControllerList.clear();
+      approvalTextEditingControllerList.clear();
+      percentageListController.clear();
     }
-    for (int i = 0; i < time.length; i++) {
-      editArrayList.add(time.elementAt(i));
+    editArrayList.addAll(time);
+    for (int i = 0; i < editArrayList.length; i++) {
+      textEditingControllerList.add(TextEditingController(
+          text: editArrayList[i].vTADAAAHSactionedAmount.toString()));
+      selectedValue.add(editArrayList[i].vTADAAStatusFlg.toString());
+    }
+  }
+
+  RxList<TextEditingController> textEditingControllerList =
+      <TextEditingController>[].obs;
+  RxList<TextEditingController> approvalTextEditingControllerList =
+      <TextEditingController>[].obs;
+  RxList<TextEditingController> percentageListController =
+      <TextEditingController>[].obs;
+  List<String> selectedValue = [];
+  void addToSelectedValueList(List<String> value) {
+    selectedValue.add(value.toString());
+  }
+
+  void addToTextEditingList(TextEditingController textEditingController) {
+    textEditingControllerList.add(textEditingController);
+  }
+
+  void addApprovalTextEditingList(TextEditingController textEditingController) {
+    approvalTextEditingControllerList.add(textEditingController);
+  }
+
+  void addApprovalPercentageList(TextEditingController textEditingController) {
+    percentageListController.add(textEditingController);
+  }
+
+  RxList<TadaApprovaFileModelValues> tadaApprovalFileList =
+      <TadaApprovaFileModelValues>[].obs;
+  void getFileList(List<TadaApprovaFileModelValues> tadaApprovalFile) {
+    if (tadaApprovalFileList.isNotEmpty) {
+      tadaApprovalFileList.clear();
+    }
+    for (int i = 0; i < tadaApprovalFile.length; i++) {
+      tadaApprovalFileList.add(tadaApprovalFile.elementAt(i));
     }
   }
 }

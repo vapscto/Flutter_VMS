@@ -503,6 +503,7 @@ class URLS {
   // ** TADA Approval **//
   static String tadaApprovalList = 'api/TADAApprovalFacade/getalldata/';
   static String tadaApprovalDetails = 'api/TADAApprovalFacade/edit';
+  static String tadaApprovalSave = 'api/TADAApprovalFacade/savedta';
 
   //TADA Apply Apis
   static String stateAndClintList = 'api/TADA_ApplyFacade/getalldata/';

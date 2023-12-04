@@ -34,9 +34,9 @@ class TadaApprovalTimeArrayModelValues {
   int? vtadaAClientId;
   String? vtadaAToAddress;
   String? vtadaARemarks;
-  int? vtadaATotalAppliedAmount;
-  int? vtadaATotalSactionedAmount;
-  int? vtadaATotalPaidAmount;
+  double? vtadaATotalAppliedAmount;
+  double? vtadaATotalSactionedAmount;
+  double? vtadaATotalPaidAmount;
   String? vtadaAStatusFlg;
   bool? vtadaAActiveFlg;
   int? vtadaACreatedBy;

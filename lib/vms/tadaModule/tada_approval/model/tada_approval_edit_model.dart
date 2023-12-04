@@ -28,10 +28,10 @@ class TadaApprovaEditArrayModelValues {
   String? type;
   int? mIId;
   String? mIName;
-  int? vTADACMAccommodationAmt;
-  int? vTADACMTransportAmt;
-  int? vTADACMFoodAmt;
-  int? vTADACMTravelHour;
+  double? vTADACMAccommodationAmt;
+  double? vTADACMTransportAmt;
+  double? vTADACMFoodAmt;
+  double? vTADACMTravelHour;
   int? vTADAAId;
   int? hRMEId;
   String? vTADAAToAddress;
@@ -41,9 +41,9 @@ class TadaApprovaEditArrayModelValues {
   String? vTADAARemarks;
   int? vTADAAClientId;
   int? iVRMMCTId;
-  int? vTADAATotalAppliedAmount;
-  int? vTADAATotalSactionedAmount;
-  int? vTADAATotalPaidAmount;
+  double? vTADAATotalAppliedAmount;
+  double? vTADAATotalSactionedAmount;
+  double? vTADAATotalPaidAmount;
   String? vTADAAStatusFlg;
   int? userId;
   int? sanctionLevelNo;
@@ -52,11 +52,11 @@ class TadaApprovaEditArrayModelValues {
   String? iVRMMCTName;
   int? vTADAADId;
   String? vTADAADExpenditureHead;
-  int? vTADAADAmount;
-  int? vTADAAAHSactionedAmount;
+  double? vTADAADAmount;
+  double? vTADAAAHSactionedAmount;
   String? vTADAADRemarks;
-  int? vTADAADSlots;
-  int? vTADAADTotalslots;
+  dynamic vTADAADSlots;
+  dynamic vTADAADTotalslots;
   int? hCNT;
 
   TadaApprovaEditArrayModelValues(

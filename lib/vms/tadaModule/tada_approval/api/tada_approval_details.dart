@@ -3,6 +3,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/controller/tada_approval_controller.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/file_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_edit_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_time.dart';
 
@@ -37,6 +38,11 @@ class TADAApprovalDetailsAPI {
         TadaApprovaEditArrayModel editArrayTADAData =
             TadaApprovaEditArrayModel.fromJson(response.data['editArray']);
         tadaController.getEditArray(editArrayTADAData.values!);
+        if (response.data['getFile'] != null) {
+          TadaApprovaFileModel tadaApprovaFileModel =
+              TadaApprovaFileModel.fromJson(response.data['getFile']);
+          tadaController.getFileList(tadaApprovaFileModel.values!);
+        }
       }
     } catch (e) {
       logger.e(e);

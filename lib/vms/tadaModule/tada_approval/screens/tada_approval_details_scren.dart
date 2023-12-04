@@ -7,9 +7,11 @@ import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/widgets/update_t
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/api/tada_approval_details.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/controller/tada_approval_controller.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_list_model.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_approval/widgets/tada_approval_table.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:open_filex/open_filex.dart';
 
 class TADAApprovalDetailsScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -230,6 +232,19 @@ class _TADAApprovalDetailsScreenState extends State<TADAApprovalDetailsScreen> {
                                       .copyWith(fontWeight: FontWeight.w400)),
                             ]),
                           ),
+                          widget.tadaController.tadaApprovalFileList.isNotEmpty
+                              ? const SizedBox(height: 10)
+                              : const SizedBox(),
+                          widget.tadaController.tadaApprovalFileList.isNotEmpty
+                              ? Obx(() {
+                                  return SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: _createFileTable()),
+                                  );
+                                })
+                              : const SizedBox(),
                           const SizedBox(height: 10),
                           widget.tadaController.timeArray.isNotEmpty
                               ? Obx(() {
@@ -263,13 +278,13 @@ class _TADAApprovalDetailsScreenState extends State<TADAApprovalDetailsScreen> {
                             padding: const EdgeInsets.all(12.0),
                             child: Column(
                               children: [
-                                // UpdateTADATable(
-                                //   tadaController: widget.tadaController,
-                                //   amount:
-                                //       widget.values.vTADAAAASactionedAmount!,
-                                //   values: widget.values,
-                                //   mskoolController: widget.mskoolController,
-                                // ),
+                                UpdateTADATableData(
+                                  tadaController: widget.tadaController,
+                                  amount:
+                                      widget.values.vTADAAAASactionedAmount!,
+                                  values: widget.values,
+                                  mskoolController: widget.mskoolController,
+                                ),
                               ],
                             ),
                           ),
@@ -326,6 +341,60 @@ class _TADAApprovalDetailsScreenState extends State<TADAApprovalDetailsScreen> {
         DataCell(Text(dTime)),
         DataCell(Text(toDate)),
         DataCell(Text(endTime)),
+      ]);
+    });
+  }
+
+  DataTable _createFileTable() {
+    return DataTable(
+        dataRowHeight: 35,
+        headingRowHeight: 40,
+        columnSpacing: 20,
+        headingTextStyle: const TextStyle(color: Colors.white),
+        border: TableBorder.all(
+          color: Colors.black,
+          width: 0.6,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        headingRowColor: MaterialStateColor.resolveWith(
+            (states) => Theme.of(context).primaryColor),
+        columns: createFileColumn(),
+        rows: createFileRow());
+  }
+
+  List<DataColumn> createFileColumn() {
+    return const [
+      DataColumn(label: Text("SL.NO.")),
+      DataColumn(label: Text("File Name")),
+      DataColumn(label: Text("DR View")),
+      DataColumn(label: Text("Files")),
+    ];
+  }
+
+  List<DataRow> createFileRow() {
+    return List.generate(widget.tadaController.tadaApprovalFileList.length,
+        (index) {
+      var value = index + 1;
+      var v = widget.tadaController.tadaApprovalFileList.elementAt(index);
+      return DataRow(cells: [
+        DataCell(Text(value.toString())),
+        DataCell(Text(v.vtadaaFFileName ?? '')),
+        DataCell(Text(v.vtadaaFRemarks ?? '')),
+        DataCell((v.vtadaaFFilePath != null)
+            ? InkWell(
+                onTap: () {
+                  setState(() {
+                    (v.vtadaaFFilePath!.contains("https:/"))
+                        ? createPreview(context, v.vtadaaFFilePath!)
+                        : OpenFilex.open(v.vtadaaFFilePath!);
+                  });
+                },
+                child: Text(
+                  "View",
+                  style: Get.textTheme.titleMedium!.copyWith(color: Colors.red),
+                ),
+              )
+            : const Text("")),
       ]);
     });
   }

@@ -245,11 +245,14 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                     Fluttertoast.showToast(
                         msg: "Please Enter Approval or Reject Remarks");
                   } else {
+                    headArray.clear();
                     for (int i = 0;
                         i < widget.tadaController.tadaEditValues.length;
                         i++) {
                       headArray.add({
-                        'VTADAAAD_Id': widget.values.vTADAAAId,
+                        'VTADAAAD_Id': widget.tadaController.tadaEditValues
+                            .elementAt(i)
+                            .vTADAAAId,
                         "VTADAAAAH_SactionedAmount": widget
                             .tadaController.textEditingControllerList
                             .elementAt(i)
@@ -273,7 +276,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                           'headarray': headArray,
                           'VTADAAA_Id': widget.values.vTADAAAId,
                           "MI_Id": widget.values.mIId,
-                          "approvecnt": 0,
+                          "approvecnt": 1,
                           "level": 0,
                           "HRME_Id": widget.values.hRMEId,
                           'UserId': widget.values.userId
