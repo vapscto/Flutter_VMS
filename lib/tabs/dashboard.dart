@@ -211,15 +211,28 @@ class DashboardTab extends StatelessWidget {
                                   const SizedBox(
                                     height: 6.0,
                                   ),
-                                  Text(
-                                    loginSuccessModel
-                                            .staffmobileappprivileges!.values!
-                                            .elementAt(index)
-                                            .pagename ??
-                                        "N/a",
-                                    textAlign: TextAlign.center,
-                                    maxLines: 2,
-                                  )
+                                  (loginSuccessModel
+                                              .staffmobileappprivileges!.values!
+                                              .elementAt(index)
+                                              .pagename ==
+                                          'TADA Advance Approval')
+                                      ? const Text(
+                                          'TADA Ad. Approval',
+                                          textAlign: TextAlign.center,
+                                          maxLines: 2,
+                                        )
+                                      : Text(
+                                          loginSuccessModel
+                                                  .staffmobileappprivileges!
+                                                  .values!
+                                                  .elementAt(index)
+                                                  .pagename ??
+                                              "N/a",
+                                          textAlign: TextAlign.center,
+                                          maxLines: 2,
+                                        ),
+
+                                  // )
                                 ],
                               ),
                             ),
