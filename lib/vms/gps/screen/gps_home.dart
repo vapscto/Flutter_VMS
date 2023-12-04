@@ -79,7 +79,7 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
       appBar: AppBar(
         titleSpacing: 0,
         leading: const CustomGoBackButton(),
-        title: const Text('Gps Attendence'),
+        title: const Text('GPS Attendance'),
         actions: [
           Padding(
             padding:

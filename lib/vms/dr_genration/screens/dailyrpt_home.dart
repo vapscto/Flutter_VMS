@@ -99,7 +99,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("DR Genration"),
+        title: const Text("DR Generation"),
         titleSpacing: 0,
         leading: const CustomGoBackButton(),
       ),
