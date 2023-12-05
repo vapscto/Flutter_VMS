@@ -6,8 +6,6 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/manager/coe/screen/manager_coe.dart';
-import 'package:m_skool_flutter/manager/employee_details/screens/employee_details_home_screen.dart';
 import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/model/notification_model.dart';
@@ -642,15 +640,6 @@ class NotificationScreen extends StatelessWidget {
       return;
     }
 
-    if (s.toLowerCase().contains("employee")) {
-      Get.to(
-        () => EmployeeDetailsHomeScreen(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ),
-      );
-      return;
-    }
     if (s.toLowerCase().contains("notice")) {
       Get.to(() => NoticeBoardStaffHome(
             loginSuccessModel: loginSuccessModel,
@@ -675,18 +664,7 @@ class NotificationScreen extends StatelessWidget {
 
       return;
     }
-    if (s.toLowerCase().contains("coe")) {
-      Navigator.push(context, MaterialPageRoute(builder: (_) {
-        return ManagerCoeHome(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-          title: "Coe",
-          formDashboard: true,
-        );
-      }));
 
-      return;
-    }
     if (s.toLowerCase().contains("Interaction")) {
       if (redirectUrl == "InteractionReply" && transactionId.toInt() != 0) {
         logger.d("NO-> $transactionId");

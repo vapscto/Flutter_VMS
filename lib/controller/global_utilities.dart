@@ -12,10 +12,7 @@ import 'package:get_ip_address/get_ip_address.dart';
 import 'package:m_skool_flutter/apis/version_control_api.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/manager/feedemo/screen/fee_home.dart';
-import 'package:m_skool_flutter/manager/feehead/screen/fee_details_home.dart';
 import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
-import 'package:m_skool_flutter/manager/staff_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/model/categories_api_item.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
@@ -44,13 +41,11 @@ import 'package:m_skool_flutter/vms/health_chequeup/screens/healtha_check_up.dar
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/online_leave/screen/apply_leave_home.dart';
-import 'package:m_skool_flutter/vms/online_leave/screen/online_leave_home.dart';
 import 'package:m_skool_flutter/vms/petty_indent_approval/screen/pc_Indent_Approval_HOME.dart';
 import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/vms/rating_report/screen/rating_report_home.dart';
 import 'package:m_skool_flutter/vms/salary_details/screen/salary_home_screen.dart';
 import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
-import 'package:m_skool_flutter/vms/sales_report/pre_sales/screens/pre_sale_home.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/screen/leave_list_home.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/screens/tada_approval_home.dart';
@@ -877,16 +872,6 @@ void openMappedPages(
 
     return;
   }
-
-  if (pageName == "Staff Birthday Report") {
-    Get.to(
-      () => StaffBdayHome(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-      ),
-    );
-    return;
-  }
   if (pageName == "Health Checkup") {
     Get.to(
       () => HomeHCheckup(
@@ -896,16 +881,16 @@ void openMappedPages(
     );
     return;
   }
-  if (pageName == "Fee Details") {
-    Get.to(
-      () => FeeDemoHome(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-        controller: mskoolController,
-      ),
-    );
-    return;
-  }
+  // if (pageName == "Fee Details") {
+  //   Get.to(
+  //     () => FeeDemoHome(
+  //       loginSuccessModel: loginSuccessModel,
+  //       mskoolController: mskoolController,
+  //       controller: mskoolController,
+  //     ),
+  //   );
+  //   return;
+  // }
 
   // if (pageName == "Employee Salary Report") {
   //   Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -916,15 +901,15 @@ void openMappedPages(
   //   }));
   //   return;
   // }
-  if (pageName == "Fee head Wise Details") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return FeeDetailsScreen(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-      );
-    }));
-    return;
-  }
+  // if (pageName == "Fee head Wise Details") {
+  //   Navigator.push(context, MaterialPageRoute(builder: (_) {
+  //     return FeeDetailsScreen(
+  //       loginSuccessModel: loginSuccessModel,
+  //       mskoolController: mskoolController,
+  //     );
+  //   }));
+  //   return;
+  // }
   if (pageName == "Staff in and Out") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return EmployeepunchHome(

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/screens/forgot_password_screen.dart';
-import 'package:m_skool_flutter/manager/coe/screen/manager_coe.dart';
 import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
@@ -113,26 +112,26 @@ class ManagerDashboardDrawer extends StatelessWidget {
 
                               return;
                             }
-                            if (loginSuccessModel
-                                    .staffmobileappprivileges!.values!
-                                    .elementAt(index)
-                                    .pagename ==
-                                "COE Report") {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (_) {
-                                return ManagerCoeHome(
-                                  loginSuccessModel: loginSuccessModel,
-                                  mskoolController: mskoolController,
-                                  title: loginSuccessModel
-                                      .staffmobileappprivileges!.values!
-                                      .elementAt(index)
-                                      .pagename!,
-                                  formDashboard: true,
-                                );
-                              }));
+                            // if (loginSuccessModel
+                            //         .staffmobileappprivileges!.values!
+                            //         .elementAt(index)
+                            //         .pagename ==
+                            //     "COE Report") {
+                            //   Navigator.push(context,
+                            //       MaterialPageRoute(builder: (_) {
+                            //     return ManagerCoeHome(
+                            //       loginSuccessModel: loginSuccessModel,
+                            //       mskoolController: mskoolController,
+                            //       title: loginSuccessModel
+                            //           .staffmobileappprivileges!.values!
+                            //           .elementAt(index)
+                            //           .pagename!,
+                            //       formDashboard: true,
+                            //     );
+                            //   }));
 
-                              return;
-                            }
+                            //   return;
+                            // }
                           },
                           leading: Container(
                             decoration: const BoxDecoration(

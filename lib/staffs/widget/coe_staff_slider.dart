@@ -5,10 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/coe/screens/coe_home.dart';
 import 'package:m_skool_flutter/staffs/model/dashboard_coe_data_model.dart';
-
-import '../../manager/coe/screen/manager_coe.dart';
 
 class CoeStaffSlider extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -26,20 +23,20 @@ class CoeStaffSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return forManager != null
-              ? ManagerCoeHome(
-                  formDashboard: true,
-                  loginSuccessModel: loginSuccessModel,
-                  mskoolController: mskoolController,
-                  title: 'Coe',
-                )
-              : StaffCoeHome(
-                  loginSuccessModel: loginSuccessModel,
-                  mskoolController: mskoolController,
-                  title: 'COE',
-                );
-        }));
+        // Navigator.push(context, MaterialPageRoute(builder: (_) {
+        //   return forManager != null
+        //       ? ManagerCoeHome(
+        //           formDashboard: true,
+        //           loginSuccessModel: loginSuccessModel,
+        //           mskoolController: mskoolController,
+        //           title: 'Coe',
+        //         )
+        //       : StaffCoeHome(
+        //           loginSuccessModel: loginSuccessModel,
+        //           mskoolController: mskoolController,
+        //           title: 'COE',
+        //         );
+        // }));
       },
       child: Card(
         elevation: 5,
