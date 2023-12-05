@@ -5,10 +5,9 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/screens/forgot_password_screen.dart';
 import 'package:m_skool_flutter/manager/coe/screen/manager_coe.dart';
 import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
-import 'package:m_skool_flutter/manager/staff_leave_approval/screen/staff_leave_approval_home.dart';
-import 'package:m_skool_flutter/manager/student_details/screen/student_details_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
+import 'package:m_skool_flutter/vms/staff_leave_approval/screen/leave_list_home.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
 import '../../forgotpassword/screens/reset_password.dart';
@@ -43,17 +42,17 @@ class ManagerDashboardDrawer extends StatelessWidget {
                                     .elementAt(index)
                                     .pagename ==
                                 "Student Birth Day Report") {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (_) {
-                                return ManagerStudentDetails(
-                                  loginSuccessModel: loginSuccessModel,
-                                  mskoolController: mskoolController,
-                                  title: loginSuccessModel
-                                      .staffmobileappprivileges!.values!
-                                      .elementAt(index)
-                                      .pagename!,
-                                );
-                              }));
+                              // Navigator.push(context,
+                              //     MaterialPageRoute(builder: (_) {
+                              //   return ManagerStudentDetails(
+                              //     loginSuccessModel: loginSuccessModel,
+                              //     mskoolController: mskoolController,
+                              //     title: loginSuccessModel
+                              //         .staffmobileappprivileges!.values!
+                              //         .elementAt(index)
+                              //         .pagename!,
+                              //   );
+                              // }));
 
                               return;
                             }
@@ -64,7 +63,7 @@ class ManagerDashboardDrawer extends StatelessWidget {
                                 "Leave Approval Staff") {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (_) {
-                                return StaffLeaveApproval(
+                                return ListLeaveHomeScreen(
                                   loginSuccessModel: loginSuccessModel,
                                   mskoolController: mskoolController,
                                   title: loginSuccessModel

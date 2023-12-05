@@ -12,13 +12,10 @@ import 'package:get_ip_address/get_ip_address.dart';
 import 'package:m_skool_flutter/apis/version_control_api.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/manager/employee_salary/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/manager/feedemo/screen/fee_home.dart';
 import 'package:m_skool_flutter/manager/feehead/screen/fee_details_home.dart';
 import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/manager/staff_birthday/screens/bday_home.dart';
-import 'package:m_skool_flutter/manager/student_details/screen/student_details_home.dart';
-import 'package:m_skool_flutter/manager/time_table/screen/manager_time_table_home.dart';
 import 'package:m_skool_flutter/model/categories_api_item.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
@@ -806,17 +803,6 @@ void openMappedPages(
     return;
   }
 
-  if (pageName == "Student") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return ManagerStudentDetails(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-        title: pageName,
-      );
-    }));
-
-    return;
-  }
   if (pageName == "Visitor management") {
     Get.to(() => VisitorManagementHome(
           loginSuccessModel: loginSuccessModel,
@@ -921,15 +907,15 @@ void openMappedPages(
     return;
   }
 
-  if (pageName == "Employee Salary Report") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return EmployeeSalHome(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-      );
-    }));
-    return;
-  }
+  // if (pageName == "Employee Salary Report") {
+  //   Navigator.push(context, MaterialPageRoute(builder: (_) {
+  //     return EmployeeSalHome(
+  //       loginSuccessModel: loginSuccessModel,
+  //       mskoolController: mskoolController,
+  //     );
+  //   }));
+  //   return;
+  // }
   if (pageName == "Fee head Wise Details") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return FeeDetailsScreen(
@@ -946,22 +932,6 @@ void openMappedPages(
         mskoolController: mskoolController,
       );
     }));
-    return;
-  }
-
-  if (pageName == "Staff Time Table") {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) {
-          return ManagerTimeTableHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            //forHw: true,
-          );
-        },
-      ),
-    );
     return;
   }
 }

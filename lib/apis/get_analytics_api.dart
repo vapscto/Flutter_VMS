@@ -9,7 +9,6 @@ import 'package:m_skool_flutter/manager/model/manager_dashboard_fee_details.dart
 import 'package:m_skool_flutter/manager/model/manager_dashboard_fee_model.dart';
 import 'package:m_skool_flutter/manager/model/manager_dashboard_leaves_details.dart';
 import 'package:m_skool_flutter/manager/model/manager_dashboard_preadmission.dart';
-import 'package:m_skool_flutter/manager/staff_leave_approval/screen/staff_leave_approval_home.dart';
 import 'package:m_skool_flutter/model/exam_list.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/model/staff_analytics_privilages.dart';
@@ -19,6 +18,7 @@ import 'package:m_skool_flutter/staffs/model/dashboard_leave_model.dart';
 import 'package:m_skool_flutter/staffs/model/dashboard_lop_model.dart';
 import 'package:m_skool_flutter/staffs/model/dashboard_punch_report_model.dart';
 import 'package:m_skool_flutter/staffs/model/dashboard_tt_model.dart';
+import 'package:m_skool_flutter/vms/staff_leave_approval/screen/leave_list_home.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class GetAnalyticsApi {
@@ -246,7 +246,7 @@ class GetAnalyticsApi {
                           onPress: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (_) {
-                              return StaffLeaveApproval(
+                              return ListLeaveHomeScreen(
                                 loginSuccessModel: loginSuccessModel,
                                 mskoolController: mskoolController,
                                 title: 'Leave Approval',

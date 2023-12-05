@@ -4,7 +4,6 @@ import 'package:m_skool_flutter/controller/dynamic_analytics_controller.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/manager/employee_details/screens/employee_details_home_screen.dart';
-import 'package:m_skool_flutter/manager/student_details/screen/student_details_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -75,16 +74,16 @@ class DashboardTab extends StatelessWidget {
                                       child: CustomContainer(
                                         child: InkWell(
                                           onTap: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder: (_) {
-                                              return ManagerStudentDetails(
-                                                loginSuccessModel:
-                                                    loginSuccessModel,
-                                                mskoolController:
-                                                    mskoolController,
-                                                title: 'Student Details',
-                                              );
-                                            }));
+                                            // Navigator.push(context,
+                                            //     MaterialPageRoute(builder: (_) {
+                                            //   return ManagerStudentDetails(
+                                            //     loginSuccessModel:
+                                            //         loginSuccessModel,
+                                            //     mskoolController:
+                                            //         mskoolController,
+                                            //     title: 'Student Details',
+                                            //   );
+                                            // }));
                                           },
                                           child: Container(
                                             padding: const EdgeInsets.all(8.0),

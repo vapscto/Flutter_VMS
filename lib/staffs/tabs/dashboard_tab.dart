@@ -16,7 +16,6 @@ import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dar
 import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
 import 'package:m_skool_flutter/staffs/salary_slip/screen/salary_slip_home.dart';
-import 'package:m_skool_flutter/staffs/staff_tt/screens/staff_tt_home.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/student_attendance_staff_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
@@ -344,28 +343,7 @@ class Dashboard extends StatelessWidget {
                       );
                       return;
                     }
-                    if (loginSuccessModel.staffmobileappprivileges!.values!
-                            .elementAt(index)
-                            .pagename! ==
-                        "Time Table") {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) {
-                            return StaffTTHome(
-                              loginSuccessModel: loginSuccessModel,
-                              mskoolController: mskoolController,
-                              title: loginSuccessModel
-                                  .staffmobileappprivileges!.values!
-                                  .elementAt(index)
-                                  .pagename!,
-                              //forHw: true,
-                            );
-                          },
-                        ),
-                      );
-                      return;
-                    }
+
                     if (loginSuccessModel.staffmobileappprivileges!.values!
                             .elementAt(index)
                             .pagename! ==

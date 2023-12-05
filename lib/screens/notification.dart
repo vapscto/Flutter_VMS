@@ -9,8 +9,6 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/manager/coe/screen/manager_coe.dart';
 import 'package:m_skool_flutter/manager/employee_details/screens/employee_details_home_screen.dart';
 import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
-import 'package:m_skool_flutter/manager/staff_leave_approval/screen/staff_leave_approval_home.dart';
-import 'package:m_skool_flutter/manager/student_details/screen/student_details_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/model/notification_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
@@ -23,7 +21,6 @@ import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_st
 import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dart';
 import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
-import 'package:m_skool_flutter/staffs/staff_tt/screens/staff_tt_home.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/student_attendance_staff_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
@@ -118,7 +115,7 @@ class NotificationScreen extends StatelessWidget {
                           snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
                               0);
                     }
-                     if (openFor.toLowerCase() == "hod") {
+                    if (openFor.toLowerCase() == "hod") {
                       openUsingHeaderForStaff(
                           snapshot.data!
                               .elementAt(index)
@@ -611,22 +608,7 @@ class NotificationScreen extends StatelessWidget {
       );
       return;
     }
-    if (headerName == "Time Table") {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) {
-            return StaffTTHome(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-              title: "${headerName.capitalize}",
-              //forHw: true,
-            );
-          },
-        ),
-      );
-      return;
-    }
+
     if (headerName == "COE") {
       Navigator.push(
         context,
@@ -649,27 +631,17 @@ class NotificationScreen extends StatelessWidget {
   void openUsingHeaderForManager(
       String s, BuildContext context, String redirectUrl, num transactionId) {
     if (s.toLowerCase().contains("student")) {
-      Navigator.push(context, MaterialPageRoute(builder: (_) {
-        return ManagerStudentDetails(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-          title: "Student Details",
-        );
-      }));
+      // Navigator.push(context, MaterialPageRoute(builder: (_) {
+      //   return ManagerStudentDetails(
+      //     loginSuccessModel: loginSuccessModel,
+      //     mskoolController: mskoolController,
+      //     title: "Student Details",
+      //   );
+      // }));
 
       return;
     }
-    if (s.toLowerCase().contains("approval")) {
-      Navigator.push(context, MaterialPageRoute(builder: (_) {
-        return StaffLeaveApproval(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-          title: "Leave Approval Staff",
-        );
-      }));
 
-      return;
-    }
     if (s.toLowerCase().contains("employee")) {
       Get.to(
         () => EmployeeDetailsHomeScreen(

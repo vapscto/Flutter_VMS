@@ -37,13 +37,13 @@ class ManagerDashboardContainer extends StatelessWidget {
               ? const SizedBox()
               : DashboardFeeChart(dashboardController: dashboardController);
         }),
-        Obx(() {
-          return dashboardController.preAdmission.isEmpty
-              ? const SizedBox()
-              : DashboardPreAdmissionWidget(
-                  dashboardController: dashboardController,
-                );
-        })
+        // Obx(() {
+        //   return dashboardController.preAdmission.isEmpty
+        //       ? const SizedBox()
+        //       : DashboardPreAdmissionWidget(
+        //           dashboardController: dashboardController,
+        //         );
+        // })
       ],
     );
   }

@@ -14,8 +14,6 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/model/dashboard_coe_data_model.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
-import '../staff_leave_approval/screen/staff_leave_approval_home.dart';
-
 class ManagerDashboardApi {
   ManagerDashboardApi.init();
   static final ManagerDashboardApi instance = ManagerDashboardApi.init();
@@ -128,18 +126,6 @@ class ManagerDashboardApi {
                       const SizedBox(
                         height: 12.0,
                       ),
-                      MSkollBtn(
-                          title: "Proceed",
-                          onPress: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) {
-                              return StaffLeaveApproval(
-                                loginSuccessModel: loginSuccessModel,
-                                mskoolController: mskoolController,
-                                title: 'Leave Approval',
-                              );
-                            }));
-                          }),
                       const SizedBox(
                         height: 12.0,
                       ),

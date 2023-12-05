@@ -7,8 +7,6 @@ import 'package:m_skool_flutter/manager/coe/screen/manager_coe.dart';
 import 'package:m_skool_flutter/manager/controller/manager_dashboard_controller.dart';
 import 'package:m_skool_flutter/manager/employee_details/screens/employee_details_home_screen.dart';
 import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
-import 'package:m_skool_flutter/manager/staff_leave_approval/screen/staff_leave_approval_home.dart';
-import 'package:m_skool_flutter/manager/student_details/screen/student_details_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
@@ -88,13 +86,13 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
                 child: CustomContainer(
                   child: InkWell(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return ManagerStudentDetails(
-                          loginSuccessModel: widget.loginSuccessModel,
-                          mskoolController: widget.mskoolController,
-                          title: 'Student Details',
-                        );
-                      }));
+                      // Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      //   return ManagerStudentDetails(
+                      //     loginSuccessModel: widget.loginSuccessModel,
+                      //     mskoolController: widget.mskoolController,
+                      //     title: 'Student Details',
+                      //   );
+                      // }));
                     },
                     child: Container(
                       padding: const EdgeInsets.all(8.0),
@@ -188,39 +186,21 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
                                 .elementAt(index)
                                 .pagename ==
                             "Student") {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) {
-                            return ManagerStudentDetails(
-                              loginSuccessModel: widget.loginSuccessModel,
-                              mskoolController: widget.mskoolController,
-                              title: widget.loginSuccessModel
-                                  .staffmobileappprivileges!.values!
-                                  .elementAt(index)
-                                  .pagename!,
-                            );
-                          }));
+                          // Navigator.push(context,
+                          //     MaterialPageRoute(builder: (_) {
+                          //   return ManagerStudentDetails(
+                          //     loginSuccessModel: widget.loginSuccessModel,
+                          //     mskoolController: widget.mskoolController,
+                          //     title: widget.loginSuccessModel
+                          //         .staffmobileappprivileges!.values!
+                          //         .elementAt(index)
+                          //         .pagename!,
+                          //   );
+                          // }));
 
                           return;
                         }
-                        if (widget.loginSuccessModel.staffmobileappprivileges!
-                                .values!
-                                .elementAt(index)
-                                .pagename ==
-                            "Leave Approval Staff") {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) {
-                            return StaffLeaveApproval(
-                              loginSuccessModel: widget.loginSuccessModel,
-                              mskoolController: widget.mskoolController,
-                              title: widget.loginSuccessModel
-                                  .staffmobileappprivileges!.values!
-                                  .elementAt(index)
-                                  .pagename!,
-                            );
-                          }));
 
-                          return;
-                        }
                         if (widget.loginSuccessModel.staffmobileappprivileges!
                                 .values!
                                 .elementAt(index)

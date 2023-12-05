@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/controller/dynamic_analytics_controller.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/staff_tt/screens/staff_tt_home.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 import '../../constants/constants.dart';
@@ -30,16 +29,7 @@ class _StaffHomeTTState extends State<StaffHomeTT> {
         child: Column(
       children: [
         InkWell(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) {
-              return StaffTTHome(
-                loginSuccessModel: widget.loginSuccessModel,
-                mskoolController: widget.mskoolController,
-                title: "Time Table",
-                day: widget.controller.dashboardTT.first.tTMDDayName,
-              );
-            }));
-          },
+          onTap: () {},
           child: Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
             child: Row(
