@@ -433,6 +433,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   void dispose() {
     tadaApplyDataController.tadaSavedData.clear();
     widget.previousScreen = 0;
+    allowanceData.clear();
     super.dispose();
   }
 
@@ -1539,7 +1540,9 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                             } else {
                                                               isFoodTextField =
                                                                   false;
-                                                              foodAmt = 0;
+                                                              // foodAmt = 0;
+                                                              foodTotalSlotController
+                                                                  .clear();
                                                               removeAmount(
                                                                   foodAmt);
                                                               foodTotalSlotController
@@ -1695,8 +1698,10 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                               isAccommodationTextField =
                                                                   true;
                                                             } else {
-                                                              accommodationAmount =
-                                                                  0;
+                                                              accommodationTotalSlotController
+                                                                  .clear();
+                                                              // accommodationAmount =
+                                                              //     0;
                                                               isAccommodationTextField =
                                                                   false;
                                                               removeAmount(
@@ -2359,13 +2364,17 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                         title: "Save",
                         onPress: () {
                           if (_addressController.text.isEmpty) {
-                            Fluttertoast.showToast(msg: "Please Enter Address");
+                            Fluttertoast.showToast(msg: "Enter Address");
                           } else if (allAmount == 0) {
-                            Fluttertoast.showToast(msg: "Please Add Amount");
+                            Fluttertoast.showToast(msg: "Add Amount");
+                          } else if (tadaApplyDataController
+                              .addListBrowser.isEmpty) {
+                            Fluttertoast.showToast(msg: "Upload Image");
                           } else {
                             int foodamountId = 0;
                             int accamountId = 0;
                             int othersamountId = 0;
+                            allowanceData.clear();
                             if (isFoodSelected == true) {
                               foodamountId =
                                   (foodamountId == null || foodamountId == "")
@@ -2408,7 +2417,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 "VTADAAD_Id": othersamountId,
                               });
                             }
-
+                            logger.i(allowanceData);
                             saveData();
                           }
                         }),

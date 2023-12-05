@@ -30,8 +30,10 @@ class PlannerStatusList {
         PlannerStatusListModel plannerStatusList =
             PlannerStatusListModel.fromJson(response.data['get_plannerlist']);
         plannerCreationController.getPlannerStatus(plannerStatusList.values!);
-        plannerCreationController.isPlannerCreate.value =
-            response.data['plannerextapproval'];
+        Future.delayed(Duration(seconds: 1)).then((value) {
+          plannerCreationController.isPlannerCreate.value =
+              response.data['plannerextapproval'];
+        });
 
         logger.i(plannerCreationController.isPlannerCreate.value);
         plannerCreationController.statusLoading(false);

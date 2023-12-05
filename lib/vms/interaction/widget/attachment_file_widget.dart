@@ -4,8 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:m_skool_flutter/staffs/interaction/controller/staff_interaction_compose_related_controller.dart';
 import 'package:m_skool_flutter/student/interaction/controller/compose_tab_controller.dart';
+import 'package:m_skool_flutter/vms/interaction/controller/staff_interaction_compose_related_controller.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:open_filex/open_filex.dart';
 

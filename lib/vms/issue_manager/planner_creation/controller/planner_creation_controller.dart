@@ -55,7 +55,26 @@ class PlannerCreationController extends GetxController {
       assignedTaskList.clear();
     }
     for (int i = 0; i < value.length; i++) {
-      assignedTaskList.add(value.elementAt(i));
+      if (value.elementAt(i).iSMTPLTAPreviousTask == 1 ||
+          value.elementAt(i).iSMTPLTAPreviousTask == '1') {
+        assignedTaskList.add(value.elementAt(i));
+      } else if ((value.elementAt(i).periodicity == " " ||
+              value.elementAt(i).periodicity == null ||
+              value.elementAt(i).periodicity == "undefined" ||
+              value.elementAt(i).periodicity == '' ||
+              value.elementAt(i).periodicity!.toLowerCase() == 'once') &&
+          (value.elementAt(i).iSMTPLTAPreviousTask == 0 ||
+              value.elementAt(i).iSMTPLTAPreviousTask == null ||
+              value.elementAt(i).iSMTPLTAPreviousTask == '' ||
+              value.elementAt(i).iSMTPLTAPreviousTask == '0')) {
+      } else if (value.elementAt(i).periodicity.toString().toLowerCase() ==
+              'daily' &&
+          (value.elementAt(i).iSMTPLTAPreviousTask == 0 ||
+              value.elementAt(i).iSMTPLTAPreviousTask == null ||
+              value.elementAt(i).iSMTPLTAPreviousTask == '' ||
+              value.elementAt(i).iSMTPLTAPreviousTask == '0')) {
+        assignedTaskList.add(value.elementAt(i));
+      }
     }
   }
 

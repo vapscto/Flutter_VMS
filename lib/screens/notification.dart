@@ -13,7 +13,6 @@ import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
 import 'package:m_skool_flutter/staffs/coe/screens/coe_home.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/screen/hw_cw_home.dart';
-import 'package:m_skool_flutter/staffs/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/screen/marks_entry_home.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
 import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dart';
@@ -36,6 +35,9 @@ import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart
 import 'package:m_skool_flutter/student/interaction/screen/messaging_section.dart';
 import 'package:m_skool_flutter/student/library/screen/library_home.dart';
 import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
+import 'package:m_skool_flutter/vms/api/vms_notification_api.dart';
+import 'package:m_skool_flutter/vms/interaction/screen/interaction_home.dart';
+import 'package:m_skool_flutter/vms/model/vms_notification_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
@@ -57,18 +59,17 @@ class NotificationScreen extends StatelessWidget {
     MskoolController mskoolController = Get.find<MskoolController>();
     return Scaffold(
       appBar: const CustomAppBar(title: "Notification").getAppBar(),
-      body: FutureBuilder<List<NotificationDataModelValues>>(
-        future: PushNotification.instance.getAllNotification(
+      body: FutureBuilder<List<NotificationListModelValues>>(
+        future: VMSPushNotification.instance.getAllNotification(
           miId: loginSuccessModel.mIID!,
           userId: loginSuccessModel.userId!,
-          // userId: openFor.toLowerCase() == "student"
-          //     ? loginSuccessModel.amsTId!
-          //     : loginSuccessModel.userId!,
-          openFor: openFor,
           base: baseUrlFromInsCode(
-            "portal",
+            "issuemanager",
             mskoolController,
           ),
+          asmayId: loginSuccessModel.asmaYId!,
+          flag: 'S',
+          ivrmrtId: loginSuccessModel.roleId!,
         ),
         builder: (_, snapshot) {
           if (snapshot.hasData) {
@@ -86,67 +87,67 @@ class NotificationScreen extends StatelessWidget {
               itemBuilder: (_, index) {
                 return InkWell(
                   onTap: () {
-                    if (snapshot.data!.elementAt(index).pNSDHeaderFlg == null) {
-                      Fluttertoast.showToast(
-                          msg:
-                              "Sorry but we are unable to redirect because page info is null");
-                      return;
-                    }
-                    if (openFor.toLowerCase() == "student") {
-                      logger.d(snapshot.data!.elementAt(index).pNSDHeaderFlg);
-                      openUsingHeaderForStudent(
-                          snapshot.data!.elementAt(index).pNSDHeaderFlg!,
-                          snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
-                          snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
-                              0);
-                      return;
-                    }
+                    // if (snapshot.data!.elementAt(index).pNSDHeaderFlg == null) {
+                    //   Fluttertoast.showToast(
+                    //       msg:
+                    //           "Sorry but we are unable to redirect because page info is null");
+                    //   return;
+                    // }
+                    // if (openFor.toLowerCase() == "student") {
+                    //   logger.d(snapshot.data!.elementAt(index).pNSDHeaderFlg);
+                    //   openUsingHeaderForStudent(
+                    //       snapshot.data!.elementAt(index).pNSDHeaderFlg!,
+                    //       snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
+                    //       snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
+                    //           0);
+                    //   return;
+                    // }
 
-                    if (openFor.toLowerCase() == "staff") {
-                      openUsingHeaderForStaff(
-                          snapshot.data!
-                              .elementAt(index)
-                              .pNSDHeaderFlg!
-                              .capitalize!,
-                          context,
-                          snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
-                          snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
-                              0);
-                    }
-                    if (openFor.toLowerCase() == "hod") {
-                      openUsingHeaderForStaff(
-                          snapshot.data!
-                              .elementAt(index)
-                              .pNSDHeaderFlg!
-                              .capitalize!,
-                          context,
-                          snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
-                          snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
-                              0);
-                    }
+                    // if (openFor.toLowerCase() == "staff") {
+                    //   openUsingHeaderForStaff(
+                    //       snapshot.data!
+                    //           .elementAt(index)
+                    //           .pNSDHeaderFlg!
+                    //           .capitalize!,
+                    //       context,
+                    //       snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
+                    //       snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
+                    //           0);
+                    // }
+                    // if (openFor.toLowerCase() == "hod") {
+                    //   openUsingHeaderForStaff(
+                    //       snapshot.data!
+                    //           .elementAt(index)
+                    //           .pNSDHeaderFlg!
+                    //           .capitalize!,
+                    //       context,
+                    //       snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
+                    //       snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
+                    //           0);
+                    // }
 
-                    if (openFor.toLowerCase() == "manager") {
-                      openUsingHeaderForManager(
-                        snapshot.data!
-                            .elementAt(index)
-                            .pNSDHeaderFlg!
-                            .capitalize!,
-                        context,
-                        snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
-                        snapshot.data!.elementAt(index).pNSDTRANSACTIONID ?? 0,
-                      );
-                    }
+                    // if (openFor.toLowerCase() == "manager") {
+                    //   openUsingHeaderForManager(
+                    //     snapshot.data!
+                    //         .elementAt(index)
+                    //         .pNSDHeaderFlg!
+                    //         .capitalize!,
+                    //     context,
+                    //     snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
+                    //     snapshot.data!.elementAt(index).pNSDTRANSACTIONID ?? 0,
+                    //   );
+                    // }
                   },
                   child: Container(
                     padding: const EdgeInsets.all(12.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.0),
                       color:
-                          snapshot.data!.elementAt(index).pNSDHeaderFlg == null
+                          snapshot.data!.elementAt(index).iSMNOModeFlg == null
                               ? Colors.grey.shade300
                               : getNotificationItem(snapshot.data!
                                   .elementAt(index)
-                                  .pNSDHeaderFlg!)['bgColor'],
+                                  .iSMNOModeFlg!)['bgColor'],
                     ),
                     child: Row(children: [
                       Container(
@@ -155,25 +156,24 @@ class NotificationScreen extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12.0),
-                          color:
-                              snapshot.data!.elementAt(index).pNSDHeaderFlg ==
-                                      null
-                                  ? Colors.grey.shade300
-                                  : getNotificationItem(snapshot.data!
-                                      .elementAt(index)
-                                      .pNSDHeaderFlg!)['color'],
+                          color: snapshot.data!.elementAt(index).iSMNOModeFlg ==
+                                  null
+                              ? Colors.grey.shade300
+                              : getNotificationItem(snapshot.data!
+                                  .elementAt(index)
+                                  .iSMNOModeFlg!)['color'],
                         ),
-                        child: snapshot.data!.elementAt(index).pNSDHeaderFlg ==
-                                null
-                            ? const Icon(Icons.broken_image)
-                            : Image.asset(
-                                getNotificationItem(snapshot.data!
-                                    .elementAt(index)
-                                    .pNSDHeaderFlg!)['image'],
-                                color: Colors.white,
-                                width: 28.0,
-                                height: 28,
-                              ),
+                        child:
+                            snapshot.data!.elementAt(index).iSMNOModeFlg == null
+                                ? const Icon(Icons.broken_image)
+                                : Image.asset(
+                                    getNotificationItem(snapshot.data!
+                                        .elementAt(index)
+                                        .iSMNOModeFlg!)['image'],
+                                    color: Colors.white,
+                                    width: 28.0,
+                                    height: 28,
+                                  ),
                       ),
                       const SizedBox(
                         width: 12.0,
@@ -183,7 +183,7 @@ class NotificationScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              snapshot.data!.elementAt(index).pNSDHeaderName ??
+                              snapshot.data!.elementAt(index).createdby ??
                                   "N/a",
                               style:
                                   Theme.of(context).textTheme.titleSmall!.merge(
@@ -197,27 +197,22 @@ class NotificationScreen extends StatelessWidget {
                             ),
                             Text(snapshot.data!
                                     .elementAt(index)
-                                    .pNSDSMSMessage ??
+                                    .iSMNONotification ??
                                 "N/a"),
                             const SizedBox(
                               height: 6.0,
                             ),
-                            Text(
-                                snapshot.data!.elementAt(index).pNSDHeaderFlg ??
-                                    "N/a")
+                            Text(snapshot.data!.elementAt(index).iSMNOModeFlg ??
+                                "N/a")
                           ],
                         ),
                       ),
                       Column(
                         children: [
-                          Text(snapshot.data!
-                                      .elementAt(index)
-                                      .pNSDDEDeliveryDate ==
+                          Text(snapshot.data!.elementAt(index).createdDate ==
                                   null
                               ? "N/a"
-                              : convertToAgoShort(DateTime.parse(snapshot.data!
-                                  .elementAt(index)
-                                  .pNSDDEDeliveryDate!))),
+                              : snapshot.data!.elementAt(index).createdDate!),
                         ],
                       ),
                     ]),

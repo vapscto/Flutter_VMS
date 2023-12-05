@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/interaction/controller/staff_interaction_compose_related_controller.dart';
-import 'package:m_skool_flutter/staffs/interaction/tabs/compose_tab_staff.dart';
-import 'package:m_skool_flutter/staffs/interaction/tabs/inbox_tab_staff.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
+import 'package:m_skool_flutter/vms/interaction/controller/staff_interaction_compose_related_controller.dart';
+import 'package:m_skool_flutter/vms/interaction/tabs/compose_tab_staff.dart';
+import 'package:m_skool_flutter/vms/interaction/tabs/inbox_tab_staff.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 

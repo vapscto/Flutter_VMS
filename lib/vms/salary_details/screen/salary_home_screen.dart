@@ -62,7 +62,7 @@ class _SalaryHomeScreenState extends State<SalaryHomeScreen> {
                   widget.title,
                 ),
               ),
-        floatingActionButton: const HomeFab(),
+        // floatingActionButton: const HomeFab(),
         body: salaryDetailsController.isLoading.value
             ? const AnimatedProgressWidget(
                 title: "Loading Salary Details",

@@ -271,6 +271,12 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
   }
 
   @override
+  void dispose() {
+    allowanceData.clear();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: 'TA-DA Advance Apply').getAppBar(),
@@ -2018,6 +2024,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                   int foodamountId = 0;
                                                   int accamountId = 0;
                                                   int othersamountId = 0;
+                                                  allowanceData.clear();
 
                                                   if (isFoodSelected == true) {
                                                     foodamountId =

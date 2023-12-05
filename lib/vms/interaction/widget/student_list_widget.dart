@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/staffs/interaction/model/interactionStudentListModel.dart';
+import 'package:m_skool_flutter/vms/interaction/model/interaction_staff_list_mode.dart';
 
 class StudentListWidget extends StatefulWidget {
-  final GetStudentValue data;
+  final InteractionStaffListModelValues data;
   final Function(int) function;
   final Function(int) function1;
   bool? selectAll;
@@ -20,8 +19,6 @@ class StudentListWidget extends StatefulWidget {
 }
 
 class _StudentListWidgetState extends State<StudentListWidget> {
-  
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -35,9 +32,9 @@ class _StudentListWidgetState extends State<StudentListWidget> {
         contentPadding: const EdgeInsets.symmetric(horizontal: 8),
         visualDensity: const VisualDensity(horizontal: -4.0),
         title: Text(
-          widget.data.studentName!,
+          widget.data.employeeName!,
           style: Theme.of(context).textTheme.labelSmall!.merge(const TextStyle(
-              fontWeight: FontWeight.w400, fontSize: 14.0, letterSpacing: 0.3)),
+              fontWeight: FontWeight.w400, fontSize: 15.0, letterSpacing: 0.3)),
         ),
         value: widget.selectAll,
         onChanged: (value) {
@@ -45,10 +42,10 @@ class _StudentListWidgetState extends State<StudentListWidget> {
             widget.selectAll = value!;
           });
           if (value!) {
-            widget.function(widget.data.amstId!);
+            widget.function(widget.data.hRMEId!);
             return;
           }
-          widget.function1(widget.data.amstId!);
+          widget.function1(widget.data.hRMEId!);
         },
       ),
     );

@@ -5,11 +5,11 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/interaction/widget/attachment_file_widget.dart';
 import 'package:m_skool_flutter/student/interaction/apis/compose_tab_related_api.dart';
 import 'package:m_skool_flutter/student/interaction/apis/messaging_api.dart';
 import 'package:m_skool_flutter/student/interaction/controller/compose_tab_controller.dart';
 import 'package:m_skool_flutter/student/interaction/model/staff_detail_model.dart';
+import 'package:m_skool_flutter/vms/interaction/widget/attachment_file_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class ComposeTabScreen extends StatefulWidget {
