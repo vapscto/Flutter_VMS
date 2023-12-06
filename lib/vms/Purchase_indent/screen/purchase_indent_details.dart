@@ -115,7 +115,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                   child: AnimatedProgressWidget(
                     animationPath: "assets/json/nodata.json",
                     animatorHeight: 300,
-                    title: "Loading Purchase Indent",
+                    title: "No Purchase Indent",
                     desc:
                         "Please wait while we load detail table and create a view for you.",
                   ),
