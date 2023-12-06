@@ -228,6 +228,13 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
             child: MSkollBtn(
                 title: "Save",
                 onPress: () {
+                  var approveCent = 0;
+                  if (widget.values.vTADAATotalSactionedAmount == 0.00 &&
+                      widget.values.vTADAATotalSactionedAmount == 0) {
+                    approveCent = 0;
+                  } else {
+                    approveCent = 1;
+                  }
                   if (amount > widget.values.vTADAATotalAppliedAmount!) {
                     Fluttertoast.showToast(
                         msg:
@@ -240,21 +247,39 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
                       for (int i = 0;
                           i < widget.tadaController.editArrayList.length;
                           i++) {
+                        var value =
+                            widget.tadaController.editArrayList.elementAt(i);
                         headArray.add({
-                          'VTADAAD_Id': (widget.tadaController.editArrayList
-                                  .elementAt(i)
-                                  .vTADAADId ??
-                              0),
-                          "VTADAAAH_SactionedAmount": widget
-                              .tadaController.textEditingControllerList
-                              .elementAt(i)
-                              .text,
-                          'VTADAAAH_Remarks': widget
-                              .tadaController.approvalTextEditingControllerList
-                              .elementAt(i)
-                              .text,
-                          'flag':
+                          // 'VTADAAD_Id': (widget.tadaController.editArrayList
+                          //         .elementAt(i)
+                          //         .vTADAADId ??
+                          //     0),
+                          // "VTADAAAA_Id": widget.values.vTADAAAId,
+                          // "VTADAAAH_SactionedAmount": widget
+                          //     .tadaController.textEditingControllerList
+                          //     .elementAt(i)
+                          //     .text,
+                          // 'VTADAAAH_Remarks': widget
+                          //     .tadaController.approvalTextEditingControllerList
+                          //     .elementAt(i)
+                          //     .text,
+                          // 'flag':
+                          //     widget.tadaController.selectedValue.elementAt(i),
+                          "VTADAAD_Id": value.vTADAADId,
+                          "VTADAA_Id": value.vTADAAId,
+                          "VTADAAD_ExpenditureHead":
+                              value.vTADAADExpenditureHead,
+                          "VTADAAD_Amount": value.vTADAADAmount,
+                          "VTADAAAH_SactionedAmount":
+                              value.vTADAAAHSactionedAmount,
+                          "flag":
                               widget.tadaController.selectedValue.elementAt(i),
+                          "VTADAAD_Slots": value.vTADAADRemarks,
+                          "VTADAAD_TotalSlots": value.vTADAADTotalslots,
+                          "VTADACM_FoodAmt": value.vTADACMFoodAmt,
+                          "VTADACM_AccommodationAmt":
+                              value.vTADACMAccommodationAmt,
+                          "VTADACM_TransportAmt": value.vTADACMTransportAmt
                         });
                       }
                     }

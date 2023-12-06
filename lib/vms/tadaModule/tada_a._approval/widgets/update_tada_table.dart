@@ -229,6 +229,13 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
             child: MSkollBtn(
                 title: "Save",
                 onPress: () {
+                  var approveCent = 0;
+                  if (widget.values.vTADAAATotalSactionedAmount == 0.00 &&
+                      widget.values.vTADAAATotalSactionedAmount == 0) {
+                    approveCent = 0;
+                  } else {
+                    approveCent = 1;
+                  }
                   if (amount > widget.values.vTADAAATotalAppliedAmount!) {
                     Fluttertoast.showToast(
                         msg:
@@ -240,20 +247,24 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                     for (int i = 0;
                         i < widget.tadaController.tadaEditValues.length;
                         i++) {
+                      var value =
+                          widget.tadaController.tadaEditValues.elementAt(i);
                       headArray.add({
-                        'VTADAAAD_Id': widget.tadaController.tadaEditValues
-                            .elementAt(i)
-                            .vTADAAAId,
-                        "VTADAAAAH_SactionedAmount": widget
-                            .tadaController.textEditingControllerList
-                            .elementAt(i)
-                            .text,
-                        'VTADAAAAH_Remarks': widget
-                            .tadaController.approvalTextEditingControllerList
-                            .elementAt(i)
-                            .text,
-                        'flag':
+                        "VTADAAAD_Id": value.vTADAAADId,
+                        "VTADAAA_Id": value.vTADAAAId,
+                        "VTADAAAD_ExpenditureHead":
+                            value.vTADAAADExpenditureHead,
+                        "VTADAAAD_Amount": value.vTADAAADAmount,
+                        "VTADAAAAH_SactionedAmount":
+                            value.vTADAAAAHSactionedAmount,
+                        "flag":
                             widget.tadaController.selectedValue.elementAt(i),
+                        "VTADACM_FoodAmt": value.vTADACMFoodAmt,
+                        "VTADACM_AccommodationAmt":
+                            value.vTADACMAccommodationAmt,
+                        "VTADACM_TransportAmt": value.vTADACMTransportAmt,
+                        "VTADAAAD_Slots": value.vTADAAADSlots,
+                        "VTADAAAD_TotalSlots": value.vTADAAADTotalSlots
                       });
                     }
 
@@ -263,11 +274,12 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                             'issuemanager', widget.mskoolController),
                         body: {
                           'VTADAAA_Remarks': remarkController.text,
-                          'VTADAAA_TotalSactionedAmount': amount,
+                          'VTADAAA_TotalSactionedAmount':
+                              widget.values.vTADAAATotalSactionedAmount,
                           'headarray': headArray,
                           'VTADAAA_Id': widget.values.vTADAAAId,
                           "MI_Id": widget.values.mIId,
-                          "approvecnt": 0,
+                          "approvecnt": approveCent,
                           "level": widget.values.sanctionLevelNo,
                           "HRME_Id": widget.values.hRMEId,
                           'UserId': widget.values.userId

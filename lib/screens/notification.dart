@@ -203,17 +203,13 @@ class NotificationScreen extends StatelessWidget {
                               height: 6.0,
                             ),
                             Text(snapshot.data!.elementAt(index).iSMNOModeFlg ??
-                                "N/a")
+                                "N/a"),
+                            Text(snapshot.data!.elementAt(index).createdDate ==
+                                    null
+                                ? "N/a"
+                                : snapshot.data!.elementAt(index).createdDate!),
                           ],
                         ),
-                      ),
-                      Column(
-                        children: [
-                          Text(snapshot.data!.elementAt(index).createdDate ==
-                                  null
-                              ? "N/a"
-                              : snapshot.data!.elementAt(index).createdDate!),
-                        ],
                       ),
                     ]),
                   ),
