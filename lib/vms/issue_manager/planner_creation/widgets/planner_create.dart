@@ -263,13 +263,13 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   }
 
   getPlannerStatus() async {
-    plannerCreationController.statusLoading(true);
+    plannerCreationController.plannerLoading(true);
     await PlannerStatusList.instance.plannerStatusAPI(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!,
         plannerCreationController: plannerCreationController);
-    plannerCreationController.statusLoading(false);
+    plannerCreationController.plannerLoading(false);
   }
 
   savePlanner() async {
@@ -312,10 +312,10 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() {
-        return plannerCreationController.isstatusLoading.value
+        return plannerCreationController.isPlannerLoading.value
             ? const Center(
                 child: AnimatedProgressWidget(
-                    title: "Getting Planner status",
+                    title: "Loading...",
                     desc: "We are loading Planner creation  Please wait ",
                     animationPath: "assets/json/default.json"),
               )

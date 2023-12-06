@@ -41,6 +41,8 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
   List<Map<String, dynamic>> headArray = [];
   var days;
   num amount = 0;
+  RxList<String> slesRadioBtn = <String>[].obs;
+
   void addAmount(double a) {
     amount += a;
   }
@@ -71,6 +73,7 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.tadaController.editArrayList;
     });
+
     setState(() {
       for (int index = 0;
           index < widget.tadaController.editArrayList.length;
@@ -86,7 +89,7 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
             .text;
         (widget.tadaController.editArrayList.first.vTADAADId == null)
             ? amount = widget.amount
-            : amount = 0;
+            : amount = widget.amount;
       }
     });
     super.initState();
@@ -225,9 +228,7 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
             child: MSkollBtn(
                 title: "Save",
                 onPress: () {
-                  if (amount == 0) {
-                    Fluttertoast.showToast(msg: "Please Enter sanction amount");
-                  } else if (amount > widget.values.vTADAATotalAppliedAmount!) {
+                  if (amount > widget.values.vTADAATotalAppliedAmount!) {
                     Fluttertoast.showToast(
                         msg:
                             "sanction amount should be lessthen applied amount");
@@ -343,17 +344,17 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
   List<DataRow> createRow() {
     return List.generate(widget.tadaController.editArrayList.length, (index) {
       var value = index + 1;
-
+      widget.tadaController.selectedValue.add("Approved");
       return DataRow(cells: [
         DataCell(Text(value.toString())),
         DataCell(Radio(
           fillColor: MaterialStateColor.resolveWith(
               (states) => Theme.of(context).primaryColor),
           groupValue: widget.tadaController.selectedValue[index],
-          value: 'Approved',
+          value: "Approved",
           onChanged: (value) {
             setState(() {
-              widget.tadaController.selectedValue[index] = value!;
+              widget.tadaController.selectedValue[index] = value.toString();
 
               if (widget.tadaController.selectedValue[index] == 'Approved') {
                 addAmount(double.parse(widget
@@ -361,6 +362,7 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
                     .elementAt(index)
                     .text));
               }
+              logger.i(widget.tadaController.selectedValue[index]);
             });
           },
         )),
@@ -381,6 +383,7 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
                     .elementAt(index)
                     .text));
               }
+              logger.i(widget.tadaController.selectedValue[index]);
             });
           },
         )),

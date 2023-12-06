@@ -72,7 +72,7 @@ class TADAController {
     for (int i = 0; i < editArray.length; i++) {
       textEditingControllerList.add(TextEditingController(
           text: editArray[i].vTADAAAAHSactionedAmount.toString()));
-      selectedValue.add(editArray[i].vTADAAAAHStatusFlg.toString());
+      // selectedValue.add(editArray[i].vTADAAAAHStatusFlg.toString());
     }
   }
 }

@@ -10,8 +10,13 @@ class PlannerCreationController extends GetxController {
   RxBool isCategoryTask = RxBool(false);
   RxBool isAssignedTask = RxBool(false);
   RxBool isPlannerCreate = RxBool(false);
+  RxBool isPlannerLoading = RxBool(false);
   void statusLoading(bool loading) {
     isstatusLoading.value = loading;
+  }
+
+  void plannerLoading(bool loading) {
+    isPlannerLoading.value = loading;
   }
 
   void taskLoading(bool loading) {

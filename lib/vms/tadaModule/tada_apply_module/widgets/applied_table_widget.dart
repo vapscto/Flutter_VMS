@@ -79,43 +79,20 @@ class AppliedTableWidget extends StatelessWidget {
                   tadaApplyDataController.getSavedData[index].vtadaAToDate!);
               toSelectedDate = '${dt.day}-${dt.month}-${dt.year}';
             }
-            if (tadaApplyDataController
-                    .getSavedData[index].vtadaADepartureTime !=
-                null) {
-              TimeOfDay startTime = TimeOfDay(
-                  hour: int.parse(tadaApplyDataController
-                      .getSavedData[index].vtadaADepartureTime!
-                      .split(":")[0]),
-                  minute: int.parse(tadaApplyDataController
-                      .getSavedData[index].vtadaADepartureTime!
-                      .split(":")[1]));
-              time =
-                  '${startTime.hourOfPeriod}:${startTime.minute} ${startTime.period.name.toUpperCase()}';
-            }
-
             //
-            if (tadaApplyDataController.getSavedData[index].vtadaAArrivalTime !=
-                null) {
-              TimeOfDay startToTime = TimeOfDay(
-                  hour: int.parse(tadaApplyDataController
-                      .getSavedData[index].vtadaAArrivalTime!
-                      .split(":")[0]),
-                  minute: int.parse(tadaApplyDataController
-                      .getSavedData[index].vtadaAArrivalTime!
-                      .split(":")[1]));
-              toSavedTime =
-                  '${startToTime.hourOfPeriod}:${startToTime.minute} ${startToTime.period.name.toUpperCase()}';
-            }
-
             return DataRow(cells: [
               DataCell(Text(value.toString())),
               DataCell(Text(
                   tadaApplyDataController.getSavedData[index].ivrmmcTName ??
                       "")),
               DataCell(Text(date)),
-              DataCell(Text(time)),
+              DataCell(Text(tadaApplyDataController
+                      .getSavedData[index].vtadaADepartureTime ??
+                  '')),
               DataCell(Text(toSelectedDate)),
-              DataCell(Text(toSavedTime)),
+              DataCell(Text(tadaApplyDataController
+                      .getSavedData[index].vtadaAArrivalTime ??
+                  '')),
               DataCell(Text(tadaApplyDataController
                   .getSavedData[index].vtadaATotalAppliedAmount
                   .toString())),

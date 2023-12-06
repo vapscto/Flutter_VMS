@@ -92,6 +92,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
             .tadaController.textEditingControllerList
             .elementAt(index)
             .text;
+        amount = widget.amount;
       }
     });
     super.initState();
@@ -228,22 +229,12 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
             child: MSkollBtn(
                 title: "Save",
                 onPress: () {
-                  if (widget.tadaController.selectedValue.isEmpty) {
-                    Fluttertoast.showToast(msg: "Please Select Status");
-                  } else if (widget
-                      .tadaController.textEditingControllerList.isEmpty) {
-                    Fluttertoast.showToast(msg: "Please Enter sanction amount");
-                  } else if (amount >
-                      widget.values.vTADAAATotalAppliedAmount!) {
+                  if (amount > widget.values.vTADAAATotalAppliedAmount!) {
                     Fluttertoast.showToast(
                         msg:
                             "sanction amount should be lessthen applied amount");
                   } else if (remarkController.text.isEmpty) {
                     Fluttertoast.showToast(msg: "Please Enter Remarks");
-                  } else if (widget.tadaController
-                      .approvalTextEditingControllerList.isEmpty) {
-                    Fluttertoast.showToast(
-                        msg: "Please Enter Approval or Reject Remarks");
                   } else {
                     headArray.clear();
                     for (int i = 0;
@@ -341,7 +332,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
   List<DataRow> createRow() {
     return List.generate(widget.tadaController.tadaEditValues.length, (index) {
       var value = index + 1;
-
+      widget.tadaController.selectedValue.add("Approved");
       return DataRow(cells: [
         DataCell(Text(value.toString())),
         DataCell(Radio(
