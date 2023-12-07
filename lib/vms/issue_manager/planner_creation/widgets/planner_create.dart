@@ -152,12 +152,19 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
           //
           if (plannerCreationController.assignedTaskList
                   .elementAt(index)
-                  .iSMTCRASTOStartDate !=
+                  .iSMTPLTAStartDate !=
               null) {
-            DateTime startDt = DateTime.parse(plannerCreationController
-                .assignedTaskList
-                .elementAt(index)
-                .iSMTCRASTOStartDate!);
+            DateTime startDt = DateTime.parse((plannerCreationController
+                    .assignedTaskList
+                    .elementAt(index)
+                    .iSMTPLTAStartDate!
+                    .contains("1900-01-01T00:00:00"))
+                ? plannerCreationController.assignedTaskList
+                    .elementAt(index)
+                    .iSMTCRASTOStartDate!
+                : plannerCreationController.assignedTaskList
+                    .elementAt(index)
+                    .iSMTPLTAStartDate!);
             startDate =
                 '${numberList[startDt.day]}:${numberList[startDt.month]}:${startDt.year}';
           }
@@ -165,12 +172,19 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
           //
           if (plannerCreationController.assignedTaskList
                   .elementAt(index)
-                  .iSMTCRASTOEndDate !=
+                  .iSMTPLTAEndDate !=
               null) {
-            DateTime endDt = DateTime.parse(plannerCreationController
-                .assignedTaskList
-                .elementAt(index)
-                .iSMTCRASTOEndDate!);
+            DateTime endDt = DateTime.parse((plannerCreationController
+                    .assignedTaskList
+                    .elementAt(index)
+                    .iSMTCRASTOEndDate!
+                    .contains("1900-01-01T00:00:00"))
+                ? plannerCreationController.assignedTaskList
+                    .elementAt(index)
+                    .iSMTPLTAEndDate!
+                : plannerCreationController.assignedTaskList
+                    .elementAt(index)
+                    .iSMTCRASTOEndDate!);
             endDate =
                 '${numberList[endDt.day]}:${numberList[endDt.month]}:${endDt.year}';
           }
