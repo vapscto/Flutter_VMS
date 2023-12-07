@@ -232,15 +232,13 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
                   if (widget.values.vTADAATotalSactionedAmount == 0.00 &&
                       widget.values.vTADAATotalSactionedAmount == 0) {
                     approveCent = 0;
-                  } else {
+                  } else if (widget.values.vTADAATotalSactionedAmount! > 0) {
                     approveCent = 1;
                   }
                   if (amount > widget.values.vTADAATotalAppliedAmount!) {
                     Fluttertoast.showToast(
                         msg:
                             "sanction amount should be lessthen applied amount");
-                  } else if (remarkController.text.isEmpty) {
-                    Fluttertoast.showToast(msg: "Please Enter Remarks");
                   } else {
                     if (widget.tadaController.editArrayList.isNotEmpty) {
                       headArray.clear();
@@ -270,8 +268,10 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
                           "VTADAAD_ExpenditureHead":
                               value.vTADAADExpenditureHead,
                           "VTADAAD_Amount": value.vTADAADAmount,
-                          "VTADAAAH_SactionedAmount":
-                              value.vTADAAAHSactionedAmount,
+                          "VTADAAAH_SactionedAmount": widget
+                              .tadaController.textEditingControllerList
+                              .elementAt(i)
+                              .text,
                           "flag":
                               widget.tadaController.selectedValue.elementAt(i),
                           "VTADAAD_Slots": value.vTADAADRemarks,
@@ -291,7 +291,7 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
                       'headarray': headArray,
                       'VTADAA_Id': widget.values.vTADAAId,
                       "MI_Id": widget.values.mIId,
-                      "approvecnt": 0,
+                      "approvecnt": approveCent,
                       "level": widget.values.sanctionLevelNo,
                       "HRME_Id": widget.values.hRMEId,
                       'UserId': widget.values.userId
@@ -305,7 +305,7 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
                           'headarray': headArray,
                           'VTADAA_Id': widget.values.vTADAAAId,
                           "MI_Id": widget.values.mIId,
-                          "approvecnt": 0,
+                          "approvecnt": approveCent,
                           "level": widget.values.sanctionLevelNo,
                           "HRME_Id": widget.values.hRMEId,
                           'UserId': widget.values.userId

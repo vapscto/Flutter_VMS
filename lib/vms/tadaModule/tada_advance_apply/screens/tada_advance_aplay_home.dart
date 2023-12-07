@@ -229,8 +229,8 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
         allowanceArray: allowanceData,
         tadaApplyController: tadaApplyController);
     getStateList();
-    Get.back();
     tadaApplyController.saveData(false);
+    Get.back();
   }
 
   checkPlanner() async {

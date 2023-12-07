@@ -233,15 +233,13 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                   if (widget.values.vTADAAATotalSactionedAmount == 0.00 &&
                       widget.values.vTADAAATotalSactionedAmount == 0) {
                     approveCent = 0;
-                  } else {
+                  } else if (widget.values.vTADAAATotalSactionedAmount! > 0) {
                     approveCent = 1;
                   }
                   if (amount > widget.values.vTADAAATotalAppliedAmount!) {
                     Fluttertoast.showToast(
                         msg:
                             "sanction amount should be lessthen applied amount");
-                  } else if (remarkController.text.isEmpty) {
-                    Fluttertoast.showToast(msg: "Please Enter Remarks");
                   } else {
                     headArray.clear();
                     for (int i = 0;
@@ -255,8 +253,10 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                         "VTADAAAD_ExpenditureHead":
                             value.vTADAAADExpenditureHead,
                         "VTADAAAD_Amount": value.vTADAAADAmount,
-                        "VTADAAAAH_SactionedAmount":
-                            value.vTADAAAAHSactionedAmount,
+                        "VTADAAAAH_SactionedAmount": widget
+                            .tadaController.textEditingControllerList
+                            .elementAt(i)
+                            .text,
                         "flag":
                             widget.tadaController.selectedValue.elementAt(i),
                         "VTADACM_FoodAmt": value.vTADACMFoodAmt,
@@ -269,13 +269,23 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                     }
 
                     logger.i(headArray);
+                    logger.i({
+                      'VTADAAA_Remarks': remarkController.text,
+                      'VTADAAA_TotalSactionedAmount': amount,
+                      'headarray': headArray,
+                      'VTADAAA_Id': widget.values.vTADAAAId,
+                      "MI_Id": widget.values.mIId,
+                      "approvecnt": approveCent,
+                      "level": widget.values.sanctionLevelNo,
+                      "HRME_Id": widget.values.hRMEId,
+                      'UserId': widget.values.userId
+                    });
                     SaveTADAAPI.instance.saveTADA(
                         base: baseUrlFromInsCode(
                             'issuemanager', widget.mskoolController),
                         body: {
                           'VTADAAA_Remarks': remarkController.text,
-                          'VTADAAA_TotalSactionedAmount':
-                              widget.values.vTADAAATotalSactionedAmount,
+                          'VTADAAA_TotalSactionedAmount': amount,
                           'headarray': headArray,
                           'VTADAAA_Id': widget.values.vTADAAAId,
                           "MI_Id": widget.values.mIId,
