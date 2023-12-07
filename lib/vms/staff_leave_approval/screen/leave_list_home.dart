@@ -121,6 +121,7 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
                                 }
 
                                 showDialog(
+                                  barrierDismissible: false,
                                     context: context,
                                     builder: (_) {
                                       return Dialog(
@@ -184,8 +185,7 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
                                                         Navigator.pop(context);
                                                         showDialog(
                                                           context: context,
-                                                          barrierDismissible:
-                                                              false,
+                                                          barrierDismissible:false,
                                                           builder: (_) {
                                                             return Dialog(
                                                               child: FutureBuilder<
@@ -319,6 +319,7 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
                                                       ),
                                                       onPressed: () {
                                                         showDialog(
+                                                          barrierDismissible: false,
                                                             context: context,
                                                             builder: (_) {
                                                               return Dialog(

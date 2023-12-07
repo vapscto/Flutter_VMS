@@ -317,6 +317,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                     ),
                     onPressed: () {
                       showDialog(
+                        barrierDismissible: false,
                           context: context,
                           builder: (_) {
                             return Dialog(
@@ -622,6 +623,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                     ),
                     onPressed: () {
                       showDialog(
+                        barrierDismissible: false,
                           context: context,
                           builder: (_) {
                             return Dialog(
@@ -651,6 +653,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                         ),
                                         InkWell(
                                           onTap: () {
+                                            remark.clear();
                                             Navigator.pop(context);
                                           },
                                           child: const Icon(Icons.close),
@@ -763,6 +766,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
   void acceptOrReject(BuildContext context, String remark, String status,
       bool isRejecting, LeaveApprovalModelValues value) {
     Navigator.pop(context);
+    // remark != '' ? remark = '' : 
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -818,7 +822,8 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                               title: "Ok UnderStood",
                               onPress: () {
                                 Navigator.pop(context);
-                                Navigator.pop(context);
+                                remark = '';
+                                // Navigator.pop(context);
                               })
                         ],
                       ),
