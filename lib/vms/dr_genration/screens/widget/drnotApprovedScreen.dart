@@ -29,14 +29,16 @@ class DrnotApprovedScreen extends StatelessWidget {
                                   "DAILY REPORT NOT APPROVED DETAILS",
                                   style: Theme.of(context)
                                       .textTheme
-                                      .titleMedium!
+                                      .titleSmall!
                                       .merge(TextStyle(
                                           color:
                                               Theme.of(context).primaryColor)),
                                 )
                               ],
                             ),
-                            SizedBox(height: 20,),
+                            SizedBox(
+                              height: 20,
+                            ),
                             ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: DataTable(

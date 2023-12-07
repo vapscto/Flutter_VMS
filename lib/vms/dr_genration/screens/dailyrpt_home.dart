@@ -44,10 +44,12 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
     init();
     // _plannerDetailsController.plannernameDateController.value.text;
     fliteresList = _plannerDetailsController.getTaskDrList;
-
+    _plannerDetailsController.plannernameDateController.value.text =
+        '${todayDate.day}-${todayDate.month}-${todayDate.year}';
     super.initState();
   }
 
+  DateTime todayDate = DateTime.now();
   init() async {
     await getPlanerdetails(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
@@ -56,43 +58,46 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!);
     _plannerDetailsController.closeTaskCoutnList[0].iSMEDWTCCTaskCount! != 0
-         ? Get.dialog(
-          barrierDismissible :false,
+        ? Get.dialog(
+            barrierDismissible: false,
             AlertDialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            title:    Align(
-              alignment: Alignment.center,
-              child: Text("Update Task",
-              style:   Theme.of(context).textTheme.titleLarge!.merge(
-                TextStyle(
-                  color:  Theme.of(context).primaryColor
-                )
-              ),)),
-            content:   Text(
-              "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Close The Completed Task",
-              style:Theme.of(context).textTheme.titleSmall!.merge(
-                TextStyle(
-                  color: Theme.of(context).primaryColor
-                )
-              )  ,
-            ),
-          ))
-        : 
-         _plannerDetailsController.drnotapprovedList.isNotEmpty ?
-         Get.dialog(
-          barrierDismissible :false,
-            AlertDialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-             content: DrnotApprovedScreen(),
-          )):
-          _plannerDetailsController.drnotSentdetailsList.isNotEmpty ?
-          Get.dialog(
-          barrierDismissible :false,
-            AlertDialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-             content: DrnotsentScreen(),
-          )):
-        null;
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              title: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Update Task",
+                    style: Theme.of(context).textTheme.titleLarge!.merge(
+                        TextStyle(color: Theme.of(context).primaryColor)),
+                  )),
+              content: Text(
+                "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Close The Completed Task",
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall!
+                    .merge(TextStyle(color: Theme.of(context).primaryColor)),
+              ),
+            ))
+        : _plannerDetailsController.drnotapprovedList.isNotEmpty
+            ? Get.dialog(
+                barrierDismissible: false,
+                AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  iconPadding: const EdgeInsets.symmetric(horizontal: 16),
+                  contentPadding: const EdgeInsets.all(5),
+                  content:
+                      SizedBox(width: Get.width, child: DrnotApprovedScreen()),
+                ))
+            : _plannerDetailsController.drnotSentdetailsList.isNotEmpty
+                ? Get.dialog(
+                    barrierDismissible: false,
+                    AlertDialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      content: DrnotsentScreen(),
+                    ))
+                : null;
   }
 
   @override
@@ -105,7 +110,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
       ),
       body: Obx(
         () => _plannerDetailsController.loadPlanerDeatails.isTrue
-            ?   Container(
+            ? Container(
                 child: const Center(
                   child: AnimatedProgressWidget(
                     animationPath: 'assets/json/default.json',
@@ -232,7 +237,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                     visualDensity:
                                         const VisualDensity(horizontal: -4.0),
                                     title: Text(
-                                      "Other's day",
+                                      "Other's date",
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleSmall!
@@ -260,7 +265,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                             onTap: () async {
                               await showDatePicker(
                                 context: context,
-                                firstDate: DateTime.now(),
+                                firstDate: DateTime(2000),
                                 lastDate: DateTime(2035),
                                 initialDate: DateTime.now(),
                               ).then((value) async {
@@ -1277,5 +1282,5 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
 }
 
 Future<String> getDateNeed(DateTime dt) async {
-  return "${dt.month.toString().padLeft(2, "0")}-${dt.day.toString().padLeft(2, "0")}-${dt.year}";
+  return "${dt.day.toString().padLeft(2, "0")}-${dt.month.toString().padLeft(2, "0")}-${dt.year}";
 }
