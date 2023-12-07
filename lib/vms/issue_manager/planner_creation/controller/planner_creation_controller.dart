@@ -71,11 +71,12 @@ class PlannerCreationController extends GetxController {
       //         value.elementAt(i).iSMTPLTAPreviousTask == null ||
       //         value.elementAt(i).iSMTPLTAPreviousTask == '' ||
       //         value.elementAt(i).iSMTPLTAPreviousTask == '0')) {
+      //||
+      // value.elementAt(i).iSMTPLTAStartDate != "1900-01-01T00:00:00"
       //   assignedTaskList.add(value.elementAt(i));
       // }
 
-      // if (value.elementAt(i).iSMTPLTAPreviousTask == 1 ||
-      //     value.elementAt(i).iSMTPLTAStartDate != "1900-01-01T00:00:00") {
+      // if (value.elementAt(i).iSMTPLTAStartDate != "1900-01-01T00:00:00") {
       assignedTaskList.add(value.elementAt(i));
       // }
     }

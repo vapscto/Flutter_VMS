@@ -22,7 +22,6 @@ class TaskListAPI {
   }) async {
     var dio = Dio();
     var url = base + URLS.assignTaskList;
-    // 'https://vmsissuemanager.azurewebsites.net/${URLS.assignTaskList}';
     try {
       if (plannerCreationController.isErrorLoading.value) {
         plannerCreationController.errorLoading(false);
@@ -47,14 +46,10 @@ class TaskListAPI {
         "ISMTPL_StartDate": startDate,
         "ISMTPL_EndDate": endDate
       });
-
       if (response.statusCode == 200) {
         CategoryWisePlanModel categoryWisePlanModel =
             CategoryWisePlanModel.fromJson(response.data['categorylist']);
-        if (categoryWisePlanModel.values!.isNotEmpty) {
-          plannerCreationController.categoryList(categoryWisePlanModel.values!);
-        }
-
+        plannerCreationController.categoryList(categoryWisePlanModel.values!);
         AssignedTaskList assignedTaskList =
             AssignedTaskList.fromJson(response.data['get_Assignedtasklist']);
         if (assignedTaskList.values!.isNotEmpty) {
