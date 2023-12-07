@@ -8,7 +8,6 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/vms/rating_report/api/month_api.dart';
-import 'package:m_skool_flutter/vms/rating_report/api/report_data_api.dart';
 import 'package:m_skool_flutter/vms/rating_report/api/year_list_api.dart';
 import 'package:m_skool_flutter/vms/rating_report/controller/rating_report_controller.dart';
 import 'package:m_skool_flutter/vms/rating_report/model/year_list_rating_model.dart';
@@ -436,24 +435,14 @@ class _RatingReportHomeState extends State<RatingReportHome> {
                         return;
                       }
 
-                      await getReportData(
-                          base: baseUrlFromInsCode(
-                              "issuemanager", widget.mskoolController),
-                          mIId: widget.loginSuccessModel.mIID!,
-                          userId: widget.loginSuccessModel.userId!,
-                          flag: "monthyearwise",
-                          year: year!,
-                          monthList: monthListArray,
-                          controller: ratingReportController);
-
-                      Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return ReportDataScreen(
-                          loginSuccessModel: widget.loginSuccessModel,
-                          mskoolController: widget.mskoolController,
-                          controller: ratingReportController,
-                          selectedMonths: ratingReportController.checkList!,
-                        );
-                      }));
+                      Get.to(ReportDataScreen(
+                        loginSuccessModel: widget.loginSuccessModel,
+                        mskoolController: widget.mskoolController,
+                        controller: ratingReportController,
+                        selectedMonths: ratingReportController.checkList!,
+                        monthListArray: monthListArray,
+                        year: year!,
+                      ));
                     },
                     child: const Padding(
                       padding: EdgeInsets.only(
