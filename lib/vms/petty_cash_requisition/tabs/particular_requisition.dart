@@ -53,9 +53,9 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
 
   DepartmentPcRequestModelValues? selectedDepartment;
   EmployeeListPcReqModelValues? selectedEmployee;
-  
+
   ParticularsPcRequestModelValues? selectedParticular;
-  
+
   loadData() async {
     await getPcRequisitionOnLoad(
         miId: widget.loginSuccessModel.mIID!,
@@ -129,17 +129,37 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
       var amount = rows[index].amountCountroller.text;
       var remarks = rows[index].remarksController.text;
 
+      // if (selectedParticular != null) {
+      //   reqDetailsDTOList.add({
+      //     "PCMPART_Id": selectedParticular.pcmparTId,
+      //     "PCMPART_ParticularName": selectedParticular.pcmparTParticularName,
+      //     "PCREQTNDET_Amount": double.parse(amount),
+      //     "PCREQTNDET_Id": cashRequisitionController.employeeList
+      //         .elementAt(index)
+      //         .pcreqtndeTId,
+      //     "PCREQTNDET_Remarks": remarks,
+      //   });
+      // }
+
       if (selectedParticular != null) {
-        reqDetailsDTOList.add({
-          "PCMPART_Id": selectedParticular.pcmparTId,
-          "PCMPART_ParticularName": selectedParticular.pcmparTParticularName,
-          "PCREQTNDET_Amount": double.parse(amount),
-          "PCREQTNDET_Id": cashRequisitionController.employeeList
-              .elementAt(index)
-              .pcreqtndeTId,
-          "PCREQTNDET_Remarks": remarks,
-        });
-      }
+  // Assume you want to process the first item in the employeeList
+  int index = 0;
+
+  if (index >= 0 && index < cashRequisitionController.employeeList.length) {
+    reqDetailsDTOList.add({
+      "PCMPART_Id": selectedParticular.pcmparTId,
+      "PCMPART_ParticularName": selectedParticular.pcmparTParticularName,
+      "PCREQTNDET_Amount": double.parse(amount),
+      "PCREQTNDET_Id": cashRequisitionController.employeeList[index].pcreqtndeTId,
+      "PCREQTNDET_Remarks": remarks,
+    });
+  } else {
+    // Handle index out of range error or other issues
+  }
+} else {
+  // Handle the case when selectedParticular is null
+}
+
     }
 
     print(reqDetailsDTOList.toString());
@@ -837,34 +857,39 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                                           ),
                                         ),
                                         DataCell(
-  Row(
-    children: [
-      if (index == 0 && showAddButton)
-        IconButton(
-          icon: const Icon(Icons.add),
-          onPressed: () {
-            setState(() {
-              rows.add(DataTableRowModel(
-                sno: rows.length + 1,
-                selectedParticular: selectedParticular,
-                amountCountroller: TextEditingController(),
-                remarksController: TextEditingController(),
-              ));
-            });
-          },
-        )
-      else
-        IconButton(
-          icon: const Icon(Icons.remove),
-          onPressed: () {
-            setState(() {
-              rows.removeAt(index);
-            });
-          },
-        ),
-    ],
-  ),
-),
+                                          Row(
+                                            children: [
+                                              if (index == 0 && showAddButton)
+                                                IconButton(
+                                                  icon: const Icon(Icons.add),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      rows.add(
+                                                          DataTableRowModel(
+                                                        sno: rows.length + 1,
+                                                        selectedParticular:
+                                                            selectedParticular,
+                                                        amountCountroller:
+                                                            TextEditingController(),
+                                                        remarksController:
+                                                            TextEditingController(),
+                                                      ));
+                                                    });
+                                                  },
+                                                )
+                                              else
+                                                IconButton(
+                                                  icon:
+                                                      const Icon(Icons.remove),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      rows.removeAt(index);
+                                                    });
+                                                  },
+                                                ),
+                                            ],
+                                          ),
+                                        ),
                                       ],
                                     ),
                                 ],
