@@ -2429,6 +2429,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             int accamountId = 0;
                             int othersamountId = 0;
                             allowanceData.clear();
+
                             if (isFoodSelected == true) {
                               foodamountId =
                                   (foodamountId == null || foodamountId == "")
@@ -2471,6 +2472,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 "VTADAAD_Id": othersamountId,
                               });
                             }
+
                             logger.i(allowanceData);
                             saveData();
                           }
