@@ -672,7 +672,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 13, left: 5),
                               child: SizedBox(
-                                width: 300,
+                                width: 280,
                                 child: Text(
                                   overflow: TextOverflow.clip,
                                   _taskClientModuleCntroller
@@ -784,7 +784,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 13, left: 5),
                             child: SizedBox(
-                              width: 300,
+                              width: 280,
                               child: Text(
                                 overflow: TextOverflow.clip,
                                 _taskProjectsController
@@ -957,7 +957,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 13, left: 5),
                               child: SizedBox(
-                                width: 300,
+                                width: 280,
                                 child: Text(
                                   overflow: TextOverflow.clip,
                                   _taskClientModuleCntroller
@@ -2398,7 +2398,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   }
 
   String getDateFrom(DateTime? dt) {
-    return "${dt!.day.toString().padLeft(2, "0")}-${dt.month.toString().padLeft(2, "0")}-${dt.year}";
+    return "${dt!.year}-${dt.month.toString().padLeft(2, "0")}-${dt.day.toString().padLeft(2, "0")}";
   }
 
   Future<void> pickImage(int index) async {
