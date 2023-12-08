@@ -108,7 +108,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     }
     loadCmpny();
     VmsTransationAPI.init().getTransation(
-        base: "",
+        base: baseUrlFromInsCode("login", widget.mskoolController),
         vmsTransationController: _vmsTransationController,
         userName: widget.loginSuccessModel.userName!,
         password: logInBox!.get("password"),
@@ -2356,6 +2356,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                       Get.to(() => TaskDetailsScreen(
                             loginSuccessModel: widget.loginSuccessModel,
                             mskoolController: widget.mskoolController,
+                            taskDepartController: _taskDepartController,
                           ));
                     }),
               ),

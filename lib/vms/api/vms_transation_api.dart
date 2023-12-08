@@ -21,7 +21,7 @@ class VmsTransationAPI {
     var url2 =
         'https://vmsstaging.vapssmartecampus.com:40002/${URLS.logintransation}';
     try {
-      var response = await dio.post(url2,
+      var response = await dio.post(url,
           options: Options(headers: getSession()),
           data: {
             "IVRM_MI_Id": miId,
