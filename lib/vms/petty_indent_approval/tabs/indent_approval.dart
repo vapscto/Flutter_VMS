@@ -613,7 +613,13 @@ class _IndentApprovalState extends State<IndentApproval> {
                                           "PCREQTN_Id": indentApprovalController
                                               .requisitiondetais[i].pcreqtNId,
                                         });
-                                        totalRequestedAmount += indentApprovalController.requisitiondetais[selectedRows.elementAt(i)].pcreqtNTotAmount ?? 0.0;
+                                        totalRequestedAmount +=
+                                            indentApprovalController
+                                                    .requisitiondetais[
+                                                        selectedRows
+                                                            .elementAt(i)]
+                                                    .pcreqtNTotAmount ??
+                                                0.0;
                                       }
 
                                       particularReqDetails(
