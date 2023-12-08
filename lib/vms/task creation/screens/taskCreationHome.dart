@@ -2374,7 +2374,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   Future<void> fromDate() async {
     await showDatePicker(
       context: context,
-      firstDate: DateTime.now().subtract(const Duration(days: 10)),
+      firstDate: DateTime.parse(_taskDepartController.maxPlannerDate),
       lastDate: DateTime(2035),
       initialDate: DateTime.now(),
     ).then((value) {

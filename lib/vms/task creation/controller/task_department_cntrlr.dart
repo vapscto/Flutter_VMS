@@ -57,4 +57,6 @@ class TaskDepartController extends GetxController {
   void createdTask(bool loading) {
     isCreatedTaskLoading.value = loading;
   }
+
+  String maxPlannerDate = '';
 }
