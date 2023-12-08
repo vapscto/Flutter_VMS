@@ -124,7 +124,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                         fontWeight: FontWeight.w400),
                                     dataRowHeight:
                                         MediaQuery.of(context).size.height *
-                                            0.15,
+                                            0.2,
                                     headingRowHeight: 50,
                                     horizontalMargin: 10,
                                     columnSpacing: 10,
@@ -188,7 +188,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.4,
+                                                0.5,
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,

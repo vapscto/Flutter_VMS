@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -2373,7 +2374,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   Future<void> fromDate() async {
     await showDatePicker(
       context: context,
-      firstDate: DateTime.now(),
+      firstDate: DateTime.now().subtract(const Duration(days: 10)),
       lastDate: DateTime(2035),
       initialDate: DateTime.now(),
     ).then((value) {
