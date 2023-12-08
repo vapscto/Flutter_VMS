@@ -639,6 +639,7 @@ class URLS {
       "api/ISM_DailyReportGenerationFacade/GetCategoryChecklistDetails";
   //Interaction VMS
   static String staffList = 'api/ISM_InteractionFacade/getdetails/';
+  static String interactionSave = 'api/ISM_InteractionFacade/savedata';
   // VMS Notification
   static String vMSNotification = 'api/ISM_InteractionFacade/getnotification';
 }

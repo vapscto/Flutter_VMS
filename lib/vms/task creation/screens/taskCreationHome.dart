@@ -26,10 +26,12 @@ import 'package:m_skool_flutter/vms/task%20creation/model/get_project_category.d
 import 'package:m_skool_flutter/vms/task%20creation/model/get_tsk_module.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/priority_model.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/task_employee_list.dart';
+import 'package:m_skool_flutter/vms/task%20creation/screens/task_details_screen.dart';
 import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:open_filex/open_filex.dart';
 
 class TaskCreationHome extends StatefulWidget {
@@ -2344,7 +2346,20 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
             const SizedBox(
               height: 40,
             ),
-
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: MSkollBtn(
+                    title: "Task Details",
+                    onPress: () {
+                      Get.to(() => TaskDetailsScreen(
+                            loginSuccessModel: widget.loginSuccessModel,
+                            mskoolController: widget.mskoolController,
+                          ));
+                    }),
+              ),
+            ),
             const SizedBox(
               height: 40,
             ),

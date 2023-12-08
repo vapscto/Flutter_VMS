@@ -3,8 +3,8 @@ import 'package:m_skool_flutter/vms/interaction/model/interaction_staff_list_mod
 
 class StudentListWidget extends StatefulWidget {
   final InteractionStaffListModelValues data;
-  final Function(int) function;
-  final Function(int) function1;
+  final Function(int, String) function;
+  final Function(int, String) function1;
   bool? selectAll;
   StudentListWidget({
     super.key,
@@ -42,10 +42,10 @@ class _StudentListWidgetState extends State<StudentListWidget> {
             widget.selectAll = value!;
           });
           if (value!) {
-            widget.function(widget.data.hRMEId!);
+            widget.function(widget.data.hRMEId!, widget.data.employeeName!);
             return;
           }
-          widget.function1(widget.data.hRMEId!);
+          widget.function1(widget.data.hRMEId!, widget.data.employeeName!);
         },
       ),
     );

@@ -537,6 +537,31 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                         rows: List.generate(fliteresList.length,
                                             (index) {
                                           int i = index + 1;
+                                          var startDate;
+                                          if (fliteresList
+                                                  .elementAt(index)
+                                                  .iSMTPLStartDate !=
+                                              null) {
+                                            DateTime dt = DateTime.parse(
+                                                fliteresList
+                                                    .elementAt(index)
+                                                    .iSMTPLStartDate!);
+                                            startDate =
+                                                "${dt.day}-${dt.month}-${dt.year}";
+                                          }
+                                          var endDt;
+                                          if (fliteresList
+                                                  .elementAt(index)
+                                                  .iSMTPLEndDate !=
+                                              null) {
+                                            DateTime newDt = DateTime.parse(
+                                                fliteresList
+                                                    .elementAt(index)
+                                                    .iSMTPLEndDate!);
+                                            endDt =
+                                                "${newDt.day}-${newDt.month}-${newDt.year}";
+                                          }
+
                                           return DataRow(cells: [
                                             DataCell(Align(
                                                 alignment: Alignment.center,
@@ -779,7 +804,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                           fontSize: 14)),
                                                 ),
                                                 Text(
-                                                  "Task Start date : ${fliteresList.elementAt(index).iSMTPLStartDate.toString().replaceRange(10, null, '')}",
+                                                  "Task Start date : $startDate",
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .titleSmall!
@@ -791,7 +816,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                               FontWeight.w600)),
                                                 ),
                                                 Text(
-                                                  "Task End date : ${fliteresList.elementAt(index).iSMTPLEndDate.toString().replaceRange(10, null, '')}",
+                                                  "Task End date : $endDt",
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .titleSmall!

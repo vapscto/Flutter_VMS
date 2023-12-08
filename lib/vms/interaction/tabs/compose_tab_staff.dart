@@ -5,9 +5,6 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-// import 'package:m_skool_flutter/staffs/interaction/api/staff_interaction_compose_related_api.dart';
-// import 'package:m_skool_flutter/staffs/interaction/model/interactionStudentListModel.dart';
-// import 'package:m_skool_flutter/staffs/interaction/widget/student_list_widget.dart';
 import 'package:m_skool_flutter/student/interaction/apis/messaging_api.dart';
 import 'package:m_skool_flutter/vms/interaction/api/staff_interaction_compose_related_api.dart';
 import 'package:m_skool_flutter/vms/interaction/controller/staff_interaction_compose_related_controller.dart';
@@ -51,13 +48,14 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
     super.dispose();
   }
 
-  void addStudentInList(int amstId) {
-    arrayStudents.add({"HRME_Id": amstId});
+  void addStudentInList(int amstId, String empName) {
+    arrayStudents.add({"HRME_Id": amstId, "employeeName": empName});
     logger.d(arrayStudents);
   }
 
-  void removeFromStudentInList(int amstId) {
+  void removeFromStudentInList(int amstId, String empName) {
     arrayStudents.removeWhere((v) => v['HRME_Id'] == amstId);
+    arrayStudents.removeWhere((v) => v['employeeName'] == empName);
     logger.d(arrayStudents);
   }
 
@@ -79,7 +77,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
     attachment.add(document!);
   }
 
-  _getStudentList() async {
+  _gettaffList() async {
     staffInteractionComposeController.dataLoading(true);
     await InteractionStaffListAPI.instance.getStaffList(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
@@ -98,7 +96,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
 
   @override
   void initState() {
-    _getStudentList();
+    _gettaffList();
     if (widget.animateToInbox) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         widget.tabController.animateTo(1);
@@ -142,7 +140,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                       setState(() {
                         staffInteractionComposeController
                             .groupOrIndividual(value!);
-                        _getStudentList();
+                        _gettaffList();
                       });
                     },
                   ),
@@ -171,7 +169,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                         staffInteractionComposeController
                             .groupOrIndividual(value!);
                         arrayStudents.clear();
-                        _getStudentList();
+                        _gettaffList();
                       });
                     },
                   ),
@@ -500,7 +498,12 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                                                         staffInteractionComposeController
                                                             .interactionStaffList
                                                             .elementAt(i)
-                                                            .hRMEId
+                                                            .hRMEId,
+                                                    "employeeName":
+                                                        staffInteractionComposeController
+                                                            .interactionStaffList
+                                                            .elementAt(i)
+                                                            .employeeName
                                                   });
                                                 }
                                                 logger.d(arrayStudents);
@@ -592,12 +595,38 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                     Fluttertoast.showToast(msg: "Enter About");
                   } else if (subject.text.isEmpty) {
                     Fluttertoast.showToast(msg: "Enter Subject");
-                  } else if (staffInteractionComposeController.grpOrInd.value ==
-                      'Group') {
-                    if (arrayStudents.isEmpty) {
-                      Fluttertoast.showToast(msg: "Select Staff");
-                    }
-                  } else {}
+                  } else {
+                    staffInteractionComposeController.issubmitloading(true);
+                    await submitComposeStaff(
+                      data: {
+                        "MI_Id": widget.loginSuccessModel.mIID,
+                        "ASMAY_Id": widget.loginSuccessModel.asmaYId,
+                        "UserId": widget.loginSuccessModel.userId,
+                        "Role_flag": "S",
+                        "roletype": widget.loginSuccessModel.roleforlogin,
+                        "IVRMRT_Id": widget.loginSuccessModel.roleId,
+                        "ISMINTR_GroupOrIndFlg":
+                            (staffInteractionComposeController.grpOrInd.value ==
+                                    'Group')
+                                ? "G"
+                                : "I",
+                        "ISMINTR_Subject": subject.text,
+                        "ISMINTR_Interaction": about.text,
+                        "arraymessage":
+                            (staffInteractionComposeController.grpOrInd.value ==
+                                    'Group')
+                                ? arrayStudents
+                                : selectedstaff
+                      },
+                      base: baseUrlFromInsCode(
+                        'issuemanager',
+                        widget.mskoolController,
+                      ),
+                    ).then((value) {
+                      changeTabAfterCompose(value);
+                    });
+                    staffInteractionComposeController.issubmitloading(false);
+                  }
                 },
                 child: staffInteractionComposeController.isSubmit.value
                     ? const SizedBox(

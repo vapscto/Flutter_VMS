@@ -7,29 +7,29 @@ import 'package:m_skool_flutter/vms/interaction/model/interaction_staff_list_mod
 
 var dio = Dio();
 
-// Future<bool> submitComposeStaff({
-//   required Map data,
-//   required String base,
-// }) async {
-//   var url = base + URLS.onSubmit;
-//   logger.d(data);
-//   try {
-//     var response = await dio.post(
-//       url,
-//       options: Options(
-//         headers: getSession(),
-//       ),
-//       data: data,
-//     );
-//     if (response.statusCode == 200) {
-//       return true;
-//     }
-//     return false;
-//   } catch (e) {
-//     logger.d(e.toString());
-//     return false;
-//   }
-// }
+Future<bool> submitComposeStaff({
+  required Map data,
+  required String base,
+}) async {
+  var url = base + URLS.interactionSave;
+  logger.d(data);
+  try {
+    var response = await dio.post(
+      url,
+      options: Options(
+        headers: getSession(),
+      ),
+      data: data,
+    );
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    logger.d(e.toString());
+    return false;
+  }
+}
 
 class InteractionStaffListAPI {
   InteractionStaffListAPI.init();
