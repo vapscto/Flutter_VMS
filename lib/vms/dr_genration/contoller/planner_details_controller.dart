@@ -31,28 +31,34 @@ class PlannerDetails extends GetxController {
   RxList<TextEditingController> deveationEtField =
       <TextEditingController>[].obs;
   // adding status in the list
-  RxList<DrstatusListModelValues> statusDrList = <DrstatusListModelValues>[].obs;
+  RxList<DrstatusListModelValues> statusDrList =
+      <DrstatusListModelValues>[].obs;
   // list of depertment devation list
-  RxList<DepartwisedeviationModelValues> depWiseDevitnList = <DepartwisedeviationModelValues>[].obs;
-  // checkbox List 
+  RxList<DepartwisedeviationModelValues> depWiseDevitnList =
+      <DepartwisedeviationModelValues>[].obs;
+  // checkbox List
   RxList<bool> checkBoxList = <bool>[].obs;
   // category checklist array
-  RxList<CategoryCheckListModelValues> categoryCheckList = <CategoryCheckListModelValues>[].obs;
+  RxList<CategoryCheckListModelValues> categoryCheckList =
+      <CategoryCheckListModelValues>[].obs;
   // drnotapproved list
-  RxList<DrnotapprovedmessageValues> drnotapprovedList = <DrnotapprovedmessageValues>[].obs;
+  RxList<DrnotapprovedmessageValues> drnotapprovedList =
+      <DrnotapprovedmessageValues>[].obs;
   // drnotset list
-  RxList<GetdrnotsentdetailsValues> drnotSentdetailsList = <GetdrnotsentdetailsValues>[].obs;
+  RxList<GetdrnotsentdetailsValues> drnotSentdetailsList =
+      <GetdrnotsentdetailsValues>[].obs;
   // drnotsent remarks list
   RxList<TextEditingController> etRemark = <TextEditingController>[].obs;
   // hrplannerDetails
-  RxList<HrplannerdetailsValues> hrplannerDetailsList = <HrplannerdetailsValues>[].obs;
+  RxList<HrplannerdetailsValues> hrplannerDetailsList =
+      <HrplannerdetailsValues>[].obs;
   RxString day = "today".obs;
   Rx<TextEditingController> plannernameEditingController =
       TextEditingController(text: "").obs;
   Rx<TextEditingController> plannernameDateController =
       TextEditingController(text: "").obs;
   RxString otherDaysEditingController = "".obs;
-  Rx<TextEditingController> etSearchController =TextEditingController().obs;
+  Rx<TextEditingController> etSearchController = TextEditingController().obs;
   updatePlannerDeatails(bool val) {
     loadPlanerDeatails.value = val;
   }
@@ -60,6 +66,10 @@ class PlannerDetails extends GetxController {
   updateDayRadio(String val) {
     day.value = val;
   }
-  RxList<AtachmentFile> addListBrowser = <AtachmentFile>[].obs ;
 
+  RxList<AtachmentFile> addListBrowser = <AtachmentFile>[].obs;
+  RxBool isSaveLoading = RxBool(false);
+  void saveLoading(bool loading) {
+    isSaveLoading.value = loading;
+  }
 }

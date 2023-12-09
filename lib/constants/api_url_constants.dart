@@ -642,4 +642,5 @@ class URLS {
   static String interactionSave = 'api/ISM_InteractionFacade/savedata';
   // VMS Notification
   static String vMSNotification = 'api/ISM_InteractionFacade/getnotification';
+  static String drSaveAPI = 'api/ISM_DailyReportGeneration/generatedailyreport';
 }

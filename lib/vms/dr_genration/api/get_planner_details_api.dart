@@ -21,7 +21,7 @@ Future<bool> getPlanerdetails({
   required int miId,
 }) async {
   final Dio ins = getGlobalDio();
-  String base = "https://vms.vapstech.com:44011/";
+  // String base = "https://vms.vapstech.com:44011/";
   final String apiUrl = base + URLS.drDetailsGenration;
   //  print(base);
   controller.updatePlannerDeatails(true);
@@ -69,13 +69,15 @@ Future<bool> getPlanerdetails({
     Drnotapprovedmessage drnotapprovedmessage =
         Drnotapprovedmessage.fromJson(response.data['drnotapprovedmessage']);
     controller.drnotapprovedList.addAll(drnotapprovedmessage.values!);
-    Getdrnotsentdetails getdrnotsentdetails = Getdrnotsentdetails.fromJson(response.data['getdrnotsentdetails']);
-  controller.drnotSentdetailsList.addAll(getdrnotsentdetails.values!);
-  Hrplannerdetails hrplannerdetails = Hrplannerdetails.fromJson(response.data['hrplannerdetails']);
-  controller.hrplannerDetailsList.addAll(hrplannerdetails.values!);
-   for(var a =0;a<getdrnotsentdetails.values!.length;a++){
-    controller.etRemark.add(TextEditingController(text: ""));
-  }
+    Getdrnotsentdetails getdrnotsentdetails =
+        Getdrnotsentdetails.fromJson(response.data['getdrnotsentdetails']);
+    controller.drnotSentdetailsList.addAll(getdrnotsentdetails.values!);
+    Hrplannerdetails hrplannerdetails =
+        Hrplannerdetails.fromJson(response.data['hrplannerdetails']);
+    controller.hrplannerDetailsList.addAll(hrplannerdetails.values!);
+    for (var a = 0; a < getdrnotsentdetails.values!.length; a++) {
+      controller.etRemark.add(TextEditingController(text: ""));
+    }
     controller.updatePlannerDeatails(false);
     return true;
   } on DioError catch (e) {
@@ -85,4 +87,50 @@ Future<bool> getPlanerdetails({
     logger.e(e.toString());
     return false;
   }
+}
+
+Future<bool?> saveDr({
+  required String base,
+  required PlannerDetails controller,
+  required String ismdrptDate,
+  required bool halfDayFlag,
+  required int ismtplId,
+  required List<Map<String, dynamic>> drList,
+  required int deviationId,
+  required String endWeek,
+  required String reasion,
+  required String startWeek,
+  required String todayOrOthersDay,
+  required int totalWorkingHrFlag,
+}) async {
+  var dio = Dio();
+  var api = base;
+  try {
+    controller.saveLoading(true);
+    var response =
+        await dio.post(api, options: Options(headers: getSession()), data: {
+      "ISMDRPT_Date": ismdrptDate,
+      "ISMDRPT_HalfDayFlag": halfDayFlag,
+      "ISMTPL_Id": ismtplId,
+      "Temp_ISM_DailyReportGenerationDTO": drList,
+      "deviation_id": deviationId,
+      "endweek": endWeek,
+      "reason": reasion,
+      "startweek": startWeek,
+      "todayorothers": todayOrOthersDay,
+      "totalworkinghrsflag": totalWorkingHrFlag
+    });
+    if (response.statusCode == 200) {
+      controller.saveLoading(false);
+      return true;
+    }
+    return false;
+  } on DioError catch (e) {
+    logger.e(e.message);
+    controller.saveLoading(true);
+    return false;
+  } on Exception catch (e) {
+    logger.e(e.toString());
+  }
+  return null;
 }

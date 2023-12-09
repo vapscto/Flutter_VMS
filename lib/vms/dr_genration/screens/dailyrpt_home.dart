@@ -15,6 +15,7 @@ import 'package:m_skool_flutter/vms/dr_genration/screens/widget/category_checkLi
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/drnotApprovedScreen.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/drnotsent_screen.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
+import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -37,6 +38,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   RxBool halfDay = RxBool(false);
   List<int> selectCheckbox = [];
   List<GetTaskDrListModelValues> fliteresList = [];
+
   bool deviation = false;
 
   @override
@@ -48,6 +50,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         '${todayDate.day}-${todayDate.month}-${todayDate.year}';
     super.initState();
   }
+
+  List<Map<String, dynamic>> dailyReportGenaration = [];
+  List<Map<String, dynamic>> dailyReportStatus = [];
 
   DateTime todayDate = DateTime.now();
   init() async {
@@ -107,6 +112,146 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         title: const Text("DR Generation"),
         titleSpacing: 0,
         leading: const CustomGoBackButton(),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: BtnSave(
+              onPress: () async {
+                for (int i = 0;
+                    i < _plannerDetailsController.checkBoxList.length;
+                    i++) {
+                  var value = fliteresList.elementAt(i);
+                  dailyReportGenaration.add({
+                    "CreatedFlag": 0,
+                    "HRME_Id": value.hRMEId,
+                    "HRMPR_Id": value.hRMPRId,
+                    "HRMP_Name": value.hRMPName,
+                    "ISMDRPT_DeviationFlg": false,
+                    "ISMDRPT_ExtraFlg": false,
+                    "ISMDRPT_Remarks": value.iSMDRPTRemarks,
+                    "ISMDRPT_Status": "Completed",
+                    "ISMDRPT_TimeTakenInHrs": value.iSMDRPTTimeTakenInHrs,
+                    "ISMDRPT_TimeTakenInHrsmin": "Hours",
+                    "ISMDRPT_TimeTakenInHrsmins": "Hours",
+                    "ISMDR_Id": null,
+                    "ISMMCLT_ClientName": "Hutchings High School",
+                    "ISMMCLT_Id": 4,
+                    "ISMMPR_Id": 303,
+                    "ISMMTCAT_CompulsoryFlg": false,
+                    "ISMMTCAT_Id": 104,
+                    "ISMTAPL_Day": null,
+                    "ISMTAPL_Periodicity": "DRTask",
+                    "ISMTAPL_ToDate": null,
+                    "ISMTCRTRTO_TransferredDate": null,
+                    "ISMTCR_BugOREnhancementFlg": "B",
+                    "ISMTCR_CreationDate": "2023-11-28T11:02:04.057",
+                    "ISMTCR_Desc": value.iSMTCRDesc,
+                    "ISMTCR_Id": value.iSMTCRId,
+                    "ISMTCR_ReOpenDate": null,
+                    "ISMTCR_ReOpenFlg": false,
+                    "ISMTCR_Status": "Open",
+                    "ISMTCR_TaskNo": "TASK/93760/2023-2024",
+                    "ISMTCR_Title":
+                        "Mobile app module COE data not reflecting for student.",
+                    "ISMTPLTA_EffortInHrs": 1,
+                    "ISMTPLTA_EndDate": "2023-12-09T00:00:00",
+                    "ISMTPLTA_Id": 613843,
+                    "ISMTPLTA_StartDate": "2023-12-04T00:00:00",
+                    "ISMTPL_ActiveFlg": true,
+                    "ISMTPL_ApprovalFlg": true,
+                    "ISMTPL_ApprovedBy": 1766,
+                    "ISMTPL_EndDate": "2023-12-09T00:00:00",
+                    "ISMTPL_Id": 25281,
+                    "ISMTPL_PlannedBy": 1952,
+                    "ISMTPL_PlannerName": "1st Week DECEMBER",
+                    "ISMTPL_Remarks": null,
+                    "ISMTPL_StartDate": "2023-12-04T00:00:00",
+                    "ISMTPL_TotalHrs": 61.18,
+                    "ProjectName": "IVRM - SCHOOL",
+                    "actualeffortinhrs": "01",
+                    "actualeffortinmins": "00",
+                    "approvedflag": 0,
+                    "assignedby": "Basavaraj Kammanhalli",
+                    "checkedvalue": true,
+                    "createdemp": "Priyanka Ashok Shirke",
+                    "deviationflag": false,
+                    "dr_flag": 0,
+                    "effhrs": 1,
+                    "effmin": 0,
+                    "effortss": "0",
+                    "get_Status": [],
+                    "maxtime": "0",
+                    "periodicitydailyflag": 2,
+                    "periodicityendflag": "",
+                    "periodicityweeklyflag": 0,
+                    "taskcategoryname": "Issues"
+                  });
+                  _plannerDetailsController.saveLoading(true);
+                  await saveDr(
+                          base: baseUrlFromInsCode(
+                              'issuemanager', widget.mskoolController),
+                          controller: _plannerDetailsController,
+                          ismdrptDate: '',
+                          halfDayFlag: halfDay.value,
+                          ismtplId: 0,
+                          drList: dailyReportGenaration,
+                          deviationId: 0,
+                          endWeek: '',
+                          reasion: '',
+                          startWeek: '',
+                          todayOrOthersDay: _plannerDetailsController.day.value,
+                          totalWorkingHrFlag: 0)
+                      .then((value) {
+                    if (value == true) {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      'Daily Report Genrrated successfully',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .merge(TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor)),
+                                    ),
+                                  ),
+                                  TextButton(
+                                      onPressed: () {
+                                        Get.back();
+                                        Get.back();
+                                      },
+                                      child: Text(
+                                        "OK",
+                                        style: Get.textTheme.titleMedium!
+                                            .copyWith(
+                                                color: Theme.of(context)
+                                                    .primaryColor),
+                                      ))
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  });
+                  _plannerDetailsController.saveLoading(false);
+                }
+              },
+              title: "Save",
+            ),
+          ),
+        ],
       ),
       body: Obx(
         () => _plannerDetailsController.loadPlanerDeatails.isTrue
