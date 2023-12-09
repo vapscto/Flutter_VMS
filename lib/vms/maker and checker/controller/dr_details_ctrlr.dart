@@ -8,11 +8,11 @@ class DrDetailsCtrlr extends GetxController {
   RxBool drIsLoading = RxBool(false);
   RxBool drErrorLaodig = RxBool(false);
   RxBool tabLoading = RxBool(false);
-   
+
   void updateIsLoadign(bool val) {
     drIsLoading.value = val;
   }
- 
+
   void updatempErrorLoading(bool val) {
     drErrorLaodig.value = val;
   }
@@ -22,6 +22,15 @@ class DrDetailsCtrlr extends GetxController {
   }
 
   RxList<DrDetailModelValues> drdList = <DrDetailModelValues>[].obs;
+  void getList(List<DrDetailModelValues> drd) {
+    if (drdList.isNotEmpty) {
+      drdList.clear();
+    }
+    for (int i = 0; i < drd.length; i++) {
+      drdList.add(drd.elementAt(i));
+    }
+  }
+
   RxList<GetEmployeeDetailValues> empDetails = <GetEmployeeDetailValues>[].obs;
   RxList<String> statusList = <String>[].obs;
   RxList<String> sList = <String>[].obs;

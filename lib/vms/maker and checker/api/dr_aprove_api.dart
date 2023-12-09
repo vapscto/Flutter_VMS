@@ -24,8 +24,7 @@ Future<int> getdrLists({
   required DrDetailsCtrlr controller,
 }) async {
   final Dio ins = getGlobalDio();
-  String apiUrl =
-     base+URLS.getDrs;
+  String apiUrl = base + URLS.getDrs;
 
   logger.d(apiUrl);
   logger.d({
@@ -39,7 +38,7 @@ Future<int> getdrLists({
 
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
-      "IVRMRT_Id": roleId ,
+      "IVRMRT_Id": roleId,
       "UserId": userId,
       "MI_Id": mi_id,
       "DRApprovalTypeFlag": "DRApproval",
@@ -56,7 +55,7 @@ Future<int> getdrLists({
         {"HRME_Id": hrme_Id}
       ]
     });
-   logger.d( {
+    logger.d({
       "IVRMRT_Id": roleId,
       "UserId": userId,
       "MI_Id": mi_id,
@@ -77,14 +76,16 @@ Future<int> getdrLists({
     if (response.data['getsaveddetails'] == null) {
       controller.drErrorLaodig(true);
     }
-     print(response.data['getsaveddetails']);
+    print(response.data['getsaveddetails']);
+    print(response.statusCode);
     controller.drIsLoading(false);
     DrDetailModel drList =
         DrDetailModel.fromJson(response.data['getsaveddetails']);
-    controller.drdList.addAll(drList.values!);
+    controller.getList(drList.values!);
     controller.sList.add('Approved');
     controller.sList.add('Rejected');
-    GetEmployeeDetail getEmployeeDetail = GetEmployeeDetail.fromJson(response.data['filldata']);
+    GetEmployeeDetail getEmployeeDetail =
+        GetEmployeeDetail.fromJson(response.data['filldata']);
     controller.empDetails.addAll(getEmployeeDetail.values!);
     for (int i = 0; i < drList.values!.length; i++) {
       controller.statusET.add(TextEditingController(text: "Select"));
@@ -100,7 +101,6 @@ Future<int> getdrLists({
     }
 
     return response.statusCode!;
-    
   } on DioError catch (e) {
     logger.e(e.message);
     return 0;

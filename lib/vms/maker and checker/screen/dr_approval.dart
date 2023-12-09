@@ -31,8 +31,8 @@ class DRApprovalScreen extends StatefulWidget {
 class _DRApprovalScreenState extends State<DRApprovalScreen> {
   List<String> statusList = ['Approved', 'Rejected'];
   String? dropdownvalue;
-  bool isLoadingTab=false;
- List< Map<String, dynamic>> selectedemployeedetails = [];
+  bool isLoadingTab = false;
+  List<Map<String, dynamic>> selectedemployeedetails = [];
   List<Map<String, dynamic>> getAllDrLists = [];
   DrDetailsCtrlr controller = Get.put(DrDetailsCtrlr());
   TextEditingController descTextEditingController = TextEditingController();
@@ -66,7 +66,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
         "Remarks": controller.etRemakeList.elementAt(i).text,
         "Task_Response": controller.statusET[i].text == "Approved" ? "" : "Open"
       });
-           countToatalEffort +=
+      countToatalEffort +=
           double.parse(controller.etHoursList[i].text.toString());
     }
 
@@ -78,43 +78,45 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
       "remarks": descTextEditingController.text,
       "selectedapprovaldetails": getAllDrLists
     });
-     await submitDrs(
+    await submitDrs(
       base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
       date: widget.date,
       userId: widget.loginSuccessModel.userId!,
       mi_id: widget.loginSuccessModel.mIID!,
       academicYear: widget.loginSuccessModel.asmaYId!,
-      roleflag:  widget.loginSuccessModel.roleforlogin!,
+      roleflag: widget.loginSuccessModel.roleforlogin!,
       roleId: widget.loginSuccessModel.roleId!,
       selectedemployeedetails: selectedemployeedetails,
       controller: controller,
     ).then((value) {
       if (value) {
         controller.updateTabLoading(false);
-            Get.dialog(
-          barrierDismissible :false,
+        Get.dialog(
+            barrierDismissible: false,
             WillPopScope(
               onWillPop: () {
                 return Future.value(false);
               },
               child: AlertDialog(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              title:    Align(
-                alignment: Alignment.center,
-                child: Text("Record saved successfully",
-                style:   Theme.of(context).textTheme.titleLarge!.merge(
-                  TextStyle(
-                    color:  Theme.of(context).primaryColor
-                  )
-                ),)),
-               content:  MSkollBtn(title: "Close", onPress: () {
-                      Get.back();
-                       Get.back(); 
-                    },),
-                      ),
-            )) ;
-       
-       }
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                title: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Record saved successfully",
+                      style: Theme.of(context).textTheme.titleLarge!.merge(
+                          TextStyle(color: Theme.of(context).primaryColor)),
+                    )),
+                content: MSkollBtn(
+                  title: "Close",
+                  onPress: () {
+                    Get.back();
+                    Get.back();
+                  },
+                ),
+              ),
+            ));
+      }
     });
   }
 
@@ -134,44 +136,45 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
             ),
           ),
           actions: [
-             Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
-            child: Obx(
-              () => controller.drIsLoading.value
-                  ? const SizedBox()
-                  : BtnSave(
-                      title:  'Submit',
-                      onPress: () {
-                       if(descTextEditingController.text.isNotEmpty){
-                          loadListDr();  
-                          }else{
-                             Fluttertoast.showToast(msg: "Please enter overAll remark");
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+              child: Obx(
+                () => controller.drIsLoading.value
+                    ? const SizedBox()
+                    : BtnSave(
+                        title: 'Submit',
+                        onPress: () {
+                          if (descTextEditingController.text.isNotEmpty) {
+                            loadListDr();
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Please enter overAll remark");
                           }
-                         
-                          logger.d(selectedemployeedetails);  
-                      },
-                    ),
-            ),
-          )
-          //   Padding(
-          //     padding:
-          //         const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
-          //     child:  Obx(() => BtnSave(
-          //               title: 'submit',
-          //               onPress: () {
-                          
-          //                 if(descTextEditingController.text.isNotEmpty){
-          //                 loadListDr();  
-          //                 }else{
-          //                    Fluttertoast.showToast(msg: "Please enter overAll remark");
-          //                 }
-                         
-          //                 logger.d(selectedemployeedetails);
-          //               },
-          //             )),
-          //   ),
-           ],
+
+                          logger.d(selectedemployeedetails);
+                        },
+                      ),
+              ),
+            )
+            //   Padding(
+            //     padding:
+            //         const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+            //     child:  Obx(() => BtnSave(
+            //               title: 'submit',
+            //               onPress: () {
+
+            //                 if(descTextEditingController.text.isNotEmpty){
+            //                 loadListDr();
+            //                 }else{
+            //                    Fluttertoast.showToast(msg: "Please enter overAll remark");
+            //                 }
+
+            //                 logger.d(selectedemployeedetails);
+            //               },
+            //             )),
+            //   ),
+          ],
           titleSpacing: 0,
         ),
         body: SingleChildScrollView(
@@ -180,338 +183,330 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
               const SizedBox(
                 height: 5,
               ),
-              Obx(() =>
-              controller.drIsLoading.isTrue
-              ? const
-              AnimatedProgressWidget(
+              Obx(() => controller.drIsLoading.isTrue
+                  ? const AnimatedProgressWidget(
                       animationPath: 'assets/json/default.json',
                       title: 'Loading data',
                       desc: "Please wait we are loading data",
-                    ):
-               controller.drdList.isEmpty
-                  ? const AnimatedProgressWidget(
-                      animationPath: 'assets/json/nodata.json',
-                      title: 'No data available',
-                      desc: "No data available",
                     )
-                  : SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: Center(
-                        child: SingleChildScrollView(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          scrollDirection: Axis.horizontal,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: DataTable(
-                              dataTextStyle: const TextStyle(
-                                  fontSize: 14,
-                                  color: Color.fromRGBO(0, 0, 0, 0.95),
-                                  fontWeight: FontWeight.w500),
-                              dataRowHeight: 150,
-                              headingRowHeight: 40,
-                              horizontalMargin: 10,
-                              columnSpacing: 30,
-                              dividerThickness: 1,
-                              headingTextStyle: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700),
-                              border: TableBorder.all(
-                                  borderRadius: BorderRadius.circular(10),
-                                  width: 0.5),
-                              headingRowColor: MaterialStateProperty.all(
-                                  Theme.of(context).primaryColor),
-                              columns: const [
-                                // 1
-                                DataColumn(
-                                  numeric: true,
-                                  label: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      'S.No',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                //2
-                                DataColumn(
-                                  label: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      'Task DR Detail',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                // 3
-                                DataColumn(
-                                  label: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      'DR Response',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                // 4
-                                DataColumn(
-                                  label: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      'Effort',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                // 5
-                                DataColumn(
-                                  label: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      'Change Effort',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                // 6
-                                DataColumn(
-                                  label: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      'Status',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                // 7
-                                DataColumn(
-                                  label: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      'Remark',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                              rows: List.generate(controller.drdList.length,
-                                  (index) {
-                                var i = index + 1;
-                                return DataRow(
-                                  cells: [
-                                    DataCell(Align(
+                  : controller.drdList.isEmpty
+                      ? const AnimatedProgressWidget(
+                          animationPath: 'assets/json/nodata.json',
+                          title: 'No data available',
+                          desc: "No data available",
+                        )
+                      : SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Center(
+                            child: SingleChildScrollView(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              scrollDirection: Axis.horizontal,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: DataTable(
+                                  dataTextStyle: const TextStyle(
+                                      fontSize: 14,
+                                      color: Color.fromRGBO(0, 0, 0, 0.95),
+                                      fontWeight: FontWeight.w500),
+                                  dataRowHeight: 150,
+                                  headingRowHeight: 40,
+                                  horizontalMargin: 10,
+                                  columnSpacing: 30,
+                                  dividerThickness: 1,
+                                  headingTextStyle: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700),
+                                  border: TableBorder.all(
+                                      borderRadius: BorderRadius.circular(10),
+                                      width: 0.5),
+                                  headingRowColor: MaterialStateProperty.all(
+                                      Theme.of(context).primaryColor),
+                                  columns: const [
+                                    // 1
+                                    DataColumn(
+                                      numeric: true,
+                                      label: Align(
                                         alignment: Alignment.center,
-                                        child: Text('$i'))),
-                                    DataCell(Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const SizedBox(
-                                            height: 10,
+                                        child: Text(
+                                          'S.No',
+                                          style: TextStyle(
+                                            fontSize: 14,
                                           ),
-                                          Text(
-                                            controller.drdList
-                                                .elementAt(index)
-                                                .iSMTCRTaskNo!,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall!
-                                                .merge(const TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 14.0,
-                                                  letterSpacing: 0.3,
-                                                  overflow: TextOverflow.clip,
-                                                )),
+                                        ),
+                                      ),
+                                    ),
+                                    //2
+                                    DataColumn(
+                                      label: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'Task DR Detail',
+                                          style: TextStyle(
+                                            fontSize: 14,
                                           ),
-                                          const SizedBox(
-                                            height: 5,
+                                        ),
+                                      ),
+                                    ),
+                                    // 3
+                                    DataColumn(
+                                      label: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'DR Response',
+                                          style: TextStyle(
+                                            fontSize: 14,
                                           ),
-                                          SizedBox(
-                                            width: 200,
-                                            child: Text(
-                                              controller.drdList
-                                                  .elementAt(index)
-                                                  .iSMTCRTitle!,
-                                              maxLines: 3,
+                                        ),
+                                      ),
+                                    ),
+                                    // 4
+                                    DataColumn(
+                                      label: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'Effort',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    // 5
+                                    DataColumn(
+                                      label: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'Change Effort',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    // 6
+                                    DataColumn(
+                                      label: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'Status',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    // 7
+                                    DataColumn(
+                                      label: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'Remark',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                  rows: List.generate(controller.drdList.length,
+                                      (index) {
+                                    var i = index + 1;
+                                    return DataRow(
+                                      cells: [
+                                        DataCell(Align(
+                                            alignment: Alignment.center,
+                                            child: Text('$i'))),
+                                        DataCell(Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                controller.drdList
+                                                    .elementAt(index)
+                                                    .iSMTCRTaskNo!,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .merge(const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 14.0,
+                                                      letterSpacing: 0.3,
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                    )),
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              SizedBox(
+                                                width: 200,
+                                                child: Text(
+                                                  controller.drdList
+                                                      .elementAt(index)
+                                                      .iSMTCRTitle!,
+                                                  maxLines: 3,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .merge(const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 13.0,
+                                                        letterSpacing: 0.3,
+                                                        overflow:
+                                                            TextOverflow.clip,
+                                                      )),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                "DR Date : ${controller.drdList.elementAt(index).iSMDRPTDate!}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .merge(const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 14.0,
+                                                      letterSpacing: 0.3,
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                    )),
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                "DR Status : ${controller.drdList.elementAt(index).iSMDRPTStatus!}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .merge(const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 14.0,
+                                                      letterSpacing: 0.3,
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                    )),
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                "Task Category : ${controller.drdList.elementAt(index).iSMMTCATTaskCategoryName}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .merge(const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 14.0,
+                                                      letterSpacing: 0.3,
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                    )),
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                            ])),
+                                        DataCell(SizedBox(
+                                          width: 200,
+                                          child: Scrollbar(
+                                            radius: const Radius.circular(10),
+                                            thickness: 2.0,
+                                            interactive: true,
+                                            thumbVisibility: false,
+                                            trackVisibility: false,
+                                            child: SingleChildScrollView(
+                                              scrollDirection: Axis.vertical,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 10),
+                                              child: Text(
+                                                controller.drdList
+                                                    .elementAt(index)
+                                                    .iSMDRPTRemarks!,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .merge(const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 13.0,
+                                                      letterSpacing: 0.3,
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                    )),
+                                              ),
+                                            ),
+                                          ),
+                                        )),
+                                        DataCell(Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Actual Effort',
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .titleSmall!
                                                   .merge(const TextStyle(
                                                     fontWeight: FontWeight.w500,
-                                                    fontSize: 13.0,
+                                                    fontSize: 14.0,
                                                     letterSpacing: 0.3,
                                                     overflow: TextOverflow.clip,
                                                   )),
                                             ),
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            "DR Date : ${controller.drdList.elementAt(index).iSMDRPTDate!}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall!
-                                                .merge(const TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 14.0,
-                                                  letterSpacing: 0.3,
-                                                  overflow: TextOverflow.clip,
-                                                )),
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            "DR Status : ${controller.drdList.elementAt(index).iSMDRPTStatus!}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall!
-                                                .merge(const TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 14.0,
-                                                  letterSpacing: 0.3,
-                                                  overflow: TextOverflow.clip,
-                                                )),
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            "Task Category : ${controller.drdList.elementAt(index).iSMMTCATTaskCategoryName}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall!
-                                                .merge(const TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 14.0,
-                                                  letterSpacing: 0.3,
-                                                  overflow: TextOverflow.clip,
-                                                )),
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                        ])),
-                                    DataCell(SizedBox(
-                                      width: 200,
-                                      child: Scrollbar(
-                                        radius: const Radius.circular(10),
-                                        thickness: 2.0,
-                                        interactive: true,
-                                        thumbVisibility: false,
-                                        trackVisibility: false,
-                                        child: SingleChildScrollView(
-                                          scrollDirection: Axis.vertical,
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 10),
-                                          child: Text(
-                                            controller.drdList
-                                                .elementAt(index)
-                                                .iSMDRPTRemarks!,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall!
-                                                .merge(const TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 13.0,
-                                                  letterSpacing: 0.3,
-                                                  overflow: TextOverflow.clip,
-                                                )),
-                                          ),
-                                        ),
-                                      ),
-                                    )),
-                                    DataCell(Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Actual Effort',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall!
-                                              .merge(const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.3,
-                                                overflow: TextOverflow.clip,
-                                              )),
-                                        ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          "${controller.drdList.elementAt(index).iSMTPLTAEffortInHrs!.toInt().toString().padLeft(2, '0')} Hrs : 00 Mins",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall!
-                                              .merge(const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.3,
-                                                overflow: TextOverflow.clip,
-                                              )),
-                                        ),
-                                        const SizedBox(
-                                          height: 15,
-                                        ),
-                                        Text(
-                                          'Time Taken',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall!
-                                              .merge(const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.3,
-                                                overflow: TextOverflow.clip,
-                                              )),
-                                        ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          "${controller.drdList.elementAt(index).iSMDRPTTimeTakenInHrs!.toInt().toString().padLeft(2, '0')} Hrs : 00 Mins",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall!
-                                              .merge(const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.3,
-                                                overflow: TextOverflow.clip,
-                                              )),
-                                        ),
-                                      ],
-                                    )),
-                                    DataCell(Align(
-                                      alignment: Alignment.center,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              SizedBox(
-                                                  width: 80,
-                                                  child: TextField(
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              "${controller.drdList.elementAt(index).iSMTPLTAEffortInHrs!.toInt().toString().padLeft(2, '0')} Hrs : 00 Mins",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .merge(const TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 14.0,
+                                                    letterSpacing: 0.3,
+                                                    overflow: TextOverflow.clip,
+                                                  )),
+                                            ),
+                                            const SizedBox(
+                                              height: 15,
+                                            ),
+                                            Text(
+                                              'Time Taken',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .merge(const TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 14.0,
+                                                    letterSpacing: 0.3,
+                                                    overflow: TextOverflow.clip,
+                                                  )),
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            (controller.drdList
+                                                        .elementAt(index)
+                                                        .iSMDRPTTimeTakenInHrs !=
+                                                    null)
+                                                ? Text(
+                                                    "${controller.drdList.elementAt(index).iSMDRPTTimeTakenInHrs!.toInt().toString().padLeft(2, '0')} Hrs : 00 Mins",
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .titleSmall!
@@ -523,84 +518,21 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                                                           overflow:
                                                               TextOverflow.clip,
                                                         )),
-                                                    decoration: InputDecoration(
-                                                        border:
-                                                         const   OutlineInputBorder(),
-                                                        hintText: " HH ",
-                                                        hintStyle: Theme.of(
-                                                                context)
-                                                            .textTheme
-                                                            .titleSmall!
-                                                            .merge(
-                                                                const TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontSize: 14.0,
-                                                              letterSpacing:
-                                                                  0.3,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .clip,
-                                                            ))),
-                                                    controller: controller
-                                                        .etHoursList
-                                                        .elementAt(index),
-                                                  )),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              SizedBox(
-                                                width: 80,
-                                                child: TextField(
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleSmall!
-                                                      .merge(const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.3,
-                                                        overflow:
-                                                            TextOverflow.clip,
-                                                      )),
-                                                  decoration: InputDecoration(
-                                                      border:
-                                                        const  OutlineInputBorder(),
-                                                      hintText: " MM ",
-                                                      hintStyle: Theme.of(
-                                                              context)
-                                                          .textTheme
-                                                          .titleSmall!
-                                                          .merge(
-                                                              const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 14.0,
-                                                            letterSpacing: 0.3,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .clip,
-                                                          ))),
-                                                  controller: controller
-                                                      .etMinutesList
-                                                      .elementAt(index),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 3,
-                                          ),
-                                          Row(
+                                                  )
+                                                : const Text("00"),
+                                          ],
+                                        )),
+                                        DataCell(Align(
+                                          alignment: Alignment.center,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: [
-                                              SizedBox(
-                                                  width: 80,
-                                                  child: Align(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: Text(
-                                                        "HH",
+                                              Row(
+                                                children: [
+                                                  SizedBox(
+                                                      width: 80,
+                                                      child: TextField(
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .titleSmall!
@@ -616,16 +548,39 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                                                                   TextOverflow
                                                                       .clip,
                                                             )),
-                                                      ))),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              SizedBox(
-                                                width: 80,
-                                                child: Align(
-                                                    alignment: Alignment.center,
-                                                    child: Text(
-                                                      "MM",
+                                                        decoration:
+                                                            InputDecoration(
+                                                                border:
+                                                                    const OutlineInputBorder(),
+                                                                hintText:
+                                                                    " HH ",
+                                                                hintStyle: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .merge(
+                                                                        const TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontSize:
+                                                                          14.0,
+                                                                      letterSpacing:
+                                                                          0.3,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .clip,
+                                                                    ))),
+                                                        controller: controller
+                                                            .etHoursList
+                                                            .elementAt(index),
+                                                      )),
+                                                  const SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 80,
+                                                    child: TextField(
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .titleSmall!
@@ -639,76 +594,162 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                                                                 TextOverflow
                                                                     .clip,
                                                           )),
-                                                    )),
-                                              )
+                                                      decoration:
+                                                          InputDecoration(
+                                                              border:
+                                                                  const OutlineInputBorder(),
+                                                              hintText: " MM ",
+                                                              hintStyle: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .merge(
+                                                                      const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    fontSize:
+                                                                        14.0,
+                                                                    letterSpacing:
+                                                                        0.3,
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .clip,
+                                                                  ))),
+                                                      controller: controller
+                                                          .etMinutesList
+                                                          .elementAt(index),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 3,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  SizedBox(
+                                                      width: 80,
+                                                      child: Align(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          child: Text(
+                                                            "HH",
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .titleSmall!
+                                                                .merge(
+                                                                    const TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  letterSpacing:
+                                                                      0.3,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .clip,
+                                                                )),
+                                                          ))),
+                                                  const SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 80,
+                                                    child: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                          "MM",
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .titleSmall!
+                                                              .merge(
+                                                                  const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.3,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .clip,
+                                                              )),
+                                                        )),
+                                                  )
+                                                ],
+                                              ),
                                             ],
                                           ),
-                                        ],
-                                      ),
-                                    )),
-                                    DataCell(Align(
-                                      alignment: Alignment.center,
-                                      child: DropdownMenu<String>(
-                                        enableSearch: true,
-                                        textStyle: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .merge(const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 14.0,
-                                              letterSpacing: 0.3,
-                                              overflow: TextOverflow.clip,
-                                            )),
-                                        controller: controller.statusET
-                                            .elementAt(index),
-                                           
-                                        initialSelection:
-                                            controller.sList.first,
-                                        onSelected: (String? value) {
-                                          setState(() {
-                                            controller.statusET[index].text =
-                                                value!;
-                                          });
-                                        },
-                                        dropdownMenuEntries: controller.sList
-                                            .map<DropdownMenuEntry<String>>(
-                                                (String value) {
-                                          return DropdownMenuEntry<String>(
-                                              value: value, label: value);
-                                        }).toList(),
-                                      ),
-                                    )),
-                                    DataCell(Align(
-                                      alignment: Alignment.center,
-                                      child: SizedBox(
-                                        width: 120,
-                                        height: 100,
-                                        child: TextFormField(
-                                          decoration: const InputDecoration(
-                                              border: OutlineInputBorder()),
-                                          maxLines: 7,
-                                          controller: controller.etRemakeList
-                                              .elementAt(index),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall!
-                                              .merge(const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.3,
-                                                overflow: TextOverflow.clip,
-                                              )),
-                                        ),
-                                      ),
-                                    )),
-                                  ],
-                                );
-                              }),
+                                        )),
+                                        DataCell(Align(
+                                          alignment: Alignment.center,
+                                          child: DropdownMenu<String>(
+                                            enableSearch: true,
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .merge(const TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 14.0,
+                                                  letterSpacing: 0.3,
+                                                  overflow: TextOverflow.clip,
+                                                )),
+                                            controller: controller.statusET
+                                                .elementAt(index),
+                                            initialSelection:
+                                                controller.sList.first,
+                                            onSelected: (String? value) {
+                                              setState(() {
+                                                controller.statusET[index]
+                                                    .text = value!;
+                                              });
+                                            },
+                                            dropdownMenuEntries: controller
+                                                .sList
+                                                .map<DropdownMenuEntry<String>>(
+                                                    (String value) {
+                                              return DropdownMenuEntry<String>(
+                                                  value: value, label: value);
+                                            }).toList(),
+                                          ),
+                                        )),
+                                        DataCell(Align(
+                                          alignment: Alignment.center,
+                                          child: SizedBox(
+                                            width: 120,
+                                            height: 100,
+                                            child: TextFormField(
+                                              decoration: const InputDecoration(
+                                                  border: OutlineInputBorder()),
+                                              maxLines: 7,
+                                              controller: controller
+                                                  .etRemakeList
+                                                  .elementAt(index),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .merge(const TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 14.0,
+                                                    letterSpacing: 0.3,
+                                                    overflow: TextOverflow.clip,
+                                                  )),
+                                            ),
+                                          ),
+                                        )),
+                                      ],
+                                    );
+                                  }),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    )),
+                        )),
               const SizedBox(
                 height: 20,
               ),

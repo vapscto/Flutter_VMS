@@ -203,9 +203,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                             "ISMDRPT_Status": _plannerDetailsController
                                 .deveationEtField[i].text,
                             "ISMDRPT_TimeTakenInHrs":
-                                value.iSMDRPTTimeTakenInHrs,
+                                _plannerDetailsController.hoursEt[i].text,
                             "ISMDRPT_TimeTakenInHrsmin":
-                                value.iSMDRPTTimeTakenInHrs,
+                                _plannerDetailsController.minutesEt[i].text,
                             "ISMDRPT_TimeTakenInHrsmins":
                                 value.iSMDRPTTimeTakenInHrsmins,
                             "ISMMCLT_ClientName": value.iSMMCLTClientName,
@@ -1194,7 +1194,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                        "Actual Effort:- ${fliteresList.elementAt(index).iSMTPLTAEffortInHrs}"),
+                                                        "Actual Effort:- ${fliteresList.elementAt(index).iSMTPLTAEffortInHrs} Hr"),
+                                                    const SizedBox(height: 5),
                                                     Row(
                                                       children: [
                                                         SizedBox(
