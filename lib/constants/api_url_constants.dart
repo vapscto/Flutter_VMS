@@ -643,7 +643,8 @@ class URLS {
   // VMS Notification
   static String vMSNotification = 'api/ISM_InteractionFacade/getnotification';
   //dr
-  static String drSaveAPI = 'api/ISM_DailyReportGeneration/generatedailyreport';
+  static String drSaveAPI =
+      'api/ISM_DailyReportGenerationFacade/generatedailyreport';
   static String drNotSave =
-      'api/ISM_DailyReportGeneration/SaveDRNotSentRemarks';
+      'api/ISM_DailyReportGenerationFacade/SaveDRNotSentRemarks';
 }

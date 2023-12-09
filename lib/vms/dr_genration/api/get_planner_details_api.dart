@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -71,9 +72,14 @@ Future<bool> getPlanerdetails({
     Drnotapprovedmessage drnotapprovedmessage =
         Drnotapprovedmessage.fromJson(response.data['drnotapprovedmessage']);
     controller.drnotapprovedList.addAll(drnotapprovedmessage.values!);
-    Getdrnotsentdetails getdrnotsentdetails =
-        Getdrnotsentdetails.fromJson(response.data['getdrnotsentdetails']);
-    controller.drNotSend(getdrnotsentdetails.values!);
+    if (response.data['getdrnotsentdetails'] != null) {
+      Getdrnotsentdetails getdrnotsentdetails =
+          Getdrnotsentdetails.fromJson(response.data['getdrnotsentdetails']);
+      controller.drNotSend(getdrnotsentdetails.values!);
+      for (var a = 0; a < getdrnotsentdetails.values!.length; a++) {
+        controller.etRemark.add(TextEditingController(text: ""));
+      }
+    }
     Hrplannerdetails hrplannerdetails =
         Hrplannerdetails.fromJson(response.data['hrplannerdetails']);
     controller.hrplannerDetailsList.addAll(hrplannerdetails.values!);
@@ -84,9 +90,7 @@ Future<bool> getPlanerdetails({
     AdvanceApplyModel advanceApplyModel =
         AdvanceApplyModel.fromJson(response.data['adavanceList']);
     controller.getAdvanceApply(advanceApplyModel.values!);
-    for (var a = 0; a < getdrnotsentdetails.values!.length; a++) {
-      controller.etRemark.add(TextEditingController(text: ""));
-    }
+
     controller.updatePlannerDeatails(false);
     return true;
   } on DioError catch (e) {
@@ -111,13 +115,17 @@ Future<bool?> saveDr({
   required String startWeek,
   required String todayOrOthersDay,
   required double totalWorkingHrFlag,
+  required int userId,
+  required int miID,
 }) async {
   var dio = Dio();
-  var api = 'base+ URLS.drSaveAPI';
+  var api = base + URLS.drSaveAPI;
   try {
     controller.saveLoading(true);
     var response =
         await dio.post(api, options: Options(headers: getSession()), data: {
+      "UserId": userId,
+      "MI_Id": miID,
       "ISMDRPT_Date": ismdrptDate,
       "ISMDRPT_HalfDayFlag": halfDayFlag,
       "ISMTPL_Id": ismtplId,
@@ -130,6 +138,8 @@ Future<bool?> saveDr({
       "totalworkinghrsflag": totalWorkingHrFlag
     });
     logger.e({
+      "UserId": userId,
+      "MI_Id": miID,
       "ISMDRPT_Date": ismdrptDate,
       "ISMDRPT_HalfDayFlag": halfDayFlag,
       "ISMTPL_Id": ismtplId,
@@ -142,6 +152,9 @@ Future<bool?> saveDr({
       "totalworkinghrsflag": totalWorkingHrFlag
     });
     if (response.statusCode == 200) {
+      if (response.data['returnval'] == true) {
+        Fluttertoast.showToast(msg: "Saved Successfully");
+      }
       controller.saveLoading(false);
       return true;
     }
@@ -162,6 +175,7 @@ Future<bool?> drNotSaveDAPI({
   required List<Map<String, dynamic>> drList,
   required int userId,
   required int miId,
+  required String todayDate,
 }) async {
   var dio = Dio();
   var api = base + URLS.drNotSave;
@@ -169,6 +183,7 @@ Future<bool?> drNotSaveDAPI({
     "UserId": userId,
     "MI_Id": miId,
     "SaveDRNotSentRemarksDetails": drList,
+    "ISMDRNSDR_RemarksDate": "",
   });
   try {
     controller.saveLoading(true);
@@ -177,6 +192,7 @@ Future<bool?> drNotSaveDAPI({
       "UserId": userId,
       "MI_Id": miId,
       "SaveDRNotSentRemarksDetails": drList,
+      "ISMDRNSDR_RemarksDate": todayDate,
     });
 
     if (response.statusCode == 200) {

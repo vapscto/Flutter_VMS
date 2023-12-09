@@ -166,10 +166,12 @@ class DrnotsentScreen extends StatelessWidget {
                           .elementAt(i)
                           .fromDate,
                       "remarks":
-                          plannerDetailsController.etRemark.elementAt(i).text
+                          plannerDetailsController.etRemark.elementAt(i).text,
+                      "Template": "DRNotSentRemarks"
                     });
                   }
                   await drNotSaveDAPI(
+                          todayDate: dt.toIso8601String(),
                           base: baseUrlFromInsCode(
                               'issuemanager', mskoolController),
                           controller: plannerDetailsController,
@@ -180,7 +182,6 @@ class DrnotsentScreen extends StatelessWidget {
                     if (value!) {
                       Fluttertoast.showToast(
                           msg: "Daily Report Update Successfully");
-                      Get.back();
                       Get.back();
                     }
                   });
@@ -196,4 +197,5 @@ class DrnotsentScreen extends StatelessWidget {
   }
 
   List<Map<String, dynamic>> drList = [];
+  DateTime dt = DateTime.now();
 }

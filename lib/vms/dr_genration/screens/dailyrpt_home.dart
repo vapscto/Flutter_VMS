@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -42,7 +43,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   List<GetTaskDrListModelValues> fliteresList = [];
 
   bool deviation = false;
-
+  String todayDt = '';
   @override
   void initState() {
     init();
@@ -175,151 +176,177 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: BtnSave(
-              onPress: () async {
-                for (int i = 0;
-                    i < _plannerDetailsController.checkBoxList.length;
-                    i++) {
-                  var value = fliteresList.elementAt(i);
-                  if (_plannerDetailsController.checkBoxList.elementAt(i) ==
-                      true) {
-                    dailyReportGenaration.add({
-                      "CreatedFlag": value.createdFlag,
-                      "HRME_Id": value.hRMEId,
-                      "HRMPR_Id": value.hRMPRId,
-                      "HRMP_Name": value.hRMPName,
-                      "ISMDRPT_DeviationFlg": value.iSMDRPTDeviationFlg,
-                      "ISMDRPT_ExtraFlg": value.iSMDRPTExtraFlg,
-                      "ISMDRPT_Remarks": value.iSMDRPTRemarks,
-                      "ISMDRPT_Status": "Completed",
-                      "ISMDRPT_TimeTakenInHrs": value.iSMDRPTTimeTakenInHrs,
-                      "ISMDRPT_TimeTakenInHrsmin": "Hours",
-                      "ISMDRPT_TimeTakenInHrsmins": "Hours",
-                      "ISMDR_Id": null,
-                      "ISMMCLT_ClientName": value.iSMMCLTClientName,
-                      "ISMMCLT_Id": value.iSMMCLTId,
-                      "ISMMPR_Id": value.iSMMPRId,
-                      "ISMMTCAT_CompulsoryFlg": false,
-                      "ISMMTCAT_Id": value.iSMMTCATId,
-                      "ISMTAPL_Day": null,
-                      "ISMTAPL_Periodicity": value.iSMTAPLPeriodicity,
-                      "ISMTAPL_ToDate": null,
-                      "ISMTCRTRTO_TransferredDate": null,
-                      "ISMTCR_BugOREnhancementFlg":
-                          value.iSMTCRBugOREnhancementFlg,
-                      "ISMTCR_CreationDate": value.iSMTCRCreationDate,
-                      "ISMTCR_Desc": value.iSMTCRDesc,
-                      "ISMTCR_Id": value.iSMTCRId,
-                      "ISMTCR_ReOpenDate": null,
-                      "ISMTCR_ReOpenFlg": false,
-                      "ISMTCR_Status": "Open",
-                      "ISMTCR_TaskNo": value.iSMTCRTaskNo,
-                      "ISMTCR_Title": value.iSMTCRTitle,
-                      "ISMTPLTA_EffortInHrs": 1,
-                      "ISMTPLTA_EndDate": value.iSMTPLTAEndDate,
-                      "ISMTPLTA_Id": value.iSMTPLTAId,
-                      "ISMTPLTA_StartDate": value.iSMTPLTAStartDate,
-                      "ISMTPL_ActiveFlg": value.iSMTPLActiveFlg,
-                      "ISMTPL_ApprovalFlg": value.iSMTPLApprovalFlg,
-                      "ISMTPL_ApprovedBy": value.iSMTPLApprovedBy,
-                      "ISMTPL_EndDate": value.iSMTPLEndDate,
-                      "ISMTPL_Id": value.iSMTPLId,
-                      "ISMTPL_PlannedBy": value.iSMTPLPlannedBy,
-                      "ISMTPL_PlannerName": value.iSMTPLPlannerName,
-                      "ISMTPL_Remarks": null,
-                      "ISMTPL_StartDate": value.iSMTPLStartDate,
-                      "ISMTPL_TotalHrs": value.iSMTPLTotalHrs,
-                      "ProjectName": value.projectName,
-                      "actualeffortinhrs": "01",
-                      "actualeffortinmins": "00",
-                      "approvedflag": 0,
-                      "assignedby": value.assignedby,
-                      "checkedvalue": true,
-                      "createdemp": value.createdemp,
-                      "deviationflag": false,
-                      "dr_flag": 0,
-                      "effhrs": 1,
-                      "effmin": 0,
-                      "effortss": value.effortss,
-                      "get_Status": [],
-                      "maxtime": value.maxtime,
-                      "periodicitydailyflag": value.periodicitydailyflag,
-                      "periodicityendflag": value.periodicityendflag,
-                      "periodicityweeklyflag": value.periodicityweeklyflag,
-                      "taskcategoryname": value.taskcategoryname
-                    });
-                  }
-                  logger.i(dailyReportGenaration);
-                  _plannerDetailsController.saveLoading(true);
-                  await saveDr(
-                          base: baseUrlFromInsCode(
-                              'issuemanager', widget.mskoolController),
-                          controller: _plannerDetailsController,
-                          ismdrptDate: _plannerDetailsController
-                              .plannernameDateController.value.text,
-                          halfDayFlag: halfDay.value,
-                          ismtplId: _plannerDetailsController
-                              .getplannerdetails[0].ismtpLId!,
-                          drList: dailyReportGenaration,
-                          deviationId:
-                              _plannerDetailsController.daviationId.value,
-                          endWeek: _plannerDetailsController
-                              .getplannerdetails[0].ismtpLEndDate!,
-                          reasion: reasonController.text,
-                          startWeek: _plannerDetailsController
-                              .getplannerdetails[0].ismtpLStartDate!,
-                          todayOrOthersDay: _plannerDetailsController.day.value,
-                          totalWorkingHrFlag: _plannerDetailsController
-                              .getplannerdetails[0].ismtpLTotalHrs!)
-                      .then((value) {
-                    if (value == true) {
-                      showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 20),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      'Daily Report Genrrated successfully',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium!
-                                          .merge(TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor)),
-                                    ),
+            child: (_plannerDetailsController.isSaveLoading.value)
+                ? const SizedBox(
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  )
+                : BtnSave(
+                    onPress: () async {
+                      for (int i = 0;
+                          i < _plannerDetailsController.checkBoxList.length;
+                          i++) {
+                        var value = fliteresList.elementAt(i);
+                        if (_plannerDetailsController.checkBoxList
+                                .elementAt(i) ==
+                            true) {
+                          dailyReportGenaration.add({
+                            "CreatedFlag": value.createdFlag,
+                            "HRME_Id": value.hRMEId,
+                            "HRMPR_Id": value.hRMPRId,
+                            "HRMP_Name": value.hRMPName,
+                            "ISMDRPT_DeviationFlg": value.iSMDRPTDeviationFlg,
+                            "ISMDRPT_ExtraFlg": value.iSMDRPTExtraFlg,
+                            "ISMDRPT_Remarks": value.iSMDRPTRemarks,
+                            "ISMDRPT_Status": _plannerDetailsController
+                                .deveationEtField[i].text,
+                            "ISMDRPT_TimeTakenInHrs":
+                                value.iSMDRPTTimeTakenInHrs,
+                            "ISMDRPT_TimeTakenInHrsmin":
+                                value.iSMDRPTTimeTakenInHrs,
+                            "ISMDRPT_TimeTakenInHrsmins":
+                                value.iSMDRPTTimeTakenInHrsmins,
+                            "ISMMCLT_ClientName": value.iSMMCLTClientName,
+                            "ISMMCLT_Id": value.iSMMCLTId,
+                            "ISMMPR_Id": value.iSMMPRId,
+                            "ISMMTCAT_CompulsoryFlg":
+                                value.iSMMTCATCompulsoryFlg,
+                            "ISMMTCAT_Id": value.iSMMTCATId,
+                            "ISMTAPL_Day": value.iSMTAPLDay,
+                            "ISMTAPL_Periodicity": value.iSMTAPLPeriodicity,
+                            "ISMTAPL_ToDate": value.iSMTAPLToDate,
+                            "ISMTCRTRTO_TransferredDate": null,
+                            "ISMTCR_BugOREnhancementFlg":
+                                value.iSMTCRBugOREnhancementFlg,
+                            "ISMTCR_CreationDate": value.iSMTCRCreationDate,
+                            "ISMTCR_Desc": value.iSMTCRDesc,
+                            "ISMTCR_Id": value.iSMTCRId,
+                            "ISMTCR_ReOpenDate": value.iSMTCRCreationDate,
+                            "ISMTCR_ReOpenFlg": value.iSMTCRReOpenFlg,
+                            "ISMTCR_Status": _plannerDetailsController
+                                .statusEtField
+                                .elementAt(i)
+                                .text,
+                            "ISMTCR_TaskNo": value.iSMTCRTaskNo,
+                            "ISMTCR_Title": value.iSMTCRTitle,
+                            "ISMTPLTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
+                            "ISMTPLTA_EndDate": value.iSMTPLTAEndDate,
+                            "ISMTPLTA_Id": value.iSMTPLTAId,
+                            "ISMTPLTA_StartDate": value.iSMTPLTAStartDate,
+                            "ISMTPL_ActiveFlg": value.iSMTPLActiveFlg,
+                            "ISMTPL_ApprovalFlg": value.iSMTPLApprovalFlg,
+                            "ISMTPL_ApprovedBy": value.iSMTPLApprovedBy,
+                            "ISMTPL_EndDate": value.iSMTPLEndDate,
+                            "ISMTPL_Id": value.iSMTPLId,
+                            "ISMTPL_PlannedBy": value.iSMTPLPlannedBy,
+                            "ISMTPL_PlannerName": value.iSMTPLPlannerName,
+                            "ISMTPL_Remarks": null,
+                            "ISMTPL_StartDate": value.iSMTPLStartDate,
+                            "ISMTPL_TotalHrs": value.iSMTPLTotalHrs,
+                            "ProjectName": value.projectName,
+                            "actualeffortinhrs":
+                                _plannerDetailsController.hoursEt[i].text,
+                            "actualeffortinmins":
+                                _plannerDetailsController.minutesEt[i].text,
+                            "approvedflag": value.approvedflag,
+                            "assignedby": value.assignedby,
+                            "checkedvalue":
+                                _plannerDetailsController.checkBoxList[i],
+                            "createdemp": value.createdemp,
+                            "deviationflag": false,
+                            "dr_flag": value.drFlag,
+                            "effhrs": _plannerDetailsController.hoursEt[i].text,
+                            "effmin":
+                                _plannerDetailsController.minutesEt[i].text,
+                            "effortss": value.effortss,
+                            "get_Status": [],
+                            "maxtime": value.maxtime,
+                            "periodicitydailyflag": value.periodicitydailyflag,
+                            "periodicityendflag": value.periodicityendflag,
+                            "periodicityweeklyflag":
+                                value.periodicityweeklyflag,
+                            "taskcategoryname": value.taskcategoryname
+                          });
+                        }
+                        logger.i(dailyReportGenaration);
+                      }
+                      _plannerDetailsController.saveLoading(true);
+                      await saveDr(
+                              miID: widget.loginSuccessModel.mIID!,
+                              userId: widget.loginSuccessModel.userId!,
+                              base: baseUrlFromInsCode(
+                                  'issuemanager', widget.mskoolController),
+                              controller: _plannerDetailsController,
+                              ismdrptDate: todayDt,
+                              halfDayFlag: halfDay.value,
+                              ismtplId: _plannerDetailsController
+                                  .getplannerdetails[0].ismtpLId!,
+                              drList: dailyReportGenaration,
+                              deviationId:
+                                  _plannerDetailsController.daviationId.value,
+                              endWeek: _plannerDetailsController
+                                  .getplannerdetails[0].ismtpLEndDate!,
+                              reasion: reasonController.text,
+                              startWeek: _plannerDetailsController
+                                  .getplannerdetails[0].ismtpLStartDate!,
+                              todayOrOthersDay:
+                                  _plannerDetailsController.day.value,
+                              totalWorkingHrFlag: _plannerDetailsController
+                                  .getplannerdetails[0].ismtpLTotalHrs!)
+                          .then((value) {
+                        _plannerDetailsController.saveLoading(false);
+                        if (value!) {
+                          showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'Daily Report Genrrated successfully',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .merge(TextStyle(
+                                                  color: Theme.of(context)
+                                                      .primaryColor)),
+                                        ),
+                                      ),
+                                      TextButton(
+                                          onPressed: () {
+                                            Get.back();
+                                            Get.back();
+                                          },
+                                          child: Text(
+                                            "OK",
+                                            style: Get.textTheme.titleMedium!
+                                                .copyWith(
+                                                    color: Theme.of(context)
+                                                        .primaryColor),
+                                          ))
+                                    ],
                                   ),
-                                  TextButton(
-                                      onPressed: () {
-                                        Get.back();
-                                        Get.back();
-                                      },
-                                      child: Text(
-                                        "OK",
-                                        style: Get.textTheme.titleMedium!
-                                            .copyWith(
-                                                color: Theme.of(context)
-                                                    .primaryColor),
-                                      ))
-                                ],
-                              ),
-                            ),
+                                ),
+                              );
+                            },
                           );
-                        },
-                      );
-                    }
-                  });
-                  _plannerDetailsController.saveLoading(false);
-                }
-              },
-              title: "Save",
-            ),
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: "Daily Report is no save");
+                        }
+                      });
+                    },
+                    title: "Save",
+                  ),
           ),
         ],
       ),
@@ -476,64 +503,62 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                             margin: const EdgeInsets.only(
                                 left: 20, right: 20, top: 30, bottom: 10),
                             child: CustomContainer(
-                              child: Obx(
-                                () => TextField(
-                                  controller: reasonController,
-                                  maxLines: 2,
-                                  style: Theme.of(context)
+                              child: TextField(
+                                controller: reasonController,
+                                maxLines: 2,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .merge(const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                        letterSpacing: 0.3)),
+                                decoration: InputDecoration(
+                                  hintText: "Enter reason",
+                                  hintStyle: Theme.of(context)
                                       .textTheme
                                       .titleSmall!
                                       .merge(const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal,
-                                          letterSpacing: 0.3)),
-                                  decoration: InputDecoration(
-                                    hintText: "Enter reason",
-                                    hintStyle: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .merge(const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w300)),
-                                    border: const OutlineInputBorder(),
-                                    label: Container(
-                                      margin: const EdgeInsets.only(bottom: 12),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20.0, vertical: 6.0),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(24.0),
-                                          color: const Color.fromARGB(
-                                              255, 212, 245, 206)),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            " Reason ",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelMedium!
-                                                .merge(
-                                                  const TextStyle(
-                                                      fontSize: 20.0,
-                                                      color: Color.fromARGB(
-                                                          255, 20, 180, 15)),
-                                                ),
-                                          ),
-                                        ],
-                                      ),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w300)),
+                                  border: const OutlineInputBorder(),
+                                  label: Container(
+                                    margin: const EdgeInsets.only(bottom: 12),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20.0, vertical: 6.0),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(24.0),
+                                        color: const Color.fromARGB(
+                                            255, 212, 245, 206)),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          " Reason ",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!
+                                              .merge(
+                                                const TextStyle(
+                                                    fontSize: 20.0,
+                                                    color: Color.fromARGB(
+                                                        255, 20, 180, 15)),
+                                              ),
+                                        ),
+                                      ],
                                     ),
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.always,
-                                    enabledBorder: const OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                      ),
+                                  ),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always,
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
                                     ),
-                                    focusedBorder: const OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                      ),
+                                  ),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
                                     ),
                                   ),
                                 ),
@@ -558,6 +583,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                     .plannernameDateController
                                     .value
                                     .text = await getDateNeed(value!);
+                                todayDt = value.toIso8601String();
                               });
                             },
                             controller: _plannerDetailsController
@@ -1167,6 +1193,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
+                                                    Text(
+                                                        "Actual Effort:- ${fliteresList.elementAt(index).iSMTPLTAEffortInHrs}"),
                                                     Row(
                                                       children: [
                                                         SizedBox(
