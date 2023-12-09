@@ -61,7 +61,7 @@ class _ShomeScreenState extends State<ShomeScreen> {
                   title: 'No data',
                   desc: "there is no data",
                 )
-              :  SizedBox(
+              : SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Center(
                     child: SingleChildScrollView(
@@ -205,120 +205,134 @@ class _ShomeScreenState extends State<ShomeScreen> {
                                       shape: ContinuousRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(10)),
-                                      onChanged: (value) async{
+                                      onChanged: (value) async {
                                         controller.securityUploadImage.clear();
                                         controller.checkBox[index] = !value!;
                                         setState(() {});
-                                              controller.getFromCamera(miId: 0,base: "").then((value) {
-                                                if(value){
-                                                 showDialog(
-                                            context: context,
-                                            builder: (_) {
-                                              return Dialog(
-                                                  insetPadding:
-                                                      const EdgeInsets.all(
-                                                          16.0),
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0)),
-                                                  child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        Container(
-                                                          width:
-                                                              double.infinity,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal:
-                                                                      16.0,
-                                                                  vertical:
-                                                                      16.0),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .primaryColor,
+                                        controller
+                                            .getFromCamera(miId: 0, base: "")
+                                            .then(
+                                          (value) {
+                                            if (value) {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (_) {
+                                                    return Dialog(
+                                                        insetPadding:
+                                                            const EdgeInsets
+                                                                .all(16.0),
+                                                        shape: RoundedRectangleBorder(
                                                             borderRadius:
-                                                                const BorderRadius
-                                                                    .only(
-                                                              topLeft: Radius
-                                                                  .circular(
-                                                                      8.0),
-                                                              topRight: Radius
-                                                                  .circular(
-                                                                      8.0),
-                                                            ),
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12.0)),
+                                                        child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
                                                             children: [
-                                                            const  SizedBox(
-                                                                 child: Text(
-                                                                  "Upload images",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .white),
+                                                              Container(
+                                                                width: double
+                                                                    .infinity,
+                                                                padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        16.0,
+                                                                    vertical:
+                                                                        16.0),
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .primaryColor,
+                                                                  borderRadius:
+                                                                      const BorderRadius
+                                                                          .only(
+                                                                    topLeft: Radius
+                                                                        .circular(
+                                                                            8.0),
+                                                                    topRight: Radius
+                                                                        .circular(
+                                                                            8.0),
+                                                                  ),
+                                                                ),
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    const SizedBox(
+                                                                      child:
+                                                                          Text(
+                                                                        "Upload images",
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                14,
+                                                                            color:
+                                                                                Colors.white),
+                                                                      ),
+                                                                    ),
+                                                                    InkWell(
+                                                                      onTap:
+                                                                          () {
+                                                                        controller.checkBox[index] =
+                                                                            value;
+                                                                        setState(
+                                                                            () {});
+                                                                        Get.back();
+                                                                      },
+                                                                      child:
+                                                                          const Icon(
+                                                                        Icons
+                                                                            .close_sharp,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    )
+                                                                  ],
                                                                 ),
                                                               ),
-                                                              InkWell(
-                                                                onTap: () {
-                                                                  controller.checkBox[
-                                                                          index] =
-                                                                      value;
-                                                                  setState(
-                                                                      () {});
-                                                                  Get.back();
-                                                                },
-                                                                child:const Icon(
-                                                                  Icons
-                                                                      .close_sharp,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      Obx(() =>  Container(
-                                                          height: 200,
-                                                          child: ListView.builder(itemBuilder: (context, index) {
-                                                            return Column(
-                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                              children: [
-                                                                ListTile(
-                                                                  title:Text(controller.securityUploadImage[index],style:const TextStyle(
-                                                                     color:Colors.black
-                                                                  ),) ,
-                                                                ),
-                                                               const SizedBox(height: 20,),
-                                                                 SizedBox(
-                                                                  width: 120,
-                                                                   child: ElevatedButton(
-                                                                    
-                                                                    onPressed: () {
-                                                                     
-                                                                   },
-                                                                    
-                                                                   child:const Center(child: Text("submit")),),
-                                                                 )
-                                                              ],
-                                                            );
-                                                          },
-                                                          itemCount: controller.securityUploadImage.length,
-                                                          ),
-                                                        ))
-                                                      ]));
-                                            });
-                                                }
-                                              },);
-                                      
+                                                              Obx(
+                                                                  () =>
+                                                                      Container(
+                                                                        height:
+                                                                            200,
+                                                                        child: ListView
+                                                                            .builder(
+                                                                          itemBuilder:
+                                                                              (context, index) {
+                                                                            return Column(
+                                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                                              children: [
+                                                                                ListTile(
+                                                                                  title: Text(
+                                                                                    controller.securityUploadImage[index],
+                                                                                    style: const TextStyle(color: Colors.black),
+                                                                                  ),
+                                                                                ),
+                                                                                const SizedBox(
+                                                                                  height: 20,
+                                                                                ),
+                                                                                SizedBox(
+                                                                                  width: 120,
+                                                                                  child: ElevatedButton(
+                                                                                    onPressed: () {},
+                                                                                    child: const Center(child: Text("submit")),
+                                                                                  ),
+                                                                                )
+                                                                              ],
+                                                                            );
+                                                                          },
+                                                                          itemCount: controller
+                                                                              .securityUploadImage
+                                                                              .length,
+                                                                        ),
+                                                                      ))
+                                                            ]));
+                                                  });
+                                            }
+                                          },
+                                        );
 
                                         ///
                                       },
@@ -345,10 +359,15 @@ class _ShomeScreenState extends State<ShomeScreen> {
                                     alignment: Alignment.center,
                                     child: Text(
                                         '${controller.securtyWorkList.elementAt(index).hRMARACTActivityName}'))),
-                                DataCell(Align(
+                                DataCell(
+                                  Align(
                                     alignment: Alignment.center,
-                                    child: Text(
-                                        '${controller.securtyWorkList.elementAt(index).hRMARACTSTMAPDate}'))),
+                                    child: Text(getDateNeed(DateTime.parse(
+                                        controller.securtyWorkList
+                                            .elementAt(index)
+                                            .hRMARACTSTMAPDate!))),
+                                  ),
+                                ),
                                 DataCell(Align(
                                     alignment: Alignment.center,
                                     child: Text(
@@ -356,7 +375,7 @@ class _ShomeScreenState extends State<ShomeScreen> {
                                 DataCell(Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                        '${controller.securtyWorkList.elementAt(index).hRMARACTTActivityDuration}'))),
+                                        '${controller.securtyWorkList.elementAt(index).hRMARACTTActivityDuration} Min'))),
                               ],
                             );
                           }),
@@ -368,6 +387,10 @@ class _ShomeScreenState extends State<ShomeScreen> {
         ]),
       ),
     );
+  }
+
+  String getDateNeed(DateTime dt) {
+    return "${dt.day.toString().padLeft(2, "0")}-${dt.month.toString().padLeft(2, "0")}-${dt.year}";
   }
 
   @override
