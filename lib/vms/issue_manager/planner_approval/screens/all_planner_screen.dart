@@ -155,7 +155,7 @@ class _AllPlannersState extends State<AllPlanners> {
           '',
           value.iSMTPLTAId!,
           value.plannedby!,
-          value.iSMMTCATDurationFlg!,
+          value.iSMMTCATDurationFlg ?? '',
           value.iSMTCRId!,
           value.iSMTCRStatus!,
           value.pTSCount!,

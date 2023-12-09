@@ -61,16 +61,18 @@ class PlannerApprovalController extends GetxController {
         var tempData = [];
         tempData = drNotApprove.where((d) => d.hRMEId == drapp.hRMEId).toList();
         drapp.drappDatecount = tempData.length;
-        newplannerList.add({
-          "name": drapp.plannedby,
-          "day": drapp.drappDatecount,
-          "startDate": fromDate,
-          "endDate": toDate,
-          "totalEffort": drapp.iSMTPLTotalHrs,
-          "planner": drapp.iSMTPLPlannerName,
-          "category": 'Task Category',
-          "plannerView": "View & Approve"
-        });
+        if (drapp.drappDatecount != 0) {
+          newplannerList.add({
+            "name": drapp.plannedby,
+            "day": drapp.drappDatecount,
+            "startDate": fromDate,
+            "endDate": toDate,
+            "totalEffort": drapp.iSMTPLTotalHrs,
+            "planner": drapp.iSMTPLPlannerName,
+            "category": 'Task Category',
+            "plannerView": "View & Approve"
+          });
+        }
       }
     }
     if (drNotApprove != null && drNotApprove.isNotEmpty) {
