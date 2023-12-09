@@ -33,6 +33,7 @@ class PlannerStatusList {
         plannerCreationController.isPlannerCreate.value =
             response.data['plannerextapproval'];
         logger.i(plannerCreationController.isPlannerCreate.value);
+        plannerCreationController.maxDate = response.data['plannerMaxdate'];
         plannerCreationController.statusLoading(false);
       }
     } on DioError catch (e) {

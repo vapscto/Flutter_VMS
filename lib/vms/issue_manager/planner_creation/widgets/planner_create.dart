@@ -483,20 +483,10 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                       context: context,
                                       helpText: "Select From Data",
                                       firstDate: DateTime.parse(
-                                              plannerCreationController
-                                                  .plannerStatus
-                                                  .first
-                                                  .iSMTPLEndDate!)
-                                          .add(const Duration(days: 1)),
+                                          plannerCreationController.maxDate),
                                       initialDate: DateTime.parse(
-                                              plannerCreationController
-                                                  .plannerStatus
-                                                  .first
-                                                  .iSMTPLEndDate!)
-                                          .add(const Duration(days: 1)),
+                                          plannerCreationController.maxDate),
                                       lastDate: DateTime(3050),
-                                      // selectableDayPredicate: (DateTime val) =>
-                                      //     val.weekday == 7 ? false : true,
                                     );
                                     if (fromDate != null) {
                                       setState(() {
@@ -512,20 +502,12 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                           helpText: "Select From Data",
                                           context: context,
                                           firstDate: DateTime.parse(
-                                                  plannerCreationController
-                                                      .plannerStatus
-                                                      .first
-                                                      .iSMTPLEndDate!)
-                                              .add(const Duration(days: 1)),
+                                              plannerCreationController
+                                                  .maxDate),
                                           initialDate: DateTime.parse(
-                                                  plannerCreationController
-                                                      .plannerStatus
-                                                      .first
-                                                      .iSMTPLEndDate!)
-                                              .add(const Duration(days: 1)),
+                                              plannerCreationController
+                                                  .maxDate),
                                           lastDate: DateTime(3050),
-                                          // selectableDayPredicate: (DateTime val) =>
-                                          //     val.weekday == 7 ? false : true,
                                         );
                                         if (fromDate != null) {
                                           setState(() {

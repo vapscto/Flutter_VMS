@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/advance_tada_applied.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/countTask_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/drnotapprovedmessage_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/drnotsent_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/get_planner_details.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/hrplannerdetails_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_details.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
@@ -47,6 +50,16 @@ class PlannerDetails extends GetxController {
   // drnotset list
   RxList<GetdrnotsentdetailsValues> drnotSentdetailsList =
       <GetdrnotsentdetailsValues>[].obs;
+  void drNotSend(List<GetdrnotsentdetailsValues> drnotSent) {
+    if (drnotSentdetailsList.isNotEmpty) {
+      drnotSentdetailsList.clear();
+    }
+    for (int i = 0; i < drnotSent.length; i++) {
+      drnotSentdetailsList.add(drnotSent.elementAt(i));
+      logger.e(drnotSent.elementAt(i).fromDate);
+    }
+  }
+
   // drnotsent remarks list
   RxList<TextEditingController> etRemark = <TextEditingController>[].obs;
   // hrplannerDetails
@@ -71,5 +84,28 @@ class PlannerDetails extends GetxController {
   RxBool isSaveLoading = RxBool(false);
   void saveLoading(bool loading) {
     isSaveLoading.value = loading;
+  }
+
+  RxInt daviationId = 0.obs;
+  RxList<GetPlannerDetailsModelValues> getplannerdetails =
+      <GetPlannerDetailsModelValues>[].obs;
+  void getPlannerData(List<GetPlannerDetailsModelValues> getplanner) {
+    if (getplannerdetails.isNotEmpty) {
+      getplannerdetails.clear();
+    }
+    for (int i = 0; i < getplanner.length; i++) {
+      getplannerdetails.add(getplanner.elementAt(i));
+    }
+  }
+
+  RxList<AdvanceApplyModelValues> advanceApplyDataList =
+      <AdvanceApplyModelValues>[].obs;
+  void getAdvanceApply(List<AdvanceApplyModelValues> advanceApply) {
+    if (advanceApplyDataList.isNotEmpty) {
+      advanceApplyDataList.clear();
+    }
+    for (int i = 0; i < advanceApply.length; i++) {
+      advanceApplyDataList.add(advanceApply.elementAt(i));
+    }
   }
 }

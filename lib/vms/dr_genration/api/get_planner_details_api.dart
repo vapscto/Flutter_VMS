@@ -5,11 +5,13 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/advance_tada_applied.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/countTask_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/drnotapprovedmessage_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/drnotsent_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/get_planner_details.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/hrplannerdetails_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_details.dart';
 
@@ -30,8 +32,8 @@ Future<bool> getPlanerdetails({
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
       "MI_Id": miId,
-      "UserId": 60241,
-      "IVRMRT_Id": 11,
+      "UserId": userId,
+      "IVRMRT_Id": ivrmrtId,
     });
     logger.e({
       "MI_Id": miId,
@@ -71,10 +73,17 @@ Future<bool> getPlanerdetails({
     controller.drnotapprovedList.addAll(drnotapprovedmessage.values!);
     Getdrnotsentdetails getdrnotsentdetails =
         Getdrnotsentdetails.fromJson(response.data['getdrnotsentdetails']);
-    controller.drnotSentdetailsList.addAll(getdrnotsentdetails.values!);
+    controller.drNotSend(getdrnotsentdetails.values!);
     Hrplannerdetails hrplannerdetails =
         Hrplannerdetails.fromJson(response.data['hrplannerdetails']);
     controller.hrplannerDetailsList.addAll(hrplannerdetails.values!);
+    controller.daviationId.value = response.data['deviation_id'];
+    GetPlannerDetailsModel getPlannerDetailsModel =
+        GetPlannerDetailsModel.fromJson(response.data['getplannerdetails']);
+    controller.getPlannerData(getPlannerDetailsModel.values!);
+    AdvanceApplyModel advanceApplyModel =
+        AdvanceApplyModel.fromJson(response.data['adavanceList']);
+    controller.getAdvanceApply(advanceApplyModel.values!);
     for (var a = 0; a < getdrnotsentdetails.values!.length; a++) {
       controller.etRemark.add(TextEditingController(text: ""));
     }
@@ -101,10 +110,10 @@ Future<bool?> saveDr({
   required String reasion,
   required String startWeek,
   required String todayOrOthersDay,
-  required int totalWorkingHrFlag,
+  required double totalWorkingHrFlag,
 }) async {
   var dio = Dio();
-  var api = base;
+  var api = 'base+ URLS.drSaveAPI';
   try {
     controller.saveLoading(true);
     var response =
@@ -119,6 +128,55 @@ Future<bool?> saveDr({
       "startweek": startWeek,
       "todayorothers": todayOrOthersDay,
       "totalworkinghrsflag": totalWorkingHrFlag
+    });
+    logger.e({
+      "ISMDRPT_Date": ismdrptDate,
+      "ISMDRPT_HalfDayFlag": halfDayFlag,
+      "ISMTPL_Id": ismtplId,
+      "Temp_ISM_DailyReportGenerationDTO": drList,
+      "deviation_id": deviationId,
+      "endweek": endWeek,
+      "reason": reasion,
+      "startweek": startWeek,
+      "todayorothers": todayOrOthersDay,
+      "totalworkinghrsflag": totalWorkingHrFlag
+    });
+    if (response.statusCode == 200) {
+      controller.saveLoading(false);
+      return true;
+    }
+    return false;
+  } on DioError catch (e) {
+    logger.e(e.message);
+    controller.saveLoading(true);
+    return false;
+  } on Exception catch (e) {
+    logger.e(e.toString());
+  }
+  return null;
+}
+
+Future<bool?> drNotSaveDAPI({
+  required String base,
+  required PlannerDetails controller,
+  required List<Map<String, dynamic>> drList,
+  required int userId,
+  required int miId,
+}) async {
+  var dio = Dio();
+  var api = base + URLS.drNotSave;
+  try {
+    controller.saveLoading(true);
+    var response =
+        await dio.post(api, options: Options(headers: getSession()), data: {
+      "UserId": userId,
+      "MI_Id": miId,
+      "SaveDRNotSentRemarksDetails": drList,
+    });
+    logger.e({
+      "UserId": userId,
+      "MI_Id": miId,
+      "SaveDRNotSentRemarksDetails": drList,
     });
     if (response.statusCode == 200) {
       controller.saveLoading(false);

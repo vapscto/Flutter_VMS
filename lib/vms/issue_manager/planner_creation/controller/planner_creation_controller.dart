@@ -93,4 +93,6 @@ class PlannerCreationController extends GetxController {
       effortDataValues.add(data.elementAt(i));
     }
   }
+
+  String maxDate = '';
 }

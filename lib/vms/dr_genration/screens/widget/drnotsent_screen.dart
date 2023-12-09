@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/api/get_planner_details_api.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class DrnotsentScreen extends StatelessWidget {
-  DrnotsentScreen({super.key});
-  final PlannerDetails _plannerDetailsController = Get.put(PlannerDetails());
-
+  final MskoolController mskoolController;
+  final LoginSuccessModel loginSuccessModel;
+  final PlannerDetails plannerDetailsController;
+  DrnotsentScreen(
+      {super.key,
+      required this.mskoolController,
+      required this.loginSuccessModel,
+      required this.plannerDetailsController});
+  // final PlannerDetails plannerDetailsController = Get.put(PlannerDetails());
+  final _key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -78,20 +90,20 @@ class DrnotsentScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    // DataColumn(
-                                    //   label: Align(
-                                    //     alignment: Alignment.center,
-                                    //     child: Text(
-                                    //       'Remarks',
-                                    //       style: TextStyle(
-                                    //         fontSize: 14,
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
+                                    DataColumn(
+                                      label: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'Remarks',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                   rows: List.generate(
-                                      _plannerDetailsController
+                                      plannerDetailsController
                                           .drnotSentdetailsList
                                           .length, (index) {
                                     int i = index + 1;
@@ -102,36 +114,36 @@ class DrnotsentScreen extends StatelessWidget {
                                       DataCell(Align(
                                           alignment: Alignment.center,
                                           child: Text(getDate(DateTime.parse(
-                                              _plannerDetailsController
+                                              plannerDetailsController
                                                   .drnotSentdetailsList
                                                   .elementAt(index)
                                                   .fromDate!))))),
-                                      // DataCell(Align(
-                                      //     alignment: Alignment.center,
-                                      //     child: Padding(
-                                      //       padding: const EdgeInsets.symmetric(
-                                      //           vertical: 10),
-                                      //       child: SizedBox(
-                                      //         width: 150,
-                                      //         child: TextField(
-                                      //           maxLines: 3,
-                                      //           style: Theme.of(context)
-                                      //               .textTheme
-                                      //               .titleSmall,
-                                      //           controller:
-                                      //               _plannerDetailsController
-                                      //                   .etRemark
-                                      //                   .elementAt(index),
-                                      //           decoration: InputDecoration(
-                                      //               hintText: "Enter Remark",
-                                      //               hintStyle: Theme.of(context)
-                                      //                   .textTheme
-                                      //                   .titleSmall,
-                                      //               border:
-                                      //                   OutlineInputBorder()),
-                                      //         ),
-                                      //       ),
-                                      //     ))),
+                                      DataCell(Align(
+                                          alignment: Alignment.center,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                            child: SizedBox(
+                                              width: 150,
+                                              child: TextFormField(
+                                                maxLines: 3,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall,
+                                                controller:
+                                                    plannerDetailsController
+                                                        .etRemark
+                                                        .elementAt(index),
+                                                decoration: InputDecoration(
+                                                    hintText: "Enter Remark",
+                                                    hintStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall,
+                                                    border:
+                                                        const OutlineInputBorder()),
+                                              ),
+                                            ),
+                                          ))),
                                     ]);
                                   }),
                                 )),
@@ -139,15 +151,48 @@ class DrnotsentScreen extends StatelessWidget {
                         )))),
           ),
           // need to integrate api  holded beacuse of need create sencriao  test
-          // Padding(
-          //   padding: const EdgeInsets.all(10.0),
-          //   child: MSkollBtn(
-          //     title: "Save",
-          //     onPress: () {},
-          //   ),
-          // )
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: MSkollBtn(
+              title: "Save",
+              onPress: () async {
+                if (plannerDetailsController.etRemark.isNotEmpty) {
+                  for (int i = 0;
+                      i < plannerDetailsController.drnotSentdetailsList.length;
+                      i++) {
+                    drList.add({
+                      "drnotsentdate": plannerDetailsController
+                          .drnotSentdetailsList
+                          .elementAt(i)
+                          .fromDate,
+                      "remarks":
+                          plannerDetailsController.etRemark.elementAt(i).text
+                    });
+                  }
+                  await drNotSaveDAPI(
+                          base: baseUrlFromInsCode(
+                              'issuemanager', mskoolController),
+                          controller: plannerDetailsController,
+                          drList: drList,
+                          miId: loginSuccessModel.mIID!,
+                          userId: loginSuccessModel.userId!)
+                      .then((value) {
+                    if (value!) {
+                      Fluttertoast.showToast(
+                          msg: "Daily Report Update Successfully");
+                      Get.back();
+                    }
+                  });
+                } else {
+                  Fluttertoast.showToast(msg: "Enter Remarks");
+                }
+              },
+            ),
+          )
         ],
       ),
     );
   }
+
+  List<Map<String, dynamic>> drList = [];
 }
