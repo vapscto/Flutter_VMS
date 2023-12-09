@@ -214,7 +214,7 @@ class _AllPlannersState extends State<AllPlanners> {
         "ISMTPLAPTA_EndDate": value.endDate,
         "ISMTPLAPTA_EffortInHrs": value.effort,
         "ISMTPLAPTA_Status": selectedItemValue[i], //value.status,
-        "plannerStatus": 1,
+        "plannerStatus": (dataRowGroupValue == 'Approve') ? 1 : 0,
         "ISMTPLTA_Id": value.ismtpltaId,
         "ISMTPL_Id": widget.ismtplId,
         "extraflag": 0,

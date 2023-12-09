@@ -181,6 +181,7 @@ class DrnotsentScreen extends StatelessWidget {
                       Fluttertoast.showToast(
                           msg: "Daily Report Update Successfully");
                       Get.back();
+                      Get.back();
                     }
                   });
                 } else {

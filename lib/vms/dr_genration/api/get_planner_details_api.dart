@@ -165,6 +165,11 @@ Future<bool?> drNotSaveDAPI({
 }) async {
   var dio = Dio();
   var api = base + URLS.drNotSave;
+  logger.e({
+    "UserId": userId,
+    "MI_Id": miId,
+    "SaveDRNotSentRemarksDetails": drList,
+  });
   try {
     controller.saveLoading(true);
     var response =
@@ -173,11 +178,7 @@ Future<bool?> drNotSaveDAPI({
       "MI_Id": miId,
       "SaveDRNotSentRemarksDetails": drList,
     });
-    logger.e({
-      "UserId": userId,
-      "MI_Id": miId,
-      "SaveDRNotSentRemarksDetails": drList,
-    });
+
     if (response.statusCode == 200) {
       controller.saveLoading(false);
       return true;
