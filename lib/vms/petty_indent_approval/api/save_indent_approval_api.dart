@@ -32,7 +32,7 @@ Future<int> indentApproveApi({
     "PCINDENT_Desc": pcIndentDesc,
     "PCINDENT_ApprovedAmt": pcIndentApprovedAmt,
     "PCINDENT_RequestedAmount": pcIndentRequestedAmt,
-    "PCINDENTAPT_Date": pcIndentDate,
+    "PCINDENT_Date": pcIndentDate,
     "PC_Indent_DetailsDTO": featchList
 }
 
@@ -51,7 +51,7 @@ Future<int> indentApproveApi({
     "PCINDENT_Desc": pcIndentDesc,
     "PCINDENT_ApprovedAmt": pcIndentApprovedAmt,
     "PCINDENT_RequestedAmount": pcIndentRequestedAmt,
-    "PCINDENTAPT_Date": pcIndentDate,
+    "PCINDENT_Date": pcIndentDate,
     "PC_Indent_DetailsDTO": featchList
 
 

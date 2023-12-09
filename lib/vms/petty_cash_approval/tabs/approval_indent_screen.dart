@@ -90,6 +90,8 @@ bool validateFields() {
 
     selectDate.text = getDateNeed(DateTime.now());
 
+    selectEndDate.text = getEndDate(DateTime.now());
+
     // Initialize the TextEditingController list
     textEditingControllerList = List.generate(
       _pcapprovalController.particularIndentDetails.length,
@@ -148,6 +150,7 @@ bool validateFields() {
   final TextEditingController fromDate = TextEditingController();
   final TextEditingController toDate = TextEditingController();
   final TextEditingController selectDate = TextEditingController();
+  final TextEditingController selectEndDate = TextEditingController();
   RxInt changes = RxInt(-1);
   List<int>? selectCheckBx = <int>[].obs;
   bool selectAll = false;
@@ -1253,7 +1256,7 @@ bool validateFields() {
                                       CustomContainer(
                                         child: TextField(
                                           readOnly: true,
-                                          controller: selectDate,
+                                          controller: selectEndDate,
                                           style: Theme.of(context)
                                               .textTheme
                                               .titleSmall,
@@ -1501,9 +1504,11 @@ bool validateFields() {
     });
   }
 
-  String getDateNeed(DateTime dt) {
-    //.padLeft(2,"0")
+  String getEndDate(DateTime dt) {
+    return "${dt.day.toString().padLeft(2, "0")}-${dt.month.toString().padLeft(2, "0")}-${dt.year}";
+  }
 
+  String getDateNeed(DateTime dt) {
     return "${dt.month.toString().padLeft(2, "0")}-${dt.day.toString().padLeft(2, "0")}-${dt.year}";
   }
 }

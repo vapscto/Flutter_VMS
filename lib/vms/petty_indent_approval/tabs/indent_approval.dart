@@ -1150,14 +1150,20 @@ class _IndentApprovalState extends State<IndentApproval> {
                                                                       .toString()) ??
                                                                   0.0;
 
-                                                              if (approvalAmount >
-                                                                  requestedAmount) {
-                                                                // indentApprovalController.eTapprovalAmount.elementAt(index).text = '';
+                                                              setState(() {
+                                                                if (approvalAmount >
+                                                                    requestedAmount) {
+                                                                  indentApprovalController
+                                                                      .eTapprovalAmount
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .text = '';
 
-                                                                // Show a popup message
-                                                                showPopup(
-                                                                    "Approved amount should not be greater than requested amount");
-                                                              }
+                                                                  // Show a popup message
+                                                                  showPopup(
+                                                                      "Approved amount should not be greater than requested amount");
+                                                                }
+                                                              });
                                                             }
                                                           },
                                                         ),
