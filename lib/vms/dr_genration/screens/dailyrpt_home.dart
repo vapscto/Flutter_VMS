@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -1050,24 +1051,41 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                       MainAxisAlignment
                                                           .spaceEvenly,
                                                   children: [
-                                                    Text(
-                                                      fliteresList
-                                                          .elementAt(index)
-                                                          .iSMTCRTaskNo!,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .titleSmall!
-                                                          .merge(const TextStyle(
-                                                              color: Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      52,
-                                                                      82,
-                                                                      252),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: 14)),
+                                                    InkWell(
+                                                      onTap: () {
+                                                        Clipboard.setData(ClipboardData(
+                                                                text: fliteresList
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .iSMTCRTaskNo!))
+                                                            .then((_) {
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                                  const SnackBar(
+                                                                      content: Text(
+                                                                          'Copied to your clipboard !')));
+                                                        });
+                                                      },
+                                                      child: Text(
+                                                        fliteresList
+                                                            .elementAt(index)
+                                                            .iSMTCRTaskNo!,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall!
+                                                            .merge(const TextStyle(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        52,
+                                                                        82,
+                                                                        252),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontSize: 14)),
+                                                      ),
                                                     ),
                                                     SizedBox(
                                                       width: 200,

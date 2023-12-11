@@ -70,9 +70,12 @@ Future<bool> getPlanerdetails({
         planerDeatailsList.plannername ?? '';
     controller.otherDaysEditingController.value =
         planerDeatailsList.dailyreportothersdatecount!.toInt().toString();
-    Drnotapprovedmessage drnotapprovedmessage =
-        Drnotapprovedmessage.fromJson(response.data['drnotapprovedmessage']);
-    controller.drnotapprovedList.addAll(drnotapprovedmessage.values!);
+    if (response.data['drnotapprovedmessage'] != null) {
+      Drnotapprovedmessage drnotapprovedmessage =
+          Drnotapprovedmessage.fromJson(response.data['drnotapprovedmessage']);
+      controller.drnotapprovedList.addAll(drnotapprovedmessage.values!);
+    }
+
     if (response.data['getdrnotsentdetails'] != null) {
       Getdrnotsentdetails getdrnotsentdetails =
           Getdrnotsentdetails.fromJson(response.data['getdrnotsentdetails']);
