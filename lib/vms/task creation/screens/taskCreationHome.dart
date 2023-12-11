@@ -445,7 +445,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             _taskProjectsController.getTaskProjectsList.clear();
                             _taskProjectsController.getTaskCategoryList.clear();
                             hrmdIds = s!.hrmDId!;
-                            filterEmployees("");
+                            filterEmployees(s.hrmDDepartmentName!);
                             await getTskPrjtCatgryList(
                                 base: baseUrlFromInsCode(
                                   'issuemanager',
@@ -2427,14 +2427,14 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   }
 
   void filterEmployees(String query) {
+    logger.e(query);
     taskEmployeeList.value = _taskDepartController.getTaskEmployeeList
         .where((employee) =>
             employee.employeeName!
                 .toLowerCase()
                 .contains(query.toLowerCase()) ||
-            employee.hRMDESDesignationName!
-                .toLowerCase()
-                .contains(query.toLowerCase()))
+            employee.hRMDDepartmentName!.toLowerCase().trim() ==
+                query.toLowerCase().trim())
         .toList();
   }
 
