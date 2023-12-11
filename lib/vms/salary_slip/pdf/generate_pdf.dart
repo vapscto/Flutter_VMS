@@ -21,6 +21,10 @@ class GenerateSalarySlip {
     double earning = 0.0;
     double deduction = 0.0;
     var gross;
+    DateTime dt = DateTime.parse(controller
+        .salarySlipDetail.first.currentemployeeDetails!.hrmEDoj!
+        .toIso8601String());
+    var date = '${dt.day}-${dt.month}-${dt.year}';
     for (int i = 0;
         i <
             controller.salarySlipDetail.first.employeeSalaryslipDetails!.values!
@@ -103,7 +107,7 @@ class GenerateSalarySlip {
                     ),
                   ),
                   Text(
-                    'Date Of Joining : ${controller.salarySlipDetail.first.currentemployeeDetails!.hrmEDoj!.toLocal().toString().split(" ").first} ',
+                    'Date Of Joining : $date ',
                     style: TextStyle(
                       fontSize: 12,
                       color: PdfColor.fromHex("#000000"),
@@ -202,11 +206,9 @@ class GenerateSalarySlip {
                 const TextSpan(text: "Salary In Words : "),
                 TextSpan(
                     text:
-                        "${NumberToWordsEnglish.convert(netSalary.toInt())} rupee only"
+                        "${NumberToWordsEnglish.convert(netSalary.toInt())} rupees only"
                             .toUpperCase())
               ])),
-              // Text(
-              //     "Salary In Words : ${NumberToWordsEnglish.convert(netSalary.toInt())} rupee only"),
               SizedBox(height: 8.0),
               Text(
                   "Note : Signature is not required because it is computer generated statement"),
