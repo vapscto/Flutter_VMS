@@ -113,8 +113,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
             AlertDialog(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
-              iconPadding: const EdgeInsets.symmetric(horizontal: 16),
               contentPadding: const EdgeInsets.all(5),
+              insetPadding: const EdgeInsets.symmetric(horizontal: 16),
               content: SizedBox(width: Get.width, child: DrnotApprovedScreen()),
             ))
         : null;
@@ -190,165 +190,175 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                   )
                 : BtnSave(
                     onPress: () async {
-                      for (int i = 0;
-                          i < _plannerDetailsController.checkBoxList.length;
-                          i++) {
-                        var value = fliteresList.elementAt(i);
-                        if (_plannerDetailsController.checkBoxList
-                                .elementAt(i) ==
-                            true) {
-                          dailyReportGenaration.add({
-                            "CreatedFlag": value.createdFlag,
-                            "HRME_Id": value.hRMEId,
-                            "HRMPR_Id": value.hRMPRId,
-                            "HRMP_Name": value.hRMPName,
-                            "ISMDRPT_DeviationFlg": value.iSMDRPTDeviationFlg,
-                            "ISMDRPT_ExtraFlg": value.iSMDRPTExtraFlg,
-                            "ISMDRPT_Remarks": value.iSMDRPTRemarks,
-                            "ISMDRPT_Status": _plannerDetailsController
-                                .deveationEtField[i].text,
-                            "ISMDRPT_TimeTakenInHrs":
-                                _plannerDetailsController.hoursEt[i].text,
-                            "ISMDRPT_TimeTakenInHrsmin":
-                                _plannerDetailsController.minutesEt[i].text,
-                            "ISMDRPT_TimeTakenInHrsmins":
-                                value.iSMDRPTTimeTakenInHrsmins,
-                            "ISMMCLT_ClientName": value.iSMMCLTClientName,
-                            "ISMMCLT_Id": value.iSMMCLTId,
-                            "ISMMPR_Id": value.iSMMPRId,
-                            "ISMMTCAT_CompulsoryFlg":
-                                value.iSMMTCATCompulsoryFlg,
-                            "ISMMTCAT_Id": value.iSMMTCATId,
-                            "ISMTAPL_Day": value.iSMTAPLDay,
-                            "ISMTAPL_Periodicity": value.iSMTAPLPeriodicity,
-                            "ISMTAPL_ToDate": value.iSMTAPLToDate,
-                            "ISMTCRTRTO_TransferredDate": null,
-                            "ISMTCR_BugOREnhancementFlg":
-                                value.iSMTCRBugOREnhancementFlg,
-                            "ISMTCR_CreationDate": value.iSMTCRCreationDate,
-                            "ISMTCR_Desc": value.iSMTCRDesc,
-                            "ISMTCR_Id": value.iSMTCRId,
-                            "ISMTCR_ReOpenDate": value.iSMTCRCreationDate,
-                            "ISMTCR_ReOpenFlg": value.iSMTCRReOpenFlg,
-                            "ISMTCR_Status": _plannerDetailsController
-                                .statusEtField
-                                .elementAt(i)
-                                .text,
-                            "ISMTCR_TaskNo": value.iSMTCRTaskNo,
-                            "ISMTCR_Title": value.iSMTCRTitle,
-                            "ISMTPLTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
-                            "ISMTPLTA_EndDate": value.iSMTPLTAEndDate,
-                            "ISMTPLTA_Id": value.iSMTPLTAId,
-                            "ISMTPLTA_StartDate": value.iSMTPLTAStartDate,
-                            "ISMTPL_ActiveFlg": value.iSMTPLActiveFlg,
-                            "ISMTPL_ApprovalFlg": value.iSMTPLApprovalFlg,
-                            "ISMTPL_ApprovedBy": value.iSMTPLApprovedBy,
-                            "ISMTPL_EndDate": value.iSMTPLEndDate,
-                            "ISMTPL_Id": value.iSMTPLId,
-                            "ISMTPL_PlannedBy": value.iSMTPLPlannedBy,
-                            "ISMTPL_PlannerName": value.iSMTPLPlannerName,
-                            "ISMTPL_Remarks": null,
-                            "ISMTPL_StartDate": value.iSMTPLStartDate,
-                            "ISMTPL_TotalHrs": value.iSMTPLTotalHrs,
-                            "ProjectName": value.projectName,
-                            "actualeffortinhrs":
-                                _plannerDetailsController.hoursEt[i].text,
-                            "actualeffortinmins":
-                                _plannerDetailsController.minutesEt[i].text,
-                            "approvedflag": value.approvedflag,
-                            "assignedby": value.assignedby,
-                            "checkedvalue":
-                                _plannerDetailsController.checkBoxList[i],
-                            "createdemp": value.createdemp,
-                            "deviationflag": false,
-                            "dr_flag": value.drFlag,
-                            "effhrs": _plannerDetailsController.hoursEt[i].text,
-                            "effmin":
-                                _plannerDetailsController.minutesEt[i].text,
-                            "effortss": value.effortss,
-                            "get_Status": [],
-                            "maxtime": value.maxtime,
-                            "periodicitydailyflag": value.periodicitydailyflag,
-                            "periodicityendflag": value.periodicityendflag,
-                            "periodicityweeklyflag":
-                                value.periodicityweeklyflag,
-                            "taskcategoryname": value.taskcategoryname
-                          });
+                      if (fliteresList.isNotEmpty) {
+                        for (int i = 0;
+                            i < _plannerDetailsController.checkBoxList.length;
+                            i++) {
+                          var value = fliteresList.elementAt(i);
+                          if (_plannerDetailsController.checkBoxList
+                                  .elementAt(i) ==
+                              true) {
+                            dailyReportGenaration.add({
+                              "CreatedFlag": value.createdFlag,
+                              "HRME_Id": value.hRMEId,
+                              "HRMPR_Id": value.hRMPRId,
+                              "HRMP_Name": value.hRMPName,
+                              "ISMDRPT_DeviationFlg": value.iSMDRPTDeviationFlg,
+                              "ISMDRPT_ExtraFlg": value.iSMDRPTExtraFlg,
+                              "ISMDRPT_Remarks": value.iSMDRPTRemarks,
+                              "ISMDRPT_Status": _plannerDetailsController
+                                  .deveationEtField[i].text,
+                              "ISMDRPT_TimeTakenInHrs":
+                                  _plannerDetailsController.hoursEt[i].text,
+                              "ISMDRPT_TimeTakenInHrsmin":
+                                  _plannerDetailsController.minutesEt[i].text,
+                              "ISMDRPT_TimeTakenInHrsmins":
+                                  value.iSMDRPTTimeTakenInHrsmins,
+                              "ISMMCLT_ClientName": value.iSMMCLTClientName,
+                              "ISMMCLT_Id": value.iSMMCLTId,
+                              "ISMMPR_Id": value.iSMMPRId,
+                              "ISMMTCAT_CompulsoryFlg":
+                                  value.iSMMTCATCompulsoryFlg,
+                              "ISMMTCAT_Id": value.iSMMTCATId,
+                              "ISMTAPL_Day": value.iSMTAPLDay,
+                              "ISMTAPL_Periodicity": value.iSMTAPLPeriodicity,
+                              "ISMTAPL_ToDate": value.iSMTAPLToDate,
+                              "ISMTCRTRTO_TransferredDate": null,
+                              "ISMTCR_BugOREnhancementFlg":
+                                  value.iSMTCRBugOREnhancementFlg,
+                              "ISMTCR_CreationDate": value.iSMTCRCreationDate,
+                              "ISMTCR_Desc": value.iSMTCRDesc,
+                              "ISMTCR_Id": value.iSMTCRId,
+                              "ISMTCR_ReOpenDate": value.iSMTCRCreationDate,
+                              "ISMTCR_ReOpenFlg": value.iSMTCRReOpenFlg,
+                              "ISMTCR_Status": _plannerDetailsController
+                                  .statusEtField
+                                  .elementAt(i)
+                                  .text,
+                              "ISMTCR_TaskNo": value.iSMTCRTaskNo,
+                              "ISMTCR_Title": value.iSMTCRTitle,
+                              "ISMTPLTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
+                              "ISMTPLTA_EndDate": value.iSMTPLTAEndDate,
+                              "ISMTPLTA_Id": value.iSMTPLTAId,
+                              "ISMTPLTA_StartDate": value.iSMTPLTAStartDate,
+                              "ISMTPL_ActiveFlg": value.iSMTPLActiveFlg,
+                              "ISMTPL_ApprovalFlg": value.iSMTPLApprovalFlg,
+                              "ISMTPL_ApprovedBy": value.iSMTPLApprovedBy,
+                              "ISMTPL_EndDate": value.iSMTPLEndDate,
+                              "ISMTPL_Id": value.iSMTPLId,
+                              "ISMTPL_PlannedBy": value.iSMTPLPlannedBy,
+                              "ISMTPL_PlannerName": value.iSMTPLPlannerName,
+                              "ISMTPL_Remarks": null,
+                              "ISMTPL_StartDate": value.iSMTPLStartDate,
+                              "ISMTPL_TotalHrs": value.iSMTPLTotalHrs,
+                              "ProjectName": value.projectName,
+                              "actualeffortinhrs":
+                                  _plannerDetailsController.hoursEt[i].text,
+                              "actualeffortinmins":
+                                  _plannerDetailsController.minutesEt[i].text,
+                              "approvedflag": value.approvedflag,
+                              "assignedby": value.assignedby,
+                              "checkedvalue":
+                                  _plannerDetailsController.checkBoxList[i],
+                              "createdemp": value.createdemp,
+                              "deviationflag": false,
+                              "dr_flag": value.drFlag,
+                              "effhrs":
+                                  _plannerDetailsController.hoursEt[i].text,
+                              "effmin":
+                                  _plannerDetailsController.minutesEt[i].text,
+                              "effortss": value.effortss,
+                              "get_Status": [],
+                              "maxtime": value.maxtime,
+                              "periodicitydailyflag":
+                                  value.periodicitydailyflag,
+                              "periodicityendflag": value.periodicityendflag,
+                              "periodicityweeklyflag":
+                                  value.periodicityweeklyflag,
+                              "taskcategoryname": value.taskcategoryname
+                            });
+                          }
+                          logger.i(dailyReportGenaration);
                         }
-                        logger.i(dailyReportGenaration);
-                      }
-                      _plannerDetailsController.saveLoading(true);
-                      await saveDr(
-                              miID: widget.loginSuccessModel.mIID!,
-                              userId: widget.loginSuccessModel.userId!,
-                              base: baseUrlFromInsCode(
-                                  'issuemanager', widget.mskoolController),
-                              controller: _plannerDetailsController,
-                              ismdrptDate: todayDt,
-                              halfDayFlag: halfDay.value,
-                              ismtplId: _plannerDetailsController
-                                  .getplannerdetails[0].ismtpLId!,
-                              drList: dailyReportGenaration,
-                              deviationId:
-                                  _plannerDetailsController.daviationId.value,
-                              endWeek: _plannerDetailsController
-                                  .getplannerdetails[0].ismtpLEndDate!,
-                              reasion: reasonController.text,
-                              startWeek: _plannerDetailsController
-                                  .getplannerdetails[0].ismtpLStartDate!,
-                              todayOrOthersDay:
-                                  _plannerDetailsController.day.value,
-                              totalWorkingHrFlag: _plannerDetailsController
-                                  .getplannerdetails[0].ismtpLTotalHrs!)
-                          .then((value) {
-                        _plannerDetailsController.saveLoading(false);
-                        if (value!) {
-                          showDialog(
-                            barrierDismissible: false,
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 20),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Daily Report Genrrated successfully',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium!
-                                              .merge(TextStyle(
-                                                  color: Theme.of(context)
-                                                      .primaryColor)),
-                                        ),
-                                      ),
-                                      TextButton(
-                                          onPressed: () {
-                                            Get.back();
-                                            Get.back();
-                                          },
+                        _plannerDetailsController.saveLoading(true);
+                        await saveDr(
+                                miID: widget.loginSuccessModel.mIID!,
+                                userId: widget.loginSuccessModel.userId!,
+                                base: baseUrlFromInsCode(
+                                    'issuemanager', widget.mskoolController),
+                                controller: _plannerDetailsController,
+                                ismdrptDate: todayDt,
+                                halfDayFlag: halfDay.value,
+                                ismtplId: _plannerDetailsController
+                                    .getplannerdetails[0].ismtpLId!,
+                                drList: dailyReportGenaration,
+                                deviationId:
+                                    _plannerDetailsController.daviationId.value,
+                                endWeek: _plannerDetailsController
+                                    .getplannerdetails[0].ismtpLEndDate!,
+                                reasion: reasonController.text,
+                                startWeek: _plannerDetailsController
+                                    .getplannerdetails[0].ismtpLStartDate!,
+                                todayOrOthersDay:
+                                    _plannerDetailsController.day.value,
+                                totalWorkingHrFlag: _plannerDetailsController
+                                    .getplannerdetails[0].ismtpLTotalHrs!)
+                            .then((value) {
+                          _plannerDetailsController.saveLoading(false);
+                          if (value!) {
+                            showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  title: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 20),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.center,
                                           child: Text(
-                                            "OK",
-                                            style: Get.textTheme.titleMedium!
-                                                .copyWith(
+                                            'Daily Report Genrated successfully',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .merge(TextStyle(
                                                     color: Theme.of(context)
-                                                        .primaryColor),
-                                          ))
-                                    ],
+                                                        .primaryColor)),
+                                          ),
+                                        ),
+                                        TextButton(
+                                            onPressed: () {
+                                              Get.back();
+                                              Get.back();
+                                            },
+                                            child: Text(
+                                              "OK",
+                                              style: Get.textTheme.titleMedium!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .primaryColor),
+                                            ))
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                          );
-                        } else {
-                          Fluttertoast.showToast(
-                              msg: "Daily Report is no save");
-                        }
-                      });
+                                );
+                              },
+                            );
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Daily Report is no save");
+                          }
+                        });
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: "Please Select Planner List");
+                      }
                     },
                     title: "Save",
                   ),
@@ -357,13 +367,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
       ),
       body: Obx(
         () => _plannerDetailsController.loadPlanerDeatails.isTrue
-            ? Container(
-                child: const Center(
-                  child: AnimatedProgressWidget(
-                    animationPath: 'assets/json/default.json',
-                    title: 'Loading data',
-                    desc: "Please wait we are loading data",
-                  ),
+            ? const Center(
+                child: AnimatedProgressWidget(
+                  animationPath: 'assets/json/default.json',
+                  title: 'Loading data',
+                  desc: "Please wait we are loading data",
                 ),
               )
             : SingleChildScrollView(

@@ -82,6 +82,9 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
     final TextEditingController endDate = TextEditingController();
     final TextEditingController reportingDate = TextEditingController();
     int myInt = widget.values.hrmLNoOfDays.round();
+    int lastIntDate =
+        myInt + int.parse(widget.values.hrmLMaxLeavesApplyPerMonth.toString());
+    int firstDate = widget.values.hrmLMaxLeavesApplyPerMonth;
     DateTime startDT = DateTime.now();
     DateTime endDT = DateTime.now();
     DateTime reportingDT = DateTime.now();
@@ -95,13 +98,25 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
     DateTime firstDt2 = DateTime.now();
     DateTime lastDt2 = DateTime.now();
     if (widget.values.hrmLLeaveName == "Casual Leave") {
-      initialDt = currentDate.add(Duration(days: 3));
-      firstDt = currentDate.add(Duration(days: 3));
-      lastDt = currentDate.add(Duration(days: 5));
+      if (widget.values.hrmLWhenToApplyFlg == "Before") {
+        initialDt = currentDate.add(Duration(days: myInt));
+        firstDt = currentDate.add(Duration(days: myInt));
+        lastDt = currentDate.add(Duration(days: lastIntDate));
+      } else {
+        initialDt = currentDate.subtract(Duration(days: lastIntDate));
+        firstDt = currentDate.subtract(Duration(days: lastIntDate));
+        lastDt = currentDate.subtract(Duration(days: myInt));
+      }
     } else if (widget.values.hrmLLeaveName == "Sick Leave") {
-      initialDt = currentDate.subtract(Duration(days: 2));
-      firstDt = currentDate.subtract(Duration(days: 2));
-      lastDt = currentDate.subtract(Duration(days: myInt));
+      if (widget.values.hrmLWhenToApplyFlg == "After") {
+        initialDt = currentDate.subtract(Duration(days: firstDate));
+        firstDt = currentDate.subtract(Duration(days: firstDate));
+        lastDt = currentDate.subtract(Duration(days: myInt));
+      } else {
+        initialDt = currentDate.add(Duration(days: firstDate));
+        firstDt = currentDate.add(Duration(days: firstDate));
+        lastDt = currentDate.add(Duration(days: myInt));
+      }
     } else if (widget.values.hrmLLeaveName == "Comp off" ||
         widget.values.hrmLLeaveName == "Emergency Leave") {
       initialDt = currentDate.subtract(Duration(days: 1));
@@ -330,8 +345,10 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                         "Casual Leave") {
                                       initialDt2 = startDT;
                                       firstDt2 = startDT;
-                                      lastDt2 = startDT
-                                          .add(Duration(days: myInt - 2));
+                                      lastDt2 = date.add(Duration(
+                                          days: widget.values
+                                                  .hrmLMaxLeavesApplyPerMonth -
+                                              1));
                                     } else if (widget.values.hrmLLeaveName ==
                                             "Comp off" ||
                                         widget.values.hrmLLeaveName ==

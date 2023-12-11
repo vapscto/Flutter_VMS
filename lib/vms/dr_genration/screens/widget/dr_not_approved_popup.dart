@@ -24,7 +24,6 @@ class DrnotApproveScreen extends StatelessWidget {
             TextButton(
                 onPressed: () {
                   Get.back();
-                  Get.back();
                 },
                 child: Text(
                   "OK",

@@ -404,6 +404,10 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                           onChanged: (s) {
                             setState(() {
                               selectedstaff = s;
+                              arrayStudents.add({
+                                "HRME_Id": s!.hRMEId,
+                                "employeeName": s.employeeName
+                              });
                             });
                           },
                         ),
@@ -596,6 +600,26 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                   } else if (subject.text.isEmpty) {
                     Fluttertoast.showToast(msg: "Enter Subject");
                   } else {
+                    logger.i({
+                      "MI_Id": widget.loginSuccessModel.mIID,
+                      "ASMAY_Id": widget.loginSuccessModel.asmaYId,
+                      "UserId": widget.loginSuccessModel.userId,
+                      "Role_flag": "S",
+                      "roletype": widget.loginSuccessModel.roleforlogin,
+                      "IVRMRT_Id": widget.loginSuccessModel.roleId,
+                      "ISMINTR_GroupOrIndFlg":
+                          (staffInteractionComposeController.grpOrInd.value ==
+                                  'Group')
+                              ? "G"
+                              : "I",
+                      "ISMINTR_Subject": subject.text,
+                      "ISMINTR_Interaction": about.text,
+                      "arraymessage":
+                          (staffInteractionComposeController.grpOrInd.value ==
+                                  'Group')
+                              ? arrayStudents
+                              : selectedstaff!.hRMEId
+                    });
                     staffInteractionComposeController.issubmitloading(true);
                     await submitComposeStaff(
                       data: {
@@ -612,11 +636,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                                 : "I",
                         "ISMINTR_Subject": subject.text,
                         "ISMINTR_Interaction": about.text,
-                        "arraymessage":
-                            (staffInteractionComposeController.grpOrInd.value ==
-                                    'Group')
-                                ? arrayStudents
-                                : selectedstaff!.hRMEId
+                        "arraymessage": arrayStudents
                       },
                       base: baseUrlFromInsCode(
                         'issuemanager',
