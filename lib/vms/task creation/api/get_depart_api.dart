@@ -20,9 +20,15 @@ Future<bool> getTskCompaniesList({
   final Dio ins = getGlobalDio();
 
   final String apiUrl = base + URLS.taskGetDetails;
-  logger.d(base + URLS.taskGetDetails);
 
   try {
+    logger.d(apiUrl);
+    logger.d({
+      "IVRMRT_Id": ivrmrtId,
+      "UserId": userId,
+      "MI_Id": miId,
+    });
+
     controller.taskDeptLoading(true);
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
