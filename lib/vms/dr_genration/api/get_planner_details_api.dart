@@ -65,8 +65,9 @@ Future<bool> getPlanerdetails({
     CloseTaskCoutnModel closeTaskList =
         CloseTaskCoutnModel.fromJson(response.data['closeTaskCoutnDetails']);
     controller.closeTaskCoutnList.addAll(closeTaskList.values!);
+    if (planerDeatailsList.plannername != null) {}
     controller.plannernameEditingController.value.text =
-        planerDeatailsList.plannername!;
+        planerDeatailsList.plannername ?? '';
     controller.otherDaysEditingController.value =
         planerDeatailsList.dailyreportothersdatecount!.toInt().toString();
     Drnotapprovedmessage drnotapprovedmessage =

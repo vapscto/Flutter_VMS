@@ -58,15 +58,19 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
   @override
   void initState() {
     load();
-    todayDate.text = "${selecteddate.year}-${numberList[selecteddate.month]}-${numberList[selecteddate.day]}";
-   
+    todayDate.text =
+        "${selecteddate.year}-${numberList[selecteddate.month]}-${numberList[selecteddate.day]}";
+
     super.initState();
   }
 
   load() async {
-    int statuscode =
-        await feacthUserApi(base:baseUrlFromInsCode('issuemanager', widget.mskoolController),
-        ivrmrtId: widget.loginSuccessModel.roleTypeId!,userId: widget.loginSuccessModel.userId!, mi_id: widget.loginSuccessModel.mIID!, controller: controller);
+    int statuscode = await feacthUserApi(
+        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
+        ivrmrtId: widget.loginSuccessModel.roleTypeId!,
+        userId: widget.loginSuccessModel.userId!,
+        mi_id: widget.loginSuccessModel.mIID!,
+        controller: controller);
     if (statuscode == 200) {
       hrmdc_Id = controller.departmentList.first.hRMDCID;
       departList.clear();
@@ -76,8 +80,12 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
         "selected": true
       });
       int statusCode = await feachDesignation(
-        base:  baseUrlFromInsCode("issuemanager", widget.mskoolController),
-          mi_id: widget.loginSuccessModel.mIID!, userId: widget.loginSuccessModel.userId!,ivrmrt: widget.loginSuccessModel.roleTypeId!, controller: controller, list: departList);
+          base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+          mi_id: widget.loginSuccessModel.mIID!,
+          userId: widget.loginSuccessModel.userId!,
+          ivrmrt: widget.loginSuccessModel.roleTypeId!,
+          controller: controller,
+          list: departList);
       if (statusCode == 200) {
         controller.employeeList.clear();
         emplist.clear();
@@ -91,51 +99,53 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
         });
       }
     }
-     controller.adavanceListModel.isNotEmpty ||  controller.applyListModel.isNotEmpty 
-     ?
-    Get.dialog(
-          barrierDismissible :false,
+    controller.adavanceListModel.isNotEmpty ||
+            controller.applyListModel.isNotEmpty
+        ? Get.dialog(
+            barrierDismissible: false,
             WillPopScope(
               onWillPop: () {
                 return Future.value(false);
               },
               child: AlertDialog(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              title:    Align(
-                alignment: Alignment.center,
-                child: Text("Update Task",
-                style:   Theme.of(context).textTheme.titleLarge!.merge(
-                  TextStyle(
-                    color:  Theme.of(context).primaryColor
-                  )
-                ),)),
-              content:   Container(
-                height: 120,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                   children: [
-                   Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Kindly Approved TA-DA List, Then only can Approved DR",
-                        style:Theme.of(context).textTheme.titleSmall!.merge(
-                          TextStyle(
-                            color: Theme.of(context).primaryColor
-                          )
-                        )  ,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                title: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Update Task",
+                      style: Theme.of(context).textTheme.titleLarge!.merge(
+                          TextStyle(color: Theme.of(context).primaryColor)),
+                    )),
+                content: Container(
+                  height: 120,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Kindly Approved TA-DA List, Then only can Approved DR",
+                          style: Theme.of(context).textTheme.titleSmall!.merge(
+                              TextStyle(color: Theme.of(context).primaryColor)),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 20,),
-                    MSkollBtn(title: "Close", onPress: () {
-                      Get.back();
-                       Get.back();
-                    },)
-                  ],
+                      SizedBox(
+                        height: 20,
+                      ),
+                      MSkollBtn(
+                        title: "Close",
+                        onPress: () {
+                          Get.back();
+                          Get.back();
+                        },
+                      )
+                    ],
+                  ),
                 ),
               ),
-                      ),
-            )) 
-          :null;
+            ))
+        : null;
   }
 
   @override
@@ -264,11 +274,13 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                   "selected": true
                                 });
                                 await feachDesignation(
-                                  base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+                                    base: baseUrlFromInsCode("issuemanager",
+                                        widget.mskoolController),
                                     mi_id: widget.loginSuccessModel.mIID!,
                                     userId: widget.loginSuccessModel.userId!,
                                     controller: controller,
-                                    ivrmrt: widget.loginSuccessModel.roleTypeId!,
+                                    ivrmrt:
+                                        widget.loginSuccessModel.roleTypeId!,
                                     list: departList);
                               },
                             ),
@@ -391,8 +403,9 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                   "selected": true
                                 });
                                 await feachEmpolyee(
-                                  base:baseUrlFromInsCode("issuemanager", widget.mskoolController),
-                                   userId: widget.loginSuccessModel.userId!,
+                                    base: baseUrlFromInsCode("issuemanager",
+                                        widget.mskoolController),
+                                    userId: widget.loginSuccessModel.userId!,
                                     mi_id: widget.loginSuccessModel.mIID!,
                                     ivrmrtId: widget.loginSuccessModel.roleId!,
                                     controller: controller,
@@ -548,10 +561,8 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                         if (value != null) {
                           selecteddate = value;
                           setState(() {
-                            // getDate =
-                            //     "${selecteddate.year}/${numberList[selecteddate.month]}/${numberList[selecteddate.day]}";
-
-                          todayDate.text = "${selecteddate.year}-${numberList[selecteddate.month]}-${numberList[selecteddate.day]}";
+                            todayDate.text =
+                                "${selecteddate.year}-${numberList[selecteddate.month]}-${numberList[selecteddate.day]}";
 
                             getDateNeed(selecteddate);
                           });
@@ -620,7 +631,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                   ),
                 ),
               ),
-             const SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Center(
@@ -638,10 +649,11 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
 
                     if (_formKey.currentState!.validate()) {
                       int goto = await getdrLists(
-                          roleId: widget.loginSuccessModel.roleId!,
+                        roleId: widget.loginSuccessModel.roleId!,
                         mi_id: widget.loginSuccessModel.mIID!,
                         userId: widget.loginSuccessModel.userId!,
-                       base:baseUrlFromInsCode('issuemanager', widget.mskoolController),
+                        base: baseUrlFromInsCode(
+                            'issuemanager', widget.mskoolController),
                         hrmdc_Id: hrmdc_Id!,
                         hrmdes_Id: hrmdes_Id!,
                         hrme_Id: hrme_Id!,

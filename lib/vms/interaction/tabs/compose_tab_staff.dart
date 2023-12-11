@@ -616,7 +616,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                             (staffInteractionComposeController.grpOrInd.value ==
                                     'Group')
                                 ? arrayStudents
-                                : selectedstaff
+                                : selectedstaff!.hRMEId
                       },
                       base: baseUrlFromInsCode(
                         'issuemanager',

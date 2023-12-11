@@ -117,36 +117,40 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
               content: SizedBox(width: Get.width, child: DrnotApprovedScreen()),
             ))
         : null;
-    (_plannerDetailsController.getplannerdetails[0].ismtpLApprovalFlg ==
-                false &&
-            _plannerDetailsController.getplannerdetails[0].ismtpLApprovedBy ==
-                0)
-        ? Get.dialog(
-            barrierDismissible: false,
-            AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              content: const DrnotApproveScreen(
-                title:
-                    'Still Your Planner Is Pending , So Kindly Contact Department Head',
-              ),
-            ))
-        : null;
-    (_plannerDetailsController.getplannerdetails[0].ismtpLApprovalFlg ==
-                false &&
-            _plannerDetailsController.getplannerdetails[0].ismtpLApprovedBy! >
-                0)
-        ? Get.dialog(
-            barrierDismissible: false,
-            AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              content: const DrnotApproveScreen(
-                title:
-                    'Still Your Planner Is Rejected , So Kindly Contact Department Head',
-              ),
-            ))
-        : null;
+    if (_plannerDetailsController.getplannerdetails.isNotEmpty) {
+      (_plannerDetailsController.getplannerdetails[0].ismtpLApprovalFlg ==
+                  false &&
+              _plannerDetailsController.getplannerdetails[0].ismtpLApprovedBy ==
+                  0)
+          ? Get.dialog(
+              barrierDismissible: false,
+              AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                content: const DrnotApproveScreen(
+                  title:
+                      'Still Your Planner Is Pending , So Kindly Contact Department Head',
+                ),
+              ))
+          : null;
+    }
+    if (_plannerDetailsController.getplannerdetails.isNotEmpty) {
+      (_plannerDetailsController.getplannerdetails[0].ismtpLApprovalFlg ==
+                  false &&
+              _plannerDetailsController.getplannerdetails[0].ismtpLApprovedBy! >
+                  0)
+          ? Get.dialog(
+              barrierDismissible: false,
+              AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                content: const DrnotApproveScreen(
+                  title:
+                      'Still Your Planner Is Rejected , So Kindly Contact Department Head',
+                ),
+              ))
+          : null;
+    }
     _plannerDetailsController.advanceApplyDataList.isNotEmpty
         ? Get.dialog(
             barrierDismissible: false,
@@ -759,10 +763,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                       height: 30,
                     ),
                     Obx(
-                      () => _plannerDetailsController
-                              .advanceApplyDataList.isNotEmpty
-                          ? const SizedBox()
-                          : SizedBox(
+                      () => (fliteresList.isNotEmpty)
+                          ? SizedBox(
                               width: MediaQuery.of(context).size.width,
                               child: Center(
                                   child: SingleChildScrollView(
@@ -1623,7 +1625,12 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                 ))
                                               ]);
                                             }),
-                                          ))))),
+                                          )))))
+                          : const AnimatedProgressWidget(
+                              animationPath: 'assets/json/nodata.json',
+                              title: 'No data available',
+                              desc: "Planner Not Created For This Week!!",
+                            ),
                     ),
                   ],
                 ),
