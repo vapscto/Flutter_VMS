@@ -1655,7 +1655,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                           : const AnimatedProgressWidget(
                               animationPath: 'assets/json/nodata.json',
                               title: 'No data available',
-                              desc: "Planner Not Created For This Week!!",
+                              desc: " ",
                             ),
                     ),
                   ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -194,7 +195,23 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                                   CrossAxisAlignment.start,
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                Text(value.iSMTCRTaskNo!),
+                                                InkWell(
+                                                    onTap: () {
+                                                      Clipboard.setData(
+                                                              ClipboardData(
+                                                                  text: value
+                                                                      .iSMTCRTaskNo!))
+                                                          .then((_) {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                                const SnackBar(
+                                                                    content: Text(
+                                                                        'Copied to your clipboard !')));
+                                                      });
+                                                    },
+                                                    child: Text(
+                                                        value.iSMTCRTaskNo!)),
                                                 Text(value.iSMTCRTitle!),
                                                 RichText(
                                                     text: TextSpan(children: [
