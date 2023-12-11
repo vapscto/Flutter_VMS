@@ -309,15 +309,16 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                         title: 'Submit',
                         onPress: () async {
                           if (_formKey.currentState!.validate()) {
-                            if (employeesID.isNotEmpty) {
-                              if (_titleETController.text.isNotEmpty ||
-                                  _descritpionETController.text.isNotEmpty) {
+                            if (_titleETController.text.isNotEmpty ||
+                                _descritpionETController.text.isNotEmpty) {
+                              if (employeesID.isNotEmpty) {
                                 await loadImages();
                               } else {
-                                Fluttertoast.showToast(msg: " Fill mandatory ");
+                                Fluttertoast.showToast(
+                                    msg: " Select Employee ");
                               }
                             } else {
-                              Fluttertoast.showToast(msg: " Select Employee ");
+                              Fluttertoast.showToast(msg: " Fill mandatory ");
                             }
                           } else {
                             Fluttertoast.showToast(msg: " Select mandatory ");
