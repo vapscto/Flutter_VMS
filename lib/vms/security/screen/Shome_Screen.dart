@@ -198,146 +198,171 @@ class _ShomeScreenState extends State<ShomeScreen> {
                             var i = index + 1;
                             return DataRow(
                               cells: [
-                                DataCell(Align(
+                                DataCell(
+                                  Align(
                                     alignment: Alignment.center,
                                     child: Checkbox(
                                       checkColor: Colors.indigo,
                                       shape: ContinuousRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
                                       onChanged: (value) async {
                                         controller.securityUploadImage.clear();
                                         controller.checkBox[index] = !value!;
                                         setState(() {});
-                                        controller
-                                            .getFromCamera(miId: 0, base: "")
-                                            .then(
-                                          (value) {
-                                            if (value) {
-                                              showDialog(
+
+                                        if (value) {
+                                          controller
+                                              .getFromCamera(miId: 0, base: "")
+                                              .then(
+                                            (value) {
+                                              if (value) {
+                                                showDialog(
                                                   context: context,
                                                   builder: (_) {
                                                     return Dialog(
-                                                        insetPadding:
-                                                            const EdgeInsets
-                                                                .all(16.0),
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
+                                                      insetPadding:
+                                                          const EdgeInsets.all(
+                                                              16.0),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12.0),
+                                                      ),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Container(
+                                                            width:
+                                                                double.infinity,
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                              horizontal: 16.0,
+                                                              vertical: 16.0,
+                                                            ),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor,
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
                                                                     .circular(
-                                                                        12.0)),
-                                                        child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            children: [
-                                                              Container(
-                                                                width: double
-                                                                    .infinity,
-                                                                padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        16.0,
-                                                                    vertical:
-                                                                        16.0),
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                  borderRadius:
-                                                                      const BorderRadius
-                                                                          .only(
-                                                                    topLeft: Radius
-                                                                        .circular(
-                                                                            8.0),
-                                                                    topRight: Radius
-                                                                        .circular(
-                                                                            8.0),
+                                                                        8.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        8.0),
+                                                              ),
+                                                            ),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                const SizedBox(
+                                                                  child: Text(
+                                                                    "Upload images",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
                                                                   ),
                                                                 ),
-                                                                child: Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  children: [
-                                                                    const SizedBox(
-                                                                      child:
-                                                                          Text(
-                                                                        "Upload images",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                14,
+                                                                InkWell(
+                                                                  onTap: () {
+                                                                    controller.checkBox[
+                                                                            index] =
+                                                                        value;
+                                                                    setState(
+                                                                        () {});
+                                                                    Get.back();
+                                                                  },
+                                                                  child:
+                                                                      const Icon(
+                                                                    Icons
+                                                                        .close_sharp,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Obx(
+                                                            () => Container(
+                                                              height: 200,
+                                                              child: ListView
+                                                                  .builder(
+                                                                itemBuilder:
+                                                                    (context,
+                                                                        index) {
+                                                                  return Column(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      ListTile(
+                                                                        title:
+                                                                            Text(
+                                                                          controller
+                                                                              .securityUploadImage[index],
+                                                                          style:
+                                                                              const TextStyle(
                                                                             color:
-                                                                                Colors.white),
-                                                                      ),
-                                                                    ),
-                                                                    InkWell(
-                                                                      onTap:
-                                                                          () {
-                                                                        controller.checkBox[index] =
-                                                                            value;
-                                                                        setState(
-                                                                            () {});
-                                                                        Get.back();
-                                                                      },
-                                                                      child:
-                                                                          const Icon(
-                                                                        Icons
-                                                                            .close_sharp,
-                                                                        color: Colors
-                                                                            .white,
-                                                                      ),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              Obx(
-                                                                  () =>
-                                                                      Container(
-                                                                        height:
-                                                                            200,
-                                                                        child: ListView
-                                                                            .builder(
-                                                                          itemBuilder:
-                                                                              (context, index) {
-                                                                            return Column(
-                                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                                              children: [
-                                                                                ListTile(
-                                                                                  title: Text(
-                                                                                    controller.securityUploadImage[index],
-                                                                                    style: const TextStyle(color: Colors.black),
-                                                                                  ),
-                                                                                ),
-                                                                                const SizedBox(
-                                                                                  height: 20,
-                                                                                ),
-                                                                                SizedBox(
-                                                                                  width: 120,
-                                                                                  child: ElevatedButton(
-                                                                                    onPressed: () {},
-                                                                                    child: const Center(child: Text("submit")),
-                                                                                  ),
-                                                                                )
-                                                                              ],
-                                                                            );
-                                                                          },
-                                                                          itemCount: controller
-                                                                              .securityUploadImage
-                                                                              .length,
+                                                                                Colors.black,
+                                                                          ),
                                                                         ),
-                                                                      ))
-                                                            ]));
-                                                  });
-                                            }
-                                          },
-                                        );
-
-                                        ///
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        height:
+                                                                            20,
+                                                                      ),
+                                                                      SizedBox(
+                                                                        width:
+                                                                            120,
+                                                                        child:
+                                                                            ElevatedButton(
+                                                                          onPressed:
+                                                                              () {},
+                                                                          child:
+                                                                              const Center(
+                                                                            child:
+                                                                                Text("submit"),
+                                                                          ),
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  );
+                                                                },
+                                                                itemCount:
+                                                                    controller
+                                                                        .securityUploadImage
+                                                                        .length,
+                                                              ),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              }
+                                            },
+                                          );
+                                        }
                                       },
                                       value: !controller.checkBox[index],
-                                    ))),
+                                    ),
+                                  ),
+                                ),
                                 DataCell(Align(
                                     alignment: Alignment.center,
                                     child: Text('$i'))),
