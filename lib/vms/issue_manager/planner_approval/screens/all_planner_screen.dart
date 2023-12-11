@@ -202,10 +202,13 @@ class _AllPlannersState extends State<AllPlanners> {
   }
 
   List<String> selectedItemValue = <String>[];
-
+  bool isLoading = false;
   //save planner
   List<Map<String, dynamic>> plannerList = [];
   _getPlannerSave() async {
+    setState(() {
+      isLoading = true;
+    });
     for (int i = 0; i < checkList.length; i++) {
       var value = allPlannerList.elementAt(checkList[i]);
       plannerList.add({
@@ -235,9 +238,11 @@ class _AllPlannersState extends State<AllPlanners> {
       totalEffort: approveEffort,
     );
     _getData();
-    // _getPlannerData();
     Get.back();
     Get.back();
+    setState(() {
+      isLoading = false;
+    });
   }
 
   int visibleRowCount = 10;
@@ -260,19 +265,31 @@ class _AllPlannersState extends State<AllPlanners> {
           width: MediaQuery.of(context).size.width * 0.35,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            child: BtnSave(
-              title: 'Save',
-              onPress: () {
-                if (_remarkController.text.isEmpty) {
-                  Fluttertoast.showToast(msg: "Please Enter Planner Remarks");
-                } else if (checkList.isEmpty) {
-                  Fluttertoast.showToast(msg: "Please Select check box");
-                } else {
-                  _getPlannerSave();
-                }
-                setState(() {});
-              },
-            ),
+            child: isLoading == true
+                ? const SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 6,
+                      color: Colors.white,
+                    ),
+                  )
+                : BtnSave(
+                    title: 'Save',
+                    onPress: () {
+                      setState(() {
+                        if (_remarkController.text.isEmpty) {
+                          Fluttertoast.showToast(
+                              msg: "Please Enter Planner Remarks");
+                        } else if (checkList.isEmpty) {
+                          Fluttertoast.showToast(
+                              msg: "Please Select check box");
+                        } else {
+                          _getPlannerSave();
+                        }
+                      });
+                    },
+                  ),
           ),
         )
       ]).getAppBar(),

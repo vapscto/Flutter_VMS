@@ -30,11 +30,14 @@ class GetAppliedLeavesApi {
         "LoginId": loginId,
       });
       if (response.statusCode == 200) {
-        LeaveApprovalModel appliedLeaves =
-            LeaveApprovalModel.fromJson(response.data['get_leavestatus']);
-        logger.i(response.data['get_leavestatus']);
+        if (response.data['get_leavestatus'] != null) {
+          LeaveApprovalModel appliedLeaves =
+              LeaveApprovalModel.fromJson(response.data['get_leavestatus']);
+          logger.i(response.data['get_leavestatus']);
+          leaveApproveController.getLeaves(appliedLeaves.values!);
+        }
+
         leaveApproveController.leaveLoading(false);
-        leaveApproveController.getLeaves(appliedLeaves.values!);
       }
 
       if (response.data['get_leavestatus'] == null) {

@@ -1229,6 +1229,16 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                         SizedBox(
                                                             width: 80,
                                                             child: TextField(
+                                                              inputFormatters: [
+                                                                FilteringTextInputFormatter
+                                                                    .allow(RegExp(
+                                                                        '[0-9]'))
+                                                              ],
+                                                              keyboardType:
+                                                                  const TextInputType
+                                                                          .numberWithOptions(
+                                                                      decimal:
+                                                                          false),
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
@@ -1278,6 +1288,16 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                         SizedBox(
                                                           width: 80,
                                                           child: TextField(
+                                                            inputFormatters: [
+                                                              FilteringTextInputFormatter
+                                                                  .allow(RegExp(
+                                                                      '[0-9]'))
+                                                            ],
+                                                            keyboardType:
+                                                                const TextInputType
+                                                                        .numberWithOptions(
+                                                                    decimal:
+                                                                        false),
                                                             style: Theme.of(
                                                                     context)
                                                                 .textTheme
@@ -1393,7 +1413,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                     onTapUp: (details) {
                                                       final offset = details
                                                           .globalPosition;
-
                                                       showMenu(
                                                           context: context,
                                                           position: RelativeRect

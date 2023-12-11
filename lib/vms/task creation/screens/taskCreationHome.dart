@@ -309,11 +309,15 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                         title: 'Submit',
                         onPress: () async {
                           if (_formKey.currentState!.validate()) {
-                            if (_titleETController.text.isNotEmpty ||
-                                _descritpionETController.text.isNotEmpty) {
-                              await loadImages();
+                            if (employeesID.isNotEmpty) {
+                              if (_titleETController.text.isNotEmpty ||
+                                  _descritpionETController.text.isNotEmpty) {
+                                await loadImages();
+                              } else {
+                                Fluttertoast.showToast(msg: " Fill mandatory ");
+                              }
                             } else {
-                              Fluttertoast.showToast(msg: " Fill mandatory ");
+                              Fluttertoast.showToast(msg: " Select Employee ");
                             }
                           } else {
                             Fluttertoast.showToast(msg: " Select mandatory ");
@@ -2042,11 +2046,16 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                   width: 60,
                                                   child: TextField(
                                                     inputFormatters: [
+                                                      FilteringTextInputFormatter
+                                                          .allow(
+                                                              RegExp('[0-9]')),
                                                       LengthLimitingTextInputFormatter(
                                                           2),
                                                     ],
                                                     keyboardType:
-                                                        TextInputType.number,
+                                                        const TextInputType
+                                                                .numberWithOptions(
+                                                            decimal: false),
                                                     maxLines: 1,
                                                     controller: hoursEt,
                                                     style: Theme.of(context)
@@ -2085,11 +2094,16 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                   width: 60,
                                                   child: TextField(
                                                     inputFormatters: [
+                                                      FilteringTextInputFormatter
+                                                          .allow(
+                                                              RegExp('[0-9]')),
                                                       LengthLimitingTextInputFormatter(
                                                           2),
                                                     ],
                                                     keyboardType:
-                                                        TextInputType.number,
+                                                        const TextInputType
+                                                                .numberWithOptions(
+                                                            decimal: false),
                                                     maxLines: 1,
                                                     decoration: InputDecoration(
                                                         border: OutlineInputBorder(
@@ -2184,7 +2198,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                             const SizedBox(
                                               height: 10,
                                             ),
-                                            Container(
+                                            SizedBox(
                                               width: 240,
                                               height: 150,
                                               child: Obx(
@@ -2241,7 +2255,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                                 });
                                                               },
                                                             ),
-                                                            SizedBox(),
+                                                            const SizedBox(),
                                                             SizedBox(
                                                               width: 180,
                                                               child: RichText(

@@ -117,20 +117,42 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
         firstDt = currentDate.add(Duration(days: firstDate));
         lastDt = currentDate.add(Duration(days: myInt));
       }
-    } else if (widget.values.hrmLLeaveName == "Comp off" ||
-        widget.values.hrmLLeaveName == "Emergency Leave") {
-      initialDt = currentDate.subtract(Duration(days: 1));
-      firstDt = currentDate.subtract(Duration(days: 30));
-      lastDt = currentDate.subtract(Duration(days: 1));
+    } else if (widget.values.hrmLLeaveName == "Comp off") {
+      if (widget.values.hrmLWhenToApplyFlg == "After") {
+        initialDt = currentDate.subtract(Duration(days: myInt));
+        firstDt = currentDate.subtract(Duration(days: myInt));
+        lastDt = currentDate.subtract(Duration(days: firstDate));
+      } else {
+        initialDt = currentDate.add(Duration(days: myInt));
+        firstDt = currentDate.add(Duration(days: myInt)); //firstDate
+        lastDt = currentDate.add(Duration(days: firstDate));
+      }
+    } else if (widget.values.hrmLLeaveName == "Emergency Leave") {
+      if (widget.values.hrmLWhenToApplyFlg == "After") {
+        initialDt = currentDate.subtract(Duration(days: myInt));
+        firstDt = currentDate.subtract(Duration(days: myInt));
+        lastDt = currentDate.subtract(Duration(days: myInt + 1));
+      } else {
+        initialDt = currentDate.add(Duration(days: firstDate));
+        firstDt = currentDate.add(Duration(days: firstDate));
+        lastDt = currentDate.add(Duration(days: myInt));
+      }
     } else if (widget.values.hrmLLeaveName == "Optional Leave") {
       initialDt = currentDate;
-      firstDt = currentDate.add(Duration(days: 1));
-      lastDt = DateTime.now().add(Duration(days: myInt));
+      firstDt = currentDate;
+      lastDt = DateTime.now().add(Duration(days: lastIntDate));
     } else if (widget.values.hrmLLeaveName == "Privilege Leave") {
-      DateTime subdate = currentDate.add(Duration(days: 10));
-      initialDt = subdate.add(Duration());
-      firstDt = subdate;
-      lastDt = currentDate.add(Duration(days: myInt));
+      if (widget.values.hrmLWhenToApplyFlg == "Before") {
+        DateTime subdate = currentDate.add(Duration(days: firstDate));
+        initialDt = subdate;
+        firstDt = subdate;
+        lastDt = currentDate.add(Duration(days: lastIntDate));
+      } else {
+        DateTime subdate = currentDate.subtract(Duration(days: firstDate));
+        initialDt = subdate;
+        firstDt = subdate;
+        lastDt = currentDate.add(Duration(days: lastIntDate));
+      }
     }
     return Column(
       children: [
@@ -316,18 +338,11 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                         } else if (widget
                                                 .values.hrmLLeaveName ==
                                             "Optional Leave") {
-                                          return true
-                                              //  date.isAfter(currentDate) &&
-                                              //     date.isBefore(lastDt
-                                              //         .add(Duration(days: 1)))
-                                              ;
+                                          return true;
                                         } else if (widget
                                                 .values.hrmLLeaveName ==
                                             "Privilege Leave") {
                                           return true;
-                                          // date.isAfter(currentDate.add(
-                                          //         Duration(days: myInt))) &&
-                                          //     date.isBefore(lastDt);
                                         }
                                         return true;
                                       },
@@ -355,10 +370,11 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                             "Emergency Leave") {
                                       initialDt2 = startDT;
                                       firstDt2 = startDT;
-                                      lastDt2 = (lastDt.day ==
-                                              currentDate.day - 1)
-                                          ? lastDt
-                                          : lastDt.add(Duration(days: myInt));
+                                      lastDt2 =
+                                          (lastDt.day == currentDate.day - 1)
+                                              ? date
+                                              : currentDate
+                                                  .subtract(Duration(days: 1));
                                     } else if (widget.values.hrmLLeaveName ==
                                         "Optional Leave") {
                                       for (int i = 0;

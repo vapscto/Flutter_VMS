@@ -114,10 +114,12 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                     alignment: Alignment.center,
                     child: Text(
                       "Update Task",
+                      // ignore: use_build_context_synchronously
                       style: Theme.of(context).textTheme.titleLarge!.merge(
+                          // ignore: use_build_context_synchronously
                           TextStyle(color: Theme.of(context).primaryColor)),
                     )),
-                content: Container(
+                content: SizedBox(
                   height: 120,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -126,11 +128,13 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                         alignment: Alignment.center,
                         child: Text(
                           "Kindly Approved TA-DA List, Then only can Approved DR",
+                          // ignore: use_build_context_synchronously
                           style: Theme.of(context).textTheme.titleSmall!.merge(
+                              // ignore: use_build_context_synchronously
                               TextStyle(color: Theme.of(context).primaryColor)),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       MSkollBtn(
