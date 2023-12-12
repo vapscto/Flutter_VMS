@@ -1267,7 +1267,20 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                         children: [
                                                           SizedBox(
                                                               width: 80,
-                                                              child: TextField(
+                                                              child: TextFormField(
+                                                                 validator: (value) {
+                                                               if (value!.isEmpty) {
+                                                                  if(selectCheckbox.contains(index)){
+                                                                    if( _plannerDetailsController.minutesEt.elementAt(i).text.isEmpty)
+                                                                    {
+                                                                      return 'Please  enter hours';
+                                                                    }
+                                                                  }
+                                                                  
+                                                                }
+                                                              
+                                                                return null;
+                                                              },
                                                                 inputFormatters: [
                                                                   FilteringTextInputFormatter
                                                                       .allow(RegExp(
@@ -1326,7 +1339,20 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                           ),
                                                           SizedBox(
                                                             width: 80,
-                                                            child: TextField(
+                                                            child: TextFormField(
+                                                               validator: (value) {
+                                                               if (value!.isEmpty) {
+                                                                  if(selectCheckbox.contains(index)){
+                                                                     if( _plannerDetailsController.hoursEt.elementAt(i).text.isEmpty)
+                                                                    {
+                                                                      return 'Please  enter minutes';
+                                                                    }
+                                                                  }
+                                                                  
+                                                                }
+                                                              
+                                                                return null;
+                                                              },
                                                               inputFormatters: [
                                                                 FilteringTextInputFormatter
                                                                     .allow(RegExp(
