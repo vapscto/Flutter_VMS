@@ -353,7 +353,7 @@ class _IndentApprovalState extends State<IndentApproval> {
                                   firstDate: DateTime(
                                       1000), //DateTime.now().year, 01, 01
                                   lastDate:
-                                      DateTime(DateTime.now().year, 12, 31),
+                                      DateTime.now(),
                                 );
 
                                 if (selectedDT == null) {
@@ -477,7 +477,7 @@ class _IndentApprovalState extends State<IndentApproval> {
                                   firstDate: indentApprovalController
                                       .fromSelectedDate.value,
                                   lastDate:
-                                      DateTime(DateTime.now().year, 12, 31),
+                                      DateTime.now(),
                                 );
 
                                 if (selectedDT == null) {
