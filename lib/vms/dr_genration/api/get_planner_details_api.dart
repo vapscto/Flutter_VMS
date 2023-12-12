@@ -50,6 +50,7 @@ Future<bool> getPlanerdetails({
       controller.minutesEt.add(TextEditingController(text: ''));
       controller.statusEtField.add(TextEditingController(text: ''));
       controller.deveationEtField.add(TextEditingController(text: ''));
+      controller.etResponse.add(TextEditingController(text: ''));
       controller.checkBoxList.add(false);
     }
     // adding status in the list

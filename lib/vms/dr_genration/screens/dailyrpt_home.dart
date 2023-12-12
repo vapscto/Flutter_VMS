@@ -42,6 +42,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   RxBool halfDay = RxBool(false);
   List<int> selectCheckbox = [];
   List<GetTaskDrListModelValues> fliteresList = [];
+  final _formKey = GlobalKey<FormState>();
 
   bool deviation = false;
   String todayDt = '';
@@ -184,1063 +185,1146 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
             ))
         : null;
   }
-
+                           saveDaetails()async{
+     
+                        if (fliteresList.isNotEmpty) {
+                          for (int i = 0;
+                              i < _plannerDetailsController.checkBoxList.length;
+                              i++) {
+                            var value = fliteresList.elementAt(i);
+                               
+                            if (_plannerDetailsController.checkBoxList
+                                    .elementAt(i) ==
+                                true) {
+                               
+                               
+                                dailyReportGenaration.add({
+                                "CreatedFlag": value.createdFlag,
+                                "HRME_Id": value.hRMEId,
+                                "HRMPR_Id": value.hRMPRId,
+                                "HRMP_Name": value.hRMPName,
+                                "ISMDRPT_DeviationFlg": value.iSMDRPTDeviationFlg,
+                                "ISMDRPT_ExtraFlg": value.iSMDRPTExtraFlg,
+                                "ISMDRPT_Remarks":_plannerDetailsController.etResponse.elementAt(i).text.toString(),
+                                "ISMDRPT_Status": _plannerDetailsController
+                                    .deveationEtField[i].text,
+                                "ISMDRPT_TimeTakenInHrs":
+                                    _plannerDetailsController.hoursEt[i].text,
+                                "ISMDRPT_TimeTakenInHrsmin":
+                                    _plannerDetailsController.minutesEt[i].text,
+                                "ISMDRPT_TimeTakenInHrsmins":
+                                    value.iSMDRPTTimeTakenInHrsmins,
+                                "ISMMCLT_ClientName": value.iSMMCLTClientName,
+                                "ISMMCLT_Id": value.iSMMCLTId,
+                                "ISMMPR_Id": value.iSMMPRId,
+                                "ISMMTCAT_CompulsoryFlg":
+                                    value.iSMMTCATCompulsoryFlg,
+                                "ISMMTCAT_Id": value.iSMMTCATId,
+                                "ISMTAPL_Day": value.iSMTAPLDay,
+                                "ISMTAPL_Periodicity": value.iSMTAPLPeriodicity,
+                                "ISMTAPL_ToDate": value.iSMTAPLToDate,
+                                "ISMTCRTRTO_TransferredDate": null,
+                                "ISMTCR_BugOREnhancementFlg":
+                                    value.iSMTCRBugOREnhancementFlg,
+                                "ISMTCR_CreationDate": value.iSMTCRCreationDate,
+                                "ISMTCR_Desc": value.iSMTCRDesc,
+                                "ISMTCR_Id": value.iSMTCRId,
+                                "ISMTCR_ReOpenDate": value.iSMTCRCreationDate,
+                                "ISMTCR_ReOpenFlg": value.iSMTCRReOpenFlg,
+                                "ISMTCR_Status": _plannerDetailsController
+                                    .statusEtField
+                                    .elementAt(i)
+                                    .text,
+                                "ISMTCR_TaskNo": value.iSMTCRTaskNo,
+                                "ISMTCR_Title": value.iSMTCRTitle,
+                                "ISMTPLTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
+                                "ISMTPLTA_EndDate": value.iSMTPLTAEndDate,
+                                "ISMTPLTA_Id": value.iSMTPLTAId,
+                                "ISMTPLTA_StartDate": value.iSMTPLTAStartDate,
+                                "ISMTPL_ActiveFlg": value.iSMTPLActiveFlg,
+                                "ISMTPL_ApprovalFlg": value.iSMTPLApprovalFlg,
+                                "ISMTPL_ApprovedBy": value.iSMTPLApprovedBy,
+                                "ISMTPL_EndDate": value.iSMTPLEndDate,
+                                "ISMTPL_Id": value.iSMTPLId,
+                                "ISMTPL_PlannedBy": value.iSMTPLPlannedBy,
+                                "ISMTPL_PlannerName": value.iSMTPLPlannerName,
+                                "ISMTPL_Remarks": null,
+                                "ISMTPL_StartDate": value.iSMTPLStartDate,
+                                "ISMTPL_TotalHrs": value.iSMTPLTotalHrs,
+                                "ProjectName": value.projectName,
+                                "actualeffortinhrs":
+                                    _plannerDetailsController.hoursEt[i].text,
+                                "actualeffortinmins":
+                                    _plannerDetailsController.minutesEt[i].text,
+                                "approvedflag": value.approvedflag,
+                                "assignedby": value.assignedby,
+                                "checkedvalue":
+                                    _plannerDetailsController.checkBoxList[i],
+                                "createdemp": value.createdemp,
+                                "deviationflag": false,
+                                "dr_flag": value.drFlag,
+                                "effhrs":
+                                    _plannerDetailsController.hoursEt[i].text,
+                                "effmin":
+                                    _plannerDetailsController.minutesEt[i].text,
+                                "effortss": value.effortss,
+                                "get_Status": [],
+                                "maxtime": value.maxtime,
+                                "periodicitydailyflag":
+                                    value.periodicitydailyflag,
+                                "periodicityendflag": value.periodicityendflag,
+                                "periodicityweeklyflag":
+                                    value.periodicityweeklyflag,
+                                "taskcategoryname": value.taskcategoryname
+                              });
+                            }
+                            logger.i(dailyReportGenaration);
+                          }
+                          _plannerDetailsController.saveLoading(true);
+                          await saveDr(
+                                  miID: widget.loginSuccessModel.mIID!,
+                                  userId: widget.loginSuccessModel.userId!,
+                                   base: baseUrlFromInsCode(
+                                      'issuemanager', widget.mskoolController),
+                                  controller: _plannerDetailsController,
+                                  ismdrptDate: todayDt,
+                                  halfDayFlag: halfDay.value,
+                                  ismtplId: _plannerDetailsController
+                                      .getplannerdetails[0].ismtpLId!,
+                                  drList: dailyReportGenaration,
+                                  deviationId:
+                                      _plannerDetailsController.daviationId.value,
+                                  endWeek: _plannerDetailsController
+                                      .getplannerdetails[0].ismtpLEndDate!,
+                                  reasion: reasonController.text,
+                                  startWeek: _plannerDetailsController
+                                      .getplannerdetails[0].ismtpLStartDate!,
+                                  todayOrOthersDay:
+                                      _plannerDetailsController.day.value,
+                                  totalWorkingHrFlag: _plannerDetailsController
+                                      .getplannerdetails[0].ismtpLTotalHrs!)
+                              .then((value) {
+                            _plannerDetailsController.saveLoading(false);
+                            if (value!) {
+                              showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20)),
+                                    title: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 20),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              'Daily Report Genrated successfully',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .merge(TextStyle(
+                                                      color: Theme.of(context)
+                                                          .primaryColor)),
+                                            ),
+                                          ),
+                                          TextButton(
+                                              onPressed: () {
+                                                Get.back();
+                                                Get.back();
+                                              },
+                                              child: Text(
+                                                "OK",
+                                                style: Get.textTheme.titleMedium!
+                                                    .copyWith(
+                                                        color: Theme.of(context)
+                                                            .primaryColor),
+                                              ))
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "Daily Report is no save");
+                            }
+                          });
+                              
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: "Please Select Planner List");
+                        }
+   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("DR Generation"),
-        titleSpacing: 0,
-        leading: const CustomGoBackButton(),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: (_plannerDetailsController.isSaveLoading.value)
-                ? const SizedBox(
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
+    return Form(
+      key: _formKey,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("DR Generation"),
+          titleSpacing: 0,
+          leading: const CustomGoBackButton(),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: (_plannerDetailsController.isSaveLoading.value)
+                  ? const SizedBox(
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    )
+                  : BtnSave(
+                      onPress: () async {
+                         if (_formKey.currentState!.validate()) {
+                                 saveDaetails();
+                              }else{
+                                logger.w("show damit");
+                              }
+                      },
+                      title: "Save",
                     ),
-                  )
-                : BtnSave(
-                    onPress: () async {
-                      if (fliteresList.isNotEmpty) {
-                        for (int i = 0;
-                            i < _plannerDetailsController.checkBoxList.length;
-                            i++) {
-                          var value = fliteresList.elementAt(i);
-                          if (_plannerDetailsController.checkBoxList
-                                  .elementAt(i) ==
-                              true) {
-                            dailyReportGenaration.add({
-                              "CreatedFlag": value.createdFlag,
-                              "HRME_Id": value.hRMEId,
-                              "HRMPR_Id": value.hRMPRId,
-                              "HRMP_Name": value.hRMPName,
-                              "ISMDRPT_DeviationFlg": value.iSMDRPTDeviationFlg,
-                              "ISMDRPT_ExtraFlg": value.iSMDRPTExtraFlg,
-                              "ISMDRPT_Remarks": value.iSMDRPTRemarks,
-                              "ISMDRPT_Status": _plannerDetailsController
-                                  .deveationEtField[i].text,
-                              "ISMDRPT_TimeTakenInHrs":
-                                  _plannerDetailsController.hoursEt[i].text,
-                              "ISMDRPT_TimeTakenInHrsmin":
-                                  _plannerDetailsController.minutesEt[i].text,
-                              "ISMDRPT_TimeTakenInHrsmins":
-                                  value.iSMDRPTTimeTakenInHrsmins,
-                              "ISMMCLT_ClientName": value.iSMMCLTClientName,
-                              "ISMMCLT_Id": value.iSMMCLTId,
-                              "ISMMPR_Id": value.iSMMPRId,
-                              "ISMMTCAT_CompulsoryFlg":
-                                  value.iSMMTCATCompulsoryFlg,
-                              "ISMMTCAT_Id": value.iSMMTCATId,
-                              "ISMTAPL_Day": value.iSMTAPLDay,
-                              "ISMTAPL_Periodicity": value.iSMTAPLPeriodicity,
-                              "ISMTAPL_ToDate": value.iSMTAPLToDate,
-                              "ISMTCRTRTO_TransferredDate": null,
-                              "ISMTCR_BugOREnhancementFlg":
-                                  value.iSMTCRBugOREnhancementFlg,
-                              "ISMTCR_CreationDate": value.iSMTCRCreationDate,
-                              "ISMTCR_Desc": value.iSMTCRDesc,
-                              "ISMTCR_Id": value.iSMTCRId,
-                              "ISMTCR_ReOpenDate": value.iSMTCRCreationDate,
-                              "ISMTCR_ReOpenFlg": value.iSMTCRReOpenFlg,
-                              "ISMTCR_Status": _plannerDetailsController
-                                  .statusEtField
-                                  .elementAt(i)
-                                  .text,
-                              "ISMTCR_TaskNo": value.iSMTCRTaskNo,
-                              "ISMTCR_Title": value.iSMTCRTitle,
-                              "ISMTPLTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
-                              "ISMTPLTA_EndDate": value.iSMTPLTAEndDate,
-                              "ISMTPLTA_Id": value.iSMTPLTAId,
-                              "ISMTPLTA_StartDate": value.iSMTPLTAStartDate,
-                              "ISMTPL_ActiveFlg": value.iSMTPLActiveFlg,
-                              "ISMTPL_ApprovalFlg": value.iSMTPLApprovalFlg,
-                              "ISMTPL_ApprovedBy": value.iSMTPLApprovedBy,
-                              "ISMTPL_EndDate": value.iSMTPLEndDate,
-                              "ISMTPL_Id": value.iSMTPLId,
-                              "ISMTPL_PlannedBy": value.iSMTPLPlannedBy,
-                              "ISMTPL_PlannerName": value.iSMTPLPlannerName,
-                              "ISMTPL_Remarks": null,
-                              "ISMTPL_StartDate": value.iSMTPLStartDate,
-                              "ISMTPL_TotalHrs": value.iSMTPLTotalHrs,
-                              "ProjectName": value.projectName,
-                              "actualeffortinhrs":
-                                  _plannerDetailsController.hoursEt[i].text,
-                              "actualeffortinmins":
-                                  _plannerDetailsController.minutesEt[i].text,
-                              "approvedflag": value.approvedflag,
-                              "assignedby": value.assignedby,
-                              "checkedvalue":
-                                  _plannerDetailsController.checkBoxList[i],
-                              "createdemp": value.createdemp,
-                              "deviationflag": false,
-                              "dr_flag": value.drFlag,
-                              "effhrs":
-                                  _plannerDetailsController.hoursEt[i].text,
-                              "effmin":
-                                  _plannerDetailsController.minutesEt[i].text,
-                              "effortss": value.effortss,
-                              "get_Status": [],
-                              "maxtime": value.maxtime,
-                              "periodicitydailyflag":
-                                  value.periodicitydailyflag,
-                              "periodicityendflag": value.periodicityendflag,
-                              "periodicityweeklyflag":
-                                  value.periodicityweeklyflag,
-                              "taskcategoryname": value.taskcategoryname
-                            });
-                          }
-                          logger.i(dailyReportGenaration);
-                        }
-                        _plannerDetailsController.saveLoading(true);
-                        await saveDr(
-                                miID: widget.loginSuccessModel.mIID!,
-                                userId: widget.loginSuccessModel.userId!,
-                                base: baseUrlFromInsCode(
-                                    'issuemanager', widget.mskoolController),
-                                controller: _plannerDetailsController,
-                                ismdrptDate: todayDt,
-                                halfDayFlag: halfDay.value,
-                                ismtplId: _plannerDetailsController
-                                    .getplannerdetails[0].ismtpLId!,
-                                drList: dailyReportGenaration,
-                                deviationId:
-                                    _plannerDetailsController.daviationId.value,
-                                endWeek: _plannerDetailsController
-                                    .getplannerdetails[0].ismtpLEndDate!,
-                                reasion: reasonController.text,
-                                startWeek: _plannerDetailsController
-                                    .getplannerdetails[0].ismtpLStartDate!,
-                                todayOrOthersDay:
-                                    _plannerDetailsController.day.value,
-                                totalWorkingHrFlag: _plannerDetailsController
-                                    .getplannerdetails[0].ismtpLTotalHrs!)
-                            .then((value) {
-                          _plannerDetailsController.saveLoading(false);
-                          if (value!) {
-                            showDialog(
-                              barrierDismissible: false,
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20)),
-                                  title: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 20),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            'Daily Report Genrated successfully',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .merge(TextStyle(
-                                                    color: Theme.of(context)
-                                                        .primaryColor)),
-                                          ),
-                                        ),
-                                        TextButton(
-                                            onPressed: () {
-                                              Get.back();
-                                              Get.back();
-                                            },
-                                            child: Text(
-                                              "OK",
-                                              style: Get.textTheme.titleMedium!
-                                                  .copyWith(
-                                                      color: Theme.of(context)
-                                                          .primaryColor),
-                                            ))
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          } else {
-                            Fluttertoast.showToast(
-                                msg: "Daily Report is no save");
-                          }
-                        });
-                      } else {
-                        Fluttertoast.showToast(
-                            msg: "Please Select Planner List");
-                      }
-                    },
-                    title: "Save",
+            ),
+          ],
+        ),
+        body: Obx(
+          () => _plannerDetailsController.loadPlanerDeatails.isTrue
+              ? const Center(
+                  child: AnimatedProgressWidget(
+                    animationPath: 'assets/json/default.json',
+                    title: 'Loading data',
+                    desc: "Please wait we are loading data",
                   ),
-          ),
-        ],
-      ),
-      body: Obx(
-        () => _plannerDetailsController.loadPlanerDeatails.isTrue
-            ? const Center(
-                child: AnimatedProgressWidget(
-                  animationPath: 'assets/json/default.json',
-                  title: 'Loading data',
-                  desc: "Please wait we are loading data",
-                ),
-              )
-            : SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child:
-                    // ignore: prefer_is_empty
-                    Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 30),
-                      child: CustomContainer(
-                        child: Obx(
-                          () => TextField(
-                            controller: _plannerDetailsController
-                                .plannernameEditingController.value,
-                            readOnly: true,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .merge(const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 0.3)),
-                            decoration: InputDecoration(
-                              border: const OutlineInputBorder(),
-                              label: Container(
-                                margin: const EdgeInsets.only(bottom: 12),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0, vertical: 6.0),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(24.0),
-                                    color: const Color.fromARGB(
-                                        255, 234, 239, 255)),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      " Planner Name ",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .merge(
-                                            const TextStyle(
-                                                fontSize: 20.0,
-                                                color: Color.fromARGB(
-                                                    255, 103, 118, 255)),
-                                          ),
-                                    ),
-                                  ],
+                )
+              : SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child:
+                      // ignore: prefer_is_empty
+                      Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 30),
+                        child: CustomContainer(
+                          child: Obx(
+                            () => TextField(
+                              controller: _plannerDetailsController
+                                  .plannernameEditingController.value,
+                              readOnly: true,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .merge(const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 0.3)),
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                label: Container(
+                                  margin: const EdgeInsets.only(bottom: 12),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0, vertical: 6.0),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(24.0),
+                                      color: const Color.fromARGB(
+                                          255, 234, 239, 255)),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        " Planner Name ",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
+                                            .merge(
+                                              const TextStyle(
+                                                  fontSize: 20.0,
+                                                  color: Color.fromARGB(
+                                                      255, 103, 118, 255)),
+                                            ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
                                 ),
-                              ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 0),
-                        child: CustomContainer(
-                          child: Obx(
-                            () => Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.2,
-                                  child: RadioListTile(
-                                    value: "today",
-                                    groupValue:
-                                        _plannerDetailsController.day.value,
-                                    onChanged: (value) {
-                                      _plannerDetailsController
-                                          .updateDayRadio(value!);
-                                    },
-                                    dense: true,
-                                    activeColor: Theme.of(context).primaryColor,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        horizontal: 8),
-                                    visualDensity:
-                                        const VisualDensity(horizontal: -4.0),
-                                    title: Text(
-                                      "Today's",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .merge(const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              letterSpacing: 0.3)),
+                      Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 0),
+                          child: CustomContainer(
+                            child: Obx(
+                              () => Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.2,
+                                    child: RadioListTile(
+                                      value: "today",
+                                      groupValue:
+                                          _plannerDetailsController.day.value,
+                                      onChanged: (value) {
+                                        _plannerDetailsController
+                                            .updateDayRadio(value!);
+                                      },
+                                      dense: true,
+                                      activeColor: Theme.of(context).primaryColor,
+                                      contentPadding: const EdgeInsets.symmetric(
+                                          horizontal: 8),
+                                      visualDensity:
+                                          const VisualDensity(horizontal: -4.0),
+                                      title: Text(
+                                        "Today's",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .merge(const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                letterSpacing: 0.3)),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.2,
-                                  child: RadioListTile(
-                                    value: "Others",
-                                    groupValue:
-                                        _plannerDetailsController.day.value,
-                                    dense: true,
-                                    activeColor: Theme.of(context).primaryColor,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        horizontal: 8),
-                                    visualDensity:
-                                        const VisualDensity(horizontal: -4.0),
-                                    title: Text(
-                                      "Other's date",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .merge(const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              letterSpacing: 0.3)),
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.2,
+                                    child: RadioListTile(
+                                      value: "Others",
+                                      groupValue:
+                                          _plannerDetailsController.day.value,
+                                      dense: true,
+                                      activeColor: Theme.of(context).primaryColor,
+                                      contentPadding: const EdgeInsets.symmetric(
+                                          horizontal: 8),
+                                      visualDensity:
+                                          const VisualDensity(horizontal: -4.0),
+                                      title: Text(
+                                        "Other's date",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .merge(const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                letterSpacing: 0.3)),
+                                      ),
+                                      onChanged: (value) {
+                                        _plannerDetailsController
+                                            .updateDayRadio(value!);
+                                      },
                                     ),
-                                    onChanged: (value) {
-                                      _plannerDetailsController
-                                          .updateDayRadio(value!);
-                                    },
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        )),
-                    (_plannerDetailsController.day.value == 'Others')
-                        ? Container(
-                            margin: const EdgeInsets.only(
-                                left: 20, right: 20, top: 30, bottom: 10),
-                            child: CustomContainer(
-                              child: TextField(
-                                controller: reasonController,
-                                maxLines: 2,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .merge(const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        letterSpacing: 0.3)),
-                                decoration: InputDecoration(
-                                  hintText: "Enter reason",
-                                  hintStyle: Theme.of(context)
+                          )),
+                      (_plannerDetailsController.day.value == 'Others')
+                          ? Container(
+                              margin: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 30, bottom: 10),
+                              child: CustomContainer(
+                                child: TextField(
+                                  controller: reasonController,
+                                  maxLines: 2,
+                                  style: Theme.of(context)
                                       .textTheme
                                       .titleSmall!
                                       .merge(const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w300)),
-                                  border: const OutlineInputBorder(),
-                                  label: Container(
-                                    margin: const EdgeInsets.only(bottom: 12),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20.0, vertical: 6.0),
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(24.0),
-                                        color: const Color.fromARGB(
-                                            255, 212, 245, 206)),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          " Reason ",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelMedium!
-                                              .merge(
-                                                const TextStyle(
-                                                    fontSize: 20.0,
-                                                    color: Color.fromARGB(
-                                                        255, 20, 180, 15)),
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.always,
-                                  enabledBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                    ),
-                                  ),
-                                  focusedBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        : const SizedBox(),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          left: 20, right: 20, top: 30, bottom: 10),
-                      child: CustomContainer(
-                        child: Obx(
-                          () => TextField(
-                            onTap: () async {
-                              await showDatePicker(
-                                context: context,
-                                firstDate: DateTime(2000),
-                                lastDate: DateTime(2035),
-                                initialDate: DateTime.now(),
-                              ).then((value) async {
-                                _plannerDetailsController
-                                    .plannernameDateController
-                                    .value
-                                    .text = await getDateNeed(value!);
-                                todayDt = value.toIso8601String();
-                              });
-                            },
-                            controller: _plannerDetailsController
-                                .plannernameDateController.value,
-                            readOnly: true,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .merge(const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                    letterSpacing: 0.3)),
-                            decoration: InputDecoration(
-                              hintText: "Select Date",
-                              hintStyle: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .merge(const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w300)),
-                              suffixIcon: const Icon(
-                                Icons.calendar_month,
-                                size: 20,
-                                color: Color.fromARGB(255, 47, 175, 51),
-                              ),
-                              border: const OutlineInputBorder(),
-                              label: Container(
-                                margin: const EdgeInsets.only(bottom: 12),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0, vertical: 6.0),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(24.0),
-                                    color: const Color.fromARGB(
-                                        255, 212, 245, 206)),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      " Date ",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .merge(
-                                            const TextStyle(
-                                                fontSize: 20.0,
-                                                color: Color.fromARGB(
-                                                    255, 20, 180, 15)),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                          letterSpacing: 0.3)),
+                                  decoration: InputDecoration(
+                                    hintText: "Enter reason",
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w300)),
+                                    border: const OutlineInputBorder(),
+                                    label: Container(
+                                      margin: const EdgeInsets.only(bottom: 12),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20.0, vertical: 6.0),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(24.0),
+                                          color: const Color.fromARGB(
+                                              255, 212, 245, 206)),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            " Reason ",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelMedium!
+                                                .merge(
+                                                  const TextStyle(
+                                                      fontSize: 20.0,
+                                                      color: Color.fromARGB(
+                                                          255, 20, 180, 15)),
+                                                ),
                                           ),
+                                        ],
+                                      ),
                                     ),
-                                  ],
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.always,
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                ),
-                              ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      child: CustomContainer(
-                        child: Obx(
-                          () => Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 10),
-                            child: RichText(
-                                text: TextSpan(children: [
-                              TextSpan(
-                                  text:
-                                      "No.of Daily Report Generated In Other's Date : ",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .merge(const TextStyle(
-                                          fontSize: 16,
-                                          color: Color.fromARGB(
-                                              255, 16, 103, 233)))),
-                              TextSpan(
-                                  text: _plannerDetailsController
-                                      .otherDaysEditingController.value,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .merge(const TextStyle(
-                                          fontSize: 16,
-                                          color: Color.fromARGB(
-                                              255, 16, 103, 233))))
-                            ])),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      child: CustomContainer(
+                            )
+                          : const SizedBox(),
+                      Container(
+                        margin: const EdgeInsets.only(
+                            left: 20, right: 20, top: 30, bottom: 10),
+                        child: CustomContainer(
                           child: Obx(
-                        () => Row(
-                          children: [
-                            Checkbox(
-                              value: halfDay.value,
-                              onChanged: (value) {
-                                halfDay.value = value!;
+                            () => TextField(
+                              onTap: () async {
+                                await showDatePicker(
+                                  context: context,
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2035),
+                                  initialDate: DateTime.now(),
+                                ).then((value) async {
+                                  _plannerDetailsController
+                                      .plannernameDateController
+                                      .value
+                                      .text = await getDateNeed(value!);
+                                  todayDt = value.toIso8601String();
+                                });
                               },
-                              activeColor:
-                                  const Color.fromARGB(255, 33, 54, 243),
-                              shape: ContinuousRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                            ),
-                            Text(
-                              "Half Day Daily Report",
+                              controller: _plannerDetailsController
+                                  .plannernameDateController.value,
+                              readOnly: true,
                               style: Theme.of(context)
                                   .textTheme
-                                  .labelMedium!
-                                  .merge(
-                                    const TextStyle(
-                                        fontSize: 16.0,
-                                        color:
-                                            Color.fromARGB(255, 16, 103, 233)),
-                                  ),
-                            ),
-                          ],
-                        ),
-                      )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      child: CustomContainer(
-                          child: Obx(
-                        () => TextField(
-                          onChanged: (value) {
-                            filterFun(_plannerDetailsController
-                                .etSearchController.value.text);
-                          },
-                          controller: _plannerDetailsController
-                              .etSearchController.value,
-                          decoration: InputDecoration(
-                              prefixIcon: const Icon(
-                                Icons.search,
-                              ),
-                              border: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                              hintText: "Search Task by Name and Task Number",
-                              hintStyle: Theme.of(context)
-                                  .textTheme
                                   .titleSmall!
                                   .merge(const TextStyle(
-                                    fontSize: 14,
-                                  ))),
-                          style: Theme.of(context).textTheme.titleSmall!.merge(
-                                const TextStyle(
-                                    fontSize: 16.0,
-                                    color: Color.fromARGB(255, 27, 27, 27)),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal,
+                                      letterSpacing: 0.3)),
+                              decoration: InputDecoration(
+                                hintText: "Select Date",
+                                hintStyle: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .merge(const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w300)),
+                                suffixIcon: const Icon(
+                                  Icons.calendar_month,
+                                  size: 20,
+                                  color: Color.fromARGB(255, 47, 175, 51),
+                                ),
+                                border: const OutlineInputBorder(),
+                                label: Container(
+                                  margin: const EdgeInsets.only(bottom: 12),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0, vertical: 6.0),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(24.0),
+                                      color: const Color.fromARGB(
+                                          255, 212, 245, 206)),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        " Date ",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
+                                            .merge(
+                                              const TextStyle(
+                                                  fontSize: 20.0,
+                                                  color: Color.fromARGB(
+                                                      255, 20, 180, 15)),
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
                               ),
+                            ),
+                          ),
                         ),
-                      )),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Obx(
-                      () => (fliteresList.isNotEmpty)
-                          ? SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              child: Center(
-                                  child: SingleChildScrollView(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 20),
-                                      scrollDirection: Axis.horizontal,
-                                      child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          child: DataTable(
-                                            dataTextStyle: const TextStyle(
-                                                fontSize: 14,
-                                                color: Color.fromRGBO(
-                                                    0, 0, 0, 0.95),
-                                                fontWeight: FontWeight.w500),
-                                            dataRowHeight: 160,
-                                            headingRowHeight: 40,
-                                            horizontalMargin: 10,
-                                            columnSpacing: 30,
-                                            dividerThickness: 1,
-                                            headingTextStyle: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700),
-                                            border: TableBorder.all(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                width: 0.5),
-                                            headingRowColor:
-                                                MaterialStateProperty.all(
-                                                    Theme.of(context)
-                                                        .primaryColor),
-                                            columns: const [
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text(
-                                                    'S.No',
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text(
-                                                    'Task Details',
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text(
-                                                    'Response',
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              DataColumn(
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        child: CustomContainer(
+                          child: Obx(
+                            () => Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 10),
+                              child: RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                    text:
+                                        "No.of Daily Report Generated In Other's Date : ",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .merge(const TextStyle(
+                                            fontSize: 16,
+                                            color: Color.fromARGB(
+                                                255, 16, 103, 233)))),
+                                TextSpan(
+                                    text: _plannerDetailsController
+                                        .otherDaysEditingController.value,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .merge(const TextStyle(
+                                            fontSize: 16,
+                                            color: Color.fromARGB(
+                                                255, 16, 103, 233))))
+                              ])),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        child: CustomContainer(
+                            child: Obx(
+                          () => Row(
+                            children: [
+                              Checkbox(
+                                value: halfDay.value,
+                                onChanged: (value) {
+                                  halfDay.value = value!;
+                                },
+                                activeColor:
+                                    const Color.fromARGB(255, 33, 54, 243),
+                                shape: ContinuousRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                              ),
+                              Text(
+                                "Half Day Daily Report",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .merge(
+                                      const TextStyle(
+                                          fontSize: 16.0,
+                                          color:
+                                              Color.fromARGB(255, 16, 103, 233)),
+                                    ),
+                              ),
+                            ],
+                          ),
+                        )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        child: CustomContainer(
+                            child: Obx(
+                          () => TextField(
+                            onChanged: (value) {
+                              filterFun(_plannerDetailsController
+                                  .etSearchController.value.text);
+                            },
+                            controller: _plannerDetailsController
+                                .etSearchController.value,
+                            decoration: InputDecoration(
+                                prefixIcon: const Icon(
+                                  Icons.search,
+                                ),
+                                border: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10))),
+                                hintText: "Search Task by Name and Task Number",
+                                hintStyle: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .merge(const TextStyle(
+                                      fontSize: 14,
+                                    ))),
+                            style: Theme.of(context).textTheme.titleSmall!.merge(
+                                  const TextStyle(
+                                      fontSize: 16.0,
+                                      color: Color.fromARGB(255, 27, 27, 27)),
+                                ),
+                          ),
+                        )),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Obx(
+                        () => (fliteresList.isNotEmpty)
+                            ? SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                child: Center(
+                                    child: SingleChildScrollView(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 20),
+                                        scrollDirection: Axis.horizontal,
+                                        child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: DataTable(
+                                              dataTextStyle: const TextStyle(
+                                                  fontSize: 14,
+                                                  color: Color.fromRGBO(
+                                                      0, 0, 0, 0.95),
+                                                  fontWeight: FontWeight.w500),
+                                              dataRowHeight: 160,
+                                              headingRowHeight: 40,
+                                              horizontalMargin: 10,
+                                              columnSpacing: 30,
+                                              dividerThickness: 1,
+                                              headingTextStyle: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w700),
+                                              border: TableBorder.all(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  width: 0.5),
+                                              headingRowColor:
+                                                  MaterialStateProperty.all(
+                                                      Theme.of(context)
+                                                          .primaryColor),
+                                              columns: const [
+                                                DataColumn(
                                                   label: Align(
-                                                alignment: Alignment.center,
-                                                child: Text("Efforts"),
-                                              )),
-                                              DataColumn(
-                                                  label: Align(
-                                                alignment: Alignment.center,
-                                                child: Text("Status"),
-                                              )),
-                                              DataColumn(
-                                                  label: Align(
-                                                alignment: Alignment.center,
-                                                child:
-                                                    Text("Deviation Remarks"),
-                                              ))
-                                            ],
-                                            rows: List.generate(
-                                                fliteresList.length, (index) {
-                                              int i = index + 1;
-                                              var startDate;
-                                              if (fliteresList
-                                                      .elementAt(index)
-                                                      .iSMTPLStartDate !=
-                                                  null) {
-                                                DateTime dt = DateTime.parse(
-                                                    fliteresList
-                                                        .elementAt(index)
-                                                        .iSMTPLStartDate!);
-                                                startDate =
-                                                    "${dt.day}-${dt.month}-${dt.year}";
-                                              }
-                                              var endDt;
-                                              if (fliteresList
-                                                      .elementAt(index)
-                                                      .iSMTPLEndDate !=
-                                                  null) {
-                                                DateTime newDt = DateTime.parse(
-                                                    fliteresList
-                                                        .elementAt(index)
-                                                        .iSMTPLEndDate!);
-                                                endDt =
-                                                    "${newDt.day}-${newDt.month}-${newDt.year}";
-                                              }
-
-                                              return DataRow(cells: [
-                                                DataCell(Align(
                                                     alignment: Alignment.center,
-                                                    child: Text('$i'))),
-                                                DataCell(Align(
+                                                    child: Text(
+                                                      'S.No',
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                DataColumn(
+                                                  label: Align(
                                                     alignment: Alignment.center,
-                                                    child: Obx(
-                                                      () => Checkbox(
-                                                        shape: ContinuousRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10)),
-                                                        activeColor: const Color
-                                                                .fromARGB(
-                                                            255, 21, 46, 189),
-                                                        value:
+                                                  ),
+                                                ),
+                                                DataColumn(
+                                                  label: Align(
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                      'Task Details',
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                DataColumn(
+                                                  label: Align(
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                      'Response',
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                DataColumn(
+                                                    label: Align(
+                                                  alignment: Alignment.center,
+                                                  child: Text("Efforts"),
+                                                )),
+                                                DataColumn(
+                                                    label: Align(
+                                                  alignment: Alignment.center,
+                                                  child: Text("Status"),
+                                                )),
+                                                DataColumn(
+                                                    label: Align(
+                                                  alignment: Alignment.center,
+                                                  child:
+                                                      Text("Deviation Remarks"),
+                                                ))
+                                              ],
+                                              rows: List.generate(
+                                                  fliteresList.length, (index) {
+                                                int i = index + 1;
+                                                var startDate;
+                                                if (fliteresList
+                                                        .elementAt(index)
+                                                        .iSMTPLStartDate !=
+                                                    null) {
+                                                  DateTime dt = DateTime.parse(
+                                                      fliteresList
+                                                          .elementAt(index)
+                                                          .iSMTPLStartDate!);
+                                                  startDate =
+                                                      "${dt.day}-${dt.month}-${dt.year}";
+                                                }
+                                                var endDt;
+                                                if (fliteresList
+                                                        .elementAt(index)
+                                                        .iSMTPLEndDate !=
+                                                    null) {
+                                                  DateTime newDt = DateTime.parse(
+                                                      fliteresList
+                                                          .elementAt(index)
+                                                          .iSMTPLEndDate!);
+                                                  endDt =
+                                                      "${newDt.day}-${newDt.month}-${newDt.year}";
+                                                }
+    
+                                                return DataRow(cells: [
+                                                  DataCell(Align(
+                                                      alignment: Alignment.center,
+                                                      child: Text('$i'))),
+                                                  DataCell(Align(
+                                                      alignment: Alignment.center,
+                                                      child: Obx(
+                                                        () => Checkbox(
+                                                          shape: ContinuousRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                          activeColor: const Color
+                                                                  .fromARGB(
+                                                              255, 21, 46, 189),
+                                                          value:
+                                                              _plannerDetailsController
+                                                                      .checkBoxList[
+                                                                  index],
+                                                          onChanged: (value) {
+                                                            getCategoryChecklistDetails(
+                                                                    base: baseUrlFromInsCode(
+                                                                        "issuemanager",
+                                                                        widget
+                                                                            .mskoolController),
+                                                                    controller:
+                                                                        _plannerDetailsController,
+                                                                    ismctrId: fliteresList
+                                                                        .elementAt(
+                                                                            index)
+                                                                        .iSMTCRId!,
+                                                                    ismmcatId: fliteresList
+                                                                        .elementAt(
+                                                                            index)
+                                                                        .iSMMTCATId!)
+                                                                .then(
+                                                              (value) {
+                                                                if (value!.values!
+                                                                    .isNotEmpty) {
+                                                                  showDialog(
+                                                                      context:
+                                                                          context,
+                                                                      builder:
+                                                                          (context) {
+                                                                        return Center(
+                                                                          child:
+                                                                              AlertDialog(
+                                                                            content:
+                                                                                Container(
+                                                                              padding:
+                                                                                  const EdgeInsets.symmetric(horizontal: 0),
+                                                                              height:
+                                                                                  400,
+                                                                              width:
+                                                                                  MediaQuery.of(context).size.width,
+                                                                              decoration: BoxDecoration(
+                                                                                  color: Colors.white,
+                                                                                  borderRadius: BorderRadius.circular(10),
+                                                                                  shape: BoxShape.rectangle),
+                                                                              child:
+                                                                                  CategoryCheckList(
+                                                                                value: value,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        );
+                                                                      });
+                                                                }
+                                                              },
+                                                            );
+    
                                                             _plannerDetailsController
                                                                     .checkBoxList[
-                                                                index],
-                                                        onChanged: (value) {
-                                                          getCategoryChecklistDetails(
-                                                                  base: baseUrlFromInsCode(
-                                                                      "issuemanager",
-                                                                      widget
-                                                                          .mskoolController),
-                                                                  controller:
-                                                                      _plannerDetailsController,
-                                                                  ismctrId: fliteresList
-                                                                      .elementAt(
-                                                                          index)
-                                                                      .iSMTCRId!,
-                                                                  ismmcatId: fliteresList
-                                                                      .elementAt(
-                                                                          index)
-                                                                      .iSMMTCATId!)
-                                                              .then(
-                                                            (value) {
-                                                              if (value!.values!
-                                                                  .isNotEmpty) {
-                                                                showDialog(
+                                                                index] = value!;
+                                                            if (value) {
+                                                              if (selectCheckbox
+                                                                  .contains(
+                                                                      index)) {
+                                                                selectCheckbox
+                                                                    .remove(
+                                                                        index);
+                                                                logger.i(
+                                                                    selectCheckbox
+                                                                        .toString());
+                                                              } else {
+                                                                selectCheckbox
+                                                                    .add(index);
+                                                                logger.i(
+                                                                    selectCheckbox
+                                                                        .toString());
+                                                                String
+                                                                    previousDateStr =
+                                                                    fliteresList
+                                                                        .elementAt(
+                                                                            index)
+                                                                        .iSMTPLEndDate!;
+                                                                DateTime
+                                                                    previousDate =
+                                                                    DateTime.parse(
+                                                                        previousDateStr);
+    
+                                                                DateTime
+                                                                    currentDate =
+                                                                    DateTime
+                                                                        .now();
+    
+                                                                if (currentDate
+                                                                    .isAfter(
+                                                                        previousDate)) {
+                                                                  deviation =
+                                                                      true;
+                                                                  showDialog(
                                                                     context:
                                                                         context,
                                                                     builder:
                                                                         (context) {
                                                                       return Center(
                                                                         child:
-                                                                            AlertDialog(
-                                                                          content:
-                                                                              Container(
-                                                                            padding:
-                                                                                const EdgeInsets.symmetric(horizontal: 0),
-                                                                            height:
-                                                                                400,
-                                                                            width:
-                                                                                MediaQuery.of(context).size.width,
-                                                                            decoration: BoxDecoration(
-                                                                                color: Colors.white,
-                                                                                borderRadius: BorderRadius.circular(10),
-                                                                                shape: BoxShape.rectangle),
-                                                                            child:
-                                                                                CategoryCheckList(
-                                                                              value: value,
-                                                                            ),
+                                                                            Container(
+                                                                          padding:
+                                                                              const EdgeInsets.symmetric(horizontal: 20),
+                                                                          height:
+                                                                              200,
+                                                                          width:
+                                                                              300,
+                                                                          decoration: BoxDecoration(
+                                                                              color:
+                                                                                  Colors.white,
+                                                                              borderRadius: BorderRadius.circular(10),
+                                                                              shape: BoxShape.rectangle),
+                                                                          child:
+                                                                              Column(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.center,
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.center,
+                                                                            children: [
+                                                                              Text("Task End Date Is",
+                                                                                  style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255)))),
+                                                                              Text(fliteresList.elementAt(index).iSMTPLEndDate.toString().replaceRange(10, null, ''),
+                                                                                  style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255)))),
+                                                                              Text("Kindly Select Remarks",
+                                                                                  style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255))))
+                                                                            ],
                                                                           ),
                                                                         ),
                                                                       );
-                                                                    });
+                                                                    },
+                                                                  );
+                                                                }
                                                               }
-                                                            },
-                                                          );
-
-                                                          _plannerDetailsController
-                                                                  .checkBoxList[
-                                                              index] = value!;
-                                                          if (value) {
-                                                            if (selectCheckbox
-                                                                .contains(
-                                                                    index)) {
-                                                              selectCheckbox
-                                                                  .remove(
-                                                                      index);
-                                                              logger.i(
-                                                                  selectCheckbox
-                                                                      .toString());
                                                             } else {
+                                                              deviation = false;
                                                               selectCheckbox
-                                                                  .add(index);
+                                                                  .remove(index);
                                                               logger.i(
                                                                   selectCheckbox
                                                                       .toString());
-                                                              String
-                                                                  previousDateStr =
-                                                                  fliteresList
+                                                            }
+                                                          },
+                                                        ),
+                                                      ))),
+                                                  DataCell(Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          Clipboard.setData(ClipboardData(
+                                                                  text: fliteresList
                                                                       .elementAt(
                                                                           index)
-                                                                      .iSMTPLEndDate!;
-                                                              DateTime
-                                                                  previousDate =
-                                                                  DateTime.parse(
-                                                                      previousDateStr);
-
-                                                              DateTime
-                                                                  currentDate =
-                                                                  DateTime
-                                                                      .now();
-
-                                                              if (currentDate
-                                                                  .isAfter(
-                                                                      previousDate)) {
-                                                                deviation =
-                                                                    true;
-                                                                showDialog(
-                                                                  context:
-                                                                      context,
-                                                                  builder:
-                                                                      (context) {
-                                                                    return Center(
-                                                                      child:
-                                                                          Container(
-                                                                        padding:
-                                                                            const EdgeInsets.symmetric(horizontal: 20),
-                                                                        height:
-                                                                            200,
-                                                                        width:
-                                                                            300,
-                                                                        decoration: BoxDecoration(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            borderRadius: BorderRadius.circular(10),
-                                                                            shape: BoxShape.rectangle),
-                                                                        child:
-                                                                            Column(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.center,
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.center,
-                                                                          children: [
-                                                                            Text("Task End Date Is",
-                                                                                style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255)))),
-                                                                            Text(fliteresList.elementAt(index).iSMTPLEndDate.toString().replaceRange(10, null, ''),
-                                                                                style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255)))),
-                                                                            Text("Kindly Select Remarks",
-                                                                                style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255))))
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                );
-                                                              }
-                                                            }
-                                                          } else {
-                                                            deviation = false;
-                                                            selectCheckbox
-                                                                .remove(index);
-                                                            logger.i(
-                                                                selectCheckbox
-                                                                    .toString());
-                                                          }
+                                                                      .iSMTCRTaskNo!))
+                                                              .then((_) {
+                                                            ScaffoldMessenger.of(
+                                                                    context)
+                                                                .showSnackBar(
+                                                                    const SnackBar(
+                                                                        content: Text(
+                                                                            'Copied to your clipboard !')));
+                                                          });
                                                         },
-                                                      ),
-                                                    ))),
-                                                DataCell(Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        Clipboard.setData(ClipboardData(
-                                                                text: fliteresList
-                                                                    .elementAt(
-                                                                        index)
-                                                                    .iSMTCRTaskNo!))
-                                                            .then((_) {
-                                                          ScaffoldMessenger.of(
-                                                                  context)
-                                                              .showSnackBar(
-                                                                  const SnackBar(
-                                                                      content: Text(
-                                                                          'Copied to your clipboard !')));
-                                                        });
-                                                      },
-                                                      child: Text(
-                                                        fliteresList
-                                                            .elementAt(index)
-                                                            .iSMTCRTaskNo!,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .titleSmall!
-                                                            .merge(const TextStyle(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        52,
-                                                                        82,
-                                                                        252),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                fontSize: 14)),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 200,
-                                                      child: Text(
-                                                        fliteresList
-                                                            .elementAt(index)
-                                                            .iSMTCRTitle!,
-                                                        maxLines: 3,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .titleSmall!
-                                                            .merge(const TextStyle(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        52,
-                                                                        82,
-                                                                        252),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                fontSize: 14)),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      "Category : ${fliteresList.elementAt(index).taskcategoryname}",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .titleSmall!
-                                                          .merge(const TextStyle(
-                                                              color: Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      52,
-                                                                      82,
-                                                                      252),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: 14)),
-                                                    ),
-                                                    Text(
-                                                      "Project : ${fliteresList.elementAt(index).projectName}",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .titleSmall!
-                                                          .merge(const TextStyle(
-                                                              color: Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      52,
-                                                                      82,
-                                                                      252),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: 14)),
-                                                    ),
-                                                    Text(
-                                                      "Task Start date : $startDate",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .titleSmall!
-                                                          .merge(const TextStyle(
-                                                              color: Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      52,
-                                                                      82,
-                                                                      252),
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600)),
-                                                    ),
-                                                    Text(
-                                                      "Task End date : $endDt",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .titleSmall!
-                                                          .merge(const TextStyle(
-                                                              color: Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      52,
-                                                                      82,
-                                                                      252),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: 14)),
-                                                    )
-                                                  ],
-                                                )),
-                                                DataCell(Align(
-                                                    alignment: Alignment.center,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 0,
-                                                          vertical: 20),
-                                                      child: SizedBox(
-                                                        width: 150,
-                                                        child: TextFormField(
-                                                          maxLines: 6,
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .titleSmall,
-                                                          decoration: InputDecoration(
-                                                              border: OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                  borderSide: const BorderSide(
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      width:
-                                                                          .5))),
+                                                        child: Text(
+                                                          fliteresList
+                                                              .elementAt(index)
+                                                              .iSMTCRTaskNo!,
+                                                          style: Theme.of(context)
+                                                              .textTheme
+                                                              .titleSmall!
+                                                              .merge(const TextStyle(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          52,
+                                                                          82,
+                                                                          252),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontSize: 14)),
                                                         ),
                                                       ),
-                                                    ))),
-                                                DataCell(Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                        "Actual Effort:- ${fliteresList.elementAt(index).iSMTPLTAEffortInHrs} Hr"),
-                                                    const SizedBox(height: 5),
-                                                    Row(
-                                                      children: [
-                                                        SizedBox(
+                                                      SizedBox(
+                                                        width: 200,
+                                                        child: Text(
+                                                          fliteresList
+                                                              .elementAt(index)
+                                                              .iSMTCRTitle!,
+                                                          maxLines: 3,
+                                                          style: Theme.of(context)
+                                                              .textTheme
+                                                              .titleSmall!
+                                                              .merge(const TextStyle(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          52,
+                                                                          82,
+                                                                          252),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontSize: 14)),
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        "Category : ${fliteresList.elementAt(index).taskcategoryname}",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall!
+                                                            .merge(const TextStyle(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        52,
+                                                                        82,
+                                                                        252),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontSize: 14)),
+                                                      ),
+                                                      Text(
+                                                        "Project : ${fliteresList.elementAt(index).projectName}",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall!
+                                                            .merge(const TextStyle(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        52,
+                                                                        82,
+                                                                        252),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontSize: 14)),
+                                                      ),
+                                                      Text(
+                                                        "Task Start date : $startDate",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall!
+                                                            .merge(const TextStyle(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        52,
+                                                                        82,
+                                                                        252),
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600)),
+                                                      ),
+                                                      Text(
+                                                        "Task End date : $endDt",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall!
+                                                            .merge(const TextStyle(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        52,
+                                                                        82,
+                                                                        252),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontSize: 14)),
+                                                      )
+                                                    ],
+                                                  )),
+                                                  DataCell(Align(
+                                                      alignment: Alignment.center,
+                                                      child: Padding(
+                                                        padding: const EdgeInsets
+                                                                .symmetric(
+                                                            horizontal: 0,
+                                                            vertical: 20),
+                                                        child: SizedBox(
+                                                          width: 150,
+                                                          child: TextFormField(
+                                                             validator: (value) {
+                                                               if (value!.isEmpty) {
+                                                                  if(selectCheckbox.contains(index)){
+                                                                    return 'Please  enter remark';
+                                                                  }
+                                                                  
+                                                                }
+                                                              
+                                                                return null;
+                                                              },
+                                                            controller:_plannerDetailsController.etResponse.elementAt(index) ,
+                                                            maxLines: 6,
+                                                            style:
+                                                                Theme.of(context)
+                                                                    .textTheme
+                                                                    .titleSmall,
+                                                            decoration: InputDecoration(
+                                                                border: OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(
+                                                                                10),
+                                                                    borderSide: const BorderSide(
+                                                                        color: Colors
+                                                                            .grey,
+                                                                        width:
+                                                                            .5))),
+                                                          ),
+                                                        ),
+                                                      ))),
+                                                  DataCell(Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.center,
+                                                    children: [
+                                                      Text(
+                                                          "Actual Effort:- ${fliteresList.elementAt(index).iSMTPLTAEffortInHrs} Hr"),
+                                                      const SizedBox(height: 5),
+                                                      Row(
+                                                        children: [
+                                                          SizedBox(
+                                                              width: 80,
+                                                              child: TextField(
+                                                                inputFormatters: [
+                                                                  FilteringTextInputFormatter
+                                                                      .allow(RegExp(
+                                                                          '[0-9]'))
+                                                                ],
+                                                                keyboardType:
+                                                                    const TextInputType
+                                                                            .numberWithOptions(
+                                                                        decimal:
+                                                                            false),
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .merge(
+                                                                        const TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontSize:
+                                                                          14.0,
+                                                                      letterSpacing:
+                                                                          0.3,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .clip,
+                                                                    )),
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                        border:
+                                                                            const OutlineInputBorder(),
+                                                                        hintText:
+                                                                            " HH ",
+                                                                        hintStyle: Theme.of(
+                                                                                context)
+                                                                            .textTheme
+                                                                            .titleSmall!
+                                                                            .merge(
+                                                                                const TextStyle(
+                                                                              fontWeight:
+                                                                                  FontWeight.w500,
+                                                                              fontSize:
+                                                                                  14.0,
+                                                                              letterSpacing:
+                                                                                  0.3,
+                                                                              overflow:
+                                                                                  TextOverflow.clip,
+                                                                            ))),
+                                                                controller:
+                                                                    _plannerDetailsController
+                                                                            .hoursEt[
+                                                                        index],
+                                                              )),
+                                                          const SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          SizedBox(
                                                             width: 80,
                                                             child: TextField(
                                                               inputFormatters: [
@@ -1275,7 +1359,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       border:
                                                                           const OutlineInputBorder(),
                                                                       hintText:
-                                                                          " HH ",
+                                                                          " MM ",
                                                                       hintStyle: Theme.of(
                                                                               context)
                                                                           .textTheme
@@ -1293,49 +1377,26 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                           ))),
                                                               controller:
                                                                   _plannerDetailsController
-                                                                          .hoursEt[
+                                                                          .minutesEt[
                                                                       index],
-                                                            )),
-                                                        const SizedBox(
-                                                          width: 5,
-                                                        ),
-                                                        SizedBox(
-                                                          width: 80,
-                                                          child: TextField(
-                                                            inputFormatters: [
-                                                              FilteringTextInputFormatter
-                                                                  .allow(RegExp(
-                                                                      '[0-9]'))
-                                                            ],
-                                                            keyboardType:
-                                                                const TextInputType
-                                                                        .numberWithOptions(
-                                                                    decimal:
-                                                                        false),
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .titleSmall!
-                                                                .merge(
-                                                                    const TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  letterSpacing:
-                                                                      0.3,
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .clip,
-                                                                )),
-                                                            decoration:
-                                                                InputDecoration(
-                                                                    border:
-                                                                        const OutlineInputBorder(),
-                                                                    hintText:
-                                                                        " MM ",
-                                                                    hintStyle: Theme.of(
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 3,
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          SizedBox(
+                                                              width: 80,
+                                                              child: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                    "HH",
+                                                                    style: Theme.of(
                                                                             context)
                                                                         .textTheme
                                                                         .titleSmall!
@@ -1349,28 +1410,19 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                               0.3,
                                                                           overflow:
                                                                               TextOverflow.clip,
-                                                                        ))),
-                                                            controller:
-                                                                _plannerDetailsController
-                                                                        .minutesEt[
-                                                                    index],
+                                                                        )),
+                                                                  ))),
+                                                          const SizedBox(
+                                                            width: 5,
                                                           ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 3,
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        SizedBox(
+                                                          SizedBox(
                                                             width: 80,
                                                             child: Align(
                                                                 alignment:
                                                                     Alignment
                                                                         .center,
                                                                 child: Text(
-                                                                  "HH",
+                                                                  "MM",
                                                                   style: Theme.of(
                                                                           context)
                                                                       .textTheme
@@ -1378,322 +1430,307 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       .merge(
                                                                           const TextStyle(
                                                                         fontWeight:
-                                                                            FontWeight.w500,
+                                                                            FontWeight
+                                                                                .w500,
                                                                         fontSize:
                                                                             14.0,
                                                                         letterSpacing:
                                                                             0.3,
                                                                         overflow:
-                                                                            TextOverflow.clip,
+                                                                            TextOverflow
+                                                                                .clip,
                                                                       )),
-                                                                ))),
-                                                        const SizedBox(
-                                                          width: 5,
-                                                        ),
-                                                        SizedBox(
-                                                          width: 80,
-                                                          child: Align(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: Text(
-                                                                "MM",
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .titleSmall!
-                                                                    .merge(
-                                                                        const TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      fontSize:
-                                                                          14.0,
-                                                                      letterSpacing:
-                                                                          0.3,
-                                                                      overflow:
-                                                                          TextOverflow
-                                                                              .clip,
-                                                                    )),
-                                                              )),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ],
-                                                )),
-                                                DataCell(SizedBox(
-                                                  width: 180,
-                                                  child: GestureDetector(
-                                                    onTapUp: (details) {
-                                                      final offset = details
-                                                          .globalPosition;
-                                                      showMenu(
-                                                          context: context,
-                                                          position: RelativeRect
-                                                              .fromLTRB(
-                                                            offset.dx,
-                                                            offset.dy,
-                                                            MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width -
-                                                                offset.dx,
-                                                            MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .height -
-                                                                offset.dy,
-                                                          ),
-                                                          items: List.generate(
-                                                            _plannerDetailsController
-                                                                .statusDrList
-                                                                .length,
-                                                            (i) {
-                                                              return PopupMenuItem(
-                                                                onTap: () {
-                                                                  _plannerDetailsController
-                                                                          .statusEtField[
-                                                                              index]
-                                                                          .text =
-                                                                      _plannerDetailsController
-                                                                          .statusDrList[
-                                                                              i]
-                                                                          .ismmistSStatusName!;
-                                                                  setState(
-                                                                      () {});
-                                                                },
-                                                                child: Text(
-                                                                  _plannerDetailsController
-                                                                      .statusDrList[
-                                                                          i]
-                                                                      .ismmistSStatusName!,
-                                                                  style: Theme.of(
+                                                                )),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  )),
+                                                  DataCell(SizedBox(
+                                                    width: 180,
+                                                    child: GestureDetector(
+                                                      onTapUp: (details) {
+                                                        final offset = details
+                                                            .globalPosition;
+                                                        showMenu(
+                                                            context: context,
+                                                            position: RelativeRect
+                                                                .fromLTRB(
+                                                              offset.dx,
+                                                              offset.dy,
+                                                              MediaQuery.of(
                                                                           context)
-                                                                      .textTheme
-                                                                      .titleSmall!
-                                                                      .merge(
-                                                                          const TextStyle(
-                                                                        fontSize:
-                                                                            16,
-                                                                      )),
-                                                                ),
-                                                              );
-                                                            },
-                                                          ));
-                                                    },
-                                                    onTapDown: (details) async {
-                                                      final offset = details
-                                                          .globalPosition;
-
-                                                      showMenu(
-                                                          context: context,
-                                                          position: RelativeRect
-                                                              .fromLTRB(
-                                                            offset.dx,
-                                                            offset.dy,
-                                                            MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width -
-                                                                offset.dx,
-                                                            MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .height -
-                                                                offset.dy,
-                                                          ),
-                                                          items: List.generate(
-                                                            _plannerDetailsController
-                                                                .statusDrList
-                                                                .length,
-                                                            (i) {
-                                                              return PopupMenuItem(
-                                                                onTap: () {
-                                                                  _plannerDetailsController
-                                                                          .statusEtField[
-                                                                              index]
-                                                                          .text =
-                                                                      _plannerDetailsController
-                                                                          .statusDrList[
-                                                                              i]
-                                                                          .ismmistSStatusName!;
-                                                                  setState(
-                                                                      () {});
-                                                                },
-                                                                child: Text(
-                                                                  _plannerDetailsController
-                                                                      .statusDrList[
-                                                                          i]
-                                                                      .ismmistSStatusName!,
-                                                                  style: Theme.of(
+                                                                      .size
+                                                                      .width -
+                                                                  offset.dx,
+                                                              MediaQuery.of(
                                                                           context)
-                                                                      .textTheme
-                                                                      .titleSmall!
-                                                                      .merge(
-                                                                          const TextStyle(
-                                                                        fontSize:
-                                                                            16,
-                                                                      )),
-                                                                ),
-                                                              );
-                                                            },
-                                                          ));
-                                                    },
-                                                    child: TextField(
-                                                      controller:
-                                                          _plannerDetailsController
-                                                              .statusEtField
-                                                              .elementAt(index),
-                                                      readOnly: true,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .titleSmall!
-                                                          .merge(const TextStyle(
-                                                              fontSize: 16,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w300)),
-                                                      decoration: InputDecoration(
-                                                          suffixIcon:
-                                                              const Icon(Icons
-                                                                  .arrow_drop_down),
-                                                          hintText:
-                                                              "Select status",
-                                                          hintStyle: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .titleSmall!
-                                                              .merge(const TextStyle(
-                                                                  fontSize: 16,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w300)),
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5))),
-                                                    ),
-                                                  ),
-                                                )),
-                                                DataCell(SizedBox(
-                                                  width: 180,
-                                                  child: GestureDetector(
-                                                    onTapDown: (details) async {
-                                                      final offset = details
-                                                          .globalPosition;
-
-                                                      showMenu(
-                                                          context: context,
-                                                          position: RelativeRect
-                                                              .fromLTRB(
-                                                            offset.dx,
-                                                            offset.dy,
-                                                            MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width -
-                                                                offset.dx,
-                                                            MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .height -
-                                                                offset.dy,
-                                                          ),
-                                                          items: List.generate(
-                                                            _plannerDetailsController
-                                                                .depWiseDevitnList
-                                                                .length,
-                                                            (i) {
-                                                              return PopupMenuItem(
-                                                                onTap: () {
-                                                                  _plannerDetailsController
-                                                                          .deveationEtField[
-                                                                              index]
-                                                                          .text =
-                                                                      _plannerDetailsController
-                                                                          .depWiseDevitnList[
-                                                                              i]
-                                                                          .ismdRRemarks!;
-                                                                  setState(
-                                                                      () {});
-                                                                },
-                                                                child: Text(
-                                                                  _plannerDetailsController
-                                                                      .depWiseDevitnList[
-                                                                          i]
-                                                                      .ismdRRemarks!,
-                                                                  style: Theme.of(
+                                                                      .size
+                                                                      .height -
+                                                                  offset.dy,
+                                                            ),
+                                                            items: List.generate(
+                                                              _plannerDetailsController
+                                                                  .statusDrList
+                                                                  .length,
+                                                              (i) {
+                                                                return PopupMenuItem(
+                                                                  onTap: () {
+                                                                    _plannerDetailsController
+                                                                            .statusEtField[
+                                                                                index]
+                                                                            .text =
+                                                                        _plannerDetailsController
+                                                                            .statusDrList[
+                                                                                i]
+                                                                            .ismmistSStatusName!;
+                                                                    setState(
+                                                                        () {});
+                                                                  },
+                                                                  child: Text(
+                                                                    _plannerDetailsController
+                                                                        .statusDrList[
+                                                                            i]
+                                                                        .ismmistSStatusName!,
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .titleSmall!
+                                                                        .merge(
+                                                                            const TextStyle(
+                                                                          fontSize:
+                                                                              16,
+                                                                        )),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ));
+                                                      },
+                                                      onTapDown: (details) async {
+                                                        final offset = details
+                                                            .globalPosition;
+    
+                                                        showMenu(
+                                                            context: context,
+                                                            position: RelativeRect
+                                                                .fromLTRB(
+                                                              offset.dx,
+                                                              offset.dy,
+                                                              MediaQuery.of(
                                                                           context)
-                                                                      .textTheme
-                                                                      .titleSmall!
-                                                                      .merge(
-                                                                          const TextStyle(
-                                                                        fontSize:
-                                                                            16,
-                                                                      )),
-                                                                ),
-                                                              );
-                                                            },
-                                                          ));
-                                                    },
-                                                    child: TextField(
-                                                      controller:
-                                                          _plannerDetailsController
-                                                                  .deveationEtField[
-                                                              index],
-                                                      readOnly: true,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .titleSmall!
-                                                          .merge(const TextStyle(
-                                                              fontSize: 16,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w300)),
-                                                      decoration: InputDecoration(
-                                                          suffixIcon:
-                                                              const Icon(Icons
-                                                                  .arrow_drop_down),
-                                                          hintText:
-                                                              "Select Deviation",
-                                                          hintStyle: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .titleSmall!
-                                                              .merge(const TextStyle(
-                                                                  fontSize: 16,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w300)),
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5))),
+                                                                      .size
+                                                                      .width -
+                                                                  offset.dx,
+                                                              MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .height -
+                                                                  offset.dy,
+                                                            ),
+                                                            items: List.generate(
+                                                              _plannerDetailsController
+                                                                  .statusDrList
+                                                                  .length,
+                                                              (i) {
+                                                                return PopupMenuItem(
+                                                                  onTap: () {
+                                                                    _plannerDetailsController
+                                                                            .statusEtField[
+                                                                                index]
+                                                                            .text =
+                                                                        _plannerDetailsController
+                                                                            .statusDrList[
+                                                                                i]
+                                                                            .ismmistSStatusName!;
+                                                                    setState(
+                                                                        () {});
+                                                                  },
+                                                                  child: Text(
+                                                                    _plannerDetailsController
+                                                                        .statusDrList[
+                                                                            i]
+                                                                        .ismmistSStatusName!,
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .titleSmall!
+                                                                        .merge(
+                                                                            const TextStyle(
+                                                                          fontSize:
+                                                                              16,
+                                                                        )),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ));
+                                                      },
+                                                      child: TextFormField(
+                                                        validator: (value) {
+                                                              
+                                                                if (value!.isEmpty) {
+                                                                  if(selectCheckbox.contains(index)){
+                                                                    return 'Please  select status';
+                                                                  }
+                                                                  
+                                                                }
+                                                              
+                                                                return null;
+                                                              },
+                                                        controller:
+                                                            _plannerDetailsController
+                                                                .statusEtField
+                                                                .elementAt(index),
+                                                        readOnly: true,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall!
+                                                            .merge(const TextStyle(
+                                                                fontSize: 16,
+                                                                color:
+                                                                    Colors.black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300)),
+                                                        decoration: InputDecoration(
+                                                            suffixIcon:
+                                                                const Icon(Icons
+                                                                    .arrow_drop_down),
+                                                            hintText:
+                                                                "Select status",
+                                                            hintStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .titleSmall!
+                                                                .merge(const TextStyle(
+                                                                    fontSize: 16,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w300)),
+                                                            border: OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5))),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ))
-                                              ]);
-                                            }),
-                                          )))))
-                          : const AnimatedProgressWidget(
-                              animationPath: 'assets/json/nodata.json',
-                              title: 'No data available',
-                              desc: " ",
-                            ),
-                    ),
-                  ],
+                                                  )),
+                                                  DataCell(SizedBox(
+                                                    width: 180,
+                                                    child: GestureDetector(
+                                                      onTapDown: (details) async {
+                                                        final offset = details
+                                                            .globalPosition;
+    
+                                                        showMenu(
+                                                            context: context,
+                                                            position: RelativeRect
+                                                                .fromLTRB(
+                                                              offset.dx,
+                                                              offset.dy,
+                                                              MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width -
+                                                                  offset.dx,
+                                                              MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .height -
+                                                                  offset.dy,
+                                                            ),
+                                                            items: List.generate(
+                                                              _plannerDetailsController
+                                                                  .depWiseDevitnList
+                                                                  .length,
+                                                              (i) {
+                                                                return PopupMenuItem(
+                                                                   onTap: () {
+                                                                    _plannerDetailsController
+                                                                            .deveationEtField[
+                                                                                index]
+                                                                            .text =
+                                                                        _plannerDetailsController
+                                                                            .depWiseDevitnList[
+                                                                                i]
+                                                                            .ismdRRemarks!;
+                                                                    setState(
+                                                                        () {});
+                                                                  },
+                                                                  child: Text(
+                                                                    _plannerDetailsController
+                                                                        .depWiseDevitnList[
+                                                                            i]
+                                                                        .ismdRRemarks!,
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .titleSmall!
+                                                                        .merge(
+                                                                            const TextStyle(
+                                                                          fontSize:
+                                                                              16,
+                                                                        )),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ));
+                                                      },
+                                                      child: TextField(
+                                                        controller:
+                                                            _plannerDetailsController
+                                                                    .deveationEtField[
+                                                                index],
+                                                        readOnly: true,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall!
+                                                            .merge(const TextStyle(
+                                                                fontSize: 16,
+                                                                color:
+                                                                    Colors.black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300)),
+                                                        decoration: InputDecoration(
+                                                            suffixIcon:
+                                                                const Icon(Icons
+                                                                    .arrow_drop_down),
+                                                            hintText:
+                                                                "Select Deviation",
+                                                            hintStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .titleSmall!
+                                                                .merge(const TextStyle(
+                                                                    fontSize: 16,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w300)),
+                                                            border: OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5))),
+                                                      ),
+                                                    ),
+                                                  ))
+                                                ]);
+                                              }),
+                                            )))))
+                            : const AnimatedProgressWidget(
+                                animationPath: 'assets/json/nodata.json',
+                                title: 'No data available',
+                                desc: " ",
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+        ),
       ),
     );
   }

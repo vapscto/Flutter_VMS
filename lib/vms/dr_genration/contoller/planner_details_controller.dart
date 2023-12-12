@@ -50,6 +50,7 @@ class PlannerDetails extends GetxController {
   // drnotset list
   RxList<GetdrnotsentdetailsValues> drnotSentdetailsList =
       <GetdrnotsentdetailsValues>[].obs;
+  RxList<TextEditingController> etResponse = <TextEditingController>[].obs;    
   void drNotSend(List<GetdrnotsentdetailsValues> drnotSent) {
     if (drnotSentdetailsList.isNotEmpty) {
       drnotSentdetailsList.clear();
