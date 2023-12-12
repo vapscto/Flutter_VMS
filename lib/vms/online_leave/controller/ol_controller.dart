@@ -51,4 +51,8 @@ class OpetionLeaveController extends GetxController {
       leaveNameList.add(leaveName.elementAt(i));
     }
   }
+
+    String particularLeaveAuthorization = "";
+
+  
 }
