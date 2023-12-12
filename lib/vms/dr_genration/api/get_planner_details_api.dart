@@ -84,9 +84,11 @@ Future<bool> getPlanerdetails({
         controller.etRemark.add(TextEditingController(text: ""));
       }
     }
-    Hrplannerdetails hrplannerdetails =
-        Hrplannerdetails.fromJson(response.data['hrplannerdetails']);
-    controller.hrplannerDetailsList.addAll(hrplannerdetails.values!);
+    if (response.data['hrplannerdetails'] != null) {
+      Hrplannerdetails hrplannerdetails =
+          Hrplannerdetails.fromJson(response.data['hrplannerdetails']);
+      controller.hrplannerDetailsList.addAll(hrplannerdetails.values!);
+    }
     controller.daviationId.value = response.data['deviation_id'];
     GetPlannerDetailsModel getPlannerDetailsModel =
         GetPlannerDetailsModel.fromJson(response.data['getplannerdetails']);

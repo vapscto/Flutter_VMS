@@ -67,7 +67,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         ivrmrtId: widget.loginSuccessModel.roleId!,
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!);
-    _plannerDetailsController.closeTaskCoutnList[0].iSMEDWTCCTaskCount! != 0
+    _plannerDetailsController.closeTaskCoutnList[0].iSMEDWTCCTaskCount! > 0
         ? Get.dialog(
             barrierDismissible: false,
             AlertDialog(
@@ -80,12 +80,26 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                     style: Theme.of(context).textTheme.titleLarge!.merge(
                         TextStyle(color: Theme.of(context).primaryColor)),
                   )),
-              content: Text(
-                "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Close The Completed Task",
-                style: Theme.of(context)
-                    .textTheme
-                    .titleSmall!
-                    .merge(TextStyle(color: Theme.of(context).primaryColor)),
+              content: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task",
+                    style: Theme.of(context).textTheme.titleSmall!.merge(
+                        TextStyle(color: Theme.of(context).primaryColor)),
+                  ),
+                  const SizedBox(height: 16),
+                  TextButton(
+                      onPressed: () {
+                        Get.back();
+                        Get.back();
+                      },
+                      child: Text(
+                        "OK",
+                        style: Get.textTheme.titleMedium!
+                            .copyWith(color: Theme.of(context).primaryColor),
+                      ))
+                ],
               ),
             ))
         : null;

@@ -600,51 +600,54 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                   } else if (subject.text.isEmpty) {
                     Fluttertoast.showToast(msg: "Enter Subject");
                   } else {
-                    logger.i({
-                      "MI_Id": widget.loginSuccessModel.mIID,
-                      "ASMAY_Id": widget.loginSuccessModel.asmaYId,
-                      "UserId": widget.loginSuccessModel.userId,
-                      "Role_flag": "S",
-                      "roletype": widget.loginSuccessModel.roleforlogin,
-                      "IVRMRT_Id": widget.loginSuccessModel.roleId,
-                      "ISMINTR_GroupOrIndFlg":
-                          (staffInteractionComposeController.grpOrInd.value ==
-                                  'Group')
-                              ? "G"
-                              : "I",
-                      "ISMINTR_Subject": subject.text,
-                      "ISMINTR_Interaction": about.text,
-                      "arraymessage":
-                          (staffInteractionComposeController.grpOrInd.value ==
-                                  'Group')
-                              ? arrayStudents
-                              : selectedstaff!.hRMEId
-                    });
                     staffInteractionComposeController.issubmitloading(true);
-                    await submitComposeStaff(
-                      data: {
-                        "MI_Id": widget.loginSuccessModel.mIID,
-                        "ASMAY_Id": widget.loginSuccessModel.asmaYId,
-                        "UserId": widget.loginSuccessModel.userId,
-                        "Role_flag": "S",
-                        "roletype": widget.loginSuccessModel.roleforlogin,
-                        "IVRMRT_Id": widget.loginSuccessModel.roleId,
-                        "ISMINTR_GroupOrIndFlg":
-                            (staffInteractionComposeController.grpOrInd.value ==
-                                    'Group')
-                                ? "G"
-                                : "I",
-                        "ISMINTR_Subject": subject.text,
-                        "ISMINTR_Interaction": about.text,
-                        "arraymessage": arrayStudents
-                      },
-                      base: baseUrlFromInsCode(
-                        'issuemanager',
-                        widget.mskoolController,
-                      ),
-                    ).then((value) {
-                      changeTabAfterCompose(value);
-                    });
+                    if (staffInteractionComposeController.grpOrInd.value ==
+                        'Group') {
+                      await submitComposeStaff(
+                        data: {
+                          "MI_Id": widget.loginSuccessModel.mIID,
+                          "ASMAY_Id": widget.loginSuccessModel.asmaYId,
+                          "UserId": widget.loginSuccessModel.userId,
+                          "Role_flag": "S",
+                          "roletype": widget.loginSuccessModel.roleforlogin,
+                          "IVRMRT_Id": widget.loginSuccessModel.roleId,
+                          "ISMINTR_GroupOrIndFlg": "G",
+                          "ISMINTR_Subject": subject.text,
+                          "ISMINTR_Interaction": about.text,
+                          "arraymessage": arrayStudents
+                        },
+                        base: baseUrlFromInsCode(
+                          'issuemanager',
+                          widget.mskoolController,
+                        ),
+                      ).then((value) {
+                        changeTabAfterCompose(value);
+                      });
+                    } else if (staffInteractionComposeController
+                            .grpOrInd.value ==
+                        'Individual') {
+                      await submitComposeIndivisual(
+                        data: {
+                          "MI_Id": widget.loginSuccessModel.mIID,
+                          "ASMAY_Id": widget.loginSuccessModel.asmaYId,
+                          "UserId": widget.loginSuccessModel.userId,
+                          "Role_flag": "S",
+                          "roletype": "Staff",
+                          "IVRMRT_Id": widget.loginSuccessModel.roleId,
+                          "ISMINTR_GroupOrIndFlg": "I",
+                          "ISMINTR_Subject": subject.text,
+                          "ISMINTR_Interaction": about.text,
+                          "ISMINTRD_ToId": selectedstaff!.hRMEId,
+                        },
+                        base: baseUrlFromInsCode(
+                          'issuemanager',
+                          widget.mskoolController,
+                        ),
+                      ).then((value) {
+                        changeTabAfterCompose(value);
+                      });
+                    }
+
                     staffInteractionComposeController.issubmitloading(false);
                   }
                 },
