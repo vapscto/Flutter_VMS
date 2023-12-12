@@ -3,6 +3,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/interaction/controller/staff_interaction_compose_related_controller.dart';
+import 'package:m_skool_flutter/vms/interaction/model/interaction_list_model.dart';
 import 'package:m_skool_flutter/vms/interaction/model/interaction_staff_list_mode.dart';
 
 var dio = Dio();
@@ -86,6 +87,47 @@ class InteractionStaffListAPI {
         staffInteractionComposeController
             .getStaffList(interactionStaffListModel.values!);
         staffInteractionComposeController.dataLoading(false);
+      }
+    } on DioError catch (e) {
+      logger.e(e.message);
+    } on Exception catch (e) {
+      logger.e(e.toString());
+    }
+  }
+}
+
+class InteractionListAPI {
+  InteractionListAPI.init();
+  static final InteractionListAPI instance = InteractionListAPI.init();
+  getInteractionList(
+      {required String base,
+      required StaffInteractionComposeController
+          staffInteractionComposeController,
+      required int miId,
+      required int asmayId,
+      required int userId,
+      required int irmrtId,
+      required String flag,
+      required int ismintrId}) async {
+    var dio = Dio();
+    var api = base + URLS.interactionAllList;
+    try {
+      staffInteractionComposeController.isgetdetailloading(true);
+      var response =
+          await dio.post(api, options: Options(headers: getSession()), data: {
+        "MI_Id": miId,
+        "ASMAY_Id": asmayId,
+        "UserId": userId,
+        "Role_flag": flag,
+        "IVRMRT_Id": irmrtId,
+        "ISMINTR_Id": ismintrId
+      });
+      if (response.statusCode == 200) {
+        InteractionListModel interactionStaffListModel =
+            InteractionListModel.fromJson(response.data['get_messageDetail']);
+        staffInteractionComposeController
+            .getInteractionList(interactionStaffListModel.values!);
+        staffInteractionComposeController.isgetdetailloading(false);
       }
     } on DioError catch (e) {
       logger.e(e.message);

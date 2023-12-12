@@ -1,15 +1,15 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:m_skool_flutter/vms/interaction/model/interaction_list_model.dart';
 import 'package:m_skool_flutter/vms/interaction/model/interaction_staff_list_mode.dart';
 
 class StaffInteractionComposeController extends GetxController {
-  // RxList<GetdetailsValues> getDetailList = <GetdetailsValues>[].obs;
+  RxList<InteractionListModelValues> getDetailList =
+      <InteractionListModelValues>[].obs;
 
   // RxList<InteractionSectionListValue> interactionSectionList =
   //     <InteractionSectionListValue>[].obs;
-
-  // RxList<GetStudentValue> studentList = <GetStudentValue>[].obs;
 
   RxString selectedradio = ''.obs;
   RxString grpOrInd = 'Individual'.obs;
@@ -93,6 +93,15 @@ class StaffInteractionComposeController extends GetxController {
     }
     for (int index = 0; index < interactionStaff.length; index++) {
       interactionStaffList.add(interactionStaff.elementAt(index));
+    }
+  }
+
+  void getInteractionList(List<InteractionListModelValues> getDetail) {
+    if (getDetailList.isNotEmpty) {
+      getDetailList.clear();
+    }
+    for (int i = 0; i < getDetail.length; i++) {
+      getDetailList.add(getDetail.elementAt(i));
     }
   }
 }

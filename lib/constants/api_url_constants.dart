@@ -640,6 +640,8 @@ class URLS {
   //Interaction VMS
   static String staffList = 'api/ISM_InteractionFacade/getdetails/';
   static String interactionSave = 'api/ISM_InteractionFacade/savedata';
+  static String interactionAllList =
+      'api/ISM_InteractionFacade/get_replydetails';
   // VMS Notification
   static String vMSNotification = 'api/ISM_InteractionFacade/getnotification';
   //dr
