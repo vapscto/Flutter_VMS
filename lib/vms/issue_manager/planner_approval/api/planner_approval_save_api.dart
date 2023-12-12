@@ -19,8 +19,6 @@ class PlannerApprovalSaveAPI {
     required int ismtplId,
     required String remarks,
     required double totalEffort,
-    // required double taskPercentage,
-    // required bool compulsoryFlag,
   }) async {
     var dio = Dio();
     var url = base + URLS.plannerSave;
@@ -37,8 +35,6 @@ class PlannerApprovalSaveAPI {
         "ISMTPLAP_Remarks": remarks,
         "totaleffort": totalEffort,
         "approveplannerArray": plannerList,
-        // "ISMMTCAT_TaskPercentage": taskPercentage,
-        // "ISMMTCAT_CompulsoryFlg": compulsoryFlag
       });
       logger.i({
         "UserId": userId,
@@ -51,8 +47,6 @@ class PlannerApprovalSaveAPI {
         "ISMTPLAP_Remarks": remarks,
         "totaleffort": totalEffort,
         "approveplannerArray": plannerList,
-        // "ISMMTCAT_TaskPercentage": taskPercentage,
-        // "ISMMTCAT_CompulsoryFlg": compulsoryFlag
       });
       logger.i(url);
       if (response.statusCode == 200) {

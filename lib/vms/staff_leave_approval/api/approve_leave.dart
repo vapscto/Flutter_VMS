@@ -22,14 +22,14 @@ class ApproveLeaveApi {
       final Response response =
           await ins.post(api, options: Options(headers: getSession()), data: {
         "HRELAPA_Remarks": remark,
-        "HRELT_Status": status,
+        "status": status,
         "MI_Id": miId,
         "LoginId": loginId,
         "get_leave_status": getLeaveStatus
       });
       logger.i({
         "HRELAPA_Remarks": remark,
-        "HRELT_Status": status,
+        "status": status,
         "MI_Id": miId,
         "LoginId": loginId,
         "get_leave_status": getLeaveStatus
