@@ -31,7 +31,7 @@ class IndentApproval extends StatefulWidget {
 }
 
 class _IndentApprovalState extends State<IndentApproval> {
-  final ValueNotifier<bool?> allSelected = ValueNotifier(false);
+  // final ValueNotifier<bool?> allSelected = ValueNotifier(false);
   final Map<int, bool?> selectedRowsParticular = {};
   Map<int, TextEditingController> textEditingCtrlParticularAmt = {};
   bool dataColumnSelected = false;
@@ -66,16 +66,6 @@ class _IndentApprovalState extends State<IndentApproval> {
       tempRequisitionId.clear();
       indentApprovalController.requisitiondetais.clear();
     });
-  }
-
-  @override
-  void dispose() {
-    indentApprovalController.organizationList.clear();
-    allSelected.dispose();
-    textEditingCtrlParticularAmt.forEach((key, controller) {
-      controller.dispose();
-    });
-    super.dispose();
   }
 
   @override
@@ -1614,6 +1604,20 @@ class _IndentApprovalState extends State<IndentApproval> {
         ),
       );
     });
+  }
+
+  @override
+  void dispose() {
+    indentApprovalController.organizationList.clear();
+    indentApprovalController.requisitiondetais.clear();
+    indentApprovalController.particularRequisitionDetais.clear();
+    selectedRequisitionIds.clear();
+    textEditingCtrlParticularAmt.forEach((key, controller) {
+      controller.dispose();
+    });
+    tempRequisitionId.clear();
+    totalRequestedAmount = 0.0;
+    super.dispose();
   }
 
   void showPopup(String message) {

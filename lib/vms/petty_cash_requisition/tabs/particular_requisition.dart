@@ -142,24 +142,25 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
       // }
 
       if (selectedParticular != null) {
-  // Assume you want to process the first item in the employeeList
-  int index = 0;
+        // Assume you want to process the first item in the employeeList
+        int index = 0;
 
-  if (index >= 0 && index < cashRequisitionController.employeeList.length) {
-    reqDetailsDTOList.add({
-      "PCMPART_Id": selectedParticular.pcmparTId,
-      "PCMPART_ParticularName": selectedParticular.pcmparTParticularName,
-      "PCREQTNDET_Amount": double.parse(amount),
-      "PCREQTNDET_Id": cashRequisitionController.employeeList[index].pcreqtndeTId,
-      "PCREQTNDET_Remarks": remarks,
-    });
-  } else {
-    // Handle index out of range error or other issues
-  }
-} else {
-  // Handle the case when selectedParticular is null
-}
-
+        if (index >= 0 &&
+            index < cashRequisitionController.employeeList.length) {
+          reqDetailsDTOList.add({
+            "PCMPART_Id": selectedParticular.pcmparTId,
+            "PCMPART_ParticularName": selectedParticular.pcmparTParticularName,
+            "PCREQTNDET_Amount": double.parse(amount),
+            "PCREQTNDET_Id":
+                cashRequisitionController.employeeList[index].pcreqtndeTId,
+            "PCREQTNDET_Remarks": remarks,
+          });
+        } else {
+          // Handle index out of range error or other issues
+        }
+      } else {
+        // Handle the case when selectedParticular is null
+      }
     }
 
     print(reqDetailsDTOList.toString());
@@ -1013,9 +1014,10 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                         selectedDepartment = null;
                         selectedEmployee = null;
                         selectDate.clear();
+                        selectedValues.clear();
                         purposeController.clear();
                         reqDetailsDTOList.clear();
-
+                        selectedParticular = null;
                         totalAmountController.clear();
                       });
 
@@ -1071,7 +1073,7 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
     }
     cashRequisitionController.departmentList.clear();
     cashRequisitionController.employeeList.clear();
-    cashRequisitionController.particularsList.clear();
+    // cashRequisitionController.particularsList.clear();
 
     super.dispose();
   }
