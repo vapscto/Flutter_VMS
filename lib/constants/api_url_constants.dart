@@ -318,6 +318,10 @@ class URLS {
       "api/OnlineLeaveApplicationFacade/getonlineLeavestatus";
   static String saveLeave = "api/OnlineLeaveApplicationFacade/save/";
 
+  static String leaveAuthorization =
+  "api/OnlineLeaveApplicationFacade/CheckApprovalAuthorizationMapped/";
+
+
   /* Global Endpoints */
   static String pushNotification = "api/AdmissionCtrl/PushNotificationonload/";
 
