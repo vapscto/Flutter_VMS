@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/online_leave/api/authorization.dart';
+import 'package:m_skool_flutter/vms/online_leave/controller/ol_controller.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/screen/apply_leave.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -23,6 +26,9 @@ class Leaves extends StatefulWidget {
 }
 
 class _LeavesState extends State<Leaves> {
+  final OpetionLeaveController leaveController =
+      Get.put(OpetionLeaveController());
+
   int backgroundColor = -1;
   List<Color> bgColor = [];
   @override
@@ -47,7 +53,7 @@ class _LeavesState extends State<Leaves> {
             }
             bgColor.add(noticeColor.elementAt(backgroundColor));
             return InkWell(
-              onTap: () {
+              onTap: () async {
                 if (widget.leaves.elementAt(index).hrelSCBLeaves == null) {
                   Fluttertoast.showToast(
                       msg:
@@ -61,14 +67,31 @@ class _LeavesState extends State<Leaves> {
                   return;
                 }
 
-                Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return ApplyForLeave(
-                    values: widget.leaves.elementAt(index),
-                    color: bgColor.elementAt(index),
-                    loginSuccessModel: widget.loginSuccessModel,
-                    mskoolController: widget.mskoolController,
-                  );
-                }));
+                await checkAuthorizationLeave(
+                    miId: widget.loginSuccessModel.mIID!,
+                    userId: widget.loginSuccessModel.userId!,
+                    base: baseUrlFromInsCode(
+                      "leave",
+                      widget.mskoolController,
+                    ),
+                    hrmlId: widget.leaves.elementAt(index).hrmLId!,
+                    opetionLeaveController: leaveController);
+
+                if (leaveController.particularLeaveAuthorization ==
+                    "NotMapped") {
+                  showPopup(
+                      "You Can Not Apply This Leave Because Authorized Person Is Not Mapped For Approval, So Contact Administrator / HR");
+                } else {
+                  // ignore: use_build_context_synchronously
+                  Navigator.push(context, MaterialPageRoute(builder: (_) {
+                    return ApplyForLeave(
+                      values: widget.leaves.elementAt(index),
+                      color: bgColor.elementAt(index),
+                      loginSuccessModel: widget.loginSuccessModel,
+                      mskoolController: widget.mskoolController,
+                    );
+                  }));
+                }
               },
               child: LeaveNames(
                 backgroundColor: backgroundColor,
@@ -86,6 +109,27 @@ class _LeavesState extends State<Leaves> {
       ),
     );
   }
+  
+  void showPopup(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
 }
 
 class LeaveNames extends StatelessWidget {
@@ -159,4 +203,5 @@ class LeaveNames extends StatelessWidget {
       )),
     );
   }
+  
 }
