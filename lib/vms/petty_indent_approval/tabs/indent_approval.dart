@@ -352,8 +352,7 @@ class _IndentApprovalState extends State<IndentApproval> {
                                       .fromSelectedDate.value,
                                   firstDate: DateTime(
                                       1000), //DateTime.now().year, 01, 01
-                                  lastDate:
-                                      DateTime.now(),
+                                  lastDate: DateTime.now(),
                                 );
 
                                 if (selectedDT == null) {
@@ -376,6 +375,9 @@ class _IndentApprovalState extends State<IndentApproval> {
                                     indentApprovalController.getapproveddata
                                         .clear();
                                   }
+
+                                  indentApprovalController.requisitiondetais
+                                      .clear();
 
                                   await getPcIndentApproval(
                                       miId: widget.loginSuccessModel.mIID!,
@@ -476,8 +478,7 @@ class _IndentApprovalState extends State<IndentApproval> {
                                       .fromSelectedDate.value,
                                   firstDate: indentApprovalController
                                       .fromSelectedDate.value,
-                                  lastDate:
-                                      DateTime.now(),
+                                  lastDate: DateTime.now(),
                                 );
 
                                 if (selectedDT == null) {
@@ -491,7 +492,8 @@ class _IndentApprovalState extends State<IndentApproval> {
                                   toDate.text = getDate(indentApprovalController
                                       .toSelectedDate.value);
 
-                                  // setState(() {
+                                  indentApprovalController.requisitiondetais
+                                      .clear();
 
                                   await getPcIndentApproval(
                                       miId: widget.loginSuccessModel.mIID!,
@@ -581,6 +583,11 @@ class _IndentApprovalState extends State<IndentApproval> {
                                   setState(() {
                                     if (value != null) {
                                       if (value) {
+                                        
+                                        indentApprovalController.particularRequisitionDetais
+                                      .clear();
+
+                                        // selectedRows.clear();
                                         selectedRows = Set<int>.from(
                                           List.generate(
                                             indentApprovalController
@@ -589,6 +596,8 @@ class _IndentApprovalState extends State<IndentApproval> {
                                           ),
                                         );
                                       } else {
+                                        indentApprovalController.particularRequisitionDetais
+                                      .clear();
                                         selectedRows.clear();
                                       }
 
@@ -611,6 +620,8 @@ class _IndentApprovalState extends State<IndentApproval> {
                                                     .pcreqtNTotAmount ??
                                                 0.0;
                                       }
+
+                                      // selectedRows.clear();
 
                                       particularReqDetails(
                                         tempRequisitionId: tempRequisitionId,
