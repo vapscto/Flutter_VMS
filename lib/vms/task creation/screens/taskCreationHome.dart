@@ -287,6 +287,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     );
   }
 
+  bool selectAll = false;
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -312,16 +314,20 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             if (_titleETController.text.isNotEmpty ||
                                 _descritpionETController.text.isNotEmpty) {
                               if (employeesID.isNotEmpty) {
-                                await loadImages();
+                                if (minutesEt == 0 && hoursEt == 0) {
+                                  Fluttertoast.showToast(
+                                      msg: "Kindly enter effort for the task!");
+                                } else {
+                                  await loadImages();
+                                }
                               } else {
-                                Fluttertoast.showToast(
-                                    msg: " Select Employee ");
+                                Fluttertoast.showToast(msg: "Select Employee");
                               }
                             } else {
-                              Fluttertoast.showToast(msg: " Fill mandatory ");
+                              Fluttertoast.showToast(msg: "Fill mandatory");
                             }
                           } else {
-                            Fluttertoast.showToast(msg: " Select mandatory ");
+                            Fluttertoast.showToast(msg: "Select mandatory");
                           }
                         },
                       ),
@@ -2136,182 +2142,243 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      width: 250,
-                                      height: 210,
-                                      decoration: const BoxDecoration(
-                                        border: Border(
-                                            right: BorderSide(
-                                                width: 1,
-                                                color: Colors.black54),
-                                            bottom: BorderSide(
-                                                width: 1,
-                                                color: Colors.black54)),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5, horizontal: 5),
-                                        child: Column(
-                                          children: [
-                                            SizedBox(
-                                                height: 30,
-                                                width: 200,
-                                                child: TextField(
-                                                  maxLines: 1,
-                                                  controller: serchEmployee,
-                                                  onChanged: (value) {
-                                                    filterEmployees(value);
-                                                  },
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleSmall!
-                                                      .merge(const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w100,
-                                                        fontSize: 12.0,
-                                                        letterSpacing: 0.3,
-                                                        overflow:
-                                                            TextOverflow.clip,
-                                                      )),
-                                                  decoration: InputDecoration(
-                                                      hintText: "Search",
-                                                      helperStyle: Theme.of(
-                                                              context)
-                                                          .textTheme
-                                                          .titleSmall!
-                                                          .merge(
-                                                              const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w100,
-                                                            fontSize: 12.0,
-                                                            letterSpacing: 0.3,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .clip,
-                                                          )),
-                                                      border:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5))),
-                                                )),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            SizedBox(
-                                              width: 240,
-                                              height: 150,
-                                              child: Obx(
-                                                () => ListView.builder(
-                                                  itemCount:
-                                                      taskEmployeeList.length,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 2),
-                                                      child: Container(
-                                                        width: 180,
-                                                        height: 30,
-                                                        child: Row(
-                                                          children: [
-                                                            Checkbox(
-                                                              shape: ContinuousRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10)),
-                                                              activeColor:
-                                                                  const Color
-                                                                          .fromRGBO(
-                                                                      26,
-                                                                      48,
-                                                                      241,
-                                                                      1),
-                                                              value: _taskDepartController
-                                                                      .checkBox[
-                                                                  index],
-                                                              onChanged:
-                                                                  (value) {
-                                                                if (employeesID.contains(
-                                                                    taskEmployeeList[
-                                                                            index]
-                                                                        .hRMEId)) {
-                                                                  employeesID.remove(
-                                                                      taskEmployeeList[
-                                                                              index]
-                                                                          .hRMEId);
-                                                                } else {
-                                                                  employeesID.add(
-                                                                      taskEmployeeList[
-                                                                              index]
-                                                                          .hRMEId!);
-                                                                }
-                                                                setState(() {
-                                                                  _taskDepartController
-                                                                          .checkBox[
-                                                                      index] = value!;
-                                                                });
-                                                              },
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.vertical,
+                                      child: Container(
+                                        width: 250,
+                                        height: 210,
+                                        decoration: const BoxDecoration(
+                                          border: Border(
+                                              right: BorderSide(
+                                                  width: 1,
+                                                  color: Colors.black54),
+                                              bottom: BorderSide(
+                                                  width: 1,
+                                                  color: Colors.black54)),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5, horizontal: 5),
+                                          child: Column(
+                                            children: [
+                                              SizedBox(
+                                                  height: 40,
+                                                  width: 200,
+                                                  child: TextField(
+                                                    maxLines: 1,
+                                                    controller: serchEmployee,
+                                                    onChanged: (value) {
+                                                      filterEmployees(value);
+                                                    },
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall!
+                                                        .merge(const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w100,
+                                                          fontSize: 12.0,
+                                                          letterSpacing: 0.3,
+                                                          overflow:
+                                                              TextOverflow.clip,
+                                                        )),
+                                                    decoration: InputDecoration(
+                                                        hintText: "Search",
+                                                        helperStyle: Theme.of(
+                                                                context)
+                                                            .textTheme
+                                                            .titleSmall!
+                                                            .merge(
+                                                                const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w100,
+                                                              fontSize: 12.0,
+                                                              letterSpacing:
+                                                                  0.3,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .clip,
+                                                            )),
+                                                        border: OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5))),
+                                                  )),
+                                              const SizedBox(
+                                                height: 0,
+                                              ),
+                                              SingleChildScrollView(
+                                                scrollDirection: Axis.vertical,
+                                                child: SizedBox(
+                                                  width: 240,
+                                                  height: 150,
+                                                  child: Obx(
+                                                    () => ListView.builder(
+                                                      itemCount:
+                                                          taskEmployeeList
+                                                                  .length +
+                                                              1,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        if (index == 0) {
+                                                          return Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    vertical:
+                                                                        2),
+                                                            child: Row(
+                                                              children: [
+                                                                Checkbox(
+                                                                  shape:
+                                                                      ContinuousRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            10),
+                                                                  ),
+                                                                  activeColor:
+                                                                      const Color
+                                                                              .fromRGBO(
+                                                                          26,
+                                                                          48,
+                                                                          241,
+                                                                          1),
+                                                                  value:
+                                                                      selectAll,
+                                                                  onChanged:
+                                                                      (value) {
+                                                                    setState(
+                                                                        () {
+                                                                      selectAll =
+                                                                          value!;
+                                                                      if (selectAll) {
+                                                                        employeesID =
+                                                                            List.from(taskEmployeeList.map((employee) =>
+                                                                                employee.hRMEId!));
+                                                                      } else {
+                                                                        employeesID
+                                                                            .clear();
+                                                                      }
+                                                                      _taskDepartController
+                                                                          .checkBox
+                                                                          .assignAll(List.filled(
+                                                                              taskEmployeeList.length,
+                                                                              selectAll));
+                                                                    });
+                                                                  },
+                                                                ),
+                                                                const SizedBox(),
+                                                                const Text(
+                                                                  "All Employees",
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
+                                                              ],
                                                             ),
-                                                            const SizedBox(),
-                                                            SizedBox(
+                                                          );
+                                                        } else {
+                                                          return Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    vertical:
+                                                                        2),
+                                                            child: Container(
                                                               width: 180,
-                                                              child: RichText(
-                                                                  text: TextSpan(
-                                                                      children: [
-                                                                    TextSpan(
-                                                                      text: taskEmployeeList[
-                                                                              index]
-                                                                          .employeeName,
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .titleSmall!
-                                                                          .merge(
-                                                                              const TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                            fontSize:
-                                                                                12.0,
-                                                                            letterSpacing:
-                                                                                0.3,
-                                                                            overflow:
-                                                                                TextOverflow.clip,
-                                                                          )),
+                                                              height: 30,
+                                                              child: Row(
+                                                                children: [
+                                                                  Checkbox(
+                                                                    shape:
+                                                                        ContinuousRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10),
                                                                     ),
-                                                                    TextSpan(
+                                                                    activeColor:
+                                                                        const Color.fromRGBO(
+                                                                            26,
+                                                                            48,
+                                                                            241,
+                                                                            1),
+                                                                    value: _taskDepartController
+                                                                            .checkBox[
+                                                                        index -
+                                                                            1],
+                                                                    onChanged:
+                                                                        (value) {
+                                                                      setState(
+                                                                          () {
+                                                                        _taskDepartController.checkBox[index -
+                                                                                1] =
+                                                                            value!;
+
+                                                                        if (value) {
+                                                                          employeesID
+                                                                              .add(taskEmployeeList[index - 1].hRMEId!);
+                                                                        } else {
+                                                                          employeesID
+                                                                              .remove(taskEmployeeList[index - 1].hRMEId);
+                                                                        }
+
+                                                                        selectAll = _taskDepartController
+                                                                            .checkBox
+                                                                            .every((value) =>
+                                                                                value);
+                                                                      });
+                                                                    },
+                                                                  ),
+                                                                  const SizedBox(),
+                                                                  SizedBox(
+                                                                    width: 180,
+                                                                    child:
+                                                                        RichText(
                                                                       text:
-                                                                          " : ${taskEmployeeList[index].hRMDESDesignationName} ",
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .titleSmall!
-                                                                          .merge(
-                                                                              const TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.w100,
-                                                                            fontSize:
-                                                                                12.0,
-                                                                            letterSpacing:
-                                                                                0.3,
-                                                                            overflow:
-                                                                                TextOverflow.clip,
-                                                                          )),
+                                                                          TextSpan(
+                                                                        children: [
+                                                                          TextSpan(
+                                                                            text:
+                                                                                taskEmployeeList[index - 1].employeeName,
+                                                                            style: Theme.of(context).textTheme.titleSmall!.merge(
+                                                                                  const TextStyle(
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                    fontSize: 12.0,
+                                                                                    letterSpacing: 0.3,
+                                                                                    overflow: TextOverflow.clip,
+                                                                                  ),
+                                                                                ),
+                                                                          ),
+                                                                          TextSpan(
+                                                                            text:
+                                                                                " : ${taskEmployeeList[index - 1].hRMDESDesignationName} ",
+                                                                            style: Theme.of(context).textTheme.titleSmall!.merge(
+                                                                                  const TextStyle(
+                                                                                    fontWeight: FontWeight.w100,
+                                                                                    fontSize: 12.0,
+                                                                                    letterSpacing: 0.3,
+                                                                                    overflow: TextOverflow.clip,
+                                                                                  ),
+                                                                                ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
                                                                     ),
-                                                                  ])),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }
+                                                      },
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
