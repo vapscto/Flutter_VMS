@@ -43,46 +43,50 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
 
   ////*** SAVE VALIDATION ***////
 
-bool validateFields() {
-  if (selectedIndent == null) {
-    Fluttertoast.showToast(msg: "Select an Indent.");
-    return false;
-  }
+  bool validateFields() {
+    if (selectedIndent == null) {
+      Fluttertoast.showToast(msg: "Select an Indent.");
+      return false;
+    }
 
-  if (selectCheckBx!.isEmpty) {
-    Fluttertoast.showToast(msg: "Select at least one checkbox.");
-    return false;
-  }
+    if (selectCheckBx!.isEmpty) {
+      Fluttertoast.showToast(msg: "Select at least one checkbox.");
+      return false;
+    }
 
-  bool showAmountError = false; 
+    bool showAmountError = false;
 
-  for (int index = 0; index < _pcapprovalController.eTapprovalAmount.length; index++) {
-    if (_pcapprovalController.checkList.elementAt(index)) {
-      if (_pcapprovalController.eTapprovalAmount.elementAt(index).text.isEmpty) {
-        showAmountError = true; 
-        break; 
+    for (int index = 0;
+        index < _pcapprovalController.eTapprovalAmount.length;
+        index++) {
+      if (_pcapprovalController.checkList.elementAt(index)) {
+        if (_pcapprovalController.eTapprovalAmount
+            .elementAt(index)
+            .text
+            .isEmpty) {
+          showAmountError = true;
+          break;
+        }
       }
     }
+
+    if (showAmountError) {
+      Fluttertoast.showToast(msg: "Enter an amount for all selected fields.");
+      return false;
+    }
+
+    if (totalAmountController.text.isEmpty) {
+      Fluttertoast.showToast(msg: "Enter a total approved amount.");
+      return false;
+    }
+
+    if (descriptionController.text.isEmpty) {
+      Fluttertoast.showToast(msg: "Enter a description.");
+      return false;
+    }
+
+    return true;
   }
-
-  if (showAmountError) {
-    Fluttertoast.showToast(msg: "Enter an amount for all selected fields.");
-    return false;
-  }
-
-  if (totalAmountController.text.isEmpty) {
-    Fluttertoast.showToast(msg: "Enter a total approved amount.");
-    return false;
-  }
-
-  if (descriptionController.text.isEmpty) {
-    Fluttertoast.showToast(msg: "Enter a description.");
-    return false;
-  }
-
-  return true; 
-}
-
 
   @override
   void initState() {
@@ -287,6 +291,8 @@ bool validateFields() {
                                   _pcapprovalController.pcIndentDetails.clear();
                                 }
 
+                                _pcapprovalController.pcIndentDetails.clear();
+
                                 await getPcIndentApproval(
                                     miId: widget.loginSuccessModel.mIID!,
                                     base: baseUrlFromInsCode("issuemanager",
@@ -397,6 +403,8 @@ bool validateFields() {
                                     _pcapprovalController.toSelectedDate.value);
 
                                 // setState(() {
+
+                                _pcapprovalController.pcIndentDetails.clear();
 
                                 await getPcIndentApproval(
                                     miId: widget.loginSuccessModel.mIID!,
@@ -1029,7 +1037,7 @@ bool validateFields() {
                                                   fontWeight: FontWeight.w700,
                                                   fontSize: 17,
                                                   color: Color.fromARGB(
-                                                  255, 138, 137, 137)),
+                                                      255, 138, 137, 137)),
                                             ),
                                           ),
                                           Text(
@@ -1055,17 +1063,17 @@ bool validateFields() {
                                             child: Container(
                                               padding: const EdgeInsets.all(20),
                                               decoration: BoxDecoration(
-                                                color: const Color.fromARGB(255, 241, 253, 240),
+                                                color: const Color.fromARGB(
+                                                    255, 241, 253, 240),
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                               ),
                                               child: const Text(
                                                 "Calculate",
                                                 style: TextStyle(
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Color.fromARGB(
-                                                            255, 15, 87, 42)
-                                                ),
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Color.fromARGB(
+                                                        255, 15, 87, 42)),
                                               ),
                                             ),
                                           ),
@@ -1078,8 +1086,9 @@ bool validateFields() {
                                                     .width /
                                                 1.6,
                                             decoration: BoxDecoration(
-                                              borderRadius: const BorderRadius.all(
-                                                  Radius.circular(10)),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(10)),
                                               border: Border.all(
                                                   color: const Color.fromARGB(
                                                       255, 211, 211, 211)),
@@ -1118,8 +1127,8 @@ bool validateFields() {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             24.0),
-                                                    color:
-                                                        const Color.fromARGB(255, 241, 253, 240),
+                                                    color: const Color.fromARGB(
+                                                        255, 241, 253, 240),
                                                   ),
                                                   child: Row(
                                                     mainAxisSize:
@@ -1138,8 +1147,12 @@ bool validateFields() {
                                                             .labelMedium!
                                                             .merge(const TextStyle(
                                                                 fontSize: 20.0,
-                                                                color: Color.fromARGB(
-                                                            255, 15, 87, 42))),
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        15,
+                                                                        87,
+                                                                        42))),
                                                       ),
                                                     ],
                                                   ),
@@ -1205,7 +1218,8 @@ bool validateFields() {
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(24.0),
-                                                color: Color.fromARGB(255, 241, 253, 240),
+                                                color: Color.fromARGB(
+                                                    255, 241, 253, 240),
                                               ),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.min,
@@ -1372,8 +1386,9 @@ bool validateFields() {
                                               borderRadius:
                                                   BorderRadius.circular(6),
                                             ),
-                                            backgroundColor: const Color.fromARGB(
-                                                235, 56, 23, 243),
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    235, 56, 23, 243),
                                           ),
                                           onPressed: () async {
                                             if (!validateFields()) {
@@ -1426,12 +1441,19 @@ bool validateFields() {
                                                 isLoading = false;
                                                 // _pcapprovalController.eTapprovalAmount.clear();
                                                 descriptionController.clear();
-                                                
-                                                _pcapprovalController.pcIndentDetails.clear();
-                                                _pcapprovalController.particularIndentDetails.clear();
+
                                                 _pcapprovalController
-                                                                  .eTapprovalAmount.clear();
-                                                                  _pcapprovalController.pcIndentDetails.clear();
+                                                    .pcIndentDetails
+                                                    .clear();
+                                                _pcapprovalController
+                                                    .particularIndentDetails
+                                                    .clear();
+                                                _pcapprovalController
+                                                    .eTapprovalAmount
+                                                    .clear();
+                                                _pcapprovalController
+                                                    .pcIndentDetails
+                                                    .clear();
                                                 selectedIndent == null;
                                                 selectCheckBx!.clear();
                                                 totalAmountController.clear();
@@ -1453,8 +1475,7 @@ bool validateFields() {
                                                   ),
                                                 )
                                               : const Padding(
-                                                  padding:
-                                                      EdgeInsets.only(
+                                                  padding: EdgeInsets.only(
                                                     top: 13.0,
                                                     bottom: 13,
                                                     left: 14,

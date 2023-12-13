@@ -260,6 +260,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
         tadaApplyController: tadaApplyController);
     getStateList();
     tadaApplyController.editData(false);
+    Get.back();
   }
 
   @override

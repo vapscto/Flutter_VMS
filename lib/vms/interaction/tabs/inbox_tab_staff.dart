@@ -85,8 +85,8 @@ class _InboxTabStaffState extends State<InboxTabStaff> {
                         ismintId: value.iSMINTRId!,
                         istintId: 0,
                         hrmeId: value.iSMINTRComposedByHRMEId!,
-                        sender: value.sender!,
-                        receiver: value.receiver!,
+                        sender: value.sender ?? '',
+                        receiver: value.receiver ?? '',
                         isGroup:
                             value.iSMINTRGroupOrIndFlg == "G" ? true : false,
                         getInboxFunction: getInboxData,

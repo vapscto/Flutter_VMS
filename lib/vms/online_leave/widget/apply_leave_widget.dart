@@ -63,6 +63,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
     super.initState();
   }
 
+  var newDate = '';
   olLoad() async {
     await getOptionalLeave(
         asmayId: widget.loginSuccessModel.asmaYId!,
@@ -114,7 +115,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
       } else if (widget.values.hrmLWhenToApplyFlg == "Before") {
         initialDt = currentDate.add(Duration(days: min));
         firstDt = currentDate.add(Duration(days: min));
-        lastDt = currentDate.add(Duration(days: max));
+        lastDt = currentDate.add(Duration(days: max + min));
       }
       //Sick Leave
     } else if (widget.values.hrmLLeaveName == "Sick Leave") {
@@ -136,7 +137,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
       } else if (widget.values.hrmLWhenToApplyFlg == "Before") {
         initialDt = currentDate.add(Duration(days: min));
         firstDt = currentDate.add(Duration(days: min));
-        lastDt = currentDate.add(Duration(days: max));
+        lastDt = currentDate.add(Duration(days: max + min));
       }
     } else if (widget.values.hrmLLeaveName == "Comp off") {
       if (widget.values.hrmLWhenToApplyFlg == "Both") {
@@ -157,7 +158,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
       } else if (widget.values.hrmLWhenToApplyFlg == "Before") {
         initialDt = currentDate.add(Duration(days: min));
         firstDt = currentDate.add(Duration(days: min));
-        lastDt = currentDate.add(Duration(days: max));
+        lastDt = currentDate.add(Duration(days: max + min));
       }
     } else if (widget.values.hrmLLeaveName == "Emergency Leave") {
       if (widget.values.hrmLWhenToApplyFlg == "Both") {
@@ -178,7 +179,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
       } else if (widget.values.hrmLWhenToApplyFlg == "Before") {
         initialDt = currentDate.add(Duration(days: min));
         firstDt = currentDate.add(Duration(days: min));
-        lastDt = currentDate.add(Duration(days: max));
+        lastDt = currentDate.add(Duration(days: max + min));
       }
     } else if (widget.values.hrmLLeaveName == "Optional Leave") {
       if (widget.values.hrmLWhenToApplyFlg == "Both") {
@@ -451,103 +452,72 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                               controllerOL
                                                   .optionalLeaveList.length;
                                           i++) {
-                                        logger.i(controllerOL
+                                        newDate = controllerOL
                                             .optionalLeaveList[i]
-                                            .fOMHWDDFromDate);
-                                        logger.e(
-                                            "${date.year}-${date.month}-${date.day}T00:00:00");
-
-                                        if (controllerOL.optionalLeaveList[i]
-                                                .fOMHWDDFromDate ==
-                                            "${date.year}-${date.month}-${date.day}T00:00:00") {
-                                        } else {
-                                          Get.back();
-                                          // ignore: use_build_context_synchronously
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return AlertDialog(
-                                                shape:
-                                                    ContinuousRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20)),
-                                                content: SizedBox(
-                                                  height: 200,
-                                                  child: Center(
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                              " Selected Date Is ",
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .titleMedium!
-                                                                  .merge(const TextStyle(
-                                                                      fontSize:
-                                                                          24,
-                                                                      color: Color.fromARGB(
-                                                                          255,
-                                                                          7,
-                                                                          85,
-                                                                          255)))),
-                                                          Text(
-                                                              " Not Have Optional ",
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .titleMedium!
-                                                                  .merge(const TextStyle(
-                                                                      fontSize:
-                                                                          24,
-                                                                      color: Color.fromARGB(
-                                                                          255,
-                                                                          7,
-                                                                          85,
-                                                                          255)))),
-                                                          Text(" Holiday ",
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .titleMedium!
-                                                                  .merge(const TextStyle(
-                                                                      fontSize:
-                                                                          24,
-                                                                      color: Color.fromARGB(
-                                                                          255,
-                                                                          7,
-                                                                          85,
-                                                                          255)))),
-                                                          const SizedBox(
-                                                            height: 20,
-                                                          ),
-                                                          MSkollBtn(
-                                                            title: " OK ",
-                                                            onPress: () {
-                                                              startDate.clear();
-                                                              endDate.clear();
-                                                              Get.back();
-                                                            },
-                                                          )
-                                                        ],
-                                                      ),
+                                            .fOMHWDDFromDate!;
+                                      }
+                                      if (newDate.contains(
+                                          "${date.year}-${date.month}-${date.day}T00:00:00")) {
+                                      } else {
+                                        // Get.back();
+                                        // ignore: use_build_context_synchronously
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              shape: ContinuousRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              content: SizedBox(
+                                                height: 150,
+                                                child: Center(
+                                                  child: Align(
+                                                    alignment: Alignment.center,
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                            " Selected Date Is  Not Have Optional Holiday",
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .titleMedium!
+                                                                .merge(const TextStyle(
+                                                                    fontSize:
+                                                                        24,
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            7,
+                                                                            85,
+                                                                            255)))),
+                                                        const SizedBox(
+                                                          height: 20,
+                                                        ),
+                                                        MSkollBtn(
+                                                          title: " OK ",
+                                                          onPress: () {
+                                                            startDate.clear();
+                                                            endDate.clear();
+                                                            Get.back();
+                                                          },
+                                                        )
+                                                      ],
                                                     ),
                                                   ),
                                                 ),
-                                              );
-                                            },
-                                          );
-                                        }
+                                              ),
+                                            );
+                                          },
+                                        );
                                       }
+
                                       // } else if (widget.values.hrmLLeaveName ==
                                       //     "Sick Leave") {
                                       //   initialDt2 = initialDt;
@@ -644,12 +614,10 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                     //second
                                     DateTime? end = await showDatePickerLeave(
                                       context: context,
-                                      initialDate: initialDt,
-                                      firstDate: firstDt,
+                                      initialDate: startDT,
+                                      firstDate: startDT,
                                       lastDate: lastDt,
                                       selectableDayPredicate: (DateTime date) {
-                                        Duration difference =
-                                            endDT.difference(startDT);
                                         if (widget.values.hrmLLeaveName ==
                                             "Casual Leave") {
                                           return true;
@@ -673,8 +641,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                         endDT.difference(startDT);
                                     totalDay.value = "${difference.inDays + 1}";
                                     double count1 =
-                                        widget.values.hrmLNoOfDays!.toDouble() +
-                                            int.tryParse(totalDay.value)!;
+                                        // widget.values.hrmLNoOfDays!.toDouble() +
+                                        double.tryParse(totalDay.value)!;
                                     if (widget.values.hrmLLeaveName ==
                                         'Privilege Leave') {
                                       if ((difference.inDays + 1) < 4 &&
@@ -743,8 +711,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                       }
                                     }
                                     if (count1 >
-                                        widget.values.hrelSTotalLeaves!
-                                                .toInt() +
+                                        widget.values.hrelSCBLeaves!.toInt() +
                                             addleave) {
                                       logger.i(true);
                                       // ignore: use_build_context_synchronously

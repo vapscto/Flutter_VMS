@@ -91,12 +91,17 @@ Future<bool> getPlanerdetails({
       controller.hrplannerDetailsList.addAll(hrplannerdetails.values!);
     }
     controller.daviationId.value = response.data['deviation_id'];
-    GetPlannerDetailsModel getPlannerDetailsModel =
-        GetPlannerDetailsModel.fromJson(response.data['getplannerdetails']);
-    controller.getPlannerData(getPlannerDetailsModel.values!);
-    AdvanceApplyModel advanceApplyModel =
-        AdvanceApplyModel.fromJson(response.data['adavanceList']);
-    controller.getAdvanceApply(advanceApplyModel.values!);
+    if (response.data['getplannerdetails'] != null) {
+      GetPlannerDetailsModel getPlannerDetailsModel =
+          GetPlannerDetailsModel.fromJson(response.data['getplannerdetails']);
+      controller.getPlannerData(getPlannerDetailsModel.values!);
+    }
+
+    if (response.data['adavanceList'] != null) {
+      AdvanceApplyModel advanceApplyModel =
+          AdvanceApplyModel.fromJson(response.data['adavanceList']);
+      controller.getAdvanceApply(advanceApplyModel.values!);
+    }
 
     controller.updatePlannerDeatails(false);
     return true;

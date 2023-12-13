@@ -30,6 +30,24 @@ class TadaSaveApi {
     required int userId,
     required int miId,
   }) async {
+    logger.i({
+      "UserId": userId,
+      "MI_Id": miId,
+      "IVRMMCT_Id": ctId,
+      "VTADAA_FromDate": fromDate,
+      "VTADAA_ToDate": toDate,
+      "VTADAA_ClientId": clintId,
+      "VTADAA_TotalAppliedAmount": totalAppliedAmount,
+      "VTADAA_ToAddress": toAddress,
+      "VTADAA_Remarks": remarks,
+      "AllowenceArray": allowanceArray,
+      "VTADAAA_Id": vtadaaaId,
+      "VTADAA_Id": vtadaaId,
+      "VTADAA_DepartureTime": departureTime,
+      "VTADAA_ArrivalTime": arrivalTime,
+      // "vtadaaA_ClientMultiple": clintMultiple,
+      "filelist": fileList
+    });
     var dio = Dio();
     var url = base + URLS.applyTada;
     try {
@@ -56,24 +74,7 @@ class TadaSaveApi {
         // "vtadaaA_ClientMultiple": clintMultiple,
         "filelist": fileList
       });
-      logger.i({
-        "UserId": userId,
-        "MI_Id": miId,
-        "IVRMMCT_Id": ctId,
-        "VTADAA_FromDate": fromDate,
-        "VTADAA_ToDate": toDate,
-        "VTADAA_ClientId": clintId,
-        "VTADAA_TotalAppliedAmount": totalAppliedAmount,
-        "VTADAA_ToAddress": toAddress,
-        "VTADAA_Remarks": remarks,
-        "AllowenceArray": allowanceArray,
-        "VTADAAA_Id": vtadaaaId,
-        "VTADAA_Id": vtadaaId,
-        "VTADAA_DepartureTime": departureTime,
-        "VTADAA_ArrivalTime": arrivalTime,
-        // "vtadaaA_ClientMultiple": clintMultiple,
-        "filelist": fileList
-      });
+
       logger.i(url);
       logger.i(response.data);
       logger.i(response.statusCode);

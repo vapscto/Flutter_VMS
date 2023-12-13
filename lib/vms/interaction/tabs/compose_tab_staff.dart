@@ -5,7 +5,6 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/student/interaction/apis/messaging_api.dart';
 import 'package:m_skool_flutter/vms/interaction/api/staff_interaction_compose_related_api.dart';
 import 'package:m_skool_flutter/vms/interaction/controller/staff_interaction_compose_related_controller.dart';
 import 'package:m_skool_flutter/vms/interaction/model/interaction_staff_list_mode.dart';
@@ -68,14 +67,14 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
     Fluttertoast.showToast(msg: 'Something went wrong');
   }
 
-  Future<void> documentToNetworkUrl(String filePath) async {
-    var document = await jpgToNetworkImageUrl(
-        base: baseUrlFromInsCode('login', widget.mskoolController),
-        image: filePath,
-        miId: widget.loginSuccessModel.mIID!);
+  // Future<void> documentToNetworkUrl(String filePath) async {
+  //   var document = await jpgToNetworkImageUrl(
+  //       base: baseUrlFromInsCode('login', widget.mskoolController),
+  //       image: filePath,
+  //       miId: widget.loginSuccessModel.mIID!);
 
-    attachment.add(document!);
-  }
+  //   attachment.add(document!);
+  // }
 
   _gettaffList() async {
     staffInteractionComposeController.dataLoading(true);

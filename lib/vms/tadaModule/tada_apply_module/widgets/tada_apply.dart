@@ -417,8 +417,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         allowanceArray: allowanceData,
         tadaApplyController: tadaApplyDataController,
         fileList: uploadArray,
-        vtadaaId: (tadaApplyDataController.getSavedData.isNotEmpty)
-            ? tadaApplyDataController.getSavedData.first.vtadaAId!
+        vtadaaId: (tadaApplyDataController.tadaSavedData.isNotEmpty)
+            ? tadaApplyDataController.tadaSavedData.first.vtadaaAId!
             : 0);
 
     tadaApplyDataController.saveData(false);

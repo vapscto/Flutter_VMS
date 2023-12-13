@@ -15,7 +15,6 @@ class OpetionLeaveController extends GetxController {
     }
     for (int i = 0; i < optionalLeave.length; i++) {
       optionalLeaveList.add(optionalLeave.elementAt(i));
-      logger.i(optionalLeaveList.first.fOMHWDDFromDate);
     }
   }
 
@@ -63,7 +62,5 @@ class OpetionLeaveController extends GetxController {
     }
   }
 
-    String particularLeaveAuthorization = "";
-
-  
+  String particularLeaveAuthorization = "";
 }
