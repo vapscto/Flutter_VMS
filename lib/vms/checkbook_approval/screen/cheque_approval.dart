@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -8,15 +9,18 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/api/approveChequeBook.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/api/fetchCompaniesList.dart';
+import 'package:m_skool_flutter/vms/checkbook_approval/api/otp_fetch.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/api/updateCheck.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/controller/cheque_controller.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/controller/detailed_todo_controller.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/model/company_model.dart';
+import 'package:m_skool_flutter/vms/checkbook_approval/widget/otp_screen.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/controller/dr_details_ctrlr.dart';
 import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class ChequeApproval extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -45,7 +49,6 @@ class _ChequeApprovalState extends State<ChequeApproval> {
   void initState() {
     super.initState();
     load();
-   
   }
 
   load() async {
@@ -90,10 +93,10 @@ class _ChequeApprovalState extends State<ChequeApproval> {
     }
     loadingCntrl.updateTabLoading(false);
     setState(() {
-        _controller.getTaDaModelList.clear();
-      });
-    }
-   
+      _controller.getTaDaModelList.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -319,8 +322,9 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                               alignment: Alignment.center,
                                               child: SizedBox(
                                                 child: Checkbox(
-                                                  activeColor:const Color.fromRGBO(
-                                                      0, 4, 250, 0.898),
+                                                  activeColor:
+                                                      const Color.fromRGBO(
+                                                          0, 4, 250, 0.898),
                                                   shape:
                                                       ContinuousRectangleBorder(
                                                           borderRadius:
@@ -530,7 +534,8 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                         ? SizedBox()
                                                         : Checkbox(
                                                             activeColor:
-                                                            const    Color.fromRGBO(
+                                                                const Color
+                                                                        .fromRGBO(
                                                                     0,
                                                                     4,
                                                                     250,
@@ -608,8 +613,11 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                     width: 40,
                                                     child: Radio(
                                                       focusColor:
-                                                      const    Color.fromARGB(255,
-                                                                  182, 180, 180)
+                                                          const Color.fromARGB(
+                                                                  255,
+                                                                  182,
+                                                                  180,
+                                                                  180)
                                                               .withOpacity(.1),
                                                       activeColor:
                                                           Theme.of(context)
@@ -748,26 +756,26 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                             //b3
                                             DataCell(
                                               Padding(
-                                                padding: const EdgeInsets
-                                                    .symmetric(vertical: 8.0),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 8.0),
                                                 child: TextFormField(
-                                                  decoration:const InputDecoration(
-                                                    border:  InputBorder.none
-                                                  ),
+                                                  decoration:
+                                                      const InputDecoration(
+                                                          border:
+                                                              InputBorder.none),
                                                   validator: (value) {
-                                                    if (selectCheckBox
-                                                        .contains(_controller
+                                                    if (selectCheckBox.contains(
+                                                        _controller
                                                             .getTaDaModelList
                                                             .indexOf(_controller
                                                                 .getTaDaModelList
                                                                 .elementAt(
                                                                     index)))) {
-                                                      if (double.parse(
-                                                              value!) >
+                                                      if (double.parse(value!) >
                                                           double.parse(_controller
                                                               .getTaDaModelList
-                                                              .elementAt(
-                                                                  index)
+                                                              .elementAt(index)
                                                               .vPAYVOUAppliedAmount
                                                               .toString())) {
                                                         return "Amount is greater than";
@@ -800,11 +808,12 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                             DataCell(
                                               SizedBox(
                                                 width: 150,
-                                               
                                                 child: TextField(
                                                   maxLines: 3,
-                                                  decoration:const InputDecoration(
-                                                      border: InputBorder.none),
+                                                  decoration:
+                                                      const InputDecoration(
+                                                          border:
+                                                              InputBorder.none),
                                                   controller: _controller
                                                       .tEControllerListOfNarration
                                                       .elementAt(index),
@@ -828,12 +837,14 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                               SizedBox(
                                                 width: 150,
                                                 child: Padding(
-                                                  padding: const EdgeInsets.all(8.0),
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
                                                   child: TextField(
                                                     maxLines: 3,
-                                                     decoration: const InputDecoration(
-                                                      border: OutlineInputBorder()
-                                                     ),
+                                                    decoration:
+                                                        const InputDecoration(
+                                                            border:
+                                                                OutlineInputBorder()),
                                                     controller: _controller
                                                         .tEControllerListOfApprovalRemark
                                                         .elementAt(index),
@@ -861,6 +872,94 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                 ),
                               ),
                             ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Obx(
+                                  () => Visibility(
+                                    visible: _chequeController.updateBtn.isTrue,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: MSkollBtn(
+                                        title: " Submit ",
+                                        onPress: () {},
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Obx(
+                                  () => Visibility(
+                                    visible:
+                                        _chequeController.updateBtn.isFalse,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: MSkollBtn(
+                                        title: "Send Otp",
+                                        onPress: () async {
+                                          Random randomOtp = Random.secure();
+                                          int otps = randomOtp.nextInt(999999);
+                                          if(otps.toString().characters.length>5){
+                                              await otpCheck(
+                                                  base: baseUrlFromInsCode(
+                                                      "issuemanager",
+                                                      widget.mskoolController),
+                                                  mi_id: mid!,
+                                                  otp: otps,
+                                                  userId: widget
+                                                      .loginSuccessModel
+                                                      .userId!,
+                                                  controller: _chequeController)
+                                              .then(
+                                            (value) {
+                                              if (value) {
+                                                showDialog(
+                                                  barrierDismissible: false,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog(
+                                                      content: Container(
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height /
+                                                              2,
+                                                          child: OTpScreen(
+                                                              loginSuccessModel:
+                                                                  widget
+                                                                      .loginSuccessModel,
+                                                              mskoolController:
+                                                                  widget
+                                                                      .mskoolController,
+                                                              chequeController:
+                                                                  _chequeController,
+                                                              cmpnymiId: mid)),
+                                                    );
+                                                  },
+                                                );
+                                              } else {
+                                                Fluttertoast.showToast(
+                                                    msg: "Failed send otp");
+                                              }
+                                            },
+                                          );
+                                          }else{
+                                            Fluttertoast.showToast(
+                                                    msg: "Failed send otp");
+                                          }
+                                         
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
                           ],
                         ),
                       )

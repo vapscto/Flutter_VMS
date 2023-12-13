@@ -198,7 +198,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                     child: CustomContainer(
                       child: TextField(
                         controller: controller,
-                        readOnly: true,
+                        readOnly: false,
                         style: Theme.of(context).textTheme.titleSmall!.merge(
                               TextStyle(
                                   fontSize: 16,

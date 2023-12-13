@@ -93,7 +93,7 @@ dependencies:
   text_scroll: ^0.2.0
   location: ^4.3.0
   syncfusion_flutter_pdfviewer:
-
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

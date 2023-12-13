@@ -653,4 +653,6 @@ class URLS {
       'api/ISM_DailyReportGenerationFacade/generatedailyreport';
   static String drNotSave =
       'api/ISM_DailyReportGenerationFacade/SaveDRNotSentRemarks';
+
+  static String OtpCheck="api/CheckBookEntryFacade/geterifyEmail/";
 }
