@@ -641,8 +641,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                         endDT.difference(startDT);
                                     totalDay.value = "${difference.inDays + 1}";
                                     double count1 =
-                                        widget.values.hrmLNoOfDays!.toDouble() +
-                                            int.tryParse(totalDay.value)!;
+                                        // widget.values.hrmLNoOfDays!.toDouble() +
+                                        double.tryParse(totalDay.value)!;
                                     if (widget.values.hrmLLeaveName ==
                                         'Privilege Leave') {
                                       if ((difference.inDays + 1) < 4 &&
