@@ -357,7 +357,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                           if (selectCheckbox.isNotEmpty) {
                             saveDaetails();
                           } else {
-                            Fluttertoast.showToast(msg: "Select Check Box to Generate Daily Report");
+                            Fluttertoast.showToast(
+                                msg:
+                                    "Select Check Box to Generate Daily Report");
                           }
                         } else {
                           logger.w("show damit");
@@ -913,6 +915,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                   endDt =
                                                       "${newDt.day}-${newDt.month}-${newDt.year}";
                                                 }
+                                                DateTime endNewDate =
+                                                    DateTime.parse(fliteresList
+                                                        .elementAt(index)
+                                                        .iSMTPLEndDate!);
                                                 DateTime currentDt =
                                                     DateTime.now();
                                                 DateTime previousDt =
@@ -1726,21 +1732,22 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             ));
                                                       },
                                                       child: TextFormField(
-                                                        validator:
-                                                            (deviation == false)
-                                                                ? (value) {
-                                                                    if (value!
-                                                                        .isEmpty) {
-                                                                      if (selectCheckbox
-                                                                          .contains(
-                                                                              index)) {
-                                                                        return 'Please  select Deviation';
-                                                                      }
-                                                                    }
+                                                        // validator: (currentDt
+                                                        //             .day <
+                                                        //         endNewDate.day)
+                                                        //     ? (value) {
+                                                        //         if (value!
+                                                        //             .isEmpty) {
+                                                        //           if (selectCheckbox
+                                                        //               .contains(
+                                                        //                   index)) {
+                                                        //             return 'Please  select Deviation';
+                                                        //           }
+                                                        //         }
 
-                                                                    return null;
-                                                                  }
-                                                                : null,
+                                                        //         return null;
+                                                        //       }
+                                                        //     : null,
                                                         controller:
                                                             _plannerDetailsController
                                                                     .deveationEtField[
