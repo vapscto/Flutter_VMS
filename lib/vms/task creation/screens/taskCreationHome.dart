@@ -311,20 +311,28 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                         title: 'Submit',
                         onPress: () async {
                           if (_formKey.currentState!.validate()) {
-                            if (_titleETController.text.isNotEmpty ||
-                                _descritpionETController.text.isNotEmpty) {
-                              if (employeesID.isNotEmpty) {
-                                if (minutesEt == 0 && hoursEt == 0) {
-                                  Fluttertoast.showToast(
-                                      msg: "Kindly enter effort for the task!");
-                                } else {
-                                  await loadImages();
-                                }
-                              } else {
+                            if (_taskDepartController.taskAssingn.value ==
+                                'Y') {
+                              if (selectFromDate.text.isEmpty) {
+                                Fluttertoast.showToast(msg: "Select From Date");
+                                return;
+                              } else if (selectToDate.text.isEmpty) {
+                                Fluttertoast.showToast(msg: "Select To Date");
+                                return;
+                              } else if (hoursEt.text == "0" &&
+                                  minutesEt.text == "0") {
+                                Fluttertoast.showToast(msg: "Enter Time");
+                                return;
+                              } else if (employeesID.isEmpty) {
                                 Fluttertoast.showToast(msg: "Select Employee");
+                                return;
+                              } else {
+                                await loadImages();
                               }
-                            } else {
-                              Fluttertoast.showToast(msg: "Fill mandatory");
+                            } else if (_taskDepartController
+                                    .taskAssingn.value ==
+                                'N') {
+                              await loadImages();
                             }
                           } else {
                             Fluttertoast.showToast(msg: "Select mandatory");
@@ -365,7 +373,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                       )
                     : Container(
                         margin: const EdgeInsets.only(
-                            top: 40, left: 16, right: 16, bottom: 16),
+                            top: 30, left: 16, right: 16, bottom: 16),
                         decoration: BoxDecoration(
                           color: Theme.of(context).scaffoldBackgroundColor,
                           borderRadius: BorderRadius.circular(16.0),
@@ -442,7 +450,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                       .titleSmall!
                                       .merge(const TextStyle(
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 12.0,
+                                          fontSize: 13.0,
                                           letterSpacing: 0.3)),
                                 ),
                               ),
@@ -684,7 +692,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 13, left: 5),
                               child: SizedBox(
-                                width: 280,
+                                width: MediaQuery.of(context).size.width * 0.7,
                                 child: Text(
                                   overflow: TextOverflow.clip,
                                   _taskClientModuleCntroller
@@ -796,7 +804,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 13, left: 5),
                             child: SizedBox(
-                              width: 280,
+                              width: MediaQuery.of(context).size.width * 0.7,
                               child: Text(
                                 overflow: TextOverflow.clip,
                                 _taskProjectsController
@@ -825,6 +833,12 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: TextFormField(
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Enter Task Title';
+                  }
+                  return null;
+                },
                 maxLines: 6,
                 style: Theme.of(context)
                     .textTheme
@@ -855,6 +869,12 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: TextFormField(
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Enter Task Description';
+                  }
+                  return null;
+                },
                 maxLines: 6,
                 style: Theme.of(context)
                     .textTheme
@@ -969,7 +989,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 13, left: 5),
                               child: SizedBox(
-                                width: 280,
+                                width: MediaQuery.of(context).size.width * 0.7,
                                 child: Text(
                                   overflow: TextOverflow.clip,
                                   _taskClientModuleCntroller
@@ -1996,8 +2016,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                         ),
                                                       ),
                                                     ),
-                                                    hintText:
-                                                        "Select From Date",
+                                                    hintText: "Select To Date",
                                                     hintStyle: Theme.of(context)
                                                         .textTheme
                                                         .titleSmall!

@@ -17,7 +17,7 @@ Future<bool> saveTask({
   required typeAssign,
   required String base,
   required TaskDepartController controller,
-  required  DrDetailsCtrlr controllerLoading,
+  required DrDetailsCtrlr controllerLoading,
   required Map<String, dynamic> trnsNumConfig,
   required int miId,
   required int userID,
@@ -52,150 +52,149 @@ Future<bool> saveTask({
 }) async {
   final Dio ins = getGlobalDio();
   var dataMap;
-  final String apiUrl = base+URLS.saveTaskCreation;
+  final String apiUrl = base + URLS.saveTaskCreation;
   List<Map<String, dynamic>> att = [];
   List<UploadHwCwModel> uploadAttachment = [];
-   logger.d(apiUrl);
-   
+  logger.d(apiUrl);
+
   for (var element in controller.addListBrowser) {
-    if(element.FileName==""){
-    print("File not exist");
-    }else{
-    try {
-      uploadAttachment
-          .add(await uploadAtt(miId: miId, file: File(element.file!.path)));
-    } catch (e) {
-      return Future.error({
-        "errorTitle": "An Error Occured",
-        "errorMsg": "While trying to upload attchement, we encountered an error"
-      });
+    if (element.FileName == "") {
+      print("File not exist");
+    } else {
+      try {
+        uploadAttachment
+            .add(await uploadAtt(miId: miId, file: File(element.file!.path)));
+      } catch (e) {
+        return Future.error({
+          "errorTitle": "An Error Occured",
+          "errorMsg":
+              "While trying to upload attchement, we encountered an error"
+        });
+      }
     }
-    }
-    
   }
   for (var element in uploadAttachment) {
     att.add(
         {"ISMTCRAT_Attatchment": element.path, "ISMTCRAT_File": element.name});
   }
   if (typeAssign == "Y") {
-    if(periodicity =="Daily"){
+    if (periodicity == "Daily") {
       print("001");
- dataMap = {
-    "transnumbconfigurationsettingsss": trnsNumConfig ,
-    "UserId": userID,
-    "Role_flag": "S",
-    "roletype": roletype,
-    "IVRMRT_Id": ivrmrtId,
-    "plannerextapproval": false,
-    "plannerMaxdate": "0001-01-01T00:00:00",
-    "MI_Id": miId,
-    "HRME_Id": hrme,
-    "ASMAY_Id": academicYear,
-    "HRMD_Id": HRMD_Id,
-    "HRMDC_ID": null,
-    "ISMMPR_Id": ISMMPR_Id,
-    "IVRMM_Id": IVRMM_Id,
-    "ISMTCR_BugOREnhancementFlg": ISMTCR_BugOREnhancementFlg,
-    "assignto": assignto,
-    "ISMTCR_CreationDate": ISMTCR_CreationDate,
-    "ISMTCR_Title": ISMTCR_Title,
-    "HRMPR_Id": HRMPR_Id,
-    "ISMMTCAT_Id":ISMMTCAT_Id,
-    "ISMTCR_Desc": ISMTCR_Desc,
-    "ISMTCR_Status": "Open",
-    "ISMTCRCL_Id": 0,
-    "ISMMCLT_Id": ISMMCLT_Id,
-    "TimeRequiredFlg": "HOURS",
-    "attachmentArray":  att,
-    "effortinhrs": effortinhrs,
-    "enddate":  enddate,
-    "periodicity":periodicity,
-    "remarks": remarks,
-    "startdate": startdate,
-    "taskEmpArray":  taskEmpArray
-    };
-    }else{
+      dataMap = {
+        "transnumbconfigurationsettingsss": trnsNumConfig,
+        "UserId": userID,
+        "Role_flag": "S",
+        "roletype": roletype,
+        "IVRMRT_Id": ivrmrtId,
+        "plannerextapproval": false,
+        "plannerMaxdate": "0001-01-01T00:00:00",
+        "MI_Id": miId,
+        "HRME_Id": hrme,
+        "ASMAY_Id": academicYear,
+        "HRMD_Id": HRMD_Id,
+        "HRMDC_ID": null,
+        "ISMMPR_Id": ISMMPR_Id,
+        "IVRMM_Id": IVRMM_Id,
+        "ISMTCR_BugOREnhancementFlg": ISMTCR_BugOREnhancementFlg,
+        "assignto": assignto,
+        "ISMTCR_CreationDate": ISMTCR_CreationDate,
+        "ISMTCR_Title": ISMTCR_Title,
+        "HRMPR_Id": HRMPR_Id,
+        "ISMMTCAT_Id": ISMMTCAT_Id,
+        "ISMTCR_Desc": ISMTCR_Desc,
+        "ISMTCR_Status": "Open",
+        "ISMTCRCL_Id": 0,
+        "ISMMCLT_Id": ISMMCLT_Id,
+        "TimeRequiredFlg": "HOURS",
+        "attachmentArray": att,
+        "effortinhrs": effortinhrs,
+        "enddate": enddate,
+        "periodicity": periodicity,
+        "remarks": remarks,
+        "startdate": startdate,
+        "taskEmpArray": taskEmpArray
+      };
+    } else {
       print("002");
-    dataMap = {
-   "transnumbconfigurationsettingsss": trnsNumConfig ,
-    "UserId": userID,
-    "Role_flag": "S",
-    "roletype": roletype,
-    "IVRMRT_Id": ivrmrtId,
-    "plannerextapproval": false,
-    "plannerMaxdate": "0001-01-01T00:00:00",
-    "MI_Id": miId,
-    "HRME_Id": hrme,
-    "ASMAY_Id":  academicYear,
-    "HRMD_Id": HRMD_Id,
-    "HRMDC_ID": null,
-    "ISMMPR_Id": ISMMPR_Id,
-    "IVRMM_Id": IVRMM_Id,
-    "ISMTCR_BugOREnhancementFlg":ISMTCR_BugOREnhancementFlg ,
-    "assignto": assignto ,
-    "ISMTCR_CreationDate":  ISMTCR_CreationDate,
-    "ISMTCR_Title":ISMTCR_Title  ,
-    "HRMPR_Id":  HRMPR_Id,
-    "ISMMTCAT_Id": ISMMTCAT_Id,
-    "ISMTCR_Desc": ISMTCR_Desc ,
-    "ISMTCR_Status": "Open",
-    "ISMTCRCL_Id": 0,
-    "ISMMCLT_Id": ISMMCLT_Id,
-    "TaskDay":TaskDay,
-    "TimeRequiredFlg": "HOURS",
-    "attachmentArray":  att,
-    "effortinhrs": effortinhrs,
-    "enddate": enddate,
-    "periodicity": periodicity,
-    "remarks": remarks,
-    "startdate": startdate,
-    "taskEmpArray":  taskEmpArray
-    };
+      dataMap = {
+        "transnumbconfigurationsettingsss": trnsNumConfig,
+        "UserId": userID,
+        "Role_flag": "S",
+        "roletype": roletype,
+        "IVRMRT_Id": ivrmrtId,
+        "plannerextapproval": false,
+        "plannerMaxdate": "0001-01-01T00:00:00",
+        "MI_Id": miId,
+        "HRME_Id": hrme,
+        "ASMAY_Id": academicYear,
+        "HRMD_Id": HRMD_Id,
+        "HRMDC_ID": null,
+        "ISMMPR_Id": ISMMPR_Id,
+        "IVRMM_Id": IVRMM_Id,
+        "ISMTCR_BugOREnhancementFlg": ISMTCR_BugOREnhancementFlg,
+        "assignto": assignto,
+        "ISMTCR_CreationDate": ISMTCR_CreationDate,
+        "ISMTCR_Title": ISMTCR_Title,
+        "HRMPR_Id": HRMPR_Id,
+        "ISMMTCAT_Id": ISMMTCAT_Id,
+        "ISMTCR_Desc": ISMTCR_Desc,
+        "ISMTCR_Status": "Open",
+        "ISMTCRCL_Id": 0,
+        "ISMMCLT_Id": ISMMCLT_Id,
+        "TaskDay": TaskDay,
+        "TimeRequiredFlg": "HOURS",
+        "attachmentArray": att,
+        "effortinhrs": effortinhrs,
+        "enddate": enddate,
+        "periodicity": periodicity,
+        "remarks": remarks,
+        "startdate": startdate,
+        "taskEmpArray": taskEmpArray
+      };
     }
- logger.d(dataMap);
+    logger.d(dataMap);
   } else if (typeAssign == "N") {
     dataMap = {
-    "transnumbconfigurationsettingsss": trnsNumConfig ,
-    "UserId": userID,
-    "Role_flag": "S",
-    "roletype": roletype,
-    "IVRMRT_Id": ivrmrtId,
-    "plannerextapproval": false,
-    "plannerMaxdate": "0001-01-01T00:00:00",
-    "MI_Id": miId,
-    "HRME_Id": hrme,
-    "ASMAY_Id": academicYear,
-    "HRMD_Id": HRMD_Id,
-    "HRMDC_ID": null,
-    "ISMMPR_Id": ISMMPR_Id,
-    "IVRMM_Id": IVRMM_Id,
-    "ISMTCR_BugOREnhancementFlg": ISMTCR_BugOREnhancementFlg,
-    "assignto": assignto,
-    "ISMTCR_CreationDate":ISMTCR_CreationDate,
-    "ISMTCR_Title": ISMTCR_Title,
-    "HRMPR_Id": HRMPR_Id,
-    "ISMMTCAT_Id":ISMMTCAT_Id,
-    "ISMTCR_Desc": ISMTCR_Desc,
-    "ISMTCR_Status": "Open",
-    "ISMTCRCL_Id": 0,
-    "ISMMCLT_Id": ISMMCLT_Id,
-    "attachmentArray":att
+      "transnumbconfigurationsettingsss": trnsNumConfig,
+      "UserId": userID,
+      "Role_flag": "S",
+      "roletype": roletype,
+      "IVRMRT_Id": ivrmrtId,
+      "plannerextapproval": false,
+      "plannerMaxdate": "0001-01-01T00:00:00",
+      "MI_Id": miId,
+      "HRME_Id": hrme,
+      "ASMAY_Id": academicYear,
+      "HRMD_Id": HRMD_Id,
+      "HRMDC_ID": null,
+      "ISMMPR_Id": ISMMPR_Id,
+      "IVRMM_Id": IVRMM_Id,
+      "ISMTCR_BugOREnhancementFlg": ISMTCR_BugOREnhancementFlg,
+      "assignto": assignto,
+      "ISMTCR_CreationDate": ISMTCR_CreationDate,
+      "ISMTCR_Title": ISMTCR_Title,
+      "HRMPR_Id": HRMPR_Id,
+      "ISMMTCAT_Id": ISMMTCAT_Id,
+      "ISMTCR_Desc": ISMTCR_Desc,
+      "ISMTCR_Status": "Open",
+      "ISMTCRCL_Id": 0,
+      "ISMMCLT_Id": ISMMCLT_Id,
+      "attachmentArray": att
     };
-    
   }
 
   try {
-    final Response response =
-        await ins.post(apiUrl, options: Options(headers: getSession()), data:  dataMap);
-   // logger.d(dataMap);
+    final Response response = await ins.post(apiUrl,
+        options: Options(headers: getSession()), data: dataMap);
+    // logger.d(dataMap);
     logger.d(response.data);
-     controllerLoading.updateTabLoading(false);
+    controllerLoading.updateTabLoading(false);
     return true;
   } on DioError catch (e) {
     logger.e(e.message);
-     return false;
+    return false;
   } on Exception catch (e) {
-     return false;
+    return false;
   }
 }
 
