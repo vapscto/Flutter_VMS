@@ -1024,13 +1024,13 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                     previousDate =
                                                                     DateTime.parse(
                                                                             previousDateStr)
-                                                                        .add(Duration(
+                                                                        .add(const Duration(
                                                                             days:
                                                                                 1));
                                                                 previousDt = DateTime
                                                                         .parse(
                                                                             previousDateStr)
-                                                                    .add(Duration(
+                                                                    .add(const Duration(
                                                                         days:
                                                                             1));
                                                                 logger.e(

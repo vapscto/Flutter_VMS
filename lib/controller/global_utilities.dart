@@ -64,6 +64,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
+import '../model/version_change.dart';
 
 RxInt currentHomeTab = 0.obs;
 RxList<int> previousHomeTab = [0].obs;
@@ -449,12 +450,10 @@ void version(LoginSuccessModel loginSuccessModel,
     MskoolController mskoolController) async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-  // String appName = packageInfo.appName;
-  // String packageName = packageInfo.packageName;
   String version = packageInfo.version;
-  // String buildNumber = packageInfo.buildNumber;
-
-  final bool ctrl = await VersionControlApi.instance.checkVersionAndShowUpgrade(
+  logger.i(version);
+  final VersionChangeModel? ctrl =
+      await VersionControlApi.instance.checkVersionAndShowUpgrade(
     miId: loginSuccessModel.mIID!,
     version: version,
     base: baseUrlFromInsCode(
@@ -463,7 +462,7 @@ void version(LoginSuccessModel loginSuccessModel,
     ),
   );
 
-  if (ctrl) {
+  if (!ctrl!.values!.first.iMVEAppVersion!.contains(version)) {
     Get.dialog(AlertDialog(
       title: const Text("Update App!"),
       content: const Text(

@@ -2,12 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/model/version_change.dart';
 
 class VersionControlApi {
   VersionControlApi.init();
   static final VersionControlApi instance = VersionControlApi.init();
 
-  Future<bool> checkVersionAndShowUpgrade({
+  Future<VersionChangeModel?> checkVersionAndShowUpgrade({
     required int miId,
     required String version,
     required String base,
@@ -25,19 +26,22 @@ class VersionControlApi {
         "MI_Id": miId,
         "version": version,
       });
-
-      if (response.data['versiondetailslist'] == null) {
-        return Future.value(false);
+      if (response.statusCode == 200) {
+        VersionChangeModel versionChangeModel =
+            VersionChangeModel.fromJson(response.data['versiondetailslist']);
+        return versionChangeModel;
       }
+      // if (response.data['versiondetailslist'] == null) {
+      // }
 
-      if ((response.data['versiondetailslist']['\$values'] as List).isEmpty) {
-        return Future.value(false);
-      }
+      // if ((response.data['versiondetailslist']['\$values'] as List).isEmpty) {
+      // }
       logger.d("message");
-      return Future.value(true);
+      // return Future.value(true);
     } on DioError catch (e) {
       logger.e(e.stackTrace);
-      return Future.value(false);
+      // return Future.value(false);
     }
+    return null;
   }
 }
