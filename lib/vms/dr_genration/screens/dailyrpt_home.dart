@@ -354,10 +354,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                   : BtnSave(
                       onPress: () async {
                         if (_formKey.currentState!.validate()) {
-                          if (dailyReportGenaration.isNotEmpty) {
+                          if (selectCheckbox.isNotEmpty) {
                             saveDaetails();
                           } else {
-                            Fluttertoast.showToast(msg: "Select Planner");
+                            Fluttertoast.showToast(msg: "Select Check Box to Generate Daily Report");
                           }
                         } else {
                           logger.w("show damit");
