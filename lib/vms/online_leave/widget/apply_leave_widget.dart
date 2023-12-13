@@ -711,8 +711,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                       }
                                     }
                                     if (count1 >
-                                        widget.values.hrelSTotalLeaves!
-                                                .toInt() +
+                                        widget.values.hrelSCBLeaves!.toInt() +
                                             addleave) {
                                       logger.i(true);
                                       // ignore: use_build_context_synchronously
