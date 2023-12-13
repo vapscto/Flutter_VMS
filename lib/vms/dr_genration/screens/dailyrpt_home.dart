@@ -1023,10 +1023,16 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                 DateTime
                                                                     previousDate =
                                                                     DateTime.parse(
-                                                                        previousDateStr);
-                                                                previousDt =
-                                                                    DateTime.parse(
-                                                                        previousDateStr);
+                                                                            previousDateStr)
+                                                                        .add(Duration(
+                                                                            days:
+                                                                                1));
+                                                                previousDt = DateTime
+                                                                        .parse(
+                                                                            previousDateStr)
+                                                                    .add(Duration(
+                                                                        days:
+                                                                            1));
                                                                 logger.e(
                                                                     "====$previousDt");
 
