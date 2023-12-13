@@ -772,7 +772,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                                 color: Theme.of(context)
                                                     .primaryColor)),
                                     TextSpan(
-                                        text: '${totalday * 8}',
+                                        text: '${totalday * 8} Hr',
                                         style: Get.textTheme.titleSmall!
                                             .copyWith()),
                                   ])),
@@ -786,7 +786,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                                 color: Theme.of(context)
                                                     .primaryColor)),
                                     TextSpan(
-                                        text: '$plannedEffort',
+                                        text: '$plannedEffort Hr',
                                         style: Get.textTheme.titleSmall!
                                             .copyWith()),
                                   ])),
