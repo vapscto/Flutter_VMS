@@ -1732,22 +1732,20 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             ));
                                                       },
                                                       child: TextFormField(
-                                                        // validator: (currentDt
-                                                        //             .day <
-                                                        //         endNewDate.day)
-                                                        //     ? (value) {
-                                                        //         if (value!
-                                                        //             .isEmpty) {
-                                                        //           if (selectCheckbox
-                                                        //               .contains(
-                                                        //                   index)) {
-                                                        //             return 'Please  select Deviation';
-                                                        //           }
-                                                        //         }
+                                                        validator: (value) {
+                                                          if (value!.isEmpty) {
+                                                            if (selectCheckbox
+                                                                .contains(
+                                                                    index)) {
+                                                              if (currentDt.isAfter(
+                                                                  previousDt)) {
+                                                                return 'Please  select Deviation';
+                                                              }
+                                                            }
+                                                          }
 
-                                                        //         return null;
-                                                        //       }
-                                                        //     : null,
+                                                          return null;
+                                                        },
                                                         controller:
                                                             _plannerDetailsController
                                                                     .deveationEtField[
