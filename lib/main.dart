@@ -56,7 +56,6 @@ void main() async {
       themeData.isLightMode.value,
     );
   }
-  // LocationController().requestLocationPermission();
   runApp(const MyApp());
 }
 
@@ -81,10 +80,6 @@ class MyApp extends StatelessWidget {
               'US',
             ),
             home: const SplashScreen(),
-            // home: (logInBox!.get("isLoggedIn") == null ||
-            //         !logInBox!.get("isLoggedIn"))
-            //     ? const Home() //const Authentication()
-            //     : const Home(),
             builder: (context, child) {
               return MediaQuery(
                   data: MediaQuery.of(context).copyWith(

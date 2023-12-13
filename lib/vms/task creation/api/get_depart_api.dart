@@ -47,6 +47,7 @@ Future<bool> getTskCompaniesList({
         CreatedTaskListModel.fromJson(response.data['get_taskdetails']);
     controller.getTaskList(createdTaskListModel.values!);
     controller.maxPlannerDate = response.data['plannerMaxdate'];
+    logger.i(controller.maxPlannerDate);
     for (int i = 0; i < employeeListModel.values!.length; i++) {
       controller.checkBox.add(false);
     }

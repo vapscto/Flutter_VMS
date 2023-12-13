@@ -15,12 +15,7 @@ Future<MessageModel?> getMessages(
     required int userId,
     required String base,
     required int ivrmrtId}) async {
-  logger.d(ismintId);
-  logger.d(miId);
-  logger.d(asmayId);
-  logger.d(userId);
-
-  var url = base + URLS.getMessages;
+  var url = base + URLS.vmsMessageList;
   logger.d(url);
   logger.d({
     "ISMINT_Id": ismintId,
@@ -36,11 +31,12 @@ Future<MessageModel?> getMessages(
         headers: getSession(),
       ),
       data: {
-        "ISMINT_Id": ismintId,
+        "ISMINTR_Id": ismintId,
         "IVRMRT_Id": ivrmrtId,
         "MI_Id": miId,
         "ASMAY_Id": asmayId,
         "UserId": userId,
+        "Role_flag": "S",
       },
     );
     if (response.statusCode == 200) {

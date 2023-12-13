@@ -185,182 +185,153 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
             ))
         : null;
   }
-                           saveDaetails()async{
-     
-                        if (fliteresList.isNotEmpty) {
-                          for (int i = 0;
-                              i < _plannerDetailsController.checkBoxList.length;
-                              i++) {
-                            var value = fliteresList.elementAt(i);
-                               
-                            if (_plannerDetailsController.checkBoxList
-                                    .elementAt(i) ==
-                                true) {
-                               
-                               
-                                dailyReportGenaration.add({
-                                "CreatedFlag": value.createdFlag,
-                                "HRME_Id": value.hRMEId,
-                                "HRMPR_Id": value.hRMPRId,
-                                "HRMP_Name": value.hRMPName,
-                                "ISMDRPT_DeviationFlg": value.iSMDRPTDeviationFlg,
-                                "ISMDRPT_ExtraFlg": value.iSMDRPTExtraFlg,
-                                "ISMDRPT_Remarks":_plannerDetailsController.etResponse.elementAt(i).text.toString(),
-                                "ISMDRPT_Status": _plannerDetailsController
-                                    .deveationEtField[i].text,
-                                "ISMDRPT_TimeTakenInHrs":
-                                    _plannerDetailsController.hoursEt[i].text,
-                                "ISMDRPT_TimeTakenInHrsmin":
-                                    _plannerDetailsController.minutesEt[i].text,
-                                "ISMDRPT_TimeTakenInHrsmins":
-                                    value.iSMDRPTTimeTakenInHrsmins,
-                                "ISMMCLT_ClientName": value.iSMMCLTClientName,
-                                "ISMMCLT_Id": value.iSMMCLTId,
-                                "ISMMPR_Id": value.iSMMPRId,
-                                "ISMMTCAT_CompulsoryFlg":
-                                    value.iSMMTCATCompulsoryFlg,
-                                "ISMMTCAT_Id": value.iSMMTCATId,
-                                "ISMTAPL_Day": value.iSMTAPLDay,
-                                "ISMTAPL_Periodicity": value.iSMTAPLPeriodicity,
-                                "ISMTAPL_ToDate": value.iSMTAPLToDate,
-                                "ISMTCRTRTO_TransferredDate": null,
-                                "ISMTCR_BugOREnhancementFlg":
-                                    value.iSMTCRBugOREnhancementFlg,
-                                "ISMTCR_CreationDate": value.iSMTCRCreationDate,
-                                "ISMTCR_Desc": value.iSMTCRDesc,
-                                "ISMTCR_Id": value.iSMTCRId,
-                                "ISMTCR_ReOpenDate": value.iSMTCRCreationDate,
-                                "ISMTCR_ReOpenFlg": value.iSMTCRReOpenFlg,
-                                "ISMTCR_Status": _plannerDetailsController
-                                    .statusEtField
-                                    .elementAt(i)
-                                    .text,
-                                "ISMTCR_TaskNo": value.iSMTCRTaskNo,
-                                "ISMTCR_Title": value.iSMTCRTitle,
-                                "ISMTPLTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
-                                "ISMTPLTA_EndDate": value.iSMTPLTAEndDate,
-                                "ISMTPLTA_Id": value.iSMTPLTAId,
-                                "ISMTPLTA_StartDate": value.iSMTPLTAStartDate,
-                                "ISMTPL_ActiveFlg": value.iSMTPLActiveFlg,
-                                "ISMTPL_ApprovalFlg": value.iSMTPLApprovalFlg,
-                                "ISMTPL_ApprovedBy": value.iSMTPLApprovedBy,
-                                "ISMTPL_EndDate": value.iSMTPLEndDate,
-                                "ISMTPL_Id": value.iSMTPLId,
-                                "ISMTPL_PlannedBy": value.iSMTPLPlannedBy,
-                                "ISMTPL_PlannerName": value.iSMTPLPlannerName,
-                                "ISMTPL_Remarks": null,
-                                "ISMTPL_StartDate": value.iSMTPLStartDate,
-                                "ISMTPL_TotalHrs": value.iSMTPLTotalHrs,
-                                "ProjectName": value.projectName,
-                                "actualeffortinhrs":
-                                    _plannerDetailsController.hoursEt[i].text,
-                                "actualeffortinmins":
-                                    _plannerDetailsController.minutesEt[i].text,
-                                "approvedflag": value.approvedflag,
-                                "assignedby": value.assignedby,
-                                "checkedvalue":
-                                    _plannerDetailsController.checkBoxList[i],
-                                "createdemp": value.createdemp,
-                                "deviationflag": false,
-                                "dr_flag": value.drFlag,
-                                "effhrs":
-                                    _plannerDetailsController.hoursEt[i].text,
-                                "effmin":
-                                    _plannerDetailsController.minutesEt[i].text,
-                                "effortss": value.effortss,
-                                "get_Status": [],
-                                "maxtime": value.maxtime,
-                                "periodicitydailyflag":
-                                    value.periodicitydailyflag,
-                                "periodicityendflag": value.periodicityendflag,
-                                "periodicityweeklyflag":
-                                    value.periodicityweeklyflag,
-                                "taskcategoryname": value.taskcategoryname
-                              });
-                            }
-                            logger.i(dailyReportGenaration);
-                          }
-                          _plannerDetailsController.saveLoading(true);
-                          await saveDr(
-                                  miID: widget.loginSuccessModel.mIID!,
-                                  userId: widget.loginSuccessModel.userId!,
-                                   base: baseUrlFromInsCode(
-                                      'issuemanager', widget.mskoolController),
-                                  controller: _plannerDetailsController,
-                                  ismdrptDate: todayDt,
-                                  halfDayFlag: halfDay.value,
-                                  ismtplId: _plannerDetailsController
-                                      .getplannerdetails[0].ismtpLId!,
-                                  drList: dailyReportGenaration,
-                                  deviationId:
-                                      _plannerDetailsController.daviationId.value,
-                                  endWeek: _plannerDetailsController
-                                      .getplannerdetails[0].ismtpLEndDate!,
-                                  reasion: reasonController.text,
-                                  startWeek: _plannerDetailsController
-                                      .getplannerdetails[0].ismtpLStartDate!,
-                                  todayOrOthersDay:
-                                      _plannerDetailsController.day.value,
-                                  totalWorkingHrFlag: _plannerDetailsController
-                                      .getplannerdetails[0].ismtpLTotalHrs!)
-                              .then((value) {
-                            _plannerDetailsController.saveLoading(false);
-                            if (value!) {
-                              showDialog(
-                                barrierDismissible: false,
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20)),
-                                    title: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 20),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Align(
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              'Daily Report Genrated successfully',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleMedium!
-                                                  .merge(TextStyle(
-                                                      color: Theme.of(context)
-                                                          .primaryColor)),
-                                            ),
-                                          ),
-                                          TextButton(
-                                              onPressed: () {
-                                                Get.back();
-                                                Get.back();
-                                              },
-                                              child: Text(
-                                                "OK",
-                                                style: Get.textTheme.titleMedium!
-                                                    .copyWith(
-                                                        color: Theme.of(context)
-                                                            .primaryColor),
-                                              ))
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "Daily Report is no save");
-                            }
-                          });
-                              
-                        } else {
-                          Fluttertoast.showToast(
-                              msg: "Please Select Planner List");
-                        }
-   }
+
+  saveDaetails() async {
+    if (fliteresList.isNotEmpty) {
+      for (int i = 0; i < _plannerDetailsController.checkBoxList.length; i++) {
+        var value = fliteresList.elementAt(i);
+
+        if (_plannerDetailsController.checkBoxList.elementAt(i) == true) {
+          dailyReportGenaration.add({
+            "CreatedFlag": value.createdFlag,
+            "HRME_Id": value.hRMEId,
+            "HRMPR_Id": value.hRMPRId,
+            "HRMP_Name": value.hRMPName,
+            "ISMDRPT_DeviationFlg": value.iSMDRPTDeviationFlg,
+            "ISMDRPT_ExtraFlg": value.iSMDRPTExtraFlg,
+            "ISMDRPT_Remarks": _plannerDetailsController.etResponse
+                .elementAt(i)
+                .text
+                .toString(),
+            "ISMDRPT_Status":
+                _plannerDetailsController.deveationEtField[i].text,
+            "ISMDRPT_TimeTakenInHrs": _plannerDetailsController.hoursEt[i].text,
+            "ISMDRPT_TimeTakenInHrsmin":
+                _plannerDetailsController.minutesEt[i].text,
+            "ISMDRPT_TimeTakenInHrsmins": value.iSMDRPTTimeTakenInHrsmins,
+            "ISMMCLT_ClientName": value.iSMMCLTClientName,
+            "ISMMCLT_Id": value.iSMMCLTId,
+            "ISMMPR_Id": value.iSMMPRId,
+            "ISMMTCAT_CompulsoryFlg": value.iSMMTCATCompulsoryFlg,
+            "ISMMTCAT_Id": value.iSMMTCATId,
+            "ISMTAPL_Day": value.iSMTAPLDay,
+            "ISMTAPL_Periodicity": value.iSMTAPLPeriodicity,
+            "ISMTAPL_ToDate": value.iSMTAPLToDate,
+            "ISMTCRTRTO_TransferredDate": null,
+            "ISMTCR_BugOREnhancementFlg": value.iSMTCRBugOREnhancementFlg,
+            "ISMTCR_CreationDate": value.iSMTCRCreationDate,
+            "ISMTCR_Desc": value.iSMTCRDesc,
+            "ISMTCR_Id": value.iSMTCRId,
+            "ISMTCR_ReOpenDate": value.iSMTCRCreationDate,
+            "ISMTCR_ReOpenFlg": value.iSMTCRReOpenFlg,
+            "ISMTCR_Status":
+                _plannerDetailsController.statusEtField.elementAt(i).text,
+            "ISMTCR_TaskNo": value.iSMTCRTaskNo,
+            "ISMTCR_Title": value.iSMTCRTitle,
+            "ISMTPLTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
+            "ISMTPLTA_EndDate": value.iSMTPLTAEndDate,
+            "ISMTPLTA_Id": value.iSMTPLTAId,
+            "ISMTPLTA_StartDate": value.iSMTPLTAStartDate,
+            "ISMTPL_ActiveFlg": value.iSMTPLActiveFlg,
+            "ISMTPL_ApprovalFlg": value.iSMTPLApprovalFlg,
+            "ISMTPL_ApprovedBy": value.iSMTPLApprovedBy,
+            "ISMTPL_EndDate": value.iSMTPLEndDate,
+            "ISMTPL_Id": value.iSMTPLId,
+            "ISMTPL_PlannedBy": value.iSMTPLPlannedBy,
+            "ISMTPL_PlannerName": value.iSMTPLPlannerName,
+            "ISMTPL_Remarks": null,
+            "ISMTPL_StartDate": value.iSMTPLStartDate,
+            "ISMTPL_TotalHrs": value.iSMTPLTotalHrs,
+            "ProjectName": value.projectName,
+            "actualeffortinhrs": _plannerDetailsController.hoursEt[i].text,
+            "actualeffortinmins": _plannerDetailsController.minutesEt[i].text,
+            "approvedflag": value.approvedflag,
+            "assignedby": value.assignedby,
+            "checkedvalue": _plannerDetailsController.checkBoxList[i],
+            "createdemp": value.createdemp,
+            "deviationflag": false,
+            "dr_flag": value.drFlag,
+            "effhrs": _plannerDetailsController.hoursEt[i].text,
+            "effmin": _plannerDetailsController.minutesEt[i].text,
+            "effortss": value.effortss,
+            "get_Status": [],
+            "maxtime": value.maxtime,
+            "periodicitydailyflag": value.periodicitydailyflag,
+            "periodicityendflag": value.periodicityendflag,
+            "periodicityweeklyflag": value.periodicityweeklyflag,
+            "taskcategoryname": value.taskcategoryname
+          });
+        }
+        logger.i(dailyReportGenaration);
+      }
+      _plannerDetailsController.saveLoading(true);
+      await saveDr(
+              miID: widget.loginSuccessModel.mIID!,
+              userId: widget.loginSuccessModel.userId!,
+              base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
+              controller: _plannerDetailsController,
+              ismdrptDate: todayDt,
+              halfDayFlag: halfDay.value,
+              ismtplId:
+                  _plannerDetailsController.getplannerdetails[0].ismtpLId!,
+              drList: dailyReportGenaration,
+              deviationId: _plannerDetailsController.daviationId.value,
+              endWeek:
+                  _plannerDetailsController.getplannerdetails[0].ismtpLEndDate!,
+              reasion: reasonController.text,
+              startWeek: _plannerDetailsController
+                  .getplannerdetails[0].ismtpLStartDate!,
+              todayOrOthersDay: _plannerDetailsController.day.value,
+              totalWorkingHrFlag: _plannerDetailsController
+                  .getplannerdetails[0].ismtpLTotalHrs!)
+          .then((value) {
+        _plannerDetailsController.saveLoading(false);
+        if (value!) {
+          showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                title: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Daily Report Genrated successfully',
+                          style: Theme.of(context).textTheme.titleMedium!.merge(
+                              TextStyle(color: Theme.of(context).primaryColor)),
+                        ),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Get.back();
+                            Get.back();
+                          },
+                          child: Text(
+                            "OK",
+                            style: Get.textTheme.titleMedium!.copyWith(
+                                color: Theme.of(context).primaryColor),
+                          ))
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        } else {
+          Fluttertoast.showToast(msg: "Daily Report is no save");
+        }
+      });
+    } else {
+      Fluttertoast.showToast(msg: "Please Select Planner List");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -382,11 +353,15 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                     )
                   : BtnSave(
                       onPress: () async {
-                         if (_formKey.currentState!.validate()) {
-                                 saveDaetails();
-                              }else{
-                                logger.w("show damit");
-                              }
+                        if (_formKey.currentState!.validate()) {
+                          if (dailyReportGenaration.isNotEmpty) {
+                            saveDaetails();
+                          } else {
+                            Fluttertoast.showToast(msg: "Select Planner");
+                          }
+                        } else {
+                          logger.w("show damit");
+                        }
                       },
                       title: "Save",
                     ),
@@ -489,9 +464,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                             .updateDayRadio(value!);
                                       },
                                       dense: true,
-                                      activeColor: Theme.of(context).primaryColor,
-                                      contentPadding: const EdgeInsets.symmetric(
-                                          horizontal: 8),
+                                      activeColor:
+                                          Theme.of(context).primaryColor,
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 8),
                                       visualDensity:
                                           const VisualDensity(horizontal: -4.0),
                                       title: Text(
@@ -514,9 +491,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                       groupValue:
                                           _plannerDetailsController.day.value,
                                       dense: true,
-                                      activeColor: Theme.of(context).primaryColor,
-                                      contentPadding: const EdgeInsets.symmetric(
-                                          horizontal: 8),
+                                      activeColor:
+                                          Theme.of(context).primaryColor,
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 8),
                                       visualDensity:
                                           const VisualDensity(horizontal: -4.0),
                                       title: Text(
@@ -616,9 +595,23 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                               onTap: () async {
                                 await showDatePicker(
                                   context: context,
-                                  firstDate: DateTime(2000),
-                                  lastDate: DateTime(2035),
-                                  initialDate: DateTime.now(),
+                                  firstDate:
+                                      _plannerDetailsController.day.value ==
+                                              'Others'
+                                          ? DateTime(2000)
+                                          : DateTime.now(),
+                                  lastDate:
+                                      _plannerDetailsController.day.value ==
+                                              'Others'
+                                          ? DateTime.now()
+                                              .subtract(Duration(days: 1))
+                                          : DateTime(3000),
+                                  initialDate:
+                                      _plannerDetailsController.day.value ==
+                                              'Others'
+                                          ? DateTime.now()
+                                              .subtract(Duration(days: 1))
+                                          : DateTime.now(),
                                 ).then((value) async {
                                   _plannerDetailsController
                                       .plannernameDateController
@@ -754,8 +747,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                     .merge(
                                       const TextStyle(
                                           fontSize: 16.0,
-                                          color:
-                                              Color.fromARGB(255, 16, 103, 233)),
+                                          color: Color.fromARGB(
+                                              255, 16, 103, 233)),
                                     ),
                               ),
                             ],
@@ -788,7 +781,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                     .merge(const TextStyle(
                                       fontSize: 14,
                                     ))),
-                            style: Theme.of(context).textTheme.titleSmall!.merge(
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .merge(
                                   const TextStyle(
                                       fontSize: 16.0,
                                       color: Color.fromARGB(255, 27, 27, 27)),
@@ -909,20 +905,27 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                         .elementAt(index)
                                                         .iSMTPLEndDate !=
                                                     null) {
-                                                  DateTime newDt = DateTime.parse(
-                                                      fliteresList
-                                                          .elementAt(index)
-                                                          .iSMTPLEndDate!);
+                                                  DateTime newDt =
+                                                      DateTime.parse(
+                                                          fliteresList
+                                                              .elementAt(index)
+                                                              .iSMTPLEndDate!);
                                                   endDt =
                                                       "${newDt.day}-${newDt.month}-${newDt.year}";
                                                 }
-    
+                                                DateTime currentDt =
+                                                    DateTime.now();
+                                                DateTime previousDt =
+                                                    DateTime.now();
+
                                                 return DataRow(cells: [
                                                   DataCell(Align(
-                                                      alignment: Alignment.center,
+                                                      alignment:
+                                                          Alignment.center,
                                                       child: Text('$i'))),
                                                   DataCell(Align(
-                                                      alignment: Alignment.center,
+                                                      alignment:
+                                                          Alignment.center,
                                                       child: Obx(
                                                         () => Checkbox(
                                                           shape: ContinuousRectangleBorder(
@@ -930,13 +933,16 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   BorderRadius
                                                                       .circular(
                                                                           10)),
-                                                          activeColor: const Color
-                                                                  .fromARGB(
-                                                              255, 21, 46, 189),
-                                                          value:
-                                                              _plannerDetailsController
-                                                                      .checkBoxList[
-                                                                  index],
+                                                          activeColor:
+                                                              const Color
+                                                                      .fromARGB(
+                                                                  255,
+                                                                  21,
+                                                                  46,
+                                                                  189),
+                                                          value: _plannerDetailsController
+                                                                  .checkBoxList[
+                                                              index],
                                                           onChanged: (value) {
                                                             getCategoryChecklistDetails(
                                                                     base: baseUrlFromInsCode(
@@ -955,7 +961,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                         .iSMMTCATId!)
                                                                 .then(
                                                               (value) {
-                                                                if (value!.values!
+                                                                if (value!
+                                                                    .values!
                                                                     .isNotEmpty) {
                                                                   showDialog(
                                                                       context:
@@ -967,18 +974,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                               AlertDialog(
                                                                             content:
                                                                                 Container(
-                                                                              padding:
-                                                                                  const EdgeInsets.symmetric(horizontal: 0),
-                                                                              height:
-                                                                                  400,
-                                                                              width:
-                                                                                  MediaQuery.of(context).size.width,
-                                                                              decoration: BoxDecoration(
-                                                                                  color: Colors.white,
-                                                                                  borderRadius: BorderRadius.circular(10),
-                                                                                  shape: BoxShape.rectangle),
-                                                                              child:
-                                                                                  CategoryCheckList(
+                                                                              padding: const EdgeInsets.symmetric(horizontal: 0),
+                                                                              height: 400,
+                                                                              width: MediaQuery.of(context).size.width,
+                                                                              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), shape: BoxShape.rectangle),
+                                                                              child: CategoryCheckList(
                                                                                 value: value,
                                                                               ),
                                                                             ),
@@ -988,7 +988,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                 }
                                                               },
                                                             );
-    
+
                                                             _plannerDetailsController
                                                                     .checkBoxList[
                                                                 index] = value!;
@@ -1018,12 +1018,17 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                     previousDate =
                                                                     DateTime.parse(
                                                                         previousDateStr);
-    
+                                                                previousDt =
+                                                                    DateTime.parse(
+                                                                        previousDateStr);
+                                                                logger.e(
+                                                                    "====$previousDt");
+
                                                                 DateTime
                                                                     currentDate =
                                                                     DateTime
                                                                         .now();
-    
+
                                                                 if (currentDate
                                                                     .isAfter(
                                                                         previousDate)) {
@@ -1044,8 +1049,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                           width:
                                                                               300,
                                                                           decoration: BoxDecoration(
-                                                                              color:
-                                                                                  Colors.white,
+                                                                              color: Colors.white,
                                                                               borderRadius: BorderRadius.circular(10),
                                                                               shape: BoxShape.rectangle),
                                                                           child:
@@ -1055,12 +1059,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                             crossAxisAlignment:
                                                                                 CrossAxisAlignment.center,
                                                                             children: [
-                                                                              Text("Task End Date Is",
-                                                                                  style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255)))),
-                                                                              Text(fliteresList.elementAt(index).iSMTPLEndDate.toString().replaceRange(10, null, ''),
-                                                                                  style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255)))),
-                                                                              Text("Kindly Select Remarks",
-                                                                                  style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255))))
+                                                                              Text("Task End Date Is", style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255)))),
+                                                                              Text(fliteresList.elementAt(index).iSMTPLEndDate.toString().replaceRange(10, null, ''), style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255)))),
+                                                                              Text("Kindly Select Remarks", style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255))))
                                                                             ],
                                                                           ),
                                                                         ),
@@ -1072,7 +1073,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             } else {
                                                               deviation = false;
                                                               selectCheckbox
-                                                                  .remove(index);
+                                                                  .remove(
+                                                                      index);
                                                               logger.i(
                                                                   selectCheckbox
                                                                       .toString());
@@ -1082,7 +1084,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                       ))),
                                                   DataCell(Column(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .spaceEvenly,
@@ -1095,19 +1098,20 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                           index)
                                                                       .iSMTCRTaskNo!))
                                                               .then((_) {
-                                                            ScaffoldMessenger.of(
-                                                                    context)
+                                                            ScaffoldMessenger
+                                                                    .of(context)
                                                                 .showSnackBar(
                                                                     const SnackBar(
-                                                                        content: Text(
-                                                                            'Copied to your clipboard !')));
+                                                                        content:
+                                                                            Text('Copied to your clipboard !')));
                                                           });
                                                         },
                                                         child: Text(
                                                           fliteresList
                                                               .elementAt(index)
                                                               .iSMTCRTaskNo!,
-                                                          style: Theme.of(context)
+                                                          style: Theme
+                                                                  .of(context)
                                                               .textTheme
                                                               .titleSmall!
                                                               .merge(const TextStyle(
@@ -1120,7 +1124,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600,
-                                                                  fontSize: 14)),
+                                                                  fontSize:
+                                                                      14)),
                                                         ),
                                                       ),
                                                       SizedBox(
@@ -1130,7 +1135,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                               .elementAt(index)
                                                               .iSMTCRTitle!,
                                                           maxLines: 3,
-                                                          style: Theme.of(context)
+                                                          style: Theme
+                                                                  .of(context)
                                                               .textTheme
                                                               .titleSmall!
                                                               .merge(const TextStyle(
@@ -1143,7 +1149,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600,
-                                                                  fontSize: 14)),
+                                                                  fontSize:
+                                                                      14)),
                                                         ),
                                                       ),
                                                       Text(
@@ -1217,37 +1224,44 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                     ],
                                                   )),
                                                   DataCell(Align(
-                                                      alignment: Alignment.center,
+                                                      alignment:
+                                                          Alignment.center,
                                                       child: Padding(
-                                                        padding: const EdgeInsets
-                                                                .symmetric(
-                                                            horizontal: 0,
-                                                            vertical: 20),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 0,
+                                                                vertical: 20),
                                                         child: SizedBox(
                                                           width: 150,
                                                           child: TextFormField(
-                                                             validator: (value) {
-                                                               if (value!.isEmpty) {
-                                                                  if(selectCheckbox.contains(index)){
-                                                                    return 'Please  enter remark';
-                                                                  }
-                                                                  
+                                                            validator: (value) {
+                                                              if (value!
+                                                                  .isEmpty) {
+                                                                if (selectCheckbox
+                                                                    .contains(
+                                                                        index)) {
+                                                                  return 'Please  enter remark';
                                                                 }
-                                                              
-                                                                return null;
-                                                              },
-                                                            controller:_plannerDetailsController.etResponse.elementAt(index) ,
+                                                              }
+
+                                                              return null;
+                                                            },
+                                                            controller:
+                                                                _plannerDetailsController
+                                                                    .etResponse
+                                                                    .elementAt(
+                                                                        index),
                                                             maxLines: 6,
-                                                            style:
-                                                                Theme.of(context)
-                                                                    .textTheme
-                                                                    .titleSmall,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .titleSmall,
                                                             decoration: InputDecoration(
                                                                 border: OutlineInputBorder(
                                                                     borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                10),
+                                                                        BorderRadius.circular(
+                                                                            10),
                                                                     borderSide: const BorderSide(
                                                                         color: Colors
                                                                             .grey,
@@ -1258,7 +1272,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                       ))),
                                                   DataCell(Column(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment.center,
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Text(
                                                           "Actual Effort:- ${fliteresList.elementAt(index).iSMTPLTAEffortInHrs} Hr"),
@@ -1267,20 +1282,24 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                         children: [
                                                           SizedBox(
                                                               width: 80,
-                                                              child: TextFormField(
-                                                                 validator: (value) {
-                                                               if (value!.isEmpty) {
-                                                                  if(selectCheckbox.contains(index)){
-                                                                    if( _plannerDetailsController.minutesEt.elementAt(i).text.isEmpty)
-                                                                    {
-                                                                      return 'Please  enter hours';
+                                                              child:
+                                                                  TextFormField(
+                                                                validator:
+                                                                    (value) {
+                                                                  if (value!
+                                                                      .isEmpty) {
+                                                                    if (selectCheckbox
+                                                                        .contains(
+                                                                            index)) {
+                                                                      if (value
+                                                                          .isEmpty) {
+                                                                        return 'Please  enter hours';
+                                                                      }
                                                                     }
                                                                   }
-                                                                  
-                                                                }
-                                                              
-                                                                return null;
-                                                              },
+
+                                                                  return null;
+                                                                },
                                                                 inputFormatters: [
                                                                   FilteringTextInputFormatter
                                                                       .allow(RegExp(
@@ -1314,20 +1333,14 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                             const OutlineInputBorder(),
                                                                         hintText:
                                                                             " HH ",
-                                                                        hintStyle: Theme.of(
-                                                                                context)
+                                                                        hintStyle: Theme.of(context)
                                                                             .textTheme
                                                                             .titleSmall!
-                                                                            .merge(
-                                                                                const TextStyle(
-                                                                              fontWeight:
-                                                                                  FontWeight.w500,
-                                                                              fontSize:
-                                                                                  14.0,
-                                                                              letterSpacing:
-                                                                                  0.3,
-                                                                              overflow:
-                                                                                  TextOverflow.clip,
+                                                                            .merge(const TextStyle(
+                                                                              fontWeight: FontWeight.w500,
+                                                                              fontSize: 14.0,
+                                                                              letterSpacing: 0.3,
+                                                                              overflow: TextOverflow.clip,
                                                                             ))),
                                                                 controller:
                                                                     _plannerDetailsController
@@ -1339,18 +1352,22 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                           ),
                                                           SizedBox(
                                                             width: 80,
-                                                            child: TextFormField(
-                                                               validator: (value) {
-                                                               if (value!.isEmpty) {
-                                                                  if(selectCheckbox.contains(index)){
-                                                                     if( _plannerDetailsController.hoursEt.elementAt(i).text.isEmpty)
-                                                                    {
+                                                            child:
+                                                                TextFormField(
+                                                              validator:
+                                                                  (value) {
+                                                                if (value!
+                                                                    .isEmpty) {
+                                                                  if (selectCheckbox
+                                                                      .contains(
+                                                                          index)) {
+                                                                    if (value
+                                                                        .isEmpty) {
                                                                       return 'Please  enter minutes';
                                                                     }
                                                                   }
-                                                                  
                                                                 }
-                                                              
+
                                                                 return null;
                                                               },
                                                               inputFormatters: [
@@ -1456,15 +1473,13 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       .merge(
                                                                           const TextStyle(
                                                                         fontWeight:
-                                                                            FontWeight
-                                                                                .w500,
+                                                                            FontWeight.w500,
                                                                         fontSize:
                                                                             14.0,
                                                                         letterSpacing:
                                                                             0.3,
                                                                         overflow:
-                                                                            TextOverflow
-                                                                                .clip,
+                                                                            TextOverflow.clip,
                                                                       )),
                                                                 )),
                                                           )
@@ -1480,8 +1495,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             .globalPosition;
                                                         showMenu(
                                                             context: context,
-                                                            position: RelativeRect
-                                                                .fromLTRB(
+                                                            position:
+                                                                RelativeRect
+                                                                    .fromLTRB(
                                                               offset.dx,
                                                               offset.dy,
                                                               MediaQuery.of(
@@ -1495,7 +1511,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       .height -
                                                                   offset.dy,
                                                             ),
-                                                            items: List.generate(
+                                                            items:
+                                                                List.generate(
                                                               _plannerDetailsController
                                                                   .statusDrList
                                                                   .length,
@@ -1507,8 +1524,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                                 index]
                                                                             .text =
                                                                         _plannerDetailsController
-                                                                            .statusDrList[
-                                                                                i]
+                                                                            .statusDrList[i]
                                                                             .ismmistSStatusName!;
                                                                     setState(
                                                                         () {});
@@ -1532,14 +1548,16 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                               },
                                                             ));
                                                       },
-                                                      onTapDown: (details) async {
+                                                      onTapDown:
+                                                          (details) async {
                                                         final offset = details
                                                             .globalPosition;
-    
+
                                                         showMenu(
                                                             context: context,
-                                                            position: RelativeRect
-                                                                .fromLTRB(
+                                                            position:
+                                                                RelativeRect
+                                                                    .fromLTRB(
                                                               offset.dx,
                                                               offset.dy,
                                                               MediaQuery.of(
@@ -1553,7 +1571,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       .height -
                                                                   offset.dy,
                                                             ),
-                                                            items: List.generate(
+                                                            items:
+                                                                List.generate(
                                                               _plannerDetailsController
                                                                   .statusDrList
                                                                   .length,
@@ -1565,8 +1584,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                                 index]
                                                                             .text =
                                                                         _plannerDetailsController
-                                                                            .statusDrList[
-                                                                                i]
+                                                                            .statusDrList[i]
                                                                             .ismmistSStatusName!;
                                                                     setState(
                                                                         () {});
@@ -1592,28 +1610,29 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                       },
                                                       child: TextFormField(
                                                         validator: (value) {
-                                                              
-                                                                if (value!.isEmpty) {
-                                                                  if(selectCheckbox.contains(index)){
-                                                                    return 'Please  select status';
-                                                                  }
-                                                                  
-                                                                }
-                                                              
-                                                                return null;
-                                                              },
+                                                          if (value!.isEmpty) {
+                                                            if (selectCheckbox
+                                                                .contains(
+                                                                    index)) {
+                                                              return 'Please  select status';
+                                                            }
+                                                          }
+
+                                                          return null;
+                                                        },
                                                         controller:
                                                             _plannerDetailsController
                                                                 .statusEtField
-                                                                .elementAt(index),
+                                                                .elementAt(
+                                                                    index),
                                                         readOnly: true,
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .titleSmall!
                                                             .merge(const TextStyle(
                                                                 fontSize: 16,
-                                                                color:
-                                                                    Colors.black,
+                                                                color: Colors
+                                                                    .black,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w300)),
@@ -1628,7 +1647,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                 .textTheme
                                                                 .titleSmall!
                                                                 .merge(const TextStyle(
-                                                                    fontSize: 16,
+                                                                    fontSize:
+                                                                        16,
                                                                     color: Colors
                                                                         .black,
                                                                     fontWeight:
@@ -1645,14 +1665,16 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                   DataCell(SizedBox(
                                                     width: 180,
                                                     child: GestureDetector(
-                                                      onTapDown: (details) async {
+                                                      onTapDown:
+                                                          (details) async {
                                                         final offset = details
                                                             .globalPosition;
-    
+
                                                         showMenu(
                                                             context: context,
-                                                            position: RelativeRect
-                                                                .fromLTRB(
+                                                            position:
+                                                                RelativeRect
+                                                                    .fromLTRB(
                                                               offset.dx,
                                                               offset.dy,
                                                               MediaQuery.of(
@@ -1666,20 +1688,20 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       .height -
                                                                   offset.dy,
                                                             ),
-                                                            items: List.generate(
+                                                            items:
+                                                                List.generate(
                                                               _plannerDetailsController
                                                                   .depWiseDevitnList
                                                                   .length,
                                                               (i) {
                                                                 return PopupMenuItem(
-                                                                   onTap: () {
+                                                                  onTap: () {
                                                                     _plannerDetailsController
                                                                             .deveationEtField[
                                                                                 index]
                                                                             .text =
                                                                         _plannerDetailsController
-                                                                            .depWiseDevitnList[
-                                                                                i]
+                                                                            .depWiseDevitnList[i]
                                                                             .ismdRRemarks!;
                                                                     setState(
                                                                         () {});
@@ -1703,7 +1725,22 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                               },
                                                             ));
                                                       },
-                                                      child: TextField(
+                                                      child: TextFormField(
+                                                        validator:
+                                                            (deviation == false)
+                                                                ? (value) {
+                                                                    if (value!
+                                                                        .isEmpty) {
+                                                                      if (selectCheckbox
+                                                                          .contains(
+                                                                              index)) {
+                                                                        return 'Please  select Deviation';
+                                                                      }
+                                                                    }
+
+                                                                    return null;
+                                                                  }
+                                                                : null,
                                                         controller:
                                                             _plannerDetailsController
                                                                     .deveationEtField[
@@ -1714,8 +1751,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             .titleSmall!
                                                             .merge(const TextStyle(
                                                                 fontSize: 16,
-                                                                color:
-                                                                    Colors.black,
+                                                                color: Colors
+                                                                    .black,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w300)),
@@ -1730,7 +1767,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                 .textTheme
                                                                 .titleSmall!
                                                                 .merge(const TextStyle(
-                                                                    fontSize: 16,
+                                                                    fontSize:
+                                                                        16,
                                                                     color: Colors
                                                                         .black,
                                                                     fontWeight:

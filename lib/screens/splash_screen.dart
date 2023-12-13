@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     messaging = FirebaseMessaging.instance;
-    // institutionalCode!.delete("institutionalCode");
+    initializeFCMNotification();
     super.initState();
   }
 
@@ -94,7 +94,6 @@ class _SplashScreenState extends State<SplashScreen> {
         var platformChannelSpecifics = NotificationDetails(
             android: androidPlatformChannelSpecifics,
             iOS: iOSPlatformChannelSpecifics);
-        // notificationController.getNotificationsCount();
         await flutterLocalNotificationsPlugin.show(
           notification.hashCode,
           notification!.title,
@@ -105,10 +104,6 @@ class _SplashScreenState extends State<SplashScreen> {
       },
     );
     messaging.getToken().then((token) async {
-      // AuthenticationController().loginVerification(fcmToken: token ?? "").then(
-      // (value) async {
-      // await checkVersionPermission();
-      // notificationController.getNotificationsCount();
       messaging.getInitialMessage().then((message) async {
         if (message != null) {
           pushNotificationNavigator(
@@ -135,9 +130,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //InstitutionalCodeApi.instance.loginWithInsCode("DEMOBGH");
     CustomThemeData.changeStatusBarColor(context);
-    // version();
 
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
@@ -145,13 +138,6 @@ class _SplashScreenState extends State<SplashScreen> {
         child: FutureBuilder<Widget>(
             future: handleAuth(),
             builder: (context, snapshot) {
-              // if (snapshot.hasData) {
-              //   if (snapshot.data!.get("institutionalCode") == null) {
-              //     return const InstitutionalLogin();
-              //   }
-              //   return LoginScreen();
-              // }
-
               if (snapshot.hasData) {
                 return snapshot.data!;
               }
@@ -206,18 +192,6 @@ class _SplashScreenState extends State<SplashScreen> {
                           ],
                         )),
                   );
-                  // return ErrWidget(
-                  //   err: err,
-                  //   btnTitle: "Update Password",
-                  //   onPressed: () {
-                  //     Navigator.pushReplacement(context,
-                  //         MaterialPageRoute(builder: (_) {
-                  //       return ResetExpiredPassword(
-                  //           base: baseUrlFromInsCode("login", mskoolController),
-                  //           userName: err['userName']);
-                  //     }));
-                  //   },
-                  // );
                 }
                 return Center(
                   child: SizedBox(
@@ -287,7 +261,6 @@ class _SplashScreenState extends State<SplashScreen> {
           mskoolController: mskoolController,
         );
       }
-
       if (institutionalCode!.get("institutionalCode") == null) {
         return Future.value(
           InstitutionalLogin(
@@ -295,21 +268,17 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         );
       }
-
       final InstitutionalCodeModel codeModel = await InstitutionalCodeApi
           .instance
           .loginWithInsCode(institutionalCode!.get("institutionalCode"), true);
-
       mskoolController.updateUniversalInsCodeModel(codeModel);
       if (logInBox!.get("isLoggedIn") == null || !logInBox!.get("isLoggedIn")) {
         return Future.value(LoginScreen(
           mskoolController: mskoolController,
         ));
       }
-
       String userName = logInBox!.get("userName");
       String password = logInBox!.get("password");
-
       int miId = importantIds!.get(URLS.miId);
       String loginBaseUrl = "";
       for (int i = 0; i < codeModel.apiarray.values.length; i++) {
@@ -326,78 +295,7 @@ class _SplashScreenState extends State<SplashScreen> {
       getDeviceTokenForFCM(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController);
-
       logger.d(loginSuccessModel.roleId);
-
-      // if (loginSuccessModel.roleforlogin!.toLowerCase() ==
-      //         URLS.staff.toLowerCase() ||
-      //     loginSuccessModel.roleforlogin!.toLowerCase() ==
-      //         URLS.hod.toLowerCase()) {
-      //   return Future.value(StaffHomeScreen(
-      //       loginSuccessModel: loginSuccessModel,
-      //       mskoolController: mskoolController));
-      // }
-
-      // if (loginSuccessModel.roleforlogin!.toLowerCase() ==
-      //     URLS.manager.toLowerCase()) {
-      //   return Future.value(ManagerHome(
-      //     loginSuccessModel: loginSuccessModel,
-      //     mskoolController: mskoolController,
-      //   ));
-      // }
-
-      // if (loginSuccessModel.roleforlogin!.toLowerCase() ==
-      //     URLS.student.toLowerCase()) {
-      //   return Future.value(Home(
-      //     loginSuccessModel: loginSuccessModel,
-      //     mskoolController: mskoolController,
-      //   ));
-      // }
-
-      // return Future.value(Center(
-      //   child: Scaffold(
-      //     body: Center(
-      //       child: Column(
-      //         mainAxisSize: MainAxisSize.min,
-      //         children: [
-      //           const Text("This app is not used to manage this ID"),
-      //           Padding(
-      //             padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-      //             child: SizedBox(
-      //               width: 180,
-      //               height: 40,
-      //               child: CustomElevatedButton(
-      //                   isGradient: false,
-      //                   boxShadow: const BoxShadow(),
-      //                   color: const Color(0xFFFFDFD6),
-      //                   child: Row(
-      //                       mainAxisSize: MainAxisSize.min,
-      //                       children: const [
-      //                         Icon(
-      //                           Icons.logout,
-      //                           color: Color(0xffF24E1E),
-      //                         ),
-      //                         SizedBox(
-      //                           width: 10,
-      //                         ),
-      //                         Text(
-      //                           "Log Out",
-      //                           style: TextStyle(
-      //                               color: Color(0xffF24E1E),
-      //                               fontSize: 16,
-      //                               fontWeight: FontWeight.w600),
-      //                         )
-      //                       ]),
-      //                   onPressed: () {
-      //                     Get.dialog(const LogoutConfirmationPopup());
-      //                   }),
-      //             ),
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //   ),
-      // ));
       return Future.value(CommonHomeScreen(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController));

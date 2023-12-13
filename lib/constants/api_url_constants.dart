@@ -319,8 +319,7 @@ class URLS {
   static String saveLeave = "api/OnlineLeaveApplicationFacade/save/";
 
   static String leaveAuthorization =
-  "api/OnlineLeaveApplicationFacade/CheckApprovalAuthorizationMapped/";
-
+      "api/OnlineLeaveApplicationFacade/CheckApprovalAuthorizationMapped/";
 
   /* Global Endpoints */
   static String pushNotification = "api/AdmissionCtrl/PushNotificationonload/";
@@ -646,6 +645,7 @@ class URLS {
   static String interactionSave = 'api/ISM_InteractionFacade/savedata';
   static String interactionAllList =
       'api/ISM_InteractionFacade/get_replydetails';
+  static String vmsMessageList = 'api/ISM_InteractionFacade/get_replydetails';
   // VMS Notification
   static String vMSNotification = 'api/ISM_InteractionFacade/getnotification';
   //dr
