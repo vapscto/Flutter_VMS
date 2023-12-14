@@ -13,6 +13,13 @@ import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
+class Item {
+  bool isApproved;
+  bool isRejected;
+
+  Item({required this.isApproved, required this.isRejected});
+}
+
 class UpdateTADATableData extends StatefulWidget {
   final TadaApprovalController tadaController;
   final double amount;
@@ -51,6 +58,7 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
     amount -= a;
   }
 
+  var approveCent = 0;
   _getData() async {
     widget.tadaController.updateIsLoading(true);
     await TADAApprovalDetailsAPI.instance.tadaDetails(
@@ -73,11 +81,19 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.tadaController.editArrayList;
     });
-
+    widget.tadaController.selectedValue = List.generate(
+        widget.tadaController.editArrayList.length,
+        (index) => Item(isApproved: true, isRejected: false));
     setState(() {
+      updateCounts();
       for (int index = 0;
           index < widget.tadaController.editArrayList.length;
           index++) {
+        widget.tadaController.textEditingControllerList.add(
+            TextEditingController(
+                text:
+                    widget.tadaController.editArrayList[index].vTADAADRemarks ??
+                        ''));
         widget.tadaController.approvalTextEditingControllerList
             .add(TextEditingController(text: ''));
         widget.tadaController.textEditingControllerList[index].addListener(() {
@@ -111,6 +127,25 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
     sum -= amount;
     amount = sum;
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    widget.tadaController.selectedValue.clear();
+    super.dispose();
+  }
+
+  int approvedCount = 0;
+  int rejectedCount = 0;
+  void updateCounts() {
+    approvedCount = widget.tadaController.selectedValue
+        .where((item) => item.isApproved)
+        .length;
+    rejectedCount = widget.tadaController.selectedValue
+        .where((item) => item.isRejected)
+        .length;
+    logger.i(approvedCount);
+    logger.i(rejectedCount);
   }
 
   @override
@@ -225,101 +260,83 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
         const SizedBox(height: 20),
         Align(
             alignment: Alignment.bottomCenter,
-            child: MSkollBtn(
-                title: "Save",
-                onPress: () {
-                  var approveCent = 0;
-                  if (widget.values.vTADAATotalSactionedAmount == 0.00 &&
-                      widget.values.vTADAATotalSactionedAmount == 0) {
-                    approveCent = 0;
-                  } else if (widget.values.vTADAATotalSactionedAmount! > 0) {
-                    approveCent = 1;
-                  }
-                  if (amount > widget.values.vTADAATotalAppliedAmount!) {
-                    Fluttertoast.showToast(
-                        msg:
-                            "sanction amount should be lessthen applied amount");
-                  } else {
-                    if (widget.tadaController.editArrayList.isNotEmpty) {
-                      headArray.clear();
-                      for (int i = 0;
-                          i < widget.tadaController.editArrayList.length;
-                          i++) {
-                        var value =
-                            widget.tadaController.editArrayList.elementAt(i);
-                        headArray.add({
-                          // 'VTADAAD_Id': (widget.tadaController.editArrayList
-                          //         .elementAt(i)
-                          //         .vTADAADId ??
-                          //     0),
-                          // "VTADAAAA_Id": widget.values.vTADAAAId,
-                          // "VTADAAAH_SactionedAmount": widget
-                          //     .tadaController.textEditingControllerList
-                          //     .elementAt(i)
-                          //     .text,
-                          // 'VTADAAAH_Remarks': widget
-                          //     .tadaController.approvalTextEditingControllerList
-                          //     .elementAt(i)
-                          //     .text,
-                          // 'flag':
-                          //     widget.tadaController.selectedValue.elementAt(i),
-                          "VTADAAD_Id": value.vTADAADId,
-                          "VTADAA_Id": value.vTADAAId,
-                          "VTADAAD_ExpenditureHead":
-                              value.vTADAADExpenditureHead,
-                          "VTADAAD_Amount": value.vTADAADAmount,
-                          "VTADAAAH_SactionedAmount": widget
-                              .tadaController.textEditingControllerList
-                              .elementAt(i)
-                              .text,
-                          "flag":
-                              widget.tadaController.selectedValue.elementAt(i),
-                          "VTADAAD_Slots": value.vTADAADRemarks,
-                          "VTADAAD_TotalSlots": value.vTADAADTotalslots,
-                          "VTADACM_FoodAmt": value.vTADACMFoodAmt,
-                          "VTADACM_AccommodationAmt":
-                              value.vTADACMAccommodationAmt,
-                          "VTADACM_TransportAmt": value.vTADACMTransportAmt
+            child: (widget.tadaController.isDetailsLoading.value == true)
+                ? SizedBox(
+                    height: 30,
+                    width: 30,
+                    child: CircularProgressIndicator(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  )
+                : MSkollBtn(
+                    title: "Save",
+                    onPress: () {
+                      updateCounts();
+                      if (amount > widget.values.vTADAATotalAppliedAmount!) {
+                        Fluttertoast.showToast(
+                            msg:
+                                "sanction amount should be lessthen applied amount");
+                      } else {
+                        logger.i(approveCent);
+                        if (widget.tadaController.editArrayList.isNotEmpty) {
+                          headArray.clear();
+                          for (int i = 0;
+                              i < widget.tadaController.editArrayList.length;
+                              i++) {
+                            var value = widget.tadaController.editArrayList
+                                .elementAt(i);
+                            headArray.add({
+                              "VTADAAD_Id": value.vTADAADId,
+                              "VTADAA_Id": value.vTADAAId,
+                              "VTADAAD_ExpenditureHead":
+                                  value.vTADAADExpenditureHead,
+                              "VTADAAAD_Remarks": widget.tadaController
+                                  .textEditingControllerList[i].text,
+                              "VTADAAD_Amount": value.vTADAADAmount,
+                              "VTADAAAH_SactionedAmount": widget
+                                  .tadaController.textEditingControllerList
+                                  .elementAt(i)
+                                  .text,
+                              "flag": (widget.tadaController.selectedValue
+                                          .elementAt(i)
+                                          .isApproved ==
+                                      true)
+                                  ? "Approved"
+                                  : "Rejected",
+                              "VTADAAD_Slots": value.vTADAADSlots ?? 0,
+                              "VTADAAD_TotalSlots":
+                                  value.vTADAADTotalslots ?? 0,
+                              "VTADACM_FoodAmt": value.vTADACMFoodAmt,
+                              "VTADACM_AccommodationAmt":
+                                  value.vTADACMAccommodationAmt,
+                              "VTADACM_TransportAmt": value.vTADACMTransportAmt
+                            });
+                          }
+                        }
+                        TADAApprovalSaveAPI.instance.saveTADA(
+                            base: baseUrlFromInsCode(
+                                'issuemanager', widget.mskoolController),
+                            body: {
+                              'VTADAA_Remarks': remarkController.text,
+                              'VTADAA_TotalSactionedAmount': amount,
+                              'headarray': headArray,
+                              'VTADAA_Id': widget.values.vTADAAAId,
+                              "MI_Id": widget.values.mIId,
+                              "approvecnt": approvedCount,
+                              "level": widget.values.sanctionLevelNo,
+                              "HRME_Id": widget.values.hRMEId,
+                              'UserId': widget.values.userId
+                            }).then((v) {
+                          TADAApprovalListAPI.instance.showApplyList(
+                              base: baseUrlFromInsCode(
+                                  'issuemanager', widget.mskoolController),
+                              userId: widget.values.userId!,
+                              tadaController: widget.tadaController);
+                          _getData();
+                          Get.back();
                         });
                       }
-                    }
-
-                    logger.i(headArray);
-                    logger.i({
-                      'VTADAA_Remarks': remarkController.text,
-                      'VTADAA_TotalSactionedAmount': amount,
-                      'headarray': headArray,
-                      'VTADAA_Id': widget.values.vTADAAId,
-                      "MI_Id": widget.values.mIId,
-                      "approvecnt": approveCent,
-                      "level": widget.values.sanctionLevelNo,
-                      "HRME_Id": widget.values.hRMEId,
-                      'UserId': widget.values.userId
-                    });
-                    TADAApprovalSaveAPI.instance.saveTADA(
-                        base: baseUrlFromInsCode(
-                            'issuemanager', widget.mskoolController),
-                        body: {
-                          'VTADAA_Remarks': remarkController.text,
-                          'VTADAA_TotalSactionedAmount': amount,
-                          'headarray': headArray,
-                          'VTADAA_Id': widget.values.vTADAAAId,
-                          "MI_Id": widget.values.mIId,
-                          "approvecnt": approveCent,
-                          "level": widget.values.sanctionLevelNo,
-                          "HRME_Id": widget.values.hRMEId,
-                          'UserId': widget.values.userId
-                        }).then((v) {
-                      TADAApprovalListAPI.instance.showApplyList(
-                          base: baseUrlFromInsCode(
-                              'issuemanager', widget.mskoolController),
-                          userId: widget.values.userId!,
-                          tadaController: widget.tadaController);
-                      _getData();
-                      Get.back();
-                    });
-                  }
-                })),
+                    })),
       ],
     );
   }
@@ -369,24 +386,32 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
   List<DataRow> createRow() {
     return List.generate(widget.tadaController.editArrayList.length, (index) {
       var value = index + 1;
-      widget.tadaController.selectedValue.add("Approved");
       return DataRow(cells: [
         DataCell(Text(value.toString())),
         DataCell(Radio(
           fillColor: MaterialStateColor.resolveWith(
               (states) => Theme.of(context).primaryColor),
-          groupValue: widget.tadaController.selectedValue[index],
-          value: "Approved",
+          groupValue: widget.tadaController.selectedValue[index].isApproved,
+          value: true,
           onChanged: (value) {
             setState(() {
-              widget.tadaController.selectedValue[index] = value.toString();
+              widget.tadaController.selectedValue[index].isApproved = value!;
+              widget.tadaController.selectedValue[index].isRejected = !value;
 
-              if (widget.tadaController.selectedValue[index] == 'Approved') {
+              if (widget.tadaController.selectedValue[index].isApproved ==
+                  true) {
                 addAmount(double.parse(widget
                     .tadaController.textEditingControllerList
                     .elementAt(index)
                     .text));
+                updateCounts();
+                widget.tadaController.textEditingControllerList
+                        .elementAt(index)
+                        .text =
+                    widget.tadaController.editArrayList[index].vTADAADAmount
+                        .toString();
               }
+
               logger.i(widget.tadaController.selectedValue[index]);
             });
           },
@@ -394,11 +419,21 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
         DataCell(Radio(
           fillColor: MaterialStateColor.resolveWith(
               (states) => Theme.of(context).primaryColor),
-          groupValue: widget.tadaController.selectedValue[index],
-          value: 'Rejected',
+          groupValue: widget.tadaController.selectedValue[index].isRejected,
+          value: true,
           onChanged: (dynamic value) {
             setState(() {
-              widget.tadaController.selectedValue[index] = value;
+              widget.tadaController.selectedValue[index].isRejected = value;
+              widget.tadaController.selectedValue[index].isApproved = !value;
+              (widget.tadaController.selectedValue[index].isRejected)
+                  ? widget.tadaController.textEditingControllerList
+                      .elementAt(index)
+                      .text = '0'
+                  : widget.tadaController.textEditingControllerList
+                          .elementAt(index)
+                          .text =
+                      widget.tadaController.editArrayList[index].vTADAADAmount
+                          .toString();
               if (amount >=
                   double.parse(widget.tadaController.textEditingControllerList
                       .elementAt(index)
@@ -408,6 +443,7 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
                     .elementAt(index)
                     .text));
               }
+              updateCounts();
               logger.i(widget.tadaController.selectedValue[index]);
             });
           },
@@ -456,9 +492,10 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
         DataCell(Padding(
           padding: const EdgeInsets.only(bottom: 4.0),
           child: TextFormField(
-            readOnly: (widget.tadaController.selectedValue[index] == 'Approved')
-                ? false
-                : true,
+            readOnly:
+                (widget.tadaController.selectedValue[index].isApproved == true)
+                    ? false
+                    : true,
             onChanged: (value) {
               setState(() {
                 if (double.parse(widget
@@ -508,9 +545,10 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
         DataCell(Padding(
           padding: const EdgeInsets.only(bottom: 4.0),
           child: TextFormField(
-            readOnly: (widget.tadaController.selectedValue[index] == 'Approved')
-                ? false
-                : true,
+            readOnly:
+                (widget.tadaController.selectedValue[index].isApproved == true)
+                    ? false
+                    : true,
             style: Get.textTheme.titleSmall,
             controller: widget.tadaController.approvalTextEditingControllerList
                 .elementAt(index),

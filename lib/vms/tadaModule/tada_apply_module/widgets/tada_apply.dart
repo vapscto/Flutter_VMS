@@ -2411,72 +2411,82 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                   padding: const EdgeInsets.only(top: 30),
                   child: Align(
                     alignment: Alignment.bottomCenter,
-                    child: MSkollBtn(
-                        title: "Save",
-                        onPress: () {
-                          allAmount = foodAmt +
-                              accommodationAmount +
-                              otherAmount.toDouble();
-                          if (_addressController.text.isEmpty) {
-                            Fluttertoast.showToast(msg: "Enter Address");
-                          } else if (allAmount == 0) {
-                            Fluttertoast.showToast(msg: "Add Amount");
-                          } else if (tadaApplyDataController
-                              .addListBrowser.isEmpty) {
-                            Fluttertoast.showToast(msg: "Upload Image");
-                          } else {
-                            int foodamountId = 0;
-                            int accamountId = 0;
-                            int othersamountId = 0;
-                            allowanceData.clear();
+                    child: tadaApplyDataController.isSave.value
+                        ? SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          )
+                        : MSkollBtn(
+                            title: "Save",
+                            onPress: () {
+                              allAmount = foodAmt +
+                                  accommodationAmount +
+                                  otherAmount.toDouble();
+                              if (_addressController.text.isEmpty) {
+                                Fluttertoast.showToast(msg: "Enter Address");
+                              } else if (allAmount == 0) {
+                                Fluttertoast.showToast(msg: "Add Amount");
+                              } else if (tadaApplyDataController
+                                  .addListBrowser.isEmpty) {
+                                Fluttertoast.showToast(msg: "Upload Image");
+                              } else {
+                                int foodamountId = 0;
+                                int accamountId = 0;
+                                int othersamountId = 0;
+                                allowanceData.clear();
 
-                            if (isFoodSelected == true) {
-                              foodamountId =
-                                  (foodamountId == null || foodamountId == "")
+                                if (isFoodSelected == true) {
+                                  foodamountId = (foodamountId == null ||
+                                          foodamountId == "")
                                       ? 0
                                       : foodamountId;
-                              allowanceData.add({
-                                "Type": "Food",
-                                "Amount": foodAmt,
-                                "Remarks": foodRemarksController.text,
-                                "VTADAAD_Id": foodamountId,
-                                "VTADAAD_TotalSlots": foodSlot,
-                                "VTADAAD_Slots": foodTotalSlotController.text,
-                              });
-                            }
+                                  allowanceData.add({
+                                    "Type": "Food",
+                                    "Amount": foodAmt,
+                                    "Remarks": foodRemarksController.text,
+                                    "VTADAAD_Id": foodamountId,
+                                    "VTADAAD_TotalSlots": foodSlot,
+                                    "VTADAAD_Slots":
+                                        foodTotalSlotController.text,
+                                  });
+                                }
 
-                            if (isAccommodationSelected == true) {
-                              accamountId =
-                                  (accamountId == null || accamountId == "")
+                                if (isAccommodationSelected == true) {
+                                  accamountId =
+                                      (accamountId == null || accamountId == "")
+                                          ? 0
+                                          : accamountId;
+                                  allowanceData.add({
+                                    "Type": "Accommodation",
+                                    "Amount": accommodationAmount,
+                                    "Remarks":
+                                        accommodationRemarksController.text,
+                                    "VTADAAD_Id": accamountId,
+                                    "VTADAAD_TotalSlots": accommudationSlot,
+                                    "VTADAAD_Slots":
+                                        accommodationTotalSlotController.text,
+                                  });
+                                }
+                                if (isOthersSelected == true) {
+                                  othersamountId = (othersamountId == null ||
+                                          othersamountId == "")
                                       ? 0
-                                      : accamountId;
-                              allowanceData.add({
-                                "Type": "Accommodation",
-                                "Amount": accommodationAmount,
-                                "Remarks": accommodationRemarksController.text,
-                                "VTADAAD_Id": accamountId,
-                                "VTADAAD_TotalSlots": accommudationSlot,
-                                "VTADAAD_Slots":
-                                    accommodationTotalSlotController.text,
-                              });
-                            }
-                            if (isOthersSelected == true) {
-                              othersamountId = (othersamountId == null ||
-                                      othersamountId == "")
-                                  ? 0
-                                  : othersamountId;
-                              allowanceData.add({
-                                "Type": "Other",
-                                "Amount": otherAmountController.text,
-                                "Remarks": otherremarksController.text,
-                                "VTADAAD_Id": othersamountId,
-                              });
-                            }
+                                      : othersamountId;
+                                  allowanceData.add({
+                                    "Type": "Other",
+                                    "Amount": otherAmountController.text,
+                                    "Remarks": otherremarksController.text,
+                                    "VTADAAD_Id": othersamountId,
+                                  });
+                                }
 
-                            logger.i(allowanceData);
-                            saveData();
-                          }
-                        }),
+                                logger.i(allowanceData);
+                                saveData();
+                              }
+                            }),
                   ),
                 ),
                 (tadaApplyDataController.getSavedData.isEmpty)

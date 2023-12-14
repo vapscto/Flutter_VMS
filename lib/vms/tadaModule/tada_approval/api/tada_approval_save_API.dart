@@ -11,13 +11,13 @@ class TADAApprovalSaveAPI {
   saveTADA({required Map<String, dynamic> body, required String base}) async {
     var dio = Dio();
     var url = base + URLS.tadaApprovalSave;
+    logger.d(body);
     try {
       var response = await dio.post(
         url,
         options: Options(headers: getSession()),
         data: body,
       );
-      logger.d(body);
       logger.i(url);
       if (response.statusCode == 200) {
         if (response.data['returnvalue'] == true) {
