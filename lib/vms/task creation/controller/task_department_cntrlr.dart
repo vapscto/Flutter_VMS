@@ -11,6 +11,10 @@ class TaskDepartController extends GetxController {
   RxBool tskDeptErrorLoading = RxBool(false);
   RxString taskAssingn = "N".obs;
   RxString typesTask = "B".obs;
+  RxBool disableSubmitButton = RxBool(true);
+  void updateDisbleSubmitButton(bool val){
+    disableSubmitButton.value = val;
+  }
   void taskDeptLoading(bool val) {
     tskDeptLoading.value = val;
   }

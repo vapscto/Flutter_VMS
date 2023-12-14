@@ -246,7 +246,13 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
           _taskClientModuleCntroller.taskClientList.clear();
           _titleETController.clear();
           _descritpionETController.clear();
+          _taskDepartController.updateTaskAssign("N");
+          _taskDepartController.updateTypeOfTask("B");
+           employeesID.clear();
+          _taskDepartController.checkBox.clear();
+          addItemListBrowse(0, "");
           loadCmpny();
+           _taskDepartController.updateDisbleSubmitButton(true); 
           showDialog(
             context: context,
             builder: (context) {
@@ -307,38 +313,43 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
               child: Obx(
                 () => controller.drIsLoading.value
                     ? const SizedBox()
-                    : BtnSave(
-                        title: 'Submit',
-                        onPress: () async {
-                          if (_formKey.currentState!.validate()) {
-                            if (_taskDepartController.taskAssingn.value ==
-                                'Y') {
-                              if (selectFromDate.text.isEmpty) {
-                                Fluttertoast.showToast(msg: "Select From Date");
-                                return;
-                              } else if (selectToDate.text.isEmpty) {
-                                Fluttertoast.showToast(msg: "Select To Date");
-                                return;
-                              } else if (hoursEt.text == "0" &&
-                                  minutesEt.text == "0") {
-                                Fluttertoast.showToast(msg: "Enter Time");
-                                return;
-                              } else if (employeesID.isEmpty) {
-                                Fluttertoast.showToast(msg: "Select Employee");
-                                return;
-                              } else {
+                    : Visibility(
+                      visible: _taskDepartController.disableSubmitButton.isTrue,
+                      child: BtnSave(
+                          title: 'Submit',
+                          onPress: () async {
+                            if (_formKey.currentState!.validate()) {
+                              if (_taskDepartController.taskAssingn.value ==
+                                  'Y') {
+                                if (selectFromDate.text.isEmpty) {
+                                  Fluttertoast.showToast(msg: "Select From Date");
+                                  return;
+                                } else if (selectToDate.text.isEmpty) {
+                                  Fluttertoast.showToast(msg: "Select To Date");
+                                  return;
+                                } else if (hoursEt.text == "0" &&
+                                    minutesEt.text == "0") {
+                                  Fluttertoast.showToast(msg: "Enter Time");
+                                  return;
+                                } else if (employeesID.isEmpty) {
+                                  Fluttertoast.showToast(msg: "Select Employee");
+                                  return;
+                                } else {
+                                  _taskDepartController.updateDisbleSubmitButton(false);
+                                  await loadImages();
+                                }
+                              } else if (_taskDepartController
+                                      .taskAssingn.value ==
+                                  'N') {
+                                _taskDepartController.updateDisbleSubmitButton(false);    
                                 await loadImages();
                               }
-                            } else if (_taskDepartController
-                                    .taskAssingn.value ==
-                                'N') {
-                              await loadImages();
+                            } else {
+                              Fluttertoast.showToast(msg: "Select mandatory");
                             }
-                          } else {
-                            Fluttertoast.showToast(msg: "Select mandatory");
-                          }
-                        },
-                      ),
+                          },
+                        ),
+                    ),
               ),
             )
           ],
@@ -2416,7 +2427,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                       child: Align(
                                         alignment: Alignment.center,
                                         child: Padding(
-                                          padding: EdgeInsets.symmetric(
+                                          padding:const EdgeInsets.symmetric(
                                               horizontal: 10),
                                           child: TextField(
                                             style: Theme.of(context)
