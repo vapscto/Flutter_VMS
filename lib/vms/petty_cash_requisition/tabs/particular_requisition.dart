@@ -506,11 +506,9 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                       onTap: () async {
                         DateTime? selectedDT = await showDatePicker(
                           context: context,
-                          initialDate: selectDate.text.isNotEmpty
-                              ? DateTime.parse(selectDate.text)
-                              : DateTime.now(),
+                          initialDate: DateTime.now(),
                           firstDate: DateTime(1000),
-                          lastDate: DateTime(DateTime.now().year, 12, 31),
+                          lastDate: DateTime.now(),
                         );
 
                         if (selectedDT == null) {
