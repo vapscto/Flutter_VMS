@@ -150,6 +150,56 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
               ),
             ))
         : null;
+        controller.leaveApproveList.isNotEmpty
+        ? Get.dialog(
+            barrierDismissible: false,
+            WillPopScope(
+              onWillPop: () {
+                return Future.value(false);
+              },
+              child: AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                title: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Update Task",
+                      // ignore: use_build_context_synchronously
+                      style: Theme.of(context).textTheme.titleLarge!.merge(
+                          // ignore: use_build_context_synchronously
+                          TextStyle(color: Theme.of(context).primaryColor)),
+                    )),
+                content: SizedBox(
+                  height: 120,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Kindly Approved Leaves",
+                          // ignore: use_build_context_synchronously
+                          style: Theme.of(context).textTheme.titleSmall!.merge(
+                              // ignore: use_build_context_synchronously
+                              TextStyle(color: Theme.of(context).primaryColor)),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      MSkollBtn(
+                        title: "Close",
+                        onPress: () {
+                          Get.back();
+                          Get.back();
+                        },
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ))
+        : null;
   }
 
   @override
