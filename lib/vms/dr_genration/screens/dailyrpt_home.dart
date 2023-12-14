@@ -536,7 +536,12 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                               margin: const EdgeInsets.only(
                                   left: 20, right: 20, top: 30, bottom: 10),
                               child: CustomContainer(
-                                child: TextField(
+                                child: TextFormField(
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return '';
+                                    }
+                                  },
                                   controller: reasonController,
                                   maxLines: 2,
                                   style: Theme.of(context)
@@ -1750,60 +1755,61 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                               },
                                                             ));
                                                       },
-                                                      child: TextFormField(
-                                                        validator: (value) {
-                                                          if (value!.isEmpty) {
-                                                            if (selectCheckbox
-                                                                .contains(
-                                                                    index)) {
-                                                              if (currentDt.isAfter(
-                                                                  previousDt)) {
-                                                                return 'Please  select Deviation';
-                                                              }
-                                                            }
-                                                          }
+                                                      child:
+                                                          (currentDt.isAfter(
+                                                                  previousDt))
+                                                              ? SizedBox()
+                                                              : TextFormField(
+                                                                  validator:
+                                                                      (value) {
+                                                                    if (value!
+                                                                        .isEmpty) {
+                                                                      if (selectCheckbox
+                                                                          .contains(
+                                                                              index)) {
+                                                                        if (currentDt
+                                                                            .isAfter(previousDt)) {
+                                                                          return 'Please  select Deviation';
+                                                                        }
+                                                                      }
+                                                                    }
 
-                                                          return null;
-                                                        },
-                                                        controller:
-                                                            _plannerDetailsController
-                                                                    .deveationEtField[
-                                                                index],
-                                                        readOnly: true,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .titleSmall!
-                                                            .merge(const TextStyle(
-                                                                fontSize: 16,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w300)),
-                                                        decoration: InputDecoration(
-                                                            suffixIcon:
-                                                                const Icon(Icons
-                                                                    .arrow_drop_down),
-                                                            hintText:
-                                                                "Select Deviation",
-                                                            hintStyle: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .titleSmall!
-                                                                .merge(const TextStyle(
-                                                                    fontSize:
-                                                                        16,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w300)),
-                                                            border: OutlineInputBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5))),
-                                                      ),
+                                                                    return null;
+                                                                  },
+                                                                  controller:
+                                                                      _plannerDetailsController
+                                                                              .deveationEtField[
+                                                                          index],
+                                                                  readOnly:
+                                                                      true,
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .titleSmall!
+                                                                      .merge(const TextStyle(
+                                                                          fontSize:
+                                                                              16,
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontWeight:
+                                                                              FontWeight.w300)),
+                                                                  decoration: InputDecoration(
+                                                                      suffixIcon:
+                                                                          const Icon(Icons
+                                                                              .arrow_drop_down),
+                                                                      hintText:
+                                                                          "Select Deviation",
+                                                                      hintStyle: Theme.of(context).textTheme.titleSmall!.merge(const TextStyle(
+                                                                          fontSize:
+                                                                              16,
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontWeight: FontWeight
+                                                                              .w300)),
+                                                                      border: OutlineInputBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(5))),
+                                                                ),
                                                     ),
                                                   ))
                                                 ]);
