@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/vms/maker%20and%20checker/controller/mc_home_scr
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/adavnceList_mode.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/applyList_model.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/department_list.dart';
+import 'package:m_skool_flutter/vms/maker%20and%20checker/model/leave_model.dart';
 
 Future<int> feacthUserApi({
   required String base,
@@ -49,19 +50,19 @@ Future<int> feacthUserApi({
       DepartmentModelList deptList =
           DepartmentModelList.fromJson(response.data['departmentList']);
       controller.departmentList.addAll(deptList.values!);
-      
+      if(response.data['adavanceList'] !=null){
       AdavanceListModel adavanceListModel = AdavanceListModel.fromJson(response.data['adavanceList']);
       controller.adavanceListModel.addAll(adavanceListModel.values!);
-      ApplyListModel applyListModel = ApplyListModel.fromJson(response.data['applyList']);
+      }
+      if(response.data['applyList'] !=null){
+       ApplyListModel applyListModel = ApplyListModel.fromJson(response.data['applyList']);
       controller.applyListModel.addAll(applyListModel.values!);
-      if(adavanceListModel.values!.isNotEmpty && applyListModel.values!.isNotEmpty)
-      {
-        logger.w( 
-          "Fuked up"
-        );
-      }      //       DesignationsModel dsgnList = DesignationsModel.fromJson(response.data['designation']);
-
-      //  controller.designationList.addAll(dsgnList.values!);
+      }
+      if(response.data['get_leaveDetails'] !=null){
+      GetListLeaveModel   getListLeaveModel = GetListLeaveModel.fromJson(response.data['get_leaveDetails']);
+      controller.leaveApproveList.addAll(getListLeaveModel.values!);
+      }
+           
       return response.statusCode!;
     }
 
