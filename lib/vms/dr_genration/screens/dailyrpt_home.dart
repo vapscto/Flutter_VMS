@@ -607,7 +607,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                               'Others'
                                           ? DateTime.now()
                                               .subtract(Duration(days: 1))
-                                          : DateTime(3000),
+                                          : DateTime.now(),
                                   initialDate:
                                       _plannerDetailsController.day.value ==
                                               'Others'

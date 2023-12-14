@@ -168,8 +168,9 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                                       alignment: Alignment.center,
                                       child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor:const Color.fromARGB(
-                                                255, 27, 59, 238),
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    255, 27, 59, 238),
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 14, vertical: 2.0),
                                             shape: RoundedRectangleBorder(
@@ -245,13 +246,15 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                               }),
                             ))))),
           ),
-          MSkollBtn(title: "Save", onPress:  () {
-            
-          },)
+          MSkollBtn(
+            title: "Save",
+            onPress: () {},
+          )
         ],
       ),
     );
   }
+
   @override
   void dispose() {
     _plannerDetailsController.addListBrowser.clear();

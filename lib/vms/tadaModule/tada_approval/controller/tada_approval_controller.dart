@@ -4,6 +4,7 @@ import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/file_list_mod
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_edit_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_time.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_approval/widgets/tada_approval_table.dart';
 
 class TadaApprovalController extends GetxController {
   RxBool isDataLoading = RxBool(false);
@@ -62,9 +63,9 @@ class TadaApprovalController extends GetxController {
       <TextEditingController>[].obs;
   RxList<TextEditingController> percentageListController =
       <TextEditingController>[].obs;
-  List<String> selectedValue = [];
-  void addToSelectedValueList(List<String> value) {
-    selectedValue.add(value.toString());
+  List<Item> selectedValue = [];
+  void addToSelectedValueList(List<Item> value) {
+    selectedValue.addAll(value);
   }
 
   void addToTextEditingList(TextEditingController textEditingController) {
