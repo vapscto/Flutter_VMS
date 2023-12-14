@@ -50,7 +50,7 @@ class PlannerDetails extends GetxController {
   // drnotset list
   RxList<GetdrnotsentdetailsValues> drnotSentdetailsList =
       <GetdrnotsentdetailsValues>[].obs;
-  RxList<TextEditingController> etResponse = <TextEditingController>[].obs;    
+  RxList<TextEditingController> etResponse = <TextEditingController>[].obs;
   void drNotSend(List<GetdrnotsentdetailsValues> drnotSent) {
     if (drnotSentdetailsList.isNotEmpty) {
       drnotSentdetailsList.clear();
@@ -109,4 +109,6 @@ class PlannerDetails extends GetxController {
       advanceApplyDataList.add(advanceApply.elementAt(i));
     }
   }
+
+  List<Map<String, dynamic>> uploadImages = [];
 }

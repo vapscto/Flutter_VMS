@@ -2,11 +2,16 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/homework/model/upload_hw_cw_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';
+import 'package:m_skool_flutter/vms/task%20creation/api/sava_task.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
+import 'package:m_skool_flutter/vms/utils/saveImage.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:open_filex/open_filex.dart';
@@ -14,8 +19,12 @@ import 'package:open_filex/open_filex.dart';
 class CategoryCheckList extends StatefulWidget {
   final CategoryCheckListModel value;
   final PlannerDetails plannerDetailsController;
+  final LoginSuccessModel loginSuccessModel;
   const CategoryCheckList(
-      {required this.value, super.key, required this.plannerDetailsController});
+      {required this.value,
+      super.key,
+      required this.plannerDetailsController,
+      required this.loginSuccessModel});
 
   @override
   State<CategoryCheckList> createState() => _CategoryCheckListState();
@@ -236,12 +245,6 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                                                     );
                                                   },
                                                   child: Icon(Icons.add)),
-                                              // InkWell(
-                                              //     onTap: () {
-                                              //       removeItemListBrowse(
-                                              //           index);
-                                              //     },
-                                              //     child: Icon(Icons.remove))
                                             ],
                                           )
                                         : index <
@@ -257,12 +260,50 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                             }),
                           ))))),
         ),
-        MSkollBtn(
-          title: "Save",
-          onPress: () async {
-            if (widget.plannerDetailsController.addListBrowser.isNotEmpty) {}
-          },
-        )
+        (isLoading == true)
+            ? SizedBox(
+                height: 30,
+                child: CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor,
+                ),
+              )
+            : MSkollBtn(
+                title: "Save",
+                onPress: () async {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  if (widget
+                      .plannerDetailsController.addListBrowser.isNotEmpty) {
+                    for (var element
+                        in widget.plannerDetailsController.addListBrowser) {
+                      try {
+                        uploadAttachment.add(await uploadAtt(
+                            miId: widget.loginSuccessModel.mIID!,
+                            file: File(element.file!.path)));
+                      } catch (e) {
+                        Fluttertoast.showToast(msg: "Please Upload Image");
+                        return Future.error({
+                          "errorTitle": "An Error Occured",
+                          "errorMsg":
+                              "While trying to upload attchement, we encountered an error"
+                        });
+                      }
+                    }
+                    widget.plannerDetailsController.uploadImages.clear();
+                    for (var i in uploadAttachment) {
+                      widget.plannerDetailsController.uploadImages
+                          .add({"name": i.name, "path": i.path});
+                    }
+                    setState(() {
+                      isLoading = false;
+                    });
+                    Get.back(result: uploadAttachment);
+                  } else {
+                    Fluttertoast.showToast(msg: "Please Upload File");
+                  }
+                },
+              )
       ],
     );
   }
@@ -272,4 +313,7 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
     widget.plannerDetailsController.addListBrowser.clear();
     super.dispose();
   }
+
+  List<UploadHwCwModel> uploadAttachment = [];
+  bool isLoading = false;
 }

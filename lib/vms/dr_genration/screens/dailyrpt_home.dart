@@ -187,6 +187,12 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   }
 
   saveDaetails() async {
+    if (_plannerDetailsController.uploadImages.isNotEmpty) {
+      for (var i in _plannerDetailsController.uploadImages) {
+        fileName = i['name'];
+        filePath = i['path'];
+      }
+    }
     if (fliteresList.isNotEmpty) {
       for (int i = 0; i < _plannerDetailsController.checkBoxList.length; i++) {
         var value = fliteresList.elementAt(i);
@@ -259,7 +265,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
             "periodicitydailyflag": value.periodicitydailyflag,
             "periodicityendflag": value.periodicityendflag,
             "periodicityweeklyflag": value.periodicityweeklyflag,
-            "taskcategoryname": value.taskcategoryname
+            "taskcategoryname": value.taskcategoryname,
+            "filename": fileName,
+            "filepath": filePath
           });
         }
         logger.i(dailyReportGenaration);
@@ -332,6 +340,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
     }
   }
 
+  String fileName = '';
+  String filePath = '';
+  bool newindex = false;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -929,175 +940,173 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                       alignment:
                                                           Alignment.center,
                                                       child: Text('$i'))),
-                                                  DataCell(Align(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: Obx(
-                                                        () => Checkbox(
-                                                          shape: ContinuousRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10)),
-                                                          activeColor:
-                                                              const Color
-                                                                      .fromARGB(
-                                                                  255,
-                                                                  21,
-                                                                  46,
-                                                                  189),
-                                                          value: _plannerDetailsController
-                                                                  .checkBoxList[
-                                                              index],
-                                                          onChanged: (value) {
-                                                            value == true
-                                                                ? getCategoryChecklistDetails(
-                                                                        base: baseUrlFromInsCode(
-                                                                            "issuemanager",
-                                                                            widget
-                                                                                .mskoolController),
-                                                                        controller:
-                                                                            _plannerDetailsController,
-                                                                        ismctrId: fliteresList
-                                                                            .elementAt(
-                                                                                index)
-                                                                            .iSMTCRId!,
-                                                                        ismmcatId: fliteresList
-                                                                            .elementAt(index)
-                                                                            .iSMMTCATId!)
-                                                                    .then(
-                                                                    (value) {
-                                                                      if (value!
-                                                                          .values!
-                                                                          .isNotEmpty) {
-                                                                        showDialog(
-                                                                            context:
-                                                                                context,
-                                                                            builder:
-                                                                                (context) {
-                                                                              return AlertDialog(
-                                                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                                                                contentPadding: const EdgeInsets.all(10),
-                                                                                insetPadding: const EdgeInsets.symmetric(horizontal: 16),
-                                                                                content: SizedBox(
-                                                                                  // height: 400,
-                                                                                  width: MediaQuery.of(context).size.width,
-                                                                                  child: Column(
-                                                                                    mainAxisSize: MainAxisSize.min,
-                                                                                    children: [
-                                                                                      CategoryCheckList(
-                                                                                        value: value,
-                                                                                        plannerDetailsController: _plannerDetailsController,
+                                                  DataCell(Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Align(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          child: Obx(
+                                                            () => Checkbox(
+                                                              shape: ContinuousRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10)),
+                                                              activeColor:
+                                                                  const Color
+                                                                          .fromARGB(
+                                                                      255,
+                                                                      21,
+                                                                      46,
+                                                                      189),
+                                                              value: _plannerDetailsController
+                                                                      .checkBoxList[
+                                                                  index],
+                                                              onChanged:
+                                                                  (value) {
+                                                                value == true
+                                                                    ? getCategoryChecklistDetails(
+                                                                            base:
+                                                                                baseUrlFromInsCode("issuemanager", widget.mskoolController),
+                                                                            controller: _plannerDetailsController,
+                                                                            ismctrId: fliteresList.elementAt(index).iSMTCRId!,
+                                                                            ismmcatId: fliteresList.elementAt(index).iSMMTCATId!)
+                                                                        .then(
+                                                                        (value) {
+                                                                          if (value!
+                                                                              .values!
+                                                                              .isNotEmpty) {
+                                                                            newindex =
+                                                                                value.values!.first.ismmtcatcLUploadEnterFlg!;
+                                                                            logger.e(newindex);
+                                                                            showDialog(
+                                                                                context: context,
+                                                                                builder: (context) {
+                                                                                  return AlertDialog(
+                                                                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                                                    contentPadding: const EdgeInsets.all(10),
+                                                                                    insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+                                                                                    content: SizedBox(
+                                                                                      // height: 400,
+                                                                                      width: MediaQuery.of(context).size.width,
+                                                                                      child: Column(
+                                                                                        mainAxisSize: MainAxisSize.min,
+                                                                                        children: [
+                                                                                          CategoryCheckList(
+                                                                                            value: value,
+                                                                                            plannerDetailsController: _plannerDetailsController,
+                                                                                            loginSuccessModel: widget.loginSuccessModel,
+                                                                                          ),
+                                                                                        ],
                                                                                       ),
-                                                                                    ],
-                                                                                  ),
-                                                                                ),
-                                                                              );
-                                                                            });
-                                                                      }
-                                                                    },
-                                                                  )
-                                                                : null;
+                                                                                    ),
+                                                                                  );
+                                                                                });
+                                                                          }
+                                                                        },
+                                                                      )
+                                                                    : null;
 
-                                                            _plannerDetailsController
-                                                                    .checkBoxList[
-                                                                index] = value!;
-                                                            if (value) {
-                                                              if (selectCheckbox
-                                                                  .contains(
-                                                                      index)) {
-                                                                selectCheckbox
-                                                                    .remove(
-                                                                        index);
-                                                                logger.i(
+                                                                _plannerDetailsController
+                                                                        .checkBoxList[
+                                                                    index] = value!;
+                                                                if (value) {
+                                                                  if (selectCheckbox
+                                                                      .contains(
+                                                                          index)) {
                                                                     selectCheckbox
-                                                                        .toString());
-                                                              } else {
-                                                                selectCheckbox
-                                                                    .add(index);
-                                                                logger.i(
+                                                                        .remove(
+                                                                            index);
+                                                                    logger.i(
+                                                                        selectCheckbox
+                                                                            .toString());
+                                                                  } else {
                                                                     selectCheckbox
-                                                                        .toString());
-                                                                String
-                                                                    previousDateStr =
-                                                                    fliteresList
+                                                                        .add(
+                                                                            index);
+                                                                    logger.i(
+                                                                        selectCheckbox
+                                                                            .toString());
+                                                                    String previousDateStr = fliteresList
                                                                         .elementAt(
                                                                             index)
                                                                         .iSMTPLEndDate!;
-                                                                DateTime
-                                                                    previousDate =
-                                                                    DateTime.parse(
+                                                                    DateTime
+                                                                        previousDate =
+                                                                        DateTime.parse(previousDateStr).add(const Duration(
+                                                                            days:
+                                                                                1));
+                                                                    previousDt = DateTime.parse(
                                                                             previousDateStr)
                                                                         .add(const Duration(
                                                                             days:
                                                                                 1));
-                                                                previousDt = DateTime
-                                                                        .parse(
-                                                                            previousDateStr)
-                                                                    .add(const Duration(
-                                                                        days:
-                                                                            1));
-                                                                logger.e(
-                                                                    "====$previousDt");
+                                                                    logger.e(
+                                                                        "====$previousDt");
 
-                                                                DateTime
-                                                                    currentDate =
                                                                     DateTime
-                                                                        .now();
+                                                                        currentDate =
+                                                                        DateTime
+                                                                            .now();
 
-                                                                if (currentDate
-                                                                    .isAfter(
-                                                                        previousDate)) {
-                                                                  deviation =
-                                                                      true;
-                                                                  showDialog(
-                                                                    context:
-                                                                        context,
-                                                                    builder:
-                                                                        (context) {
-                                                                      return Center(
-                                                                        child:
-                                                                            Container(
-                                                                          padding:
-                                                                              const EdgeInsets.symmetric(horizontal: 20),
-                                                                          height:
-                                                                              200,
-                                                                          width:
-                                                                              300,
-                                                                          decoration: BoxDecoration(
-                                                                              color: Colors.white,
-                                                                              borderRadius: BorderRadius.circular(10),
-                                                                              shape: BoxShape.rectangle),
-                                                                          child:
-                                                                              Column(
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.center,
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.center,
-                                                                            children: [
-                                                                              Text("Task End Date Is", style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255)))),
-                                                                              Text(fliteresList.elementAt(index).iSMTPLEndDate.toString().replaceRange(10, null, ''), style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255)))),
-                                                                              Text("Kindly Select Remarks", style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255))))
-                                                                            ],
-                                                                          ),
-                                                                        ),
+                                                                    if (currentDate
+                                                                        .isAfter(
+                                                                            previousDate)) {
+                                                                      deviation =
+                                                                          true;
+                                                                      showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (context) {
+                                                                          return Center(
+                                                                            child:
+                                                                                Container(
+                                                                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                                                                              height: 200,
+                                                                              width: 300,
+                                                                              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), shape: BoxShape.rectangle),
+                                                                              child: Column(
+                                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                children: [
+                                                                                  Text("Task End Date Is", style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255)))),
+                                                                                  Text(fliteresList.elementAt(index).iSMTPLEndDate.toString().replaceRange(10, null, ''), style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255)))),
+                                                                                  Text("Kindly Select Remarks", style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(fontSize: 24, color: Color.fromARGB(255, 7, 85, 255))))
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          );
+                                                                        },
                                                                       );
-                                                                    },
-                                                                  );
-                                                                }
-                                                              }
-                                                            } else {
-                                                              deviation = false;
-                                                              selectCheckbox
-                                                                  .remove(
-                                                                      index);
-                                                              logger.i(
+                                                                    }
+                                                                  }
+                                                                } else {
+                                                                  deviation =
+                                                                      false;
                                                                   selectCheckbox
-                                                                      .toString());
-                                                            }
-                                                          },
-                                                        ),
-                                                      ))),
+                                                                      .remove(
+                                                                          index);
+                                                                  logger.i(
+                                                                      selectCheckbox
+                                                                          .toString());
+                                                                }
+                                                              },
+                                                            ),
+                                                          )),
+                                                      const SizedBox(height: 5),
+                                                      (_plannerDetailsController
+                                                                  .uploadImages
+                                                                  .isNotEmpty ||
+                                                              newindex)
+                                                          ? const Icon(Icons
+                                                              .visibility_outlined)
+                                                          : const SizedBox()
+                                                    ],
+                                                  )),
                                                   DataCell(Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment

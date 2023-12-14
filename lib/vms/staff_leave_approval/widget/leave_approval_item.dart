@@ -175,6 +175,8 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                 )
               ],
             ),
+            const SizedBox(height: 6),
+            Text("Applied Days: ${value.hRELAPTotalDays}"),
             const SizedBox(
               height: 6.0,
             ),
@@ -274,38 +276,41 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                (value.hRELAPSupportingDocument != 'undefined')
-                    ? Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: InkWell(
-                          onTap: () {
-                            logger.i(value.hRELAPSupportingDocument);
-                            if (value.hRELAPSupportingDocument
-                                .toString()
-                                .contains('https://')) {
-                              createPreview(
-                                  context, value.hRELAPSupportingDocument);
-                            } else {
-                              OpenFilex.open(value.hRELAPSupportingDocument);
-                            }
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.green[100]),
-                            child: const Padding(
-                              padding: EdgeInsets.all(5.0),
-                              child: Center(
-                                child: Icon(
-                                  Icons.visibility,
-                                  color: Colors.green,
+                (value.hRELAPSupportingDocument == 0)
+                    ? const SizedBox()
+                    : (value.hRELAPSupportingDocument != 'undefined')
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: InkWell(
+                              onTap: () {
+                                logger.i(value.hRELAPSupportingDocument);
+                                if (value.hRELAPSupportingDocument
+                                    .toString()
+                                    .contains('https://')) {
+                                  createPreview(
+                                      context, value.hRELAPSupportingDocument);
+                                } else {
+                                  OpenFilex.open(
+                                      value.hRELAPSupportingDocument);
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.green[100]),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(5.0),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.visibility,
+                                      color: Colors.green,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                      )
-                    : const SizedBox(),
+                          )
+                        : const SizedBox(),
                 Expanded(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -317,7 +322,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                     ),
                     onPressed: () {
                       showDialog(
-                        barrierDismissible: false,
+                          barrierDismissible: false,
                           context: context,
                           builder: (_) {
                             return Dialog(
@@ -623,7 +628,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                     ),
                     onPressed: () {
                       showDialog(
-                        barrierDismissible: false,
+                          barrierDismissible: false,
                           context: context,
                           builder: (_) {
                             return Dialog(
@@ -766,7 +771,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
   void acceptOrReject(BuildContext context, String remark, String status,
       bool isRejecting, LeaveApprovalModelValues value) {
     Navigator.pop(context);
-    // remark != '' ? remark = '' : 
+    // remark != '' ? remark = '' :
     showDialog(
       context: context,
       barrierDismissible: false,
