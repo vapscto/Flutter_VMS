@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/dr_not_approved_model.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/leave_approve_popup_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/planner_approval_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/planner_list_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/planner_status_model.dart';
@@ -120,4 +121,7 @@ class PlannerApprovalController extends GetxController {
       plannerApprovalList.add(plannerList.elementAt(index));
     }
   }
+
+  RxList<LeaveApprovePopUpValues> leavePopUp = <LeaveApprovePopUpValues>[].obs;
+
 }

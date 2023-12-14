@@ -52,8 +52,12 @@ Future<int> feacthUserApi({
       
       AdavanceListModel adavanceListModel = AdavanceListModel.fromJson(response.data['adavanceList']);
       controller.adavanceListModel.addAll(adavanceListModel.values!);
+
+
       ApplyListModel applyListModel = ApplyListModel.fromJson(response.data['applyList']);
       controller.applyListModel.addAll(applyListModel.values!);
+
+      
       if(adavanceListModel.values!.isNotEmpty && applyListModel.values!.isNotEmpty)
       {
         logger.w( 

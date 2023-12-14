@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/vms/issue_manager/planner_approval/controller/pl
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/approved_status.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_approval_home.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class PlannerApprovalTabScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -39,6 +40,115 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
         miId: widget.loginSuccessModel.mIID!,
         roleId: widget.loginSuccessModel.roleId!);
     plannerApprovalController.plannerLoading(false);
+
+    plannerApprovalController.leavePopUp.isNotEmpty
+        ? Get.dialog(
+            barrierDismissible: false,
+            WillPopScope(
+              onWillPop: () {
+                return Future.value(false);
+              },
+              child: AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                title: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "LEAVE APPROVAL DETAILS",
+                      // ignore: use_build_context_synchronously
+                      style: Theme.of(context).textTheme.titleLarge!.merge(
+                          // ignore: use_build_context_synchronously
+                          const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w900)),
+                    )),
+                content: Column(
+                  children: [
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      padding:
+                          const EdgeInsetsDirectional.symmetric(horizontal: 8),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: DataTable(
+                            dataRowHeight: 35,
+                            headingRowHeight: 40,
+                            columnSpacing: 20,
+                            headingTextStyle:
+                                const TextStyle(color: Colors.white),
+                            border: TableBorder.all(
+                              color: Colors.black,
+                              width: 0.6,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            headingRowColor: MaterialStateColor.resolveWith(
+                                (states) => Theme.of(context).primaryColor),
+                            columns: const [
+                              DataColumn(label: Text("SL.NO.")),
+                              DataColumn(label: Text("Employee Name")),
+                              DataColumn(label: Text("Leave Name")),
+                              DataColumn(label: Text("From Date")),
+                              DataColumn(label: Text("To Date")),
+                              DataColumn(label: Text("Total Days")),
+                              DataColumn(label: Text("Reason")),
+                              // DataColumn(
+                              //     label: Text("Planner")),
+                            ],
+                            rows: List.generate(
+                                plannerApprovalController.leavePopUp.length,
+                                (index) {
+                              var i = index + 1;
+                              return DataRow(cells: [
+                                DataCell(Text(i.toString())),
+                                DataCell(Text(
+                                    '${plannerApprovalController.leavePopUp.elementAt(index).hRMEEmployeeFirstName}')),
+                                DataCell(Text(
+                                    '${plannerApprovalController.leavePopUp.elementAt(index).hRMLLeaveName}')),
+                                DataCell(Text(
+                                  getDateSelect(DateTime.parse(
+                                      plannerApprovalController.leavePopUp
+                                          .elementAt(index)
+                                          .hRELAPFromDate!)),
+                                )),
+                                DataCell(Text(
+                                  getDateSelect(DateTime.parse(
+                                      plannerApprovalController.leavePopUp
+                                          .elementAt(index)
+                                          .hRELAPToDate!)),
+                                )),
+                                DataCell(Text(
+                                    '${plannerApprovalController.leavePopUp.elementAt(index).hRELAPTotalDays}')),
+                                DataCell(Text(
+                                    '${plannerApprovalController.leavePopUp.elementAt(index).hRELAPLeaveReason}')),
+                              ]);
+                            })),
+                      ),
+                    ),
+                    const Expanded(
+                      child: SizedBox(
+                          // height: 20,
+                          ),
+                    ),
+                    Text(
+                        "Kindly update Leave Status, Then only can Approve Planner"),
+                    MSkollBtn(
+                      title: "Close",
+                      onPress: () {
+                        Get.back();
+                        Get.back();
+
+                        plannerApprovalController.leavePopUp.clear();
+                      },
+                    ),
+                    SizedBox(
+                      height: 40,
+                    )
+                  ],
+                ),
+              ),
+            ))
+        : null;
   }
 
   @override
@@ -95,5 +205,9 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
         ],
       ),
     );
+  }
+
+  String getDateSelect(DateTime dt) {
+    return "${dt.day.toString().padLeft(2, "0")}-${dt.month.toString().padLeft(2, "0")}-${dt.year}";
   }
 }
