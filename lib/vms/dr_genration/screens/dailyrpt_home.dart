@@ -950,50 +950,53 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   .checkBoxList[
                                                               index],
                                                           onChanged: (value) {
-                                                           value == true? getCategoryChecklistDetails(
-                                                                    base: baseUrlFromInsCode(
-                                                                        "issuemanager",
-                                                                        widget
-                                                                            .mskoolController),
-                                                                    controller:
-                                                                        _plannerDetailsController,
-                                                                    ismctrId: fliteresList
-                                                                        .elementAt(
-                                                                            index)
-                                                                        .iSMTCRId!,
-                                                                    ismmcatId: fliteresList
-                                                                        .elementAt(
-                                                                            index)
-                                                                        .iSMMTCATId!)
-                                                                .then(
-                                                              (value) {
-                                                                if (value!
-                                                                    .values!
-                                                                    .isNotEmpty) {
-                                                                  showDialog(
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        return Center(
-                                                                          child:
-                                                                              AlertDialog(
-                                                                            content:
-                                                                                Container(
-                                                                              padding: const EdgeInsets.symmetric(horizontal: 0),
-                                                                              height: 400,
-                                                                              width: MediaQuery.of(context).size.width,
-                                                                              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), shape: BoxShape.rectangle),
-                                                                              child: CategoryCheckList(
-                                                                                value: value,
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        );
-                                                                      });
-                                                                }
-                                                              },
-                                                            ):null;
+                                                            value == true
+                                                                ? getCategoryChecklistDetails(
+                                                                        base: baseUrlFromInsCode(
+                                                                            "issuemanager",
+                                                                            widget
+                                                                                .mskoolController),
+                                                                        controller:
+                                                                            _plannerDetailsController,
+                                                                        ismctrId: fliteresList
+                                                                            .elementAt(
+                                                                                index)
+                                                                            .iSMTCRId!,
+                                                                        ismmcatId: fliteresList
+                                                                            .elementAt(index)
+                                                                            .iSMMTCATId!)
+                                                                    .then(
+                                                                    (value) {
+                                                                      if (value!
+                                                                          .values!
+                                                                          .isNotEmpty) {
+                                                                        showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (context) {
+                                                                              return AlertDialog(
+                                                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                                                contentPadding: const EdgeInsets.all(10),
+                                                                                insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+                                                                                content: SizedBox(
+                                                                                  // height: 400,
+                                                                                  width: MediaQuery.of(context).size.width,
+                                                                                  child: Column(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    children: [
+                                                                                      CategoryCheckList(
+                                                                                        value: value,
+                                                                                      ),
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            });
+                                                                      }
+                                                                    },
+                                                                  )
+                                                                : null;
 
                                                             _plannerDetailsController
                                                                     .checkBoxList[
