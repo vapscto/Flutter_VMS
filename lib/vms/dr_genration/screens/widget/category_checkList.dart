@@ -225,12 +225,12 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                                                       );
                                                     },
                                                     child: Icon(Icons.add)),
-                                                InkWell(
-                                                    onTap: () {
-                                                      removeItemListBrowse(
-                                                          index);
-                                                    },
-                                                    child: Icon(Icons.remove))
+                                                // InkWell(
+                                                //     onTap: () {
+                                                //       removeItemListBrowse(
+                                                //           index);
+                                                //     },
+                                                //     child: Icon(Icons.remove))
                                               ],
                                             )
                                           : index <

@@ -41,6 +41,7 @@ class _OTpScreenState extends State<OTpScreen> {
   // int seconds = 59;
   @override
   void initState() {
+    
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
       if (otpSentStatusController.remainingTime.value == 0) {
         otpSentStatusController.updateDisableResendBtn(false);
@@ -56,7 +57,7 @@ class _OTpScreenState extends State<OTpScreen> {
   void dispose() {
     Get.delete<OtpSentStatusController>();
     entredOtp.dispose();
-
+    widget.chequeController.otpResponseList.clear();
     super.dispose();
   }
 
@@ -109,47 +110,9 @@ class _OTpScreenState extends State<OTpScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              // Obx(() {
-              //   return TextButton(
-              //       onPressed: otpSentStatusController
-              //               .disableResendBtn.value
-              //           ? null
-              //           : () async {
-              //               otpSentStatusController
-              //                   .updateDisableResendBtn(true);
-
-              //               otpSentStatusController
-              //                   .updateRemainingTime(59);
-              //             },
-              //       style: TextButton.styleFrom(
-              //         padding: const EdgeInsets.symmetric(
-              //             vertical: 6.0),
-              //       ),
-              //       child: Text(
-              //         "Resend Code",
-              //         style: Theme.of(context)
-              //             .textTheme
-              //             .titleSmall!
-              //             .merge(
-              //               TextStyle(
-              //                   decoration:
-              //                       TextDecoration.underline,
-              //                   color: otpSentStatusController
-              //                           .disableResendBtn.value
-              //                       ? Theme.of(context)
-              //                           .disabledColor
-              //                       : Theme.of(context)
-              //                           .textTheme
-              //                           .titleSmall!
-              //                           .color),
-              //             ),
-              //       ));
-              // }),
-              Obx(() {
+               Obx(() {
                 return Text(
-                  otpSentStatusController.remainingTime.value < 10
-                      ? "0:0${otpSentStatusController.remainingTime.value}"
-                      : "0:${otpSentStatusController.remainingTime.value}",
+                    timeFormat(otpSentStatusController.remainingTime.value),
                   style: Theme.of(context).textTheme.titleSmall!.merge(
                         const TextStyle(
                             // decoration: TextDecoration.underline,
@@ -197,4 +160,11 @@ class _OTpScreenState extends State<OTpScreen> {
       ),
     ));
   }
+  String timeFormat(int v){
+    otpSentStatusController.minutes.value = v ~/ 60;
+  otpSentStatusController. remainingSeconds.value = v % 60;
+      return '${otpSentStatusController.minutes.value}:${otpSentStatusController.remainingSeconds.toString().padLeft(2, '0')}';
+
+  }
+  
 }

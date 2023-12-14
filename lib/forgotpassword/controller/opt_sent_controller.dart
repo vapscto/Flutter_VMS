@@ -2,6 +2,9 @@ import 'package:get/get.dart';
 
 class OtpSentStatusController extends GetxController {
   RxBool isOtpSent = RxBool(false);
+  RxInt minutes =0.obs;
+  RxInt remainingSeconds = 0.obs;
+   
   void updateOptSent(bool isSent) {
     isOtpSent.value = isSent;
   }
@@ -18,8 +21,10 @@ class OtpSentStatusController extends GetxController {
     otp.value = newOtp;
   }
 
-  RxInt remainingTime = RxInt(59);
+  RxInt remainingTime = RxInt(120);
   void updateRemainingTime(int v) {
+    
     remainingTime.value = v;
   }
+    
 }

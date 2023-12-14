@@ -113,26 +113,26 @@ class _ChequeApprovalState extends State<ChequeApproval> {
               fontWeight: FontWeight.w300,
             ),
           ),
-          actions: [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
-              child: Obx(
-                () => _controller.isLoading.value
-                    ? const SizedBox()
-                    : BtnSave(
-                        title: 'Submit',
-                        onPress: () {
-                          if (_formKey.currentState!.validate()) {
-                            submitData();
-                          } else {
-                            Fluttertoast.showToast(msg: "Amount is greater");
-                          }
-                        },
-                      ),
-              ),
-            )
-          ],
+          // actions: [
+          //   Padding(
+          //     padding:
+          //         const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+          //     child: Obx(
+          //       () => _controller.isLoading.value
+          //           ? const SizedBox()
+          //           : BtnSave(
+          //               title: 'Submit',
+          //               onPress: () {
+          //                 if (_formKey.currentState!.validate()) {
+          //                   submitData();
+          //                 } else {
+          //                   Fluttertoast.showToast(msg: "Amount is greater");
+          //                 }
+          //               },
+          //             ),
+          //     ),
+          //   )
+          // ],
           titleSpacing: 0,
         ),
         body: SingleChildScrollView(
@@ -885,7 +885,19 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: MSkollBtn(
                                         title: " Submit ",
-                                        onPress: () {},
+                                        onPress: () {
+
+                                           if (_formKey.currentState!.validate()) {
+                                            if(selectCheckBox.isNotEmpty){
+                                              submitData();
+                                            }else{
+                                              Fluttertoast.showToast(msg: "Pease select any one");
+                                            }
+                                              
+                                            } else {
+                                              Fluttertoast.showToast(msg: "Amount is greater");
+                                            }
+                                         },
                                       ),
                                     ),
                                   ),
