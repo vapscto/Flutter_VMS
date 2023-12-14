@@ -270,6 +270,8 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                         "VTADAAA_Id": value.vTADAAAId,
                         // "VTADAAAD_ExpenditureHead":
                         //     value.vTADAAADExpenditureHead,
+                        "VTADAAAD_Remarks": widget
+                            .tadaController.textEditingControllerList[i].text,
                         "VTADAAAD_Amount": value.vTADAAADAmount,
                         "VTADAAAAH_SactionedAmount": widget
                             .tadaController.textEditingControllerList

@@ -987,6 +987,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                                     children: [
                                                                                       CategoryCheckList(
                                                                                         value: value,
+                                                                                        plannerDetailsController: _plannerDetailsController,
                                                                                       ),
                                                                                     ],
                                                                                   ),

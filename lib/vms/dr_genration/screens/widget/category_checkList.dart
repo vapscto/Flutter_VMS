@@ -13,14 +13,16 @@ import 'package:open_filex/open_filex.dart';
 
 class CategoryCheckList extends StatefulWidget {
   final CategoryCheckListModel value;
-  const CategoryCheckList({required this.value, super.key});
+  final PlannerDetails plannerDetailsController;
+  const CategoryCheckList(
+      {required this.value, super.key, required this.plannerDetailsController});
 
   @override
   State<CategoryCheckList> createState() => _CategoryCheckListState();
 }
 
 class _CategoryCheckListState extends State<CategoryCheckList> {
-  final PlannerDetails _plannerDetailsController = Get.put(PlannerDetails());
+  // final PlannerDetails _plannerDetailsController = Get.put(PlannerDetails());
   final ImagePicker _imagePicker = ImagePicker();
 
   @override
@@ -30,7 +32,7 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
   }
 
   addItemListBrowse(int val, String name) {
-    _plannerDetailsController.addListBrowser.add(AtachmentFile(
+    widget.plannerDetailsController.addListBrowser.add(AtachmentFile(
       id: val,
       FileName: name,
     ));
@@ -46,8 +48,8 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
     if (result != null) {
       File file = File(result.files.single.path!);
       XFile xFile = XFile(file.path);
-      _plannerDetailsController.addListBrowser[index].file = xFile;
-      _plannerDetailsController.addListBrowser[index].FileName =
+      widget.plannerDetailsController.addListBrowser[index].file = xFile;
+      widget.plannerDetailsController.addListBrowser[index].FileName =
           result.names.first;
       // if (pickedImage != null) {
       //   _plannerDetailsController.addListBrowser[index].file = pickedImage;
@@ -58,7 +60,7 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
   }
 
   removeItemListBrowse(int val) {
-    _plannerDetailsController.addListBrowser.removeAt(val);
+    widget.plannerDetailsController.addListBrowser.removeAt(val);
     setState(() {});
   }
 
@@ -167,8 +169,8 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                               ),
                             ],
                             rows: List.generate(
-                                _plannerDetailsController.addListBrowser.length,
-                                (index) {
+                                widget.plannerDetailsController.addListBrowser
+                                    .length, (index) {
                               int i = index + 1;
                               return DataRow(cells: [
                                 DataCell(Align(
@@ -204,21 +206,24 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                                         )))),
                                 DataCell(Align(
                                     alignment: Alignment.center,
-                                    child: Text(_plannerDetailsController
+                                    child: Text(widget.plannerDetailsController
                                         .addListBrowser[index].FileName!))),
                                 DataCell(Align(
                                     alignment: Alignment.center,
                                     child: InkWell(
                                       onTap: () {
-                                        OpenFilex.open(_plannerDetailsController
-                                            .addListBrowser[index].file!.path);
+                                        OpenFilex.open(widget
+                                            .plannerDetailsController
+                                            .addListBrowser[index]
+                                            .file!
+                                            .path);
                                       },
                                       child: Icon(Icons.visibility),
                                     ))),
                                 DataCell(Align(
                                     alignment: Alignment.center,
                                     child: index ==
-                                            _plannerDetailsController
+                                            widget.plannerDetailsController
                                                     .addListBrowser.length -
                                                 1
                                         ? Row(
@@ -240,7 +245,7 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                                             ],
                                           )
                                         : index <
-                                                _plannerDetailsController
+                                                widget.plannerDetailsController
                                                     .addListBrowser.length
                                             ? InkWell(
                                                 onTap: () {
@@ -254,10 +259,8 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
         ),
         MSkollBtn(
           title: "Save",
-          onPress: () {
-            // if (_plannerDetailsController.addListBrowser.isNotEmpty) {
-            Get.back();
-            // }
+          onPress: () async {
+            if (widget.plannerDetailsController.addListBrowser.isNotEmpty) {}
           },
         )
       ],
@@ -266,7 +269,7 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
 
   @override
   void dispose() {
-    _plannerDetailsController.addListBrowser.clear();
+    widget.plannerDetailsController.addListBrowser.clear();
     super.dispose();
   }
 }

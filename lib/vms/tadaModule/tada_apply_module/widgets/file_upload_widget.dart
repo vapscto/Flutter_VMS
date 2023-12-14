@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -16,14 +19,24 @@ class FileUploadWidget extends StatefulWidget {
 
 class _FileUploadWidgetState extends State<FileUploadWidget> {
   final ImagePicker _imagePicker = ImagePicker();
-  void addRow(int value) {
-    widget.tadaApplyDataController.newList.add(value);
-    for (int i = 0; i < widget.tadaApplyDataController.newList.length; i++) {
+  void addRow() {
+    for (int i = 0;
+        i < widget.tadaApplyDataController.addListBrowser.length;
+        i++) {
       widget.tadaApplyDataController.newRemarksController
           .add(TextEditingController(text: ''));
       widget.tadaApplyDataController.fileNameController
           .add(TextEditingController(text: ''));
     }
+    setState(() {});
+  }
+
+  addItemListBrowse(int val, String name) {
+    widget.tadaApplyDataController.addListBrowser.add(AtachmentFile(
+      id: val,
+      FileName: name,
+    ));
+    addRow();
     setState(() {});
   }
 
@@ -34,7 +47,6 @@ class _FileUploadWidgetState extends State<FileUploadWidget> {
 
   @override
   void initState() {
-    addRow(1);
     addItemListBrowse(0, '');
     super.initState();
   }
@@ -161,25 +173,28 @@ class _FileUploadWidgetState extends State<FileUploadWidget> {
   }
 
   Future<void> pickImage(int index) async {
-    final pickedImage = await _imagePicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 25);
-    if (pickedImage != null) {
-      widget.tadaApplyDataController.addListBrowser[index].file = pickedImage;
+    // final pickedImage = await _imagePicker.pickImage(
+    //     source: ImageSource.gallery, imageQuality: 25);
+    // if (pickedImage != null) {
+    //   widget.tadaApplyDataController.addListBrowser[index].file = pickedImage;
+    //   widget.tadaApplyDataController.addListBrowser[index].FileName =
+    //       pickedImage.name;
+    //   setState(() {});
+    // } else {
+    //   Fluttertoast.showToast(msg: "Image Is not Uploaded Please try Again");
+    // }
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      XFile xFile = XFile(file.path);
+      widget.tadaApplyDataController.addListBrowser[index].file = xFile;
       widget.tadaApplyDataController.addListBrowser[index].FileName =
-          pickedImage.name;
+          result.names.first;
       setState(() {});
     } else {
       Fluttertoast.showToast(msg: "Image Is not Uploaded Please try Again");
     }
-  }
-
-  addItemListBrowse(int val, String name) {
-    widget.tadaApplyDataController.addListBrowser.add(AtachmentFile(
-      id: val,
-      FileName: name,
-    ));
-
-    setState(() {});
   }
 
   removeItemListBrowse(int val) {
