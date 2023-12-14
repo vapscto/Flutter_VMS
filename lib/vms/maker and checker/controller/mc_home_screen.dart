@@ -4,6 +4,7 @@ import 'package:m_skool_flutter/vms/maker%20and%20checker/model/applyList_model.
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/department_list.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/designation.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/employee_model_list.dart';
+import 'package:m_skool_flutter/vms/maker%20and%20checker/model/leave_model.dart';
 
 class MakerCheckerController extends GetxController{
    RxBool loading = RxBool(false);
@@ -40,4 +41,5 @@ class MakerCheckerController extends GetxController{
    RxList<EmployeeModelListValues> employeeList = <EmployeeModelListValues>[].obs;
    RxList<AdavanceListModelValues> adavanceListModel =<AdavanceListModelValues>[].obs;
    RxList<ApplyListModelValues> applyListModel = <ApplyListModelValues>[].obs;
+   RxList<GetListLeaveModelValues> leaveApproveList =<GetListLeaveModelValues>[].obs;
 }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/model/edit_array_tada.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/model/tada_apply_list.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/model/time_array_tada.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/widgets/update_tada_table.dart';
 
 class TADAController {
   RxBool isLoading = RxBool(false);
@@ -18,7 +19,7 @@ class TADAController {
       <TextEditingController>[].obs;
   RxList<TextEditingController> percentageListController =
       <TextEditingController>[].obs;
-  List<String> selectedValue = [];
+  List<Item> selectedValue = [];
 
   void updateIsLoading(bool b) {
     isLoading.value = b;
@@ -44,8 +45,8 @@ class TADAController {
     newTimeArray.addAll(timeArray);
   }
 
-  void addToSelectedValueList(List<String> value) {
-    selectedValue.add(value.toString());
+  void addToSelectedValueList(List<Item> value) {
+    selectedValue.addAll(value);
   }
 
   void addToTextEditingList(TextEditingController textEditingController) {
