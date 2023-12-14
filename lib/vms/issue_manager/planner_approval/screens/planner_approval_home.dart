@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_approval/api/planner_list_api.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/controller/planner_approval_controller.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/all_planner_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/widgets/dr_not_submit.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class PlannerApprovalHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -28,7 +31,30 @@ class PlannerApprovalHomeScreen extends StatefulWidget {
 class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
   @override
   void initState() {
+    // _getPlannerData();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget.plannerApprovalController.leavePopUp.clear();
+    widget.plannerApprovalController.plannerListModel.clear();
+    super.dispose();
+  }
+
+  PlannerApprovalController plannerApprovalController =
+      Get.put(PlannerApprovalController());
+  _getPlannerData() async {
+    plannerApprovalController.plannerLoading(true);
+    await PlannerListAPI.instance.plannerListAPI(
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+        plannerApprovalController: plannerApprovalController,
+        userId: widget.loginSuccessModel.userId!,
+        miId: widget.loginSuccessModel.mIID!,
+        roleId: widget.loginSuccessModel.roleId!);
+    plannerApprovalController.plannerLoading(false);
+
+    
   }
 
   @override
@@ -401,5 +427,9 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
         );
       }),
     );
+  }
+
+  String getDateSelect(DateTime dt) {
+    return "${dt.day.toString().padLeft(2, "0")}-${dt.month.toString().padLeft(2, "0")}-${dt.year}";
   }
 }

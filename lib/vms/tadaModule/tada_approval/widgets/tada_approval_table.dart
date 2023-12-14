@@ -67,15 +67,14 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
         tadaController: widget.tadaController,
         vtaDaaId: widget.values.vTADAAId!);
 
-    setState(() {
-      DateTime dt = DateTime.parse(widget.values.vTADAAFromDate!);
-      fromDate = '${dt.day}-${dt.month}-${dt.year}';
-      DateTime toDt = DateTime.parse(widget.values.vTADAAToDate!);
-      toDate = '${toDt.day}-${toDt.month}-${toDt.year}';
-    });
+    DateTime dt = DateTime.parse(widget.values.vTADAAFromDate!);
+    fromDate = '${dt.day}-${dt.month}-${dt.year}';
+    DateTime toDt = DateTime.parse(widget.values.vTADAAToDate!);
+    toDate = '${toDt.day}-${toDt.month}-${toDt.year}';
     widget.tadaController.updateIsLoading(false);
   }
 
+  int vtadaaId = 0;
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -285,11 +284,10 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
                               i++) {
                             var value = widget.tadaController.editArrayList
                                 .elementAt(i);
+                            vtadaaId = value.vTADAAId!;
                             headArray.add({
                               "VTADAAD_Id": value.vTADAADId,
                               "VTADAA_Id": value.vTADAAId,
-                              "VTADAAD_ExpenditureHead":
-                                  value.vTADAADExpenditureHead,
                               "VTADAAAD_Remarks": widget.tadaController
                                   .textEditingControllerList[i].text,
                               "VTADAAD_Amount": value.vTADAADAmount,
@@ -301,15 +299,8 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
                                           .elementAt(i)
                                           .isApproved ==
                                       true)
-                                  ? "Approved"
-                                  : "Rejected",
-                              "VTADAAD_Slots": value.vTADAADSlots ?? 0,
-                              "VTADAAD_TotalSlots":
-                                  value.vTADAADTotalslots ?? 0,
-                              "VTADACM_FoodAmt": value.vTADACMFoodAmt,
-                              "VTADACM_AccommodationAmt":
-                                  value.vTADACMAccommodationAmt,
-                              "VTADACM_TransportAmt": value.vTADACMTransportAmt
+                                  ? "A"
+                                  : "R",
                             });
                           }
                         }
@@ -320,7 +311,7 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
                               'VTADAA_Remarks': remarkController.text,
                               'VTADAA_TotalSactionedAmount': amount,
                               'headarray': headArray,
-                              'VTADAA_Id': widget.values.vTADAAAId,
+                              'VTADAA_Id': vtadaaId,
                               "MI_Id": widget.values.mIId,
                               "approvecnt": approvedCount,
                               "level": widget.values.sanctionLevelNo,
@@ -332,7 +323,7 @@ class _UpdateTADATableDataState extends State<UpdateTADATableData> {
                                   'issuemanager', widget.mskoolController),
                               userId: widget.values.userId!,
                               tadaController: widget.tadaController);
-                          _getData();
+                          // _getData();
                           Get.back();
                         });
                       }

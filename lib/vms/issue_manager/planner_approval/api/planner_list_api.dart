@@ -4,8 +4,10 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/controller/planner_approval_controller.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/dr_not_approved_model.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/leave_approve_popup_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/planner_list_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/planner_status_model.dart';
+import 'package:m_skool_flutter/vms/staff_leave_approval/model/leave_approval_model.dart';
 
 class PlannerListAPI {
   PlannerListAPI.init();
@@ -28,6 +30,20 @@ class PlannerListAPI {
       logger.i(url);
       if (response.statusCode == 200) {
         logger.i(response.data['get_plannerlist']);
+
+        
+        if (response.data['get_leaveDetails'] != null) {
+          LeaveApprovePopUp? leaveApprovePopUp =
+            LeaveApprovePopUp.fromJson(response.data['get_leaveDetails']);
+
+          plannerApprovalController.leavePopUp
+              .addAll(leaveApprovePopUp.values!);
+        }
+
+        // logger.d(response.data['get_leaveDetails']);
+
+        // plannerApprovalController.leavePopUp = response.data['get_leaveDetails'];
+
         PlannerListModel plannerListModel =
             PlannerListModel.fromJson(response.data['get_plannerlist']);
         DrNotApprovedModel drNotApprovedModel =
