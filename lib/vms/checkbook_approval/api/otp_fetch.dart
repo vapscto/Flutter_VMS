@@ -27,21 +27,19 @@ required ChequeController controller,
     final Response response = await ins.post(apiUrl,
         options: Options(headers: getSession()),
         data: {
-           "MI_Id": mi_id,
+          "MI_Id": mi_id,
           "UserId": userId,
           "EMAILOTP": otp
           });
    if (response.statusCode == 200) {
-   // Map<String, dynamic> data = json.decode(response.data);
     OtpResponse otpResponse = OtpResponse.fromJson(response.data);
     controller.otpResponseList.add( otpResponse);
+     return  true ;
    }else {
     logger.d('Error: ${response.statusCode}');
   }
-      // controller.otpResponseList.add(response.data);
-      // logger.d(controller.otpResponseList.first);
-     return  true ;
-  } on DioError catch (e) {
+   return false;
+   } on DioError catch (e) {
     logger.e(e.message);
     return false;
   } on Exception catch (e) {
