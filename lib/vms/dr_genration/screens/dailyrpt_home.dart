@@ -950,7 +950,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   .checkBoxList[
                                                               index],
                                                           onChanged: (value) {
-                                                            getCategoryChecklistDetails(
+                                                           value == true? getCategoryChecklistDetails(
                                                                     base: baseUrlFromInsCode(
                                                                         "issuemanager",
                                                                         widget
@@ -993,7 +993,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       });
                                                                 }
                                                               },
-                                                            );
+                                                            ):null;
 
                                                             _plannerDetailsController
                                                                     .checkBoxList[
