@@ -6,9 +6,13 @@ import 'package:m_skool_flutter/vms/utils/saveImage.dart';
 class SecurtyWorkController extends GetxController{
  RxBool  isLoading = RxBool(false);
  RxBool isError = RxBool(false);
+ RxString uploadImagePath = ''.obs;
  void updateLoading(bool val){
   isLoading.value = val;
 
+ }
+ void updateIamgePath(String  val){
+  uploadImagePath.value =val;
  }
  void updateError(bool val){
  isError.value = val;
@@ -26,8 +30,12 @@ class SecurtyWorkController extends GetxController{
     );
     if (pickedFile != null) {
       String? imageUrl = await securUpload(
-          image: pickedFile.path, miId: miId, base: base);
-      securityUploadImage.add( pickedFile.name);
+          image: pickedFile.path, miId: miId, base: base).then(
+            (value) {
+             updateIamgePath(value!);
+            },
+          );
+      securityUploadImage.add(pickedFile.name);
       return true;
     }
     return false;

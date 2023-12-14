@@ -4,6 +4,7 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/security/api/api.dart';
+import 'package:m_skool_flutter/vms/security/api/upload_details.dart';
 import 'package:m_skool_flutter/vms/security/controller/security_controller.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
@@ -57,8 +58,8 @@ class _ShomeScreenState extends State<ShomeScreen> {
         child: Column(children: [
           Obx(() => controller.securtyWorkList.isEmpty
               ? const AnimatedProgressWidget(
-                  animationPath: 'assets/json/nodata.json',
-                  title: 'No data',
+                  animationPath: 'assets/json/default.json',
+                  title: 'Loading...',
                   desc: "there is no data",
                 )
               : SizedBox(
@@ -330,8 +331,45 @@ class _ShomeScreenState extends State<ShomeScreen> {
                                                                             120,
                                                                         child:
                                                                             ElevatedButton(
-                                                                          onPressed:
-                                                                              () {},
+                                                                           onPressed:
+                                                                              ()async {
+                                                                             await  savedataSecurityTask(
+                                                                                base:  baseUrlFromInsCode('issuemanager', widget.mskoolController),
+                                                                                hracttId: controller.securtyWorkList.elementAt(index).hRMARACTTId!,
+                                                                                hrmarId: controller.securtyWorkList.elementAt(index).hRMARId!,
+                                                                                hrmaractId: controller.securtyWorkList.elementAt(index).hRMARACTId!,
+                                                                                miId: widget.loginSuccessModel.mIID!,
+                                                                                remark: "",
+                                                                                securtyWorkController: controller,
+                                                                                status: "",
+                                                                                userId: widget.loginSuccessModel.userId!
+                                                                               ).then(
+                                                                                (value) {
+                                                                                  Get.back();
+                                                                                   controller.securtyWorkList.clear();
+                                                                                    controller.checkBox.clear();
+                                                                                  showDialog(context: context, builder: 
+                                                                                  (context) {
+                                                                                    return AlertDialog(
+                                                                                      content:  Container(
+                                                                                        height: 150,
+                                                                                        child: Center(
+                                                                                          child: Text("Task uploading completed",
+                                                                                          style: Theme.of(context).textTheme.titleSmall
+                                                                                          !.merge(
+                                                                                            const TextStyle(
+                                                                                            color: Color.fromARGB(255, 24, 54, 223),
+                                                                                            fontSize: 20,
+                                                                                            fontWeight: FontWeight.bold
+                                                                                          ))),
+                                                                                        ),
+                                                                                      ),
+                                                                                    );
+                                                                                  },);
+                                                                                },
+                                                                               );
+                                                                               load();
+                                                                              },
                                                                           child:
                                                                               const Center(
                                                                             child:

@@ -38,12 +38,13 @@ Future<int> feacthSecurityApi({
 
     qRcodeActivityDetails qrDetails =
         qRcodeActivityDetails.fromJson(response.data['qRcodeActivityDetails']);
+      logger.w(response.data['qRcodeActivityDetails'])  ;
     controller.securtyWorkList.addAll(qrDetails.values!);
     controller.updateLoading(false);
     for (int i = 0; i < qrDetails.values!.length; i++) {
       controller.checkBox.add(true);
     }
-    print(controller.checkBox.toString());
+     
     return response.statusCode!;
   } on DioError catch (e) {
     controller.updateError(true);
