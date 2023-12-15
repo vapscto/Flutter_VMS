@@ -77,7 +77,7 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return false;
+        return true;
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
