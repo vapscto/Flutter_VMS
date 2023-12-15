@@ -84,7 +84,7 @@ class GenerateSalarySlip {
               Table(children: [
                 TableRow(children: [
                   Text(
-                    'Name  : ${controller.salarySlipDetail.first.currentemployeeDetails!.hrmEEmployeeFirstName} ${controller.salarySlipDetail.first.currentemployeeDetails!.hrmEEmployeeMiddleName} ${controller.salarySlipDetail.first.currentemployeeDetails!.hrmEEmployeeLastName ?? ''}',
+                    'Name  : ${controller.salarySlipDetail.first.currentemployeeDetails!.hrmEEmployeeFirstName} ${controller.salarySlipDetail.first.currentemployeeDetails!.hrmEEmployeeMiddleName ?? ''} ${controller.salarySlipDetail.first.currentemployeeDetails!.hrmEEmployeeLastName ?? ''}',
                     style: TextStyle(
                       fontSize: 12,
                       color: PdfColor.fromHex("#000000"),
