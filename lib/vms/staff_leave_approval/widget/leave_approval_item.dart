@@ -228,48 +228,53 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
             const SizedBox(
               height: 8.0,
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Do you want reduce leave?",
-                  style: Get.textTheme.titleSmall,
-                ),
-                InkWell(
-                  onTap: () {
-                    Get.dialog(
-                            DatePickerWidget(
-                              endDate: value.hRELAPToDate!,
-                              startDate: value.hRELAPFromDate!,
-                            ),
-                            barrierDismissible: false)
-                        .then((dateList) {
-                      if (leaveDates.isNotEmpty) {
-                        leaveDates.clear();
-                      }
-                      leaveDates.addAll(dateList);
-                      if (leaveDates.isNotEmpty) {
-                        value.hRELAPToDate = leaveDates.first;
-                        value.hRELAPFromDate = leaveDates.last;
-                        value.hRELAPTotalDays = DateTime.parse(leaveDates.last)
-                                .difference(DateTime.parse(leaveDates.first))
-                                .inDays +
-                            1;
-                        value.hRELAPReportingDate = getFormatedDate(
-                            DateTime.parse(DateTime.parse(leaveDates.last)
-                                .add(const Duration(days: 1))
-                                .toString()));
-                      }
-                    });
-                  },
-                  child: SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: SvgPicture.asset('assets/svg/calendar_icon.svg')),
-                )
-              ],
-            ),
+            (value.hRELAPTotalDays! <= 1.0)
+                ? const SizedBox()
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Do you want reduce leave?",
+                        style: Get.textTheme.titleSmall,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.dialog(
+                                  DatePickerWidget(
+                                    endDate: value.hRELAPToDate!,
+                                    startDate: value.hRELAPFromDate!,
+                                  ),
+                                  barrierDismissible: false)
+                              .then((dateList) {
+                            if (leaveDates.isNotEmpty) {
+                              leaveDates.clear();
+                            }
+                            leaveDates.addAll(dateList);
+                            if (leaveDates.isNotEmpty) {
+                              value.hRELAPToDate = leaveDates.first;
+                              value.hRELAPFromDate = leaveDates.last;
+                              value.hRELAPTotalDays =
+                                  DateTime.parse(leaveDates.last)
+                                          .difference(
+                                              DateTime.parse(leaveDates.first))
+                                          .inDays +
+                                      1;
+                              value.hRELAPReportingDate = getFormatedDate(
+                                  DateTime.parse(DateTime.parse(leaveDates.last)
+                                      .add(const Duration(days: 1))
+                                      .toString()));
+                            }
+                          });
+                        },
+                        child: SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: SvgPicture.asset(
+                                'assets/svg/calendar_icon.svg')),
+                      )
+                    ],
+                  ),
             const SizedBox(
               height: 12.0,
             ),
@@ -283,16 +288,18 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: InkWell(
                               onTap: () {
-                                logger.i(value.hRELAPSupportingDocument);
                                 if (value.hRELAPSupportingDocument
                                     .toString()
-                                    .contains('https://')) {
+                                    .contains('https:')) {
                                   createPreview(
-                                      context, value.hRELAPSupportingDocument);
+                                      context,
+                                      value.hRELAPSupportingDocument
+                                          .toString());
                                 } else {
                                   OpenFilex.open(
                                       value.hRELAPSupportingDocument);
                                 }
+                                logger.i(value.hRELAPSupportingDocument);
                               },
                               child: Container(
                                 decoration: BoxDecoration(

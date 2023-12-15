@@ -101,7 +101,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
               Align(
                 alignment: Alignment.center,
                 child: MSkollBtn(
-                    title: "Back",
+                    title: "OK",
                     onPress: () {
                       Get.back(result: dates);
                     }),
