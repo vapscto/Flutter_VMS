@@ -667,6 +667,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                           onTap: () {
                                             remark.clear();
                                             Navigator.pop(context);
+                                            Navigator.pop(context);
                                           },
                                           child: const Icon(Icons.close),
                                         ),
