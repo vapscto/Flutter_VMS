@@ -462,7 +462,7 @@ void version(LoginSuccessModel loginSuccessModel,
     ),
   );
 
-  if (ctrl!.values![0].iMVEAppVersion! != version) {
+  if (ctrl!.values!.first.iMVEAppVersion! != version) {
     Get.dialog(AlertDialog(
       title: const Text("Update App!"),
       content: const Text(
@@ -882,35 +882,7 @@ void openMappedPages(
     );
     return;
   }
-  // if (pageName == "Fee Details") {
-  //   Get.to(
-  //     () => FeeDemoHome(
-  //       loginSuccessModel: loginSuccessModel,
-  //       mskoolController: mskoolController,
-  //       controller: mskoolController,
-  //     ),
-  //   );
-  //   return;
-  // }
 
-  // if (pageName == "Employee Salary Report") {
-  //   Navigator.push(context, MaterialPageRoute(builder: (_) {
-  //     return EmployeeSalHome(
-  //       loginSuccessModel: loginSuccessModel,
-  //       mskoolController: mskoolController,
-  //     );
-  //   }));
-  //   return;
-  // }
-  // if (pageName == "Fee head Wise Details") {
-  //   Navigator.push(context, MaterialPageRoute(builder: (_) {
-  //     return FeeDetailsScreen(
-  //       loginSuccessModel: loginSuccessModel,
-  //       mskoolController: mskoolController,
-  //     );
-  //   }));
-  //   return;
-  // }
   if (pageName == "Staff in and Out") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return EmployeepunchHome(

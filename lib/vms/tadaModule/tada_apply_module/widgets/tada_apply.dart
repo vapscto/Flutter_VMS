@@ -485,7 +485,20 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   }
 
   Future<void> pickImage(int index) async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: [
+        'jpg',
+        'jpeg',
+        'png',
+        'doc',
+        'docx',
+        'xls',
+        'xlsx',
+        'pdf',
+        'mp4'
+      ],
+    );
 
     if (result != null) {
       File file = File(result.files.single.path!);

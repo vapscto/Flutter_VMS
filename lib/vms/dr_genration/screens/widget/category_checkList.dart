@@ -52,7 +52,20 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
   Future<void> pickImage(int index) async {
     // final pickedImage =
     //     await _imagePicker.pickImage(source: ImageSource.gallery);
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: [
+        'jpg',
+        'jpeg',
+        'png',
+        'doc',
+        'docx',
+        'xls',
+        'xlsx',
+        'pdf',
+        'mp4'
+      ],
+    );
 
     if (result != null) {
       File file = File(result.files.single.path!);
