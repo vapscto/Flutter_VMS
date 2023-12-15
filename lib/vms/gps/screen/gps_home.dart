@@ -93,9 +93,6 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                         // if (_fromKey.currentState!.validate()) {
                         if (clientId == 0) {
                           Fluttertoast.showToast(msg: "Select Client");
-                        } else if (punchFlag.isFalse) {
-                          Fluttertoast.showToast(
-                              msg: " Select Punch checkbox ");
                         } else if (remarksEtingController.text.isEmpty) {
                           Fluttertoast.showToast(msg: "Enter Remarks");
                         } else {

@@ -238,8 +238,8 @@ class _AllPlannersState extends State<AllPlanners> {
       totalEffort: approveEffort,
     );
     _getData();
-    Get.back();
-    Get.back();
+    // Get.back();
+    // Get.back();
     setState(() {
       isLoading = false;
     });
@@ -783,7 +783,26 @@ class _AllPlannersState extends State<AllPlanners> {
                                             RichText(
                                                 text: TextSpan(children: [
                                               TextSpan(
-                                                  text: 'Assigned Date: ',
+                                                  text: 'Created Date: ',
+                                                  style: Get
+                                                      .textTheme.titleSmall!
+                                                      .copyWith(
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .primaryColor)),
+                                              TextSpan(
+                                                  text: getDateSelect(
+                                                      DateTime.parse(
+                                                          allPlannerList[index]
+                                                              .date)),
+                                                  style: Get
+                                                      .textTheme.titleSmall!
+                                                      .copyWith()),
+                                            ])),
+                                            RichText(
+                                                text: TextSpan(children: [
+                                              TextSpan(
+                                                  text: 'Planned Date: ',
                                                   style: Get
                                                       .textTheme.titleSmall!
                                                       .copyWith(
@@ -971,5 +990,9 @@ class _AllPlannersState extends State<AllPlanners> {
                   );
       }),
     );
+  }
+
+  String getDateSelect(DateTime dt) {
+    return "${dt.day.toString().padLeft(2, "0")}-${dt.month.toString().padLeft(2, "0")}-${dt.year}";
   }
 }
