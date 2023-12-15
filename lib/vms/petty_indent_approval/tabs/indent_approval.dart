@@ -1476,8 +1476,7 @@ class _IndentApprovalState extends State<IndentApproval> {
                                               context: context,
                                               initialDate: DateTime.now(),
                                               firstDate: DateTime(1000),
-                                              lastDate: DateTime(
-                                                  DateTime.now().year, 12, 31),
+                                              lastDate: DateTime.now(),
                                             );
 
                                             if (selectedDT == null) {

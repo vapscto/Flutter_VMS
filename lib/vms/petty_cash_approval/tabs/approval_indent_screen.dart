@@ -1270,7 +1270,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                       CustomContainer(
                                         child: TextField(
                                           readOnly: true,
-                                          controller: selectEndDate,
+                                          controller: selectDate,
                                           style: Theme.of(context)
                                               .textTheme
                                               .titleSmall,
