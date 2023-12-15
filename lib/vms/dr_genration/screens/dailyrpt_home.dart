@@ -18,7 +18,6 @@ import 'package:m_skool_flutter/vms/dr_genration/screens/widget/dr_not_approved_
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/drnotApprovedScreen.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/drnotsent_screen.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/tada_not_approved.dart';
-import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
