@@ -31,16 +31,10 @@ class VersionControlApi {
             VersionChangeModel.fromJson(response.data['versiondetailslist']);
         return versionChangeModel;
       }
-      // if (response.data['versiondetailslist'] == null) {
-      // }
 
-      // if ((response.data['versiondetailslist']['\$values'] as List).isEmpty) {
-      // }
       logger.d("message");
-      // return Future.value(true);
     } on DioError catch (e) {
       logger.e(e.stackTrace);
-      // return Future.value(false);
     }
     return null;
   }
