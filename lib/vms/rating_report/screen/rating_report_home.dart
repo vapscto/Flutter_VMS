@@ -435,14 +435,25 @@ class _RatingReportHomeState extends State<RatingReportHome> {
                         return;
                       }
 
-                      Get.to(ReportDataScreen(
-                        loginSuccessModel: widget.loginSuccessModel,
-                        mskoolController: widget.mskoolController,
-                        controller: ratingReportController,
-                        selectedMonths: ratingReportController.checkList!,
-                        monthListArray: monthListArray,
-                        year: year!,
-                      ));
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return ReportDataScreen(
+                          loginSuccessModel: widget.loginSuccessModel,
+                          mskoolController: widget.mskoolController,
+                          controller: ratingReportController,
+                          selectedMonths: ratingReportController.checkList!,
+                          monthListArray: monthListArray,
+                          year: year!,
+                        );
+                      }));
+
+                      // Get.to(ReportDataScreen(
+                      //   loginSuccessModel: widget.loginSuccessModel,
+                      //   mskoolController: widget.mskoolController,
+                      //   controller: ratingReportController,
+                      //   selectedMonths: ratingReportController.checkList!,
+                      //   monthListArray: monthListArray,
+                      //   year: year!,
+                      // ));
                     },
                     child: const Padding(
                       padding: EdgeInsets.only(

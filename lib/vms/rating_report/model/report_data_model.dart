@@ -70,7 +70,7 @@ class ReportDataModelValues {
     type = json['$type'];
     empName = json['EmpName'];
     rATMTRatingTypeName = json['RATMT_RatingTypeName'];
-    rATMQERatingQuestions = json['RATMQE_RatingQuestions'];
+    rATMQERatingQuestions = json['RATMQECLSUB_QuestionsSubclassification'];
     january = json['January'];
     february = json['February'];
     march = json['March'];
@@ -93,7 +93,7 @@ class ReportDataModelValues {
     data['$type'] = type;
     data['EmpName'] = empName;
     data['RATMT_RatingTypeName'] = rATMTRatingTypeName;
-    data['RATMQE_RatingQuestions'] = rATMQERatingQuestions;
+    data['RATMQECLSUB_QuestionsSubclassification'] = rATMQERatingQuestions;
     data['January'] = january;
     data['February'] = february;
     data['March'] = march;

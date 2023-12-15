@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
@@ -8,6 +9,8 @@ import 'package:m_skool_flutter/vms/rating_report/controller/rating_report_contr
 import 'package:m_skool_flutter/vms/rating_report/model/report_data_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+
+var logger = Logger();
 
 class ReportDataScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -38,6 +41,8 @@ class _ReportDataScreenState extends State<ReportDataScreen> {
   double totalAverage = 0.0;
 
   _getreport() async {
+    logger.d(totalAverage);
+
     widget.controller.updateisLoadingRatingReportData(true);
     await getReportData(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
@@ -48,12 +53,7 @@ class _ReportDataScreenState extends State<ReportDataScreen> {
         monthList: widget.monthListArray,
         controller: widget.controller);
     widget.controller.updateisLoadingRatingReportData(false);
-  }
 
-  @override
-  void initState() {
-    super.initState();
-    _getreport();
     if (widget.controller.ratingReportData.isNotEmpty) {
       employeeName = widget.controller.ratingReportData.first.empName;
     } else {
@@ -63,6 +63,7 @@ class _ReportDataScreenState extends State<ReportDataScreen> {
     for (var data in widget.controller.ratingReportData) {
       int totalSum = 0;
       int monthCount = 0;
+      logger.d(monthCount);
       for (int monthIndex in widget.selectedMonths) {
         int? monthValue = getMonthValue(data, monthIndex);
         if (monthValue != null) {
@@ -73,6 +74,12 @@ class _ReportDataScreenState extends State<ReportDataScreen> {
       totalAverage += (monthCount > 0 ? totalSum / monthCount : 0);
     }
     totalAverage /= widget.controller.ratingReportData.length;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getreport();
   }
 
   @override
