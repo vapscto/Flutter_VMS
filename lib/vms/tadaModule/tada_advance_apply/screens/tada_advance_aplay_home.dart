@@ -2236,24 +2236,9 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                   tadaApplyController.getSavedData[index].vtadaaAToDate!);
               toSelectedDate = '${dt.day}-${dt.month}-${dt.year}';
             }
-            // TimeOfDay startTime = TimeOfDay(
-            //     hour: int.parse(tadaApplyController
-            //         .getSavedData[index].vtadaaADepartureTime!
-            //         .split(":")[0]),
-            //     minute: int.parse(tadaApplyController
-            //         .getSavedData[index].vtadaaADepartureTime!
-            //         .split(":")[1]));
             time =
                 '${tadaApplyController.getSavedData[index].vtadaaADepartureTime}';
 
-            //
-            // TimeOfDay startToTime = TimeOfDay(
-            //     hour: int.parse(tadaApplyController
-            //         .getSavedData[index].vtadaaAArrivalTime!
-            //         .split(":")[0]),
-            //     minute: int.parse(tadaApplyController
-            //         .getSavedData[index].vtadaaAArrivalTime!
-            //         .split(":")[1]));
             toSavedTime =
                 '${tadaApplyController.getSavedData[index].vtadaaAArrivalTime}';
 
