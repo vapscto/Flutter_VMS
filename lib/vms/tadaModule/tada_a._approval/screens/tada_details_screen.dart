@@ -265,7 +265,7 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
                                 UpdateTADATable(
                                   tadaController: widget.tadaController,
                                   amount:
-                                      widget.values.vTADAAAASactionedAmount!,
+                                      widget.values.vTADAAATotalAppliedAmount!,
                                   values: widget.values,
                                   mskoolController: widget.mskoolController,
                                 ),

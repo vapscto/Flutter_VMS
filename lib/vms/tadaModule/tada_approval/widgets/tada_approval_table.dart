@@ -20,13 +20,13 @@ class Item {
   Item({required this.isApproved, required this.isRejected});
 }
 
-class UpdateTADATableData extends StatefulWidget {
+class ApproveTADATableData extends StatefulWidget {
   final TadaApprovalController tadaController;
   final double amount;
   final TadaApprovalListModelValues values;
   final MskoolController mskoolController;
 
-  const UpdateTADATableData(
+  const ApproveTADATableData(
       {super.key,
       required this.tadaController,
       required this.amount,
@@ -34,10 +34,10 @@ class UpdateTADATableData extends StatefulWidget {
       required this.mskoolController});
 
   @override
-  State<UpdateTADATableData> createState() => _UpdateTADATableDataState();
+  State<ApproveTADATableData> createState() => _ApproveTADATableDataState();
 }
 
-class _UpdateTADATableDataState extends State<UpdateTADATableData> {
+class _ApproveTADATableDataState extends State<ApproveTADATableData> {
   final remarkController = TextEditingController();
   final sanctionController2 = TextEditingController();
   final parcentageController = TextEditingController();

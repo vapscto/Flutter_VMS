@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -29,6 +31,7 @@ import 'package:m_skool_flutter/vms/task%20creation/api/sava_task.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
+import 'package:open_filex/open_filex.dart';
 
 class TadaApplyWidget extends StatefulWidget {
   final MskoolController mskoolController;
@@ -461,18 +464,63 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   bool checked = false;
   int clintId = 0;
   String clintName = '';
-  //
+  //File Picker
+  addItemListBrowse(int val, String name) {
+    setState(() {
+      tadaApplyDataController.addListBrowser.add(AtachmentFile(
+        id: val,
+        FileName: name,
+      ));
+      for (int i = 0; i < tadaApplyDataController.addListBrowser.length; i++) {
+        tadaApplyDataController.newRemarksController
+            .add(TextEditingController(text: ''));
+      }
+    });
+  }
+
+  void removeRow(int value) {
+    setState(() {
+      tadaApplyDataController.newList.removeAt(value);
+    });
+  }
+
+  Future<void> pickImage(int index) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      XFile xFile = XFile(file.path);
+      tadaApplyDataController.addListBrowser[index].file = xFile;
+      tadaApplyDataController.addListBrowser[index].FileName =
+          result.names.first;
+      setState(() {});
+    } else {
+      Fluttertoast.showToast(msg: "Image Is not Uploaded Please try Again");
+    }
+  }
+
+  removeItemListBrowse(int val) {
+    tadaApplyDataController.addListBrowser.removeAt(val);
+    setState(() {});
+  }
+
+  //File Picker
   @override
   void initState() {
     getStateList();
     savedDataListAPI();
     addRow(1);
+
+    setState(() {
+      addItemListBrowse(0, '');
+    });
     super.initState();
   }
 
   @override
   void dispose() {
     tadaApplyDataController.tadaSavedData.clear();
+    tadaApplyDataController.addListBrowser.clear();
     widget.previousScreen = 0;
     allowanceData.clear();
     super.dispose();
@@ -2404,8 +2452,117 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                 const SizedBox(
                   height: 16,
                 ),
-                FileUploadWidget(
-                  tadaApplyDataController: tadaApplyDataController,
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: DataTable(
+                        // dataRowHeight: 35,
+                        headingRowHeight: 45,
+                        columnSpacing: 10,
+                        headingTextStyle: const TextStyle(color: Colors.white),
+                        border: TableBorder.all(
+                          color: Colors.black,
+                          width: 0.6,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        headingRowColor: MaterialStateColor.resolveWith(
+                            (states) => Theme.of(context).primaryColor),
+                        columns: const [
+                          DataColumn(label: Text("SL.NO.")),
+                          DataColumn(label: Text("Upload")),
+                          DataColumn(label: Text("View")),
+                          DataColumn(label: Text("Remarks")),
+                          DataColumn(label: Text("Action")),
+                        ],
+                        rows: List.generate(
+                            tadaApplyDataController.addListBrowser.length,
+                            (index) {
+                          var value = index + 1;
+                          return DataRow(cells: [
+                            DataCell(Text(value.toString())),
+                            DataCell(Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    pickImage(index);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      backgroundColor:
+                                          Theme.of(context).primaryColor),
+                                  child: Center(
+                                    child: Text(
+                                      "Choose File",
+                                      style: Get.textTheme.titleSmall!
+                                          .copyWith(color: Colors.white),
+                                    ),
+                                  )),
+                            )),
+                            DataCell(Align(
+                              alignment: Alignment.center,
+                              child: Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      OpenFilex.open(tadaApplyDataController
+                                          .addListBrowser[index].file!.path);
+                                    },
+                                    child: (tadaApplyDataController
+                                                .addListBrowser[index].file ==
+                                            null)
+                                        ? const Icon(Icons.visibility_off)
+                                        : const Icon(Icons.visibility),
+                                  ),
+                                ],
+                              ),
+                            )),
+                            DataCell(Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: SizedBox(
+                                width: 120,
+                                child: TextField(
+                                  style: Get.textTheme.titleSmall!
+                                      .copyWith(color: Colors.black),
+                                  controller: tadaApplyDataController
+                                      .newRemarksController
+                                      .elementAt(index),
+                                ),
+                              ),
+                            )),
+                            DataCell(Align(
+                                alignment: Alignment.center,
+                                child: index ==
+                                        tadaApplyDataController
+                                                .addListBrowser.length -
+                                            1
+                                    ? InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            addItemListBrowse(
+                                              index + 1,
+                                              "",
+                                            );
+                                          });
+                                        },
+                                        child: const Icon(Icons.add))
+                                    : index <
+                                            tadaApplyDataController
+                                                .addListBrowser.length
+                                        ? InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                removeItemListBrowse(index);
+                                              });
+                                            },
+                                            child: const Icon(Icons.remove))
+                                        : null)),
+                          ]);
+                        })),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 30),
@@ -2425,6 +2582,10 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                               allAmount = foodAmt +
                                   accommodationAmount +
                                   otherAmount.toDouble();
+                              if (_endTime.text.isEmail) {
+                                Fluttertoast.showToast(
+                                    msg: "Select Arrival Time");
+                              }
                               if (_addressController.text.isEmpty) {
                                 Fluttertoast.showToast(msg: "Enter Address");
                               } else if (allAmount == 0) {
@@ -2557,4 +2718,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
       ),
     );
   }
+
+  bool isAddLoading = false;
+  bool isSubstractLoading = false;
 }

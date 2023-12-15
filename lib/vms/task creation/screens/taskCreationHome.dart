@@ -1492,7 +1492,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                         "",
                                                       );
                                                     },
-                                                    child: Icon(Icons.add)),
+                                                    child:
+                                                        const Icon(Icons.add)),
                                                 // InkWell(
                                                 //     onTap: () {
                                                 //       removeItemListBrowse(
@@ -1508,7 +1509,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                   onTap: () {
                                                     removeItemListBrowse(index);
                                                   },
-                                                  child: Icon(Icons.remove))
+                                                  child:
+                                                      const Icon(Icons.remove))
                                               : null)),
                                 ]);
                               }),

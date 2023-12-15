@@ -19,24 +19,18 @@ class FileUploadWidget extends StatefulWidget {
 
 class _FileUploadWidgetState extends State<FileUploadWidget> {
   final ImagePicker _imagePicker = ImagePicker();
-  void addRow() {
-    for (int i = 0;
-        i < widget.tadaApplyDataController.addListBrowser.length;
-        i++) {
-      widget.tadaApplyDataController.newRemarksController
-          .add(TextEditingController(text: ''));
-      widget.tadaApplyDataController.fileNameController
-          .add(TextEditingController(text: ''));
-    }
-    setState(() {});
-  }
 
   addItemListBrowse(int val, String name) {
     widget.tadaApplyDataController.addListBrowser.add(AtachmentFile(
       id: val,
       FileName: name,
     ));
-    addRow();
+    for (int i = 0;
+        i < widget.tadaApplyDataController.addListBrowser.length;
+        i++) {
+      widget.tadaApplyDataController.newRemarksController
+          .add(TextEditingController(text: ''));
+    }
     setState(() {});
   }
 
@@ -53,7 +47,6 @@ class _FileUploadWidgetState extends State<FileUploadWidget> {
 
   @override
   void dispose() {
-    widget.tadaApplyDataController.newList.clear();
     widget.tadaApplyDataController.addListBrowser.clear();
     super.dispose();
   }

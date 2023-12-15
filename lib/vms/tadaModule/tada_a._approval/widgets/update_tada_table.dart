@@ -268,8 +268,6 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                       headArray.add({
                         "VTADAAAD_Id": value.vTADAAADId,
                         "VTADAAA_Id": value.vTADAAAId,
-                        // "VTADAAAD_ExpenditureHead":
-                        //     value.vTADAAADExpenditureHead,
                         "VTADAAAD_Remarks": widget
                             .tadaController.textEditingControllerList[i].text,
                         "VTADAAAD_Amount": value.vTADAAADAmount,
@@ -283,12 +281,6 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                                 true)
                             ? "A"
                             : "R",
-                        // "VTADACM_FoodAmt": value.vTADACMFoodAmt,
-                        // "VTADACM_AccommodationAmt":
-                        //     value.vTADACMAccommodationAmt,
-                        // "VTADACM_TransportAmt": value.vTADACMTransportAmt,
-                        // "VTADAAAD_Slots": value.vTADAAADSlots,
-                        // "VTADAAAD_TotalSlots": value.vTADAAADTotalSlots
                       });
                     }
                     SaveTADAAPI.instance.saveTADA(

@@ -278,10 +278,10 @@ class _TADAApprovalDetailsScreenState extends State<TADAApprovalDetailsScreen> {
                             padding: const EdgeInsets.all(12.0),
                             child: Column(
                               children: [
-                                UpdateTADATableData(
+                                ApproveTADATableData(
                                   tadaController: widget.tadaController,
                                   amount:
-                                      widget.values.vTADAAAASactionedAmount!,
+                                      widget.values.vTADAATotalAppliedAmount!,
                                   values: widget.values,
                                   mskoolController: widget.mskoolController,
                                 ),

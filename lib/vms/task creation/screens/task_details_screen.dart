@@ -189,7 +189,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.5,
+                                                0.57,
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
