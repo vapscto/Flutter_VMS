@@ -248,11 +248,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
           _descritpionETController.clear();
           _taskDepartController.updateTaskAssign("N");
           _taskDepartController.updateTypeOfTask("B");
-           employeesID.clear();
+          employeesID.clear();
           _taskDepartController.checkBox.clear();
           addItemListBrowse(0, "");
           loadCmpny();
-           _taskDepartController.updateDisbleSubmitButton(true); 
+          _taskDepartController.updateDisbleSubmitButton(true);
           showDialog(
             context: context,
             builder: (context) {
@@ -314,15 +314,17 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                 () => controller.drIsLoading.value
                     ? const SizedBox()
                     : Visibility(
-                      visible: _taskDepartController.disableSubmitButton.isTrue,
-                      child: BtnSave(
+                        visible:
+                            _taskDepartController.disableSubmitButton.isTrue,
+                        child: BtnSave(
                           title: 'Submit',
                           onPress: () async {
                             if (_formKey.currentState!.validate()) {
                               if (_taskDepartController.taskAssingn.value ==
                                   'Y') {
                                 if (selectFromDate.text.isEmpty) {
-                                  Fluttertoast.showToast(msg: "Select From Date");
+                                  Fluttertoast.showToast(
+                                      msg: "Select From Date");
                                   return;
                                 } else if (selectToDate.text.isEmpty) {
                                   Fluttertoast.showToast(msg: "Select To Date");
@@ -332,16 +334,19 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                   Fluttertoast.showToast(msg: "Enter Time");
                                   return;
                                 } else if (employeesID.isEmpty) {
-                                  Fluttertoast.showToast(msg: "Select Employee");
+                                  Fluttertoast.showToast(
+                                      msg: "Select Employee");
                                   return;
                                 } else {
-                                  _taskDepartController.updateDisbleSubmitButton(false);
+                                  _taskDepartController
+                                      .updateDisbleSubmitButton(false);
                                   await loadImages();
                                 }
                               } else if (_taskDepartController
                                       .taskAssingn.value ==
                                   'N') {
-                                _taskDepartController.updateDisbleSubmitButton(false);    
+                                _taskDepartController
+                                    .updateDisbleSubmitButton(false);
                                 await loadImages();
                               }
                             } else {
@@ -349,7 +354,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             }
                           },
                         ),
-                    ),
+                      ),
               ),
             )
           ],
@@ -1488,12 +1493,12 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                       );
                                                     },
                                                     child: Icon(Icons.add)),
-                                                InkWell(
-                                                    onTap: () {
-                                                      removeItemListBrowse(
-                                                          index);
-                                                    },
-                                                    child: Icon(Icons.remove))
+                                                // InkWell(
+                                                //     onTap: () {
+                                                //       removeItemListBrowse(
+                                                //           index);
+                                                //     },
+                                                //     child: Icon(Icons.remove))
                                               ],
                                             )
                                           : index <
@@ -2018,7 +2023,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                               12),
                                                       child: InkWell(
                                                         onTap: () async {
-                                                          fromDate();
+                                                          toDate();
                                                         },
                                                         child: SvgPicture.asset(
                                                           "assets/svg/calendar_icon.svg",
@@ -2427,7 +2432,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                       child: Align(
                                         alignment: Alignment.center,
                                         child: Padding(
-                                          padding:const EdgeInsets.symmetric(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 10),
                                           child: TextField(
                                             style: Theme.of(context)

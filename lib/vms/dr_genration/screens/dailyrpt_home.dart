@@ -1060,8 +1060,12 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                     if (currentDate
                                                                         .isAfter(
                                                                             previousDate)) {
-                                                                      deviation =
-                                                                          true;
+                                                                      setState(
+                                                                          () {
+                                                                        deviation =
+                                                                            true;
+                                                                      });
+
                                                                       showDialog(
                                                                         context:
                                                                             context,
@@ -1102,14 +1106,15 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                               },
                                                             ),
                                                           )),
-                                                      const SizedBox(height: 5),
-                                                      (_plannerDetailsController
-                                                                  .uploadImages
-                                                                  .isNotEmpty ||
-                                                              newindex)
-                                                          ? const Icon(Icons
-                                                              .visibility_outlined)
-                                                          : const SizedBox()
+                                                      // const SizedBox(height: 5),
+                                                      // (_plannerDetailsController
+                                                      //             .uploadImages
+
+                                                      //             .isNotEmpty ||
+                                                      //         newindex)
+                                                      //     ? const Icon(Icons
+                                                      //         .visibility_outlined)
+                                                      //     : const SizedBox()
                                                     ],
                                                   )),
                                                   DataCell(Column(
@@ -1700,6 +1705,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                         final offset = details
                                                             .globalPosition;
 
+                                                        // (deviation == false)
+                                                        //     ? const SizedBox():
                                                         showMenu(
                                                             context: context,
                                                             position:
@@ -1755,61 +1762,60 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                               },
                                                             ));
                                                       },
-                                                      child:
-                                                          (currentDt.isAfter(
-                                                                  previousDt))
-                                                              ? SizedBox()
-                                                              : TextFormField(
-                                                                  validator:
-                                                                      (value) {
-                                                                    if (value!
-                                                                        .isEmpty) {
-                                                                      if (selectCheckbox
-                                                                          .contains(
-                                                                              index)) {
-                                                                        if (currentDt
-                                                                            .isAfter(previousDt)) {
-                                                                          return 'Please  select Deviation';
-                                                                        }
-                                                                      }
-                                                                    }
+                                                      child: TextFormField(
+                                                        validator: (value) {
+                                                          if (value!.isEmpty) {
+                                                            if (selectCheckbox
+                                                                .contains(
+                                                                    index)) {
+                                                              if (currentDt.isAfter(
+                                                                  previousDt)) {
+                                                                return 'Please  select Deviation';
+                                                              }
+                                                            }
+                                                          }
 
-                                                                    return null;
-                                                                  },
-                                                                  controller:
-                                                                      _plannerDetailsController
-                                                                              .deveationEtField[
-                                                                          index],
-                                                                  readOnly:
-                                                                      true,
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .titleSmall!
-                                                                      .merge(const TextStyle(
-                                                                          fontSize:
-                                                                              16,
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontWeight:
-                                                                              FontWeight.w300)),
-                                                                  decoration: InputDecoration(
-                                                                      suffixIcon:
-                                                                          const Icon(Icons
-                                                                              .arrow_drop_down),
-                                                                      hintText:
-                                                                          "Select Deviation",
-                                                                      hintStyle: Theme.of(context).textTheme.titleSmall!.merge(const TextStyle(
-                                                                          fontSize:
-                                                                              16,
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontWeight: FontWeight
-                                                                              .w300)),
-                                                                      border: OutlineInputBorder(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(5))),
-                                                                ),
+                                                          return null;
+                                                        },
+                                                        controller:
+                                                            _plannerDetailsController
+                                                                    .deveationEtField[
+                                                                index],
+                                                        readOnly: true,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall!
+                                                            .merge(const TextStyle(
+                                                                fontSize: 16,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300)),
+                                                        decoration: InputDecoration(
+                                                            suffixIcon:
+                                                                const Icon(Icons
+                                                                    .arrow_drop_down),
+                                                            hintText:
+                                                                "Select Deviation",
+                                                            hintStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .titleSmall!
+                                                                .merge(const TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w300)),
+                                                            border: OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5))),
+                                                      ),
                                                     ),
                                                   ))
                                                 ]);

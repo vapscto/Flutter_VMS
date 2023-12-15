@@ -279,8 +279,11 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
               : MSkollBtn(
                   title: "Save",
                   onPress: () async {
-                    if (widget
-                        .plannerDetailsController.addListBrowser.isNotEmpty) {
+                    if (widget.plannerDetailsController.addListBrowser.first
+                            .file ==
+                        null) {
+                      Fluttertoast.showToast(msg: "Please Upload File");
+                    } else {
                       setState(() {
                         isLoading = true;
                       });
@@ -307,8 +310,6 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                         isLoading = false;
                       });
                       Get.back(result: uploadAttachment);
-                    } else {
-                      Fluttertoast.showToast(msg: "Please Upload File");
                     }
                   },
                 )
