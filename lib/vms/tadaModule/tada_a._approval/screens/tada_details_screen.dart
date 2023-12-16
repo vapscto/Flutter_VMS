@@ -55,8 +55,8 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
       toDate = '${toDt.day}-${toDt.month}-${toDt.year}';
       DateTime dt1 = DateTime.parse(widget.values.vTADAAAFromDate!);
       DateTime dt2 = DateTime.parse(widget.values.vTADAAAToDate!);
-      Duration diff = dt1.difference(dt2);
-      day = diff.inDays;
+      int diff = dt2.difference(dt1).inDays;
+      day = diff + 1;
     });
     widget.tadaController.updateIsLoading(false);
   }
@@ -311,32 +311,21 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
   List<DataRow> createRow() {
     return List.generate(widget.tadaController.newTimeArray.length, (index) {
       var value = index + 1;
-      // TimeOfDay startTime = TimeOfDay(
-      //     hour: int.parse(widget
-      //         .tadaController.newTimeArray[index].vtadaaADepartureTime!
-      //         .split(":")[0]),
-      //     minute: int.parse(widget
-      //         .tadaController.newTimeArray[index].vtadaaADepartureTime!
-      //         .split(":")[1]));
+      var v = widget.tadaController.newTimeArray.elementAt(index);
       var dTime =
           '${widget.tadaController.newTimeArray[index].vtadaaADepartureTime}';
-      // TimeOfDay endTime0 = TimeOfDay(
-      //     hour: int.parse(widget
-      //         .tadaController.newTimeArray[index].vtadaaAArrivalTime!
-      //         .split(":")[0]),
-      //     minute: int.parse(widget
-      //         .tadaController.newTimeArray[index].vtadaaAArrivalTime!
-      //         .split(":")[1]));
+
       var endTime =
           '${widget.tadaController.newTimeArray[index].vtadaaAArrivalTime}';
+
       return DataRow(cells: [
         DataCell(Text(value.toString())),
         DataCell(Text(widget.values.cityName ?? "")),
-        DataCell(Text(widget.values.sanctionLevelNo.toString())),
+        DataCell(Text(day.toString())),
         DataCell(Text(fromDate)),
-        DataCell(Text(dTime)),
+        DataCell(Text(v.vtadaaADepartureTime!)),
         DataCell(Text(toDate)),
-        DataCell(Text(endTime)),
+        DataCell(Text(v.vtadaaAArrivalTime!)),
       ]);
     });
   }
