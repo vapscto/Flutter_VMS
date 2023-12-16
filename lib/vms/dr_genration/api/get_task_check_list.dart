@@ -1,30 +1,31 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';
- 
-Future<CategoryCheckListModel?> getCategoryChecklistDetails({
-  required String base,
-  required int ismctrId,
-  required int ismmcatId,
-  required PlannerDetails controller
-}) async {
+import 'package:m_skool_flutter/vms/dr_genration/model/upload_dr_image.dart';
+import 'package:mime/mime.dart';
+import 'package:http_parser/src/media_type.dart';
+
+Future<CategoryCheckListModel?> getCategoryChecklistDetails(
+    {required String base,
+    required int ismctrId,
+    required int ismmcatId,
+    required PlannerDetails controller}) async {
   final Dio ins = getGlobalDio();
   final String apiUrl = base + URLS.getTaskCheckList;
   logger.e(apiUrl);
   try {
-    final Response response =
-        await ins.post(apiUrl, options: Options(headers: getSession()), data: {
-    "ISMMTCAT_Id": ismmcatId,
-    "ISMTCR_Id": ismctrId
-    });
-    logger.e({
-     
-    });
-    CategoryCheckListModel checkListModel =  CategoryCheckListModel.fromJson(response.data['gettaskcategorychecklist']);
-    
+    final Response response = await ins.post(apiUrl,
+        options: Options(headers: getSession()),
+        data: {"ISMMTCAT_Id": ismmcatId, "ISMTCR_Id": ismctrId});
+    logger.e({});
+    CategoryCheckListModel checkListModel = CategoryCheckListModel.fromJson(
+        response.data['gettaskcategorychecklist']);
+
     return checkListModel;
   } on DioError catch (e) {
     logger.e(e.message);
@@ -32,5 +33,40 @@ Future<CategoryCheckListModel?> getCategoryChecklistDetails({
   } on Exception catch (e) {
     logger.e(e.toString());
     return null;
+  }
+}
+
+Future<UploadDrImage> uploadDrImage(
+    {required int miId, required File file}) async {
+  final Dio ins = getGlobalDio();
+  final String uploadFile =
+      "https://bdcampus.azurewebsites.net/${URLS.uploadHomeWorkEnd}";
+  String? mime = lookupMimeType(file.path);
+  if (mime == null) {
+    logger.d("mime null");
+  }
+  try {
+    final Response response = await ins.post(uploadFile,
+        options: Options(headers: getSession()),
+        data: FormData.fromMap(
+          {
+            "MI_Id": miId,
+            "File": await MultipartFile.fromFile(
+              file.path,
+              contentType:
+                  MediaType(mime!.split("/").first, mime.split("/").last),
+            )
+          },
+        ));
+    logger.e({
+      "MI_Id": miId,
+      "File": await MultipartFile.fromFile(
+        file.path,
+        contentType: MediaType(mime!.split("/").first, mime.split("/").last),
+      )
+    });
+    return Future.value(UploadDrImage.fromMap(response.data.first));
+  } catch (e) {
+    return Future.error({"error Occured"});
   }
 }

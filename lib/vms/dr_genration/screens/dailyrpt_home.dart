@@ -58,7 +58,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   List<Map<String, dynamic>> dailyReportGenaration = [];
   List<Map<String, dynamic>> dailyReportStatus = [];
   final reasonController = TextEditingController();
-
+  String image = '';
   DateTime todayDate = DateTime.now();
   init() async {
     await getPlanerdetails(
@@ -192,7 +192,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         filePath = i['path'];
       }
     }
-    
+
     if (fliteresList.isNotEmpty) {
       // Calculate the total hours and minutes
       int totalHours = 0;
@@ -388,7 +388,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
 
   String fileName = '';
   String filePath = '';
-  bool newindex = false;
+  List<dynamic> newindex = [];
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -1031,7 +1031,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                               .values!
                                                                               .isNotEmpty) {
                                                                             newindex =
-                                                                                value.values!.first.ismmtcatcLUploadEnterFlg!;
+                                                                                value.values!;
                                                                             logger.e(newindex);
                                                                             showDialog(
                                                                                 context: context,
@@ -1050,12 +1050,15 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                                             value: value,
                                                                                             plannerDetailsController: _plannerDetailsController,
                                                                                             loginSuccessModel: widget.loginSuccessModel,
+                                                                                            index: index,
                                                                                           ),
                                                                                         ],
                                                                                       ),
                                                                                     ),
                                                                                   );
-                                                                                });
+                                                                                }).then((value) {
+                                                                              image = value.toString();
+                                                                            });
                                                                           }
                                                                         },
                                                                       )
@@ -1152,15 +1155,13 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                               },
                                                             ),
                                                           )),
-                                                      // const SizedBox(height: 5),
-                                                      // (_plannerDetailsController
-                                                      //             .uploadImages
-
-                                                      //             .isNotEmpty ||
-                                                      //         newindex)
-                                                      //     ? const Icon(Icons
-                                                      //         .visibility_outlined)
-                                                      //     : const SizedBox()
+                                                      const SizedBox(height: 5),
+                                                      (image.isNotEmpty &&
+                                                              newindex
+                                                                  .isNotEmpty)
+                                                          ? const Icon(Icons
+                                                              .visibility_outlined)
+                                                          : const SizedBox()
                                                     ],
                                                   )),
                                                   DataCell(Column(

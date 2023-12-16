@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -81,7 +83,7 @@ class PlannerDetails extends GetxController {
     day.value = val;
   }
 
-  RxList<AtachmentFile> addListBrowser = <AtachmentFile>[].obs;
+  RxList<AtachmenDrtFile> addListBrowser = <AtachmenDrtFile>[].obs;
   RxBool isSaveLoading = RxBool(false);
   void saveLoading(bool loading) {
     isSaveLoading.value = loading;
@@ -111,4 +113,37 @@ class PlannerDetails extends GetxController {
   }
 
   List<Map<String, dynamic>> uploadImages = [];
+}
+
+class AtachmenDrtFile {
+  int? id;
+  String? FileName;
+  File? file;
+  AtachmenDrtFile({required this.id, required this.FileName, this.file});
+}
+
+class UploadAttachment {
+  String? iSMTCRATAttatchment;
+  String? iSMTCRATFile;
+
+  UploadAttachment(
+      {required this.iSMTCRATAttatchment, required this.iSMTCRATFile});
+
+  UploadAttachment.fromJson(Map<String, dynamic> json) {
+    iSMTCRATAttatchment = json['ISMTCRAT_Attatchment'];
+    iSMTCRATFile = json['ISMTCRAT_File'];
+  }
+
+  factory UploadAttachment.fromMap(Map<String, dynamic> map) {
+    return UploadAttachment(
+        iSMTCRATAttatchment: map['ISMTCRAT_Attatchment'] as String,
+        iSMTCRATFile: map['ISMTCRAT_File'] as String);
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['ISMTCRAT_Attatchment'] = this.iSMTCRATAttatchment;
+    data['ISMTCRAT_File'] = this.iSMTCRATFile;
+    return data;
+  }
 }
