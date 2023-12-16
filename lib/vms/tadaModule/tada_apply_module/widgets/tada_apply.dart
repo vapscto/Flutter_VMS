@@ -608,7 +608,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             accommodationRemarksController.clear();
                             accommodationRemarksController.clear();
                             tadaApplyDataController.allowenseData.clear();
-                            tadaApplyDataController.stateList.first;
+                            tadaApplyDataController.stateList.clear();
                             _startDate.text =
                                 "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
                             fromSelectedDate =
@@ -642,7 +642,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 accommodationRemarksController.clear();
                                 accommodationRemarksController.clear();
                                 tadaApplyDataController.allowenseData.clear();
-                                tadaApplyDataController.stateList.first;
+                                tadaApplyDataController.stateList.clear();
                                 _startDate.text =
                                     "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
                                 fromSelectedDate =
@@ -741,7 +741,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                               accommodationRemarksController.clear();
                               accommodationRemarksController.clear();
                               tadaApplyDataController.allowenseData.clear();
-                              tadaApplyDataController.stateList.first;
+                              tadaApplyDataController.stateList.clear();
                               _endDate.text =
                                   "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                               dayCount =
@@ -786,7 +786,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                   accommodationRemarksController.clear();
                                   accommodationRemarksController.clear();
                                   tadaApplyDataController.allowenseData.clear();
-                                  tadaApplyDataController.stateList.first;
+                                  tadaApplyDataController.stateList.clear();
                                   _endDate.text =
                                       "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                                   dayCount =
