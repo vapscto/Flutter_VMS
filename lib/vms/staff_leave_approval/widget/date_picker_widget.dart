@@ -33,6 +33,8 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   void initState() {
     selectedDates.add(DateTime.parse(widget.startDate));
     selectedDates.add(DateTime.parse(widget.endDate));
+    max = DateTime.parse(widget.endDate);
+    min = DateTime.parse(widget.startDate);
     logger.i(max);
     logger.i(min);
     super.initState();
@@ -60,8 +62,8 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               SfDateRangePicker(
-                maxDate: max,
                 minDate: min,
+                maxDate: max,
                 controller: _controller,
                 key: ValueKey(_controller.selectedDates?.length ?? 0),
                 view: DateRangePickerView.month,
