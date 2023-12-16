@@ -84,6 +84,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.tadaController.tadaEditValues;
     });
+    addAllAmount(0);
     widget.tadaController.selectedValue = List.generate(
         widget.tadaController.tadaEditValues.length,
         (index) => Item(isApproved: true, isRejected: false));
@@ -95,8 +96,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
         widget.tadaController.approvalTextEditingControllerList
             .add(TextEditingController(text: ''));
         widget.tadaController.textEditingControllerList[index].addListener(() {
-          addAllAmount(double.parse(
-              widget.tadaController.textEditingControllerList[index].text));
+          addAllAmount(0);
         });
         sanctionController2.text += widget
             .tadaController.textEditingControllerList
@@ -178,6 +178,8 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                       style: Get.textTheme.titleSmall,
                     ),
                     Text(
+                      // (amount == 0.0)
+                      //     ? widget.amount.toString():
                       amount.toString(),
                       style: Get.textTheme.titleSmall!
                           .copyWith(fontWeight: FontWeight.w600),
@@ -302,6 +304,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                               'issuemanager', widget.mskoolController),
                           userId: widget.values.userId!,
                           tadaController: widget.tadaController);
+                      Get.back();
                       Get.back();
                     });
                   }

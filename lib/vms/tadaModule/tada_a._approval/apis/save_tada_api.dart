@@ -11,14 +11,15 @@ class SaveTADAAPI {
   saveTADA({required Map<String, dynamic> body, required String base}) async {
     var dio = Dio();
     var url = base + URLS.tadaSave;
+    logger.d(body);
+    logger.i(url);
     try {
       var response = await dio.post(
         url,
         options: Options(headers: getSession()),
         data: body,
       );
-      logger.d(body);
-      logger.i(url);
+
       if (response.statusCode == 200) {
         if (response.data['returnvalue'] == true) {
           if (int.parse(response.data['VTADAAA_TotalSactionedAmount']) > 0) {
