@@ -18,7 +18,6 @@ import 'package:m_skool_flutter/vms/dr_genration/screens/widget/dr_not_approved_
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/drnotApprovedScreen.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/drnotsent_screen.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/tada_not_approved.dart';
-import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
@@ -193,7 +192,54 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         filePath = i['path'];
       }
     }
+    
     if (fliteresList.isNotEmpty) {
+      // Calculate the total hours and minutes
+      int totalHours = 0;
+      int totalMinutes = 0;
+
+      for (int i = 0; i < _plannerDetailsController.hoursEt.length; i++) {
+        if (_plannerDetailsController.hoursEt[i].text.isNotEmpty) {
+          totalHours += int.parse(_plannerDetailsController.hoursEt[i].text);
+        }
+
+        if (_plannerDetailsController.minutesEt[i].text.isNotEmpty) {
+          totalMinutes +=
+              int.parse(_plannerDetailsController.minutesEt[i].text);
+        }
+      }
+
+      int excessHours = totalMinutes ~/ 60;
+      totalHours += excessHours;
+      totalMinutes %= 60;
+
+      if (totalHours > 24) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: const Text(
+                'Effort Should Be Less Than Equal To 24 Hours Per Day',
+                style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 18,
+                    color: Colors.black54),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+
+        return;
+      }
+
       for (int i = 0; i < _plannerDetailsController.checkBoxList.length; i++) {
         var value = fliteresList.elementAt(i);
 
@@ -1391,15 +1437,18 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                 TextFormField(
                                                               validator:
                                                                   (value) {
-                                                                if (value!
-                                                                    .isEmpty) {
-                                                                  if (selectCheckbox
-                                                                      .contains(
-                                                                          index)) {
-                                                                    if (value
-                                                                        .isEmpty) {
-                                                                      return 'Please  enter minutes';
-                                                                    }
+                                                                if (selectCheckbox
+                                                                    .contains(
+                                                                        index)) {
+                                                                  if (value !=
+                                                                          null &&
+                                                                      int.tryParse(
+                                                                              value) !=
+                                                                          null &&
+                                                                      int.parse(
+                                                                              value) >
+                                                                          59) {
+                                                                    return 'Greater 59';
                                                                   }
                                                                 }
 
@@ -1434,25 +1483,28 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   )),
                                                               decoration:
                                                                   InputDecoration(
-                                                                      border:
-                                                                          const OutlineInputBorder(),
-                                                                      hintText:
-                                                                          " MM ",
-                                                                      hintStyle: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .titleSmall!
-                                                                          .merge(
-                                                                              const TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            fontSize:
-                                                                                14.0,
-                                                                            letterSpacing:
-                                                                                0.3,
-                                                                            overflow:
-                                                                                TextOverflow.clip,
-                                                                          ))),
+                                                                border:
+                                                                    const OutlineInputBorder(),
+                                                                hintText:
+                                                                    " MM ",
+                                                                hintStyle: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .titleSmall!
+                                                                    .merge(
+                                                                        const TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontSize:
+                                                                          14.0,
+                                                                      letterSpacing:
+                                                                          0.3,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .clip,
+                                                                    )),
+                                                              ),
                                                               controller:
                                                                   _plannerDetailsController
                                                                           .minutesEt[
