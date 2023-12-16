@@ -86,6 +86,10 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
     setState(() {});
   }
 
+  int id = 0;
+  String name = '';
+  String refNo = '';
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -95,7 +99,10 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
           initialSelection: widget.value.values!.first,
           width: MediaQuery.of(context).size.width / 2,
           onSelected: (CategoryCheckListModelValues? value) {
-            setState(() {});
+            setState(() {
+              id = value!.ismmtcatcLId!;
+              name = value.ismmtcatcLCheckListName!;
+            });
           },
           dropdownMenuEntries: widget.value.values!
               .map<DropdownMenuEntry<CategoryCheckListModelValues>>(
@@ -295,29 +302,27 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                         in widget.plannerDetailsController.addListBrowser) {
                       var path = element.file!.path;
                       logger.i(path);
-                      try {
-                        uploadAttachment.add(await uploadDrImage(
-                            miId: widget.loginSuccessModel.mIID!,
-                            file: element.file!));
-                      } catch (e) {
-                        return Future.error({
-                          "errorTitle": "An Error Occured",
-                          "errorMsg":
-                              "While trying to upload attchement, we encountered an error"
-                        });
-                      }
+                      uploadAttachment.add(await uploadDrImage(
+                          miId: widget.loginSuccessModel.mIID!,
+                          file: element.file!));
                     }
                     widget.plannerDetailsController.uploadImages.clear();
                     for (var i in uploadAttachment) {
                       widget.plannerDetailsController.uploadImages.add({
                         "name": i.name,
                         "path": i.path,
-                        // "index": widget.index
+                        "index": widget.index,
+                        "ismmtcatclId": id,
+                        "checkName": name,
+                        "ref": i.hashCode
                       });
                     }
-                    setState(() {
-                      isLoading = false;
-                    });
+                    if (uploadAttachment.isNotEmpty) {
+                      setState(() {
+                        isLoading = false;
+                      });
+                    }
+
                     Get.back(result: uploadAttachment);
                   }
                 },

@@ -58,15 +58,9 @@ Future<UploadDrImage> uploadDrImage(
             )
           },
         ));
-    logger.e({
-      "MI_Id": miId,
-      "File": await MultipartFile.fromFile(
-        file.path,
-        contentType: MediaType(mime!.split("/").first, mime.split("/").last),
-      )
-    });
+    logger.e(response.data);
     return Future.value(UploadDrImage.fromMap(response.data.first));
   } catch (e) {
-    return Future.error({"error Occured"});
+    return Future.error({e});
   }
 }

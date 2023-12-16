@@ -55,6 +55,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
     super.initState();
   }
 
+  int uploadImageIndex = 0;
   List<Map<String, dynamic>> dailyReportGenaration = [];
   List<Map<String, dynamic>> dailyReportStatus = [];
   final reasonController = TextEditingController();
@@ -185,11 +186,21 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         : null;
   }
 
+  List<Map<String, dynamic>> uploadImageList = [];
   saveDaetails() async {
     if (_plannerDetailsController.uploadImages.isNotEmpty) {
       for (var i in _plannerDetailsController.uploadImages) {
         fileName = i['name'];
         filePath = i['path'];
+        uploadImageIndex = i['index'];
+        uploadImageList.add({
+          "ISMMTCATCL_Id": i['ismmtcatclId'],
+          "checklistname": i['checkName'],
+          "comments": "",
+          "filename": i['name'],
+          "filepath": i['path'],
+          "refno": i["ref"]
+        });
       }
     }
 
@@ -251,15 +262,13 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
             "HRMP_Name": value.hRMPName,
             "ISMDRPT_DeviationFlg": value.iSMDRPTDeviationFlg,
             "ISMDRPT_ExtraFlg": value.iSMDRPTExtraFlg,
-            "ISMDRPT_Remarks": _plannerDetailsController.etResponse
-                .elementAt(i)
-                .text
-                .toString(),
+            "ISMDRPT_Remarks":
+                _plannerDetailsController.etResponse.elementAt(i).text,
             "ISMDRPT_Status":
                 _plannerDetailsController.deveationEtField[i].text,
-            "ISMDRPT_TimeTakenInHrs": _plannerDetailsController.hoursEt[i].text,
-            "ISMDRPT_TimeTakenInHrsmin":
-                _plannerDetailsController.minutesEt[i].text,
+            "ISMDRPT_TimeTakenInHrs":
+                '${_plannerDetailsController.hoursEt[i].text}.${_plannerDetailsController.minutesEt[i].text}',
+            "ISMDRPT_TimeTakenInHrsmin": "Hours",
             "ISMDRPT_TimeTakenInHrsmins": value.iSMDRPTTimeTakenInHrsmins,
             "ISMMCLT_ClientName": value.iSMMCLTClientName,
             "ISMMCLT_Id": value.iSMMCLTId,
@@ -312,8 +321,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
             "periodicityendflag": value.periodicityendflag,
             "periodicityweeklyflag": value.periodicityweeklyflag,
             "taskcategoryname": value.taskcategoryname,
-            "filename": fileName,
-            "filepath": filePath
+            "reason": reasonController.text,
+            "categorychecklist": uploadImageList
           });
         }
         logger.i(dailyReportGenaration);
@@ -1156,12 +1165,17 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             ),
                                                           )),
                                                       const SizedBox(height: 5),
-                                                      (image.isNotEmpty &&
-                                                              newindex
-                                                                  .isNotEmpty)
-                                                          ? const Icon(Icons
-                                                              .visibility_outlined)
-                                                          : const SizedBox()
+                                                      // (selectCheckbox
+                                                      //         .isNotEmpty)
+                                                      //     ? (uploadImageIndex ==
+                                                      //                 selectCheckbox[
+                                                      //                     index] &&
+                                                      //             newindex
+                                                      //                 .isNotEmpty)
+                                                      //         ? const Icon(Icons
+                                                      //             .visibility_outlined)
+                                                      //         : const SizedBox()
+                                                      //     : const SizedBox()
                                                     ],
                                                   )),
                                                   DataCell(Column(
