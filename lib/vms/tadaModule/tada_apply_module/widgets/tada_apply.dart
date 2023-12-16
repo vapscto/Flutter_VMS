@@ -318,21 +318,21 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
     setState(() {});
   }
 
-  void addAmount(int amount) {
+  void addAmount(double amount) {
     // int sum = 0;
     // sum += amount;
     allAmount += amount.toDouble();
   }
 
-  void removeAmount(int amount) {
+  void removeAmount(double amount) {
     allAmount -= amount;
   }
 
 //
 
-  int foodAmt = 0;
-  int accommodationAmount = 0;
-  int otherAmount = 0;
+  double foodAmt = 0.0;
+  double accommodationAmount = 0.0;
+  double otherAmount = 0.0;
   getAllowenseData(int ctId) async {
     tadaApplyDataController.allowenseLoading(true);
     await TadaAllowenceAPI.instance.getApplyAllowense(
@@ -345,8 +345,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   }
 
   //
-  var foodSlot;
-  var accommudationSlot;
+  double foodSlot = 0.0;
+  double accommudationSlot = 0.0;
 
   void calculateHour(String newStartDate, String startTime, String newEndDate,
       String endtime) {
@@ -360,8 +360,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
     print('Total hours between the two dates: $totalHours hours');
     var fSlot = totalHours / 8;
     var aSlot = totalHours / 24;
-    foodSlot = fSlot.toStringAsFixed(0);
-    accommudationSlot = aSlot.toStringAsFixed(0);
+    foodSlot = double.parse(fSlot.toStringAsFixed(0));
+    accommudationSlot = double.parse(aSlot.toStringAsFixed(0));
   }
 
   List<UploadHwCwModel> uploadAttachment = [];
@@ -1635,7 +1635,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                             const DataCell(Text('Food')),
                                             DataCell(Text(
                                                 tadaApplyDataController
-                                                    .foodAmount.value
+                                                    .foodAmount
                                                     .toString())),
                                             DataCell(Text(dayCount.toString())),
                                             DataCell(Text('$foodSlot')),
@@ -1667,18 +1667,16 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                       setState(() {
                                                         if (isFoodTextField ==
                                                             true) {
-                                                          if (int.parse(
-                                                                  foodSlot) >=
-                                                              int.parse(
+                                                          if (foodSlot >=
+                                                              double.parse(
                                                                   value)) {
                                                             foodAmt = 0;
-                                                            foodAmt = (tadaApplyDataController
-                                                                        .foodAmount
-                                                                        .value /
-                                                                    3 *
+                                                            foodAmt =
+                                                                (tadaApplyDataController
+                                                                        .foodAmount /
+                                                                    3.0 *
                                                                     num.parse(
-                                                                        value))
-                                                                .toInt();
+                                                                        value));
                                                           } else {
                                                             foodTotalSlotController
                                                                 .text = '';
@@ -1821,7 +1819,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                 Text('Accommodation Amount')),
                                             DataCell(Text(
                                                 tadaApplyDataController
-                                                    .accomodationAmount.value
+                                                    .accomodationAmount
                                                     .toString())),
                                             DataCell(Text(dayCount.toString())),
                                             DataCell(
@@ -1854,19 +1852,17 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                       if (isAccommodationTextField ==
                                                           true) {
                                                         setState(() {
-                                                          if (int.parse(
-                                                                  accommudationSlot) >=
-                                                              int.parse(
+                                                          if (accommudationSlot >=
+                                                              double.parse(
                                                                   value)) {
                                                             accommodationAmount =
                                                                 0;
-                                                            accommodationAmount =
+                                                            accommodationAmount = accommodationAmount =
                                                                 (tadaApplyDataController
-                                                                            .accomodationAmount
-                                                                            .value *
+                                                                            .accomodationAmount *
                                                                         num.parse(
                                                                             value))
-                                                                    .toInt();
+                                                                    .toDouble();
                                                             addTotalAmount();
                                                             // addAmount(
                                                             //     (accommodationAmount));
@@ -1986,7 +1982,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                         otherAmount = 0;
                                                         otherAmountController
                                                             .text = '0';
-                                                        removeAmount(int.parse(
+                                                        removeAmount(double.parse(
                                                             otherAmountController
                                                                 .text));
 
@@ -2033,9 +2029,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                         setState(() {
                                                           otherAmount = 0;
                                                           otherAmount =
-                                                              int.parse(value);
-                                                          // addAmount(
-                                                          //     otherAmount);
+                                                              double.parse(
+                                                                  value);
                                                           addTotalAmount();
                                                         });
                                                       }

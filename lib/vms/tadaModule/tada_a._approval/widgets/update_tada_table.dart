@@ -95,13 +95,13 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
         widget.tadaController.approvalTextEditingControllerList
             .add(TextEditingController(text: ''));
         widget.tadaController.textEditingControllerList[index].addListener(() {
-          addAllAmount(0);
+          addAllAmount(double.parse(
+              widget.tadaController.textEditingControllerList[index].text));
         });
-        sanctionController2.text = widget
+        sanctionController2.text += widget
             .tadaController.textEditingControllerList
             .elementAt(index)
             .text;
-        amount = widget.amount;
       }
     });
     super.initState();

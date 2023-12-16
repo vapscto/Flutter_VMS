@@ -285,9 +285,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
             "ISMTCR_ReOpenDate": value.iSMTCRCreationDate,
             "ISMTCR_ReOpenFlg": value.iSMTCRReOpenFlg,
             "ISMTCR_Status": value.iSMTCRStatus,
-            // _plannerDetailsController.deveationEtField
-            //     .elementAt(i)
-            //     .text, //statusEtField
+            // _plannerDetailsController.deveationEtField.elementAt(i) .text, //statusEtField
             "ISMTCR_TaskNo": value.iSMTCRTaskNo,
             "ISMTCR_Title": value.iSMTCRTitle,
             "ISMTPLTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
@@ -301,7 +299,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
             "ISMTPL_Id": value.iSMTPLId,
             "ISMTPL_PlannedBy": value.iSMTPLPlannedBy,
             "ISMTPL_PlannerName": value.iSMTPLPlannerName,
-            "ISMTPL_Remarks": null,
+            "ISMTPL_Remarks":
+                _plannerDetailsController.deveationEtField.elementAt(i).text,
             "ISMTPL_StartDate": value.iSMTPLStartDate,
             "ISMTPL_TotalHrs": value.iSMTPLTotalHrs,
             "ProjectName": value.projectName,

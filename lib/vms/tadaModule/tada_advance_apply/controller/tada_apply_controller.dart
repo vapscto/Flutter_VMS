@@ -29,8 +29,8 @@ class TadaApplyController extends GetxController {
   }
 
   RxList<String> addressListController = <String>[].obs;
-  RxInt foodAmount = 0.obs;
-  RxInt accomodationAmount = 0.obs;
+  double foodAmount = 0.0;
+  double accomodationAmount = 0.0;
 
   void errorLoading(bool loading) {
     isErrorLoading.value = loading;
@@ -139,9 +139,8 @@ class TadaApplyController extends GetxController {
     }
     for (int i = 0; i < data.length; i++) {
       allowenseData.add(data.elementAt(i));
-      foodAmount.value = data.elementAt(i).vtadacMFoodAmt!.toInt();
-      accomodationAmount.value =
-          data.elementAt(i).vtadacMAccommodationAmt!.toInt();
+      foodAmount = data.elementAt(i).vtadacMFoodAmt!;
+      accomodationAmount = data.elementAt(i).vtadacMAccommodationAmt!;
     }
   }
 
