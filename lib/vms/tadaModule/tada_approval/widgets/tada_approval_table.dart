@@ -80,6 +80,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.tadaController.editArrayList;
     });
+    addAllAmount(0);
     widget.tadaController.selectedValue = List.generate(
         widget.tadaController.editArrayList.length,
         (index) => Item(isApproved: true, isRejected: false));
@@ -104,7 +105,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
             .text;
         (widget.tadaController.editArrayList.first.vTADAADId == null)
             ? amount = widget.amount
-            : amount = widget.amount;
+            : amount;
       }
     });
     super.initState();
@@ -324,6 +325,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                               userId: widget.values.userId!,
                               tadaController: widget.tadaController);
                           // _getData();
+                          Get.back();
                           Get.back();
                         });
                       }

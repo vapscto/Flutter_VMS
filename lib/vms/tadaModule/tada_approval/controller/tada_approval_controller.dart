@@ -52,8 +52,7 @@ class TadaApprovalController extends GetxController {
     editArrayList.addAll(time);
     for (int i = 0; i < editArrayList.length; i++) {
       textEditingControllerList.add(TextEditingController(
-          text: editArrayList[i].vTADAATotalSactionedAmount.toString()));
-      // selectedValue.add(editArrayList[i].vTADAAStatusFlg.toString());
+          text: editArrayList[i].vTADAAAHSactionedAmount.toString()));
     }
   }
 
