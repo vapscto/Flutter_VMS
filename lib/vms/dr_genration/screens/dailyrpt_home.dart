@@ -44,7 +44,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   final _formKey = GlobalKey<FormState>();
 
   bool deviation = false;
-  String todayDt = '';
+  DateTime todayDt = DateTime.now();
   @override
   void initState() {
     init();
@@ -264,8 +264,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
             "ISMDRPT_ExtraFlg": value.iSMDRPTExtraFlg,
             "ISMDRPT_Remarks":
                 _plannerDetailsController.etResponse.elementAt(i).text,
-            "ISMDRPT_Status":
-                _plannerDetailsController.deveationEtField[i].text,
+            "ISMDRPT_Status": _plannerDetailsController.statusEtField[i].text,
             "ISMDRPT_TimeTakenInHrs":
                 '${_plannerDetailsController.hoursEt[i].text}.${_plannerDetailsController.minutesEt[i].text}',
             "ISMDRPT_TimeTakenInHrsmin": "Hours",
@@ -285,8 +284,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
             "ISMTCR_Id": value.iSMTCRId,
             "ISMTCR_ReOpenDate": value.iSMTCRCreationDate,
             "ISMTCR_ReOpenFlg": value.iSMTCRReOpenFlg,
-            "ISMTCR_Status":
-                _plannerDetailsController.statusEtField.elementAt(i).text,
+            "ISMTCR_Status": value.iSMTCRStatus,
+            // _plannerDetailsController.deveationEtField
+            //     .elementAt(i)
+            //     .text, //statusEtField
             "ISMTCR_TaskNo": value.iSMTCRTaskNo,
             "ISMTCR_Title": value.iSMTCRTitle,
             "ISMTPLTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
@@ -333,7 +334,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
               userId: widget.loginSuccessModel.userId!,
               base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
               controller: _plannerDetailsController,
-              ismdrptDate: todayDt,
+              ismdrptDate: todayDt.toIso8601String(),
               halfDayFlag: halfDay.value,
               ismtplId:
                   _plannerDetailsController.getplannerdetails[0].ismtpLId!,
@@ -690,7 +691,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                       .plannernameDateController
                                       .value
                                       .text = await getDateNeed(value!);
-                                  todayDt = value.toIso8601String();
+                                  todayDt = value;
                                 });
                               },
                               controller: _plannerDetailsController
@@ -1463,7 +1464,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       int.parse(
                                                                               value) >
                                                                           59) {
-                                                                    return 'Greater 59';
+                                                                    return ' Less then 59';
                                                                   }
                                                                 }
 

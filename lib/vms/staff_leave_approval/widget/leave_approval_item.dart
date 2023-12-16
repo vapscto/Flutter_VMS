@@ -46,10 +46,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
       "HRELAP_ToDate": value.hRELAPToDate,
       "HRELAP_TotalDays": value.hRELAPTotalDays,
       "HRELAP_TotalDaysapprv": value.hRELAPTotalDays,
-      // "HRMLY_Id": 0,
       "HRML_Id": value.hRMLId
-      // "Reason": null,
-      // "Type": null
     });
     final RxBool select = RxBool(selectAll);
     final RxBool showCheckBox = RxBool(selectAll);
