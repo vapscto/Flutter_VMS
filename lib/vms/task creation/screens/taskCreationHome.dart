@@ -31,6 +31,7 @@ import 'package:m_skool_flutter/vms/task%20creation/screens/task_details_screen.
 import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
+import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:open_filex/open_filex.dart';
@@ -79,6 +80,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   TextEditingController etRemarkControllers = TextEditingController();
   Map<String, dynamic> transnumbconfiguration = {};
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final TextEditingController selectDate = TextEditingController();
 
   var moduleId;
   List<int> employeesID = [];
@@ -917,9 +920,97 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                 controller: _descritpionETController,
               ),
             ),
+
             SizedBox(
-              height: 10,
+              height: 20,
             ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              child: CustomContainer(
+                child: TextField(
+                  readOnly: true,
+                  controller: selectDate,
+                  style: Theme.of(context).textTheme.titleSmall,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.only(top: 48.0, left: 12),
+                    border: const OutlineInputBorder(),
+                    label: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 8.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24.0),
+                        color: const Color(0xFFDFFBFE),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            "assets/images/calendar.png",
+                            height: 24.0,
+                            color: const Color(0xFF28B6C8),
+                          ),
+                          const SizedBox(
+                            width: 6.0,
+                          ),
+                          Text(
+                            "Select Date",
+                            style:
+                                Theme.of(context).textTheme.labelMedium!.merge(
+                                      const TextStyle(
+                                        fontSize: 20.0,
+                                        color: Color(0xFF28B6C8),
+                                      ),
+                                    ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    hintText: 'Select Date',
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    suffixIcon: InkWell(
+                      onTap: () async {
+                        DateTime? selectedDT = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime.now(),
+                        );
+
+                        if (selectedDT == null) {
+                          Fluttertoast.showToast(
+                              msg: "You didn't select the date");
+                          return;
+                        }
+                        // changes.value += 1;
+
+                        selectDate.text = getDate(selectedDT);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Image.asset(
+                          "assets/images/calendar.png",
+                          height: 16.0,
+                          width: 16.0,
+                          color: const Color(0xFF28B6C8),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
             // Module Dropdown
             Obx(() => _taskClientModuleCntroller.clientErrorloading.value
                 ? const Center(
