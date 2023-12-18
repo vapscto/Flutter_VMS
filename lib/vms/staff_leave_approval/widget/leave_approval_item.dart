@@ -17,13 +17,13 @@ import 'package:open_filex/open_filex.dart';
 
 import '../../../constants/constants.dart';
 
-class AppliedLeaveAprovalItem extends StatelessWidget {
+class AppliedLeaveAprovalItem extends StatefulWidget {
   final LeaveApprovalModelValues value;
   final bool selectAll;
   final Function(bool) onSelect;
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  AppliedLeaveAprovalItem({
+  const AppliedLeaveAprovalItem({
     Key? key,
     required this.value,
     required this.selectAll,
@@ -31,34 +31,43 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
     required this.loginSuccessModel,
     required this.mskoolController,
   }) : super(key: key);
+
+  @override
+  State<AppliedLeaveAprovalItem> createState() =>
+      _AppliedLeaveAprovalItemState();
+}
+
+class _AppliedLeaveAprovalItemState extends State<AppliedLeaveAprovalItem> {
   List<String> leaveDates = [];
+
   List<Map<String, dynamic>> newList = [];
+
   @override
   Widget build(BuildContext context) {
     newList.add({
-      "HRME_Id": value.hRMEId,
-      "HRELAP_ApplicationID": value.hRELAPApplicationID,
-      "HRELAP_LeaveReason": value.hRELAPLeaveReason,
-      "HRELAPA_Remarks": value.hRELAPARemarks,
-      "HRELAP_FromDateapprv": value.hRELAPFromDate,
-      "HRELAP_ToDateapprv": value.hRELAPToDate,
-      "HRELAP_FromDate": value.hRELAPFromDate,
-      "HRELAP_ToDate": value.hRELAPToDate,
-      "HRELAP_TotalDays": value.hRELAPTotalDays,
-      "HRELAP_TotalDaysapprv": value.hRELAPTotalDays,
-      "HRML_Id": value.hRMLId
+      "HRME_Id": widget.value.hRMEId,
+      "HRELAP_ApplicationID": widget.value.hRELAPApplicationID,
+      "HRELAP_LeaveReason": widget.value.hRELAPLeaveReason,
+      "HRELAPA_Remarks": widget.value.hRELAPARemarks,
+      "HRELAP_FromDateapprv": widget.value.hRELAPFromDate,
+      "HRELAP_ToDateapprv": widget.value.hRELAPToDate,
+      "HRELAP_FromDate": widget.value.hRELAPFromDate,
+      "HRELAP_ToDate": widget.value.hRELAPToDate,
+      "HRELAP_TotalDays": widget.value.hRELAPTotalDays,
+      "HRELAP_TotalDaysapprv": widget.value.hRELAPTotalDays,
+      "HRML_Id": widget.value.hRMLId
     });
-    final RxBool select = RxBool(selectAll);
-    final RxBool showCheckBox = RxBool(selectAll);
+    final RxBool select = RxBool(widget.selectAll);
+    final RxBool showCheckBox = RxBool(widget.selectAll);
     final TextEditingController remark = TextEditingController();
     String fromDate = '';
     String toDate = '';
-    if (value.hRELAPFromDate != null) {
-      var dt = DateTime.parse(value.hRELAPFromDate!);
+    if (widget.value.hRELAPFromDate != null) {
+      var dt = DateTime.parse(widget.value.hRELAPFromDate!);
       fromDate = '${numberList[dt.day]} ${shortMonth[dt.month - 1]} ${dt.year}';
     }
-    if (value.hRELAPToDate != null) {
-      var dt2 = DateTime.parse(value.hRELAPToDate!);
+    if (widget.value.hRELAPToDate != null) {
+      var dt2 = DateTime.parse(widget.value.hRELAPToDate!);
       toDate =
           '${numberList[dt2.day]} ${shortMonth[dt2.month - 1]} ${dt2.year}';
     }
@@ -76,7 +85,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        value.hRELAPLeaveReason ?? "N/a",
+                        widget.value.hRELAPLeaveReason ?? "N/a",
                         style: Theme.of(context).textTheme.titleSmall!.merge(
                               const TextStyle(
                                   fontWeight: FontWeight.w600, fontSize: 16.0),
@@ -85,7 +94,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                       const SizedBox(
                         height: 3.0,
                       ),
-                      Text(value.hRMLLeaveName ?? "N/a"),
+                      Text(widget.value.hRMLLeaveName ?? "N/a"),
                     ],
                   ),
                 ),
@@ -118,17 +127,19 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       color: noticeBackgroundColor.last),
-                  child: value.hRMLLeaveName == null
+                  child: widget.value.hRMLLeaveName == null
                       ? const Icon(Icons.broken_image)
                       : Image.asset(
                           height: 24.0,
-                          value.hRMLLeaveName!.toLowerCase().contains("casual")
+                          widget.value.hRMLLeaveName!
+                                  .toLowerCase()
+                                  .contains("casual")
                               ? "assets/images/cl.png"
-                              : value.hRMLLeaveName!
+                              : widget.value.hRMLLeaveName!
                                       .toLowerCase()
                                       .contains("sick")
                                   ? 'assets/images/sl.png'
-                                  : value.hRMLLeaveName!
+                                  : widget.value.hRMLLeaveName!
                                           .toLowerCase()
                                           .contains("emergency")
                                       ? "assets/images/el.png"
@@ -157,8 +168,8 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                             ),
                       ),
                       Text(
-                        value.hRELAPFromDate == null ||
-                                value.hRELAPToDate == null
+                        widget.value.hRELAPFromDate == null ||
+                                widget.value.hRELAPToDate == null
                             ? "N/a"
                             : "$fromDate TO $toDate",
                         style: Theme.of(context).textTheme.titleSmall!.merge(
@@ -173,7 +184,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 6),
-            Text("Applied Days: ${value.hRELAPTotalDays}"),
+            Text("Applied Days: ${widget.value.hRELAPTotalDays}"),
             const SizedBox(
               height: 6.0,
             ),
@@ -189,7 +200,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                       ),
                 ),
                 Text(
-                  "${value.hRMEEmployeeFirstName ?? "N/a"} ",
+                  "${widget.value.hRMEEmployeeFirstName ?? "N/a"} ",
                   style: Theme.of(context).textTheme.titleSmall!.merge(
                         const TextStyle(
                           fontWeight: FontWeight.w600,
@@ -213,7 +224,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                       ),
                 ),
                 Text(
-                  "${value.hRMDESDesignationName ?? "N/a"}",
+                  "${widget.value.hRMDESDesignationName ?? "N/a"}",
                   style: Theme.of(context).textTheme.titleSmall!.merge(
                         const TextStyle(
                           fontWeight: FontWeight.w600,
@@ -225,7 +236,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
             const SizedBox(
               height: 8.0,
             ),
-            (value.hRELAPTotalDays! <= 1.0)
+            (widget.value.hRELAPTotalDays! <= 1.0)
                 ? const SizedBox()
                 : Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -239,29 +250,32 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                         onTap: () {
                           Get.dialog(
                                   DatePickerWidget(
-                                    endDate: value.hRELAPToDate!,
-                                    startDate: value.hRELAPFromDate!,
+                                    endDate: widget.value.hRELAPToDate!,
+                                    startDate: widget.value.hRELAPFromDate!,
                                   ),
                                   barrierDismissible: false)
                               .then((dateList) {
-                            if (leaveDates.isNotEmpty) {
-                              leaveDates.clear();
-                            }
-                            leaveDates.addAll(dateList);
-                            if (leaveDates.isNotEmpty) {
-                              value.hRELAPToDate = leaveDates.first;
-                              value.hRELAPFromDate = leaveDates.last;
-                              value.hRELAPTotalDays =
-                                  DateTime.parse(leaveDates.last)
-                                          .difference(
-                                              DateTime.parse(leaveDates.first))
-                                          .inDays +
-                                      1;
-                              value.hRELAPReportingDate = getFormatedDate(
-                                  DateTime.parse(DateTime.parse(leaveDates.last)
-                                      .add(const Duration(days: 1))
-                                      .toString()));
-                            }
+                            setState(() {
+                              if (leaveDates.isNotEmpty) {
+                                leaveDates.clear();
+                              }
+                              leaveDates.addAll(dateList);
+                              if (leaveDates.isNotEmpty) {
+                                widget.value.hRELAPToDate = leaveDates.first;
+                                widget.value.hRELAPFromDate = leaveDates.last;
+                                widget.value.hRELAPTotalDays = DateTime.parse(
+                                            leaveDates.last)
+                                        .difference(
+                                            DateTime.parse(leaveDates.first))
+                                        .inDays +
+                                    1;
+                                widget.value.hRELAPReportingDate =
+                                    getFormatedDate(DateTime.parse(
+                                        DateTime.parse(leaveDates.last)
+                                            .add(const Duration(days: 1))
+                                            .toString()));
+                              }
+                            });
                           });
                         },
                         child: SizedBox(
@@ -278,25 +292,25 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                (value.hRELAPSupportingDocument == 0)
+                (widget.value.hRELAPSupportingDocument == 0)
                     ? const SizedBox()
-                    : (value.hRELAPSupportingDocument != 'undefined')
+                    : (widget.value.hRELAPSupportingDocument != 'undefined')
                         ? Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: InkWell(
                               onTap: () {
-                                if (value.hRELAPSupportingDocument
+                                if (widget.value.hRELAPSupportingDocument
                                     .toString()
                                     .contains('https:')) {
                                   createPreview(
                                       context,
-                                      value.hRELAPSupportingDocument
+                                      widget.value.hRELAPSupportingDocument
                                           .toString());
                                 } else {
                                   OpenFilex.open(
-                                      value.hRELAPSupportingDocument);
+                                      widget.value.hRELAPSupportingDocument);
                                 }
-                                logger.i(value.hRELAPSupportingDocument);
+                                logger.i(widget.value.hRELAPSupportingDocument);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -346,7 +360,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "Leave Approval for ${value.hRMEEmployeeFirstName ?? "N/a"}",
+                                            "Leave Approval for ${widget.value.hRMEEmployeeFirstName ?? "N/a"}",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleSmall!
@@ -405,13 +419,13 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                                               ),
                                                             )
                                                           : Text(
-                                                              value.hRELAPFromDate ==
+                                                              widget.value.hRELAPFromDate ==
                                                                       null
                                                                   ? "N/a"
                                                                   : getFormatedDate(
-                                                                      DateTime.parse(
-                                                                          value
-                                                                              .hRELAPFromDate!),
+                                                                      DateTime.parse(widget
+                                                                          .value
+                                                                          .hRELAPFromDate!),
                                                                     ),
                                                             ),
                                                 ),
@@ -456,11 +470,13 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                                                     .last),
                                                           ),
                                                         )
-                                                      : Text(value.hRELAPToDate ==
+                                                      : Text(widget.value
+                                                                  .hRELAPToDate ==
                                                               null
                                                           ? "N/a"
                                                           : getFormatedDate(
-                                                              DateTime.parse(value
+                                                              DateTime.parse(widget
+                                                                  .value
                                                                   .hRELAPToDate!))),
                                                 ),
                                               ],
@@ -497,12 +513,14 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                                         status: "Approved",
                                                         base: baseUrlFromInsCode(
                                                             "leave",
-                                                            mskoolController),
-                                                        miId: loginSuccessModel
+                                                            widget
+                                                                .mskoolController),
+                                                        miId: widget
+                                                            .loginSuccessModel
                                                             .mIID!,
-                                                        loginId:
-                                                            loginSuccessModel
-                                                                .userId!,
+                                                        loginId: widget
+                                                            .loginSuccessModel
+                                                            .userId!,
                                                         getLeaveStatus: newList,
                                                       ),
                                                       builder: (_, snapshot) {
@@ -752,7 +770,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                           }
 
                                           acceptOrReject(context, remark.text,
-                                              "Rejected", true, value);
+                                              "Rejected", true, widget.value);
                                         },
                                       ),
                                     ),
@@ -786,9 +804,9 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
               future: ApproveLeaveApi.instance.rejectNow(
                 remark: remark,
                 status: status,
-                base: baseUrlFromInsCode("leave", mskoolController),
-                miId: loginSuccessModel.mIID!,
-                loginId: loginSuccessModel.userId!,
+                base: baseUrlFromInsCode("leave", widget.mskoolController),
+                miId: widget.loginSuccessModel.mIID!,
+                loginId: widget.loginSuccessModel.userId!,
                 getLeaveStatus: newList,
               ),
               builder: (_, snapshot) {

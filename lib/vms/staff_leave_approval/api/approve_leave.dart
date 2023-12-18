@@ -16,18 +16,18 @@ class ApproveLeaveApi {
     required int loginId,
     required List<Map<String, dynamic>> getLeaveStatus,
   }) async {
+    logger.i({
+      "HRELAPA_Remarks": remark,
+      "status": status,
+      "MI_Id": miId,
+      "LoginId": loginId,
+      "get_leave_status": getLeaveStatus
+    });
     final String api = base + URLS.approveLeave;
     final Dio ins = getGlobalDio();
     try {
       final Response response =
           await ins.post(api, options: Options(headers: getSession()), data: {
-        "HRELAPA_Remarks": remark,
-        "status": status,
-        "MI_Id": miId,
-        "LoginId": loginId,
-        "get_leave_status": getLeaveStatus
-      });
-      logger.i({
         "HRELAPA_Remarks": remark,
         "status": status,
         "MI_Id": miId,
