@@ -369,7 +369,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
 //
 
   saveData() async {
-    tadaApplyDataController.saveData(true);
     String iRemarks = '';
     if (tadaApplyDataController.addListBrowser.isNotEmpty) {
       for (int i = 0; i < tadaApplyDataController.addListBrowser.length; i++) {
@@ -399,8 +398,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         "VTADAAF_Remarks": iRemarks
       });
     }
-
-    TadaSaveApi.instance.tadaApplySave(
+    tadaApplyDataController.saveData(true);
+    await TadaSaveApi.instance.tadaApplySave(
         userId: widget.loginSuccessModel.userId!,
         miId: widget.loginSuccessModel.mIID!,
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
@@ -423,7 +422,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         vtadaaId: (tadaApplyDataController.tadaSavedData.isNotEmpty)
             ? tadaApplyDataController.tadaSavedData.first.vtadaaAId!
             : 0);
-
     tadaApplyDataController.saveData(false);
     getStateList();
     Get.back();
@@ -1732,7 +1730,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                 ),
                                               ),
                                             ),
-                                            DataCell(Text(foodAmt.toString())),
+                                            DataCell(Text(
+                                                foodAmt.toStringAsFixed(0))),
                                             DataCell(
                                               Padding(
                                                 padding:
@@ -2394,7 +2393,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                   style: Get.textTheme.titleSmall!
                       .copyWith(color: Theme.of(context).primaryColor)),
               TextSpan(
-                  text: " ₹ ${foodAmt + accommodationAmount + otherAmount}",
+                  text:
+                      " ₹ ${double.parse(foodAmt.toStringAsFixed(0)) + accommodationAmount + otherAmount}",
                   style: Get.textTheme.titleSmall),
             ])),
           ),
@@ -2542,6 +2542,9 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                         } else if (tadaApplyDataController
                             .addListBrowser.isEmpty) {
                           Fluttertoast.showToast(msg: "Upload Image");
+                        } else if (tadaApplyDataController
+                            .clintSelectedValues.isEmpty) {
+                          Fluttertoast.showToast(msg: "Select Client");
                         } else {
                           int foodamountId = 0;
                           int accamountId = 0;

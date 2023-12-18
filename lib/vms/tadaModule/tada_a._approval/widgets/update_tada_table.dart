@@ -87,7 +87,19 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
     addAllAmount(0);
     widget.tadaController.selectedValue = List.generate(
         widget.tadaController.tadaEditValues.length,
-        (index) => Item(isApproved: true, isRejected: false));
+        (index) => Item(
+            isApproved: (widget.tadaController.tadaEditValues
+                        .elementAt(index)
+                        .vTADAAAAHSactionedAmount !=
+                    0)
+                ? true
+                : false,
+            isRejected: (widget.tadaController.tadaEditValues
+                        .elementAt(index)
+                        .vTADAAAAHSactionedAmount ==
+                    0)
+                ? true
+                : false));
     setState(() {
       updateCounts();
       for (int index = 0;

@@ -79,7 +79,7 @@ class TadaSaveApi {
       logger.i(response.data);
       logger.i(response.statusCode);
       if (response.statusCode == 200) {
-        SaveTadaModel saveTadaModel = SaveTadaModel.fromJson(response.data);
+        // SaveTadaModel saveTadaModel = SaveTadaModel.fromJson(response.data);
         if (response.data['returnvalue'] == true) {
           if (response.data['returnval'] == "Insert") {
             Fluttertoast.showToast(msg: "Record Saved Successfully");

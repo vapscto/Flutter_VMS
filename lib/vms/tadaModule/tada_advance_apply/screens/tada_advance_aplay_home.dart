@@ -2012,17 +2012,20 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                   otherAmount.toDouble();
                                               if (allAmount == 0) {
                                                 Fluttertoast.showToast(
-                                                    msg: "Please Add Amount");
+                                                    msg: " Add Amount");
                                               } else if (_remarkController
                                                   .text.isEmpty) {
                                                 Fluttertoast.showToast(
-                                                    msg:
-                                                        "Please Enter Remarks");
+                                                    msg: " Enter Remarks");
                                               } else if (_addressController
                                                   .text.isEmpty) {
                                                 Fluttertoast.showToast(
-                                                    msg:
-                                                        "Please Enter Address");
+                                                    msg: "Enter Address");
+                                              } else if (tadaApplyController
+                                                  .clintSelectedValues
+                                                  .isEmpty) {
+                                                Fluttertoast.showToast(
+                                                    msg: "Select Client");
                                               } else {
                                                 int foodamountId = 0;
                                                 int accamountId = 0;

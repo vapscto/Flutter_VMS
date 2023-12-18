@@ -75,6 +75,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
   }
 
   int vtadaaId = 0;
+  double status = 0.0;
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -83,7 +84,19 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
     addAllAmount(0);
     widget.tadaController.selectedValue = List.generate(
         widget.tadaController.editArrayList.length,
-        (index) => Item(isApproved: true, isRejected: false));
+        (index) => Item(
+            isApproved: (widget.tadaController.editArrayList
+                        .elementAt(index)
+                        .vTADAAAHSactionedAmount !=
+                    0)
+                ? true
+                : false,
+            isRejected: (widget.tadaController.editArrayList
+                        .elementAt(index)
+                        .vTADAAAHSactionedAmount ==
+                    0)
+                ? true
+                : false));
     setState(() {
       updateCounts();
       for (int index = 0;
