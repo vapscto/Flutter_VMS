@@ -14,6 +14,7 @@ import 'package:m_skool_flutter/vms/dr_genration/model/drnotsent_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/get_planner_details.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/hrplannerdetails_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_details.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/tada_not_approve_model.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 
 class PlannerDetails extends GetxController {
@@ -109,6 +110,17 @@ class PlannerDetails extends GetxController {
     }
     for (int i = 0; i < advanceApply.length; i++) {
       advanceApplyDataList.add(advanceApply.elementAt(i));
+    }
+  }
+
+  RxList<TADAApplyListModelValues> tadaApplyList =
+      <TADAApplyListModelValues>[].obs;
+  void getList(List<TADAApplyListModelValues> tadaApply) {
+    if (tadaApplyList.isNotEmpty) {
+      tadaApplyList.clear();
+    }
+    for (int i = 0; i < tadaApply.length; i++) {
+      tadaApplyList.add(tadaApply.elementAt(i));
     }
   }
 

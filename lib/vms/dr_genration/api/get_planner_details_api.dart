@@ -15,6 +15,7 @@ import 'package:m_skool_flutter/vms/dr_genration/model/drnotsent_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/get_planner_details.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/hrplannerdetails_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_details.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/tada_not_approve_model.dart';
 
 Future<bool> getPlanerdetails({
   required String base,
@@ -101,6 +102,11 @@ Future<bool> getPlanerdetails({
       AdvanceApplyModel advanceApplyModel =
           AdvanceApplyModel.fromJson(response.data['adavanceList']);
       controller.getAdvanceApply(advanceApplyModel.values!);
+    }
+    if (response.data['applyList'] != null) {
+      TADAApplyListModel tadaApplyListModel =
+          TADAApplyListModel.fromJson(response.data['applyList']);
+      controller.getList(tadaApplyListModel.values!);
     }
 
     controller.updatePlannerDeatails(false);

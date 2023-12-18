@@ -18,6 +18,7 @@ import 'package:m_skool_flutter/vms/dr_genration/screens/widget/dr_not_approved_
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/drnotApprovedScreen.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/drnotsent_screen.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/tada_not_approved.dart';
+import 'package:m_skool_flutter/vms/dr_genration/screens/widget/tada_not_approved_widget.dart';
 import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
@@ -68,42 +69,44 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         ivrmrtId: widget.loginSuccessModel.roleId!,
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!);
-    _plannerDetailsController.closeTaskCoutnList[0].iSMEDWTCCTaskCount! > 0
-        ? Get.dialog(
-            barrierDismissible: false,
-            AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              title: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Update Task",
-                    style: Theme.of(context).textTheme.titleLarge!.merge(
-                        TextStyle(color: Theme.of(context).primaryColor)),
-                  )),
-              content: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task",
-                    style: Theme.of(context).textTheme.titleSmall!.merge(
-                        TextStyle(color: Theme.of(context).primaryColor)),
-                  ),
-                  const SizedBox(height: 16),
-                  TextButton(
-                      onPressed: () {
-                        Get.back();
-                        Get.back();
-                      },
-                      child: Text(
-                        "OK",
-                        style: Get.textTheme.titleMedium!
-                            .copyWith(color: Theme.of(context).primaryColor),
-                      ))
-                ],
-              ),
-            ))
-        : null;
+    if (_plannerDetailsController.closeTaskCoutnList.isNotEmpty) {
+      _plannerDetailsController.closeTaskCoutnList[0].iSMEDWTCCTaskCount! > 0
+          ? Get.dialog(
+              barrierDismissible: false,
+              AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                title: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Update Task",
+                      style: Theme.of(context).textTheme.titleLarge!.merge(
+                          TextStyle(color: Theme.of(context).primaryColor)),
+                    )),
+                content: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task",
+                      style: Theme.of(context).textTheme.titleSmall!.merge(
+                          TextStyle(color: Theme.of(context).primaryColor)),
+                    ),
+                    const SizedBox(height: 16),
+                    TextButton(
+                        onPressed: () {
+                          Get.back();
+                          Get.back();
+                        },
+                        child: Text(
+                          "OK",
+                          style: Get.textTheme.titleMedium!
+                              .copyWith(color: Theme.of(context).primaryColor),
+                        ))
+                  ],
+                ),
+              ))
+          : null;
+    }
 
     _plannerDetailsController.drnotSentdetailsList.isNotEmpty
         ? Get.dialog(
@@ -119,6 +122,23 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                     mskoolController: widget.mskoolController,
                     loginSuccessModel: widget.loginSuccessModel,
                     plannerDetailsController: _plannerDetailsController,
+                  )),
+            ))
+        : null;
+    _plannerDetailsController.tadaApplyList.isNotEmpty
+        ? Get.dialog(
+            barrierDismissible: false,
+            AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+              contentPadding: const EdgeInsets.all(5),
+              content: SizedBox(
+                  width: Get.width,
+                  child: TADANotApproveScreen(
+                    mskoolController: widget.mskoolController,
+                    loginSuccessModel: widget.loginSuccessModel,
+                    data: _plannerDetailsController.tadaApplyList,
                   )),
             ))
         : null;
@@ -232,8 +252,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
               content: const Text(
                 'Effort Should Be Less Than Equal To 24 Hours Per Day',
                 style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
                     color: Colors.black54),
               ),
               actions: <Widget>[
@@ -241,7 +261,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: Text(
+                    'OK',
+                    style: Get.textTheme.titleMedium!
+                        .copyWith(color: Theme.of(context).primaryColor),
+                  ),
                 ),
               ],
             );
