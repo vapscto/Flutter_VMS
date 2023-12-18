@@ -421,7 +421,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
 
   String fileName = '';
   String filePath = '';
-  List<dynamic> newindex = [];
   int newselectedIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -1051,8 +1050,14 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   index],
                                                               onChanged:
                                                                   (value) {
+                                                                _plannerDetailsController
+                                                                    .checkBoxList
+                                                                    .clear();
                                                                 newselectedIndex =
                                                                     index;
+                                                                _plannerDetailsController
+                                                                        .checkBoxList[
+                                                                    index] = value!;
                                                                 value == true
                                                                     ? getCategoryChecklistDetails(
                                                                             base:
@@ -1065,20 +1070,28 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                           WidgetsBinding
                                                                               .instance
                                                                               .addPostFrameCallback((_) {
-                                                                            _plannerDetailsController.checkBoxList[index];
+                                                                            setState(() {
+                                                                              if (image == index && _plannerDetailsController.uploadImages.isEmpty) {
+                                                                                _plannerDetailsController.checkBoxList[index] = false;
+                                                                                logger.i('======bool - {_plannerDetailsController.checkBoxList[index]}');
+                                                                              } else {
+                                                                                _plannerDetailsController.checkBoxList[index] = true;
+                                                                              }
+                                                                            });
                                                                           });
                                                                           if (value!
                                                                               .values!
                                                                               .isNotEmpty) {
-                                                                            newindex =
-                                                                                value.values!;
-                                                                            logger.e(newindex);
-                                                                            Get.dialog(CategoryCheckList(
-                                                                              value: value,
-                                                                              plannerDetailsController: _plannerDetailsController,
-                                                                              loginSuccessModel: widget.loginSuccessModel,
-                                                                              index: newselectedIndex,
-                                                                            )).then((value) {
+                                                                            Get.dialog(
+                                                                                    CategoryCheckList(
+                                                                                      value: value,
+                                                                                      plannerDetailsController: _plannerDetailsController,
+                                                                                      loginSuccessModel: widget.loginSuccessModel,
+                                                                                      index: newselectedIndex,
+                                                                                      newBool: _plannerDetailsController.checkBoxList[index],
+                                                                                    ),
+                                                                                    barrierDismissible: false)
+                                                                                .then((value) {
                                                                               image = value;
                                                                               logger.i('====$image');
                                                                               setState(() {});
@@ -1087,10 +1100,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                         },
                                                                       )
                                                                     : null;
-
-                                                                _plannerDetailsController
-                                                                        .checkBoxList[
-                                                                    index] = value!;
+                                                                // _plannerDetailsController
+                                                                //         .checkBoxList[
+                                                                //     index] = value!;
                                                                 if (value) {
                                                                   if (selectCheckbox
                                                                       .contains(
