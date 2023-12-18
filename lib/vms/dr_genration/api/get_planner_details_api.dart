@@ -137,7 +137,7 @@ Future<bool?> saveDr({
   required int miID,
 }) async {
   var dio = Dio();
-  var api = base + URLS.drSaveAPI;
+  var api = 'base' + URLS.drSaveAPI;
   try {
     controller.saveLoading(true);
     var response =

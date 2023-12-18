@@ -890,7 +890,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                         )),
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 6,
                       ),
                       Obx(
                         () => (fliteresList.isNotEmpty)
@@ -1016,8 +1016,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                         .iSMTPLEndDate!);
                                                 DateTime currentDt =
                                                     DateTime.now();
-                                                DateTime previousDt =
-                                                    DateTime.now();
+                                                DateTime? previousDt;
 
                                                 return DataRow(cells: [
                                                   DataCell(Align(
@@ -1490,7 +1489,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                     return ' Less then 59';
                                                                   }
                                                                 }
-
+                                                                setState(() {});
                                                                 return null;
                                                               },
                                                               inputFormatters: [
@@ -1795,63 +1794,63 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                           (details) async {
                                                         final offset = details
                                                             .globalPosition;
-
-                                                        // (deviation == false)
-                                                        //     ? const SizedBox():
-                                                        showMenu(
-                                                            context: context,
-                                                            position:
-                                                                RelativeRect
-                                                                    .fromLTRB(
-                                                              offset.dx,
-                                                              offset.dy,
-                                                              MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width -
+                                                        (currentDt.isAfter(DateTime.parse(
+                                                                    fliteresList
+                                                                        .elementAt(
+                                                                            index)
+                                                                        .iSMTPLEndDate!)
+                                                                .add(const Duration(
+                                                                    days: 1))))
+                                                            ? showMenu(
+                                                                context:
+                                                                    context,
+                                                                position:
+                                                                    RelativeRect
+                                                                        .fromLTRB(
                                                                   offset.dx,
-                                                              MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .height -
                                                                   offset.dy,
-                                                            ),
-                                                            items:
-                                                                List.generate(
-                                                              _plannerDetailsController
-                                                                  .depWiseDevitnList
-                                                                  .length,
-                                                              (i) {
-                                                                return PopupMenuItem(
-                                                                  onTap: () {
-                                                                    _plannerDetailsController
-                                                                            .deveationEtField[
-                                                                                index]
-                                                                            .text =
+                                                                  MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width -
+                                                                      offset.dx,
+                                                                  MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .height -
+                                                                      offset.dy,
+                                                                ),
+                                                                items: List
+                                                                    .generate(
+                                                                  _plannerDetailsController
+                                                                      .depWiseDevitnList
+                                                                      .length,
+                                                                  (i) {
+                                                                    return PopupMenuItem(
+                                                                      onTap:
+                                                                          () {
+                                                                        _plannerDetailsController
+                                                                            .deveationEtField[index]
+                                                                            .text = _plannerDetailsController.depWiseDevitnList[i].ismdRRemarks!;
+                                                                        setState(
+                                                                            () {});
+                                                                      },
+                                                                      child:
+                                                                          Text(
                                                                         _plannerDetailsController
                                                                             .depWiseDevitnList[i]
-                                                                            .ismdRRemarks!;
-                                                                    setState(
-                                                                        () {});
+                                                                            .ismdRRemarks!,
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .titleSmall!
+                                                                            .merge(const TextStyle(
+                                                                              fontSize: 16,
+                                                                            )),
+                                                                      ),
+                                                                    );
                                                                   },
-                                                                  child: Text(
-                                                                    _plannerDetailsController
-                                                                        .depWiseDevitnList[
-                                                                            i]
-                                                                        .ismdRRemarks!,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .merge(
-                                                                            const TextStyle(
-                                                                          fontSize:
-                                                                              16,
-                                                                        )),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ));
+                                                                ))
+                                                            : null;
                                                       },
                                                       child: TextFormField(
                                                         validator: (value) {
@@ -1859,8 +1858,13 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             if (selectCheckbox
                                                                 .contains(
                                                                     index)) {
-                                                              if (currentDt.isAfter(
-                                                                  previousDt)) {
+                                                              if (currentDt.isAfter(DateTime.parse(fliteresList
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .iSMTPLEndDate!)
+                                                                  .add(const Duration(
+                                                                      days:
+                                                                          1)))) {
                                                                 return 'Please  select Deviation';
                                                               }
                                                             }
