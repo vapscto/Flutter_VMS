@@ -60,7 +60,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   List<Map<String, dynamic>> dailyReportGenaration = [];
   List<Map<String, dynamic>> dailyReportStatus = [];
   final reasonController = TextEditingController();
-  String image = '';
+  int image = 0;
   DateTime todayDate = DateTime.now();
   init() async {
     await getPlanerdetails(
@@ -422,6 +422,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   String fileName = '';
   String filePath = '';
   List<dynamic> newindex = [];
+  int newselectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -1050,6 +1051,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   index],
                                                               onChanged:
                                                                   (value) {
+                                                                newselectedIndex =
+                                                                    index;
                                                                 value == true
                                                                     ? getCategoryChecklistDetails(
                                                                             base:
@@ -1059,37 +1062,26 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                             ismmcatId: fliteresList.elementAt(index).iSMMTCATId!)
                                                                         .then(
                                                                         (value) {
+                                                                          WidgetsBinding
+                                                                              .instance
+                                                                              .addPostFrameCallback((_) {
+                                                                            _plannerDetailsController.checkBoxList[index];
+                                                                          });
                                                                           if (value!
                                                                               .values!
                                                                               .isNotEmpty) {
                                                                             newindex =
                                                                                 value.values!;
                                                                             logger.e(newindex);
-                                                                            showDialog(
-                                                                                context: context,
-                                                                                builder: (context) {
-                                                                                  return AlertDialog(
-                                                                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                                                                    contentPadding: const EdgeInsets.all(10),
-                                                                                    insetPadding: const EdgeInsets.symmetric(horizontal: 16),
-                                                                                    content: SizedBox(
-                                                                                      // height: 400,
-                                                                                      width: MediaQuery.of(context).size.width,
-                                                                                      child: Column(
-                                                                                        mainAxisSize: MainAxisSize.min,
-                                                                                        children: [
-                                                                                          CategoryCheckList(
-                                                                                            value: value,
-                                                                                            plannerDetailsController: _plannerDetailsController,
-                                                                                            loginSuccessModel: widget.loginSuccessModel,
-                                                                                            index: index,
-                                                                                          ),
-                                                                                        ],
-                                                                                      ),
-                                                                                    ),
-                                                                                  );
-                                                                                }).then((value) {
-                                                                              image = value.toString();
+                                                                            Get.dialog(CategoryCheckList(
+                                                                              value: value,
+                                                                              plannerDetailsController: _plannerDetailsController,
+                                                                              loginSuccessModel: widget.loginSuccessModel,
+                                                                              index: newselectedIndex,
+                                                                            )).then((value) {
+                                                                              image = value;
+                                                                              logger.i('====$image');
+                                                                              setState(() {});
                                                                             });
                                                                           }
                                                                         },
@@ -1188,17 +1180,16 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             ),
                                                           )),
                                                       const SizedBox(height: 5),
-                                                      // (selectCheckbox
-                                                      //         .isNotEmpty)
-                                                      //     ? (uploadImageIndex ==
-                                                      //                 selectCheckbox[
-                                                      //                     index] &&
-                                                      //             newindex
-                                                      //                 .isNotEmpty)
-                                                      //         ? const Icon(Icons
-                                                      //             .visibility_outlined)
-                                                      //         : const SizedBox()
-                                                      //     : const SizedBox()
+                                                      (selectCheckbox
+                                                              .isNotEmpty)
+                                                          ? (image == index &&
+                                                                  _plannerDetailsController
+                                                                      .uploadImages
+                                                                      .isNotEmpty)
+                                                              ? const Icon(Icons
+                                                                  .visibility_outlined)
+                                                              : const SizedBox()
+                                                          : const SizedBox()
                                                     ],
                                                   )),
                                                   DataCell(Column(

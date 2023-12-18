@@ -102,8 +102,10 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   int categoryId = 0;
 
   List<Map<String, dynamic>> taskEmpArray = [];
+  DateTime date = DateTime.now();
   @override
   void initState() {
+    selectDate.text = getDate(date);
     hoursEt.text = "0";
     minutesEt.text = "0";
     logger.d("userId${widget.loginSuccessModel.userId}");
@@ -980,21 +982,21 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                     ),
                     suffixIcon: InkWell(
                       onTap: () async {
-                        DateTime? selectedDT = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime.now(),
-                          lastDate: DateTime.now(),
-                        );
+                        // DateTime? selectedDT = await showDatePicker(
+                        //   context: context,
+                        //   initialDate: DateTime.now(),
+                        //   firstDate: DateTime.now(),
+                        //   lastDate: DateTime.now(),
+                        // );
 
-                        if (selectedDT == null) {
-                          Fluttertoast.showToast(
-                              msg: "You didn't select the date");
-                          return;
-                        }
-                        // changes.value += 1;
+                        // if (selectedDT == null) {
+                        //   Fluttertoast.showToast(
+                        //       msg: "You didn't select the date");
+                        //   return;
+                        // }
+                        // // changes.value += 1;
 
-                        selectDate.text = getDate(selectedDT);
+                        // selectDate.text = getDate(selectedDT);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
