@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/vms/security/controller/security_controller.dart
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class ShomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -331,45 +332,43 @@ class _ShomeScreenState extends State<ShomeScreen> {
                                                                             120,
                                                                         child:
                                                                             ElevatedButton(
-                                                                           onPressed:
-                                                                              ()async {
-                                                                             await  savedataSecurityTask(
-                                                                                base:  baseUrlFromInsCode('issuemanager', widget.mskoolController),
-                                                                                hracttId: controller.securtyWorkList.elementAt(index).hRMARACTTId!,
-                                                                                hrmarId: controller.securtyWorkList.elementAt(index).hRMARId!,
-                                                                                hrmaractId: controller.securtyWorkList.elementAt(index).hRMARACTId!,
-                                                                                miId: widget.loginSuccessModel.mIID!,
-                                                                                remark: "",
-                                                                                securtyWorkController: controller,
-                                                                                status: "",
-                                                                                userId: widget.loginSuccessModel.userId!
-                                                                               ).then(
-                                                                                (value) {
-                                                                                  Get.back();
-                                                                                   controller.securtyWorkList.clear();
-                                                                                    controller.checkBox.clear();
-                                                                                  showDialog(context: context, builder: 
-                                                                                  (context) {
+                                                                          onPressed:
+                                                                              () async {
+                                                                            await savedataSecurityTask(base: baseUrlFromInsCode('issuemanager', widget.mskoolController), hracttId: controller.securtyWorkList.elementAt(index).hRMARACTTId!, hrmarId: controller.securtyWorkList.elementAt(index).hRMARId!, hrmaractId: controller.securtyWorkList.elementAt(index).hRMARACTId!, miId: widget.loginSuccessModel.mIID!, remark: "", securtyWorkController: controller, status: "", userId: widget.loginSuccessModel.userId!).then(
+                                                                              (value) {
+                                                                                Get.back();
+                                                                                controller.securtyWorkList.clear();
+                                                                                controller.checkBox.clear();
+                                                                                showDialog(
+                                                                                  context: context,
+                                                                                  builder: (context) {
                                                                                     return AlertDialog(
-                                                                                      content:  Container(
-                                                                                        height: 150,
-                                                                                        child: Center(
-                                                                                          child: Text("Task uploading completed",
-                                                                                          style: Theme.of(context).textTheme.titleSmall
-                                                                                          !.merge(
-                                                                                            const TextStyle(
-                                                                                            color: Color.fromARGB(255, 24, 54, 223),
-                                                                                            fontSize: 20,
-                                                                                            fontWeight: FontWeight.bold
-                                                                                          ))),
+                                                                                      content: Container(
+                                                                                        height: 130,
+                                                                                        child: Column(
+                                                                                          children: [
+                                                                                            Center(
+                                                                                              child: Text("Task uploading completed", style: Theme.of(context).textTheme.titleSmall!.merge(const TextStyle(color: Color.fromARGB(255, 24, 54, 223), fontSize: 20, fontWeight: FontWeight.bold))),
+                                                                                            ),
+                                                                                            Expanded(child: SizedBox()),
+                                                                                            MSkollBtn(
+                                                                                                title: "OK",
+                                                                                                onPress: () {
+                                                                                                  setState(() {
+                                                                                                    Get.back();
+                                                                                                    Get.back();
+                                                                                                  });
+                                                                                                })
+                                                                                          ],
                                                                                         ),
                                                                                       ),
                                                                                     );
-                                                                                  },);
-                                                                                },
-                                                                               );
-                                                                               load();
+                                                                                  },
+                                                                                );
                                                                               },
+                                                                            );
+                                                                            load();
+                                                                          },
                                                                           child:
                                                                               const Center(
                                                                             child:
