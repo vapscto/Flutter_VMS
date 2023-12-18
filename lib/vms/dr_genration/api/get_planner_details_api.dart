@@ -138,6 +138,20 @@ Future<bool?> saveDr({
 }) async {
   var dio = Dio();
   var api = 'base' + URLS.drSaveAPI;
+  logger.e({
+    "UserId": userId,
+    "MI_Id": miID,
+    "ISMDRPT_Date": ismdrptDate,
+    "ISMDRPT_HalfDayFlag": halfDayFlag,
+    "ISMTPL_Id": ismtplId,
+    "Temp_ISM_DailyReportGenerationDTO": drList,
+    "deviation_id": deviationId,
+    "endweek": endWeek,
+    "reason": reasion,
+    "startweek": startWeek,
+    "todayorothers": todayOrOthersDay,
+    "totalworkinghrsflag": totalWorkingHrFlag
+  });
   try {
     controller.saveLoading(true);
     var response =
@@ -155,20 +169,7 @@ Future<bool?> saveDr({
       "todayorothers": todayOrOthersDay,
       "totalworkinghrsflag": totalWorkingHrFlag
     });
-    logger.e({
-      "UserId": userId,
-      "MI_Id": miID,
-      "ISMDRPT_Date": ismdrptDate,
-      "ISMDRPT_HalfDayFlag": halfDayFlag,
-      "ISMTPL_Id": ismtplId,
-      "Temp_ISM_DailyReportGenerationDTO": drList,
-      "deviation_id": deviationId,
-      "endweek": endWeek,
-      "reason": reasion,
-      "startweek": startWeek,
-      "todayorothers": todayOrOthersDay,
-      "totalworkinghrsflag": totalWorkingHrFlag
-    });
+
     if (response.statusCode == 200) {
       if (response.data['returnval'] == true) {
         Fluttertoast.showToast(msg: "Saved Successfully");
