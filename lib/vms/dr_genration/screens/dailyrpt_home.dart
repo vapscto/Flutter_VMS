@@ -1050,9 +1050,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   index],
                                                               onChanged:
                                                                   (value) {
-                                                                _plannerDetailsController
-                                                                    .checkBoxList
-                                                                    .clear();
                                                                 newselectedIndex =
                                                                     index;
                                                                 _plannerDetailsController
