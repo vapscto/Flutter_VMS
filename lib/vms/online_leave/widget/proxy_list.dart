@@ -2,22 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/applied_leave_model.dart';
 
-class ProxyListPopUp extends StatefulWidget {
+class ProxyListPopUp extends StatelessWidget {
   final AppliedLeaveModelValues value;
-  const ProxyListPopUp({super.key, required this.value});
+  ProxyListPopUp({super.key, required this.value});
 
-  @override
-  State<ProxyListPopUp> createState() => _ProxyListPopUpState();
-}
-
-class _ProxyListPopUpState extends State<ProxyListPopUp> {
   List<Map<String, dynamic>> newList = [];
 
   @override
   Widget build(BuildContext context) {
-    if (widget.value.proxy!.isNotEmpty) {
-      newList
-          .add({"proxy": widget.value.proxy, "deg": widget.value.designation});
+    if (value.proxy != null) {
+      newList.add({"proxy": value.proxy, "deg": value.designation});
     }
     return AlertDialog(
       shape: BeveledRectangleBorder(

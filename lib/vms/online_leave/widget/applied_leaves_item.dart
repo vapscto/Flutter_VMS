@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -138,7 +139,11 @@ class AppliedLeaveItem extends StatelessWidget {
                 (value.leaveCode == 'CL')
                     ? InkWell(
                         onTap: () {
-                          Get.dialog(ProxyListPopUp(value: value));
+                          if (value.proxy != null) {
+                            Get.dialog(ProxyListPopUp(value: value));
+                          } else {
+                            Fluttertoast.showToast(msg: "No Proxy Added");
+                          }
                         },
                         child: Chip(
                           label: Text(
