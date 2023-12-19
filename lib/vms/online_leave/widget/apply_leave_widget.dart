@@ -1180,7 +1180,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                         onPress: () {
                                           Navigator.pop(context);
                                           Navigator.pop(context);
-                                          // Navigator.pop(context);
+                                          Navigator.pop(context);
                                         },
                                       )
                                     ],

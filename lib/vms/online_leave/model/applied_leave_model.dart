@@ -134,6 +134,9 @@ class AppliedLeaveModelValues {
   int? asmayId;
   int? ivrmuLId;
   String? hrelapARemarks;
+  String? proxy;
+  String? designation;
+  String? leaveCode;
 
   AppliedLeaveModelValues(
       {this.hrmgTId,
@@ -244,7 +247,10 @@ class AppliedLeaveModelValues {
       this.editFlag,
       this.asmayId,
       this.ivrmuLId,
-      this.hrelapARemarks});
+      this.hrelapARemarks,
+      this.proxy,
+      this.designation,
+      this.leaveCode});
 
   AppliedLeaveModelValues.fromJson(Map<String, dynamic> json) {
     hrmgTId = json['hrmgT_Id'];
@@ -357,6 +363,9 @@ class AppliedLeaveModelValues {
     asmayId = json['asmay_id'];
     ivrmuLId = json['ivrmuL_Id'];
     hrelapARemarks = json['hrelapA_Remarks'];
+    proxy = json['Proxy'];
+    designation = json['HRMDES_DesignationName'];
+    leaveCode = json['hrmL_LeaveCode'];
   }
 
   Map<String, dynamic> toJson() {
@@ -471,6 +480,9 @@ class AppliedLeaveModelValues {
     data['asmay_id'] = asmayId;
     data['ivrmuL_Id'] = ivrmuLId;
     data['hrelapA_Remarks'] = hrelapARemarks;
+    data['Proxy'] = proxy;
+    data['HRMDES_DesignationName'] = designation;
+    data['hrmL_LeaveCode'] = leaveCode;
     return data;
   }
 }

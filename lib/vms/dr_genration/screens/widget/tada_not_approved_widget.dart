@@ -177,10 +177,11 @@ class TADANotApproveScreen extends StatelessWidget {
                                 DateTime dt1 = DateTime.parse(
                                     data.elementAt(index).vTADAAFromDate!);
                                 var fromDate =
-                                    '${dt.day}-${dt.month}-${dt.year}';
+                                    '${dt1.day}-${dt1.month}-${dt1.year}';
                                 DateTime dt2 = DateTime.parse(
                                     data.elementAt(index).vTADAAToDate!);
-                                var toDate = '${dt.day}-${dt.month}-${dt.year}';
+                                var toDate =
+                                    '${dt2.day}-${dt2.month}-${dt2.year}';
                                 return DataRow(cells: [
                                   DataCell(Align(
                                       alignment: Alignment.center,

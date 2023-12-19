@@ -108,6 +108,7 @@ Future<bool> getPlanerdetails({
           TADAApplyListModel.fromJson(response.data['applyList']);
       controller.getList(tadaApplyListModel.values!);
     }
+    controller.deviationCount.value = response.data['extensiondays'];
 
     controller.updatePlannerDeatails(false);
     return true;
@@ -137,7 +138,7 @@ Future<bool?> saveDr({
   required int miID,
 }) async {
   var dio = Dio();
-  var api = 'base' + URLS.drSaveAPI;
+  var api = base + URLS.drSaveAPI;
   logger.e({
     "UserId": userId,
     "MI_Id": miID,

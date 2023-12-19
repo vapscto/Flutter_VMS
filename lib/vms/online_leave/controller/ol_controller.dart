@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/vms/online_leave/model/leave_comment_mode.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_count_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/optional_leave_model.dart';
@@ -81,4 +82,20 @@ class OpetionLeaveController extends GetxController {
   /// **  authorizationmessage  **  ///
 
   String particularLeaveAuthorization = "";
+
+  RxBool leaveCommentLoading = RxBool(false);
+  void leaveCommentDataLoading(bool loading) {
+    leaveCommentLoading.value = loading;
+  }
+
+  RxList<LeaveCommentModelValues> leaveCommentList =
+      <LeaveCommentModelValues>[].obs;
+  void getLeaveCommment(List<LeaveCommentModelValues> leaveComment) {
+    if (leaveCommentList.isNotEmpty) {
+      leaveCommentList.clear();
+    }
+    for (int i = 0; i < leaveComment.length; i++) {
+      leaveCommentList.add(leaveComment.elementAt(i));
+    }
+  }
 }

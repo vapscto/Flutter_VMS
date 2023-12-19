@@ -22,7 +22,7 @@ Future<CategoryCheckListModel?> getCategoryChecklistDetails(
     final Response response = await ins.post(apiUrl,
         options: Options(headers: getSession()),
         data: {"ISMMTCAT_Id": ismmcatId, "ISMTCR_Id": ismctrId});
-    logger.e({});
+    logger.e(apiUrl);
     CategoryCheckListModel checkListModel = CategoryCheckListModel.fromJson(
         response.data['gettaskcategorychecklist']);
 

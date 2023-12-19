@@ -315,6 +315,8 @@ class URLS {
   /* Online leave apply */
   static String getLeaveName =
       "api/OnlineLeaveApplicationFacade/getonlineLeave/";
+  static String viewLeaveComment =
+      "api//OnlineLeaveApplicationFacade/viewcomment/";
   static String appliedLeaves =
       "api/OnlineLeaveApplicationFacade/getonlineLeavestatus";
   static String saveLeave = "api/OnlineLeaveApplicationFacade/save/";
@@ -655,7 +657,8 @@ class URLS {
   static String drNotSave =
       'api/ISM_DailyReportGenerationFacade/SaveDRNotSentRemarks';
 
-  static String OtpCheck="api/CheckBookEntryFacade/geterifyEmail/";
+  static String OtpCheck = "api/CheckBookEntryFacade/geterifyEmail/";
 
-  static String seacurityTaskSave="api/StaffAreaActivityRecordFacade/Activitysavedetails/";
+  static String seacurityTaskSave =
+      "api/StaffAreaActivityRecordFacade/Activitysavedetails/";
 }
