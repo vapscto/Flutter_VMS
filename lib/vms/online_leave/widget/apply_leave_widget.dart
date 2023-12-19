@@ -568,7 +568,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                             });
                                       }
                                     }
-                                    if (count1 >=
+                                    if (count1 >
                                         widget.values.hrelSTotalLeaves!) {
                                       logger.i(true);
                                       // ignore: use_build_context_synchronously

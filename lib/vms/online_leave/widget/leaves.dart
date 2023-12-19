@@ -109,7 +109,7 @@ class _LeavesState extends State<Leaves> {
       ),
     );
   }
-  
+
   void showPopup(String message) {
     showDialog(
       context: context,
@@ -128,8 +128,6 @@ class _LeavesState extends State<Leaves> {
       },
     );
   }
-
-
 }
 
 class LeaveNames extends StatelessWidget {
@@ -186,7 +184,7 @@ class LeaveNames extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${leave.hrelSCBLeaves!.toInt()}",
+                    "${leave.hrelSCBLeaves!}",
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   Text(
@@ -203,5 +201,4 @@ class LeaveNames extends StatelessWidget {
       )),
     );
   }
-  
 }

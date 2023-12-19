@@ -2483,33 +2483,38 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                       )),
                       DataCell(Align(
                           alignment: Alignment.center,
-                          child: index == 0
-                              // tadaApplyDataController
-                              //         .addListBrowser.length -
-                              //     1
-                              ? InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      addItemListBrowse(
-                                        index + 1,
-                                        "",
-                                      );
-                                    });
-                                  },
-                                  child: const Icon(Icons.add))
-                              :
-                              // index <
-                              //         tadaApplyDataController
-                              //             .addListBrowser.length?
-                              InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      removeItemListBrowse(index);
-                                    });
-                                  },
-                                  child: const Icon(Icons.remove))
-                          // : null
-                          )),
+                          child: index ==
+                                  tadaApplyDataController
+                                          .addListBrowser.length -
+                                      1
+                              ? Row(
+                                  children: [
+                                    InkWell(
+                                        onTap: () {
+                                          addItemListBrowse(
+                                            index + 1,
+                                            "",
+                                          );
+                                        },
+                                        child: const Icon(Icons.add)),
+                                    index >= 1
+                                        ? InkWell(
+                                            onTap: () {
+                                              removeItemListBrowse(index);
+                                            },
+                                            child: const Icon(Icons.remove))
+                                        : const SizedBox()
+                                  ],
+                                )
+                              : index <
+                                      tadaApplyDataController
+                                          .addListBrowser.length
+                                  ? InkWell(
+                                      onTap: () {
+                                        removeItemListBrowse(index);
+                                      },
+                                      child: const Icon(Icons.remove))
+                                  : null)),
                     ]);
                   })),
             ),
@@ -2534,14 +2539,14 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             otherAmount.toDouble();
                         if (_endTime.text.isEmail) {
                           Fluttertoast.showToast(msg: "Select Arrival Time");
-                        }
-                        if (_addressController.text.isEmpty) {
+                        } else if (_addressController.text.isEmpty) {
                           Fluttertoast.showToast(msg: "Enter Address");
                         } else if (allAmount == 0) {
-                          Fluttertoast.showToast(msg: "Add Amount");
+                          Fluttertoast.showToast(msg: "Fill  Total Amount");
                         } else if (tadaApplyDataController
                             .addListBrowser.isEmpty) {
-                          Fluttertoast.showToast(msg: "Upload Image");
+                          Fluttertoast.showToast(
+                              msg: "Bill File is Not Attached");
                         } else if (tadaApplyDataController
                             .clintSelectedValues.isEmpty) {
                           Fluttertoast.showToast(msg: "Select Client");

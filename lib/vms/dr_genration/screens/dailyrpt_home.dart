@@ -1052,9 +1052,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   (value) {
                                                                 newselectedIndex =
                                                                     index;
-                                                                _plannerDetailsController
-                                                                        .checkBoxList[
-                                                                    index] = value!;
                                                                 value == true
                                                                     ? getCategoryChecklistDetails(
                                                                             base:
@@ -1067,14 +1064,12 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                           WidgetsBinding
                                                                               .instance
                                                                               .addPostFrameCallback((_) {
-                                                                            setState(() {
-                                                                              if (image == index && _plannerDetailsController.uploadImages.isEmpty) {
-                                                                                _plannerDetailsController.checkBoxList[index] = false;
-                                                                                logger.i('======bool - {_plannerDetailsController.checkBoxList[index]}');
-                                                                              } else {
-                                                                                _plannerDetailsController.checkBoxList[index] = true;
-                                                                              }
-                                                                            });
+                                                                            if (image == index &&
+                                                                                _plannerDetailsController.uploadImages[index].isEmpty) {
+                                                                              _plannerDetailsController.checkBoxList[index] = true;
+                                                                            } else {
+                                                                              _plannerDetailsController.checkBoxList[index] = false;
+                                                                            }
                                                                           });
                                                                           if (value!
                                                                               .values!
@@ -1097,9 +1092,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                         },
                                                                       )
                                                                     : null;
-                                                                // _plannerDetailsController
-                                                                //         .checkBoxList[
-                                                                //     index] = value!;
+                                                                _plannerDetailsController
+                                                                        .checkBoxList[
+                                                                    index] = value!;
                                                                 if (value) {
                                                                   if (selectCheckbox
                                                                       .contains(

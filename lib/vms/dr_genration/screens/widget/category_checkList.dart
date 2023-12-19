@@ -37,8 +37,8 @@ class CategoryCheckList extends StatefulWidget {
 class _CategoryCheckListState extends State<CategoryCheckList> {
   @override
   void initState() {
+    widget.plannerDetailsController.addListBrowser.clear();
     addItemListBrowse(0, "");
-    widget.newBool = true;
     super.initState();
   }
 
@@ -47,7 +47,6 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
       id: val,
       FileName: name,
     ));
-
     setState(() {});
   }
 
@@ -70,11 +69,9 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
 
     if (result != null) {
       File file = File(result.files.single.path!);
-      // XFile xFile = XFile(file.path);
       widget.plannerDetailsController.addListBrowser[index].file = file;
       widget.plannerDetailsController.addListBrowser[index].FileName =
           result.names.first;
-      // widget.plannerDetailsController.addListBrowser[index].id = widget.index;
       setState(() {});
     }
   }
@@ -282,6 +279,15 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                                                         },
                                                         child: const Icon(
                                                             Icons.add)),
+                                                    index >= 1
+                                                        ? InkWell(
+                                                            onTap: () {
+                                                              removeItemListBrowse(
+                                                                  index);
+                                                            },
+                                                            child: const Icon(
+                                                                Icons.remove))
+                                                        : const SizedBox()
                                                   ],
                                                 )
                                               : index <
@@ -311,10 +317,12 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                   : MSkollBtn(
                       title: "Save",
                       onPress: () async {
-                        if (widget.plannerDetailsController.addListBrowser.first
-                                .file ==
+                        if (name.isEmpty) {
+                          Fluttertoast.showToast(msg: " Select Document type");
+                        } else if (widget.plannerDetailsController
+                                .addListBrowser.last.file ==
                             null) {
-                          Fluttertoast.showToast(msg: "Please Upload File");
+                          Fluttertoast.showToast(msg: " Upload File");
                         } else {
                           setState(() {
                             isLoading = true;
@@ -360,6 +368,7 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
   @override
   void dispose() {
     widget.plannerDetailsController.addListBrowser.clear();
+    widget.value.values!.clear();
     super.dispose();
   }
 

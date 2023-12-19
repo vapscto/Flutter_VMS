@@ -33,6 +33,13 @@ class CheckPlannerAPI {
           "VTADAA_ToDate": toDate,
         },
       );
+      logger.i(url);
+      logger.i({
+        "UserId": userId,
+        "MI_Id": miId,
+        "VTADAA_FromDate": fromDate,
+        "VTADAA_ToDate": toDate,
+      });
       if (response.statusCode == 200) {
         CheckPlannerModel checkPlannerModel =
             CheckPlannerModel.fromJson(response.data['getArray']);

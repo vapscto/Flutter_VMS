@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
@@ -36,11 +37,29 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
         userId: widget.loginSuccessModel.userId!,
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         tadaApplyController: tadaApplyDataController);
-    checkPlanner();
+    for (int i = 0;
+        i < tadaApplyDataController.tadaSavedDataValues.length;
+        i++) {
+      if (tadaApplyDataController.tadaSavedDataValues[i].vtadaaAFromDate !=
+          null) {
+        DateTime dt = DateTime.parse(
+            tadaApplyDataController.tadaSavedDataValues[i].vtadaaAFromDate!);
+
+        fromDt = '${numberList[dt.month]}-${numberList[dt.day]}-${dt.year}';
+      }
+      if (tadaApplyDataController.tadaSavedDataValues[i].vtadaaAToDate !=
+          null) {
+        DateTime dt = DateTime.parse(
+            tadaApplyDataController.tadaSavedDataValues[i].vtadaaAToDate!);
+
+        toDt = '${numberList[dt.month]}-${numberList[dt.day]}-${dt.year}';
+      }
+      checkPlanner(fromDt, toDate);
+    }
     tadaApplyDataController.appliedData(false);
   }
 
-  checkPlanner() async {
+  checkPlanner(String date, String todate) async {
     tadaApplyDataController.plannerCreate(true);
     await CheckPlannerAPI.instance.applyCheckPlannerAPI(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
@@ -159,6 +178,8 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
                                           .tadaSavedDataValues[index]
                                           .vtadaaAFromDate!);
                                   date = '${dt.day}-${dt.month}-${dt.year}';
+                                  // fromDt =
+                                  //     '${numberList[dt.month]}-${numberList[dt.day]}-${dt.year}';
                                 }
                                 if (tadaApplyDataController
                                         .tadaSavedDataValues[index]
@@ -169,6 +190,8 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
                                           .tadaSavedDataValues[index]
                                           .vtadaaAToDate!);
                                   toDate = '${dt.day}-${dt.month}-${dt.year}';
+                                  // toDt =
+                                  //     '${numberList[dt.month]}-${numberList[dt.day]}-${dt.year}';
                                 }
 
                                 return DataRow(cells: [
@@ -194,15 +217,15 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
                                       onPressed: () {
                                         setState(() {
                                           if (tadaApplyDataController
-                                              .checkPlanner.isEmpty) {
-                                            Get.dialog(showPopup());
-                                          } else {
+                                              .checkPlanner.isNotEmpty) {
                                             tadaApplyDataController
                                                 .tadaSavedData
                                                 .add(tadaApplyDataController
                                                         .tadaSavedDataValues[
                                                     index]);
                                             widget.tabController.index = 0;
+                                          } else {
+                                            Get.dialog(showPopup());
                                           }
                                         });
                                       },
@@ -226,6 +249,9 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
 
   var date = '';
   var toDate = '';
+  var fromDt = '';
+  var toDt = '';
+
   showPopup() {
     return AlertDialog(
       shape: RoundedRectangleBorder(
