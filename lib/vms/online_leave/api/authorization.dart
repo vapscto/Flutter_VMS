@@ -3,6 +3,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/online_leave/controller/ol_controller.dart';
+import 'package:m_skool_flutter/vms/online_leave/model/staff_list_model.dart';
 
 Future<void> checkAuthorizationLeave(
     {required int miId,
@@ -32,6 +33,19 @@ Future<void> checkAuthorizationLeave(
 
     opetionLeaveController.particularLeaveAuthorization =
         response.data["authorizationmessage"];
+
+    /// **  Staff LIST Previlege  **  ///
+
+    if (response.data['staff_List'] == null) {
+      opetionLeaveController.updateErrorLoadingOnloadEmployee(true);
+      // return 0;
+    } else if (response.data['staff_List'] != null) {
+      opetionLeaveController.updateErrorLoadingOnloadEmployee(false);
+      opetionLeaveController.updateisLoadingOnloadEmployee(false);
+      StaffPrevilegeListModel employeeListResponse =
+          StaffPrevilegeListModel.fromJson(response.data['staff_List']);
+      opetionLeaveController.employeeList.addAll(employeeListResponse.values!);
+    }
   } on DioError catch (e) {
     logger.e(e.message);
   } on Exception catch (e) {

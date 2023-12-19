@@ -19,10 +19,11 @@ class SaveLeaveApplication {
     required List<Map<String, dynamic>> frmToDate,
     required List<Map<String, dynamic>> temp,
     required String base,
+    required int hrmeId
   }) async {
     final Dio ins = getGlobalDio();
     final String apiUrl = base + URLS.saveLeave;
-    try {
+    try { 
       logger.d({
         "HRELAP_ApplicationDate": applicationDate,
         "HRELAP_ContactNoOnLeave": contactNoOnLeave,
@@ -33,7 +34,8 @@ class SaveLeaveApplication {
         "UserId": "$userId",
         "asmay_id": asmayId,
         "frmToDates": frmToDate,
-        "temp_table_data": temp
+        "temp_table_data": temp,
+        "HRME_Id" : hrmeId,
       });
       final Response response = await ins
           .post(apiUrl, options: Options(headers: getSession()), data: {
@@ -46,7 +48,8 @@ class SaveLeaveApplication {
         "UserId": "$userId",
         "asmay_id": asmayId,
         "frmToDates": frmToDate,
-        "temp_table_data": temp
+        "temp_table_data": temp,
+        "HRME_Id" : hrmeId,
       });
 
       // logger.d()
