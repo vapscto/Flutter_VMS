@@ -209,21 +209,21 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
 
   List<Map<String, dynamic>> uploadImageList = [];
   saveDaetails() async {
-    if (_plannerDetailsController.uploadImages.isNotEmpty) {
-      for (var i in _plannerDetailsController.uploadImages) {
-        fileName = i['name'];
-        filePath = i['path'];
-        uploadImageIndex = i['index'];
-        uploadImageList.add({
-          "ISMMTCATCL_Id": i['ismmtcatclId'],
-          "checklistname": i['checkName'],
-          "comments": "",
-          "filename": i['name'],
-          "filepath": i['path'],
-          "refno": i["ref"]
-        });
-      }
-    }
+    // if (_plannerDetailsController.uploadImages.isNotEmpty) {
+    //   for (var i in _plannerDetailsController.uploadImages) {
+    //     fileName = i['name'];
+    //     filePath = i['path'];
+    //     uploadImageIndex = i['index'];
+    //     uploadImageList.add({
+    //       "ISMMTCATCL_Id": i['ismmtcatclId'],
+    //       "checklistname": i['checkName'],
+    //       "comments": "",
+    //       "filename": i['name'],
+    //       "filepath": i['path'],
+    //       "refno": i["ref"]
+    //     });
+    //   }
+    // }
 
     if (fliteresList.isNotEmpty) {
       // Calculate the total hours and minutes
@@ -296,10 +296,28 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
           deviationId = 2;
         }
         //
+        if (_plannerDetailsController.uploadImages.isNotEmpty) {
+          for (var j in _plannerDetailsController.uploadImages) {
+            if (i == j.index) {
+              logger.i(j.name);
+              fileName = j.name;
+              filePath = j.path;
+              uploadImageIndex = j.index;
+              uploadImageList.add({
+                "ISMMTCATCL_Id": j.id,
+                "checklistname": j.imageType,
+                "comments": "",
+                "filename": j.name,
+                "filepath": j.path,
+                "refno": '',
+              });
+            }
+          }
+        }
         if (_plannerDetailsController.checkBoxList.elementAt(i) == true) {
-          todayDailyReportGenaration.clear();
-          totalhrs = double.parse(_plannerDetailsController.hoursEt[i].text) +
-              double.parse(_plannerDetailsController.minutesEt[i].text);
+          // todayDailyReportGenaration.clear();
+          // totalhrs = double.parse(_plannerDetailsController.hoursEt[i].text) +
+          //     double.parse(_plannerDetailsController.minutesEt[i].text);
           todayDailyReportGenaration.add({
             "ISMTPL_Id": value.iSMTPLId,
             "ISMTCR_Id": value.iSMTCRId,
@@ -347,6 +365,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
       await saveDr(
               miID: widget.loginSuccessModel.mIID!,
               userId: widget.loginSuccessModel.userId!,
+              roleId: widget.loginSuccessModel.roleId!,
               base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
               controller: _plannerDetailsController,
               ismdrptDate: todayDt.toIso8601String(),
@@ -434,6 +453,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                     )
                   : BtnSave(
                       onPress: () async {
+                        saveDaetails();
                         if (_formKey.currentState!.validate()) {
                           if (selectCheckbox.isNotEmpty) {
                             saveDaetails();

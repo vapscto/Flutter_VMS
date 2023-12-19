@@ -14,6 +14,7 @@ import 'package:m_skool_flutter/vms/dr_genration/model/drnotsent_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/get_planner_details.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/hrplannerdetails_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_details.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/planner_file_upload_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/tada_not_approve_model.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 
@@ -124,7 +125,7 @@ class PlannerDetails extends GetxController {
     }
   }
 
-  List<Map<String, dynamic>> uploadImages = [];
+  List<PlannerFileUpload> uploadImages = [];
 
   RxInt deviationCount = 0.obs;
 }

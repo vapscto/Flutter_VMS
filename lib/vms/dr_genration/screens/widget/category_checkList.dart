@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/api/get_task_check_list.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/planner_file_upload_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/upload_dr_image.dart';
 import 'package:m_skool_flutter/vms/rating_report/screen/report_data_screen.dart';
 import 'package:m_skool_flutter/vms/task%20creation/api/sava_task.dart';
@@ -329,23 +330,26 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                           });
                           for (var element in widget
                               .plannerDetailsController.addListBrowser) {
-                            var path = element.file!.path;
-                            logger.i(path);
-                            uploadAttachment.add(await uploadDrImage(
+                            UploadDrImage dat = await uploadDrImage(
                                 miId: widget.loginSuccessModel.mIID!,
-                                file: element.file!));
+                                file: element.file!);
+                            if (!uploadAttachment
+                                .any((element) => element.name == dat.name)) {
+                              uploadAttachment.add(UploadDrImage(
+                                  name: dat.name, path: dat.path));
+                            }
+                          }
+                          for (int i = 0; i < uploadAttachment.length; i++) {
+                            logger.i(
+                                '===+++///Upload ${uploadAttachment[i].name}');
                           }
                           widget.plannerDetailsController.uploadImages.clear();
                           for (var i in uploadAttachment) {
-                            widget.plannerDetailsController.uploadImages.add({
-                              "name": i.name,
-                              "path": i.path,
-                              "index": widget.index,
-                              "ismmtcatclId": id,
-                              "checkName": name,
-                              "ref": i.hashCode
-                            });
+                            widget.plannerDetailsController.uploadImages.add(
+                                PlannerFileUpload(
+                                    i.name, i.path, widget.index, id, name));
                           }
+
                           if (uploadAttachment.isNotEmpty) {
                             setState(() {
                               isLoading = true;
@@ -365,12 +369,12 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
     );
   }
 
-  @override
-  void dispose() {
-    widget.plannerDetailsController.addListBrowser.clear();
-    widget.value.values!.clear();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   // widget.plannerDetailsController.addListBrowser.clear();
+  //   widget.value.values!.clear();
+  //   super.dispose();
+  // }
 
   List<UploadDrImage> uploadAttachment = [];
   bool isLoading = false;

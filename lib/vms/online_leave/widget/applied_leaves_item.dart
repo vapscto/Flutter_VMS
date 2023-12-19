@@ -136,7 +136,7 @@ class AppliedLeaveItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                (value.leaveCode == 'CL')
+                (value.leaveCode == 'PL')
                     ? InkWell(
                         onTap: () {
                           if (value.proxy != null) {
