@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/applied_leave_model.dart';
+import 'package:m_skool_flutter/vms/online_leave/widget/approval_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class AppliedLeaveItem extends StatelessWidget {
   final int color;
   final AppliedLeaveModelValues value;
-  const AppliedLeaveItem({super.key, required this.color, required this.value});
+  final MskoolController mskoolController;
+  const AppliedLeaveItem(
+      {super.key,
+      required this.color,
+      required this.value,
+      required this.mskoolController});
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +54,6 @@ class AppliedLeaveItem extends StatelessWidget {
                                       .color),
                             ),
                       ),
-                      // const SizedBox(
-                      //   height: 2.0,
-                      // ),
                     ],
                   ),
                 ),
@@ -125,6 +130,31 @@ class AppliedLeaveItem extends StatelessWidget {
                 )
               ],
             ),
+            const SizedBox(height: 6),
+            value.hrelaPApplicationStatus!.toLowerCase() == "applied"
+                ? const SizedBox()
+                : Align(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(3),
+                          color: noticeColor.elementAt(color)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: InkWell(
+                            onTap: () {
+                              Get.dialog(ApprovalWidget(
+                                hrmeId: value.hrelaPId!,
+                                mskoolController: mskoolController,
+                              ));
+                            },
+                            child: const Icon(
+                              Icons.visibility_outlined,
+                              color: Colors.white,
+                            )),
+                      ),
+                    ),
+                  )
           ],
         ),
       ),

@@ -95,6 +95,7 @@ class _ApplyLeaveHomeScreenState extends State<ApplyLeaveHomeScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: AppliedLeaveWidget(
                           leaves: snapshot.data!,
+                          mskoolController: widget.mskoolController,
                         ),
                       );
                     }
