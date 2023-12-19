@@ -15,17 +15,18 @@ class GetLeaveNameApi {
   }) async {
     String api = base + URLS.getLeaveName;
     final Dio ins = getGlobalDio();
+    logger.i(api);
+      logger.i({
+        "MI_Id": miId,
+        "UserId": userId,
+      });
     try {
       final Response response =
           await ins.post(api, options: Options(headers: getSession()), data: {
         "MI_Id": miId,
         "UserId": userId,
       });
-      logger.i(api);
-      logger.i({
-        "MI_Id": miId,
-        "UserId": userId,
-      });
+      
       if (response.data['leave_name'] == null) {
         return Future.error({
           "errorTitle": "No Leaves Found",

@@ -17,6 +17,11 @@ class LeaveNameApi {
   }) async {
     String api = base + URLS.getLeaveName;
     final Dio ins = getGlobalDio();
+    logger.i(api);
+      logger.i({
+        "MI_Id": miId,
+        "UserId": userId,
+      });
     try {
       opetionLeaveController.leaveloading(true);
       final Response response =
@@ -24,11 +29,7 @@ class LeaveNameApi {
         "MI_Id": miId,
         "UserId": userId,
       });
-      logger.i(api);
-      logger.i({
-        "MI_Id": miId,
-        "UserId": userId,
-      });
+      
 
       if (response.statusCode == 200) {
         if (response.data['leave_name'] == null) {

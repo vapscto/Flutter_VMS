@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_count_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/optional_leave_model.dart';
+import 'package:m_skool_flutter/vms/online_leave/model/staff_list_model.dart';
 
 class OpetionLeaveController extends GetxController {
   RxList<OpetionLeaveModelValues> optionalLeaveList =
@@ -61,6 +62,23 @@ class OpetionLeaveController extends GetxController {
       leaveNameList.add(leaveName.elementAt(i));
     }
   }
+
+  /// **  Staff LIST Previlege CONTROLLER  **  ///
+
+  RxBool isErrorOccuredWhileLoadingOnloadEmployee = RxBool(false);
+  RxBool isLoadingOnloadEmployee = RxBool(false);
+
+  final RxList<StaffPrevilegeListModelValues> employeeList = RxList();
+
+  updateErrorLoadingOnloadEmployee(bool val) {
+    isErrorOccuredWhileLoadingOnloadEmployee.value = val;
+  }
+
+  updateisLoadingOnloadEmployee(bool val) {
+    isLoadingOnloadEmployee.value = val;
+  }
+
+  /// **  authorizationmessage  **  ///
 
   String particularLeaveAuthorization = "";
 }

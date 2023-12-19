@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/student/homework/model/upload_hw_cw_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/api/ol_featch_api.dart';
 import 'package:m_skool_flutter/vms/online_leave/api/save_leave_application.dart';
@@ -16,6 +17,7 @@ import 'package:m_skool_flutter/vms/online_leave/controller/ol_controller.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_count_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/optional_leave_model.dart';
+import 'package:m_skool_flutter/vms/online_leave/model/staff_list_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/widget/leave_attachment.dart';
 import 'package:m_skool_flutter/vms/profile/api/profile_api.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
@@ -48,6 +50,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
   OpetionLeaveController controllerOL = Get.put(OpetionLeaveController());
   var addleave = 0;
   ProfileController profileController = Get.put(ProfileController());
+  
+  StaffPrevilegeListModelValues? selectedEmployee;
   _getProfileData() async {
     profileController.profileLoading(true);
     await ProfileAPI.instance.profileData(
@@ -937,6 +941,88 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
             ],
           ),
         ),
+        widget.values.hrmLLeaveCode == "PL"
+            ? Container(
+                margin: const EdgeInsets.only(
+                    top: 30, left: 0, right: 0, bottom: 0),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: BorderRadius.circular(16.0),
+                  boxShadow: const [
+                    BoxShadow(
+                      offset: Offset(0, 1),
+                      blurRadius: 8,
+                      color: Colors.black12,
+                    ),
+                  ],
+                ),
+                child: DropdownButtonFormField<StaffPrevilegeListModelValues>(
+                  // value: selectedEmployee,
+                  decoration: InputDecoration(
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    hintStyle: Theme.of(context).textTheme.labelSmall!.merge(
+                        const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14.0,
+                            letterSpacing: 0.3)),
+                    hintText: controllerOL.employeeList.isNotEmpty
+                        ? 'Select Employee'
+                        : 'No data available',
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    isDense: true,
+                    label: const CustomDropDownLabel(
+                      icon: 'assets/images/ClassTeacher.png',
+                      containerColor: Color.fromRGBO(250, 238, 253, 1),
+                      text: 'Select Employee',
+                      textColor: Color.fromRGBO(146, 79, 190, 1),
+                    ),
+                  ),
+                  icon: const Padding(
+                    padding: EdgeInsets.only(top: 3),
+                    child: Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      size: 30,
+                    ),
+                  ),
+                  iconSize: 30,
+                  items:
+                      List.generate(controllerOL.employeeList.length, (index) {
+                    final employee = controllerOL.employeeList[index];
+                    return DropdownMenuItem(
+                      value: employee,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 13, left: 5),
+                        child: Text(
+                          controllerOL
+                              .employeeList[index].hRMEEmployeeFirstName!,
+                          style: Theme.of(context).textTheme.labelSmall!.merge(
+                              const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16.0,
+                                  letterSpacing: 0.3)),
+                        ),
+                      ),
+                    );
+                  }),
+                  onChanged: (s) {
+                    setState(() {
+                      selectedEmployee = s;
+                    });
+
+                    // selectedEmployee = s;
+                  },
+                ),
+              )
+            : SizedBox(),
         const SizedBox(
           height: 20,
         ),
@@ -1015,6 +1101,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                           FutureBuilder<bool>(
                               future: SaveLeaveApplication.instance.saveNow(
                                   miId: widget.loginSuccessModel.mIID!,
+                                  hrmeId: selectedEmployee!.hRMEId ?? 0,
                                   userId: widget.loginSuccessModel.userId!,
                                   asmayId: widget.loginSuccessModel.asmaYId!,
                                   applicationDate:
