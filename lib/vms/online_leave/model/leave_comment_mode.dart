@@ -36,7 +36,7 @@ class LeaveCommentModelValues {
   String? createdDate;
   String? hRELAPFromDate;
   String? hRELAPToDate;
-  Null? hRELAPSupportingDocument;
+  String? hRELAPSupportingDocument;
   String? updatedDate;
 
   LeaveCommentModelValues(

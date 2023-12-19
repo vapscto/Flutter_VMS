@@ -281,13 +281,16 @@ class _ApprovalWidgetState extends State<ApprovalWidget> {
                                           alignment: Alignment.center,
                                           child:
                                               Text(data.hRELAPARemarks ?? ''))),
-                                      DataCell(IconButton(
-                                          onPressed: () {
-                                            // OpenFilex.open(
-                                            //     data.hRELAPSupportingDocument ??
-                                            //         '');
-                                          },
-                                          icon: const Icon(Icons.visibility))),
+                                      DataCell((data.hRELAPSupportingDocument !=
+                                              null)
+                                          ? IconButton(
+                                              onPressed: () {
+                                                OpenFilex.open(data
+                                                    .hRELAPSupportingDocument);
+                                              },
+                                              icon:
+                                                  const Icon(Icons.visibility))
+                                          : const Icon(Icons.visibility_off)),
                                     ]);
                                   }),
                                 )))

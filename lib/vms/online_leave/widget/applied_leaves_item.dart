@@ -4,6 +4,7 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/applied_leave_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/widget/approval_widget.dart';
+import 'package:m_skool_flutter/vms/online_leave/widget/proxy_list.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class AppliedLeaveItem extends StatelessWidget {
@@ -131,30 +132,54 @@ class AppliedLeaveItem extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 6),
-            value.hrelaPApplicationStatus!.toLowerCase() == "applied"
-                ? const SizedBox()
-                : Align(
-                    alignment: Alignment.bottomRight,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(3),
-                          color: noticeColor.elementAt(color)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: InkWell(
-                            onTap: () {
-                              Get.dialog(ApprovalWidget(
-                                hrmeId: value.hrelaPId!,
-                                mskoolController: mskoolController,
-                              ));
-                            },
-                            child: const Icon(
-                              Icons.visibility_outlined,
-                              color: Colors.white,
-                            )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                (value.leaveCode == 'CL')
+                    ? InkWell(
+                        onTap: () {
+                          Get.dialog(ProxyListPopUp(value: value));
+                        },
+                        child: Chip(
+                          label: Text(
+                            "Proxy",
+                            style:
+                                Theme.of(context).textTheme.titleSmall!.merge(
+                                      const TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                          ),
+                          backgroundColor: Colors.green,
+                        ),
+                      )
+                    : const SizedBox(),
+                value.hrelaPApplicationStatus!.toLowerCase() == "applied"
+                    ? const SizedBox()
+                    : Align(
+                        alignment: Alignment.bottomRight,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(3),
+                              color: noticeColor.elementAt(color)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: InkWell(
+                                onTap: () {
+                                  Get.dialog(ApprovalWidget(
+                                    hrmeId: value.hrelaPId!,
+                                    mskoolController: mskoolController,
+                                  ));
+                                },
+                                child: const Icon(
+                                  Icons.visibility_outlined,
+                                  color: Colors.white,
+                                )),
+                          ),
+                        ),
                       ),
-                    ),
-                  )
+              ],
+            )
           ],
         ),
       ),
