@@ -125,6 +125,8 @@ class PlannerDetails extends GetxController {
   }
 
   List<Map<String, dynamic>> uploadImages = [];
+
+  RxInt deviationCount = 0.obs;
 }
 
 class AtachmenDrtFile {

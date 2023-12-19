@@ -58,6 +58,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
 
   int uploadImageIndex = 0;
   List<Map<String, dynamic>> dailyReportGenaration = [];
+  List<Map<String, dynamic>> todayDailyReportGenaration = [];
   List<Map<String, dynamic>> dailyReportStatus = [];
   final reasonController = TextEditingController();
   int image = 0;
@@ -275,81 +276,72 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         return;
       }
 
+      int currentDayOfWeek = 0;
+      var totalworkinghrsflag = 0.0;
+      int deviationId = 0;
+      double effortss = 0.0;
+      var totalhrs = 0.0;
       for (int i = 0; i < _plannerDetailsController.checkBoxList.length; i++) {
         var value = fliteresList.elementAt(i);
-
+        DateTime startDate = DateTime.parse(
+            _plannerDetailsController.getplannerdetails[0].ismtpLStartDate!);
+        DateTime endDate = DateTime.parse(
+            _plannerDetailsController.getplannerdetails[0].ismtpLEndDate!);
+        int totalDays = endDate.difference(startDate).inDays + 1;
+        DateTime currentDate = DateTime.now();
+        currentDayOfWeek = currentDate.weekday;
+        if (currentDayOfWeek == 6) {
+          deviationId = 1;
+        } else {
+          deviationId = 2;
+        }
+        //
         if (_plannerDetailsController.checkBoxList.elementAt(i) == true) {
-          dailyReportGenaration.add({
-            "CreatedFlag": value.createdFlag,
-            "HRME_Id": value.hRMEId,
-            "HRMPR_Id": value.hRMPRId,
-            "HRMP_Name": value.hRMPName,
-            "ISMDRPT_DeviationFlg": value.iSMDRPTDeviationFlg,
-            "ISMDRPT_ExtraFlg": value.iSMDRPTExtraFlg,
+          todayDailyReportGenaration.clear();
+          totalhrs = double.parse(_plannerDetailsController.hoursEt[i].text) +
+              double.parse(_plannerDetailsController.minutesEt[i].text);
+          todayDailyReportGenaration.add({
+            "ISMTPL_Id": value.iSMTPLId,
+            "ISMTCR_Id": value.iSMTCRId,
             "ISMDRPT_Remarks":
                 _plannerDetailsController.etResponse.elementAt(i).text,
-            "ISMDRPT_Status": _plannerDetailsController.statusEtField[i].text,
             "ISMDRPT_TimeTakenInHrs":
                 '${_plannerDetailsController.hoursEt[i].text}.${_plannerDetailsController.minutesEt[i].text}',
-            "ISMDRPT_TimeTakenInHrsmin": "Hours",
-            "ISMDRPT_TimeTakenInHrsmins": value.iSMDRPTTimeTakenInHrsmins,
-            "ISMMCLT_ClientName": value.iSMMCLTClientName,
-            "ISMMCLT_Id": value.iSMMCLTId,
-            "ISMMPR_Id": value.iSMMPRId,
-            "ISMMTCAT_CompulsoryFlg": value.iSMMTCATCompulsoryFlg,
-            "ISMMTCAT_Id": value.iSMMTCATId,
-            "ISMTAPL_Day": value.iSMTAPLDay,
-            "ISMTAPL_Periodicity": value.iSMTAPLPeriodicity,
-            "ISMTAPL_ToDate": value.iSMTAPLToDate,
-            "ISMTCRTRTO_TransferredDate": null,
-            "ISMTCR_BugOREnhancementFlg": value.iSMTCRBugOREnhancementFlg,
-            "ISMTCR_CreationDate": value.iSMTCRCreationDate,
-            "ISMTCR_Desc": value.iSMTCRDesc,
-            "ISMTCR_Id": value.iSMTCRId,
-            "ISMTCR_ReOpenDate": value.iSMTCRCreationDate,
-            "ISMTCR_ReOpenFlg": value.iSMTCRReOpenFlg,
-            "ISMTCR_Status": value.iSMTCRStatus,
-            // _plannerDetailsController.deveationEtField.elementAt(i) .text, //statusEtField
-            "ISMTCR_TaskNo": value.iSMTCRTaskNo,
-            "ISMTCR_Title": value.iSMTCRTitle,
-            "ISMTPLTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
-            "ISMTPLTA_EndDate": value.iSMTPLTAEndDate,
-            "ISMTPLTA_Id": value.iSMTPLTAId,
+            "ISMDRPT_Status": _plannerDetailsController.statusEtField[i].text,
+            "extraflag": 0,
             "ISMTPLTA_StartDate": value.iSMTPLTAStartDate,
-            "ISMTPL_ActiveFlg": value.iSMTPLActiveFlg,
-            "ISMTPL_ApprovalFlg": value.iSMTPLApprovalFlg,
-            "ISMTPL_ApprovedBy": value.iSMTPLApprovedBy,
-            "ISMTPL_EndDate": value.iSMTPLEndDate,
-            "ISMTPL_Id": value.iSMTPLId,
-            "ISMTPL_PlannedBy": value.iSMTPLPlannedBy,
-            "ISMTPL_PlannerName": value.iSMTPLPlannerName,
-            "ISMTPL_Remarks":
-                _plannerDetailsController.deveationEtField.elementAt(i).text,
-            "ISMTPL_StartDate": value.iSMTPLStartDate,
-            "ISMTPL_TotalHrs": value.iSMTPLTotalHrs,
-            "ProjectName": value.projectName,
-            "actualeffortinhrs": _plannerDetailsController.hoursEt[i].text,
-            "actualeffortinmins": _plannerDetailsController.minutesEt[i].text,
-            "approvedflag": value.approvedflag,
-            "assignedby": value.assignedby,
-            "checkedvalue": _plannerDetailsController.checkBoxList[i],
-            "createdemp": value.createdemp,
-            "deviationflag": false,
-            "dr_flag": value.drFlag,
-            "effhrs": _plannerDetailsController.hoursEt[i].text,
-            "effmin": _plannerDetailsController.minutesEt[i].text,
-            "effortss": value.effortss,
-            "get_Status": [],
-            "maxtime": value.maxtime,
-            "periodicitydailyflag": value.periodicitydailyflag,
+            "ISMTPLTA_EndDate": value.iSMTPLTAEndDate,
+            "ISMTPLTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
+            "deviationflag": deviation,
+            "ISMDR_Id": value.iSMDRId,
+            "ISMDRPT_TimeTakenInHrsmin": "Hours",
             "periodicityendflag": value.periodicityendflag,
-            "periodicityweeklyflag": value.periodicityweeklyflag,
-            "taskcategoryname": value.taskcategoryname,
-            "reason": reasonController.text,
-            "categorychecklist": uploadImageList
+            "ISMTAPL_Periodicity": value.iSMTAPLPeriodicity,
+            "ISMTPLTA_Id": value.iSMTPLTAId,
+            "attachmentArray": null,
+            "categorychecklist": uploadImageList,
+            "Temp_TaskReponseList": null
           });
         }
-        logger.i(dailyReportGenaration);
+        if (halfDay.value == false) {
+          if (totalhrs >=
+              double.parse(
+                  fliteresList.elementAt(i).iSMTPLTAEffortInHrs.toString())) {
+            totalworkinghrsflag = 1;
+          }
+
+          if (totalhrs > 24) {
+            Fluttertoast.showToast(
+                msg:
+                    "Effort Should Be  Less Than Equal To 24 Hours Per Day , Total Efforts Selected  $totalhrs  Hours");
+            return;
+          }
+        } else if (halfDay.value == true) {
+          var efforts = double.parse(value.effortss!) / 2;
+          if (totalhrs == efforts) {
+            totalworkinghrsflag = 1;
+          }
+        }
       }
       _plannerDetailsController.saveLoading(true);
       await saveDr(
@@ -361,16 +353,15 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
               halfDayFlag: halfDay.value,
               ismtplId:
                   _plannerDetailsController.getplannerdetails[0].ismtpLId!,
-              drList: dailyReportGenaration,
-              deviationId: _plannerDetailsController.daviationId.value,
+              drList: todayDailyReportGenaration,
+              deviationId: deviationId,
               endWeek:
                   _plannerDetailsController.getplannerdetails[0].ismtpLEndDate!,
               reasion: reasonController.text,
               startWeek: _plannerDetailsController
                   .getplannerdetails[0].ismtpLStartDate!,
               todayOrOthersDay: _plannerDetailsController.day.value,
-              totalWorkingHrFlag: _plannerDetailsController
-                  .getplannerdetails[0].ismtpLTotalHrs!)
+              totalWorkingHrFlag: totalworkinghrsflag)
           .then((value) {
         _plannerDetailsController.saveLoading(false);
         if (value!) {
@@ -601,8 +592,67 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                 letterSpacing: 0.3)),
                                       ),
                                       onChanged: (value) {
-                                        _plannerDetailsController
-                                            .updateDayRadio(value!);
+                                        if (_plannerDetailsController
+                                                .deviationCount.value !=
+                                            3) {
+                                          _plannerDetailsController
+                                              .updateDayRadio(value!);
+                                        } else {
+                                          showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                title: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 20),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                          'Others Date Report Generation Is Not Available',
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .titleMedium!
+                                                              .merge(TextStyle(
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .primaryColor)),
+                                                        ),
+                                                      ),
+                                                      TextButton(
+                                                          onPressed: () {
+                                                            Get.back();
+                                                          },
+                                                          child: Text(
+                                                            "OK",
+                                                            style: Get.textTheme
+                                                                .titleMedium!
+                                                                .copyWith(
+                                                                    color: Theme.of(
+                                                                            context)
+                                                                        .primaryColor),
+                                                          ))
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                          _plannerDetailsController
+                                              .updateDayRadio('today');
+                                          return;
+                                        }
                                       },
                                     ),
                                   ),
@@ -807,6 +857,16 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                 TextSpan(
                                     text: _plannerDetailsController
                                         .otherDaysEditingController.value,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .merge(const TextStyle(
+                                            fontSize: 16,
+                                            color: Color.fromARGB(
+                                                255, 16, 103, 233)))),
+                                TextSpan(
+                                    text:
+                                        ' [Extension: ${_plannerDetailsController.deviationCount.value}]',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyLarge!
@@ -1065,10 +1125,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                               .instance
                                                                               .addPostFrameCallback((_) {
                                                                             if (image == index &&
-                                                                                _plannerDetailsController.uploadImages[index].isEmpty) {
+                                                                                _plannerDetailsController.uploadImages.isNotEmpty) {
                                                                               _plannerDetailsController.checkBoxList[index] = true;
                                                                             } else {
-                                                                              _plannerDetailsController.checkBoxList[index] = false;
+                                                                              _plannerDetailsController.checkBoxList[index] = true;
                                                                             }
                                                                           });
                                                                           if (value!
@@ -1085,7 +1145,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                                     barrierDismissible: false)
                                                                                 .then((value) {
                                                                               image = value;
-                                                                              logger.i('====$image');
                                                                               setState(() {});
                                                                             });
                                                                           }
@@ -1102,16 +1161,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                     selectCheckbox
                                                                         .remove(
                                                                             index);
-                                                                    logger.i(
-                                                                        selectCheckbox
-                                                                            .toString());
                                                                   } else {
                                                                     selectCheckbox
                                                                         .add(
                                                                             index);
-                                                                    logger.i(
-                                                                        selectCheckbox
-                                                                            .toString());
+
                                                                     String previousDateStr = fliteresList
                                                                         .elementAt(
                                                                             index)
@@ -1176,9 +1230,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   selectCheckbox
                                                                       .remove(
                                                                           index);
-                                                                  logger.i(
-                                                                      selectCheckbox
-                                                                          .toString());
                                                                 }
                                                               },
                                                             ),
