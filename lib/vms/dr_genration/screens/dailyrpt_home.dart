@@ -82,28 +82,31 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                     child: Text(
                       "Update Task",
                       style: Theme.of(context).textTheme.titleLarge!.merge(
-                          TextStyle(color: Theme.of(context).primaryColor)),
+                          TextStyle(color: Colors.black , fontWeight: FontWeight.w600)),
                     )),
-                content: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task",
-                      style: Theme.of(context).textTheme.titleSmall!.merge(
-                          TextStyle(color: Theme.of(context).primaryColor)),
-                    ),
-                    const SizedBox(height: 16),
-                    TextButton(
-                        onPressed: () {
-                          Get.back();
-                          Get.back();
-                        },
-                        child: Text(
-                          "OK",
-                          style: Get.textTheme.titleMedium!
-                              .copyWith(color: Theme.of(context).primaryColor),
-                        ))
-                  ],
+                content: Container(
+                  height: 200,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task",
+                        style: Theme.of(context).textTheme.titleSmall!.merge(
+                            TextStyle(color: Theme.of(context).primaryColor)),
+                      ),
+                      const SizedBox(height: 16),
+                      TextButton(
+                          onPressed: () {
+                            Get.back();
+                            Get.back();
+                          },
+                          child: Text(
+                            "OK",
+                            style: Get.textTheme.titleMedium!
+                                .copyWith(color: Theme.of(context).primaryColor),
+                          ))
+                    ],
+                  ),
                 ),
               ))
           : null;

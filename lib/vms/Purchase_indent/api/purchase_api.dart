@@ -16,9 +16,9 @@ class PurchaseIndentApi {
     required PurchaseController controller,
   }) async {
     final Dio ins = getGlobalDio();
-    final String api = base + URLS.purchaseindentapi;
-    const String api2 =
-        "https://vmsstaging.vapssmartecampus.com:40016/api/IndentApprovalFacade/getloaddata/";
+    // final String api = base + URLS.purchaseindentapi;
+     String api2 =
+        base + URLS.purchaseLoadData;
 
     if (controller.isErrorOccured.value) {
       controller.updateIsErrorOccured(false);
@@ -26,7 +26,7 @@ class PurchaseIndentApi {
 
     controller.updateIsLoadingApproval(true);
 
-    logger.d(api);
+    logger.d(api2);
     logger.d({
       "UserId": userId,
     });

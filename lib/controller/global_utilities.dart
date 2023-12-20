@@ -706,14 +706,14 @@ void openMappedPages(
     }));
   }
 
-  if (pageName == "Cash Request") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return PCRequisitionHome(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-      );
-    }));
-  }
+  // if (pageName == "Cash Request") {
+  //   Navigator.push(context, MaterialPageRoute(builder: (_) {
+  //     return PCRequisitionHome(
+  //       loginSuccessModel: loginSuccessModel,
+  //       mskoolController: mskoolController,
+  //     );
+  //   }));
+  // }
 
   if (pageName == "Rating Report") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -762,7 +762,7 @@ void openMappedPages(
     return;
   }
 
-  if (pageName == "Purchase Requisition") {
+  if (pageName == "Cash Request") {
     Get.to(() => PurchaserequisitionHome(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
