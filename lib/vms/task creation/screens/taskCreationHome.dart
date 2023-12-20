@@ -2383,12 +2383,18 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                                       selectAll =
                                                                           value!;
                                                                       if (selectAll) {
+                                                                        employeesID
+                                                                            .clear();
                                                                         employeesID =
                                                                             List.from(taskEmployeeList.map((employee) =>
                                                                                 employee.hRMEId!));
+                                                                        logger.i(
+                                                                            employeesID);
                                                                       } else {
                                                                         employeesID
                                                                             .clear();
+                                                                        logger.i(
+                                                                            employeesID);
                                                                       }
                                                                       _taskDepartController
                                                                           .checkBox
@@ -2449,9 +2455,13 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                                         if (value) {
                                                                           employeesID
                                                                               .add(taskEmployeeList[index - 1].hRMEId!);
+                                                                          logger
+                                                                              .i(employeesID);
                                                                         } else {
                                                                           employeesID
                                                                               .remove(taskEmployeeList[index - 1].hRMEId);
+                                                                          logger
+                                                                              .i(employeesID);
                                                                         }
 
                                                                         selectAll = _taskDepartController
