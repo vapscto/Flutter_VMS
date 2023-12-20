@@ -79,14 +79,13 @@ class TadaSaveApi {
       logger.i(response.data);
       logger.i(response.statusCode);
       if (response.statusCode == 200) {
-        // SaveTadaModel saveTadaModel = SaveTadaModel.fromJson(response.data);
         if (response.data['returnvalue'] == true) {
           if (response.data['returnval'] == "Insert") {
             Fluttertoast.showToast(msg: "Record Saved Successfully");
             return Get.back();
           } else if (response.data['returnval'] == "Failed") {
             Fluttertoast.showToast(msg: "Record Not saved");
-          } else if (response.data['returnval'] == "Duplicate") {
+          } else if (response.data['returnval'] == "DuplicateAdavance") {
             Fluttertoast.showToast(msg: "Record Already Exist");
           } else if (response.data['returnval'] == "Update") {
             Fluttertoast.showToast(msg: "Record Update Successfully");

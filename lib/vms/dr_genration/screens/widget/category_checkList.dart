@@ -40,6 +40,7 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
   void initState() {
     widget.plannerDetailsController.addListBrowser.clear();
     addItemListBrowse(0, "");
+    logger.e(widget.index);
     super.initState();
   }
 
@@ -83,7 +84,7 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
   }
 
   int id = 0;
-  String name = '';
+  String drName = '';
   String refNo = '';
 
   @override
@@ -108,7 +109,7 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                 onSelected: (CategoryCheckListModelValues? value) {
                   setState(() {
                     id = value!.ismmtcatcLId!;
-                    name = value.ismmtcatcLCheckListName!;
+                    drName = value.ismmtcatcLCheckListName!;
                   });
                 },
                 dropdownMenuEntries: widget.value.values!
@@ -318,7 +319,7 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                   : MSkollBtn(
                       title: "Save",
                       onPress: () async {
-                        if (name.isEmpty) {
+                        if (drName.isEmpty) {
                           Fluttertoast.showToast(msg: " Select Document type");
                         } else if (widget.plannerDetailsController
                                 .addListBrowser.last.file ==
@@ -330,25 +331,34 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                           });
                           for (var element in widget
                               .plannerDetailsController.addListBrowser) {
-                            UploadDrImage dat = await uploadDrImage(
-                                miId: widget.loginSuccessModel.mIID!,
-                                file: element.file!);
-                            if (!uploadAttachment
-                                .any((element) => element.name == dat.name)) {
-                              uploadAttachment.add(UploadDrImage(
-                                  name: dat.name, path: dat.path));
-                            }
+                            await uploadDrImage(
+                                    miId: widget.loginSuccessModel.mIID!,
+                                    file: element.file!)
+                                .then((value) {
+                              if (value.name.isNotEmpty) {
+                                if (!uploadAttachment.any(
+                                    (element) => element.name == value.name)) {
+                                  uploadAttachment.add(UploadDrImage(
+                                      name: value.name, path: value.path));
+                                }
+                              }
+                            });
                           }
-                          for (int i = 0; i < uploadAttachment.length; i++) {
-                            logger.i(
-                                '===+++///Upload ${uploadAttachment[i].name}');
-                          }
-                          widget.plannerDetailsController.uploadImages.clear();
-                          for (var i in uploadAttachment) {
-                            widget.plannerDetailsController.uploadImages.add(
-                                PlannerFileUpload(
-                                    i.name, i.path, widget.index, id, name));
-                          }
+
+                          widget.plannerDetailsController
+                              .uploadImages[widget.index].index = widget.index;
+                          widget
+                              .plannerDetailsController
+                              .uploadImages[widget.index]
+                              .name = uploadAttachment.first.name;
+                          widget
+                              .plannerDetailsController
+                              .uploadImages[widget.index]
+                              .path = uploadAttachment.first.path;
+                          widget.plannerDetailsController
+                              .uploadImages[widget.index].id = id;
+                          widget.plannerDetailsController
+                              .uploadImages[widget.index].imageType = drName;
 
                           if (uploadAttachment.isNotEmpty) {
                             setState(() {
@@ -357,7 +367,6 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                           } else {
                             widget.newBool = false;
                           }
-
                           Get.back(result: widget.index);
                         }
                       },

@@ -751,47 +751,48 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                             ),
                           ),
                         )),
-              // const SizedBox(
-              //   height: 20,
-              // ),
-              // Padding(
-              //   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              //   child: TextFormField(
-              //     validator: (value) {
-              //       // if (value != null) {
-              //       //   return "";
-              //       // }
-              //       // return null;
-              //     },
-              //     controller: descTextEditingController,
-              //     maxLines: 6,
-              //     style: Theme.of(context)
-              //         .textTheme
-              //         .titleSmall!
-              //         .merge(const TextStyle(
-              //           fontWeight: FontWeight.w500,
-              //           fontSize: 14.0,
-              //           letterSpacing: 0.3,
-              //           overflow: TextOverflow.clip,
-              //         )),
-              //     decoration: InputDecoration(
-              //         border: OutlineInputBorder(
-              //             borderRadius: BorderRadius.circular(10)),
-              //         errorBorder: OutlineInputBorder(
-              //           borderRadius: BorderRadius.circular(10),
-              //         ),
-              //         hintText: "Write remark",
-              //         hintStyle: Theme.of(context)
-              //             .textTheme
-              //             .titleSmall!
-              //             .merge(const TextStyle(
-              //               fontWeight: FontWeight.w300,
-              //               fontSize: 14.0,
-              //               letterSpacing: 0.3,
-              //               overflow: TextOverflow.clip,
-              //             ))),
-              //   ),
-              // )
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: TextFormField(
+                  validator: (value) {
+                    // if (value != null) {
+                    //   return "";
+                    // }
+                    // return null;
+                  },
+                  controller: descTextEditingController,
+                  maxLines: 6,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall!
+                      .merge(const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14.0,
+                        letterSpacing: 0.3,
+                        overflow: TextOverflow.clip,
+                      )),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      hintText: "Write remark",
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .merge(const TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 14.0,
+                            letterSpacing: 0.3,
+                            overflow: TextOverflow.clip,
+                          ))),
+                ),
+              )
             ],
           ),
         ),
