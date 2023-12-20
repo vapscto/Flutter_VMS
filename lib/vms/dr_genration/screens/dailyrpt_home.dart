@@ -47,8 +47,12 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
 
   bool deviation = false;
   DateTime todayDt = DateTime.now();
+  var currentDate;
   @override
   void initState() {
+    currentDate =
+        "${todayDt.year}-${todayDt.month}-${todayDt.day} 00:00:00.000";
+    logger.e(currentDate);
     init();
     // _plannerDetailsController.plannernameDateController.value.text;
     fliteresList = _plannerDetailsController.getTaskDrList;
@@ -318,7 +322,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
           }
         }
         if (_plannerDetailsController.checkBoxList.elementAt(i) == true) {
-          // todayDailyReportGenaration.clear();
           totalhrs = double.parse(_plannerDetailsController.hoursEt[i].text) +
               double.parse(_plannerDetailsController.minutesEt[i].text);
           todayDailyReportGenaration.add({
@@ -371,7 +374,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
               roleId: widget.loginSuccessModel.roleId!,
               base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
               controller: _plannerDetailsController,
-              ismdrptDate: todayDt.toIso8601String(),
+              ismdrptDate: (_plannerDetailsController
+                      .plannernameDateController.value.text.isEmpty)
+                  ? currentDate
+                  : todayDt.toIso8601String(),
               halfDayFlag: halfDay.value,
               ismtplId:
                   _plannerDetailsController.getplannerdetails[0].ismtpLId!,
@@ -797,6 +803,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                       .value
                                       .text = await getDateNeed(value!);
                                   todayDt = value;
+                                  logger.i(value);
                                 });
                               },
                               controller: _plannerDetailsController
