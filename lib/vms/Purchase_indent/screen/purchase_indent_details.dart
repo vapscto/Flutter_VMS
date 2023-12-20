@@ -65,6 +65,9 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
         "INVTPIAPP_ApprovedQty":
             controller.getOnclickList[i].iNVTPIAPPApprovedQty,
         "INVTPI_Remarks": controller.remarkControllerList.elementAt(i).text,
+        "invmI_ItemName": controller.getOnclickList[i].iNVMIItemName,
+        "invmpI_Id": controller.getOnclickList[i].iNVMPIId,
+        "invmuoM_UOMName": controller.getOnclickList[i].iNVMUOMUOMName,
       });
     }
     controller.isSaveLoaeding(true);
@@ -75,6 +78,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
         arrayList: transRowEdit,
         invmpiId: widget.values.iNVMPIId!,
         miId: widget.loginSuccessModel.mIID!,
+        userId: widget.loginSuccessModel.userId!,
         approvecent: 1,
         controller: controller);
     controller.isSaveLoaeding(false);
@@ -396,7 +400,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                                       .primaryColor),
                                           groupValue:
                                               controller.selectedValue[index],
-                                          value: 'Approved',
+                                          value: 'A',
                                           onChanged: (dynamic value) {
                                             setState(() {
                                               controller.selectedValue[index] =
@@ -426,7 +430,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                                       .primaryColor),
                                           groupValue:
                                               controller.selectedValue[index],
-                                          value: 'Reject',
+                                          value: 'R',
                                           onChanged: (dynamic value) {
                                             setState(() {
                                               controller.selectedValue[index] =

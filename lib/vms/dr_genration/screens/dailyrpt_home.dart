@@ -88,7 +88,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                     child: Text(
                       "Update Task",
                       style: Theme.of(context).textTheme.titleLarge!.merge(
-                          TextStyle(color: Theme.of(context).primaryColor)),
+                          TextStyle(color: Colors.black , fontWeight: FontWeight.w600)),
                     )),
                 content: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

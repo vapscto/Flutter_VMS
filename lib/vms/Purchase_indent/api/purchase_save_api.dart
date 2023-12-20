@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/controller/purchase_controller.dart';
@@ -15,14 +16,15 @@ class PurchaseSave {
     required List<Map<String, dynamic>> arrayList,
     required int invmpiId,
     required int miId,
+    required int userId,
     required int approvecent,
     required PurchaseController controller,
   }) async {
     try {
       var dio = Dio();
       var url =
-          'https://vmsstaging.vapssmartecampus.com:40016/api/IndentApprovalFacade/savedetails/';
-      controller.saveLoading(true);
+          base + URLS.purchaseSaveApi;
+      // controller.saveLoading(true);
       var response = await dio.post(
         url,
         options: Options(headers: getSession()),
@@ -32,6 +34,7 @@ class PurchaseSave {
           "arrayPI": arrayList,
           "INVMPI_Id": invmpiId,
           "MI_Id": miId,
+          "UserId": userId,
           "approvecnt": approvecent,
         },
       );
@@ -41,12 +44,14 @@ class PurchaseSave {
         "arrayPI": arrayList,
         "INVMPI_Id": invmpiId,
         "MI_Id": miId,
+        "UserId": userId,
         "approvecnt": approvecent,
       });
-      logger.i("=====${response}");
+      
       if (response.statusCode == 200) {
-        controller.saveLoading(false);
-        Fluttertoast.showToast(msg: "Update Successfully");
+        logger.i("=====${response}");
+        // controller.saveLoading(false);
+        // Fluttertoast.showToast(msg: "Update Successfully");
       }
     } catch (e) {
       logger.e(e);

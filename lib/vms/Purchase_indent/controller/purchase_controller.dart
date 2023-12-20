@@ -61,7 +61,11 @@ class PurchaseController extends GetxController {
     isLoadingOnclick.value = isLoading;
   }
 
-  RxList<GetPiModelValues> getOnclickList = RxList();
+  // RxList<GetPiModelValues> getOnclickList = RxList();
+
+  RxList<GetPiModelValues> getOnclickList =
+      <GetPiModelValues>[].obs;
+
   void getunitData(TextEditingController controller) {
     unitControllerList.add(controller);
   }

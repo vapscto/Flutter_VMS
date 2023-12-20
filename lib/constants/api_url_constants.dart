@@ -661,4 +661,10 @@ class URLS {
 
   static String seacurityTaskSave =
       "api/StaffAreaActivityRecordFacade/Activitysavedetails/";
+
+  ///////////  PURCHASE API //////////////
+
+  static String purchaseLoadData = "api/IndentApprovalFacade/getloaddata/";
+
+  static String purchaseSaveApi = "api/IndentApprovalFacade/savedetails/";
 }
