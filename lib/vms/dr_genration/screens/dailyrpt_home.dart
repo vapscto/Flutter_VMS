@@ -1164,7 +1164,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                               .instance
                                                                               .addPostFrameCallback((_) {
                                                                             setState(() {
-                                                                              if (image == index && _plannerDetailsController.uploadImages[index].path.isEmpty) {
+                                                                              if (image == index && _plannerDetailsController.uploadImages.isEmpty) {
                                                                                 _plannerDetailsController.checkBoxList[index] = false;
                                                                               } else {
                                                                                 _plannerDetailsController.checkBoxList[index] = true;

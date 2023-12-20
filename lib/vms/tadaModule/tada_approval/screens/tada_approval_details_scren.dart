@@ -58,8 +58,8 @@ class _TADAApprovalDetailsScreenState extends State<TADAApprovalDetailsScreen> {
       toDate = '${toDt.day}-${toDt.month}-${toDt.year}';
       DateTime dt1 = DateTime.parse(widget.values.vTADAAFromDate!);
       DateTime dt2 = DateTime.parse(widget.values.vTADAAToDate!);
-      Duration diff = dt1.difference(dt2);
-      day = diff.inDays + 1;
+      int diff = dt1.difference(dt2).inDays;
+      day = diff + 1;
     });
     widget.tadaController.updateIsLoading(false);
   }
@@ -336,7 +336,7 @@ class _TADAApprovalDetailsScreenState extends State<TADAApprovalDetailsScreen> {
       return DataRow(cells: [
         DataCell(Text(value.toString())),
         DataCell(Text(widget.values.cityName ?? "")),
-        DataCell(Text(widget.values.sanctionLevelNo.toString())),
+        DataCell(Text(day.toString())),
         DataCell(Text(fromDate)),
         DataCell(Text(dTime)),
         DataCell(Text(toDate)),
