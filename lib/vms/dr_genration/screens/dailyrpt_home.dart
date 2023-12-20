@@ -13,6 +13,7 @@ import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_contr
 import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/planner_file_upload_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/category_checkList.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/dr_not_approved_popup.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/drnotApprovedScreen.dart';
@@ -61,8 +62,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   List<Map<String, dynamic>> todayDailyReportGenaration = [];
   List<Map<String, dynamic>> dailyReportStatus = [];
   final reasonController = TextEditingController();
-  int image = 0;
+  int image = -2;
   DateTime todayDate = DateTime.now();
+  List<dynamic> newValues = [];
   init() async {
     await getPlanerdetails(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
@@ -84,29 +86,27 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                       style: Theme.of(context).textTheme.titleLarge!.merge(
                           TextStyle(color: Colors.black , fontWeight: FontWeight.w600)),
                     )),
-                content: Container(
-                  height: 200,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task",
-                        style: Theme.of(context).textTheme.titleSmall!.merge(
-                            TextStyle(color: Theme.of(context).primaryColor)),
-                      ),
-                      const SizedBox(height: 16),
-                      TextButton(
-                          onPressed: () {
-                            Get.back();
-                            Get.back();
-                          },
-                          child: Text(
-                            "OK",
-                            style: Get.textTheme.titleMedium!
-                                .copyWith(color: Theme.of(context).primaryColor),
-                          ))
-                    ],
-                  ),
+                content: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task",
+                      style: Theme.of(context).textTheme.titleSmall!.merge(
+                          TextStyle(color: Theme.of(context).primaryColor)),
+                    ),
+                    const SizedBox(height: 16),
+                    TextButton(
+                        onPressed: () {
+                          Get.back();
+                          Get.back();
+                        },
+                        child: Text(
+                          "OK",
+                          style: Get.textTheme.titleMedium!
+                              .copyWith(color: Theme.of(context).primaryColor),
+                        ))
+                  ],
                 ),
               ))
           : null;
@@ -319,8 +319,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         }
         if (_plannerDetailsController.checkBoxList.elementAt(i) == true) {
           // todayDailyReportGenaration.clear();
-          // totalhrs = double.parse(_plannerDetailsController.hoursEt[i].text) +
-          //     double.parse(_plannerDetailsController.minutesEt[i].text);
+          totalhrs = double.parse(_plannerDetailsController.hoursEt[i].text) +
+              double.parse(_plannerDetailsController.minutesEt[i].text);
           todayDailyReportGenaration.add({
             "ISMTPL_Id": value.iSMTPLId,
             "ISMTCR_Id": value.iSMTCRId,
@@ -456,18 +456,27 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                     )
                   : BtnSave(
                       onPress: () async {
-                        saveDaetails();
-                        if (_formKey.currentState!.validate()) {
-                          if (selectCheckbox.isNotEmpty) {
-                            saveDaetails();
-                          } else {
-                            Fluttertoast.showToast(
-                                msg:
-                                    "Select Check Box to Generate Daily Report");
-                          }
-                        } else {
-                          logger.w("show damit");
+                        for (int i = 0;
+                            i < _plannerDetailsController.uploadImages.length;
+                            i++) {
+                          logger.i(
+                              _plannerDetailsController.uploadImages[i].index);
+                          logger.i(
+                              _plannerDetailsController.uploadImages[i].path);
                         }
+
+                        // saveDaetails();
+                        // if (_formKey.currentState!.validate()) {
+                        //   if (selectCheckbox.isNotEmpty) {
+                        //     saveDaetails();
+                        //   } else {
+                        //     Fluttertoast.showToast(
+                        //         msg:
+                        //             "Select Check Box to Generate Daily Report");
+                        //   }
+                        // } else {
+                        //   logger.w("show damit");
+                        // }
                       },
                       title: "Save",
                     ),
@@ -1068,6 +1077,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                               rows: List.generate(
                                                   fliteresList.length, (index) {
                                                 int i = index + 1;
+                                                _plannerDetailsController
+                                                    .uploadImages
+                                                    .add(PlannerFileUpload(
+                                                        '', '', -1, -1, ''));
                                                 var startDate;
                                                 if (fliteresList
                                                         .elementAt(index)
@@ -1135,6 +1148,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   (value) {
                                                                 newselectedIndex =
                                                                     index;
+
+                                                                logger.i(
+                                                                    newselectedIndex);
                                                                 value == true
                                                                     ? getCategoryChecklistDetails(
                                                                             base:
@@ -1147,16 +1163,19 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                           WidgetsBinding
                                                                               .instance
                                                                               .addPostFrameCallback((_) {
-                                                                            if (image == index &&
-                                                                                _plannerDetailsController.uploadImages.isNotEmpty) {
-                                                                              _plannerDetailsController.checkBoxList[index] = true;
-                                                                            } else {
-                                                                              _plannerDetailsController.checkBoxList[index] = true;
-                                                                            }
+                                                                            setState(() {
+                                                                              if (image == index && _plannerDetailsController.uploadImages.isEmpty) {
+                                                                                _plannerDetailsController.checkBoxList[index] = false;
+                                                                              } else {
+                                                                                _plannerDetailsController.checkBoxList[index] = true;
+                                                                              }
+                                                                            });
                                                                           });
                                                                           if (value!
                                                                               .values!
                                                                               .isNotEmpty) {
+                                                                            newValues =
+                                                                                value.values!;
                                                                             Get.dialog(
                                                                                     CategoryCheckList(
                                                                                       value: value,
@@ -1260,12 +1279,25 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                       const SizedBox(height: 5),
                                                       (selectCheckbox
                                                               .isNotEmpty)
-                                                          ? (image == index &&
-                                                                  _plannerDetailsController
-                                                                      .uploadImages
-                                                                      .isNotEmpty)
-                                                              ? const Icon(Icons
-                                                                  .visibility_outlined)
+                                                          ? (_plannerDetailsController
+                                                                  .uploadImages[
+                                                                      index]
+                                                                  .path
+                                                                  .contains(
+                                                                      "https:"))
+                                                              ? InkWell(
+                                                                  onTap: () {
+                                                                    OpenFilex.open(_plannerDetailsController
+                                                                        .uploadImages[
+                                                                            index]
+                                                                        .path);
+                                                                    setState(
+                                                                        () {});
+                                                                  },
+                                                                  child: const Icon(
+                                                                      Icons
+                                                                          .visibility_outlined),
+                                                                )
                                                               : const SizedBox()
                                                           : const SizedBox()
                                                     ],
