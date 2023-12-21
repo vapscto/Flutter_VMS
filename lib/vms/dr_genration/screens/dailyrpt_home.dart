@@ -88,7 +88,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                     child: Text(
                       "Update Task",
                       style: Theme.of(context).textTheme.titleLarge!.merge(
-                          TextStyle(color: Colors.black , fontWeight: FontWeight.w600)),
+                          TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600)),
                     )),
                 content: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -440,7 +442,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
 
   String fileName = '';
   String filePath = '';
-  int newselectedIndex = 0;
+  int newselectedIndex = -1;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -1155,7 +1157,18 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   (value) {
                                                                 newselectedIndex =
                                                                     index;
-
+                                                                // setState(() {
+                                                                //   if (image !=
+                                                                //       index) {
+                                                                //     _plannerDetailsController
+                                                                //             .checkBoxList[
+                                                                //         index] = false;
+                                                                //   } else {
+                                                                //     _plannerDetailsController
+                                                                //             .checkBoxList[
+                                                                //         index] = true;
+                                                                //   }
+                                                                // });
                                                                 logger.i(
                                                                     newselectedIndex);
                                                                 value == true
@@ -1170,13 +1183,13 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                           WidgetsBinding
                                                                               .instance
                                                                               .addPostFrameCallback((_) {
-                                                                            setState(() {
-                                                                              if (image == index && _plannerDetailsController.uploadImages.isEmpty) {
-                                                                                _plannerDetailsController.checkBoxList[index] = false;
-                                                                              } else {
-                                                                                _plannerDetailsController.checkBoxList[index] = true;
-                                                                              }
-                                                                            });
+                                                                            // setState(() {
+                                                                            //   if (image == newselectedIndex) {
+                                                                            //     _plannerDetailsController.checkBoxList[index] = true;
+                                                                            //   } else {
+                                                                            //     _plannerDetailsController.checkBoxList[index] = false;
+                                                                            //   }
+                                                                            // });
                                                                           });
                                                                           if (value!
                                                                               .values!
@@ -1193,6 +1206,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                                     ),
                                                                                     barrierDismissible: false)
                                                                                 .then((value) {
+                                                                              if (value == null) {
+                                                                                _plannerDetailsController.checkBoxList[index] = false;
+                                                                              } else {
+                                                                                _plannerDetailsController.checkBoxList[index] = true;
+                                                                              }
                                                                               image = value;
                                                                               setState(() {});
                                                                             });
@@ -1294,12 +1312,22 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       "https:"))
                                                               ? InkWell(
                                                                   onTap: () {
-                                                                    OpenFilex.open(_plannerDetailsController
+                                                                    logger.i(_plannerDetailsController
                                                                         .uploadImages[
                                                                             index]
                                                                         .path);
                                                                     setState(
-                                                                        () {});
+                                                                        () {
+                                                                      // OpenFilex.open(_plannerDetailsController
+                                                                      //     .uploadImages[
+                                                                      //         index]
+                                                                      //     .path);
+                                                                      createPreview(
+                                                                          context,
+                                                                          _plannerDetailsController
+                                                                              .uploadImages[index]
+                                                                              .path);
+                                                                    });
                                                                   },
                                                                   child: const Icon(
                                                                       Icons

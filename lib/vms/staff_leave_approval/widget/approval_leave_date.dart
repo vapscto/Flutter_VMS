@@ -19,7 +19,7 @@ class ApprovalLeaveDatePopUp extends StatefulWidget {
 }
 
 class _ApprovalLeaveDatePopUpState extends State<ApprovalLeaveDatePopUp> {
-  OpetionLeaveController controller = Get.find();
+  OpetionLeaveController controller = Get.put(OpetionLeaveController());
   String approvedDate = '';
   String fromDate = '';
   String toDate = "";
@@ -88,214 +88,228 @@ class _ApprovalLeaveDatePopUpState extends State<ApprovalLeaveDatePopUp> {
               controller.leaveCommentLoading.value
                   ? const AnimatedProgressWidget(
                       title: "Loading applied leaves",
-                      desc:
-                          "Please wait we are loading the leave status you applied for",
+                      desc: "Please wait we are loading the leave status",
                       animationPath: "assets/json/default.json")
-                  : Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: Text(
-                            "Leave Status",
-                            style: Get.textTheme.titleMedium!.copyWith(
-                                color: Theme.of(context).primaryColor),
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        RichText(
-                          text: TextSpan(
-                            style: DefaultTextStyle.of(context).style,
-                            children: [
-                              TextSpan(
-                                text: 'Applied Start Date ',
-                                style: Get.textTheme.titleSmall!.copyWith(
+                  : controller.leaveCommentList.isEmpty
+                      ? const AnimatedProgressWidget(
+                          title: "No Data",
+                          desc: "",
+                          animationPath: "assets/json/nodata.json")
+                      : Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Text(
+                                "Leave Status",
+                                style: Get.textTheme.titleMedium!.copyWith(
                                     color: Theme.of(context).primaryColor),
                               ),
-                              TextSpan(
-                                text: fTopdate,
-                                style: Get.textTheme.titleSmall,
+                            ),
+                            const SizedBox(height: 6),
+                            RichText(
+                              text: TextSpan(
+                                style: DefaultTextStyle.of(context).style,
+                                children: [
+                                  TextSpan(
+                                    text: 'Applied Start Date ',
+                                    style: Get.textTheme.titleSmall!.copyWith(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                  TextSpan(
+                                    text: fTopdate,
+                                    style: Get.textTheme.titleSmall,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(height: 6),
+                            RichText(
+                              text: TextSpan(
+                                style: DefaultTextStyle.of(context).style,
+                                children: [
+                                  TextSpan(
+                                    text: 'Applied End Date ',
+                                    style: Get.textTheme.titleSmall!.copyWith(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                  TextSpan(
+                                    text: toTopDate,
+                                    style: Get.textTheme.titleSmall,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SingleChildScrollView(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 2, horizontal: 0),
+                                scrollDirection: Axis.horizontal,
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: DataTable(
+                                      dataTextStyle: const TextStyle(
+                                          fontSize: 14,
+                                          color: Color.fromRGBO(0, 0, 0, 0.95),
+                                          fontWeight: FontWeight.w400),
+                                      dataRowHeight: 45,
+                                      headingRowHeight: 40,
+                                      horizontalMargin: 10,
+                                      columnSpacing: 10,
+                                      dividerThickness: 1,
+                                      headingTextStyle: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 14),
+                                      border: TableBorder.all(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          width: 0.5),
+                                      headingRowColor:
+                                          MaterialStateProperty.all(
+                                              Theme.of(context).primaryColor),
+                                      columns: const [
+                                        DataColumn(
+                                          label: Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              'S.No',
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              'Approved By',
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              'Approved Date',
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              'Approved Days',
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              'Approved From Date',
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              'Approved To Date',
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              'Status',
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              'Comment',
+                                            ),
+                                          ),
+                                        ),
+                                        DataColumn(
+                                          label: Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              'Document',
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                      rows: List.generate(
+                                          controller.leaveCommentList.length,
+                                          (index) {
+                                        int i = index + 1;
+                                        var data = controller.leaveCommentList
+                                            .elementAt(index);
+                                        return DataRow(cells: [
+                                          DataCell(Align(
+                                              alignment: Alignment.center,
+                                              child: Text('$i'))),
+                                          DataCell(Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                  data.iVRMSTAULUserName ??
+                                                      ''))),
+                                          DataCell(Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                  data.updatedDate != null
+                                                      ? approvedDate
+                                                      : ''))),
+                                          DataCell(Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                                data.hRELAPATotalDays != null
+                                                    ? data.hRELAPATotalDays
+                                                        .toString()
+                                                    : ''),
+                                          )),
+                                          DataCell(Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                  data.hRELAPAFromDate != null
+                                                      ? fromDate
+                                                      : " "))),
+                                          DataCell(Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                  data.hRELAPAToDate != null
+                                                      ? toDate
+                                                      : ''))),
+                                          DataCell(Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                  data.hRELAPALeaveStatus ??
+                                                      ''))),
+                                          DataCell(Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                  data.hRELAPARemarks ?? ''))),
+                                          DataCell(
+                                              (data.hRELAPSupportingDocument !=
+                                                      null)
+                                                  ? IconButton(
+                                                      onPressed: () {
+                                                        OpenFilex.open(data
+                                                            .hRELAPSupportingDocument);
+                                                      },
+                                                      icon:
+                                                          const Icon(
+                                                              Icons.visibility))
+                                                  : const Icon(
+                                                      Icons.visibility_off)),
+                                        ]);
+                                      }),
+                                    )))
+                          ],
                         ),
-                        const SizedBox(height: 6),
-                        RichText(
-                          text: TextSpan(
-                            style: DefaultTextStyle.of(context).style,
-                            children: [
-                              TextSpan(
-                                text: 'Applied End Date ',
-                                style: Get.textTheme.titleSmall!.copyWith(
-                                    color: Theme.of(context).primaryColor),
-                              ),
-                              TextSpan(
-                                text: toTopDate,
-                                style: Get.textTheme.titleSmall,
-                              ),
-                            ],
-                          ),
-                        ),
-                        SingleChildScrollView(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 2, horizontal: 0),
-                            scrollDirection: Axis.horizontal,
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: DataTable(
-                                  dataTextStyle: const TextStyle(
-                                      fontSize: 14,
-                                      color: Color.fromRGBO(0, 0, 0, 0.95),
-                                      fontWeight: FontWeight.w400),
-                                  dataRowHeight: 45,
-                                  headingRowHeight: 40,
-                                  horizontalMargin: 10,
-                                  columnSpacing: 10,
-                                  dividerThickness: 1,
-                                  headingTextStyle: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 14),
-                                  border: TableBorder.all(
-                                      borderRadius: BorderRadius.circular(10),
-                                      width: 0.5),
-                                  headingRowColor: MaterialStateProperty.all(
-                                      Theme.of(context).primaryColor),
-                                  columns: const [
-                                    DataColumn(
-                                      label: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'S.No',
-                                        ),
-                                      ),
-                                    ),
-                                    DataColumn(
-                                      label: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Approved By',
-                                        ),
-                                      ),
-                                    ),
-                                    DataColumn(
-                                      label: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Approved Date',
-                                        ),
-                                      ),
-                                    ),
-                                    DataColumn(
-                                      label: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Approved Days',
-                                        ),
-                                      ),
-                                    ),
-                                    DataColumn(
-                                      label: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Approved From Date',
-                                        ),
-                                      ),
-                                    ),
-                                    DataColumn(
-                                      label: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Approved To Date',
-                                        ),
-                                      ),
-                                    ),
-                                    DataColumn(
-                                      label: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Status',
-                                        ),
-                                      ),
-                                    ),
-                                    DataColumn(
-                                      label: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Comment',
-                                        ),
-                                      ),
-                                    ),
-                                    DataColumn(
-                                      label: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Document',
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                  rows: List.generate(
-                                      controller.leaveCommentList.length,
-                                      (index) {
-                                    int i = index + 1;
-                                    var data = controller.leaveCommentList
-                                        .elementAt(index);
-                                    return DataRow(cells: [
-                                      DataCell(Align(
-                                          alignment: Alignment.center,
-                                          child: Text('$i'))),
-                                      DataCell(Align(
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                              data.iVRMSTAULUserName ?? ''))),
-                                      DataCell(Align(
-                                          alignment: Alignment.center,
-                                          child: Text(data.updatedDate != null
-                                              ? approvedDate
-                                              : ''))),
-                                      DataCell(Align(
-                                        alignment: Alignment.center,
-                                        child: Text(data.hRELAPATotalDays !=
-                                                null
-                                            ? data.hRELAPATotalDays.toString()
-                                            : ''),
-                                      )),
-                                      DataCell(Align(
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                              data.hRELAPAFromDate != null
-                                                  ? fromDate
-                                                  : " "))),
-                                      DataCell(Align(
-                                          alignment: Alignment.center,
-                                          child: Text(data.hRELAPAToDate != null
-                                              ? toDate
-                                              : ''))),
-                                      DataCell(Align(
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                              data.hRELAPALeaveStatus ?? ''))),
-                                      DataCell(Align(
-                                          alignment: Alignment.center,
-                                          child:
-                                              Text(data.hRELAPARemarks ?? ''))),
-                                      DataCell((data.hRELAPSupportingDocument !=
-                                              null)
-                                          ? IconButton(
-                                              onPressed: () {
-                                                OpenFilex.open(data
-                                                    .hRELAPSupportingDocument);
-                                              },
-                                              icon:
-                                                  const Icon(Icons.visibility))
-                                          : const Icon(Icons.visibility_off)),
-                                    ]);
-                                  }),
-                                )))
-                      ],
-                    ),
             ],
           ),
         ),
