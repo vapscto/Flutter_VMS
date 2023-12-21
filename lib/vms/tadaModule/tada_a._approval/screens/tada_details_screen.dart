@@ -232,11 +232,29 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
                           const SizedBox(height: 10),
                           widget.tadaController.newTimeArray.isNotEmpty
                               ? Obx(() {
-                                  return SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: _createTable()),
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: Text(
+                                          "TADA Advance Travel Details",
+                                          style: Get.textTheme.titleMedium!
+                                              .copyWith(
+                                                  color: Theme.of(context)
+                                                      .primaryColor),
+                                        ),
+                                      ),
+                                      SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: _createTable()),
+                                      ),
+                                    ],
                                   );
                                 })
                               : const Center(

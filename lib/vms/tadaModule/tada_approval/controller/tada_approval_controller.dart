@@ -41,6 +41,8 @@ class TadaApprovalController extends GetxController {
 
   RxList<TadaApprovaEditArrayModelValues> editArrayList =
       <TadaApprovaEditArrayModelValues>[].obs;
+  double foodAmount = 0.0;
+  double accommodationAmount = 0.0;
   void getEditArray(List<TadaApprovaEditArrayModelValues> time) {
     if (editArrayList.isNotEmpty) {
       editArrayList.clear();
@@ -53,6 +55,9 @@ class TadaApprovalController extends GetxController {
     for (int i = 0; i < editArrayList.length; i++) {
       textEditingControllerList.add(TextEditingController(
           text: editArrayList[i].vTADAAAHSactionedAmount.toString()));
+      // selectedValue.add(editArray[i].vTADAAAAHStatusFlg.toString());
+      foodAmount = editArrayList.elementAt(i).vTADACMFoodAmt!;
+      accommodationAmount = editArrayList.elementAt(i).vTADACMAccommodationAmt!;
     }
   }
 

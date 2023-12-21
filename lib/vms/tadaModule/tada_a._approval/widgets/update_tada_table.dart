@@ -363,6 +363,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
       DataColumn(label: Text("Approve")),
       DataColumn(label: Text("Reject")),
       DataColumn(label: Text("Header")),
+      DataColumn(label: Text("Amount")),
       DataColumn(label: Text("Total Slots")),
       DataColumn(label: Text("Slots")),
       DataColumn(label: Text("Amount")),
@@ -440,6 +441,11 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
         DataCell(Text(widget
                 .tadaController.tadaEditValues[index].vTADAAADExpenditureHead ??
             "")),
+        DataCell(Text((widget.tadaController.tadaEditValues[index]
+                    .vTADAAADExpenditureHead ==
+                'Food')
+            ? widget.tadaController.foodAmount.toString()
+            : widget.tadaController.accommodationAmount.toString())),
         DataCell(Text(
             '${widget.tadaController.tadaEditValues[index].vTADAAADTotalSlots ?? ' '}')),
         DataCell(Text(

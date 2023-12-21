@@ -385,6 +385,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
       DataColumn(label: Text("Approve")),
       DataColumn(label: Text("Reject")),
       DataColumn(label: Text("Header")),
+      DataColumn(label: Text("Amount")),
       DataColumn(label: Text("Total Slots")),
       DataColumn(label: Text("Slots")),
       DataColumn(label: Text("Amount")),
@@ -462,6 +463,11 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
         DataCell(Text(
             widget.tadaController.editArrayList[index].vTADAADExpenditureHead ??
                 "")),
+        DataCell(Text((widget.tadaController.editArrayList[index]
+                    .vTADAADExpenditureHead ==
+                'Food')
+            ? widget.tadaController.foodAmount.toString()
+            : widget.tadaController.accommodationAmount.toString())),
         DataCell(Text(
             '${widget.tadaController.editArrayList[index].vTADAADTotalslots ?? ' '}')),
         DataCell(Text(

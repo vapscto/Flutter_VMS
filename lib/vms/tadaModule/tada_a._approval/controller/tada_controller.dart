@@ -13,6 +13,8 @@ class TADAController {
       <TimeArrayTADADataValues>[].obs;
   RxList<EditArrayTADADataValues> tadaEditValues =
       <EditArrayTADADataValues>[].obs;
+  double foodAmount = 0.0;
+  double accommodationAmount = 0.0;
   RxList<TextEditingController> textEditingControllerList =
       <TextEditingController>[].obs;
   RxList<TextEditingController> approvalTextEditingControllerList =
@@ -74,6 +76,8 @@ class TADAController {
       textEditingControllerList.add(TextEditingController(
           text: editArray[i].vTADAAAAHSactionedAmount.toString()));
       // selectedValue.add(editArray[i].vTADAAAAHStatusFlg.toString());
+      foodAmount = editArray.elementAt(i).vTADACMFoodAmt!;
+      accommodationAmount = editArray.elementAt(i).vTADACMAccommodationAmt!;
     }
   }
 }
