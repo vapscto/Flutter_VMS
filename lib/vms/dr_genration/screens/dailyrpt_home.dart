@@ -464,27 +464,17 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                     )
                   : BtnSave(
                       onPress: () async {
-                        for (int i = 0;
-                            i < _plannerDetailsController.uploadImages.length;
-                            i++) {
-                          logger.i(
-                              _plannerDetailsController.uploadImages[i].index);
-                          logger.i(
-                              _plannerDetailsController.uploadImages[i].path);
+                        if (_formKey.currentState!.validate()) {
+                          if (selectCheckbox.isNotEmpty) {
+                            saveDaetails();
+                          } else {
+                            Fluttertoast.showToast(
+                                msg:
+                                    "Select Check Box to Generate Daily Report");
+                          }
+                        } else {
+                          logger.w("show damit");
                         }
-
-                        // saveDaetails();
-                        // if (_formKey.currentState!.validate()) {
-                        //   if (selectCheckbox.isNotEmpty) {
-                        //     saveDaetails();
-                        //   } else {
-                        //     Fluttertoast.showToast(
-                        //         msg:
-                        //             "Select Check Box to Generate Daily Report");
-                        //   }
-                        // } else {
-                        //   logger.w("show damit");
-                        // }
                       },
                       title: "Save",
                     ),
