@@ -8,6 +8,8 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/api/approve_leave.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/model/leave_approval_model.dart';
+import 'package:m_skool_flutter/vms/staff_leave_approval/widget/approval_leave_date.dart';
+import 'package:m_skool_flutter/vms/staff_leave_approval/widget/approval_proxy_list.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/widget/date_picker_widget.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -286,6 +288,60 @@ class _AppliedLeaveAprovalItemState extends State<AppliedLeaveAprovalItem> {
                       )
                     ],
                   ),
+            const SizedBox(
+              height: 12.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                (widget.value.hRMLLeaveName == 'Privilege Leave')
+                    ? InkWell(
+                        onTap: () {
+                          if (widget.value.proxyName != null) {
+                            Get.dialog(
+                                ApprovalProxyListPopUp(value: widget.value));
+                          } else {
+                            Fluttertoast.showToast(msg: "No Proxy Added");
+                          }
+                        },
+                        child: Chip(
+                          label: Text(
+                            "Proxy",
+                            style:
+                                Theme.of(context).textTheme.titleSmall!.merge(
+                                      const TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                          ),
+                          backgroundColor: Colors.green,
+                        ),
+                      )
+                    : const SizedBox(),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(3),
+                        color: Colors.green),
+                    child: Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: InkWell(
+                          onTap: () {
+                            Get.dialog(ApprovalLeaveDatePopUp(
+                              hrmeId: widget.value.hRELAPId!,
+                              mskoolController: widget.mskoolController,
+                            ));
+                          },
+                          child: const Icon(
+                            Icons.visibility_outlined,
+                            color: Colors.white,
+                          )),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(
               height: 12.0,
             ),
