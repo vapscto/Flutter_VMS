@@ -48,13 +48,12 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   bool deviation = false;
   DateTime todayDt = DateTime.now();
   var currentDate;
+  DateTime newDt = DateTime.now();
   @override
   void initState() {
-    currentDate =
-        "${todayDt.year}-${todayDt.month}-${todayDt.day} 00:00:00.000";
+    currentDate = "${newDt.year}-${newDt.month}-${newDt.day} 00:00:00.000";
     logger.e(currentDate);
     init();
-    // _plannerDetailsController.plannernameDateController.value.text;
     fliteresList = _plannerDetailsController.getTaskDrList;
     _plannerDetailsController.plannernameDateController.value.text =
         '${todayDate.day}-${todayDate.month}-${todayDate.year}';
@@ -218,22 +217,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
 
   List<Map<String, dynamic>> uploadImageList = [];
   saveDaetails() async {
-    // if (_plannerDetailsController.uploadImages.isNotEmpty) {
-    //   for (var i in _plannerDetailsController.uploadImages) {
-    //     fileName = i['name'];
-    //     filePath = i['path'];
-    //     uploadImageIndex = i['index'];
-    //     uploadImageList.add({
-    //       "ISMMTCATCL_Id": i['ismmtcatclId'],
-    //       "checklistname": i['checkName'],
-    //       "comments": "",
-    //       "filename": i['name'],
-    //       "filepath": i['path'],
-    //       "refno": i["ref"]
-    //     });
-    //   }
-    // }
-
     if (fliteresList.isNotEmpty) {
       // Calculate the total hours and minutes
       int totalHours = 0;
@@ -376,10 +359,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
               roleId: widget.loginSuccessModel.roleId!,
               base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
               controller: _plannerDetailsController,
-              ismdrptDate: (_plannerDetailsController
-                      .plannernameDateController.value.text.isEmpty)
-                  ? currentDate
-                  : todayDt.toIso8601String(),
+              ismdrptDate: _plannerDetailsController.day.value == 'Others'
+                  ? todayDt.toIso8601String()
+                  : currentDate,
               halfDayFlag: halfDay.value,
               ismtplId:
                   _plannerDetailsController.getplannerdetails[0].ismtpLId!,
