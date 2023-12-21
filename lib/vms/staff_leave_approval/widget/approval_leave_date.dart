@@ -297,8 +297,10 @@ class _ApprovalLeaveDatePopUpState extends State<ApprovalLeaveDatePopUp> {
                                                       null)
                                                   ? IconButton(
                                                       onPressed: () {
-                                                        OpenFilex.open(data
-                                                            .hRELAPSupportingDocument);
+                                                        setState(() {
+                                                          createPreview(context,
+                                                              data.hRELAPSupportingDocument!);
+                                                        });
                                                       },
                                                       icon:
                                                           const Icon(
