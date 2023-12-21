@@ -125,7 +125,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                         fontWeight: FontWeight.w400),
                                     dataRowHeight:
                                         MediaQuery.of(context).size.height *
-                                            0.2,
+                                            0.25,
                                     headingRowHeight: 50,
                                     horizontalMargin: 10,
                                     columnSpacing: 10,
@@ -194,6 +194,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               mainAxisSize: MainAxisSize.min,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
                                                 InkWell(
                                                     onTap: () {

@@ -165,6 +165,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     for (int i = 0; i < employeesID.length; i++) {
       taskEmpArray.add({"HRME_Id": employeesID[i]});
     }
+    transnumbconfiguration.clear();
     for (int i = 0;
         i < _vmsTransationController.transationConfigmodel.length;
         i++) {
@@ -232,6 +233,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       (value) {
         if (value) {
           //  Get.back();
+          selectAll = false;
           employeesID.clear();
           taskEmployeeList.clear();
           _taskDepartController.getDeptsList.clear();
@@ -255,21 +257,37 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
           _taskDepartController.updateTypeOfTask("B");
           employeesID.clear();
           _taskDepartController.checkBox.clear();
+          transnumbconfiguration.clear();
           addItemListBrowse(0, "");
           loadCmpny();
           _taskDepartController.updateDisbleSubmitButton(true);
           showDialog(
             context: context,
+            barrierDismissible: false,
             builder: (context) {
               return AlertDialog(
                 title: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Align(
                     alignment: Alignment.center,
-                    child: Text(
-                      'Task Created successfully',
-                      style: Theme.of(context).textTheme.titleMedium!.merge(
-                          TextStyle(color: Theme.of(context).primaryColor)),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Task Created successfully',
+                          style: Theme.of(context).textTheme.titleMedium!.merge(
+                              TextStyle(color: Theme.of(context).primaryColor)),
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              Get.back();
+                              Get.back();
+                            },
+                            child: Text(
+                              "OK",
+                              style: Get.textTheme.titleMedium!.copyWith(
+                                  color: Theme.of(context).primaryColor),
+                            ))
+                      ],
                     ),
                   ),
                 ),
@@ -2454,6 +2472,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
 
                                                                         if (value) {
                                                                           employeesID
+                                                                              .clear();
+                                                                          employeesID
                                                                               .add(taskEmployeeList[index - 1].hRMEId!);
                                                                           logger
                                                                               .i(employeesID);
@@ -2653,6 +2673,31 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     _taskDepartController.getTaskEmployeeList.clear();
     transnumbconfiguration.clear();
     _taskDepartController.addListBrowser.clear();
+    employeesID.clear();
+    taskEmployeeList.clear();
+    _taskDepartController.getDeptsList.clear();
+    _taskDepartController.getTaskEmployeeList.clear();
+    selectFromDate.clear();
+    selectToDate.clear();
+    hoursEt.text = "0";
+    minutesEt.text = "0";
+    remarksEt.clear();
+    etDayControllers.clear();
+    etRemarkControllers.clear();
+    _taskProjectsController.getTaskProjectsList.clear();
+    _taskProjectsController.getTaskCategoryList.clear();
+    _taskClientModuleCntroller.getModuleValuesList.clear();
+    _taskDepartController.getPriorityModelList.clear();
+    _taskDepartController.addListBrowser.clear();
+    _taskClientModuleCntroller.taskClientList.clear();
+    _titleETController.clear();
+    _descritpionETController.clear();
+    _taskDepartController.updateTaskAssign("N");
+    _taskDepartController.updateTypeOfTask("B");
+    employeesID.clear();
+    _taskDepartController.checkBox.clear();
+    transnumbconfiguration.clear();
+    selectAll = false;
     super.dispose();
   }
 }
