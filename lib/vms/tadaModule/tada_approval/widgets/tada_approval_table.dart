@@ -109,9 +109,9 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
           index++) {
         widget.tadaController.textEditingControllerList.add(
             TextEditingController(
-                text:
-                    widget.tadaController.editArrayList[index].vTADAADRemarks ??
-                        ''));
+                text: widget
+                        .tadaController.editArrayList[index].vTADAAADRemarks ??
+                    ''));
         widget.tadaController.approvalTextEditingControllerList
             .add(TextEditingController(text: ''));
         widget.tadaController.textEditingControllerList[index].addListener(() {
@@ -399,7 +399,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
     return List.generate(widget.tadaController.editArrayList.length, (index) {
       var value = index + 1;
       logger.i(
-          '====${widget.tadaController.editArrayList[index].vTADAADTotalslots}');
+          '====${widget.tadaController.editArrayList[index].vTADAADTotalSlots}');
       return DataRow(cells: [
         DataCell(Text(value.toString())),
         DataCell(Radio(
@@ -475,7 +475,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                 ? widget.tadaController.accommodationAmount.toString()
                 : '')),
         DataCell(Text(
-            '${(widget.tadaController.editArrayList[index].vTADAADExpenditureHead == 'Food') ? widget.tadaController.editArrayList[index].vTADAADTotalslots : (widget.tadaController.editArrayList[index].vTADAADExpenditureHead == 'Accommodation') ? widget.tadaController.editArrayList[index].vTADAADTotalslots : ''}')),
+            '${widget.tadaController.editArrayList[index].vTADAADTotalSlots ?? ''}')),
         DataCell(Text(
             '${widget.tadaController.editArrayList[index].vTADAADSlots ?? " "}')),
         DataCell(Text(

@@ -53,14 +53,13 @@ class TadaApprovalController extends GetxController {
       approvalTextEditingControllerList.clear();
       percentageListController.clear();
     }
-    editArrayList.addAll(time);
-    for (int i = 0; i < editArrayList.length; i++) {
+    for (int i = 0; i < time.length; i++) {
+      editArrayList.add(time.elementAt(i));
       textEditingControllerList.add(TextEditingController(
-          text: editArrayList[i].vTADAAAHSactionedAmount.toString()));
-      // selectedValue.add(editArray[i].vTADAAAAHStatusFlg.toString());
-      foodAmount = editArrayList.elementAt(i).vTADACMFoodAmt!;
-      accommodationAmount = editArrayList.elementAt(i).vTADACMAccommodationAmt!;
-      logger.i('====${editArrayList[i].vTADAADTotalslots}');
+          text: time[i].vTADAAAHSactionedAmount.toString()));
+
+      foodAmount = time.elementAt(i).vTADACMFoodAmt!;
+      accommodationAmount = time.elementAt(i).vTADACMAccommodationAmt!;
     }
   }
 

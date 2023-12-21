@@ -60,7 +60,6 @@ class _TADAApprovalDetailsScreenState extends State<TADAApprovalDetailsScreen> {
       toDate = '${toDt.day}-${toDt.month}-${toDt.year}';
       int diff = toDt.difference(dt).inDays;
       day = diff + 1;
-      logger.e(day);
     });
     widget.tadaController.updateIsLoading(false);
   }
