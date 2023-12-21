@@ -48,7 +48,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   DateTime? fromDate;
   DateTime? toDate;
   DateTime dt = DateTime.now();
-  int totalday = 0;
+  double totalday = 0.0;
   List<CreatePlannerTable> newTable = [];
   List<CategoryPlanTable> categoryList = [];
   String startDate = '';
@@ -86,7 +86,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
       }
       startDate = startDate.add(const Duration(days: 1));
     }
-    totalday = weekdayCount;
+    totalday = plannerCreationController.totalDay;
+    ;
 
     return weekdayCount;
   }
@@ -771,7 +772,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                                 color: Theme.of(context)
                                                     .primaryColor)),
                                     TextSpan(
-                                        text: '${totalday * 8} Hr',
+                                        text:
+                                            '${plannerCreationController.totalHour} Hr',
                                         style: Get.textTheme.titleSmall!
                                             .copyWith()),
                                   ])),
@@ -822,8 +824,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                             Fluttertoast.showToast(
                                                 msg: "Please enter plan name");
                                           } else if (plannedEffort <
-                                              double.parse(
-                                                  (totalday * 8).toString())) {
+                                              plannerCreationController
+                                                  .totalHour) {
                                             Get.dialog(showPopup());
                                           } else if (plannerCreationController
                                                   .isPlannerCreate.value ==

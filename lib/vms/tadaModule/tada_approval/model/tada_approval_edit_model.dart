@@ -56,7 +56,7 @@ class TadaApprovaEditArrayModelValues {
   double? vTADAAAHSactionedAmount;
   String? vTADAADRemarks;
   dynamic vTADAADSlots;
-  dynamic vTADAADTotalslots;
+  double? vTADAADTotalslots;
   int? hCNT;
 
   TadaApprovaEditArrayModelValues(

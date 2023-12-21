@@ -398,6 +398,8 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
   List<DataRow> createRow() {
     return List.generate(widget.tadaController.editArrayList.length, (index) {
       var value = index + 1;
+      logger.i(
+          '====${widget.tadaController.editArrayList[index].vTADAADTotalslots}');
       return DataRow(cells: [
         DataCell(Text(value.toString())),
         DataCell(Radio(
@@ -467,9 +469,13 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                     .vTADAADExpenditureHead ==
                 'Food')
             ? widget.tadaController.foodAmount.toString()
-            : widget.tadaController.accommodationAmount.toString())),
+            : (widget.tadaController.editArrayList[index]
+                        .vTADAADExpenditureHead ==
+                    'Accommodation')
+                ? widget.tadaController.accommodationAmount.toString()
+                : '')),
         DataCell(Text(
-            '${widget.tadaController.editArrayList[index].vTADAADTotalslots ?? ' '}')),
+            '${(widget.tadaController.editArrayList[index].vTADAADExpenditureHead == 'Food') ? widget.tadaController.editArrayList[index].vTADAADTotalslots : (widget.tadaController.editArrayList[index].vTADAADExpenditureHead == 'Accommodation') ? widget.tadaController.editArrayList[index].vTADAADTotalslots : ''}')),
         DataCell(Text(
             '${widget.tadaController.editArrayList[index].vTADAADSlots ?? " "}')),
         DataCell(Text(

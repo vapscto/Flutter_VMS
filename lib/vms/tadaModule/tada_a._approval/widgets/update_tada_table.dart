@@ -445,7 +445,11 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                     .vTADAAADExpenditureHead ==
                 'Food')
             ? widget.tadaController.foodAmount.toString()
-            : widget.tadaController.accommodationAmount.toString())),
+            : (widget.tadaController.tadaEditValues[index]
+                        .vTADAAADExpenditureHead ==
+                    'Accommodation')
+                ? widget.tadaController.accommodationAmount.toString()
+                : '')),
         DataCell(Text(
             '${widget.tadaController.tadaEditValues[index].vTADAAADTotalSlots ?? ' '}')),
         DataCell(Text(

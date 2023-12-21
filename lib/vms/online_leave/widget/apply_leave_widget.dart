@@ -50,7 +50,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
   OpetionLeaveController controllerOL = Get.put(OpetionLeaveController());
   var addleave = 0;
   ProfileController profileController = Get.put(ProfileController());
-  
+
   StaffPrevilegeListModelValues? selectedEmployee;
   _getProfileData() async {
     profileController.profileLoading(true);
@@ -1101,7 +1101,9 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                           FutureBuilder<bool>(
                               future: SaveLeaveApplication.instance.saveNow(
                                   miId: widget.loginSuccessModel.mIID!,
-                                  hrmeId: selectedEmployee!.hRMEId ?? 0,
+                                  hrmeId: widget.values.hrmLLeaveCode == "PL"
+                                      ? selectedEmployee!.hRMEId!
+                                      : 0,
                                   userId: widget.loginSuccessModel.userId!,
                                   asmayId: widget.loginSuccessModel.asmaYId!,
                                   applicationDate:

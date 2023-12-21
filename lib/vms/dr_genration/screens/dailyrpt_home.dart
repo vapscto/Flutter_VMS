@@ -288,6 +288,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
           deviationId = 2;
         }
         //
+        uploadImageList.clear();
         if (_plannerDetailsController.uploadImages.isNotEmpty) {
           for (var j in _plannerDetailsController.uploadImages) {
             if (i == j.index) {
