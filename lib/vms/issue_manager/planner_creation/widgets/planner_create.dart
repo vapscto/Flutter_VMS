@@ -194,14 +194,11 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     }
     plannerCreationController.totalDay = 0;
     plannerCreationController.totalHour = 0;
-    plannerCreationController.taskLoading(false);
-    for (int i = 0;
-        i < plannerCreationController.effortDataValues.length;
-        i++) {
+    plannerCreationController.effortDataValues.forEach((element) {
       plannerCreationController.totalDay++;
-      plannerCreationController.totalHour +=
-          plannerCreationController.effortDataValues[i].wORKINGHOURS!;
-    }
+      plannerCreationController.totalHour += element.wORKINGHOURS!;
+    });
+    plannerCreationController.taskLoading(false);
   }
 
   getPlannerStatus() async {

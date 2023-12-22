@@ -6,6 +6,8 @@ import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/new_tab
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/planner_status_list.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/total_effort_data.dart';
 
+import '../../../../main.dart';
+
 class PlannerCreationController extends GetxController {
   RxBool isstatusLoading = RxBool(false);
   RxBool isErrorLoading = RxBool(false);
@@ -66,20 +68,22 @@ class PlannerCreationController extends GetxController {
     for (int i = 0; i < value.length; i++) {
       // assignedTaskList.add(value.elementAt(i));
       var val = value.elementAt(i);
-      var taskEffort = val.iSMTCRASTOEffortInHrs;
-      var hrsEff = taskEffort;
-      var minEff =
-          ((num.parse(taskEffort.toString()) - num.parse(hrsEff.toString())) *
-                  60)
-              .round();
-
+      double min = 0.0;
+      double taskEffort = val.iSMTCRASTOEffortInHrs!;
+      int hrsEff = taskEffort.toInt();
+      var minEff = ((taskEffort - hrsEff) * 60).round();
+      logger.w(taskEffort);
+      logger.i(minEff);
       if (hrsEff.toString().length == 1) {
-        hrsEff = 0 + num.parse(hrsEff.toString()).toDouble();
+        String hrEffString = hrsEff.toString();
+        hrsEff = int.parse(hrEffString);
+        logger.e(hrsEff);
+      } else if (minEff.toString().length == 1) {
+        String minEffString = minEff.toString();
+        minEff = int.parse(minEffString);
+        logger.d(minEff.toDouble());
       }
-
-      if (minEff.toString().length == 1) {
-        minEff = 0 + minEff;
-      }
+      val.iSMTCRASTOEffortInHrs = double.parse('$hrsEff.$minEff');
       if (val.iSMTPLTAPreviousTask == 1 || val.iSMTPLTAPreviousTask == '1') {
         createdTaskList.add(NewTableModel(
             flag: true,
@@ -822,10 +826,11 @@ class PlannerCreationController extends GetxController {
     }
     totalHour = 0.0;
     totalDay = 0.0;
+    totalDay += (data.length);
     for (int i = 0; i < data.length; i++) {
       effortDataValues.add(data.elementAt(i));
-      totalDay += (data[i].nOOFDAYS!);
-      totalHour += (data[i].wORKINGHOURS!);
+
+      // totalHour += (data[i].wORKINGHOURS!);
     }
   }
 
