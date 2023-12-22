@@ -2472,8 +2472,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
 
                                                                         if (value) {
                                                                           employeesID
-                                                                              .clear();
-                                                                          employeesID
                                                                               .add(taskEmployeeList[index - 1].hRMEId!);
                                                                           logger
                                                                               .i(employeesID);
