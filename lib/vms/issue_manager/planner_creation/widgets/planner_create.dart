@@ -119,9 +119,12 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
           categoryList.add(CategoryPlanTable(
               '${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskCategoryName}',
               '${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage} %',
-              "${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage! / 100 * 8 * totalday}",
-              "${plannerCreationController.categoryWisePlan.elementAt(index).ismtcrastOEffortInHrs}",
-              "${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage! / 100 * 8 * totalday}"));
+              double.parse(
+                  "${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage! / 100 * 8 * totalday}"),
+              double.parse(
+                  "${plannerCreationController.categoryWisePlan.elementAt(index).ismtcrastOEffortInHrs}"),
+              double.parse(
+                  "${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage! / 100 * 8 * totalday}")));
         });
 
         categoryArray.add({
@@ -1120,12 +1123,13 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               return DataRow(cells: [
                 DataCell(Text(categoryList.elementAt(index).categoryName)),
                 DataCell(Text(categoryList.elementAt(index).percentage)),
-                DataCell(Text('${categoryList.elementAt(index).effort} Hr')),
-                DataCell(
-                    Text('${categoryList.elementAt(index).currentEffort} Hr')),
+                DataCell(Text(
+                    '${categoryList.elementAt(index).effort.toStringAsFixed(2)} Hr')),
+                DataCell(Text(
+                    '${categoryList.elementAt(index).currentEffort.toStringAsFixed(2)} Hr')),
                 DataCell(
                   Text(
-                    '${categoryList.elementAt(index).requiredEffort} Hr',
+                    '${categoryList.elementAt(index).requiredEffort.toStringAsFixed(2)} Hr',
                     style:
                         Get.textTheme.titleSmall!.copyWith(color: Colors.red),
                   ),

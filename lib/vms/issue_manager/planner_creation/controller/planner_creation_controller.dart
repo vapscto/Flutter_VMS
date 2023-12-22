@@ -74,14 +74,14 @@ class PlannerCreationController extends GetxController {
       var minEff = ((taskEffort - hrsEff) * 60).round();
       logger.w(taskEffort);
       logger.i(minEff);
+      logger.e(hrsEff.toString().length);
       if (hrsEff.toString().length == 1) {
-        String hrEffString = hrsEff.toString();
-        hrsEff = int.parse(hrEffString);
-        logger.e(hrsEff);
+        hrsEff = int.parse('0${hrsEff.toString()}');
       } else if (minEff.toString().length == 1) {
-        String minEffString = minEff.toString();
-        minEff = int.parse(minEffString);
-        logger.d(minEff.toDouble());
+        logger.v(minEff.toString().length);
+        String minEffString = (minEff.toString().padLeft(2, '0'));
+        minEff = int.parse('0${minEff.toString()}');
+        logger.d('==$minEffString');
       }
       val.iSMTCRASTOEffortInHrs = double.parse('$hrsEff.$minEff');
       if (val.iSMTPLTAPreviousTask == 1 || val.iSMTPLTAPreviousTask == '1') {
@@ -747,8 +747,8 @@ class PlannerCreationController extends GetxController {
               val.iSMTPLTAPreviousTask == null ||
               val.iSMTPLTAPreviousTask == '' ||
               val.iSMTPLTAPreviousTask == '0')) {
-        String newdate1 =
-            DateFormat('dd-MM-yyyy').format(DateTime.parse(val.oFFDate!));
+        String newdate1 = DateFormat('dd-MM-yyyy')
+            .format(DateTime.parse(val.oFFDate ?? '1970-01-01T00:00:00'));
         int cnr = 0;
 
         for (var mm in effortDataValues) {
