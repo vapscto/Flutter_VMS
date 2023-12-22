@@ -13,8 +13,8 @@ getPurchaseRequisitionGetitemApi({
 }) async {
   final Dio ins = getGlobalDio();
   final String api = base + URLS.purchaserequisitionapi;
-  const String api2 =
-      "https://vmsinventoryservicehub.azurewebsites.net/api/INV_PurchaseRequisitionFacade/GetOnchangeData/";
+  // const String api2 =
+  //     "https://vmsinventoryservicehub.azurewebsites.net/api/INV_PurchaseRequisitionFacade/GetOnchangeData/";
 
   if (controller.isErrorOccuredRequestRequisition.value) {
     controller.updateIsErrorOccuredRequestRequisition(false);
@@ -23,6 +23,7 @@ getPurchaseRequisitionGetitemApi({
   // controller.updateIsLoadingRequestRequisition(true);
 
   logger.d(api);
+  logger.d({"MI_IdNew": miIdnew});
 
   try {
     final Response response = await ins.post(api,
