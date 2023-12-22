@@ -1,4 +1,5 @@
 class NewTableModel {
+  bool? flag;
   int? iSMTCRASTOId;
   int? iSMTCRId;
   int? hRMDId;
@@ -47,7 +48,8 @@ class NewTableModel {
   int? weeksecondtrue;
 
   NewTableModel(
-      {this.iSMTCRASTOId,
+      {this.flag,
+      this.iSMTCRASTOId,
       this.iSMTCRId,
       this.hRMDId,
       this.hRMDDepartmentName,

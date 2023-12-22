@@ -61,8 +61,7 @@ class TaskListAPI {
         plannerCreationController.totalDay = 0;
         plannerCreationController.totalHour = 0;
         for (int e = 0; e < totalEffortData.values!.length; e++) {
-          ++plannerCreationController.totalDay;
-
+          plannerCreationController.totalDay++;
           plannerCreationController.totalHour +=
               double.parse(totalEffortData.values![e].wORKINGHOURS.toString());
         }

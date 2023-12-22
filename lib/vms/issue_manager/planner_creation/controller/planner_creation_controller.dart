@@ -59,19 +59,22 @@ class PlannerCreationController extends GetxController {
       <AssignedTaskListValues>[].obs;
   List<NewTableModel> createdTaskList = [];
   assignedTask(List<AssignedTaskListValues> value) {
-    if (assignedTaskList.isNotEmpty) {
+    if (createdTaskList.isNotEmpty) {
       assignedTaskList.clear();
+      createdTaskList.clear();
     }
     for (int i = 0; i < value.length; i++) {
       // assignedTaskList.add(value.elementAt(i));
       var val = value.elementAt(i);
       var taskEffort = val.iSMTCRASTOEffortInHrs;
-      var hrsEff = int.parse(taskEffort.toString());
-      var minEff =
-          ((double.parse(taskEffort.toString()) - hrsEff) * 60).round();
+      var hrsEff = taskEffort;
+      var minEff = ((double.parse(taskEffort.toString()) -
+                  num.parse(hrsEff.toString())) *
+              60)
+          .round();
 
       if (hrsEff.toString().length == 1) {
-        hrsEff = 0 + hrsEff.toInt();
+        hrsEff = 0 + num.parse(hrsEff.toString()).toDouble();
       }
 
       if (minEff.toString().length == 1) {
@@ -79,6 +82,7 @@ class PlannerCreationController extends GetxController {
       }
       if (val.iSMTPLTAPreviousTask == 1 || val.iSMTPLTAPreviousTask == '1') {
         createdTaskList.add(NewTableModel(
+            flag: true,
             iSMTCRASTOId: val.iSMTCRASTOId,
             iSMTCRId: val.iSMTCRId,
             hRMDId: val.hRMDId,
@@ -134,6 +138,7 @@ class PlannerCreationController extends GetxController {
               val.iSMTPLTAPreviousTask == '' ||
               val.iSMTPLTAPreviousTask == '0')) {
         createdTaskList.add(NewTableModel(
+            flag: true,
             iSMTCRASTOId: val.iSMTCRASTOId,
             iSMTCRId: val.iSMTCRId,
             hRMDId: val.hRMDId,
@@ -190,17 +195,618 @@ class PlannerCreationController extends GetxController {
               ? DateFormat('dd-MM-yyyy').format(DateTime.now())
               : DateFormat('dd-MM-yyyy').format(DateTime.parse(mm.pDates!));
 
-          // var endDate = mm['PDates'] == null || mm['PDates'] == ''
-          //     ? DateFormat('dd-MM-yyyy').format(DateTime.now())
-          //     : DateFormat('dd-MM-yyyy').format(mm['PDates']);
+          var endDate = mm.pDates == null || mm.pDates == ''
+              ? DateFormat('dd-MM-yyyy').format(DateTime.now())
+              : DateFormat('dd-MM-yyyy').format(DateTime.parse(mm.pDates!));
 
-          // if (mm['PDates'] != null &&
-          //     mm['PDates'] != '' &&
-          //     mm['PDates'] >= tt['ISMTCRASTO_StartDate'] &&
-          //     mm['PDates'] <= tt['ISMTCRASTO_EndDate']) {
+          if (mm.pDates != null &&
+              mm.pDates != '' &&
+              DateTime.parse(mm.pDates!)
+                  .isBefore(DateTime.parse(val.iSMTCRASTOStartDate!)) &&
+              DateTime.parse(mm.pDates!)
+                  .isAfter(DateTime.parse(val.iSMTCRASTOEndDate!))) {
+            createdTaskList.add(NewTableModel(
+                flag: true,
+                iSMTCRASTOId: val.iSMTCRASTOId,
+                iSMTCRId: val.iSMTCRId,
+                hRMDId: val.hRMDId,
+                hRMDDepartmentName: val.hRMDDepartmentName,
+                hRMPRId: val.hRMPRId,
+                hRMPName: val.hRMPName,
+                iSMTCRBugOREnhancementFlg: val.iSMTCRBugOREnhancementFlg,
+                iSMTCRCreationDate: val.iSMTCRCreationDate,
+                iSMTCRTitle: val.iSMTCRTitle,
+                iSMTCRDesc: val.iSMTCRDesc,
+                iSMTCRStatus: val.iSMTCRStatus,
+                iSMTCRReOpenFlg: val.iSMTCRReOpenFlg,
+                iSMTCRReOpenDate: val.iSMTCRReOpenDate,
+                iSMTCRTaskNo: val.iSMTCRTaskNo,
+                iSMMCLTId: val.iSMMCLTId,
+                iSMMCLTClientName: val.iSMMCLTClientName,
+                iSMTCRASTOAssignedDate: val.iSMTCRASTOAssignedDate,
+                iSMTCRASTORemarks: val.iSMTCRASTORemarks,
+                iSMTCRASTOStartDate: val.iSMTCRASTOStartDate,
+                iSMTCRASTOEndDate: val.iSMTCRASTOEndDate,
+                iSMTCRASTOEffortInHrs: val.iSMTCRASTOEffortInHrs,
+                assignedby: val.assignedby,
+                periodicity: val.periodicity,
+                iSMTAPLDay: val.iSMTAPLDay,
+                oFFDate: val.oFFDate,
+                iSMTPLTAId: val.iSMTPLTAId,
+                iSMMTCATId: val.iSMMTCATId,
+                iSMMTCATTaskCategoryName: val.iSMMTCATTaskCategoryName,
+                iSMMTCATCompulsoryFlg: val.iSMMTCATCompulsoryFlg,
+                iSMTPLTAStatus: val.iSMTPLTAStatus,
+                iSMTPLTAPreviousTask: val.iSMTPLTAPreviousTask,
+                iSMTPLTAApprovalFlg: val.iSMTPLTAApprovalFlg,
+                iSMTPLTAStartDate: val.iSMTPLTAStartDate,
+                iSMTPLTAEndDate: val.iSMTPLTAEndDate,
+                yrplan: val.yrplan,
+                priorityswitch: val.priorityswitch,
+                firstDate1: val.firstDate1,
+                firstDate2: val.firstDate2,
+                weekStartDate: val.weekStartDate,
+                weekEndDate: val.weekEndDate,
+                addeddate1: val.addeddate1,
+                addeddate2: val.addeddate2,
+                firsttrue: val.firsttrue,
+                secondtrue: val.secondtrue,
+                weekfirsttrue: val.weekfirsttrue,
+                weeksecondtrue: val.weeksecondtrue));
+          } else if (val.periodicity!.toLowerCase() == 'weekly' &&
+              (val.iSMTPLTAPreviousTask == 0 ||
+                  val.iSMTPLTAPreviousTask == null ||
+                  val.iSMTPLTAPreviousTask == '' ||
+                  val.iSMTPLTAPreviousTask == '0')) {
+            int wrkd = effortDataValues.length;
+            if (wrkd >= int.parse(val.iSMTAPLDay!)) {
+              int cnr = 0;
+              effortDataValues.forEach((mm) {
+                String startDate, endDate;
+                if (mm.pDates == null || mm.pDates == '') {
+                  startDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+                } else {
+                  startDate = DateFormat('dd-MM-yyyy')
+                      .format(DateTime.parse(mm.pDates!));
+                }
 
-          // }
+                if (mm.pDates == null || mm.pDates == '') {
+                  endDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+                } else {
+                  endDate = DateFormat('dd-MM-yyyy')
+                      .format(DateTime.parse(mm.pDates!));
+                }
+                if (DateTime.parse(mm.pDates!)
+                        .isAfter(DateTime.parse(val.iSMTCRASTOStartDate!)) &&
+                    DateTime.parse(mm.pDates!)
+                        .isBefore(DateTime.parse(val.iSMTCRASTOEndDate!))) {
+                  createdTaskList.add(NewTableModel(
+                      flag: true,
+                      iSMTCRASTOId: val.iSMTCRASTOId,
+                      iSMTCRId: val.iSMTCRId,
+                      hRMDId: val.hRMDId,
+                      hRMDDepartmentName: val.hRMDDepartmentName,
+                      hRMPRId: val.hRMPRId,
+                      hRMPName: val.hRMPName,
+                      iSMTCRBugOREnhancementFlg: val.iSMTCRBugOREnhancementFlg,
+                      iSMTCRCreationDate: val.iSMTCRCreationDate,
+                      iSMTCRTitle: val.iSMTCRTitle,
+                      iSMTCRDesc: val.iSMTCRDesc,
+                      iSMTCRStatus: val.iSMTCRStatus,
+                      iSMTCRReOpenFlg: val.iSMTCRReOpenFlg,
+                      iSMTCRReOpenDate: val.iSMTCRReOpenDate,
+                      iSMTCRTaskNo: val.iSMTCRTaskNo,
+                      iSMMCLTId: val.iSMMCLTId,
+                      iSMMCLTClientName: val.iSMMCLTClientName,
+                      iSMTCRASTOAssignedDate: val.iSMTCRASTOAssignedDate,
+                      iSMTCRASTORemarks: val.iSMTCRASTORemarks,
+                      iSMTCRASTOStartDate: val.iSMTCRASTOStartDate,
+                      iSMTCRASTOEndDate: val.iSMTCRASTOEndDate,
+                      iSMTCRASTOEffortInHrs: val.iSMTCRASTOEffortInHrs,
+                      assignedby: val.assignedby,
+                      periodicity: val.periodicity,
+                      iSMTAPLDay: val.iSMTAPLDay,
+                      oFFDate: val.oFFDate,
+                      iSMTPLTAId: val.iSMTPLTAId,
+                      iSMMTCATId: val.iSMMTCATId,
+                      iSMMTCATTaskCategoryName: val.iSMMTCATTaskCategoryName,
+                      iSMMTCATCompulsoryFlg: val.iSMMTCATCompulsoryFlg,
+                      iSMTPLTAStatus: val.iSMTPLTAStatus,
+                      iSMTPLTAPreviousTask: val.iSMTPLTAPreviousTask,
+                      iSMTPLTAApprovalFlg: val.iSMTPLTAApprovalFlg,
+                      iSMTPLTAStartDate: val.iSMTPLTAStartDate,
+                      iSMTPLTAEndDate: val.iSMTPLTAEndDate,
+                      yrplan: val.yrplan,
+                      priorityswitch: val.priorityswitch,
+                      firstDate1: val.firstDate1,
+                      firstDate2: val.firstDate2,
+                      weekStartDate: val.weekStartDate,
+                      weekEndDate: val.weekEndDate,
+                      addeddate1: val.addeddate1,
+                      addeddate2: val.addeddate2,
+                      firsttrue: val.firsttrue,
+                      secondtrue: val.secondtrue,
+                      weekfirsttrue: val.weekfirsttrue,
+                      weeksecondtrue: val.weeksecondtrue));
+                }
+              });
+            } else if (int.parse(wrkd.toString()) <
+                int.parse(val.iSMTAPLDay.toString())) {
+              int cnr = 0;
+              effortDataValues.forEach((mm) {
+                cnr += 1;
+                if (cnr == int.parse(wrkd.toString())) {
+                  String startDate, endDate;
+                  if (mm.pDates == null || mm.pDates == '') {
+                    startDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+                  } else {
+                    startDate = DateFormat('dd-MM-yyyy')
+                        .format(DateTime.parse(mm.pDates!));
+                  }
+
+                  if (mm.pDates == null || mm.pDates == '') {
+                    endDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+                  } else {
+                    endDate = DateFormat('dd-MM-yyyy')
+                        .format(DateTime.parse(mm.pDates!));
+                  }
+
+                  if (DateTime.parse(mm.pDates!)
+                          .isAfter(DateTime.parse(val.iSMTCRASTOStartDate!)) &&
+                      DateTime.parse(mm.pDates!)
+                          .isBefore(DateTime.parse(val.iSMTCRASTOEndDate!))) {
+                    createdTaskList.add(NewTableModel(
+                        flag: true,
+                        iSMTCRASTOId: val.iSMTCRASTOId,
+                        iSMTCRId: val.iSMTCRId,
+                        hRMDId: val.hRMDId,
+                        hRMDDepartmentName: val.hRMDDepartmentName,
+                        hRMPRId: val.hRMPRId,
+                        hRMPName: val.hRMPName,
+                        iSMTCRBugOREnhancementFlg:
+                            val.iSMTCRBugOREnhancementFlg,
+                        iSMTCRCreationDate: val.iSMTCRCreationDate,
+                        iSMTCRTitle: val.iSMTCRTitle,
+                        iSMTCRDesc: val.iSMTCRDesc,
+                        iSMTCRStatus: val.iSMTCRStatus,
+                        iSMTCRReOpenFlg: val.iSMTCRReOpenFlg,
+                        iSMTCRReOpenDate: val.iSMTCRReOpenDate,
+                        iSMTCRTaskNo: val.iSMTCRTaskNo,
+                        iSMMCLTId: val.iSMMCLTId,
+                        iSMMCLTClientName: val.iSMMCLTClientName,
+                        iSMTCRASTOAssignedDate: val.iSMTCRASTOAssignedDate,
+                        iSMTCRASTORemarks: val.iSMTCRASTORemarks,
+                        iSMTCRASTOStartDate: val.iSMTCRASTOStartDate,
+                        iSMTCRASTOEndDate: val.iSMTCRASTOEndDate,
+                        iSMTCRASTOEffortInHrs: val.iSMTCRASTOEffortInHrs,
+                        assignedby: val.assignedby,
+                        periodicity: val.periodicity,
+                        iSMTAPLDay: val.iSMTAPLDay,
+                        oFFDate: val.oFFDate,
+                        iSMTPLTAId: val.iSMTPLTAId,
+                        iSMMTCATId: val.iSMMTCATId,
+                        iSMMTCATTaskCategoryName: val.iSMMTCATTaskCategoryName,
+                        iSMMTCATCompulsoryFlg: val.iSMMTCATCompulsoryFlg,
+                        iSMTPLTAStatus: val.iSMTPLTAStatus,
+                        iSMTPLTAPreviousTask: val.iSMTPLTAPreviousTask,
+                        iSMTPLTAApprovalFlg: val.iSMTPLTAApprovalFlg,
+                        iSMTPLTAStartDate: val.iSMTPLTAStartDate,
+                        iSMTPLTAEndDate: val.iSMTPLTAEndDate,
+                        yrplan: val.yrplan,
+                        priorityswitch: val.priorityswitch,
+                        firstDate1: val.firstDate1,
+                        firstDate2: val.firstDate2,
+                        weekStartDate: val.weekStartDate,
+                        weekEndDate: val.weekEndDate,
+                        addeddate1: val.addeddate1,
+                        addeddate2: val.addeddate2,
+                        firsttrue: val.firsttrue,
+                        secondtrue: val.secondtrue,
+                        weekfirsttrue: val.weekfirsttrue,
+                        weeksecondtrue: val.weeksecondtrue));
+                  } else if (int.parse(wrkd.toString()) <
+                      int.parse(val.iSMTAPLDay!)) {
+                    int cnr = 0;
+                    effortDataValues.forEach((mm) {
+                      cnr += 1;
+                      if (cnr == int.parse(wrkd.toString())) {
+                        String startDate, endDate;
+                        if (mm.pDates == null || mm.pDates == '') {
+                          startDate =
+                              DateFormat('dd-MM-yyyy').format(DateTime.now());
+                        } else {
+                          startDate = DateFormat('dd-MM-yyyy')
+                              .format(DateTime.parse(mm.pDates!));
+                        }
+
+                        if (mm.pDates == null || mm.pDates == '') {
+                          endDate =
+                              DateFormat('dd-MM-yyyy').format(DateTime.now());
+                        } else {
+                          endDate = DateFormat('dd-MM-yyyy')
+                              .format(DateTime.parse(mm.pDates!));
+                        }
+
+                        if (mm.pDates != null &&
+                            DateTime.parse(mm.pDates!).isAfter(
+                                DateTime.parse(val.iSMTCRASTOStartDate!)) &&
+                            DateTime.parse(mm.pDates!).isBefore(
+                                DateTime.parse(val.iSMTCRASTOEndDate!))) {
+                          createdTaskList.add(NewTableModel(
+                              flag: true,
+                              iSMTCRASTOId: val.iSMTCRASTOId,
+                              iSMTCRId: val.iSMTCRId,
+                              hRMDId: val.hRMDId,
+                              hRMDDepartmentName: val.hRMDDepartmentName,
+                              hRMPRId: val.hRMPRId,
+                              hRMPName: val.hRMPName,
+                              iSMTCRBugOREnhancementFlg:
+                                  val.iSMTCRBugOREnhancementFlg,
+                              iSMTCRCreationDate: val.iSMTCRCreationDate,
+                              iSMTCRTitle: val.iSMTCRTitle,
+                              iSMTCRDesc: val.iSMTCRDesc,
+                              iSMTCRStatus: val.iSMTCRStatus,
+                              iSMTCRReOpenFlg: val.iSMTCRReOpenFlg,
+                              iSMTCRReOpenDate: val.iSMTCRReOpenDate,
+                              iSMTCRTaskNo: val.iSMTCRTaskNo,
+                              iSMMCLTId: val.iSMMCLTId,
+                              iSMMCLTClientName: val.iSMMCLTClientName,
+                              iSMTCRASTOAssignedDate:
+                                  val.iSMTCRASTOAssignedDate,
+                              iSMTCRASTORemarks: val.iSMTCRASTORemarks,
+                              iSMTCRASTOStartDate: val.iSMTCRASTOStartDate,
+                              iSMTCRASTOEndDate: val.iSMTCRASTOEndDate,
+                              iSMTCRASTOEffortInHrs: val.iSMTCRASTOEffortInHrs,
+                              assignedby: val.assignedby,
+                              periodicity: val.periodicity,
+                              iSMTAPLDay: val.iSMTAPLDay,
+                              oFFDate: val.oFFDate,
+                              iSMTPLTAId: val.iSMTPLTAId,
+                              iSMMTCATId: val.iSMMTCATId,
+                              iSMMTCATTaskCategoryName:
+                                  val.iSMMTCATTaskCategoryName,
+                              iSMMTCATCompulsoryFlg: val.iSMMTCATCompulsoryFlg,
+                              iSMTPLTAStatus: val.iSMTPLTAStatus,
+                              iSMTPLTAPreviousTask: val.iSMTPLTAPreviousTask,
+                              iSMTPLTAApprovalFlg: val.iSMTPLTAApprovalFlg,
+                              iSMTPLTAStartDate: val.iSMTPLTAStartDate,
+                              iSMTPLTAEndDate: val.iSMTPLTAEndDate,
+                              yrplan: val.yrplan,
+                              priorityswitch: val.priorityswitch,
+                              firstDate1: val.firstDate1,
+                              firstDate2: val.firstDate2,
+                              weekStartDate: val.weekStartDate,
+                              weekEndDate: val.weekEndDate,
+                              addeddate1: val.addeddate1,
+                              addeddate2: val.addeddate2,
+                              firsttrue: val.firsttrue,
+                              secondtrue: val.secondtrue,
+                              weekfirsttrue: val.weekfirsttrue,
+                              weeksecondtrue: val.weeksecondtrue));
+                        }
+                      }
+                    });
+                  }
+                }
+              });
+            }
+          } else if (val.periodicity!.toLowerCase() == 'once in fortnight' &&
+              (val.iSMTPLTAPreviousTask == 0 ||
+                  val.iSMTPLTAPreviousTask == null ||
+                  val.iSMTPLTAPreviousTask == '' ||
+                  val.iSMTPLTAPreviousTask == '0')) {
+            int ddcnt = int.parse(val.iSMTAPLDay!) - 1;
+            int wrkd = effortDataValues.length;
+            DateTime date = DateTime.now();
+            DateTime firstDay = DateTime(date.year, date.month, 1);
+            DateTime newDate = firstDay.add(Duration(days: ddcnt));
+            DateTime anewDate = firstDay.add(Duration(days: ddcnt + 15));
+
+            String newDate1 = DateFormat('dd-MM-yyyy').format(newDate);
+            String anewDate1 = DateFormat('dd-MM-yyyy').format(anewDate);
+
+            int cnr = 0;
+            effortDataValues.forEach((mm) {
+              if (mm.pDates == null || mm.pDates == '') {
+                startDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+              } else {
+                startDate =
+                    DateFormat('dd-MM-yyyy').format(DateTime.parse(mm.pDates!));
+              }
+              if (mm.pDates == null || mm.pDates == '') {
+                endDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+              } else {
+                endDate =
+                    DateFormat('dd-MM-yyyy').format(DateTime.parse(mm.pDates!));
+              }
+
+              if (newDate1 == endDate) {
+                createdTaskList.add(NewTableModel(
+                    flag: true,
+                    iSMTCRASTOId: val.iSMTCRASTOId,
+                    iSMTCRId: val.iSMTCRId,
+                    hRMDId: val.hRMDId,
+                    hRMDDepartmentName: val.hRMDDepartmentName,
+                    hRMPRId: val.hRMPRId,
+                    hRMPName: val.hRMPName,
+                    iSMTCRBugOREnhancementFlg: val.iSMTCRBugOREnhancementFlg,
+                    iSMTCRCreationDate: val.iSMTCRCreationDate,
+                    iSMTCRTitle: val.iSMTCRTitle,
+                    iSMTCRDesc: val.iSMTCRDesc,
+                    iSMTCRStatus: val.iSMTCRStatus,
+                    iSMTCRReOpenFlg: val.iSMTCRReOpenFlg,
+                    iSMTCRReOpenDate: val.iSMTCRReOpenDate,
+                    iSMTCRTaskNo: val.iSMTCRTaskNo,
+                    iSMMCLTId: val.iSMMCLTId,
+                    iSMMCLTClientName: val.iSMMCLTClientName,
+                    iSMTCRASTOAssignedDate: val.iSMTCRASTOAssignedDate,
+                    iSMTCRASTORemarks: val.iSMTCRASTORemarks,
+                    iSMTCRASTOStartDate: val.iSMTCRASTOStartDate,
+                    iSMTCRASTOEndDate: val.iSMTCRASTOEndDate,
+                    iSMTCRASTOEffortInHrs: val.iSMTCRASTOEffortInHrs,
+                    assignedby: val.assignedby,
+                    periodicity: val.periodicity,
+                    iSMTAPLDay: val.iSMTAPLDay,
+                    oFFDate: val.oFFDate,
+                    iSMTPLTAId: val.iSMTPLTAId,
+                    iSMMTCATId: val.iSMMTCATId,
+                    iSMMTCATTaskCategoryName: val.iSMMTCATTaskCategoryName,
+                    iSMMTCATCompulsoryFlg: val.iSMMTCATCompulsoryFlg,
+                    iSMTPLTAStatus: val.iSMTPLTAStatus,
+                    iSMTPLTAPreviousTask: val.iSMTPLTAPreviousTask,
+                    iSMTPLTAApprovalFlg: val.iSMTPLTAApprovalFlg,
+                    iSMTPLTAStartDate: val.iSMTPLTAStartDate,
+                    iSMTPLTAEndDate: val.iSMTPLTAEndDate,
+                    yrplan: val.yrplan,
+                    priorityswitch: val.priorityswitch,
+                    firstDate1: val.firstDate1,
+                    firstDate2: val.firstDate2,
+                    weekStartDate: val.weekStartDate,
+                    weekEndDate: val.weekEndDate,
+                    addeddate1: val.addeddate1,
+                    addeddate2: val.addeddate2,
+                    firsttrue: val.firsttrue,
+                    secondtrue: val.secondtrue,
+                    weekfirsttrue: val.weekfirsttrue,
+                    weeksecondtrue: val.weeksecondtrue));
+              }
+
+              if (anewDate1 == endDate) {
+                createdTaskList.add(NewTableModel(
+                    flag: true,
+                    iSMTCRASTOId: val.iSMTCRASTOId,
+                    iSMTCRId: val.iSMTCRId,
+                    hRMDId: val.hRMDId,
+                    hRMDDepartmentName: val.hRMDDepartmentName,
+                    hRMPRId: val.hRMPRId,
+                    hRMPName: val.hRMPName,
+                    iSMTCRBugOREnhancementFlg: val.iSMTCRBugOREnhancementFlg,
+                    iSMTCRCreationDate: val.iSMTCRCreationDate,
+                    iSMTCRTitle: val.iSMTCRTitle,
+                    iSMTCRDesc: val.iSMTCRDesc,
+                    iSMTCRStatus: val.iSMTCRStatus,
+                    iSMTCRReOpenFlg: val.iSMTCRReOpenFlg,
+                    iSMTCRReOpenDate: val.iSMTCRReOpenDate,
+                    iSMTCRTaskNo: val.iSMTCRTaskNo,
+                    iSMMCLTId: val.iSMMCLTId,
+                    iSMMCLTClientName: val.iSMMCLTClientName,
+                    iSMTCRASTOAssignedDate: val.iSMTCRASTOAssignedDate,
+                    iSMTCRASTORemarks: val.iSMTCRASTORemarks,
+                    iSMTCRASTOStartDate: val.iSMTCRASTOStartDate,
+                    iSMTCRASTOEndDate: val.iSMTCRASTOEndDate,
+                    iSMTCRASTOEffortInHrs: val.iSMTCRASTOEffortInHrs,
+                    assignedby: val.assignedby,
+                    periodicity: val.periodicity,
+                    iSMTAPLDay: val.iSMTAPLDay,
+                    oFFDate: val.oFFDate,
+                    iSMTPLTAId: val.iSMTPLTAId,
+                    iSMMTCATId: val.iSMMTCATId,
+                    iSMMTCATTaskCategoryName: val.iSMMTCATTaskCategoryName,
+                    iSMMTCATCompulsoryFlg: val.iSMMTCATCompulsoryFlg,
+                    iSMTPLTAStatus: val.iSMTPLTAStatus,
+                    iSMTPLTAPreviousTask: val.iSMTPLTAPreviousTask,
+                    iSMTPLTAApprovalFlg: val.iSMTPLTAApprovalFlg,
+                    iSMTPLTAStartDate: val.iSMTPLTAStartDate,
+                    iSMTPLTAEndDate: val.iSMTPLTAEndDate,
+                    yrplan: val.yrplan,
+                    priorityswitch: val.priorityswitch,
+                    firstDate1: val.firstDate1,
+                    firstDate2: val.firstDate2,
+                    weekStartDate: val.weekStartDate,
+                    weekEndDate: val.weekEndDate,
+                    addeddate1: val.addeddate1,
+                    addeddate2: val.addeddate2,
+                    firsttrue: val.firsttrue,
+                    secondtrue: val.secondtrue,
+                    weekfirsttrue: val.weekfirsttrue,
+                    weeksecondtrue: val.weeksecondtrue));
+              }
+            });
+          }
         });
+      } else if (val.periodicity!.toLowerCase() == 'monthly' &&
+          (val.iSMTPLTAPreviousTask == 0 ||
+              val.iSMTPLTAPreviousTask == null ||
+              val.iSMTPLTAPreviousTask == '' ||
+              val.iSMTPLTAPreviousTask == '0')) {
+        String ttdate1 =
+            DateFormat('dd-MM-yyyy').format(DateTime.parse(val.addeddate1!));
+        String ttdate2 =
+            DateFormat('dd-MM-yyyy').format(DateTime.parse(val.addeddate2!));
+
+        if (val.weekfirsttrue != 0) {
+          if (val.firsttrue != 0) {
+            createdTaskList.add(NewTableModel(
+                flag: true,
+                iSMTCRASTOId: val.iSMTCRASTOId,
+                iSMTCRId: val.iSMTCRId,
+                hRMDId: val.hRMDId,
+                hRMDDepartmentName: val.hRMDDepartmentName,
+                hRMPRId: val.hRMPRId,
+                hRMPName: val.hRMPName,
+                iSMTCRBugOREnhancementFlg: val.iSMTCRBugOREnhancementFlg,
+                iSMTCRCreationDate: val.iSMTCRCreationDate,
+                iSMTCRTitle: val.iSMTCRTitle,
+                iSMTCRDesc: val.iSMTCRDesc,
+                iSMTCRStatus: val.iSMTCRStatus,
+                iSMTCRReOpenFlg: val.iSMTCRReOpenFlg,
+                iSMTCRReOpenDate: val.iSMTCRReOpenDate,
+                iSMTCRTaskNo: val.iSMTCRTaskNo,
+                iSMMCLTId: val.iSMMCLTId,
+                iSMMCLTClientName: val.iSMMCLTClientName,
+                iSMTCRASTOAssignedDate: val.iSMTCRASTOAssignedDate,
+                iSMTCRASTORemarks: val.iSMTCRASTORemarks,
+                iSMTCRASTOStartDate: val.iSMTCRASTOStartDate,
+                iSMTCRASTOEndDate: val.iSMTCRASTOEndDate,
+                iSMTCRASTOEffortInHrs: val.iSMTCRASTOEffortInHrs,
+                assignedby: val.assignedby,
+                periodicity: val.periodicity,
+                iSMTAPLDay: val.iSMTAPLDay,
+                oFFDate: val.oFFDate,
+                iSMTPLTAId: val.iSMTPLTAId,
+                iSMMTCATId: val.iSMMTCATId,
+                iSMMTCATTaskCategoryName: val.iSMMTCATTaskCategoryName,
+                iSMMTCATCompulsoryFlg: val.iSMMTCATCompulsoryFlg,
+                iSMTPLTAStatus: val.iSMTPLTAStatus,
+                iSMTPLTAPreviousTask: val.iSMTPLTAPreviousTask,
+                iSMTPLTAApprovalFlg: val.iSMTPLTAApprovalFlg,
+                iSMTPLTAStartDate: val.iSMTPLTAStartDate,
+                iSMTPLTAEndDate: val.iSMTPLTAEndDate,
+                yrplan: val.yrplan,
+                priorityswitch: val.priorityswitch,
+                firstDate1: val.firstDate1,
+                firstDate2: val.firstDate2,
+                weekStartDate: val.weekStartDate,
+                weekEndDate: val.weekEndDate,
+                addeddate1: val.addeddate1,
+                addeddate2: val.addeddate2,
+                firsttrue: val.firsttrue,
+                secondtrue: val.secondtrue,
+                weekfirsttrue: val.weekfirsttrue,
+                weeksecondtrue: val.weeksecondtrue));
+          }
+        } else if (val.weeksecondtrue != 0) {
+          if (val.secondtrue != 0) {
+            createdTaskList.add(NewTableModel(
+                flag: true,
+                iSMTCRASTOId: val.iSMTCRASTOId,
+                iSMTCRId: val.iSMTCRId,
+                hRMDId: val.hRMDId,
+                hRMDDepartmentName: val.hRMDDepartmentName,
+                hRMPRId: val.hRMPRId,
+                hRMPName: val.hRMPName,
+                iSMTCRBugOREnhancementFlg: val.iSMTCRBugOREnhancementFlg,
+                iSMTCRCreationDate: val.iSMTCRCreationDate,
+                iSMTCRTitle: val.iSMTCRTitle,
+                iSMTCRDesc: val.iSMTCRDesc,
+                iSMTCRStatus: val.iSMTCRStatus,
+                iSMTCRReOpenFlg: val.iSMTCRReOpenFlg,
+                iSMTCRReOpenDate: val.iSMTCRReOpenDate,
+                iSMTCRTaskNo: val.iSMTCRTaskNo,
+                iSMMCLTId: val.iSMMCLTId,
+                iSMMCLTClientName: val.iSMMCLTClientName,
+                iSMTCRASTOAssignedDate: val.iSMTCRASTOAssignedDate,
+                iSMTCRASTORemarks: val.iSMTCRASTORemarks,
+                iSMTCRASTOStartDate: val.iSMTCRASTOStartDate,
+                iSMTCRASTOEndDate: val.iSMTCRASTOEndDate,
+                iSMTCRASTOEffortInHrs: val.iSMTCRASTOEffortInHrs,
+                assignedby: val.assignedby,
+                periodicity: val.periodicity,
+                iSMTAPLDay: val.iSMTAPLDay,
+                oFFDate: val.oFFDate,
+                iSMTPLTAId: val.iSMTPLTAId,
+                iSMMTCATId: val.iSMMTCATId,
+                iSMMTCATTaskCategoryName: val.iSMMTCATTaskCategoryName,
+                iSMMTCATCompulsoryFlg: val.iSMMTCATCompulsoryFlg,
+                iSMTPLTAStatus: val.iSMTPLTAStatus,
+                iSMTPLTAPreviousTask: val.iSMTPLTAPreviousTask,
+                iSMTPLTAApprovalFlg: val.iSMTPLTAApprovalFlg,
+                iSMTPLTAStartDate: val.iSMTPLTAStartDate,
+                iSMTPLTAEndDate: val.iSMTPLTAEndDate,
+                yrplan: val.yrplan,
+                priorityswitch: val.priorityswitch,
+                firstDate1: val.firstDate1,
+                firstDate2: val.firstDate2,
+                weekStartDate: val.weekStartDate,
+                weekEndDate: val.weekEndDate,
+                addeddate1: val.addeddate1,
+                addeddate2: val.addeddate2,
+                firsttrue: val.firsttrue,
+                secondtrue: val.secondtrue,
+                weekfirsttrue: val.weekfirsttrue,
+                weeksecondtrue: val.weeksecondtrue));
+          }
+        }
+      } else if ((val.periodicity!.toLowerCase() == 'yearly once' ||
+              val.periodicity!.toLowerCase() == 'specific day') &&
+          (val.iSMTPLTAPreviousTask == 0 ||
+              val.iSMTPLTAPreviousTask == null ||
+              val.iSMTPLTAPreviousTask == '' ||
+              val.iSMTPLTAPreviousTask == '0')) {
+        String newdate1 =
+            DateFormat('dd-MM-yyyy').format(DateTime.parse(val.oFFDate!));
+        int cnr = 0;
+
+        for (var mm in effortDataValues) {
+          String startDate = mm.pDates == null || mm.pDates == ''
+              ? DateFormat('dd-MM-yyyy').format(DateTime.now())
+              : DateFormat('dd-MM-yyyy').format(DateTime.parse(mm.pDates!));
+
+          String endDate = mm.pDates == null || mm.pDates == ''
+              ? DateFormat('dd-MM-yyyy').format(DateTime.now())
+              : DateFormat('dd-MM-yyyy').format(DateTime.parse(mm.pDates!));
+
+          if (newdate1 == endDate) {
+            createdTaskList.add(NewTableModel(
+                flag: true,
+                iSMTCRASTOId: val.iSMTCRASTOId,
+                iSMTCRId: val.iSMTCRId,
+                hRMDId: val.hRMDId,
+                hRMDDepartmentName: val.hRMDDepartmentName,
+                hRMPRId: val.hRMPRId,
+                hRMPName: val.hRMPName,
+                iSMTCRBugOREnhancementFlg: val.iSMTCRBugOREnhancementFlg,
+                iSMTCRCreationDate: val.iSMTCRCreationDate,
+                iSMTCRTitle: val.iSMTCRTitle,
+                iSMTCRDesc: val.iSMTCRDesc,
+                iSMTCRStatus: val.iSMTCRStatus,
+                iSMTCRReOpenFlg: val.iSMTCRReOpenFlg,
+                iSMTCRReOpenDate: val.iSMTCRReOpenDate,
+                iSMTCRTaskNo: val.iSMTCRTaskNo,
+                iSMMCLTId: val.iSMMCLTId,
+                iSMMCLTClientName: val.iSMMCLTClientName,
+                iSMTCRASTOAssignedDate: val.iSMTCRASTOAssignedDate,
+                iSMTCRASTORemarks: val.iSMTCRASTORemarks,
+                iSMTCRASTOStartDate: val.iSMTCRASTOStartDate,
+                iSMTCRASTOEndDate: val.iSMTCRASTOEndDate,
+                iSMTCRASTOEffortInHrs: val.iSMTCRASTOEffortInHrs,
+                assignedby: val.assignedby,
+                periodicity: val.periodicity,
+                iSMTAPLDay: val.iSMTAPLDay,
+                oFFDate: val.oFFDate,
+                iSMTPLTAId: val.iSMTPLTAId,
+                iSMMTCATId: val.iSMMTCATId,
+                iSMMTCATTaskCategoryName: val.iSMMTCATTaskCategoryName,
+                iSMMTCATCompulsoryFlg: val.iSMMTCATCompulsoryFlg,
+                iSMTPLTAStatus: val.iSMTPLTAStatus,
+                iSMTPLTAPreviousTask: val.iSMTPLTAPreviousTask,
+                iSMTPLTAApprovalFlg: val.iSMTPLTAApprovalFlg,
+                iSMTPLTAStartDate: val.iSMTPLTAStartDate,
+                iSMTPLTAEndDate: val.iSMTPLTAEndDate,
+                yrplan: val.yrplan,
+                priorityswitch: val.priorityswitch,
+                firstDate1: val.firstDate1,
+                firstDate2: val.firstDate2,
+                weekStartDate: val.weekStartDate,
+                weekEndDate: val.weekEndDate,
+                addeddate1: val.addeddate1,
+                addeddate2: val.addeddate2,
+                firsttrue: val.firsttrue,
+                secondtrue: val.secondtrue,
+                weekfirsttrue: val.weekfirsttrue,
+                weeksecondtrue: val.weeksecondtrue));
+          }
+        }
       }
     }
   }
