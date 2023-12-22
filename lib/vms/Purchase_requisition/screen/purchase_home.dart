@@ -187,9 +187,39 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
   }
 
   removeControllerData(int value) {
-    newWidget.removeAt(value);
-    setState(() {});
+    // Check if the index is valid
+    if (value >= 0 && value < newWidget.length) {
+      // Remove data from the lists
+      selectEt.removeAt(value);
+      uomController.removeAt(value);
+      quantityController.removeAt(value);
+      rateController.removeAt(value);
+      amountController.removeAt(value);
+      remarksController.removeAt(value);
+
+      // Remove the item from newWidget
+      newWidget.removeAt(value);
+
+      // Update total amount
+      updateTotalAmount();
+
+      // Call setState to trigger a rebuild
+      setState(() {});
+    }
   }
+
+  updateTotalAmount() {
+    int total = 0;
+    for (int i = 0; i < amountController.length; i++) {
+      total += int.tryParse(amountController[i].text) ?? 0;
+    }
+    totalAmount.text = total.toString();
+  }
+
+  // removeControllerData(int value) {
+  //   newWidget.removeAt(value);
+  //   setState(() {});
+  // }
 
   int sum = 0;
   removeAmount(int amount) {
@@ -702,6 +732,12 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                                                             .value, // Pass the selected value as itemId
                                                                         controller:
                                                                             purchaseRequisitionController,
+                                                                      ).then(
+                                                                        (value) {
+                                                                       setState(() {
+                                                                          uomController.elementAt(index).text = value;  
+                                                                       });
+                                                                        },
                                                                       );
                                                                     },
                                                                     child: Text(
@@ -741,8 +777,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                         Padding(
                                             padding: EdgeInsets.all(8.0),
                                             child: Obx(() => Text(
-                                                purchaseRequisitionController
-                                                    .selecString.value))),
+                                                 uomController.elementAt(index).text))),
                                       ),
                                       DataCell(
                                         Padding(
@@ -881,12 +916,6 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                             addAmount();
                                           } else {
                                             removeControllerData(index);
-                                            totalAmount.text = (int.parse(
-                                                        totalAmount.text) -
-                                                    int.parse(
-                                                        amountController[index]
-                                                            .text))
-                                                .toString();
                                           }
                                         },
                                         icon: (index == 0)

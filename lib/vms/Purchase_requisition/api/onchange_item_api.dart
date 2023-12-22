@@ -5,7 +5,7 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/controller/purchase_controller.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/item_details_model.dart';
 
-   getIndentItemDetails(
+  Future<String>  getIndentItemDetails(
     {required int miId,
     required String base,
     required int userId,
@@ -34,14 +34,15 @@ import 'package:m_skool_flutter/vms/Purchase_requisition/model/item_details_mode
     PurchaseItemDetailsModel organizationListResponse =
         PurchaseItemDetailsModel.fromJson(response.data['get_itemDetail']);
     controller.itemDetailsPurchase.addAll(organizationListResponse.values!);
-    controller.selecString.value = organizationListResponse.values!.first.invmuoMUOMName!;
-    return response.statusCode!;
+   // controller.selecString.value = organizationListResponse.values!.first.invmuoMUOMName!;
+    return organizationListResponse.values!.first.invmuoMUOMName!;
   } on DioError catch (e) {
     controller.updateErrorLoadingIndentItem(true);
 
     logger.e(e.message);
-    // return 0;
+     return "Null";
   } on Exception catch (e) {
     logger.e(e.toString());
+    return "Null";
   }
 }
