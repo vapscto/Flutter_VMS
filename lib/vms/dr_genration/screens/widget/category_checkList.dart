@@ -86,7 +86,7 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
   int id = 0;
   String drName = '';
   String refNo = '';
-
+  CategoryCheckListModelValues? category;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -103,21 +103,72 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              DropdownMenu<CategoryCheckListModelValues>(
-                initialSelection: widget.value.values!.first,
-                width: MediaQuery.of(context).size.width / 2,
-                onSelected: (CategoryCheckListModelValues? value) {
-                  setState(() {
-                    id = value!.ismmtcatcLId!;
-                    drName = value.ismmtcatcLCheckListName!;
-                  });
-                },
-                dropdownMenuEntries: widget.value.values!
-                    .map<DropdownMenuEntry<CategoryCheckListModelValues>>(
-                        (CategoryCheckListModelValues value) {
-                  return DropdownMenuEntry<CategoryCheckListModelValues>(
-                      value: value, label: value.ismmtcatcLCheckListName!);
-                }).toList(),
+              Container(
+                margin: const EdgeInsets.only(
+                    top: 20, left: 16, right: 16, bottom: 16),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: BorderRadius.circular(16.0),
+                  boxShadow: const [
+                    BoxShadow(
+                      offset: Offset(0, 1),
+                      blurRadius: 8,
+                      color: Colors.black12,
+                    ),
+                  ],
+                ),
+                child: DropdownButtonFormField<CategoryCheckListModelValues>(
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    hintStyle: Theme.of(context).textTheme.labelSmall!.merge(
+                        const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14.0,
+                            letterSpacing: 0.3)),
+                    hintText: "Select",
+                    isDense: true,
+                  ),
+                  icon: const Padding(
+                    padding: EdgeInsets.only(top: 3),
+                    child: Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      size: 30,
+                    ),
+                  ),
+                  iconSize: 30,
+                  items: List.generate(widget.value.values!.length, (index) {
+                    return DropdownMenuItem(
+                      value: widget.value.values![index],
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Text(
+                          overflow: TextOverflow.clip,
+                          widget.value.values![index].ismmtcatcLCheckListName!,
+                          style: Theme.of(context).textTheme.titleSmall!.merge(
+                              const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                  letterSpacing: 0.3)),
+                        ),
+                      ),
+                    );
+                  }),
+                  onChanged: (s) async {
+                    category = s!;
+                    id = s.ismmtcatcLId!;
+                    drName = s.ismmtcatcLCheckListName!;
+                  },
+                ),
               ),
               Obx(
                 () => SizedBox(
@@ -320,7 +371,7 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                       title: "Save",
                       onPress: () async {
                         if (drName.isEmpty) {
-                          Fluttertoast.showToast(msg: " Select Document type");
+                          Fluttertoast.showToast(msg: "Select Checklist");
                         } else if (widget.plannerDetailsController
                                 .addListBrowser.last.file ==
                             null) {

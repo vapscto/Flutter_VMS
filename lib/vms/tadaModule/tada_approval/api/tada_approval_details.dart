@@ -34,10 +34,12 @@ class TADAApprovalDetailsAPI {
         TadaApprovalTimeArrayModel timeArrayDADADataValues =
             TadaApprovalTimeArrayModel.fromJson(response.data['timeArray']);
         tadaController.getTimeArray(timeArrayDADADataValues.values!);
-
         TadaApprovaEditArrayModel editArrayTADAData =
             TadaApprovaEditArrayModel.fromJson(response.data['editArray']);
         tadaController.getEditArray(editArrayTADAData.values!);
+        for (int i = 0; i < editArrayTADAData.values!.length; i++) {
+          logger.i('Slot :- ${editArrayTADAData.values![i].vTADAADSlots}');
+        }
         if (response.data['getFile'] != null) {
           TadaApprovaFileModel tadaApprovaFileModel =
               TadaApprovaFileModel.fromJson(response.data['getFile']);

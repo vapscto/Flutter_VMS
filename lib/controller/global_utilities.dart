@@ -462,7 +462,7 @@ void version(LoginSuccessModel loginSuccessModel,
     ),
   );
 
-  if (ctrl!.values!.first.iMVEAppVersion! != version) {
+  if (ctrl!.values!.first.iMVEAppVersion! == version) {
     Get.dialog(AlertDialog(
       title: const Text("Update App!"),
       content: const Text(

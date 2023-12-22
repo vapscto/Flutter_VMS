@@ -109,9 +109,9 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
           index++) {
         widget.tadaController.textEditingControllerList.add(
             TextEditingController(
-                text:
-                    widget.tadaController.editArrayList[index].vTADAADRemarks ??
-                        ''));
+                text: widget
+                        .tadaController.editArrayList[index].vTADAAADRemarks ??
+                    ''));
         widget.tadaController.approvalTextEditingControllerList
             .add(TextEditingController(text: ''));
         widget.tadaController.textEditingControllerList[index].addListener(() {
@@ -385,6 +385,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
       DataColumn(label: Text("Approve")),
       DataColumn(label: Text("Reject")),
       DataColumn(label: Text("Header")),
+      DataColumn(label: Text("Amount")),
       DataColumn(label: Text("Total Slots")),
       DataColumn(label: Text("Slots")),
       DataColumn(label: Text("Amount")),
@@ -397,6 +398,8 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
   List<DataRow> createRow() {
     return List.generate(widget.tadaController.editArrayList.length, (index) {
       var value = index + 1;
+      logger.i(
+          '====${widget.tadaController.editArrayList[index].vTADAADTotalSlots}');
       return DataRow(cells: [
         DataCell(Text(value.toString())),
         DataCell(Radio(
@@ -462,8 +465,17 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
         DataCell(Text(
             widget.tadaController.editArrayList[index].vTADAADExpenditureHead ??
                 "")),
+        DataCell(Text((widget.tadaController.editArrayList[index]
+                    .vTADAADExpenditureHead ==
+                'Food')
+            ? widget.tadaController.foodAmount.toString()
+            : (widget.tadaController.editArrayList[index]
+                        .vTADAADExpenditureHead ==
+                    'Accommodation')
+                ? widget.tadaController.accommodationAmount.toString()
+                : '')),
         DataCell(Text(
-            '${widget.tadaController.editArrayList[index].vTADAADTotalslots ?? ' '}')),
+            '${widget.tadaController.editArrayList[index].vTADAADTotalSlots ?? ''}')),
         DataCell(Text(
             '${widget.tadaController.editArrayList[index].vTADAADSlots ?? " "}')),
         DataCell(Text(

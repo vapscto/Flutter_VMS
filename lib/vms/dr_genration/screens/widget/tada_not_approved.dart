@@ -229,8 +229,9 @@ class TADAAdvancenotApproveScreen extends StatelessWidget {
                                       DataCell(Align(
                                           alignment: Alignment.center,
                                           child: Text(data
-                                              .elementAt(index)
-                                              .vTADAAARemarks!))),
+                                                  .elementAt(index)
+                                                  .vTADAAARemarks ??
+                                              ''))),
                                     ]);
                                   }),
                                 )),

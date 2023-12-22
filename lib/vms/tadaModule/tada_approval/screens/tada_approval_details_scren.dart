@@ -13,6 +13,8 @@ import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:open_filex/open_filex.dart';
 
+import '../../../rating_report/screen/report_data_screen.dart';
+
 class TADAApprovalDetailsScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
@@ -43,7 +45,7 @@ class _TADAApprovalDetailsScreenState extends State<TADAApprovalDetailsScreen> {
   String fromTime = '';
   String toTime = '';
   Map<String, dynamic> headArray = {};
-  var day;
+  int day = 0;
   _getData() async {
     widget.tadaController.updateIsLoading(true);
     await TADAApprovalDetailsAPI.instance.tadaDetails(
@@ -56,9 +58,7 @@ class _TADAApprovalDetailsScreenState extends State<TADAApprovalDetailsScreen> {
       fromDate = '${dt.day}-${dt.month}-${dt.year}';
       DateTime toDt = DateTime.parse(widget.values.vTADAAToDate!);
       toDate = '${toDt.day}-${toDt.month}-${toDt.year}';
-      DateTime dt1 = DateTime.parse(widget.values.vTADAAFromDate!);
-      DateTime dt2 = DateTime.parse(widget.values.vTADAAToDate!);
-      int diff = dt1.difference(dt2).inDays;
+      int diff = toDt.difference(dt).inDays;
       day = diff + 1;
     });
     widget.tadaController.updateIsLoading(false);
@@ -237,22 +237,58 @@ class _TADAApprovalDetailsScreenState extends State<TADAApprovalDetailsScreen> {
                               : const SizedBox(),
                           widget.tadaController.tadaApprovalFileList.isNotEmpty
                               ? Obx(() {
-                                  return SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: _createFileTable()),
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: Text(
+                                          "File Details",
+                                          style: Get.textTheme.titleMedium!
+                                              .copyWith(
+                                                  color: Theme.of(context)
+                                                      .primaryColor),
+                                        ),
+                                      ),
+                                      SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: _createFileTable()),
+                                      ),
+                                    ],
                                   );
                                 })
                               : const SizedBox(),
                           const SizedBox(height: 10),
                           widget.tadaController.timeArray.isNotEmpty
                               ? Obx(() {
-                                  return SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: _createTable()),
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: Text(
+                                          "Travel Details",
+                                          style: Get.textTheme.titleMedium!
+                                              .copyWith(
+                                                  color: Theme.of(context)
+                                                      .primaryColor),
+                                        ),
+                                      ),
+                                      SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: _createTable()),
+                                      ),
+                                    ],
                                   );
                                 })
                               : const Center(

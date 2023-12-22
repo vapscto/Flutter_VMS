@@ -58,6 +58,14 @@ class TaskListAPI {
         TotalEffortData totalEffortData =
             TotalEffortData.fromJson(response.data['get_effortdetails']);
         plannerCreationController.effortData(totalEffortData.values!);
+        plannerCreationController.totalDay = 0;
+        plannerCreationController.totalHour = 0;
+        for (int e = 0; e < totalEffortData.values!.length; e++) {
+          ++plannerCreationController.totalDay;
+
+          plannerCreationController.totalHour +=
+              double.parse(totalEffortData.values![e].wORKINGHOURS.toString());
+        }
       }
     } on DioError catch (e) {
       logger.e(e.message);

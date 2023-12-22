@@ -1991,7 +1991,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                       color: Theme.of(context).primaryColor)),
                               TextSpan(
                                   text:
-                                      " ₹ ${foodAmt + accommodationAmount + otherAmount}",
+                                      " ₹ ${double.parse(foodAmt.toStringAsFixed(0)) + accommodationAmount + otherAmount}",
                                   style: Get.textTheme.titleSmall),
                             ])),
                             const SizedBox(height: 30),

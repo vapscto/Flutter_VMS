@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/vms/online_leave/api/leave_approval_status.dart';
 import 'package:m_skool_flutter/vms/online_leave/controller/ol_controller.dart';
+import 'package:m_skool_flutter/vms/rating_report/screen/report_data_screen.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:open_filex/open_filex.dart';
 
@@ -285,8 +286,12 @@ class _ApprovalWidgetState extends State<ApprovalWidget> {
                                               null)
                                           ? IconButton(
                                               onPressed: () {
-                                                OpenFilex.open(data
+                                                logger.i(data
                                                     .hRELAPSupportingDocument);
+                                                setState(() {
+                                                  createPreview(context,
+                                                      data.hRELAPSupportingDocument!);
+                                                });
                                               },
                                               icon:
                                                   const Icon(Icons.visibility))

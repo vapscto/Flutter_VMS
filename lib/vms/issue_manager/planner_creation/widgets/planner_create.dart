@@ -4,7 +4,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/api/planner_save_api.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/api/planner_status_api.dart';
@@ -49,7 +48,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   DateTime? fromDate;
   DateTime? toDate;
   DateTime dt = DateTime.now();
-  int totalday = 0;
+  double totalday = 0.0;
   List<CreatePlannerTable> newTable = [];
   List<CategoryPlanTable> categoryList = [];
   String startDate = '';
@@ -87,7 +86,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
       }
       startDate = startDate.add(const Duration(days: 1));
     }
-    totalday = weekdayCount;
+    totalday = plannerCreationController.totalDay;
+    ;
 
     return weekdayCount;
   }
@@ -772,7 +772,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                                 color: Theme.of(context)
                                                     .primaryColor)),
                                     TextSpan(
-                                        text: '${totalday * 8} Hr',
+                                        text:
+                                            '${plannerCreationController.totalHour} Hr',
                                         style: Get.textTheme.titleSmall!
                                             .copyWith()),
                                   ])),
@@ -823,8 +824,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                             Fluttertoast.showToast(
                                                 msg: "Please enter plan name");
                                           } else if (plannedEffort <
-                                              double.parse(
-                                                  (totalday * 8).toString())) {
+                                              plannerCreationController
+                                                  .totalHour) {
                                             Get.dialog(showPopup());
                                           } else if (plannerCreationController
                                                   .isPlannerCreate.value ==

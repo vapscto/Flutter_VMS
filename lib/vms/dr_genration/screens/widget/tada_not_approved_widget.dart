@@ -230,9 +230,9 @@ class TADANotApproveScreen extends StatelessWidget {
                                           .vTADAAToAddress!))),
                                   DataCell(Align(
                                       alignment: Alignment.center,
-                                      child: Text(data
-                                          .elementAt(index)
-                                          .vTADAARemarks!))),
+                                      child: Text(
+                                          data.elementAt(index).vTADAARemarks ??
+                                              ''))),
                                 ]);
                               }),
                             ))))),

@@ -33,7 +33,7 @@ class AdvanceApplyModelValues {
   String? vTADAAAToDate;
   String? vTADAAAToAddress;
   String? vTADAAARemarks;
-  int? vTADAAATotalAppliedAmount;
+  double? vTADAAATotalAppliedAmount;
   String? vTADAAADepartureTime;
   String? vTADAAAArrivalTime;
   String? iVRMMCTName;

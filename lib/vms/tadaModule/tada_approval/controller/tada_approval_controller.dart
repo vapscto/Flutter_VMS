@@ -6,6 +6,8 @@ import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_time.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/widgets/tada_approval_table.dart';
 
+import '../../../../main.dart';
+
 class TadaApprovalController extends GetxController {
   RxBool isDataLoading = RxBool(false);
   RxBool isDetailsLoading = RxBool(false);
@@ -41,6 +43,8 @@ class TadaApprovalController extends GetxController {
 
   RxList<TadaApprovaEditArrayModelValues> editArrayList =
       <TadaApprovaEditArrayModelValues>[].obs;
+  double foodAmount = 0.0;
+  double accommodationAmount = 0.0;
   void getEditArray(List<TadaApprovaEditArrayModelValues> time) {
     if (editArrayList.isNotEmpty) {
       editArrayList.clear();
@@ -49,10 +53,13 @@ class TadaApprovalController extends GetxController {
       approvalTextEditingControllerList.clear();
       percentageListController.clear();
     }
-    editArrayList.addAll(time);
-    for (int i = 0; i < editArrayList.length; i++) {
+    for (int i = 0; i < time.length; i++) {
+      editArrayList.add(time.elementAt(i));
       textEditingControllerList.add(TextEditingController(
-          text: editArrayList[i].vTADAAAHSactionedAmount.toString()));
+          text: time[i].vTADAAAHSactionedAmount.toString()));
+
+      foodAmount = time.elementAt(i).vTADACMFoodAmt!;
+      accommodationAmount = time.elementAt(i).vTADACMAccommodationAmt!;
     }
   }
 
