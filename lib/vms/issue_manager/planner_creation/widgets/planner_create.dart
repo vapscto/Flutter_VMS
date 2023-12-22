@@ -51,8 +51,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   double totalday = 0.0;
   List<CreatePlannerTable> newTable = [];
   List<CategoryPlanTable> categoryList = [];
-  String startDate = '';
-  String endDate = '';
+  // String startDate = '';
+  // String endDate = '';
   String assignedDate = '';
   double plannedEffort = 0.0;
   List<Map<String, dynamic>> plannerrArray = [];
@@ -131,18 +131,17 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         newCategoryArray.addAll(categoryArray.toSet());
       }
     }
-    if (plannerCreationController.assignedTaskList.isNotEmpty) {
-      newTable.clear();
+    if (plannerCreationController.createdTaskList.isNotEmpty) {
       for (int index = 0;
-          index < plannerCreationController.assignedTaskList.length;
+          index < plannerCreationController.createdTaskList.length;
           index++) {
         setState(() {
-          if (plannerCreationController.assignedTaskList
+          if (plannerCreationController.createdTaskList
                   .elementAt(index)
                   .iSMTCRASTOAssignedDate !=
               null) {
             DateTime dt = DateTime.parse(plannerCreationController
-                .assignedTaskList
+                .createdTaskList
                 .elementAt(index)
                 .iSMTCRASTOAssignedDate
                 .toString());
@@ -150,53 +149,16 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                 '${numberList[dt.day]}:${numberList[dt.month]}:${dt.year}';
           }
           //
-          if (plannerCreationController.assignedTaskList
-                  .elementAt(index)
-                  .iSMTPLTAStartDate !=
-              null) {
-            DateTime startDt = DateTime.parse((plannerCreationController
-                    .assignedTaskList
-                    .elementAt(index)
-                    .iSMTPLTAStartDate!
-                    .contains("1900-01-01T00:00:00"))
-                ? plannerCreationController.assignedTaskList
-                    .elementAt(index)
-                    .iSMTCRASTOStartDate!
-                : plannerCreationController.assignedTaskList
-                    .elementAt(index)
-                    .iSMTPLTAStartDate!);
-            startDate =
-                '${numberList[startDt.day]}:${numberList[startDt.month]}:${startDt.year}';
-          }
 
-          //
-          if (plannerCreationController.assignedTaskList
-                  .elementAt(index)
-                  .iSMTPLTAEndDate !=
-              null) {
-            DateTime endDt = DateTime.parse((plannerCreationController
-                    .assignedTaskList
-                    .elementAt(index)
-                    .iSMTCRASTOEndDate!
-                    .contains("1900-01-01T00:00:00"))
-                ? plannerCreationController.assignedTaskList
-                    .elementAt(index)
-                    .iSMTPLTAEndDate!
-                : plannerCreationController.assignedTaskList
-                    .elementAt(index)
-                    .iSMTCRASTOEndDate!);
-            endDate =
-                '${numberList[endDt.day]}:${numberList[endDt.month]}:${endDt.year}';
-          }
-          if (plannerCreationController.assignedTaskList
+          if (plannerCreationController.createdTaskList
                   .elementAt(index)
                   .iSMTPLTAId !=
               null) {
-            if (plannerCreationController.assignedTaskList
+            if (plannerCreationController.createdTaskList
                     .elementAt(index)
                     .iSMTPLTAId! ==
                 0) {
-              plannedEffort += plannerCreationController.assignedTaskList
+              plannedEffort += plannerCreationController.createdTaskList
                   .elementAt(index)
                   .iSMTCRASTOEffortInHrs!;
               setState(() {});
@@ -205,67 +167,63 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
 
           //
 
-          id = plannerCreationController.assignedTaskList
-              .elementAt(index)
-              .iSMTPLTAId!;
           //
+          // newTable.add(CreatePlannerTable(
+          //     true,
+          //     '${plannerCreationController.assignedTaskList.elementAt(index).iSMTCRTaskNo}',
+          //     '${plannerCreationController.assignedTaskList.elementAt(index).iSMTCRTitle}',
+          //     '${plannerCreationController.assignedTaskList.elementAt(index).hRMPName}',
+          //     '${plannerCreationController.assignedTaskList.elementAt(index).iSMMCLTClientName}',
+          //     '${plannerCreationController.assignedTaskList.elementAt(index).hRMDDepartmentName}',
+          //     '${plannerCreationController.assignedTaskList.elementAt(index).periodicity}',
+          //     assignedDate,
+          //     '${plannerCreationController.assignedTaskList.elementAt(index).assignedby}',
+          //     '$startDate To $endDate ',
+          //     '${plannerCreationController.assignedTaskList.elementAt(index).iSMTCRASTOEffortInHrs} Hr',
+          //     plannerCreationController.assignedTaskList
+          //             .elementAt(index)
+          //             .iSMTCRASTORemarks ??
+          //         ' ',
+          //     plannerCreationController.assignedTaskList
+          //         .elementAt(index)
+          //         .iSMTPLTAId!));
 
-          newTable.add(CreatePlannerTable(
-              true,
-              '${plannerCreationController.assignedTaskList.elementAt(index).iSMTCRTaskNo}',
-              '${plannerCreationController.assignedTaskList.elementAt(index).iSMTCRTitle}',
-              '${plannerCreationController.assignedTaskList.elementAt(index).hRMPName}',
-              '${plannerCreationController.assignedTaskList.elementAt(index).iSMMCLTClientName}',
-              '${plannerCreationController.assignedTaskList.elementAt(index).hRMDDepartmentName}',
-              '${plannerCreationController.assignedTaskList.elementAt(index).periodicity}',
-              assignedDate,
-              '${plannerCreationController.assignedTaskList.elementAt(index).assignedby}',
-              '$startDate To $endDate ',
-              '${plannerCreationController.assignedTaskList.elementAt(index).iSMTCRASTOEffortInHrs} Hr',
-              plannerCreationController.assignedTaskList
-                      .elementAt(index)
-                      .iSMTCRASTORemarks ??
-                  ' ',
-              plannerCreationController.assignedTaskList
-                  .elementAt(index)
-                  .iSMTPLTAId!));
-
-          if (plannerCreationController.assignedTaskList
+          if (plannerCreationController.createdTaskList
                   .elementAt(index)
                   .iSMTCRASTOEffortInHrs !=
               null) {
-            totalHour += plannerCreationController.assignedTaskList
+            totalHour += plannerCreationController.createdTaskList
                 .elementAt(index)
                 .iSMTCRASTOEffortInHrs!;
           }
 
           //
           plannerrArray.add({
-            "ISMTCR_Id": plannerCreationController.assignedTaskList
+            "ISMTCR_Id": plannerCreationController.createdTaskList
                 .elementAt(index)
                 .iSMTCRId,
-            "ISMTPLTA_StartDate": plannerCreationController.assignedTaskList
+            "ISMTPLTA_StartDate": plannerCreationController.createdTaskList
                 .elementAt(index)
                 .iSMTPLTAStartDate,
-            "ISMTPLTA_EndDate": plannerCreationController.assignedTaskList
+            "ISMTPLTA_EndDate": plannerCreationController.createdTaskList
                 .elementAt(index)
                 .iSMTPLTAEndDate,
-            "ISMTPLTA_EffortInHrs": plannerCreationController.assignedTaskList
+            "ISMTPLTA_EffortInHrs": plannerCreationController.createdTaskList
                 .elementAt(index)
                 .iSMTCRASTOEffortInHrs,
-            "ISMTPLTA_Remarks": plannerCreationController.assignedTaskList
+            "ISMTPLTA_Remarks": plannerCreationController.createdTaskList
                 .elementAt(index)
                 .iSMTCRASTORemarks,
-            "ISMTPLTA_Id": plannerCreationController.assignedTaskList
+            "ISMTPLTA_Id": plannerCreationController.createdTaskList
                 .elementAt(index)
                 .iSMTPLTAId,
-            "ISMTPLTA_Status": plannerCreationController.assignedTaskList
+            "ISMTPLTA_Status": plannerCreationController.createdTaskList
                 .elementAt(index)
                 .iSMTPLTAStatus,
-            "ISMTPLTA_PreviousTask": plannerCreationController.assignedTaskList
+            "ISMTPLTA_PreviousTask": plannerCreationController.createdTaskList
                 .elementAt(index)
                 .iSMTPLTAPreviousTask,
-            "ISMTPLTA_ApprovalFlg": plannerCreationController.assignedTaskList
+            "ISMTPLTA_ApprovalFlg": plannerCreationController.createdTaskList
                 .elementAt(index)
                 .iSMTPLTAApprovalFlg,
           });
@@ -701,13 +659,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                       ],
                     ),
                   ),
-                  // (plannerCreationController.isAssignedTask.value)
-                  //     ? const AnimatedProgressWidget(
-                  //         animationPath: 'assets/json/default.json',
-                  //         title: 'Loading data',
-                  //         desc: "Please wait we are loading data",
-                  //       ):
-                  (plannerCreationController.assignedTaskList.isEmpty ||
+                  (plannerCreationController.createdTaskList.isEmpty ||
                           isDeta == false)
                       ? const AnimatedProgressWidget(
                           animationPath: 'assets/json/nodata.json',
@@ -744,7 +696,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                                     .primaryColor)),
                                     TextSpan(
                                         text:
-                                            '${plannerCreationController.assignedTaskList.length} ',
+                                            '${plannerCreationController.createdTaskList.length} ',
                                         style: Get.textTheme.titleSmall!
                                             .copyWith()),
                                   ])),
@@ -898,13 +850,23 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                     setState(() {
                       selectAll = newValue!;
                       if (selectAll) {
-                        for (var i = 0; i < newTable.length; i++) {
+                        for (var i = 0;
+                            i <
+                                plannerCreationController
+                                    .createdTaskList.length;
+                            i++) {
                           checkList.add(i);
-                          newTable[i].flag = true;
+                          plannerCreationController.createdTaskList[i].flag =
+                              true;
                         }
                       } else {
-                        for (var i = 0; i < newTable.length; i++) {
-                          newTable[i].flag = false;
+                        for (var i = 0;
+                            i <
+                                plannerCreationController
+                                    .createdTaskList.length;
+                            i++) {
+                          plannerCreationController.createdTaskList[i].flag =
+                              false;
                         }
                         checkList.clear();
                       }
@@ -962,143 +924,182 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             ),
           ],
           rows: [
-            ...List.generate(newTable.length, (index) {
+            ...List.generate(plannerCreationController.createdTaskList.length,
+                (index) {
               var i = index + 1;
-
-              return DataRow(cells: [
-                DataCell(Text(i.toString())),
-                DataCell(
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Checkbox(
-                        checkColor: Colors.indigo,
-                        shape: ContinuousRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        value: (newTable[index].ismtpltaId == 0)
-                            ? newTable.elementAt(index).flag
-                            : true,
-                        onChanged: (newTable[index].ismtpltaId == 0)
-                            ? (val) {
-                                setState(() {
-                                  newTable[index].flag = val!;
-                                  if (checkList.contains(index)) {
-                                    checkList.remove(index);
-                                    newTable[index].flag = false;
-                                    if (newTable.length != checkList.length) {
-                                      selectAll = false;
-                                    }
-                                  } else {
-                                    checkList.add(index);
-                                    if (newTable.length == checkList.length) {
-                                      selectAll = true;
-                                    }
+              var data =
+                  plannerCreationController.createdTaskList.elementAt(index);
+              DateTime startDt = DateTime.parse(
+                  data.iSMTPLTAStartDate!.contains('1900-01-01T00:00:00')
+                      ? data.iSMTCRASTOStartDate.toString()
+                      : data.iSMTPLTAStartDate.toString());
+              var startDate =
+                  '${numberList[startDt.day]}:${numberList[startDt.month]}:${startDt.year}';
+              DateTime endDt = DateTime.parse(
+                  data.iSMTPLTAEndDate!.contains('1900-01-01T00:00:00')
+                      ? data.iSMTCRASTOEndDate.toString()
+                      : data.iSMTPLTAEndDate!);
+              var endDate =
+                  '${numberList[endDt.day]}:${numberList[endDt.month]}:${endDt.year}';
+              id = data.iSMTPLTAId!;
+              return DataRow(
+                  color: (plannerCreationController
+                              .createdTaskList[index].iSMTPLTAId !=
+                          0)
+                      ? MaterialStatePropertyAll(Colors.indigo.withOpacity(0.3))
+                      : const MaterialStatePropertyAll(Colors.white),
+                  cells: [
+                    DataCell(Text(i.toString())),
+                    DataCell(
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Checkbox(
+                            checkColor: Colors.indigo,
+                            shape: ContinuousRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            value: (plannerCreationController
+                                        .createdTaskList[index].iSMTPLTAId ==
+                                    0)
+                                ? plannerCreationController.createdTaskList
+                                    .elementAt(index)
+                                    .flag
+                                : true,
+                            onChanged: (plannerCreationController
+                                        .createdTaskList[index].iSMTPLTAId ==
+                                    0)
+                                ? (val) {
+                                    setState(() {
+                                      plannerCreationController
+                                          .createdTaskList[index].flag = val!;
+                                      if (checkList.contains(index)) {
+                                        checkList.remove(index);
+                                        plannerCreationController
+                                            .createdTaskList[index]
+                                            .flag = false;
+                                        if (plannerCreationController
+                                                .createdTaskList.length !=
+                                            checkList.length) {
+                                          selectAll = false;
+                                        }
+                                      } else {
+                                        checkList.add(index);
+                                        if (plannerCreationController
+                                                .createdTaskList.length ==
+                                            checkList.length) {
+                                          selectAll = true;
+                                        }
+                                      }
+                                    });
                                   }
-                                });
-                              }
-                            : null,
-                      )),
-                ),
-                DataCell(SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          newTable[index].taskNo,
-                          style: Get.textTheme.titleSmall!
-                              .copyWith(color: Theme.of(context).primaryColor),
-                        ),
-                        Text(
-                          newTable[index].taskName,
-                          maxLines: 2,
-                          style: Get.textTheme.titleSmall!
-                              .copyWith(color: Theme.of(context).primaryColor),
-                        ),
-                        RichText(
-                            text: TextSpan(children: [
-                          TextSpan(
-                              text: 'Type Task: ',
-                              style: Get.textTheme.titleSmall!.copyWith(
-                                  color: (newTable[index].ismtpltaId == 0)
-                                      ? Theme.of(context).primaryColor
-                                      : Colors.red)),
-                          TextSpan(
-                              text: newTable[index].taskType,
-                              style: Get.textTheme.titleSmall!.copyWith()),
-                        ])),
-                        RichText(
-                            text: TextSpan(children: [
-                          TextSpan(
-                              text: 'Clint: ',
-                              style: Get.textTheme.titleSmall!.copyWith(
-                                  color: Theme.of(context).primaryColor)),
-                          TextSpan(
-                              text: newTable[index].clint,
-                              style: Get.textTheme.titleSmall!.copyWith()),
-                        ])),
-                        RichText(
-                            text: TextSpan(children: [
-                          TextSpan(
-                              text: 'Category: ',
-                              style: Get.textTheme.titleSmall!.copyWith(
-                                  color: Theme.of(context).primaryColor)),
-                          TextSpan(
-                              text: newTable[index].category,
-                              style: Get.textTheme.titleSmall!.copyWith()),
-                        ])),
-                        RichText(
-                            text: TextSpan(children: [
-                          TextSpan(
-                              text: 'Periodicity: ',
-                              style: Get.textTheme.titleSmall!.copyWith(
-                                  color: Theme.of(context).primaryColor)),
-                          TextSpan(
-                              text: newTable[index].Periodicity,
-                              style: Get.textTheme.titleSmall!.copyWith()),
-                        ])),
-                        RichText(
-                            text: TextSpan(children: [
-                          TextSpan(
-                              text: 'Assigned Date: ',
-                              style: Get.textTheme.titleSmall!.copyWith(
-                                  color: Theme.of(context).primaryColor)),
-                          TextSpan(
-                              text: newTable[index].assignedDate,
-                              style: Get.textTheme.titleSmall!.copyWith()),
-                        ])),
-                      ],
+                                : null,
+                          )),
                     ),
-                  ),
-                )),
-                DataCell(Text(newTable[index].assignedBy)),
-                DataCell(Text(newTable[index].date)),
-                DataCell(Text(newTable[index].effort)),
-                DataCell(TextFormField(
-                  initialValue: newTable[index].remarks,
-                  onChanged: (value) {
-                    remark.value = value;
-                  },
-                  onTap: () {
-                    var checkTxt = checkList.contains(
-                            newTable.indexOf(newTable.elementAt(index)))
-                        ? false
-                        : true;
-                    if (checkTxt) {
-                      Fluttertoast.showToast(msg: "Please select checkbox");
-                    }
-                  },
-                  readOnly: checkList
-                          .contains(newTable.indexOf(newTable.elementAt(index)))
-                      ? false
-                      : true,
-                  style: Get.textTheme.titleSmall,
-                  decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.only(left: 4, right: 4),
-                      border: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue))),
-                )),
-              ]);
+                    DataCell(SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              data.iSMTCRTaskNo!,
+                              style: Get.textTheme.titleSmall!.copyWith(
+                                  color: Theme.of(context).primaryColor),
+                            ),
+                            Text(
+                              '${data.iSMTCRTitle}',
+                              maxLines: 2,
+                              style: Get.textTheme.titleSmall!.copyWith(
+                                  color: Theme.of(context).primaryColor),
+                            ),
+                            RichText(
+                                text: TextSpan(children: [
+                              TextSpan(
+                                  text: 'Type Task: ',
+                                  style: Get.textTheme.titleSmall!.copyWith(
+                                      color: (data.iSMTPLTAId == 0)
+                                          ? Theme.of(context).primaryColor
+                                          : Colors.red)),
+                              TextSpan(
+                                  text: data.hRMPName,
+                                  style: Get.textTheme.titleSmall!.copyWith()),
+                            ])),
+                            RichText(
+                                text: TextSpan(children: [
+                              TextSpan(
+                                  text: 'Clint: ',
+                                  style: Get.textTheme.titleSmall!.copyWith(
+                                      color: Theme.of(context).primaryColor)),
+                              TextSpan(
+                                  text: data.iSMMCLTClientName,
+                                  style: Get.textTheme.titleSmall!.copyWith()),
+                            ])),
+                            RichText(
+                                text: TextSpan(children: [
+                              TextSpan(
+                                  text: 'Category: ',
+                                  style: Get.textTheme.titleSmall!.copyWith(
+                                      color: Theme.of(context).primaryColor)),
+                              TextSpan(
+                                  text: data.iSMMTCATTaskCategoryName,
+                                  style: Get.textTheme.titleSmall!.copyWith()),
+                            ])),
+                            RichText(
+                                text: TextSpan(children: [
+                              TextSpan(
+                                  text: 'Periodicity: ',
+                                  style: Get.textTheme.titleSmall!.copyWith(
+                                      color: Theme.of(context).primaryColor)),
+                              TextSpan(
+                                  text: data.periodicity,
+                                  style: Get.textTheme.titleSmall!.copyWith()),
+                            ])),
+                            RichText(
+                                text: TextSpan(children: [
+                              TextSpan(
+                                  text: 'Assigned Date: ',
+                                  style: Get.textTheme.titleSmall!.copyWith(
+                                      color: Theme.of(context).primaryColor)),
+                              TextSpan(
+                                  text: assignedDate,
+                                  style: Get.textTheme.titleSmall!.copyWith()),
+                            ])),
+                          ],
+                        ),
+                      ),
+                    )),
+                    DataCell(Text(data.assignedby!)),
+                    DataCell(Text('$startDate TO $endDate')),
+                    DataCell(Text('${data.iSMTCRASTOEffortInHrs} Hr')),
+                    DataCell(TextFormField(
+                      initialValue: data.iSMTCRASTORemarks ?? '',
+                      onChanged: (value) {
+                        remark.value = value;
+                      },
+                      onTap: () {
+                        var checkTxt = checkList.contains(
+                                plannerCreationController.createdTaskList
+                                    .indexOf(plannerCreationController
+                                        .createdTaskList
+                                        .elementAt(index)))
+                            ? false
+                            : true;
+                        if (checkTxt) {
+                          Fluttertoast.showToast(msg: "Please select checkbox");
+                        }
+                      },
+                      readOnly: checkList.contains(plannerCreationController
+                              .createdTaskList
+                              .indexOf(plannerCreationController.createdTaskList
+                                  .elementAt(index)))
+                          ? false
+                          : true,
+                      style: Get.textTheme.titleSmall,
+                      decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.only(left: 4, right: 4),
+                          border: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue))),
+                    )),
+                  ]);
             })
           ],
         ),
