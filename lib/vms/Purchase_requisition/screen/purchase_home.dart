@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
+import 'package:m_skool_flutter/vms/Purchase_requisition/api/onchange_item_api.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/api/purchase_dropdownlist_api.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/api/purchase_getitem_api.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/api/purchase_save_api.dart';
@@ -61,6 +62,10 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
       Get.put(VmsTransationController());
   List<Map<String, dynamic>> arrayPR = [];
   Map<String, dynamic> transnumbconfigurationsettingsss = {};
+
+  // String? selectedItemName;
+
+  String? selectedItemInvmIId;
   _getTransation() async {
     String password = logInBox!.get("password");
     await VmsTransationAPI.instance.getTransation(
@@ -618,6 +623,14 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                                                   child:
                                                                       InkWell(
                                                                     onTap: () {
+                                                                      purchaseRequisitionController
+                                                                              .selecInt
+                                                                              .value =
+                                                                          purchaseRequisitionController
+                                                                              .getrequestGetItemList[i]
+                                                                              .invmIId!;
+                                                                      logger.w(
+                                                                          "Prathap ${purchaseRequisitionController.selecString.value}");
                                                                       String
                                                                           selectedItemName =
                                                                           purchaseRequisitionController
@@ -672,6 +685,24 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                                                       Navigator.of(
                                                                               context)
                                                                           .pop();
+
+                                                                      // Pass the selected value to the API call
+                                                                      getIndentItemDetails(
+                                                                        miId: widget
+                                                                            .loginSuccessModel
+                                                                            .mIID!,
+                                                                        base: baseUrlFromInsCode(
+                                                                            "inventory",
+                                                                            widget.mskoolController),
+                                                                        userId: widget
+                                                                            .loginSuccessModel
+                                                                            .userId!,
+                                                                        itemId: purchaseRequisitionController
+                                                                            .selecInt
+                                                                            .value, // Pass the selected value as itemId
+                                                                        controller:
+                                                                            purchaseRequisitionController,
+                                                                      );
                                                                     },
                                                                     child: Text(
                                                                       purchaseRequisitionController
@@ -700,6 +731,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                                         ),
                                                       ),
                                                     );
+                                                    ;
                                                   },
                                                 );
                                               },
@@ -707,31 +739,10 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                       )),
                                       DataCell(
                                         Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: TextField(
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall,
-                                            controller: uomController[index],
-                                            readOnly: true,
-                                            decoration: const InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              hintText: 'Enter here.',
-                                              floatingLabelBehavior:
-                                                  FloatingLabelBehavior.always,
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: Colors.transparent,
-                                                ),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: Colors.transparent,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Obx(() => Text(
+                                                purchaseRequisitionController
+                                                    .selecString.value))),
                                       ),
                                       DataCell(
                                         Padding(

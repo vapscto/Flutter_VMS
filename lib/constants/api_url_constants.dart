@@ -667,4 +667,6 @@ class URLS {
   static String purchaseLoadData = "api/IndentApprovalFacade/getloaddata/";
 
   static String purchaseSaveApi = "api/IndentApprovalFacade/savedetails/";
+
+  static String indentItem = "api/INV_PurchaseRequisitionFacade/getitemDetail/";
 }

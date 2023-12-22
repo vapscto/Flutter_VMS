@@ -16,6 +16,13 @@ import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import '../../../widget/home_fab.dart';
 
+class Item {
+  bool isApproved;
+  bool isRejected;
+
+  Item({required this.isApproved, required this.isRejected});
+}
+
 class PurchaseDetails extends StatefulWidget {
   final int invmpiId;
   final LoginSuccessModel loginSuccessModel;
@@ -61,7 +68,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
         "INVTPI_PIUnitRate": controller.unitControllerList.elementAt(i).text,
         "INVTPI_ApproxAmount":
             controller.getOnclickList.elementAt(i).iNVTPIApproxAmount,
-        "flag": controller.selectedValue.elementAt(i),
+        "flag": controller.selectedValue.elementAt(i).isApproved == true ? "A" : "R",
         "INVTPIAPP_ApprovedQty":
             controller.getOnclickList[i].iNVTPIAPPApprovedQty,
         "INVTPI_Remarks": controller.remarkControllerList.elementAt(i).text,
@@ -95,8 +102,53 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
         invmpiId: widget.invmpiId);
     DateTime dt = DateTime.parse(widget.values.iNVMPIPIDate!);
     date = '${dt.day}-${dt.month}-${dt.year}';
+
+
+
+    controller.selectedValue = List.generate(
+        controller.getOnclickList.length,
+        (index) => (controller.getOnclickList
+                    .elementAt(index)
+                    .iNVMIId ==
+                2)
+            ? Item(
+                isApproved: (controller.getOnclickList
+                            .elementAt(index)
+                            .iNVTPIApproxAmount !=
+                        0)
+                    ? true
+                    : false,
+                isRejected: (controller.getOnclickList
+                            .elementAt(index)
+                            .iNVTPIApproxAmount ==
+                        0)
+                    ? true
+                    : false)
+            : Item(isApproved: true, isRejected: false));
+    setState(() {
+      updateCounts();
+    });
+
+
+
+
     super.initState();
   }
+
+  int approvedCount = 0;
+  int rejectedCount = 0;
+  void updateCounts() {
+    approvedCount = controller.selectedValue
+        .where((item) => item.isApproved)
+        .length;
+    rejectedCount = controller.selectedValue
+        .where((item) => item.isRejected)
+        .length;
+    logger.i(approvedCount);
+    logger.i(rejectedCount);
+  }
+
+
 
   @override
   void dispose() {
@@ -399,12 +451,15 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                                   (states) => Theme.of(context)
                                                       .primaryColor),
                                           groupValue:
-                                              controller.selectedValue[index],
-                                          value: 'A',
-                                          onChanged: (dynamic value) {
+                                              controller.selectedValue[index].isApproved,
+                                          value: true,
+                                          onChanged: (value) {
                                             setState(() {
-                                              controller.selectedValue[index] =
-                                                  value;
+                                              controller.selectedValue[index].isApproved =
+                                                  value!;
+                                              controller.selectedValue[index].isRejected =
+                                                  !value;
+
                                               controller
                                                   .totalApproxAmountControllerList
                                                   .add(TextEditingController(
@@ -416,10 +471,13 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                               //     .totalApproxAmountControllerList
                                               //     .elementAt(index)
                                               //     .text);
-                                              addAmount(num.parse(controller
+                                              addAmount(double.parse(controller
                                                   .totalApproxAmountControllerList
                                                   .elementAt(index)
                                                   .text));
+
+                                              updateCounts();
+
                                             });
                                           },
                                         )),
@@ -429,12 +487,15 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                                   (states) => Theme.of(context)
                                                       .primaryColor),
                                           groupValue:
-                                              controller.selectedValue[index],
-                                          value: 'R',
+                                              controller.selectedValue[index].isRejected,
+                                          value: true,
                                           onChanged: (dynamic value) {
                                             setState(() {
-                                              controller.selectedValue[index] =
+                                              controller.selectedValue[index].isRejected =
                                                   value;
+                                              controller.selectedValue[index].isApproved =
+                                                  !value;
+
                                               controller
                                                   .totalApproxAmountControllerList
                                                   .add(TextEditingController(
@@ -448,11 +509,14 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                               //     .text);
                                               (amount <= 0)
                                                   ? removeAmount(0)
-                                                  : removeAmount(num.parse(
+                                                  : removeAmount(double.parse(
                                                       controller
                                                           .totalApproxAmountControllerList
                                                           .elementAt(index)
                                                           .text));
+
+                                              updateCounts();
+
                                             });
                                           },
                                         )),
@@ -649,6 +713,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                         size: const Size.fromWidth(100),
                         title: "Save",
                         onPress: () {
+                          updateCounts();
                           saveData();
                         },
                       ),

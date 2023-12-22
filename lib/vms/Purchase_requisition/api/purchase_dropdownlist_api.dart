@@ -13,8 +13,8 @@ getPurchaseRequisitionApi({
 }) async {
   final Dio ins = getGlobalDio();
   final String api = base + URLS.purchaserequisitionapi;
-  const String api2 =
-      "https://vmsinventoryservicehub.azurewebsites.net/api/INV_PurchaseRequisitionFacade/GetOnchangeData/";
+  // const String api2 =
+  //     "https://vmsinventoryservicehub.azurewebsites.net/api/INV_PurchaseRequisitionFacade/GetOnchangeData/";
 
   if (controller.isErrorOccuredRequestRequisition.value) {
     controller.updateIsErrorOccuredRequestRequisition(false);

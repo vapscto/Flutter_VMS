@@ -4,12 +4,16 @@ import 'package:m_skool_flutter/vms/Purchase_indent/model/get_pi_model.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/model/purchase_indent_model.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/model/purchase_request_comment.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/model/view_comment_model.dart';
+import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_indent_details.dart';
 
 class PurchaseController extends GetxController {
   RxBool isFromDataProvided = RxBool(false);
   RxBool isLoadingApproval = RxBool(false);
   RxBool isSaveLoaeding = RxBool(false);
-  List<String> selectedValue = [];
+  List<Item> selectedValue = [];
+  void addToSelectedValueList(List<Item> value) {
+    selectedValue.addAll(value);
+  }
   RxList<TextEditingController> unitControllerList =
       <TextEditingController>[].obs;
   RxList<TextEditingController> remarkControllerList =
@@ -17,9 +21,9 @@ class PurchaseController extends GetxController {
   RxList<TextEditingController> totalApproxAmountControllerList =
       <TextEditingController>[].obs;
 
-  void addToSelectedValueList(List<String> value) {
-    selectedValue.add(value.toString());
-  }
+  // void addToSelectedValueList(List<String> value) {
+  //   selectedValue.add(value.toString());
+  // }
 
   void updateIsFromDataProvided(bool isProvided) {
     isFromDataProvided.value = isProvided;
@@ -78,7 +82,7 @@ class PurchaseController extends GetxController {
     totalApproxAmountControllerList.add(remarkController);
   }
 
-  void getSelectedData(String selectedData) {
+  void getSelectedData(Item selectedData) {
     selectedValue.add(selectedData);
   }
 
@@ -93,14 +97,23 @@ class PurchaseController extends GetxController {
 
     getOnclickList.addAll(nitin);
     for (int i = 0; i < nitin.length; i++) {
-      unitControllerList.add(TextEditingController(
-          text: nitin.elementAt(i).iNVTPIPIUnitRate.toString()));
-      remarkControllerList
-          .add(TextEditingController(text: nitin.elementAt(i).iNVTPIRemarks));
-      selectedValue.add(nitin.elementAt(i).type!);
-      totalApproxAmountControllerList.add(TextEditingController(
-          text: nitin.elementAt(i).iNVTPIApproxAmount.toString()));
-    }
+    unitControllerList.add(TextEditingController(
+        text: nitin.elementAt(i).iNVTPIPIUnitRate.toString()));
+    remarkControllerList.add(TextEditingController(
+        text: nitin.elementAt(i).iNVTPIRemarks));
+
+    // Create an instance of Item using the 'type' property of GetPiModelValues
+    Item item = Item(
+        isApproved: false,  // You might need to set appropriate values here
+        isRejected: false   // You might need to set appropriate values here
+    );
+
+    selectedValue.add(item);
+
+    totalApproxAmountControllerList.add(TextEditingController(
+        text: nitin.elementAt(i).iNVTPIApproxAmount.toString()));
+}
+
   }
 
   RxBool isErrorOccuredOnclick = RxBool(false);
