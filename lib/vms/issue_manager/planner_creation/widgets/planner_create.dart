@@ -192,7 +192,16 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         });
       }
     }
+    plannerCreationController.totalDay = 0;
+    plannerCreationController.totalHour = 0;
     plannerCreationController.taskLoading(false);
+    for (int i = 0;
+        i < plannerCreationController.effortDataValues.length;
+        i++) {
+      plannerCreationController.totalDay++;
+      plannerCreationController.totalHour +=
+          plannerCreationController.effortDataValues[i].wORKINGHOURS!;
+    }
   }
 
   getPlannerStatus() async {

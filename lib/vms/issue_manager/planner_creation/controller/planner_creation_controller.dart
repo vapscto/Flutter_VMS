@@ -68,10 +68,10 @@ class PlannerCreationController extends GetxController {
       var val = value.elementAt(i);
       var taskEffort = val.iSMTCRASTOEffortInHrs;
       var hrsEff = taskEffort;
-      var minEff = ((double.parse(taskEffort.toString()) -
-                  num.parse(hrsEff.toString())) *
-              60)
-          .round();
+      var minEff =
+          ((num.parse(taskEffort.toString()) - num.parse(hrsEff.toString())) *
+                  60)
+              .round();
 
       if (hrsEff.toString().length == 1) {
         hrsEff = 0 + num.parse(hrsEff.toString()).toDouble();
@@ -820,12 +820,12 @@ class PlannerCreationController extends GetxController {
     if (effortDataValues.isNotEmpty) {
       effortDataValues.clear();
     }
+    totalHour = 0.0;
+    totalDay = 0.0;
     for (int i = 0; i < data.length; i++) {
       effortDataValues.add(data.elementAt(i));
-      // totalDay = 0.0;
-      // totalHour = 0.0;
-      // totalDay += num.parse(data[i].nOOFDAYS.toString());
-      // totalHour += num.parse(data[i].wORKINGHOURS.toString());
+      totalDay += (data[i].nOOFDAYS!);
+      totalHour += (data[i].wORKINGHOURS!);
     }
   }
 

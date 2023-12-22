@@ -52,6 +52,8 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
               child: AlertDialog(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
+                insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+                contentPadding: const EdgeInsets.all(10),
                 title: Align(
                     alignment: Alignment.center,
                     child: Text(
@@ -65,10 +67,12 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
                               fontWeight: FontWeight.w900)),
                     )),
                 content: SizedBox(
-                  height: 300,
+                  // height: 300,
+                  width: MediaQuery.of(context).size.width,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -132,38 +136,39 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
                       ),
                       // const Expanded(
                       //   child: SizedBox(
-                           
+
                       //       ),
                       // ),
-                      // Row(
-                      //   children: [
-                      MSkollBtn(
-                        title: "Close",
-                        onPress: () {
-                          Get.back();
-                          Get.back();
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          MSkollBtn(
+                            title: "Close",
+                            onPress: () {
+                              Get.back();
+                              Get.back();
 
-                          plannerApprovalController.leavePopUp.clear();
-                        },
+                              plannerApprovalController.leavePopUp.clear();
+                            },
+                          ),
+                          const Expanded(child: SizedBox()),
+                          MSkollBtn(
+                            title: "Leave Approval",
+                            onPress: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (_) {
+                                return ListLeaveHomeScreen(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                  title: "Leave Approval",
+                                );
+                              }));
+
+                              //     plannerApprovalController.leavePopUp.clear();
+                            },
+                          )
+                        ],
                       ),
-                      // const Expanded(child: SizedBox()),
-                      // MSkollBtn(
-                      //   title: "Leave Approval",
-                      //   onPress: () {
-                      //     Navigator.push(context,
-                      //         MaterialPageRoute(builder: (_) {
-                      //       return ListLeaveHomeScreen(
-                      //         loginSuccessModel: widget.loginSuccessModel,
-                      //         mskoolController: widget.mskoolController,
-                      //         title: "Leave Approval",
-                      //       );
-                      //     }));
-
-                      //     plannerApprovalController.leavePopUp.clear();
-                      //   },
-                      // )
-                      //   ],
-                      // ),
                       const SizedBox(
                         height: 20,
                       ),
