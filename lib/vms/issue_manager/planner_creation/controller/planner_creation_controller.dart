@@ -818,6 +818,7 @@ class PlannerCreationController extends GetxController {
   //effort list
   double totalDay = 0.0;
   double totalHour = 0.0;
+  double hour = 0.0;
   RxList<TotalEffortDataValues> effortDataValues =
       <TotalEffortDataValues>[].obs;
   effortData(List<TotalEffortDataValues> data) {
@@ -826,11 +827,12 @@ class PlannerCreationController extends GetxController {
     }
     totalHour = 0.0;
     totalDay = 0.0;
+    hour = 0.0;
     totalDay += (data.length);
     for (int i = 0; i < data.length; i++) {
       effortDataValues.add(data.elementAt(i));
 
-      // totalHour += (data[i].wORKINGHOURS!);
+      hour = data[i].wORKINGHOURS!;
     }
   }
 

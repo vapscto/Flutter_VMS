@@ -120,11 +120,11 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               '${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskCategoryName}',
               '${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage} %',
               double.parse(
-                  "${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage! / 100 * 8 * totalday}"),
+                  "${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage! / 100 * plannerCreationController.hour * plannerCreationController.effortDataValues.length}"),
               double.parse(
                   "${plannerCreationController.categoryWisePlan.elementAt(index).ismtcrastOEffortInHrs}"),
               double.parse(
-                  "${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage! / 100 * 8 * totalday}")));
+                  "${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage! / 100 * plannerCreationController.hour * plannerCreationController.effortDataValues.length}")));
         });
 
         categoryArray.add({
@@ -680,7 +680,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                                 color: Theme.of(context)
                                                     .primaryColor)),
                                     TextSpan(
-                                        text: '$totalday',
+                                        text:
+                                            '${plannerCreationController.effortDataValues.length}',
                                         style: Get.textTheme.titleSmall!
                                             .copyWith()),
                                   ])),
@@ -1160,7 +1161,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Planned Effort must be greater than or equal to ${totalday * 8} Hours ... !!",
+                "Planned Effort must be greater than or equal to ${plannerCreationController.effortDataValues.length * 8} Hours ... !!",
                 textAlign: TextAlign.center,
                 style: Get.textTheme.titleMedium!.copyWith(
                     color: Theme.of(context).primaryColor,
