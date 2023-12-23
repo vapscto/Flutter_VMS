@@ -141,6 +141,10 @@ class _TadaApproveHomeScreenState extends State<TadaApproveHomeScreen> {
                                                   widget.loginSuccessModel,
                                               mskoolController:
                                                   widget.mskoolController,
+                                              vtadaaaaId: tadaApprovalController
+                                                      .tadaApprovalList[index]
+                                                      .vTADAAAId ??
+                                                  0,
                                             ));
                                       },
                                       icon: const Icon(Icons.visibility))),

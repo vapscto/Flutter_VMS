@@ -25,13 +25,14 @@ class ApproveTADATableData extends StatefulWidget {
   final double amount;
   final TadaApprovalListModelValues values;
   final MskoolController mskoolController;
-
+  final int vtadaaaaId;
   const ApproveTADATableData(
       {super.key,
       required this.tadaController,
       required this.amount,
       required this.values,
-      required this.mskoolController});
+      required this.mskoolController,
+      required this.vtadaaaaId});
 
   @override
   State<ApproveTADATableData> createState() => _ApproveTADATableDataState();
@@ -65,7 +66,8 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         userId: widget.values.userId!,
         tadaController: widget.tadaController,
-        vtaDaaId: widget.values.vTADAAId!);
+        vtaDaaId: widget.values.vTADAAId!,
+        vtadaaaaId: widget.vtadaaaaId);
 
     DateTime dt = DateTime.parse(widget.values.vTADAAFromDate!);
     fromDate = '${dt.day}-${dt.month}-${dt.year}';
@@ -182,6 +184,19 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                           borderRadius: BorderRadius.circular(10),
                           child: _createTable(),
                         ),
+                      )
+                    : const SizedBox(),
+                const SizedBox(height: 10),
+                widget.tadaController.balanceApplyList.isNotEmpty
+                    ? Column(
+                        children: [
+                          Text(
+                            "Advance Details",
+                            style: Get.textTheme.titleMedium!.copyWith(
+                                color: Theme.of(context).primaryColor),
+                          ),
+                          const SizedBox(height: 6),
+                        ],
                       )
                     : const SizedBox(),
                 const SizedBox(height: 10),

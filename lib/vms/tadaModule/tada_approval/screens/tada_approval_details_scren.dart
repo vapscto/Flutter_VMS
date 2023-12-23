@@ -21,6 +21,7 @@ class TADAApprovalDetailsScreen extends StatefulWidget {
   final TadaApprovalController tadaController;
   final int vtadaaId;
   final TadaApprovalListModelValues values;
+  final int vtadaaaaId;
 
   final String date;
   const TADAApprovalDetailsScreen(
@@ -30,7 +31,8 @@ class TADAApprovalDetailsScreen extends StatefulWidget {
       required this.vtadaaId,
       required this.values,
       required this.loginSuccessModel,
-      required this.mskoolController});
+      required this.mskoolController,
+      required this.vtadaaaaId});
 
   @override
   State<TADAApprovalDetailsScreen> createState() =>
@@ -52,7 +54,8 @@ class _TADAApprovalDetailsScreenState extends State<TADAApprovalDetailsScreen> {
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         userId: widget.values.userId!,
         tadaController: widget.tadaController,
-        vtaDaaId: widget.vtadaaId);
+        vtaDaaId: widget.vtadaaId,
+        vtadaaaaId: widget.vtadaaaaId);
     setState(() {
       DateTime dt = DateTime.parse(widget.values.vTADAAFromDate!);
       fromDate = '${dt.day}-${dt.month}-${dt.year}';
@@ -320,6 +323,7 @@ class _TADAApprovalDetailsScreenState extends State<TADAApprovalDetailsScreen> {
                                       widget.values.vTADAATotalAppliedAmount!,
                                   values: widget.values,
                                   mskoolController: widget.mskoolController,
+                                  vtadaaaaId: widget.vtadaaaaId,
                                 ),
                               ],
                             ),

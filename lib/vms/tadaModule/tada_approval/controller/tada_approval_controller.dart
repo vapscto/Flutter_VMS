@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/balance_apply_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/file_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_edit_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_list_model.dart';
@@ -94,6 +95,25 @@ class TadaApprovalController extends GetxController {
     }
     for (int i = 0; i < tadaApprovalFile.length; i++) {
       tadaApprovalFileList.add(tadaApprovalFile.elementAt(i));
+    }
+  }
+
+  RxList<BalanceApplyModelValues> balanceApplyList =
+      <BalanceApplyModelValues>[].obs;
+  RxList<BalanceApplyModelValues> balanceApplySecondList =
+      <BalanceApplyModelValues>[].obs;
+  int count = 0;
+  void getBalanceApply(List<BalanceApplyModelValues> balanceApply) {
+    if (balanceApplyList.isNotEmpty) {
+      balanceApplyList.clear();
+    }
+    for (int index = 0; index < balanceApply.length; index++) {
+      for (int i = 1; i < 10; i++) {
+        count = i;
+        if (balanceApply.elementAt(index).vTADAAAASanctioningLevel == i) {
+          balanceApplyList.add(balanceApply.elementAt(index));
+        }
+      }
     }
   }
 }

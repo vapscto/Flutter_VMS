@@ -3,6 +3,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/controller/tada_approval_controller.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/balance_apply_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/file_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_edit_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_time.dart';
@@ -16,7 +17,8 @@ class TADAApprovalDetailsAPI {
       {required String base,
       required int userId,
       required TadaApprovalController tadaController,
-      required int vtaDaaId}) async {
+      required int vtaDaaId,
+      required int vtadaaaaId}) async {
     final dio = Dio();
     var url2 = base + URLS.tadaApprovalDetails;
 
@@ -24,11 +26,18 @@ class TADAApprovalDetailsAPI {
       tadaController.updateIsLoading(true);
 
       var response = await dio.post(url2,
-          data: {"UserId": userId, "VTADAA_Id": vtaDaaId},
-          options: Options(headers: getSession()) //60064 71
-          );
+          data: {
+            "UserId": userId,
+            "VTADAA_Id": vtaDaaId,
+            "VTADAAAAA_Id": vtadaaaaId
+          },
+          options: Options(headers: getSession()));
       logger.i(url2);
-      logger.i({"UserId": userId, "VTADAA_Id": vtaDaaId});
+      logger.i({
+        "UserId": userId,
+        "VTADAA_Id": vtaDaaId,
+        "VTADAAAAA_Id": vtadaaaaId
+      });
       if (response.statusCode == 200) {
         logger.d(response.data);
         TadaApprovalTimeArrayModel timeArrayDADADataValues =
@@ -44,6 +53,11 @@ class TADAApprovalDetailsAPI {
           TadaApprovaFileModel tadaApprovaFileModel =
               TadaApprovaFileModel.fromJson(response.data['getFile']);
           tadaController.getFileList(tadaApprovaFileModel.values!);
+        }
+        if (response.data['veiwdetails'] != null) {
+          BalanceApplyModel balanceApplyModel =
+              BalanceApplyModel.fromJson(response.data['veiwdetails']);
+          tadaController.getBalanceApply(balanceApplyModel.values!);
         }
       }
     } catch (e) {
