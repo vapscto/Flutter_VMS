@@ -388,7 +388,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
       DataColumn(label: Text("Amount")),
       DataColumn(label: Text("Total Slots")),
       DataColumn(label: Text("Slots")),
-      DataColumn(label: Text("Amount")),
+      DataColumn(label: Text("Applied Amount")),
       // DataColumn(label: Text("Percentage")),
       DataColumn(label: Text("Sanction Amount")),
       DataColumn(label: Text("Approval Remarks")),
