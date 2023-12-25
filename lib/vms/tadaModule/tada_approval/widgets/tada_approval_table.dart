@@ -789,7 +789,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                               Fluttertoast.showToast(
                                   msg: "Reject Successfully");
                               Get.back();
-                              // Get.back();
+                              Get.back();
                               setState(() {});
                             });
                           },
