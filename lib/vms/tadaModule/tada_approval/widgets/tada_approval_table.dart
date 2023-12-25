@@ -306,7 +306,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                               ],
                             ),
                             const SizedBox(height: 6),
-                            widget.tadaController.balanceApplyList.isEmpty
+                            widget.tadaController.balanceApplySecondList.isEmpty
                                 ? const SizedBox()
                                 : Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -380,6 +380,125 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                                                 var i = index + 1;
                                                 var v = widget.tadaController
                                                     .balanceApplySecondList
+                                                    .elementAt(index);
+                                                DateTime dt = DateTime.parse(
+                                                    v.vTADAAAAppliedDate!);
+                                                var appliedDate =
+                                                    '${dt.day}-${dt.month}-${dt.year}';
+                                                DateTime dt2 = DateTime.parse(
+                                                    v.vTADAAAADate!);
+                                                var approvedDate =
+                                                    '${dt2.day}-${dt2.month}-${dt2.year}';
+                                                return DataRow(cells: [
+                                                  DataCell(Text(i.toString())),
+                                                  DataCell(Text(appliedDate)),
+                                                  DataCell(Text(v
+                                                      .vTADAAADExpenditureHead!)),
+                                                  DataCell(Text(
+                                                      (v.vTADAAADExpenditureHead ==
+                                                              'Food')
+                                                          ? v.vTADACMFoodAmt
+                                                              .toString()
+                                                          : v.vTADACMAccommodationAmt
+                                                              .toString())),
+                                                  DataCell(Text(v
+                                                      .vTADAAADTotalSlots
+                                                      .toString())),
+                                                  DataCell(Text(v.vTADAAADSlots
+                                                      .toString())),
+                                                  DataCell(Text(v
+                                                      .headWiseAppliedAmount
+                                                      .toString())),
+                                                  DataCell(Text(v
+                                                      .headWiseSactionedAmount
+                                                      .toString())),
+                                                  DataCell(Text(approvedDate)),
+                                                  DataCell(Text(v
+                                                      .vTADAAAAHRemarks
+                                                      .toString())),
+                                                  DataCell(Text(
+                                                      v.vTADAAAAHStatusFlg!))
+                                                ]);
+                                              })),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                            const SizedBox(height: 6),
+                            widget.tadaController.balanceApplyThirdList.isEmpty
+                                ? const SizedBox()
+                                : Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Approved By :- ${widget.tadaController.balanceApplyThirdList.first.approvedBy}',
+                                        style: Get.textTheme.titleMedium!
+                                            .copyWith(
+                                                color: Theme.of(context)
+                                                    .primaryColor),
+                                      ),
+                                      const SizedBox(height: 6),
+                                      SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: DataTable(
+                                              dataRowHeight: 35,
+                                              headingRowHeight: 40,
+                                              columnSpacing: 20,
+                                              headingTextStyle: const TextStyle(
+                                                  color: Colors.white),
+                                              border: TableBorder.all(
+                                                color: Colors.black,
+                                                width: 0.6,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              headingRowColor:
+                                                  MaterialStateColor
+                                                      .resolveWith((states) =>
+                                                          Theme.of(context)
+                                                              .primaryColor),
+                                              columns: const [
+                                                DataColumn(
+                                                    label: Text("SL.NO.")),
+                                                DataColumn(
+                                                    label:
+                                                        Text("Applied Date")),
+                                                DataColumn(
+                                                    label: Text(
+                                                        "Expenditure Head")),
+                                                DataColumn(
+                                                    label: Text("Amount")),
+                                                DataColumn(
+                                                    label: Text("Total Slots")),
+                                                DataColumn(
+                                                    label: Text("Slots")),
+                                                DataColumn(
+                                                    label:
+                                                        Text("Applied Amount")),
+                                                DataColumn(
+                                                    label: Text(
+                                                        "Approved Amount")),
+                                                DataColumn(
+                                                    label:
+                                                        Text("Approved Date")),
+                                                DataColumn(
+                                                    label: Text(
+                                                        "Approval Remark")),
+                                                DataColumn(
+                                                    label: Text(
+                                                        "ExpenditureHead Status")),
+                                              ],
+                                              rows: List.generate(
+                                                  widget
+                                                      .tadaController
+                                                      .balanceApplyThirdList
+                                                      .length, (index) {
+                                                var i = index + 1;
+                                                var v = widget.tadaController
+                                                    .balanceApplyThirdList
                                                     .elementAt(index);
                                                 DateTime dt = DateTime.parse(
                                                     v.vTADAAAAppliedDate!);

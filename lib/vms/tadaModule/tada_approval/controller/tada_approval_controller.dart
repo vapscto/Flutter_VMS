@@ -102,21 +102,27 @@ class TadaApprovalController extends GetxController {
       <BalanceApplyModelValues>[].obs;
   RxList<BalanceApplyModelValues> balanceApplySecondList =
       <BalanceApplyModelValues>[].obs;
+  RxList<BalanceApplyModelValues> balanceApplyThirdList =
+      <BalanceApplyModelValues>[].obs;
   int count = 0;
+  RxList<int> newIndex = <int>[].obs;
+  RxInt lebel = 0.obs;
   void getBalanceApply(List<BalanceApplyModelValues> balanceApply) {
     if (balanceApplyList.isNotEmpty) {
       balanceApplyList.clear();
       balanceApplySecondList.clear();
+      balanceApplySecondList.clear();
     }
     for (int index = 0; index < balanceApply.length; index++) {
-      // for (int i = 1; i < 10; i++) {
-      //   count = i;
+      newIndex.add(index + 1);
+      lebel.value = balanceApply[index].vTADAAAASanctioningLevel!;
       if (balanceApply.elementAt(index).vTADAAAASanctioningLevel == 1) {
         balanceApplyList.add(balanceApply.elementAt(index));
       } else if (balanceApply.elementAt(index).vTADAAAASanctioningLevel == 2) {
         balanceApplySecondList.add(balanceApply.elementAt(index));
+      } else if (balanceApply.elementAt(index).vTADAAAASanctioningLevel == 3) {
+        balanceApplySecondList.add(balanceApply.elementAt(index));
       }
-      // }
     }
   }
 }
