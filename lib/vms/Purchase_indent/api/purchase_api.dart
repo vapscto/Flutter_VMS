@@ -37,7 +37,7 @@ class PurchaseIndentApi {
         "UserId": userId,
       });
 
-      logger.d(response.data['get_prNo']);
+      // logger.d(response.data['get_prNo']);
       PurchaseIndentModel purchaseIndentModelValues =
           PurchaseIndentModel.fromJson(response.data['get_prNo']);
       controller.purchaseIndentList.addAll(purchaseIndentModelValues.values!);

@@ -84,11 +84,11 @@ class _IndentApprovalState extends State<IndentApproval> {
     //   return false;
     // }
 
-    if (selectCheckBx!.isEmpty) {
-      Fluttertoast.showToast(
-          msg: "Select Requisition Particular Details checkbox");
-      return false;
-    }
+    // if (selectCheckBx!.isEmpty) {
+    //   Fluttertoast.showToast(
+    //       msg: "Select Requisition Particular Details checkbox");
+    //   return false;
+    // }
 
     if (selectCheckBx!.isNotEmpty &&
         selectCheckBx!.any((index) =>

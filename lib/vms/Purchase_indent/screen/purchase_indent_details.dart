@@ -48,6 +48,8 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
   var invmpiAmount;
   var invmpiId;
   num amount = 0;
+
+  TextEditingController? approvalAmountCountroller;
   addAmount(num i) {
     amount += i;
   }
@@ -68,7 +70,9 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
         "INVTPI_PIUnitRate": controller.unitControllerList.elementAt(i).text,
         "INVTPI_ApproxAmount":
             controller.getOnclickList.elementAt(i).iNVTPIApproxAmount,
-        "flag": controller.selectedValue.elementAt(i).isApproved == true ? "A" : "R",
+        "flag": controller.selectedValue.elementAt(i).isApproved == true
+            ? "A"
+            : "R",
         "INVTPIAPP_ApprovedQty":
             controller.getOnclickList[i].iNVTPIAPPApprovedQty,
         "INVTPI_Remarks": controller.remarkControllerList.elementAt(i).text,
@@ -103,34 +107,19 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
     DateTime dt = DateTime.parse(widget.values.iNVMPIPIDate!);
     date = '${dt.day}-${dt.month}-${dt.year}';
 
+    
 
-
-    controller.selectedValue = List.generate(
-        controller.getOnclickList.length,
-        (index) => (controller.getOnclickList
-                    .elementAt(index)
-                    .iNVMIId ==
-                2)
-            ? Item(
-                isApproved: (controller.getOnclickList
-                            .elementAt(index)
-                            .iNVTPIApproxAmount !=
-                        0)
-                    ? true
-                    : false,
-                isRejected: (controller.getOnclickList
-                            .elementAt(index)
-                            .iNVTPIApproxAmount ==
-                        0)
-                    ? true
-                    : false)
-            : Item(isApproved: true, isRejected: false));
     setState(() {
+      controller.selectedValue = List.generate(
+      controller.purchaseIndentList.length,
+      (index) =>
+          (controller.purchaseIndentList.elementAt(index).iNVMPIRejectFlg ==
+                  false)
+              ? Item(isApproved: true, isRejected: false)
+              : Item(isApproved: false, isRejected: true),
+    );
       updateCounts();
     });
-
-
-
 
     super.initState();
   }
@@ -138,20 +127,17 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
   int approvedCount = 0;
   int rejectedCount = 0;
   void updateCounts() {
-    approvedCount = controller.selectedValue
-        .where((item) => item.isApproved)
-        .length;
-    rejectedCount = controller.selectedValue
-        .where((item) => item.isRejected)
-        .length;
+    approvedCount =
+        controller.selectedValue.where((item) => item.isApproved).length;
+    rejectedCount =
+        controller.selectedValue.where((item) => item.isRejected).length;
     logger.i(approvedCount);
     logger.i(rejectedCount);
   }
 
-
-
   @override
   void dispose() {
+    controller.selectedValue.clear();
     controller.getOnclickList.clear();
     super.dispose();
   }
@@ -450,15 +436,15 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                               MaterialStateColor.resolveWith(
                                                   (states) => Theme.of(context)
                                                       .primaryColor),
-                                          groupValue:
-                                              controller.selectedValue[index].isApproved,
+                                          groupValue: controller
+                                              .selectedValue[index].isApproved,
                                           value: true,
                                           onChanged: (value) {
                                             setState(() {
-                                              controller.selectedValue[index].isApproved =
-                                                  value!;
-                                              controller.selectedValue[index].isRejected =
-                                                  !value;
+                                              controller.selectedValue[index]
+                                                  .isApproved = value!;
+                                              controller.selectedValue[index]
+                                                  .isRejected = !value;
 
                                               controller
                                                   .totalApproxAmountControllerList
@@ -477,7 +463,6 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                                   .text));
 
                                               updateCounts();
-
                                             });
                                           },
                                         )),
@@ -486,15 +471,15 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                               MaterialStateColor.resolveWith(
                                                   (states) => Theme.of(context)
                                                       .primaryColor),
-                                          groupValue:
-                                              controller.selectedValue[index].isRejected,
+                                          groupValue: controller
+                                              .selectedValue[index].isRejected,
                                           value: true,
                                           onChanged: (dynamic value) {
                                             setState(() {
-                                              controller.selectedValue[index].isRejected =
-                                                  value;
-                                              controller.selectedValue[index].isApproved =
-                                                  !value;
+                                              controller.selectedValue[index]
+                                                  .isRejected = value;
+                                              controller.selectedValue[index]
+                                                  .isApproved = !value;
 
                                               controller
                                                   .totalApproxAmountControllerList
@@ -516,7 +501,6 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                                           .text));
 
                                               updateCounts();
-
                                             });
                                           },
                                         )),
@@ -558,14 +542,15 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                         )),
                                         DataCell(Align(
                                           alignment: Alignment.center,
-                                          child: Text(
-                                            controller.getOnclickList
+                                          child: TextFormField(
+                                            controller:
+                                                approvalAmountCountroller,
+                                            initialValue: controller
+                                                .getOnclickList
                                                 .elementAt(index)
                                                 .iNVTPIAPPApprovedQty
                                                 .toString(),
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500),
+                                            keyboardType: TextInputType.number,
                                           ),
                                         )),
                                         DataCell(TextField(

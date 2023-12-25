@@ -177,4 +177,13 @@ class PurchaseController extends GetxController {
   void updateIsErrorOccuredRequest(bool error) {
     isErrorOccured.value = error;
   }
+
+  ////////////////////////////////////////////////////////////////
+
+//   void updateApproxAmount(int index, double newValue) {
+//   getOnclickList.elementAt(index).iNVTPIApproxAmount = newValue;
+//   // You might need to call setState or update the UI in your specific architecture
+// }
+
+
 }
