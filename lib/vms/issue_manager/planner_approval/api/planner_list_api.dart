@@ -3,6 +3,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/controller/planner_approval_controller.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/completed_task_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/dr_not_approved_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/leave_approve_popup_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/planner_list_model.dart';
@@ -31,10 +32,9 @@ class PlannerListAPI {
       if (response.statusCode == 200) {
         logger.i(response.data['get_plannerlist']);
 
-        
         if (response.data['get_leaveDetails'] != null) {
           LeaveApprovePopUp? leaveApprovePopUp =
-            LeaveApprovePopUp.fromJson(response.data['get_leaveDetails']);
+              LeaveApprovePopUp.fromJson(response.data['get_leaveDetails']);
 
           plannerApprovalController.leavePopUp
               .addAll(leaveApprovePopUp.values!);
@@ -62,7 +62,13 @@ class PlannerListAPI {
             response.data['ismtcrastO_EffortInHrs'] ?? 0.0;
         plannerApprovalController.ismmcId = response.data['ismmaC_Id'] ?? 0;
         plannerApprovalController.flag = response.data['ismtcrastO_ActiveFlg'];
-
+        if (response.data['completedcreatedbyme'] != null) {
+          CompletedTaskCountModel completedTaskCountModel =
+              CompletedTaskCountModel.fromJson(
+                  response.data['completedcreatedbyme']);
+          plannerApprovalController.completeTaskCount
+              .addAll(completedTaskCountModel.values!);
+        }
         plannerApprovalController.plannerLoading(false);
       }
     } on DioError catch (e) {

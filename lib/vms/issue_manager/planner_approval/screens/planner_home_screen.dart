@@ -191,6 +191,60 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
               ),
             ))
         : null;
+
+    plannerApprovalController.completeTaskCount.first.iSMEDWTCCTaskCount! > 0
+        ? Get.dialog(
+            barrierDismissible: false,
+            WillPopScope(
+              onWillPop: () {
+                return Future.value(false);
+              },
+              child: AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+                contentPadding: const EdgeInsets.all(10),
+                title: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "${plannerApprovalController.completeTaskCount.first.iSMEDWTCCTaskCount} Task are pending to validate status which are completed & are created by you, without validating those you cant approve planner!!",
+                      // ignore: use_build_context_synchronously
+                      style: Theme.of(context).textTheme.titleLarge!.merge(
+                          // ignore: use_build_context_synchronously
+                          const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w900)),
+                    )),
+                content: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        " Kindly Go to Web and Close Your Completed Task",
+                        style: Get.textTheme.titleSmall,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: MSkollBtn(
+                          title: "Close",
+                          onPress: () {
+                            Get.back();
+                            Get.back();
+
+                            plannerApprovalController.leavePopUp.clear();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ))
+        : null;
   }
 
   @override
