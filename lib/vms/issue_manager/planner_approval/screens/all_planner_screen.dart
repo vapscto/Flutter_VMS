@@ -238,7 +238,7 @@ class _AllPlannersState extends State<AllPlanners> {
       totalEffort: approveEffort,
     );
     _getData();
-    // Get.back();
+    Get.back();
     // Get.back();
     setState(() {
       isLoading = false;

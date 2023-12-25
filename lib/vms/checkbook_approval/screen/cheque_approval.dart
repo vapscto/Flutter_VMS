@@ -89,7 +89,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
         detailsList: detailsList,
         otp: 1010);
     if (status == 200) {
-    Fluttertoast.showToast(msg: " Successfully  submitted ");
+      Fluttertoast.showToast(msg: " Successfully  submitted ");
     }
     loadingCntrl.updateTabLoading(false);
     setState(() {
@@ -886,18 +886,19 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                       child: MSkollBtn(
                                         title: " Submit ",
                                         onPress: () {
-
-                                           if (_formKey.currentState!.validate()) {
-                                            if(selectCheckBox.isNotEmpty){
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            if (selectCheckBox.isNotEmpty) {
                                               submitData();
-                                            }else{
-                                              Fluttertoast.showToast(msg: "Pease select any one");
-                                            }
-                                              
                                             } else {
-                                              Fluttertoast.showToast(msg: "Amount is greater");
+                                              Fluttertoast.showToast(
+                                                  msg: "Pease select any one");
                                             }
-                                         },
+                                          } else {
+                                            Fluttertoast.showToast(
+                                                msg: "Amount is greater");
+                                          }
+                                        },
                                       ),
                                     ),
                                   ),
@@ -908,7 +909,8 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                 Obx(
                                   () => Visibility(
                                     visible:
-                                        _chequeController.updateBtn.isFalse,
+                                        _chequeController.updateBtn.isFalse &&
+                                            selectCheckBox.isNotEmpty,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: MSkollBtn(
@@ -916,55 +918,61 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                         onPress: () async {
                                           Random randomOtp = Random.secure();
                                           int otps = randomOtp.nextInt(999999);
-                                          if(otps.toString().characters.length>5){
-                                              await otpCheck(
-                                                  base: baseUrlFromInsCode(
-                                                      "issuemanager",
-                                                      widget.mskoolController),
-                                                  mi_id: mid!,
-                                                  otp: otps,
-                                                  userId: widget
-                                                      .loginSuccessModel
-                                                      .userId!,
-                                                  controller: _chequeController)
-                                              .then(
-                                            (value) {
-                                              if (value) {
-                                                showDialog(
-                                                  barrierDismissible: false,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return AlertDialog(
-                                                      content: Container(
-                                                          height: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .height /
-                                                              2,
-                                                          child: OTpScreen(
-                                                              loginSuccessModel:
-                                                                  widget
-                                                                      .loginSuccessModel,
-                                                              mskoolController:
-                                                                  widget
-                                                                      .mskoolController,
-                                                              chequeController:
-                                                                  _chequeController,
-                                                              cmpnymiId: mid)),
-                                                    );
-                                                  },
-                                                );
-                                              } else {
-                                                Fluttertoast.showToast(
-                                                    msg: "Failed send otp");
-                                              }
-                                            },
-                                          );
-                                          }else{
+                                          if (otps
+                                                  .toString()
+                                                  .characters
+                                                  .length >
+                                              5) {
+                                            await otpCheck(
+                                                    base: baseUrlFromInsCode(
+                                                        "issuemanager",
+                                                        widget
+                                                            .mskoolController),
+                                                    mi_id: mid!,
+                                                    otp: otps,
+                                                    userId: widget
+                                                        .loginSuccessModel
+                                                        .userId!,
+                                                    controller:
+                                                        _chequeController)
+                                                .then(
+                                              (value) {
+                                                if (value) {
+                                                  showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDialog(
+                                                        content: Container(
+                                                            height: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height /
+                                                                2,
+                                                            child: OTpScreen(
+                                                                loginSuccessModel:
+                                                                    widget
+                                                                        .loginSuccessModel,
+                                                                mskoolController:
+                                                                    widget
+                                                                        .mskoolController,
+                                                                chequeController:
+                                                                    _chequeController,
+                                                                cmpnymiId:
+                                                                    mid)),
+                                                      );
+                                                    },
+                                                  );
+                                                } else {
+                                                  Fluttertoast.showToast(
+                                                      msg: "Failed send otp");
+                                                }
+                                              },
+                                            );
+                                          } else {
                                             Fluttertoast.showToast(
-                                                    msg: "Failed send otp");
+                                                msg: "Failed send otp");
                                           }
-                                         
                                         },
                                       ),
                                     ),

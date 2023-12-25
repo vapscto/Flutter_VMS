@@ -6,6 +6,8 @@ import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/new_tab
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/planner_status_list.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/total_effort_data.dart';
 
+import '../../../../main.dart';
+
 class PlannerCreationController extends GetxController {
   RxBool isstatusLoading = RxBool(false);
   RxBool isErrorLoading = RxBool(false);
@@ -66,20 +68,22 @@ class PlannerCreationController extends GetxController {
     for (int i = 0; i < value.length; i++) {
       // assignedTaskList.add(value.elementAt(i));
       var val = value.elementAt(i);
-      var taskEffort = val.iSMTCRASTOEffortInHrs;
-      var hrsEff = taskEffort;
-      var minEff = ((double.parse(taskEffort.toString()) -
-                  num.parse(hrsEff.toString())) *
-              60)
-          .round();
-
+      double min = 0.0;
+      double taskEffort = val.iSMTCRASTOEffortInHrs!;
+      int hrsEff = taskEffort.toInt();
+      var minEff = ((taskEffort - hrsEff) * 60).round();
+      logger.w(taskEffort);
+      logger.i(minEff);
+      logger.e(hrsEff.toString().length);
       if (hrsEff.toString().length == 1) {
-        hrsEff = 0 + num.parse(hrsEff.toString()).toDouble();
+        hrsEff = int.parse('0${hrsEff.toString()}');
+      } else if (minEff.toString().length == 1) {
+        logger.v(minEff.toString().length);
+        String minEffString = (minEff.toString().padLeft(2, '0'));
+        minEff = int.parse('0${minEff.toString()}');
+        logger.d('==$minEffString');
       }
-
-      if (minEff.toString().length == 1) {
-        minEff = 0 + minEff;
-      }
+      val.iSMTCRASTOEffortInHrs = double.parse('$hrsEff.$minEff');
       if (val.iSMTPLTAPreviousTask == 1 || val.iSMTPLTAPreviousTask == '1') {
         createdTaskList.add(NewTableModel(
             flag: true,
@@ -743,8 +747,8 @@ class PlannerCreationController extends GetxController {
               val.iSMTPLTAPreviousTask == null ||
               val.iSMTPLTAPreviousTask == '' ||
               val.iSMTPLTAPreviousTask == '0')) {
-        String newdate1 =
-            DateFormat('dd-MM-yyyy').format(DateTime.parse(val.oFFDate!));
+        String newdate1 = DateFormat('dd-MM-yyyy')
+            .format(DateTime.parse(val.oFFDate ?? '1970-01-01T00:00:00'));
         int cnr = 0;
 
         for (var mm in effortDataValues) {
@@ -814,18 +818,21 @@ class PlannerCreationController extends GetxController {
   //effort list
   double totalDay = 0.0;
   double totalHour = 0.0;
+  double hour = 0.0;
   RxList<TotalEffortDataValues> effortDataValues =
       <TotalEffortDataValues>[].obs;
   effortData(List<TotalEffortDataValues> data) {
     if (effortDataValues.isNotEmpty) {
       effortDataValues.clear();
     }
+    totalHour = 0.0;
+    totalDay = 0.0;
+    hour = 0.0;
+    totalDay += (data.length);
     for (int i = 0; i < data.length; i++) {
       effortDataValues.add(data.elementAt(i));
-      // totalDay = 0.0;
-      // totalHour = 0.0;
-      // totalDay += num.parse(data[i].nOOFDAYS.toString());
-      // totalHour += num.parse(data[i].wORKINGHOURS.toString());
+
+      hour = data[i].wORKINGHOURS!;
     }
   }
 

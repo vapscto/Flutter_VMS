@@ -17,6 +17,7 @@ import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:text_scroll/text_scroll.dart';
 
 import '../../../../controller/global_utilities.dart';
+import '../../../../main.dart';
 
 class PlannerCreateWidget extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -118,9 +119,12 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
           categoryList.add(CategoryPlanTable(
               '${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskCategoryName}',
               '${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage} %',
-              "${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage! / 100 * 8 * totalday}",
-              "${plannerCreationController.categoryWisePlan.elementAt(index).ismtcrastOEffortInHrs}",
-              "${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage! / 100 * 8 * totalday}"));
+              double.parse(
+                  "${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage! / 100 * plannerCreationController.hour * plannerCreationController.effortDataValues.length}"),
+              double.parse(
+                  "${plannerCreationController.categoryWisePlan.elementAt(index).ismtcrastOEffortInHrs}"),
+              double.parse(
+                  "${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage! / 100 * plannerCreationController.hour * plannerCreationController.effortDataValues.length}")));
         });
 
         categoryArray.add({
@@ -138,20 +142,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         setState(() {
           if (plannerCreationController.createdTaskList
                   .elementAt(index)
-                  .iSMTCRASTOAssignedDate !=
-              null) {
-            DateTime dt = DateTime.parse(plannerCreationController
-                .createdTaskList
-                .elementAt(index)
-                .iSMTCRASTOAssignedDate
-                .toString());
-            assignedDate =
-                '${numberList[dt.day]}:${numberList[dt.month]}:${dt.year}';
-          }
-          //
-
-          if (plannerCreationController.createdTaskList
-                  .elementAt(index)
                   .iSMTPLTAId !=
               null) {
             if (plannerCreationController.createdTaskList
@@ -164,30 +154,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               setState(() {});
             }
           }
-
-          //
-
-          //
-          // newTable.add(CreatePlannerTable(
-          //     true,
-          //     '${plannerCreationController.assignedTaskList.elementAt(index).iSMTCRTaskNo}',
-          //     '${plannerCreationController.assignedTaskList.elementAt(index).iSMTCRTitle}',
-          //     '${plannerCreationController.assignedTaskList.elementAt(index).hRMPName}',
-          //     '${plannerCreationController.assignedTaskList.elementAt(index).iSMMCLTClientName}',
-          //     '${plannerCreationController.assignedTaskList.elementAt(index).hRMDDepartmentName}',
-          //     '${plannerCreationController.assignedTaskList.elementAt(index).periodicity}',
-          //     assignedDate,
-          //     '${plannerCreationController.assignedTaskList.elementAt(index).assignedby}',
-          //     '$startDate To $endDate ',
-          //     '${plannerCreationController.assignedTaskList.elementAt(index).iSMTCRASTOEffortInHrs} Hr',
-          //     plannerCreationController.assignedTaskList
-          //             .elementAt(index)
-          //             .iSMTCRASTORemarks ??
-          //         ' ',
-          //     plannerCreationController.assignedTaskList
-          //         .elementAt(index)
-          //         .iSMTPLTAId!));
-
           if (plannerCreationController.createdTaskList
                   .elementAt(index)
                   .iSMTCRASTOEffortInHrs !=
@@ -196,41 +162,45 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                 .elementAt(index)
                 .iSMTCRASTOEffortInHrs!;
           }
-
           //
-          plannerrArray.add({
-            "ISMTCR_Id": plannerCreationController.createdTaskList
-                .elementAt(index)
-                .iSMTCRId,
-            "ISMTPLTA_StartDate": plannerCreationController.createdTaskList
-                .elementAt(index)
-                .iSMTPLTAStartDate,
-            "ISMTPLTA_EndDate": plannerCreationController.createdTaskList
-                .elementAt(index)
-                .iSMTPLTAEndDate,
-            "ISMTPLTA_EffortInHrs": plannerCreationController.createdTaskList
-                .elementAt(index)
-                .iSMTCRASTOEffortInHrs,
-            "ISMTPLTA_Remarks": plannerCreationController.createdTaskList
-                .elementAt(index)
-                .iSMTCRASTORemarks,
-            "ISMTPLTA_Id": plannerCreationController.createdTaskList
-                .elementAt(index)
-                .iSMTPLTAId,
-            "ISMTPLTA_Status": plannerCreationController.createdTaskList
-                .elementAt(index)
-                .iSMTPLTAStatus,
-            "ISMTPLTA_PreviousTask": plannerCreationController.createdTaskList
-                .elementAt(index)
-                .iSMTPLTAPreviousTask,
-            "ISMTPLTA_ApprovalFlg": plannerCreationController.createdTaskList
-                .elementAt(index)
-                .iSMTPLTAApprovalFlg,
-          });
+        });
+        plannerrArray.add({
+          "ISMTCR_Id": plannerCreationController.createdTaskList
+              .elementAt(index)
+              .iSMTCRId,
+          "ISMTPLTA_StartDate": plannerCreationController.createdTaskList
+              .elementAt(index)
+              .iSMTPLTAStartDate,
+          "ISMTPLTA_EndDate": plannerCreationController.createdTaskList
+              .elementAt(index)
+              .iSMTPLTAEndDate,
+          "ISMTPLTA_EffortInHrs": plannerCreationController.createdTaskList
+              .elementAt(index)
+              .iSMTCRASTOEffortInHrs,
+          "ISMTPLTA_Remarks": plannerCreationController.createdTaskList
+              .elementAt(index)
+              .iSMTCRASTORemarks,
+          "ISMTPLTA_Id": plannerCreationController.createdTaskList
+              .elementAt(index)
+              .iSMTPLTAId,
+          "ISMTPLTA_Status": plannerCreationController.createdTaskList
+              .elementAt(index)
+              .iSMTPLTAStatus,
+          "ISMTPLTA_PreviousTask": plannerCreationController.createdTaskList
+              .elementAt(index)
+              .iSMTPLTAPreviousTask,
+          "ISMTPLTA_ApprovalFlg": plannerCreationController.createdTaskList
+              .elementAt(index)
+              .iSMTPLTAApprovalFlg,
         });
       }
     }
-
+    plannerCreationController.totalDay = 0;
+    plannerCreationController.totalHour = 0;
+    plannerCreationController.effortDataValues.forEach((element) {
+      plannerCreationController.totalDay++;
+      plannerCreationController.totalHour += element.wORKINGHOURS!;
+    });
     plannerCreationController.taskLoading(false);
   }
 
@@ -710,7 +680,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                                 color: Theme.of(context)
                                                     .primaryColor)),
                                     TextSpan(
-                                        text: '$totalday',
+                                        text:
+                                            '${plannerCreationController.effortDataValues.length}',
                                         style: Get.textTheme.titleSmall!
                                             .copyWith()),
                                   ])),
@@ -942,6 +913,10 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               var endDate =
                   '${numberList[endDt.day]}:${numberList[endDt.month]}:${endDt.year}';
               id = data.iSMTPLTAId!;
+              DateTime dt =
+                  DateTime.parse(data.iSMTCRASTOAssignedDate.toString());
+              assignedDate =
+                  '${numberList[dt.day]}:${numberList[dt.month]}:${dt.year}';
               return DataRow(
                   color: (plannerCreationController
                               .createdTaskList[index].iSMTPLTAId !=
@@ -1149,12 +1124,13 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               return DataRow(cells: [
                 DataCell(Text(categoryList.elementAt(index).categoryName)),
                 DataCell(Text(categoryList.elementAt(index).percentage)),
-                DataCell(Text('${categoryList.elementAt(index).effort} Hr')),
-                DataCell(
-                    Text('${categoryList.elementAt(index).currentEffort} Hr')),
+                DataCell(Text(
+                    '${categoryList.elementAt(index).effort.toStringAsFixed(2)} Hr')),
+                DataCell(Text(
+                    '${categoryList.elementAt(index).currentEffort.toStringAsFixed(2)} Hr')),
                 DataCell(
                   Text(
-                    '${categoryList.elementAt(index).requiredEffort} Hr',
+                    '${categoryList.elementAt(index).requiredEffort.toStringAsFixed(2)} Hr',
                     style:
                         Get.textTheme.titleSmall!.copyWith(color: Colors.red),
                   ),
@@ -1185,7 +1161,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Planned Effort must be greater than or equal to ${totalday * 8} Hours ... !!",
+                "Planned Effort must be greater than or equal to ${plannerCreationController.effortDataValues.length * 8} Hours ... !!",
                 textAlign: TextAlign.center,
                 style: Get.textTheme.titleMedium!.copyWith(
                     color: Theme.of(context).primaryColor,

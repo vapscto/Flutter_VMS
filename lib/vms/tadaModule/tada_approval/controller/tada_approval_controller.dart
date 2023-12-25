@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/balance_apply_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/file_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_edit_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_list_model.dart';
@@ -94,6 +95,34 @@ class TadaApprovalController extends GetxController {
     }
     for (int i = 0; i < tadaApprovalFile.length; i++) {
       tadaApprovalFileList.add(tadaApprovalFile.elementAt(i));
+    }
+  }
+
+  RxList<BalanceApplyModelValues> balanceApplyList =
+      <BalanceApplyModelValues>[].obs;
+  RxList<BalanceApplyModelValues> balanceApplySecondList =
+      <BalanceApplyModelValues>[].obs;
+  RxList<BalanceApplyModelValues> balanceApplyThirdList =
+      <BalanceApplyModelValues>[].obs;
+  int count = 0;
+  RxList<int> newIndex = <int>[].obs;
+  RxInt lebel = 0.obs;
+  void getBalanceApply(List<BalanceApplyModelValues> balanceApply) {
+    if (balanceApplyList.isNotEmpty) {
+      balanceApplyList.clear();
+      balanceApplySecondList.clear();
+      balanceApplySecondList.clear();
+    }
+    for (int index = 0; index < balanceApply.length; index++) {
+      newIndex.add(index + 1);
+      lebel.value = balanceApply[index].vTADAAAASanctioningLevel!;
+      if (balanceApply.elementAt(index).vTADAAAASanctioningLevel == 1) {
+        balanceApplyList.add(balanceApply.elementAt(index));
+      } else if (balanceApply.elementAt(index).vTADAAAASanctioningLevel == 2) {
+        balanceApplySecondList.add(balanceApply.elementAt(index));
+      } else if (balanceApply.elementAt(index).vTADAAAASanctioningLevel == 3) {
+        balanceApplySecondList.add(balanceApply.elementAt(index));
+      }
     }
   }
 }

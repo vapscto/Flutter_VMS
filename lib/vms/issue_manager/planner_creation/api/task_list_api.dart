@@ -36,7 +36,6 @@ class TaskListAPI {
         "ISMTPL_StartDate": startDate,
         "ISMTPL_EndDate": endDate
       });
-      logger.i(response.data);
       logger.i(url);
       logger.i({
         "UserId": userId,
@@ -58,13 +57,14 @@ class TaskListAPI {
         TotalEffortData totalEffortData =
             TotalEffortData.fromJson(response.data['get_effortdetails']);
         plannerCreationController.effortData(totalEffortData.values!);
-        plannerCreationController.totalDay = 0;
-        plannerCreationController.totalHour = 0;
-        for (int e = 0; e < totalEffortData.values!.length; e++) {
-          plannerCreationController.totalDay++;
-          plannerCreationController.totalHour +=
-              double.parse(totalEffortData.values![e].wORKINGHOURS.toString());
-        }
+        // plannerCreationController.totalHour = 0;
+        // plannerCreationController.totalDay = 0;
+        // for (int e = 0; e < totalEffortData.values!.length; e++) {
+        // plannerCreationController.totalDay +=
+        //     double.parse(response.data['NOOFDAYS']);
+        //   plannerCreationController.totalHour +=
+        //       double.parse(totalEffortData.values![e].wORKINGHOURS.toString());
+        // }
       }
     } on DioError catch (e) {
       logger.e(e.message);

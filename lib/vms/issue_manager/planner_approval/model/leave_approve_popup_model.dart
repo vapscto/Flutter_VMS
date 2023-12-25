@@ -37,7 +37,7 @@ class LeaveApprovePopUpValues {
   int? hRMEId;
   int? hRMLId;
   String? hRELAPApplicationID;
-  String? hRELAPSupportingDocument;
+  dynamic hRELAPSupportingDocument;
   String? hRELAPARemarks;
   String? hRELAPApplicationDate;
 

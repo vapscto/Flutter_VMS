@@ -143,12 +143,15 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
 
   Future<void> loadImages() async {
     controller.updateTabLoading(true);
+    String countHr =
+        (double.parse(minutesEt.text) * 0.0166667).toStringAsFixed(2);
+    double count = double.parse(hoursEt.text) + double.parse(countHr);
+    logger.i(count);
     String? periodicityType;
     var taskDay;
     if (_taskDepartController.typesTask.value == "T") {
       periodicityType = dropdownValue.value;
       if (dropdownValue.value == "Daily") {
-        //  taskDay = 0;
       } else if (dropdownValue.value == "Weekly" ||
           dropdownValue.value == "Once in Fortnight") {
         taskDay = etDayControllers.text;
@@ -222,7 +225,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       Yearlydate: "Thu Jan 01 1970",
       assignto: _taskDepartController.taskAssingn.value,
       uploadDocs: _taskDepartController.addListBrowser,
-      effortinhrs: double.parse("${hoursEt.text}.${minutesEt.text}"),
+      effortinhrs: count,
       enddate: selectToDate.text,
       periodicity: periodicityType,
       remarks: etRemarkControllers.text,
@@ -2471,8 +2474,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                                             value!;
 
                                                                         if (value) {
-                                                                          employeesID
-                                                                              .clear();
                                                                           employeesID
                                                                               .add(taskEmployeeList[index - 1].hRMEId!);
                                                                           logger
