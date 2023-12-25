@@ -90,6 +90,7 @@ class _TADAApprovalDetailsScreenState extends State<TADAApprovalDetailsScreen> {
                     animationPath: "assets/json/default.json"),
               )
             : ListView(
+                // physics: const AlwaysScrollableScrollPhysics(),
                 padding:
                     const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
                 children: [
@@ -311,23 +312,13 @@ class _TADAApprovalDetailsScreenState extends State<TADAApprovalDetailsScreen> {
                   ),
                   (widget.tadaController.timeArray.isEmpty)
                       ? const SizedBox()
-                      : SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Column(
-                              children: [
-                                ApproveTADATableData(
-                                  tadaController: widget.tadaController,
-                                  amount:
-                                      widget.values.vTADAATotalAppliedAmount!,
-                                  values: widget.values,
-                                  mskoolController: widget.mskoolController,
-                                  vtadaaaaId: widget.vtadaaaaId,
-                                ),
-                              ],
-                            ),
-                          ),
+                      : ApproveTADATableData(
+                          tadaController: widget.tadaController,
+                          amount: widget.values.vTADAATotalAppliedAmount!,
+                          values: widget.values,
+                          mskoolController: widget.mskoolController,
+                          vtadaaaaId: widget.vtadaaaaId,
+                          vtadaaId: widget.vtadaaId,
                         ),
                 ],
               ),

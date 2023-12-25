@@ -33,30 +33,30 @@ class BalanceApplyModelValues {
   String? vTADAAAToDate;
   String? iSMMCLTClientName;
   String? vTADAAAToAddress;
-  int? advancedAppliedAmount;
+  double? advancedAppliedAmount;
   String? vTADAAADStatusFlg;
-  int? vTADAAADTotalSlots;
-  int? vTADAAADSlots;
+  double? vTADAAADTotalSlots;
+  double? vTADAAADSlots;
   String? vTADAAADRemarks;
-  int? paidAmount;
+  double? paidAmount;
   String? vTADAAADepartureTime;
   String? vTADAAAArrivalTime;
   String? vTADAAADExpenditureHead;
   String? approvedBy;
-  int? vTADAAATotalSactionedAmount;
+  double? vTADAAATotalSactionedAmount;
   int? vTADAAAASanctioningLevel;
-  int? vTADAAAASactionedAmount;
-  int? headWiseSactionedAmount;
-  int? headWiseAppliedAmount;
+  double? vTADAAAASactionedAmount;
+  double? headWiseSactionedAmount;
+  double? headWiseAppliedAmount;
   String? vTADAAAAStatusFlg;
   String? vTADAAAADate;
   String? vTADAAAARemarks;
   String? vTADAAAAHStatusFlg;
   String? vTADAAAAHRemarks;
   String? vTADAAAACreatedDate;
-  int? vTADACMAccommodationAmt;
-  int? vTADACMTransportAmt;
-  int? vTADACMFoodAmt;
+  double? vTADACMAccommodationAmt;
+  double? vTADACMTransportAmt;
+  double? vTADACMFoodAmt;
 
   BalanceApplyModelValues(
       {this.type,
