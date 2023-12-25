@@ -79,39 +79,44 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
       _plannerDetailsController.closeTaskCoutnList[0].iSMEDWTCCTaskCount! > 0
           ? Get.dialog(
               barrierDismissible: false,
-              AlertDialog(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                title: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Update Task",
-                      style: Theme.of(context).textTheme.titleLarge!.merge(
-                          TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600)),
-                    )),
-                content: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task",
-                      style: Theme.of(context).textTheme.titleSmall!.merge(
-                          TextStyle(color: Theme.of(context).primaryColor)),
-                    ),
-                    const SizedBox(height: 16),
-                    TextButton(
-                        onPressed: () {
-                          Get.back();
-                          Get.back();
-                        },
-                        child: Text(
-                          "OK",
-                          style: Get.textTheme.titleMedium!
-                              .copyWith(color: Theme.of(context).primaryColor),
-                        ))
-                  ],
+              WillPopScope(
+                onWillPop: () {
+                  return Future.value(false);
+                },
+                child: AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  title: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Update Task",
+                        style: Theme.of(context).textTheme.titleLarge!.merge(
+                            TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600)),
+                      )),
+                  content: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task",
+                        style: Theme.of(context).textTheme.titleSmall!.merge(
+                            TextStyle(color: Theme.of(context).primaryColor)),
+                      ),
+                      const SizedBox(height: 16),
+                      TextButton(
+                          onPressed: () {
+                            Get.back();
+                            Get.back();
+                          },
+                          child: Text(
+                            "OK",
+                            style: Get.textTheme.titleMedium!.copyWith(
+                                color: Theme.of(context).primaryColor),
+                          ))
+                    ],
+                  ),
                 ),
               ))
           : null;

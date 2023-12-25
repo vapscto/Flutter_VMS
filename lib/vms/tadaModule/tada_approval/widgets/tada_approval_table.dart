@@ -870,9 +870,9 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                                         widget.mskoolController),
                                     userId: widget.values.userId!,
                                     tadaController: widget.tadaController);
-                                Get.back();
-                                Get.back();
                               });
+                              Get.back();
+                              Get.back();
                             }
                           })),
         ],
