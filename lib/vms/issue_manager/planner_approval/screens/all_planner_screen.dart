@@ -171,7 +171,7 @@ class _AllPlannersState extends State<AllPlanners> {
     DateTime startDate = dateFormat.parse(widget.fromDate);
     DateTime endDate = dateFormat.parse(widget.toDate);
     Duration difference = endDate.difference(startDate);
-    int totalDays = difference.inDays;
+    int totalDays = difference.inDays + 1;
     totalHour = totalDays * 8;
   }
 

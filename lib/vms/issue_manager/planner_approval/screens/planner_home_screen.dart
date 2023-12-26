@@ -192,7 +192,7 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
             ))
         : null;
 
-    plannerApprovalController.completeTaskCount.first.iSMEDWTCCTaskCount! > 0
+    plannerApprovalController.completeTaskCount.first.iSMEDWTCCTaskCount! >= 1
         ? Get.dialog(
             barrierDismissible: false,
             WillPopScope(
