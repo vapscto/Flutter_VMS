@@ -52,16 +52,12 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
   List<Map<String, dynamic>> balanceHeadArray = [];
   List<Map<String, dynamic>> balanceHeadrejectArray = [];
   var days;
-  num amount = 0;
+  num sanctionAmount = 0;
   RxList<String> slesRadioBtn = <String>[].obs;
 
-  void addAmount(double a) {
-    amount += a;
-  }
-
-  void removeAmount(double a) {
-    amount -= a;
-  }
+  // void removeAmount(double a) {
+  //   amount -= a;
+  // }
 
   var approveCent = 0;
   _getData() async {
@@ -113,11 +109,8 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
       for (int index = 0;
           index < widget.tadaController.editArrayList.length;
           index++) {
-        widget.tadaController.textEditingControllerList.add(
-            TextEditingController(
-                text: widget
-                        .tadaController.editArrayList[index].vTADAAADRemarks ??
-                    ''));
+        widget.tadaController.textEditingControllerList
+            .add(TextEditingController(text: '0'));
         widget.tadaController.approvalTextEditingControllerList
             .add(TextEditingController(text: ''));
         widget.tadaController.textEditingControllerList[index].addListener(() {
@@ -128,8 +121,8 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
             .elementAt(index)
             .text;
         (widget.tadaController.editArrayList.first.vTADAADId == null)
-            ? amount = widget.amount
-            : amount;
+            ? sanctionAmount = widget.amount
+            : sanctionAmount;
       }
     });
     super.initState();
@@ -142,14 +135,14 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
       sum += value;
     }
     setState(() {
-      amount = sum;
+      sanctionAmount = sum;
     });
   }
 
   double sum = 0;
   removeAllAmount(double amount) {
     sum -= amount;
-    amount = sum;
+    sanctionAmount = sum;
     setState(() {});
   }
 
@@ -643,7 +636,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                         style: Get.textTheme.titleSmall,
                       ),
                       Text(
-                        amount.toString(),
+                        sanctionAmount.toString(),
                         style: Get.textTheme.titleSmall!
                             .copyWith(fontWeight: FontWeight.w600),
                       ),
@@ -740,7 +733,8 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                                         body: {
                                           'VTADAA_Remarks':
                                               remarkController.text,
-                                          'VTADAA_TotalSactionedAmount': amount,
+                                          'VTADAA_TotalSactionedAmount':
+                                              sanctionAmount,
                                           'VTADAA_Id': widget.vtadaaId,
                                           "MI_Id": widget.values.mIId,
                                           "approvecnt": approvedCount,
@@ -854,7 +848,8 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                                       'issuemanager', widget.mskoolController),
                                   body: {
                                     'VTADAA_Remarks': remarkController.text,
-                                    'VTADAA_TotalSactionedAmount': amount,
+                                    'VTADAA_TotalSactionedAmount':
+                                        sanctionAmount,
                                     'headarray': headArray,
                                     'VTADAA_Id': widget.vtadaaId,
                                     "MI_Id": widget.values.mIId,
@@ -942,7 +937,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
 
               if (widget.tadaController.selectedValue[index].isApproved ==
                   true) {
-                addAmount(double.parse(widget
+                addAllAmount(double.parse(widget
                     .tadaController.textEditingControllerList
                     .elementAt(index)
                     .text));
@@ -976,11 +971,11 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                           .text =
                       widget.tadaController.editArrayList[index].vTADAADAmount
                           .toString();
-              if (amount >=
+              if (sanctionAmount >=
                   double.parse(widget.tadaController.textEditingControllerList
                       .elementAt(index)
                       .text)) {
-                removeAmount(double.parse(widget
+                removeAllAmount(double.parse(widget
                     .tadaController.textEditingControllerList
                     .elementAt(index)
                     .text));
@@ -1054,8 +1049,8 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                         .toString()) >=
                     double.parse(value)) {
                   double totalAmount = 0;
-                  double totalSactionedAmount = totalAmount;
-                  value = totalSactionedAmount.toStringAsFixed(2);
+                  value = totalAmount.toStringAsFixed(2);
+                  addAllAmount(totalAmount);
                 } else {
                   widget.tadaController.textEditingControllerList
                           .elementAt(index)
