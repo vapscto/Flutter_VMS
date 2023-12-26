@@ -84,7 +84,8 @@ class PurchaseIndentModelValues {
     data['INVMPI_Remarks'] = this.iNVMPIRemarks;
     data['INVMPI_ReferenceNo'] = this.iNVMPIReferenceNo;
     data['INVMPI_ApproxTotAmount'] = this.iNVMPIApproxTotAmount;
-    data['INVMPI_RejectFlg'] = this.iNVMPIRejectFlg;
+    data['INVMPIAPP_RejectFlg'] = this.iNVMPIRejectFlg;
+    //INVMPI_RejectFlg
     data['User_Id'] = this.userId;
     data['SanctionLevelNo'] = this.sanctionLevelNo;
     data['IndentCreadBy'] = this.indentCreadBy;

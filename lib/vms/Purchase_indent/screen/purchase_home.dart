@@ -181,42 +181,42 @@ class _PurchaseIndentHomeState extends State<PurchaseIndentHome> {
                                     child: Text(controller.purchaseIndentList
                                         .elementAt(index)
                                         .mIName
-                                        .toString()),
+                                        ?? ''),
                                   )),
                                   DataCell(Align(
                                     alignment: Alignment.center,
                                     child: Text(controller.purchaseIndentList
                                         .elementAt(index)
                                         .iNVMPIPINo
-                                        .toString()),
+                                        ?? ''),
                                   )),
                                   DataCell(Align(
                                     alignment: Alignment.center,
                                     child: Text(controller.purchaseIndentList
                                         .elementAt(index)
                                         .iNVMPIPIDate
-                                        .toString()),
+                                        ?? ''),
                                   )),
                                   DataCell(Align(
                                     alignment: Alignment.center,
                                     child: Text(controller.purchaseIndentList
                                         .elementAt(index)
                                         .iNVMPIReferenceNo
-                                        .toString()),
+                                          ?? ''),
                                   )),
                                   DataCell(Align(
                                     alignment: Alignment.center,
                                     child: Text(controller.purchaseIndentList
                                         .elementAt(index)
                                         .indentCreadBy
-                                        .toString()),
+                                        ?? ''),
                                   )),
                                   DataCell(Align(
                                     alignment: Alignment.center,
                                     child: Text(controller.purchaseIndentList
                                         .elementAt(index)
                                         .createdDeptName
-                                        .toString()),
+                                         ?? ''),
                                   )),
                                   DataCell(Align(
                                     alignment: Alignment.center,

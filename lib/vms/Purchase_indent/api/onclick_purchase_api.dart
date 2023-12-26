@@ -20,8 +20,8 @@ class OnclickPurchaseApi {
   }) async {
     final Dio ins = getGlobalDio();
     final String api = base + URLS.onclickpurchaseapi;
-    const String api2 =
-        "https://vmsstaging.vapssmartecampus.com:40016/api/IndentApprovalFacade/getpidetails/";
+    // const String api2 =
+    //     "https://vmsstaging.vapssmartecampus.com:40016/api/IndentApprovalFacade/getpidetails/";
 
     if (controller.isErrorOccured.value) {
       controller.updateIsErrorOccured(false);
@@ -30,13 +30,12 @@ class OnclickPurchaseApi {
     controller.updateIsLoadingOnclick(true);
 
     logger.d(api);
-  logger.d("bts nitin");
+    logger.d({"UserId": userId, "INVMPI_Id": invmpiId});
+    
     try {
-      final Response response = await ins.post(api2, data: {
-        "UserId": userId, "INVMPI_Id": invmpiId
-        //  options: Options(headers: getSession())
-      });
-      logger.i(response.data['get_pimodel']);
+      final Response response =
+          await ins.post(api, data: {"UserId": userId, "INVMPI_Id": invmpiId});
+      // logger.i(response.data['get_pimodel']);
 
       if (response.data['get_pimodel'] != null) {
         controller.updateIsErrorOccured(true);
@@ -44,12 +43,11 @@ class OnclickPurchaseApi {
         GetPiModel getPiModelValues =
             GetPiModel.fromJson(response.data['get_pimodel']);
         controller.updateOnclickList(getPiModelValues.values!);
-//////////////////////////////////////////////////////////////////////////
+
         ViewCommentModel viewCommentModel =
             ViewCommentModel.fromJson(response.data['viewcomments']);
         controller.getcommentList(viewCommentModel.values);
-        
-///////////////////////////////////////////////////////////////////////////////
+
         PurchaseRequestModel purchaseRequestModel =
             PurchaseRequestModel.fromJson(
                 response.data['purchaserequisitioncomments']);
