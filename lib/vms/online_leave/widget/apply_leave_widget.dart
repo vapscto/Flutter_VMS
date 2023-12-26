@@ -100,13 +100,19 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
       initialDt = currentDate;
       lastDt = currentDate.add(Duration(days: min));
     } else if (widget.values.hrmLWhenToApplyFlg == "After") {
-      initialDt = currentDate.subtract(Duration(days: min));
-      firstDt = currentDate.subtract(Duration(days: min + 30));
-      lastDt = currentDate.subtract(Duration(days: min));
+      if (widget.values.hrmLLeaveCode == "SL") {
+        initialDt = currentDate.subtract(Duration(days: min - 1));
+        firstDt = currentDate.subtract(Duration(days: min));
+        lastDt = currentDate.subtract(Duration(days: min - 1));
+      } else {
+        initialDt = currentDate.subtract(Duration(days: min));
+        firstDt = currentDate.subtract(Duration(days: min + 28));
+        lastDt = currentDate.subtract(Duration(days: min));
+      }
     } else if (widget.values.hrmLWhenToApplyFlg == "Before") {
       initialDt = currentDate.add(Duration(days: min));
       firstDt = currentDate.add(Duration(days: min));
-      lastDt = currentDate.add(Duration(days: min + 30));
+      lastDt = currentDate.add(Duration(days: min + 28));
     }
   }
 
