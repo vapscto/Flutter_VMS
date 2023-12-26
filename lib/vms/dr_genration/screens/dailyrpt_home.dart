@@ -621,8 +621,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                       ),
                                       onChanged: (value) {
                                         if (_plannerDetailsController
-                                                .deviationCount.value !=
-                                            3) {
+                                                .deviationCount.value >=
+                                            num.parse(_plannerDetailsController
+                                                .otherDaysEditingController
+                                                .value)) {
                                           _plannerDetailsController
                                               .updateDayRadio(value!);
                                         } else {
