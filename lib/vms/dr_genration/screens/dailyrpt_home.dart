@@ -2061,7 +2061,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
       return list.iSMTCRTaskNo!.toLowerCase().contains(query.toLowerCase()) ||
           list.iSMTCRTitle!.toLowerCase().contains(query.toLowerCase());
     }).toList();
-
     setState(() {});
   }
 
@@ -2073,6 +2072,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
     _plannerDetailsController.statusEtField.clear();
     _plannerDetailsController.depWiseDevitnList.clear();
     _plannerDetailsController.deveationEtField.clear();
+    _plannerDetailsController.uploadImages.clear();
     super.dispose();
   }
 }
