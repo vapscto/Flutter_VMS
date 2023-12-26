@@ -165,6 +165,8 @@ class _AllPlannersState extends State<AllPlanners> {
     widget.plannerApprovalController.approvalLoading(false);
   }
 
+  String startDate = '';
+  String endDate = '';
   var totalHour;
   _getTotalHour() {
     DateFormat dateFormat = DateFormat("dd-MM-yyyy");
@@ -210,18 +212,19 @@ class _AllPlannersState extends State<AllPlanners> {
       isLoading = true;
     });
     for (int i = 0; i < checkList.length; i++) {
-      var value = allPlannerList.elementAt(checkList[i]);
+      var value = widget.plannerApprovalController.plannerApprovalList
+          .elementAt(checkList[i]);
       plannerList.add({
-        "ISMTCR_Id": value.ismtcrId,
-        "ISMTPLAPTA_StartDate": value.startDate,
-        "ISMTPLAPTA_EndDate": value.endDate,
-        "ISMTPLAPTA_EffortInHrs": value.effort,
+        "ISMTCR_Id": value.iSMTCRId,
+        "ISMTPLAPTA_StartDate": 'value.startDate',
+        "ISMTPLAPTA_EndDate": 'value.endDate',
+        "ISMTPLAPTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
         "ISMTPLAPTA_Status": selectedItemValue[i], //value.status,
         "plannerStatus": (dataRowGroupValue == 'Approve') ? 1 : 0,
-        "ISMTPLTA_Id": value.ismtpltaId,
+        "ISMTPLTA_Id": value.iSMTPLTAId,
         "ISMTPL_Id": widget.ismtplId,
         "extraflag": 0,
-        "PTSCount": value.ptsCount
+        "PTSCount": value.pTSCount
       });
     }
     await PlannerApprovalSaveAPI.instance.plannerapproval(
@@ -499,7 +502,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                       fontWeight: FontWeight.w600),
                               dataTextStyle: Get.textTheme.titleSmall!,
                               dataRowHeight:
-                                  MediaQuery.of(context).size.height * 0.26,
+                                  MediaQuery.of(context).size.height * 0.32,
                               headingRowHeight:
                                   MediaQuery.of(context).size.height * 0.08,
                               horizontalMargin: 10,
@@ -530,34 +533,54 @@ class _AllPlannersState extends State<AllPlanners> {
                                               selectAll = value!;
                                               if (selectAll) {
                                                 for (var i = 0;
-                                                    i < allPlannerList.length;
+                                                    i <
+                                                        widget
+                                                            .plannerApprovalController
+                                                            .plannerApprovalList
+                                                            .length;
                                                     i++) {
                                                   checkList.add(i);
                                                   setState(() {
-                                                    allPlannerList
+                                                    widget
+                                                        .plannerApprovalController
+                                                        .plannerApprovalList
                                                         .elementAt(i)
-                                                        .flag = true;
+                                                        .iSMTPLApprovalFlg = true;
                                                     if (headerGroupValue ==
                                                         'Approve All') {
                                                       addApproveEffort(
-                                                          double.parse(
-                                                              allPlannerList[i]
-                                                                  .effort));
+                                                          double.parse(widget
+                                                              .plannerApprovalController
+                                                              .plannerApprovalList[
+                                                                  i]
+                                                              .iSMTPLTAEffortInHrs
+                                                              .toString()));
                                                     } else if (headerGroupValue ==
                                                         'Reject All') {
-                                                      addRejectEffort(
-                                                          double.parse(
-                                                              allPlannerList[i]
-                                                                  .effort));
+                                                      addRejectEffort(double.parse(widget
+                                                          .plannerApprovalController
+                                                          .plannerApprovalList[
+                                                              i]
+                                                          .iSMTPLTAEffortInHrs
+                                                          .toString()));
                                                     }
                                                   });
                                                 }
                                               } else {
                                                 for (var i = 0;
-                                                    i < allPlannerList.length;
+                                                    i <
+                                                        widget
+                                                            .plannerApprovalController
+                                                            .plannerApprovalList[
+                                                                i]
+                                                            .iSMTPLTAEffortInHrs
+                                                            .toString()
+                                                            .length;
                                                     i++) {
-                                                  checked = allPlannerList[i]
-                                                      .flag = false;
+                                                  checked = widget
+                                                      .plannerApprovalController
+                                                      .plannerApprovalList[i]
+                                                      .iSMTPLApprovalFlg = false;
                                                   for (int i = 0;
                                                       i < checkList.length;
                                                       i++) {}
@@ -630,16 +653,34 @@ class _AllPlannersState extends State<AllPlanners> {
                                       "Remarks",
                                     )),
                               ],
-                              rows:
-                                  List.generate(allPlannerList.length, (index) {
+                              rows: List.generate(
+                                  widget.plannerApprovalController
+                                      .plannerApprovalList.length, (index) {
                                 var v = index + 1;
                                 for (int i = 0;
-                                    i < allPlannerList.length;
+                                    i <
+                                        widget.plannerApprovalController
+                                            .plannerApprovalList.length;
                                     i++) {
                                   selectedItemValue.add(dataRowGroupValue);
                                 }
                                 addRemarks(TextEditingController(
-                                    text: allPlannerList[index].remarks));
+                                    text: widget
+                                            .plannerApprovalController
+                                            .plannerApprovalList[index]
+                                            .iSMTPLRemarks ??
+                                        ''));
+                                var val = widget.plannerApprovalController
+                                    .plannerApprovalList
+                                    .elementAt(index);
+
+                                DateTime dt = DateTime.parse(val.createdDate!);
+                                var createdDate =
+                                    '${dt.day}-${dt.month}-${dt.year}';
+                                TimeOfDay time =
+                                    TimeOfDay(hour: dt.hour, minute: dt.minute);
+                                var createdTime =
+                                    '${time.hour}:${time.minute} ${time.period.name.toUpperCase()}';
                                 return DataRow(
                                     color: (widget.plannerApprovalController
                                                 .plannerApprovalList
@@ -660,32 +701,47 @@ class _AllPlannersState extends State<AllPlanners> {
                                           shape: ContinuousRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10)),
-                                          value: allPlannerList
-                                              .elementAt(index)
-                                              .flag,
+                                          value: val.iSMTPLApprovalFlg,
                                           onChanged: (value) {
                                             setState(() {
-                                              checked = allPlannerList
-                                                  .elementAt(index)
-                                                  .flag = value!;
+                                              checked = val.iSMTPLApprovalFlg =
+                                                  value!;
                                               if (checkList.contains(index)) {
                                                 checkList.remove(index);
-                                                checked = allPlannerList[index]
-                                                    .flag = false;
-                                                if (allPlannerList.length !=
+                                                checked = val
+                                                    .iSMTPLApprovalFlg = false;
+                                                if (widget
+                                                        .plannerApprovalController
+                                                        .plannerApprovalList
+                                                        .length !=
                                                     checkList.length) {
                                                   selectAll = false;
                                                 }
                                               } else {
                                                 checkList.add(index);
-                                                if (allPlannerList.length ==
+                                                if (widget
+                                                        .plannerApprovalController
+                                                        .plannerApprovalList
+                                                        .length ==
                                                     checkList.length) {
                                                   selectAll = true;
                                                 }
                                               }
                                               if (value == false) {
-                                                rejectEffort = 0.0;
-                                                approveEffort = 0.0;
+                                                removeRejectEffort(double.parse(
+                                                    widget
+                                                        .plannerApprovalController
+                                                        .plannerApprovalList
+                                                        .elementAt(index)
+                                                        .iSMTPLTAEffortInHrs
+                                                        .toString()));
+                                                removeApproveEffort(
+                                                    double.parse(widget
+                                                        .plannerApprovalController
+                                                        .plannerApprovalList
+                                                        .elementAt(index)
+                                                        .iSMTPLTAEffortInHrs
+                                                        .toString()));
                                               }
                                             });
                                           })),
@@ -696,16 +752,17 @@ class _AllPlannersState extends State<AllPlanners> {
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Text(
-                                              allPlannerList[index].taskNo,
+                                              val.iSMTCRTaskNo!,
                                               style: Get.textTheme.titleSmall!
                                                   .copyWith(
                                                       color: Theme.of(context)
                                                           .primaryColor),
                                             ),
                                             Text(
-                                              allPlannerList[index].taskName,
+                                              val.iSMTCRTitle!,
                                               maxLines: 2,
                                               style: Get.textTheme.titleSmall!
                                                   .copyWith(
@@ -723,8 +780,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                                                   context)
                                                               .primaryColor)),
                                               TextSpan(
-                                                  text: allPlannerList[index]
-                                                      .taskType,
+                                                  text: val.hRMPName,
                                                   style: Get
                                                       .textTheme.titleSmall!
                                                       .copyWith()),
@@ -740,8 +796,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                                                   context)
                                                               .primaryColor)),
                                               TextSpan(
-                                                  text: allPlannerList[index]
-                                                      .clint,
+                                                  text: val.iSMMCLTClientName,
                                                   style: Get
                                                       .textTheme.titleSmall!
                                                       .copyWith()),
@@ -757,8 +812,8 @@ class _AllPlannersState extends State<AllPlanners> {
                                                                   context)
                                                               .primaryColor)),
                                               TextSpan(
-                                                  text: allPlannerList[index]
-                                                      .category,
+                                                  text: val
+                                                      .iSMMTCATTaskCategoryName,
                                                   style: Get
                                                       .textTheme.titleSmall!
                                                       .copyWith()),
@@ -774,8 +829,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                                                   context)
                                                               .primaryColor)),
                                               TextSpan(
-                                                  text: allPlannerList[index]
-                                                      .periodicity,
+                                                  text: val.periodicity,
                                                   style: Get
                                                       .textTheme.titleSmall!
                                                       .copyWith()),
@@ -791,10 +845,8 @@ class _AllPlannersState extends State<AllPlanners> {
                                                                   context)
                                                               .primaryColor)),
                                               TextSpan(
-                                                  text: getDateSelect(
-                                                      DateTime.parse(
-                                                          allPlannerList[index]
-                                                              .date)),
+                                                  text:
+                                                      '$createdDate $createdTime',
                                                   style: Get
                                                       .textTheme.titleSmall!
                                                       .copyWith()),
@@ -810,8 +862,8 @@ class _AllPlannersState extends State<AllPlanners> {
                                                                   context)
                                                               .primaryColor)),
                                               TextSpan(
-                                                  text: allPlannerList[index]
-                                                      .plannedDate,
+                                                  text:
+                                                      '${val.iSMTCRASTOStartDate} TO ${val.iSMTCRASTOEndDate}',
                                                   style: Get
                                                       .textTheme.titleSmall!
                                                       .copyWith()),
@@ -819,10 +871,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                           ],
                                         ),
                                       )),
-                                      DataCell((allPlannerList
-                                                  .elementAt(index)
-                                                  .flag ==
-                                              true)
+                                      DataCell((val.iSMTPLApprovalFlg == true)
                                           ? Container(
                                               width: 120,
                                               height: 40,
@@ -843,28 +892,37 @@ class _AllPlannersState extends State<AllPlanners> {
                                                   if (selectedItemValue[
                                                           index] ==
                                                       'Approve') {
-                                                    addApproveEffort(double
-                                                        .parse(allPlannerList
+                                                    addApproveEffort(
+                                                        double.parse(widget
+                                                            .plannerApprovalController
+                                                            .plannerApprovalList
                                                             .elementAt(index)
-                                                            .effort));
+                                                            .iSMTPLTAEffortInHrs
+                                                            .toString()));
                                                     if (rejectEffort > 0) {
-                                                      removeRejectEffort(double
-                                                          .parse(allPlannerList
+                                                      removeRejectEffort(
+                                                          double.parse(widget
+                                                              .plannerApprovalController
+                                                              .plannerApprovalList
                                                               .elementAt(index)
-                                                              .effort));
+                                                              .iSMTPLTAEffortInHrs
+                                                              .toString()));
                                                     }
                                                   } else if (selectedItemValue[
                                                           index] ==
                                                       'Reject') {
-                                                    addRejectEffort(double
-                                                        .parse(allPlannerList
-                                                            .elementAt(index)
-                                                            .effort));
+                                                    addRejectEffort(
+                                                        double.parse(val
+                                                            .iSMTPLTAEffortInHrs
+                                                            .toString()));
                                                     if (approveEffort > 0) {
-                                                      removeApproveEffort(double
-                                                          .parse(allPlannerList
+                                                      removeApproveEffort(
+                                                          double.parse(widget
+                                                              .plannerApprovalController
+                                                              .plannerApprovalList
                                                               .elementAt(index)
-                                                              .effort));
+                                                              .iSMTPLTAEffortInHrs
+                                                              .toString()));
                                                     }
                                                   }
                                                   setState(() {});
@@ -886,10 +944,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                                 style: Get.textTheme.titleSmall,
                                               )),
                                             )),
-                                      DataCell((allPlannerList
-                                                  .elementAt(index)
-                                                  .flag ==
-                                              true)
+                                      DataCell((val.iSMTPLApprovalFlg == true)
                                           ? SizedBox(
                                               height: 40,
                                               width: 100,
@@ -914,26 +969,22 @@ class _AllPlannersState extends State<AllPlanners> {
                                               ),
                                             )
                                           : Text(
-                                              '${allPlannerList[index].effort} ${(allPlannerList[index].duration == 'HOURS') ? 'Hr' : "Min"}')),
+                                              '${val.iSMTPLTAEffortInHrs} ${(val.iSMMTCATDurationFlg == 'HOURS') ? 'Hr' : "Min"}')),
                                       DataCell(Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8),
                                         child: TextFormField(
-                                          readOnly: (allPlannerList
-                                                      .elementAt(index)
-                                                      .flag ==
-                                                  true)
-                                              ? false
-                                              : true,
+                                          readOnly:
+                                              (val.iSMTPLApprovalFlg == true)
+                                                  ? false
+                                                  : true,
                                           style: Get.textTheme.titleSmall,
                                           keyboardType: TextInputType.text,
                                           maxLines: 2,
-                                          initialValue:
-                                              allPlannerList[index].remarks,
+                                          initialValue: val.iSMTPLRemarks,
                                           onChanged: (value) {
                                             setState(() {
-                                              allPlannerList[index].remarks =
-                                                  value;
+                                              val.iSMTPLRemarks = value;
                                             });
                                           },
                                           decoration: InputDecoration(

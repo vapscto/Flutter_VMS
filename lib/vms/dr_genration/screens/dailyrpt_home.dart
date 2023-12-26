@@ -183,6 +183,16 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                 ),
               ))
           : null;
+    } else {
+      Get.dialog(
+          barrierDismissible: false,
+          AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            content: const DrnotApproveScreen(
+              title: 'Planner Not Created For This Week!!',
+            ),
+          ));
     }
     if (_plannerDetailsController.getplannerdetails.isNotEmpty) {
       (_plannerDetailsController.getplannerdetails[0].ismtpLApprovalFlg ==
