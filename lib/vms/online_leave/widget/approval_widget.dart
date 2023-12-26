@@ -77,7 +77,7 @@ class _ApprovalWidgetState extends State<ApprovalWidget> {
     return Obx(() {
       return AlertDialog(
         shape: BeveledRectangleBorder(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(0),
         ),
         insetPadding: const EdgeInsets.symmetric(horizontal: 16),
         contentPadding: const EdgeInsets.all(10),

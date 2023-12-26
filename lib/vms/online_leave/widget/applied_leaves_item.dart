@@ -171,10 +171,18 @@ class AppliedLeaveItem extends StatelessWidget {
                             padding: const EdgeInsets.all(3.0),
                             child: InkWell(
                                 onTap: () {
-                                  Get.dialog(ApprovalWidget(
-                                    hrmeId: value.hrelaPId!,
-                                    mskoolController: mskoolController,
-                                  ));
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) {
+                                        return ApprovalWidget(
+                                          hrmeId: value.hrelaPId!,
+                                          mskoolController: mskoolController,
+                                        );
+                                      });
+                                  // Get.dialog(ApprovalWidget(
+                                  //   hrmeId: value.hrelaPId!,
+                                  //   mskoolController: mskoolController,
+                                  // ));
                                 },
                                 child: const Icon(
                                   Icons.visibility_outlined,
