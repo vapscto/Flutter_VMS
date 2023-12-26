@@ -48,6 +48,8 @@ class PlannerApprovalController extends GetxController {
         "planner": drapp.iSMTPLPlannerName,
         "plannerView": "View & Approve",
         "ismtplId": drapp.iSMTPLId,
+        "hrmeId": drapp.hRMEId,
+        "hrmdId": hrmdId,
       });
     }
 
@@ -114,6 +116,7 @@ class PlannerApprovalController extends GetxController {
   int completedCount = 0;
   double effort = 0.0;
   bool flag = false;
+  int hrmdId = 0;
   void getPlannerList(List<PlannerApprovalListModelValues> plannerList) {
     if (plannerApprovalList.isNotEmpty) {
       plannerApprovalList.clear();

@@ -22,9 +22,26 @@ class PlannerDetailsAPI {
     required double effort,
     required int ismtplId,
     required int view,
+    required int hrmId,
+    required int hrmdId,
   }) async {
     var url = base + URLS.plannerApprovelist;
     var dio = Dio();
+    logger.i({
+      "UserId": userId,
+      "ISMMAC_Id": ismmacId,
+      "MI_Id": miId,
+      "completdcount": completedCount,
+      "Role_flag": "S",
+      "IVRMRT_Id": ivrmrtId,
+      "ASMAY_Id": asmayId,
+      "ISMTCRASTO_EffortInHrs": effort,
+      "ISMTCRASTO_ActiveFlg": flag,
+      "ISMTPL_Id": ismtplId,
+      "view": view,
+      "HRME_Id": hrmId,
+      "HRMD_Id": hrmdId,
+    });
     try {
       plannerApprovalController.approvalLoading(true);
       var response =
@@ -40,19 +57,10 @@ class PlannerDetailsAPI {
         "ISMTCRASTO_ActiveFlg": flag,
         "ISMTPL_Id": ismtplId,
         "view": view,
+        "HRME_Id": hrmId,
+        "HRMD_Id": hrmdId,
       });
-      logger.i({
-        "UserId": userId,
-        "ISMMAC_Id": ismmacId,
-        "MI_Id": miId,
-        "completdcount": completedCount,
-        "Role_flag": "S",
-        "IVRMRT_Id": ivrmrtId,
-        "ASMAY_Id": asmayId,
-        "ISMTCRASTO_EffortInHrs": effort,
-        "ISMTCRASTO_ActiveFlg": flag,
-        "ISMTPL_Id": ismtplId
-      });
+
       logger.i(url);
       if (response.statusCode == 200) {
         PlannerApprovalListModel plannerApprovalListModel =

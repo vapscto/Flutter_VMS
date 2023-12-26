@@ -62,6 +62,7 @@ class PlannerListAPI {
             response.data['ismtcrastO_EffortInHrs'] ?? 0.0;
         plannerApprovalController.ismmcId = response.data['ismmaC_Id'] ?? 0;
         plannerApprovalController.flag = response.data['ismtcrastO_ActiveFlg'];
+        plannerApprovalController.hrmdId = response.data['hrmD_Id'] ?? 0;
         if (response.data['completedcreatedbyme'] != null) {
           CompletedTaskCountModel completedTaskCountModel =
               CompletedTaskCountModel.fromJson(

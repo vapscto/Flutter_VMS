@@ -21,36 +21,24 @@ class PlannerApprovalSaveAPI {
     required double totalEffort,
   }) async {
     var dio = Dio();
-    var url = 'base' + URLS.plannerSave;
+    var url = base + URLS.plannerSave;
 
     logger.i({
-        "UserId": userId,
-        "MI_Id": miId,
-        "Role_flag": "S",
-        "IVRMRT_Id": ivrmrtId,
-        "ASMAY_Id": asmayId,
-        "view": view,
-        "ISMTPL_Id": ismtplId,
-        "ISMTPLAP_Remarks": remarks,
-        "totaleffort": totalEffort,
-        "approveplannerArray": plannerList,
-      });
+      "UserId": userId,
+      "MI_Id": miId,
+      "Role_flag": "S",
+      "IVRMRT_Id": ivrmrtId,
+      "ASMAY_Id": asmayId,
+      "view": view,
+      "ISMTPL_Id": ismtplId,
+      "ISMTPLAP_Remarks": remarks,
+      "totaleffort": totalEffort,
+      "approveplannerArray": plannerList,
+    });
 
     try {
       var response =
           await dio.post(url, options: Options(headers: getSession()), data: {
-        "UserId": userId,
-        "MI_Id": miId,
-        "Role_flag": "S",
-        "IVRMRT_Id": ivrmrtId,
-        "ASMAY_Id": asmayId,
-        "view": view,
-        "ISMTPL_Id": ismtplId,
-        "ISMTPLAP_Remarks": remarks,
-        "totaleffort": totalEffort,
-        "approveplannerArray": plannerList,
-      });
-      logger.i({
         "UserId": userId,
         "MI_Id": miId,
         "Role_flag": "S",

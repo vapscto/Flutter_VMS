@@ -15,6 +15,8 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
+import '../../../../main.dart';
+
 class AllPlanners extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
@@ -24,6 +26,8 @@ class AllPlanners extends StatefulWidget {
   final String toDate;
   final String fromDate;
   final double plannedEffort;
+  final int hrmId;
+  final int hrmdId;
   const AllPlanners(
       {super.key,
       required this.loginSuccessModel,
@@ -33,7 +37,9 @@ class AllPlanners extends StatefulWidget {
       required this.createdBy,
       required this.toDate,
       required this.fromDate,
-      required this.plannedEffort});
+      required this.plannedEffort,
+      required this.hrmId,
+      required this.hrmdId});
 
   @override
   State<AllPlanners> createState() => _AllPlannersState();
@@ -110,7 +116,9 @@ class _AllPlannersState extends State<AllPlanners> {
         asmayId: widget.loginSuccessModel.asmaYId!,
         effort: widget.plannerApprovalController.effort,
         ismtplId: widget.ismtplId,
-        view: 1);
+        hrmId: widget.hrmId,
+        view: 1,
+        hrmdId: widget.plannerApprovalController.hrmdId);
     for (int i = 0;
         i < widget.plannerApprovalController.plannerApprovalList.length;
         i++) {
@@ -216,8 +224,8 @@ class _AllPlannersState extends State<AllPlanners> {
           .elementAt(checkList[i]);
       plannerList.add({
         "ISMTCR_Id": value.iSMTCRId,
-        "ISMTPLAPTA_StartDate": 'value.startDate',
-        "ISMTPLAPTA_EndDate": 'value.endDate',
+        "ISMTPLAPTA_StartDate": value.iSMTPLTAStartDate,
+        "ISMTPLAPTA_EndDate": value.iSMTPLTAEndDate,
         "ISMTPLAPTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
         "ISMTPLAPTA_Status": selectedItemValue[i], //value.status,
         "plannerStatus": (dataRowGroupValue == 'Approve') ? 1 : 0,
@@ -242,7 +250,7 @@ class _AllPlannersState extends State<AllPlanners> {
     );
     _getData();
     Get.back();
-    // Get.back();
+    Get.back();
     setState(() {
       isLoading = false;
     });
@@ -270,8 +278,8 @@ class _AllPlannersState extends State<AllPlanners> {
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             child: isLoading == true
                 ? const SizedBox(
-                    height: 20,
-                    width: 20,
+                    height: 10,
+                    width: 10,
                     child: CircularProgressIndicator(
                       strokeWidth: 6,
                       color: Colors.white,
@@ -531,6 +539,8 @@ class _AllPlannersState extends State<AllPlanners> {
                                           onChanged: (value) {
                                             setState(() {
                                               selectAll = value!;
+                                              approveEffort = 0.0;
+                                              rejectEffort = 0.0;
                                               if (selectAll) {
                                                 for (var i = 0;
                                                     i <
@@ -681,6 +691,20 @@ class _AllPlannersState extends State<AllPlanners> {
                                     TimeOfDay(hour: dt.hour, minute: dt.minute);
                                 var createdTime =
                                     '${time.hour}:${time.minute} ${time.period.name.toUpperCase()}';
+
+                                //State Date
+                                DateTime sDt =
+                                    DateTime.parse(val.iSMTPLTAStartDate!);
+                                var sDate =
+                                    '${sDt.day}-${sDt.month}-${sDt.year}';
+                                startDate = val.iSMTPLTAStartDate!;
+                                //end Date
+                                DateTime eDt =
+                                    DateTime.parse(val.iSMTPLTAEndDate!);
+                                var eDate =
+                                    '${eDt.day}-${eDt.month}-${eDt.year}';
+                                endDate = val.iSMTPLTAEndDate!;
+                                //
                                 return DataRow(
                                     color: (widget.plannerApprovalController
                                                 .plannerApprovalList
@@ -728,27 +752,33 @@ class _AllPlannersState extends State<AllPlanners> {
                                                 }
                                               }
                                               if (value == false) {
-                                                removeRejectEffort(double.parse(
-                                                    widget
-                                                        .plannerApprovalController
-                                                        .plannerApprovalList
-                                                        .elementAt(index)
-                                                        .iSMTPLTAEffortInHrs
-                                                        .toString()));
-                                                removeApproveEffort(
-                                                    double.parse(widget
-                                                        .plannerApprovalController
-                                                        .plannerApprovalList
-                                                        .elementAt(index)
-                                                        .iSMTPLTAEffortInHrs
-                                                        .toString()));
+                                                if (selectedItemValue[index] ==
+                                                    'Reject') {
+                                                  removeRejectEffort(
+                                                      double.parse(widget
+                                                          .plannerApprovalController
+                                                          .plannerApprovalList
+                                                          .elementAt(index)
+                                                          .iSMTPLTAEffortInHrs
+                                                          .toString()));
+                                                } else if (selectedItemValue[
+                                                        index] ==
+                                                    'Approve') {
+                                                  removeApproveEffort(
+                                                      double.parse(widget
+                                                          .plannerApprovalController
+                                                          .plannerApprovalList
+                                                          .elementAt(index)
+                                                          .iSMTPLTAEffortInHrs
+                                                          .toString()));
+                                                }
                                               }
                                             });
                                           })),
                                       DataCell(SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
-                                                0.65,
+                                                0.7,
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -862,8 +892,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                                                   context)
                                                               .primaryColor)),
                                               TextSpan(
-                                                  text:
-                                                      '${val.iSMTCRASTOStartDate} TO ${val.iSMTCRASTOEndDate}',
+                                                  text: '$sDate TO $eDate',
                                                   style: Get
                                                       .textTheme.titleSmall!
                                                       .copyWith()),

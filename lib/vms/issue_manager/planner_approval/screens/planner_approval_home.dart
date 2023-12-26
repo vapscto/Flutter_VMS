@@ -53,8 +53,6 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
         miId: widget.loginSuccessModel.mIID!,
         roleId: widget.loginSuccessModel.roleId!);
     plannerApprovalController.plannerLoading(false);
-
-    
   }
 
   @override
@@ -385,6 +383,17 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                                                                   .elementAt(
                                                                       index)[
                                                               'totalEffort'],
+                                                          hrmId: widget
+                                                                  .plannerApprovalController
+                                                                  .plannerListModel
+                                                                  .elementAt(
+                                                                      index)['hrmeId'] ??
+                                                              0,
+                                                          hrmdId: widget
+                                                              .plannerApprovalController
+                                                              .plannerListModel
+                                                              .elementAt(
+                                                                  index)['hrmdId'],
                                                         ));
                                                   },
                                                   child: Row(
