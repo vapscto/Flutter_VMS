@@ -49,6 +49,9 @@ Future<bool> saveTask({
   required String? roletype,
   required String? startdate,
   required List<Map<String, dynamic>> taskEmpArray,
+  required String ismtcrHour,
+  required String ismtcrDay,
+  required int ismtcrMainGroupTask,
 }) async {
   final Dio ins = getGlobalDio();
   var dataMap;
@@ -112,7 +115,10 @@ Future<bool> saveTask({
         "periodicity": periodicity,
         "remarks": remarks,
         "startdate": startdate,
-        "taskEmpArray": taskEmpArray
+        "taskEmpArray": taskEmpArray,
+        "ISMTCR_Hours": ismtcrHour,
+        "ISMTCR_Days": ismtcrDay,
+        "ISMTCR_MainGroupTaskFlg": ismtcrMainGroupTask
       };
     } else {
       print("002");
@@ -149,7 +155,10 @@ Future<bool> saveTask({
         "periodicity": periodicity,
         "remarks": remarks,
         "startdate": startdate,
-        "taskEmpArray": taskEmpArray
+        "taskEmpArray": taskEmpArray,
+        "ISMTCR_Hours": ismtcrHour,
+        "ISMTCR_Days": ismtcrDay,
+        "ISMTCR_MainGroupTaskFlg": ismtcrMainGroupTask
       };
     }
     logger.d(dataMap);
@@ -179,7 +188,10 @@ Future<bool> saveTask({
       "ISMTCR_Status": "Open",
       "ISMTCRCL_Id": 0,
       "ISMMCLT_Id": ISMMCLT_Id,
-      "attachmentArray": att
+      "attachmentArray": att,
+      "ISMTCR_Hours": ismtcrHour,
+      "ISMTCR_Days": ismtcrDay,
+      "ISMTCR_MainGroupTaskFlg": ismtcrMainGroupTask
     };
   }
 

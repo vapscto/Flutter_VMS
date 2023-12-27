@@ -231,7 +231,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       remarks: etRemarkControllers.text,
       roletype: widget.loginSuccessModel.roleforlogin,
       startdate: selectFromDate.text,
-      taskEmpArray: taskEmpArray,
+      taskEmpArray: taskEmpArray, ismtcrDay: '', ismtcrHour: '',
+      ismtcrMainGroupTask: 0,
     ).then(
       (value) {
         if (value) {
@@ -304,15 +305,16 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
 
   loadCmpny() async {
     await getTskCompaniesList(
-      base: baseUrlFromInsCode(
-        'issuemanager',
-        widget.mskoolController,
-      ),
-      controller: _taskDepartController,
-      userId: widget.loginSuccessModel.userId!,
-      ivrmrtId: widget.loginSuccessModel.roleId!,
-      miId: widget.loginSuccessModel.mIID!,
-    ).then(
+            base: baseUrlFromInsCode(
+              'issuemanager',
+              widget.mskoolController,
+            ),
+            controller: _taskDepartController,
+            userId: widget.loginSuccessModel.userId!,
+            ivrmrtId: widget.loginSuccessModel.roleId!,
+            miId: widget.loginSuccessModel.mIID!,
+            pageName: widget.previousScreen)
+        .then(
       (value) {
         if (value) {}
       },

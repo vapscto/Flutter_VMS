@@ -543,7 +543,7 @@ void openMappedPages(
     Get.to(() => TaskCreationHome(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
-          previousScreen: '0',
+          previousScreen: pageName,
         ));
     return;
   }
