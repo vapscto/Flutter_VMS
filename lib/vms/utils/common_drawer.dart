@@ -6,7 +6,6 @@ import 'package:m_skool_flutter/forgotpassword/screens/forgot_password_screen.da
 import 'package:m_skool_flutter/vms/utils/drawer_widget.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/theme_switcher.dart';
-import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
 import '../../forgotpassword/screens/reset_password.dart';
@@ -14,12 +13,11 @@ import '../../forgotpassword/screens/reset_password.dart';
 class CommonDrawer extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  final HwCwNbController hwCwNbController;
-  const CommonDrawer(
-      {super.key,
-      required this.loginSuccessModel,
-      required this.mskoolController,
-      required this.hwCwNbController});
+  const CommonDrawer({
+    super.key,
+    required this.loginSuccessModel,
+    required this.mskoolController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +39,15 @@ class CommonDrawer extends StatelessWidget {
                             (index) => ListTile(
                               onTap: () {
                                 openMappedPages(
-                                    loginSuccessModel
-                                            .staffmobileappprivileges!.values!
-                                            .elementAt(index)
-                                            .pagename ??
-                                        "N/a",
-                                    loginSuccessModel,
-                                    mskoolController,
-                                    context,
-                                    hwCwNbController);
+                                  loginSuccessModel
+                                          .staffmobileappprivileges!.values!
+                                          .elementAt(index)
+                                          .pagename ??
+                                      "N/a",
+                                  loginSuccessModel,
+                                  mskoolController,
+                                  context,
+                                );
                               },
                               leading: Image.asset(
                                 getDashboardIcon(loginSuccessModel

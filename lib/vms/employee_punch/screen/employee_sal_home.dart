@@ -3,16 +3,18 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/notice_board_staff/widget/staff_widget.dart';
+import 'package:m_skool_flutter/staffs/gallery_upload/widget/gallery_checkbox.container.dart';
+// import 'package:m_skool_flutter/staffs/notice_board_staff/widget/staff_widget.dart';
 import 'package:m_skool_flutter/vms/employee_punch/api/employee_department_api.dart';
 import 'package:m_skool_flutter/vms/employee_punch/api/employee_designation_api.dart';
 import 'package:m_skool_flutter/vms/employee_punch/controller/employee_salary_controller.dart';
 import 'package:m_skool_flutter/vms/employee_punch/widget/select_designation.dart';
+import 'package:m_skool_flutter/vms/widgets/level_widget.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
-import '../../../staffs/homework_classwork/widget/check_box_container.dart';
+// import '../../../staffs/homework_classwork/widget/check_box_container.dart';
 
 class EmployeepunchHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -253,10 +255,11 @@ class _EmployeepunchHomeState extends State<EmployeepunchHome> {
 
   @override
   void dispose() {
-  salaryController.department.clear();
-  salaryController.selectedDepartment.clear();
+    salaryController.department.clear();
+    salaryController.selectedDepartment.clear();
     super.dispose();
   }
+
   void loadDesignation() {
     String department = "";
     for (var element in salaryController.selectedDepartment) {

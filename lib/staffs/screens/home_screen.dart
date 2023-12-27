@@ -56,14 +56,14 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
         showAppBar: false,
       ),
     );
-    homeList.add(
-      StaffCoeHome(
-        mskoolController: widget.mskoolController,
-        // dashboardController: dashboardController,
-        loginSuccessModel: widget.loginSuccessModel, title: 'COE',
-        showAppBar: false,
-      ),
-    );
+    // homeList.add(
+    //   StaffCoeHome(
+    //     mskoolController: widget.mskoolController,
+    //     // dashboardController: dashboardController,
+    //     loginSuccessModel: widget.loginSuccessModel, title: 'COE',
+    //     showAppBar: false,
+    //   ),
+    // );
     homeList.add(StaffProfileTab(
         loginSuccessModel: widget.loginSuccessModel,
         mskoolController: widget.mskoolController));

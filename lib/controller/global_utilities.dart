@@ -15,19 +15,17 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/model/categories_api_item.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/screens/attachment_viewer.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
-import 'package:m_skool_flutter/staffs/view_notice/screens/view_notice_home_screen.dart';
+// import 'package:m_skool_flutter/staffs/view_notice/screens/view_notice_home_screen.dart';
 import 'package:m_skool_flutter/student/attendance/screens/home_page.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
 import 'package:m_skool_flutter/student/coe/screen/video_screen.dart';
 import 'package:m_skool_flutter/student/exam/screen/exam_home.dart';
 import 'package:m_skool_flutter/student/fees/screens/fee_receipt_home.dart';
-import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/student/library/screen/library_home.dart';
 import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
@@ -498,11 +496,11 @@ void version(LoginSuccessModel loginSuccessModel,
 }
 
 void openMappedPages(
-    String pageName,
-    LoginSuccessModel loginSuccessModel,
-    MskoolController mskoolController,
-    BuildContext context,
-    HwCwNbController hwCwNbController) {
+  String pageName,
+  LoginSuccessModel loginSuccessModel,
+  MskoolController mskoolController,
+  BuildContext context,
+) {
   logger.i(pageName);
   if (pageName == "Appointment Approval") {
     Get.to(() => InteractionHome(
@@ -517,15 +515,15 @@ void openMappedPages(
     return;
   }
 
-  if (pageName == "Notice Board") {
-    Get.to(() => NoticeHome(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-          hwCwNbController: hwCwNbController,
-          appBarTitle: pageName,
-        ));
-    return;
-  }
+  // if (pageName == "Notice Board") {
+  //   Get.to(() => NoticeHome(
+  //         loginSuccessModel: loginSuccessModel,
+  //         mskoolController: mskoolController,
+  //         hwCwNbController: hwCwNbController,
+  //         appBarTitle: pageName,
+  //       ));
+  //   return;
+  // }
 
   if (pageName == "DR Generation") {
     Get.to(() => DailyReportGenration(
@@ -746,11 +744,11 @@ void openMappedPages(
   }
 
   if (pageName == "Staff Notice Board") {
-    Get.to(() => NoticeBoardStaffHome(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-          title: pageName,
-        ));
+    // Get.to(() => NoticeBoardStaffHome(
+    //       loginSuccessModel: loginSuccessModel,
+    //       mskoolController: mskoolController,
+    //       title: pageName,
+    //     ));
 
     return;
   }
@@ -777,15 +775,15 @@ void openMappedPages(
     return;
   }
 
-  if (pageName == "View Notice") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return ViewNoticeHome(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-        title: pageName,
-      );
-    }));
-  }
+  // if (pageName == "View Notice") {
+  //   Navigator.push(context, MaterialPageRoute(builder: (_) {
+  //     return ViewNoticeHome(
+  //       loginSuccessModel: loginSuccessModel,
+  //       mskoolController: mskoolController,
+  //       title: pageName,
+  //     );
+  //   }));
+  // }
   if (pageName == "Punch Report") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return PunchReport(
@@ -851,11 +849,11 @@ void openMappedPages(
         index: 0));
   }
   if (pageName == 'Staff Notice Board') {
-    Get.to(() => NoticeBoardStaffHome(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-          title: pageName,
-        ));
+    // Get.to(() => NoticeBoardStaffHome(
+    //       loginSuccessModel: loginSuccessModel,
+    //       mskoolController: mskoolController,
+    //       title: pageName,
+    //     ));
   }
   if (pageName == "Overall Fee") {
     Navigator.push(

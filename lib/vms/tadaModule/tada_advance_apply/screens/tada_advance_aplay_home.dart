@@ -8,7 +8,6 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/notice_board_staff/widget/staff_widget.dart';
 import 'package:m_skool_flutter/student/gallery_view/widget/gallery_checkbox.container.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/api/check_planner_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/api/tada_allowense_api.dart';
@@ -19,6 +18,7 @@ import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/api/tada_state
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/controller/tada_apply_controller.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/city_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/state_list_model.dart';
+import 'package:m_skool_flutter/vms/widgets/level_widget.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
