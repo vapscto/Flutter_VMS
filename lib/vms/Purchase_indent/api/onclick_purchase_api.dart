@@ -6,13 +6,14 @@ import 'package:m_skool_flutter/vms/Purchase_indent/controller/purchase_controll
 import 'package:m_skool_flutter/vms/Purchase_indent/model/get_pi_model.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/model/purchase_request_comment.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/model/view_comment_model.dart';
+import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_indent_details.dart';
 
 class OnclickPurchaseApi {
   OnclickPurchaseApi.init();
 
   static final OnclickPurchaseApi instance = OnclickPurchaseApi.init();
 
-  getOnclickPurchaseApiApi({
+  Future<void>  getOnclickPurchaseApiApi({
     required String base,
     required int userId,
     required int invmpiId,
@@ -35,9 +36,9 @@ class OnclickPurchaseApi {
     try {
       final Response response =
           await ins.post(api, data: {"UserId": userId, "INVMPI_Id": invmpiId});
-      // logger.i(response.data['get_pimodel']);
-
-      if (response.data['get_pimodel'] != null) {
+      logger.e(api);    
+      logger.w({"UserId": userId, "INVMPI_Id": invmpiId});    
+     if (response.data['get_pimodel'] != null) {
         controller.updateIsErrorOccured(true);
         controller.updateIsLoadingOnclick(false);
         GetPiModel getPiModelValues =
@@ -52,6 +53,15 @@ class OnclickPurchaseApi {
             PurchaseRequestModel.fromJson(
                 response.data['purchaserequisitioncomments']);
         controller.getrequestList(purchaseRequestModel.values);
+          controller.selectedValue.value = List.generate(
+        
+     controller.getOnclickList.length,
+      (index) =>
+          controller.getOnclickList.elementAt(index).iNVMPIAPPRejectFlg == true?
+                Item(isApproved: false, isRejected: true)
+                :Item(isApproved: true, isRejected: false)
+              ,
+    );
         return;
       }
 

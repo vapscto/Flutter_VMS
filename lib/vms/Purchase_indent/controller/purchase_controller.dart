@@ -10,7 +10,7 @@ class PurchaseController extends GetxController {
   RxBool isFromDataProvided = RxBool(false);
   RxBool isLoadingApproval = RxBool(false);
   RxBool isSaveLoaeding = RxBool(false);
-  List<Item> selectedValue = [];
+  RxList<Item> selectedValue = <Item>[].obs;
   void addToSelectedValueList(List<Item> value) {
     selectedValue.addAll(value);
   }

@@ -9,7 +9,7 @@ class GetPiModel {
     if (json['\$values'] != null) {
       values = <GetPiModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(GetPiModelValues.fromJson(v));
+        values!.add(new GetPiModelValues.fromJson(v));
       });
     }
   }
@@ -29,15 +29,15 @@ class GetPiModelValues {
   int? iNVMPIId;
   int? iNVMIId;
   String? iNVMIItemName;
-  String? mIName;
   int? iNVMUOMId;
   String? iNVMUOMUOMName;
   double? iNVTPIPRQty;
   double? iNVTPIApproxAmount;
   double? iNVTPIPIQty;
-  double? iNVTPIAPPApprovedQty;
   String? iNVTPIRemarks;
   double? iNVTPIPIUnitRate;
+  bool? iNVMPIAPPRejectFlg;
+  double? iNVTPIAPPApprovedQty;
   int? iNVTPIId;
   int? iNVMPRId;
 
@@ -46,51 +46,51 @@ class GetPiModelValues {
       this.iNVMPIId,
       this.iNVMIId,
       this.iNVMIItemName,
-      this.mIName,
       this.iNVMUOMId,
       this.iNVMUOMUOMName,
       this.iNVTPIPRQty,
       this.iNVTPIApproxAmount,
       this.iNVTPIPIQty,
-      this.iNVTPIAPPApprovedQty,
       this.iNVTPIRemarks,
       this.iNVTPIPIUnitRate,
+      this.iNVMPIAPPRejectFlg,
+      this.iNVTPIAPPApprovedQty,
       this.iNVTPIId,
       this.iNVMPRId});
 
-  GetPiModelValues.fromJson(Map<String, dynamic> json) {
-    type = json['\$type'];
+ GetPiModelValues.fromJson(Map<String, dynamic> json) {
+    type = json['$type'];
     iNVMPIId = json['INVMPI_Id'];
     iNVMIId = json['INVMI_Id'];
     iNVMIItemName = json['INVMI_ItemName'];
-     mIName = json['MI_Name'];
     iNVMUOMId = json['INVMUOM_Id'];
     iNVMUOMUOMName = json['INVMUOM_UOMName'];
     iNVTPIPRQty = json['INVTPI_PRQty'];
     iNVTPIApproxAmount = json['INVTPI_ApproxAmount'];
     iNVTPIPIQty = json['INVTPI_PIQty'];
-    iNVTPIAPPApprovedQty = json['INVTPIAPP_ApprovedQty'];
     iNVTPIRemarks = json['INVTPI_Remarks'];
     iNVTPIPIUnitRate = json['INVTPI_PIUnitRate'];
+    iNVMPIAPPRejectFlg = json['INVMPIAPP_RejectFlg'];
+    iNVTPIAPPApprovedQty = json['INVTPIAPP_ApprovedQty'];
     iNVTPIId = json['INVTPI_Id'];
     iNVMPRId = json['INVMPR_Id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
+    data['$type'] = this.type;
     data['INVMPI_Id'] = this.iNVMPIId;
     data['INVMI_Id'] = this.iNVMIId;
     data['INVMI_ItemName'] = this.iNVMIItemName;
-    data['MI_Name'] = this.mIName;
     data['INVMUOM_Id'] = this.iNVMUOMId;
     data['INVMUOM_UOMName'] = this.iNVMUOMUOMName;
     data['INVTPI_PRQty'] = this.iNVTPIPRQty;
     data['INVTPI_ApproxAmount'] = this.iNVTPIApproxAmount;
     data['INVTPI_PIQty'] = this.iNVTPIPIQty;
-    data['INVTPIAPP_ApprovedQty'] = this.iNVTPIAPPApprovedQty;
     data['INVTPI_Remarks'] = this.iNVTPIRemarks;
     data['INVTPI_PIUnitRate'] = this.iNVTPIPIUnitRate;
+    data['INVMPIAPP_RejectFlg'] = this.iNVMPIAPPRejectFlg;
+    data['INVTPIAPP_ApprovedQty'] = this.iNVTPIAPPApprovedQty;
     data['INVTPI_Id'] = this.iNVTPIId;
     data['INVMPR_Id'] = this.iNVMPRId;
     return data;
