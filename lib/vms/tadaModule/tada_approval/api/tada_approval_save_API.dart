@@ -21,6 +21,7 @@ class TADAApprovalSaveAPI {
       logger.i(url);
       if (response.statusCode == 200) {
         if (response.data['returnvalue'] == true) {
+          Fluttertoast.showToast(msg: "Success");
           if (int.parse(response.data['VTADAA_TotalSactionedAmount']) > 0) {
             Fluttertoast.showToast(msg: "TADA Saved Successfully");
           } else {

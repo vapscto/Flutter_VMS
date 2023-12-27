@@ -648,6 +648,7 @@ class URLS {
   static String interactionSave = 'api/ISM_InteractionFacade/savedata';
   static String interactionAllList =
       'api/ISM_InteractionFacade/get_replydetails';
+  static String vmsInteractionSave = 'api/ISM_InteractionFacade/savereply';
   static String vmsMessageList = 'api/ISM_InteractionFacade/get_replydetails';
   // VMS Notification
   static String vMSNotification = 'api/ISM_InteractionFacade/getnotification';

@@ -9,6 +9,8 @@ import 'package:m_skool_flutter/student/interaction/apis/messaging_api.dart';
 import 'package:m_skool_flutter/student/interaction/controller/interaction_controller.dart';
 import 'package:m_skool_flutter/student/interaction/widget/chat_box.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_text_file.dart';
+import 'package:m_skool_flutter/vms/interaction/api/staff_interaction_compose_related_api.dart';
+import 'package:m_skool_flutter/vms/interaction/controller/staff_interaction_compose_related_controller.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 
 class VMSMessagingScreen extends StatefulWidget {
@@ -35,21 +37,26 @@ class VMSMessagingScreen extends StatefulWidget {
 }
 
 class _VMSMessagingScreenState extends State<VMSMessagingScreen> {
-  final InteractionController interactionController =
-      Get.put(InteractionController());
-
+  // final InteractionController interactionController =
+  //     Get.put(InteractionController());
+  StaffInteractionComposeController staffInteractionComposeController =
+      Get.put(StaffInteractionComposeController());
   final TextEditingController textMessage = TextEditingController();
 
   Future<void> getMessageData() async {
-    interactionController.isMessageloading(true);
-    await interactionController.getMessage(
-        ismintId: widget.ismintId,
+    await InteractionListAPI.instance.getInteractionList(
+        base: baseUrlFromInsCode(
+          'issuemanager',
+          widget.mskoolController,
+        ),
+        staffInteractionComposeController: staffInteractionComposeController,
         miId: widget.loginSuccessModel.mIID!,
         asmayId: widget.loginSuccessModel.asmaYId!,
         userId: widget.loginSuccessModel.userId!,
-        base: baseUrlFromInsCode('portal', widget.mskoolController),
-        ivrmrtId: widget.loginSuccessModel.roleId!);
-    interactionController.isMessageloading(false);
+        irmrtId: widget.loginSuccessModel.roleId!,
+        flag: "S",
+        ismintrId: 234);
+    staffInteractionComposeController.isgetdetailloading(false);
   }
 
   @override
@@ -86,52 +93,56 @@ class _VMSMessagingScreenState extends State<VMSMessagingScreen> {
           children: [
             Expanded(
               child: Obx(
-                () => interactionController.isMessage.value
+                () => staffInteractionComposeController.isGetDetail.value
                     ? Center(
                         child: CircularProgressIndicator(
                           color: Theme.of(context).primaryColor,
                         ),
                       )
-                    : interactionController.messageList.isEmpty
+                    : staffInteractionComposeController.getDetailList.isEmpty
                         ? const Text('No message, start chatting.')
                         : ListView.builder(
                             shrinkWrap: true,
                             reverse: true,
-                            itemCount: interactionController.messageList.length,
+                            itemCount: staffInteractionComposeController
+                                .getDetailList.length,
                             itemBuilder: (context, index) {
-                              int itemCount =
-                                  interactionController.messageList.length;
+                              int itemCount = staffInteractionComposeController
+                                  .getDetailList.length;
                               int reversedIndex = itemCount - 1 - index;
                               return Column(
                                 children: [
                                   ChatBox(
                                     name: widget.hrmeId ==
-                                            interactionController.messageList
+                                            staffInteractionComposeController
+                                                .getDetailList
                                                 .elementAt(reversedIndex)
-                                                .istintComposedById
-                                        ? interactionController.messageList
+                                                .iSMINTRComposedByHRMEId
+                                        ? staffInteractionComposeController
+                                            .getDetailList
                                             .elementAt(reversedIndex)
                                             .sender!
-                                        : interactionController.messageList
+                                        : staffInteractionComposeController
+                                            .getDetailList
                                             .elementAt(reversedIndex)
                                             .sender!,
                                     isFromMe: widget.hrmeId ==
-                                            interactionController.messageList
+                                            staffInteractionComposeController
+                                                .getDetailList
                                                 .elementAt(reversedIndex)
-                                                .istintComposedById
+                                                .iSMINTRComposedByHRMEId
                                         ? true
                                         : false,
-                                    messages: interactionController.messageList
+                                    messages: staffInteractionComposeController
+                                        .getDetailList
                                         .elementAt(reversedIndex)
-                                        .istintInteraction!,
-                                    istintDateTime: interactionController
-                                        .messageList
-                                        .elementAt(reversedIndex)
-                                        .istintDateTime!,
-                                    attactment: interactionController
-                                        .messageList
-                                        .elementAt(reversedIndex)
-                                        .istintAttachment!,
+                                        .iSMINTRInteraction!,
+                                    istintDateTime: DateTime.parse(
+                                        staffInteractionComposeController
+                                            .getDetailList
+                                            .elementAt(reversedIndex)
+                                            .iSMINTRDateTime!),
+                                    attactment: '',
                                     isGroup: widget.isGroup,
                                   ),
                                   const SizedBox(
@@ -158,7 +169,7 @@ class _VMSMessagingScreenState extends State<VMSMessagingScreen> {
                 Obx(
                   () => FloatingActionButton(
                     backgroundColor: Theme.of(context).primaryColor,
-                    child: interactionController.isSending.value
+                    child: staffInteractionComposeController.isGetDetail.value
                         ? const SizedBox(
                             height: 25,
                             width: 25,
@@ -169,8 +180,8 @@ class _VMSMessagingScreenState extends State<VMSMessagingScreen> {
                           )
                         : SvgPicture.asset("assets/svg/send_arrow.svg"),
                     onPressed: () async {
-                      interactionController.isMessageSending(true);
-                      await sendMessage(
+                      staffInteractionComposeController.issubmitloading(true);
+                      await sendVMSMessage(
                         miId: widget.loginSuccessModel.mIID!,
                         amstId: widget.loginSuccessModel.amsTId!,
                         asmayId: widget.loginSuccessModel.asmaYId!,
@@ -178,26 +189,19 @@ class _VMSMessagingScreenState extends State<VMSMessagingScreen> {
                         istintComposedByFlg: widget.ismintComposedById,
                         ismintId: widget.ismintId,
                         userId: widget.loginSuccessModel.userId!,
-                        image: interactionController.image,
+                        image: [],
                         roleId: widget.loginSuccessModel.roleId!,
                         base: baseUrlFromInsCode(
                             'portal', widget.mskoolController),
                       ).then(
                         (value) async {
                           if (value) {
-                            await interactionController.getMessage(
-                                ismintId: widget.ismintId,
-                                miId: widget.loginSuccessModel.mIID!,
-                                asmayId: widget.loginSuccessModel.asmaYId!,
-                                userId: widget.loginSuccessModel.userId!,
-                                base: baseUrlFromInsCode(
-                                    'portal', widget.mskoolController),
-                                ivrmrtId: widget.loginSuccessModel.roleId!);
+                            getMessageData();
                             textMessage.text = '';
                           }
                         },
                       );
-                      interactionController.isMessageSending(false);
+                      staffInteractionComposeController.issubmitloading(false);
                     },
                   ),
                 ),

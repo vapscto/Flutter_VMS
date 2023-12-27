@@ -8,8 +8,9 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/student/interaction/apis/messaging_api.dart';
 import 'package:m_skool_flutter/student/interaction/controller/interaction_controller.dart';
 import 'package:m_skool_flutter/student/interaction/widget/chat_box.dart';
-import 'package:m_skool_flutter/student/interaction/widget/custom_text_file.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
+
+import '../widget/custom_text_file.dart';
 
 class MessagingScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;

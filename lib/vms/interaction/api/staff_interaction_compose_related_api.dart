@@ -136,3 +136,49 @@ class InteractionListAPI {
     }
   }
 }
+
+Future<bool> sendVMSMessage({
+  required int miId,
+  required int amstId,
+  required int asmayId,
+  required String message,
+  required int istintComposedByFlg,
+  required int ismintId,
+  required int userId,
+  required List<String> image,
+  required int roleId,
+  required String base,
+}) async {
+  var url = base + URLS.vmsInteractionSave;
+  logger.d(url);
+  try {
+    var response = await dio.post(
+      url,
+      options: Options(
+        headers: getSession(),
+      ),
+      data: {
+        "MI_Id": miId,
+        "ASMAY_Id": asmayId,
+        "UserId": userId,
+        "Role_flag": "S",
+        "IVRMRT_Id": roleId,
+        "ISMINTR_Id": 233,
+        "ISMINTRD_ToId": 1861,
+        "ISMINTRD_Interaction": message,
+        "arrayreply": [
+          {"ISMINTRD_ToId": 1915}
+        ],
+      },
+    );
+    if (response.statusCode == 200) {
+      logger.d('true');
+      return true;
+    }
+    logger.d('false');
+    return false;
+  } catch (e) {
+    logger.e(e.toString());
+    return false;
+  }
+}

@@ -144,7 +144,7 @@ class ChatProfileTile extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            ismintComposeById == userHrmeId
+            ismintComposeById != userHrmeId
                 ? Text(
                     'To : $receiver',
                     style: Theme.of(context)

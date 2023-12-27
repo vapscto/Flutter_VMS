@@ -7,7 +7,6 @@ import 'package:m_skool_flutter/main.dart';
 class ApproveLeaveApi {
   ApproveLeaveApi.init();
   static final ApproveLeaveApi instance = ApproveLeaveApi.init();
-
   Future<bool> approveNow({
     required String remark,
     required String status,
