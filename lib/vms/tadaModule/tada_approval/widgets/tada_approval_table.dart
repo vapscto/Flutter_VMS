@@ -1050,7 +1050,6 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                     double.parse(value)) {
                   double totalAmount = 0;
                   value = totalAmount.toStringAsFixed(2);
-                  addAllAmount(totalAmount);
                 } else {
                   widget.tadaController.textEditingControllerList
                           .elementAt(index)
