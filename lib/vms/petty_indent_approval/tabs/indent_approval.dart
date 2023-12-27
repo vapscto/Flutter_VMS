@@ -84,11 +84,11 @@ class _IndentApprovalState extends State<IndentApproval> {
     //   return false;
     // }
 
-    // if (selectCheckBx!.isEmpty) {
-    //   Fluttertoast.showToast(
-    //       msg: "Select Requisition Particular Details checkbox");
-    //   return false;
-    // }
+    if (selectCheckBx!.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Select Requisition Particular Details checkbox");
+      return false;
+    }
 
     if (selectCheckBx!.isNotEmpty &&
         selectCheckBx!.any((index) =>
@@ -583,9 +583,9 @@ class _IndentApprovalState extends State<IndentApproval> {
                                   setState(() {
                                     if (value != null) {
                                       if (value) {
-                                        
-                                        indentApprovalController.particularRequisitionDetais
-                                      .clear();
+                                        indentApprovalController
+                                            .particularRequisitionDetais
+                                            .clear();
 
                                         // selectedRows.clear();
                                         selectedRows = Set<int>.from(
@@ -596,8 +596,9 @@ class _IndentApprovalState extends State<IndentApproval> {
                                           ),
                                         );
                                       } else {
-                                        indentApprovalController.particularRequisitionDetais
-                                      .clear();
+                                        indentApprovalController
+                                            .particularRequisitionDetais
+                                            .clear();
                                         selectedRows.clear();
                                       }
 
@@ -719,6 +720,11 @@ class _IndentApprovalState extends State<IndentApproval> {
                                                               index]
                                                           .pcreqtNTotAmount ??
                                                       0;
+
+                                              indentApprovalController
+                                                  .checkBoxList
+                                                  .clear();
+                                              selectAll = false;
                                             }
                                             tempRequisitionId.clear();
                                             for (int i = 0;
