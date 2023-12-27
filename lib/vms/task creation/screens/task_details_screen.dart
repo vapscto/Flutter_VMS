@@ -35,6 +35,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
       userId: widget.loginSuccessModel.userId!,
       ivrmrtId: widget.loginSuccessModel.roleId!,
       miId: widget.loginSuccessModel.mIID!,
+      pageName: '',
     );
     widget.taskDepartController.createdTask(false);
   }

@@ -10,7 +10,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/home_page_model.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
-import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
+// import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/tabs/dashboard.dart';
 import 'package:m_skool_flutter/vms/profile/screens/profile_screen.dart';
 import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart';
@@ -35,7 +35,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
   final PageController pageController = PageController();
   final RxInt selectedPage = RxInt(0);
   final GlobalKey<ScaffoldState> _scaffold = GlobalKey();
-  final HwCwNbController hwCwNbController = Get.put(HwCwNbController());
+  // final HwCwNbController hwCwNbController = Get.put(HwCwNbController());
   final DynamicAnalyticsController controller =
       Get.put(DynamicAnalyticsController());
   @override
@@ -77,7 +77,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
           page: DashboardTab(
             loginSuccessModel: widget.loginSuccessModel,
             mskoolController: widget.mskoolController,
-            hwcwNbController: hwCwNbController,
+            // hwcwNbController: hwCwNbController,
             controller: controller,
           ),
           selectedColor: const Color(0xFF9900F0),
@@ -123,7 +123,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
   @override
   void dispose() {
     Get.delete<DynamicAnalyticsController>();
-    Get.delete<HwCwNbController>();
+    // Get.delete<HwCwNbController>();
     pageController.dispose();
 
     super.dispose();
@@ -171,7 +171,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
                               mskoolController: widget.mskoolController,
                               openFor: widget.loginSuccessModel.roleforlogin!
                                   .toLowerCase(),
-                              hwCwNbController: hwCwNbController,
+                              // hwCwNbController: hwCwNbController,
                             );
                             // hwCwNbController: hwCwNbController);
                           },
@@ -191,7 +191,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
         drawer: Drawer(
           child: CommonDrawer(
             loginSuccessModel: widget.loginSuccessModel,
-            hwCwNbController: hwCwNbController,
+            // hwCwNbController: hwCwNbController,
             mskoolController: widget.mskoolController,
           ),
         ),

@@ -261,7 +261,7 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
                               value: visitorManagementsController
                                   .getrequestGetVisitList[index],
                               child: SizedBox(
-                                width: 300,
+                                width: MediaQuery.of(context).size.width / 1.32,
                                 child: Padding(
                                   padding:
                                       const EdgeInsets.only(top: 13, left: 5),
@@ -497,7 +497,7 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
                               value: visitorManagementsController
                                   .getrequestGetemployeeList[index],
                               child: SizedBox(
-                                width: 300,
+                                width: MediaQuery.of(context).size.width / 1.32,
                                 child: Padding(
                                   padding:
                                       const EdgeInsets.only(top: 13, left: 5),

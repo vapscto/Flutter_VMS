@@ -74,20 +74,20 @@ class ManagerDashboardDrawer extends StatelessWidget {
 
                               return;
                             }
-                            if (loginSuccessModel
-                                    .staffmobileappprivileges!.values!
-                                    .elementAt(index)
-                                    .pagename ==
-                                'Notice Board Staff') {
-                              Get.to(() => NoticeBoardStaffHome(
-                                    loginSuccessModel: loginSuccessModel,
-                                    mskoolController: mskoolController,
-                                    title: loginSuccessModel
-                                        .staffmobileappprivileges!.values!
-                                        .elementAt(index)
-                                        .pagename!,
-                                  ));
-                            }
+                            // if (loginSuccessModel
+                            //         .staffmobileappprivileges!.values!
+                            //         .elementAt(index)
+                            //         .pagename ==
+                            //     'Notice Board Staff') {
+                            //   Get.to(() => NoticeBoardStaffHome(
+                            //         loginSuccessModel: loginSuccessModel,
+                            //         mskoolController: mskoolController,
+                            //         title: loginSuccessModel
+                            //             .staffmobileappprivileges!.values!
+                            //             .elementAt(index)
+                            //             .pagename!,
+                            //       ));
+                            // }
 
                             if (loginSuccessModel
                                     .staffmobileappprivileges!.values!

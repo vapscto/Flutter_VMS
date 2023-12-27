@@ -4,20 +4,17 @@ import 'package:m_skool_flutter/controller/dynamic_analytics_controller.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/dynamic_analytics.dart';
 
 class DashboardTab extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  final HwCwNbController hwcwNbController;
   final DynamicAnalyticsController controller;
   const DashboardTab(
       {super.key,
       required this.loginSuccessModel,
       required this.mskoolController,
-      required this.hwcwNbController,
       required this.controller});
 
   @override
@@ -181,14 +178,14 @@ class DashboardTab extends StatelessWidget {
                             child: InkWell(
                               onTap: () {
                                 openMappedPages(
-                                    loginSuccessModel
-                                        .staffmobileappprivileges!.values!
-                                        .elementAt(index)
-                                        .pagename!,
-                                    loginSuccessModel,
-                                    mskoolController,
-                                    context,
-                                    hwcwNbController);
+                                  loginSuccessModel
+                                      .staffmobileappprivileges!.values!
+                                      .elementAt(index)
+                                      .pagename!,
+                                  loginSuccessModel,
+                                  mskoolController,
+                                  context,
+                                );
                               },
                               child: Column(
                                 children: [

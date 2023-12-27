@@ -12,7 +12,7 @@ import 'package:m_skool_flutter/model/notification_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
 import 'package:m_skool_flutter/staffs/coe/screens/coe_home.dart';
-import 'package:m_skool_flutter/staffs/homework_classwork/screen/hw_cw_home.dart';
+// import 'package:m_skool_flutter/staffs/homework_classwork/screen/hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/screen/marks_entry_home.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
 import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dart';
@@ -23,14 +23,14 @@ import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
 import 'package:m_skool_flutter/student/attendance/screens/home_page.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
-import 'package:m_skool_flutter/student/classwork/screen/classwork_home_screen.dart';
+// import 'package:m_skool_flutter/student/classwork/screen/classwork_home_screen.dart';
 import 'package:m_skool_flutter/student/coe/screen/coe_home.dart';
 import 'package:m_skool_flutter/student/exam/screen/exam_home.dart';
 import 'package:m_skool_flutter/student/fees/screens/fee_analysis_screen.dart';
 import 'package:m_skool_flutter/student/fees/screens/fee_receipt_home.dart';
 import 'package:m_skool_flutter/student/fees/screens/online_payment_screen.dart';
-import 'package:m_skool_flutter/student/homework/screen/home_work_screen.dart';
-import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
+// import 'package:m_skool_flutter/student/homework/screen/home_work_screen.dart';
+// import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/student/interaction/screen/messaging_section.dart';
 import 'package:m_skool_flutter/student/library/screen/library_home.dart';
@@ -46,13 +46,14 @@ class NotificationScreen extends StatelessWidget {
   final String openFor;
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  final HwCwNbController? hwCwNbController;
-  const NotificationScreen(
-      {super.key,
-      required this.openFor,
-      required this.loginSuccessModel,
-      required this.mskoolController,
-      this.hwCwNbController});
+  // final HwCwNbController? hwCwNbController;
+  const NotificationScreen({
+    super.key,
+    required this.openFor,
+    required this.loginSuccessModel,
+    required this.mskoolController,
+    // this.hwCwNbController
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -278,23 +279,23 @@ class NotificationScreen extends StatelessWidget {
         );
         break;
       case "classwork":
-        Get.to(() => ClassWorkHomeScreen(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            // hwCwNbController:
-            //     widget.hwCwNbController,
-            title: "${headerName.capitalize}"));
+        // Get.to(() => ClassWorkHomeScreen(
+        //     loginSuccessModel: loginSuccessModel,
+        //     mskoolController: mskoolController,
+        //     // hwCwNbController:
+        //     //     widget.hwCwNbController,
+        //     title: "${headerName.capitalize}"));
         break;
       case "homework":
-        Get.to(
-          () => HomeWorkScreen(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            // hwCwNbController:
-            //     widget.hwCwNbController,
-            title: "${headerName.capitalize}",
-          ),
-        );
+        // Get.to(
+        //   () => HomeWorkScreen(
+        //     loginSuccessModel: loginSuccessModel,
+        //     mskoolController: mskoolController,
+        //     // hwCwNbController:
+        //     //     widget.hwCwNbController,
+        //     title: "${headerName.capitalize}",
+        //   ),
+        // );
         break;
       case "coe":
         Get.to(() => CoeHome(
@@ -307,25 +308,25 @@ class NotificationScreen extends StatelessWidget {
             ));
         break;
       case "notice board":
-        Get.to(
-          () => NoticeHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            hwCwNbController: hwCwNbController!,
-            appBarTitle: "${headerName.capitalize}",
-          ),
-        );
+        // Get.to(
+        //   () => NoticeHome(
+        //     loginSuccessModel: loginSuccessModel,
+        //     mskoolController: mskoolController,
+        //     hwCwNbController: hwCwNbController!,
+        //     appBarTitle: "${headerName.capitalize}",
+        //   ),
+        // );
         break;
 
       case "noticeboard":
-        Get.to(
-          () => NoticeHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            hwCwNbController: hwCwNbController!,
-            appBarTitle: "${headerName.capitalize}",
-          ),
-        );
+        // Get.to(
+        //   () => NoticeHome(
+        //     loginSuccessModel: loginSuccessModel,
+        //     mskoolController: mskoolController,
+        //     hwCwNbController: hwCwNbController!,
+        //     appBarTitle: "${headerName.capitalize}",
+        //   ),
+        // );
         break;
       case "library":
         String base = baseUrlFromInsCode("portal", mskoolController);
@@ -469,11 +470,11 @@ class NotificationScreen extends StatelessWidget {
       // }));
 
       // Notice Board Staff
-      Get.to(() => NoticeBoardStaffHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            title: "${headerName.capitalize}",
-          ));
+      // Get.to(() => NoticeBoardStaffHome(
+      //       loginSuccessModel: loginSuccessModel,
+      //       mskoolController: mskoolController,
+      //       title: "${headerName.capitalize}",
+      //     ));
       return;
     }
     if (headerName == "Punch Report") {
@@ -488,69 +489,69 @@ class NotificationScreen extends StatelessWidget {
     }
 
     if (headerName == "Verify Homework") {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) {
-            return VerifyHwCwHome(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-              title: "${headerName.capitalize}",
-              forHw: true,
-            );
-          },
-        ),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (_) {
+      //       return VerifyHwCwHome(
+      //         loginSuccessModel: loginSuccessModel,
+      //         mskoolController: mskoolController,
+      //         title: "${headerName.capitalize}",
+      //         forHw: true,
+      //       );
+      //     },
+      //   ),
+      // );
       return;
     }
     if (headerName == "Verify Classwork") {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) {
-            return VerifyHwCwHome(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-              title: "${headerName.capitalize}",
-              forHw: false,
-            );
-          },
-        ),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (_) {
+      //       return VerifyHwCwHome(
+      //         loginSuccessModel: loginSuccessModel,
+      //         mskoolController: mskoolController,
+      //         title: "${headerName.capitalize}",
+      //         forHw: false,
+      //       );
+      //     },
+      //   ),
+      // );
       return;
     }
     if (headerName == "Classwork") {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) {
-            return HwCwHome(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-              title: "${headerName.capitalize}",
-              forHw: false,
-              scroll: true,
-            );
-          },
-        ),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (_) {
+      //       return HwCwHome(
+      //         loginSuccessModel: loginSuccessModel,
+      //         mskoolController: mskoolController,
+      //         title: "${headerName.capitalize}",
+      //         forHw: false,
+      //         scroll: true,
+      //       );
+      //     },
+      //   ),
+      // );
       return;
     }
     if (headerName == "Homework") {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) {
-            return HwCwHome(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-              title: "${headerName.capitalize}",
-              forHw: true,
-              scroll: true,
-            );
-          },
-        ),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (_) {
+      //       return HwCwHome(
+      //         loginSuccessModel: loginSuccessModel,
+      //         mskoolController: mskoolController,
+      //         title: "${headerName.capitalize}",
+      //         forHw: true,
+      //         scroll: true,
+      //       );
+      //     },
+      //   ),
+      // );
 
       return;
     }
@@ -599,19 +600,19 @@ class NotificationScreen extends StatelessWidget {
     }
 
     if (headerName == "COE") {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) {
-            return StaffCoeHome(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-              title: "${headerName.capitalize}",
-              //forHw: true,
-            );
-          },
-        ),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (_) {
+      //       return StaffCoeHome(
+      //         loginSuccessModel: loginSuccessModel,
+      //         mskoolController: mskoolController,
+      //         title: "${headerName.capitalize}",
+      //         //forHw: true,
+      //       );
+      //     },
+      //   ),
+      // );
       return;
     }
     Fluttertoast.showToast(msg: "There is no page to open this notification");
@@ -631,13 +632,13 @@ class NotificationScreen extends StatelessWidget {
       return;
     }
 
-    if (s.toLowerCase().contains("notice")) {
-      Get.to(() => NoticeBoardStaffHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            title: "Notice Board",
-          ));
-    }
+    // if (s.toLowerCase().contains("notice")) {
+    //   Get.to(() => NoticeBoardStaffHome(
+    //         loginSuccessModel: loginSuccessModel,
+    //         mskoolController: mskoolController,
+    //         title: "Notice Board",
+    //       ));
+    // }
 
     if (s.toLowerCase().contains("fee")) {
       Navigator.push(

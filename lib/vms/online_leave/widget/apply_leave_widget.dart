@@ -70,6 +70,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
     olLoad();
     _getProfileData();
     getleaveDate();
+    setState(() {});
     super.initState();
   }
 
@@ -91,28 +92,44 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
   DateTime lastDt2 = DateTime.now();
   int max = 0;
   int min = 0;
+  int transationLeave = 0;
 
   getleaveDate() {
     max = widget.values.hrmLMaxLeavesApplyPerMonth;
     min = widget.values.hrmLNoOfDays.round();
+    transationLeave = widget.values.hrelSTransLeaves.round();
     if (widget.values.hrmLWhenToApplyFlg == "Both") {
       firstDt = currentDate.subtract(Duration(days: min));
       initialDt = currentDate;
       lastDt = currentDate.add(Duration(days: min));
     } else if (widget.values.hrmLWhenToApplyFlg == "After") {
       if (widget.values.hrmLLeaveCode == "SL") {
-        initialDt = currentDate.subtract(Duration(days: min - 1));
+        initialDt = currentDate.subtract(Duration(days: min));
         firstDt = currentDate.subtract(Duration(days: min));
-        lastDt = currentDate.subtract(Duration(days: min - 1));
+        lastDt = currentDate.subtract(Duration(days: 1));
+      } else if (widget.values.hrmLLeaveCode == "EL") {
+        initialDt = currentDate.subtract(Duration(days: min));
+        firstDt = currentDate.subtract(Duration(days: min));
+        lastDt = currentDate.subtract(Duration(days: transationLeave));
       } else {
         initialDt = currentDate.subtract(Duration(days: min));
-        firstDt = currentDate.subtract(Duration(days: min + 28));
+        firstDt = currentDate.subtract(const Duration(days: 30));
         lastDt = currentDate.subtract(Duration(days: min));
       }
     } else if (widget.values.hrmLWhenToApplyFlg == "Before") {
-      initialDt = currentDate.add(Duration(days: min));
-      firstDt = currentDate.add(Duration(days: min));
-      lastDt = currentDate.add(Duration(days: min + 28));
+      if (widget.values.hrmLLeaveCode == "SL") {
+        initialDt = currentDate.add(Duration(days: min));
+        firstDt = currentDate.add(Duration(days: min));
+        lastDt = currentDate.add(Duration(days: 1));
+      } else if (widget.values.hrmLLeaveCode == "EL") {
+        initialDt = currentDate.add(Duration(days: transationLeave));
+        firstDt = currentDate.add(Duration(days: min));
+        lastDt = currentDate.add(Duration(days: min));
+      } else {
+        initialDt = currentDate.add(Duration(days: min));
+        firstDt = currentDate.add(Duration(days: min));
+        lastDt = currentDate.add(const Duration(days: 30));
+      }
     }
   }
 
@@ -120,7 +137,16 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
     logger.e(max);
     firstDt2 = date;
     initialDt2 = date;
-    if (widget.values.hrelSCBLeaves > max) {
+    if (widget.values.hrmLLeaveCode == "SL") {
+      if (date.day == currentDate.day - 1) {
+        lastDt2 = date;
+      } else if (date.day == currentDate.day - 2) {
+        lastDt2 = date.add(Duration(days: max - 2));
+      } else {
+        lastDt2 = date.add(Duration(days: max - 1));
+      }
+    } else if (int.parse(widget.values.hrelSCBLeaves.round().toString()) >
+        max) {
       lastDt2 = date.add(Duration(days: max - 1));
       logger.i(lastDt2);
     } else if (widget.values.hrelSCBLeaves == 0.5) {
@@ -128,6 +154,9 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
     } else {
       lastDt2 = date.add(Duration(days: widget.values.hrelSCBLeaves!.round()));
       logger.i(lastDt2);
+    }
+    if (widget.values.hrmLLeaveCode == "PL") {
+      lastDt2 = date.add(Duration(days: max - 1));
     }
   }
 
@@ -1108,7 +1137,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                               future: SaveLeaveApplication.instance.saveNow(
                                   miId: widget.loginSuccessModel.mIID!,
                                   hrmeId: widget.values.hrmLLeaveCode == "PL"
-                                      ? selectedEmployee!.hRMEId!
+                                      ? selectedEmployee!.hRMEId ?? 0
                                       : 0,
                                   userId: widget.loginSuccessModel.userId!,
                                   asmayId: widget.loginSuccessModel.asmaYId!,
