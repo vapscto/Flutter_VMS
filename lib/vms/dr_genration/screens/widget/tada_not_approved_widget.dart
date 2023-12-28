@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
-import 'package:m_skool_flutter/vms/dr_genration/model/advance_tada_applied.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/tada_not_approve_model.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/screens/tada_approval_home.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
@@ -242,11 +239,11 @@ class TADANotApproveScreen extends StatelessWidget {
             child: MSkollBtn(
                 title: "TA-DA Approval",
                 onPress: () {
+                  Get.back();
                   Get.to(() => TadaApproveHomeScreen(
                         mskoolController: mskoolController,
                         loginSuccessModel: loginSuccessModel,
                       ));
-                  Get.back();
                 }),
           )
         ],
