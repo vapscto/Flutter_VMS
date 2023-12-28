@@ -13,6 +13,7 @@ import 'package:m_skool_flutter/vms/dr_genration/model/drnotapprovedmessage_mode
 import 'package:m_skool_flutter/vms/dr_genration/model/drnotsent_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/get_planner_details.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/hrplannerdetails_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/others_day_planned.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_details.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_file_upload_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/tada_not_approve_model.dart';
@@ -128,6 +129,17 @@ class PlannerDetails extends GetxController {
   List<PlannerFileUpload> uploadImages = [];
 
   RxInt deviationCount = 0.obs;
+
+  RxList<OthersDayPlannedModelValues> othersDayPlannerList =
+      <OthersDayPlannedModelValues>[].obs;
+  void getPlanner(List<OthersDayPlannedModelValues> othersDayPlanner) {
+    if (othersDayPlannerList.isNotEmpty) {
+      othersDayPlannerList.clear();
+    }
+    for (int i = 0; i < othersDayPlanner.length; i++) {
+      othersDayPlannerList.add(othersDayPlanner.elementAt(i));
+    }
+  }
 }
 
 class AtachmenDrtFile {

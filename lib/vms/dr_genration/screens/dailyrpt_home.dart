@@ -439,6 +439,58 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
     }
   }
 
+  _getplannedData(DateTime todayDt) async {
+    await othersDayTask(
+        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
+        body: {
+          "MI_Id": widget.loginSuccessModel.mIID,
+          "UserId": widget.loginSuccessModel.userId,
+          "ASMAY_Id": 0,
+          "ISMDRPT_Date": todayDt.toIso8601String(),
+          "roleId": widget.loginSuccessModel.roleId
+        },
+        controller: _plannerDetailsController);
+    if (_plannerDetailsController.othersDayPlannerList.isEmpty) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            title: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Planner Not Created For This Week!!',
+                      style: Theme.of(context).textTheme.titleMedium!.merge(
+                          TextStyle(color: Theme.of(context).primaryColor)),
+                    ),
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: Text(
+                        "OK",
+                        style: Get.textTheme.titleMedium!
+                            .copyWith(color: Theme.of(context).primaryColor),
+                      ))
+                ],
+              ),
+            ),
+          );
+        },
+      );
+      return;
+    }
+  }
+
   String fileName = '';
   String filePath = '';
   int newselectedIndex = -1;
@@ -791,13 +843,13 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                           ? DateTime.now()
                                               .subtract(const Duration(days: 1))
                                           : DateTime.now(),
-                                ).then((value) async {
+                                ).then((newValue) async {
+                                  _getplannedData(newValue!);
                                   _plannerDetailsController
                                       .plannernameDateController
                                       .value
-                                      .text = await getDateNeed(value!);
-                                  todayDt = value;
-                                  logger.i(value);
+                                      .text = await getDateNeed(newValue);
+                                  todayDt = newValue;
                                 });
                               },
                               controller: _plannerDetailsController
@@ -1149,18 +1201,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   (value) {
                                                                 newselectedIndex =
                                                                     index;
-                                                                // setState(() {
-                                                                //   if (image !=
-                                                                //       index) {
-                                                                //     _plannerDetailsController
-                                                                //             .checkBoxList[
-                                                                //         index] = false;
-                                                                //   } else {
-                                                                //     _plannerDetailsController
-                                                                //             .checkBoxList[
-                                                                //         index] = true;
-                                                                //   }
-                                                                // });
+
                                                                 logger.i(
                                                                     newselectedIndex);
                                                                 value == true
@@ -1174,15 +1215,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                         (value) {
                                                                           WidgetsBinding
                                                                               .instance
-                                                                              .addPostFrameCallback((_) {
-                                                                            // setState(() {
-                                                                            //   if (image == newselectedIndex) {
-                                                                            //     _plannerDetailsController.checkBoxList[index] = true;
-                                                                            //   } else {
-                                                                            //     _plannerDetailsController.checkBoxList[index] = false;
-                                                                            //   }
-                                                                            // });
-                                                                          });
+                                                                              .addPostFrameCallback((_) {});
                                                                           if (value!
                                                                               .values!
                                                                               .isNotEmpty) {

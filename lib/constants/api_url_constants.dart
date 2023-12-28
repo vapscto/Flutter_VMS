@@ -672,4 +672,7 @@ class URLS {
   static String purchaseSaveApi = "api/IndentApprovalFacade/savedetails/";
 
   static String indentItem = "api/INV_PurchaseRequisitionFacade/getitemDetail/";
+
+  static String othersDayCount =
+      'api/ISM_DailyReportGenerationFacade/Otherdaycount/';
 }
