@@ -8,17 +8,11 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/theme_switcher.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
-import 'package:m_skool_flutter/staffs/coe/screens/coe_home.dart';
-import 'package:m_skool_flutter/staffs/marks_entry/screen/marks_entry_home.dart';
-import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
-import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dart';
 import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
 import 'package:m_skool_flutter/staffs/salary_slip/screen/salary_slip_home.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/student_attendance_staff_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
-import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
-// import 'package:m_skool_flutter/staffs/view_notice/screens/view_notice_home_screen.dart';
 import 'package:m_skool_flutter/vms/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
@@ -135,24 +129,24 @@ class StaffDashboardDrawer extends StatelessWidget {
                               return;
                             }
 
-                            if (loginSuccessModel
-                                    .staffmobileappprivileges!.values!
-                                    .elementAt(index)
-                                    .pagename ==
-                                "Online Leave Apply") {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (_) {
-                                return OnlineLeaveApply(
-                                  loginSuccessModel: loginSuccessModel,
-                                  mskoolController: mskoolController,
-                                  title: loginSuccessModel
-                                      .staffmobileappprivileges!.values!
-                                      .elementAt(index)
-                                      .pagename!,
-                                );
-                              }));
-                              return;
-                            }
+                            // if (loginSuccessModel
+                            //         .staffmobileappprivileges!.values!
+                            //         .elementAt(index)
+                            //         .pagename ==
+                            //     "Online Leave Apply") {
+                            //   Navigator.push(context,
+                            //       MaterialPageRoute(builder: (_) {
+                            //     return OnlineLeaveApply(
+                            //       loginSuccessModel: loginSuccessModel,
+                            //       mskoolController: mskoolController,
+                            //       title: loginSuccessModel
+                            //           .staffmobileappprivileges!.values!
+                            //           .elementAt(index)
+                            //           .pagename!,
+                            //     );
+                            //   }));
+                            //   return;
+                            // }
 
                             if (loginSuccessModel
                                     .staffmobileappprivileges!.values!

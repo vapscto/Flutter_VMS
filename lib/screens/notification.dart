@@ -8,8 +8,6 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
-import 'package:m_skool_flutter/staffs/marks_entry/screen/marks_entry_home.dart';
-import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dart';
 import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/student_attendance_staff_home.dart';
@@ -397,16 +395,16 @@ class NotificationScreen extends StatelessWidget {
       return;
     }
 
-    if (headerName == "Online Leave Apply") {
-      Navigator.push(context, MaterialPageRoute(builder: (_) {
-        return OnlineLeaveApply(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-          title: "${headerName.capitalize}",
-        );
-      }));
-      return;
-    }
+    // if (headerName == "Online Leave Apply") {
+    //   Navigator.push(context, MaterialPageRoute(builder: (_) {
+    //     return OnlineLeaveApply(
+    //       loginSuccessModel: loginSuccessModel,
+    //       mskoolController: mskoolController,
+    //       title: "${headerName.capitalize}",
+    //     );
+    //   }));
+    //   return;
+    // }
 
     if (headerName == "Punch Report") {
       Navigator.push(context, MaterialPageRoute(builder: (_) {
