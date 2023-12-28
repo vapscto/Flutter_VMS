@@ -316,13 +316,15 @@ class URLS {
   static String getLeaveName =
       "api/OnlineLeaveApplicationFacade/getonlineLeave/";
   static String viewLeaveComment =
-      "api//OnlineLeaveApplicationFacade/viewcomment/";
+      "api/OnlineLeaveApplicationFacade/viewcomment/";
   static String appliedLeaves =
       "api/OnlineLeaveApplicationFacade/getonlineLeavestatus";
   static String saveLeave = "api/OnlineLeaveApplicationFacade/save/";
-
+  static String checkLeaveBalance =
+      'api/OnlineLeaveApplicationFacade/CheckAppliedDate/';
   static String leaveAuthorization =
       "api/OnlineLeaveApplicationFacade/CheckApprovalAuthorizationMapped/";
+  static String leaveApprovalComment = 'api/LeaveApprovalFacade/viewcomment/';
 
   /* Global Endpoints */
   static String pushNotification = "api/AdmissionCtrl/PushNotificationonload/";

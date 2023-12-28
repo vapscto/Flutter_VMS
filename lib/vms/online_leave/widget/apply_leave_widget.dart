@@ -11,6 +11,7 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/student/homework/model/upload_hw_cw_model.dart';
+import 'package:m_skool_flutter/vms/online_leave/api/get_leaves_name.dart';
 import 'package:m_skool_flutter/vms/online_leave/api/ol_featch_api.dart';
 import 'package:m_skool_flutter/vms/online_leave/api/save_leave_application.dart';
 import 'package:m_skool_flutter/vms/online_leave/controller/ol_controller.dart';
@@ -158,6 +159,18 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
     if (widget.values.hrmLLeaveCode == "PL") {
       lastDt2 = date.add(Duration(days: max - 1));
     }
+  }
+
+  _getleaveCount(String date) async {
+    await GetLeaveCountApi.instance.getLeavesCount(
+        base: baseUrlFromInsCode('leave', widget.mskoolController),
+        data: {
+          "HRELAP_FromDate": date,
+          "HRML_Id": widget.values.hrmLId,
+          "MI_Id": widget.loginSuccessModel.mIID!,
+          "UserId": widget.loginSuccessModel.userId!
+        },
+        opetionLeaveController: controllerOL);
   }
 
   var newDate = '';
@@ -354,6 +367,18 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                               "You didn't selected start date");
                                       return;
                                     }
+                                    setState(() {
+                                      _getleaveCount(
+                                          '${date.year}-${date.month}-${date.day}');
+                                    });
+
+                                    if (controllerOL.totalLeaveCount.isEmpty) {
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "Leave is not added for this academic year");
+                                      return;
+                                    }
+
                                     getEndDate(date);
                                     startDT = date;
                                     startDate.text =
