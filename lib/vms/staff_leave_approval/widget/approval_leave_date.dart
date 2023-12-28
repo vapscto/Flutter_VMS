@@ -47,15 +47,15 @@ class _ApprovalLeaveDatePopUpState extends State<ApprovalLeaveDatePopUp> {
     var formatter = DateFormat('dd-MM-yyyy');
     for (int index = 0; index < controller.newList.length; index++) {
       DateTime fDt = DateTime.parse(
-          controller.newList.elementAt(index).hrelTFromDate.toString());
+          controller.newList.elementAt(index).hrelapAFromDate.toString());
       fTopdate = formatter.format(fDt);
 
       DateTime fDt1 = DateTime.parse(
-          controller.newList.elementAt(index).hrelTToDate.toString());
+          controller.newList.elementAt(index).hrelapAToDate.toString());
       toTopDate = formatter.format(fDt1);
       if (controller.newList.elementAt(index).hrelapAFromDate != null) {
         DateTime fDt = DateTime.parse(
-            controller.newList.elementAt(index).hrelTFromDate.toString());
+            controller.newList.elementAt(index).hrelapAFromDate.toString());
         fromDate = formatter.format(fDt);
       }
       if (controller.newList.elementAt(index).hrelapAToDate != null) {

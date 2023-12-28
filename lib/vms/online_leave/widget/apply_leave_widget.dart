@@ -66,13 +66,20 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
     profileController.profileLoading(false);
   }
 
+  DateTime newDt = DateTime.now();
   @override
   void initState() {
     olLoad();
     _getProfileData();
     getleaveDate();
-    setState(() {});
+    inti();
     super.initState();
+  }
+
+  inti() async {
+    setState(() {
+      _getleaveCount('${newDt.year}-${newDt.month}-${newDt.day}');
+    });
   }
 
   final TextEditingController reason = TextEditingController();
@@ -171,6 +178,11 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
           "UserId": widget.loginSuccessModel.userId!
         },
         opetionLeaveController: controllerOL);
+    if (controllerOL.totalLeaveCount.isEmpty) {
+      Fluttertoast.showToast(msg: "Leave is not added for this academic year");
+      startDate.text = '';
+      return;
+    }
   }
 
   var newDate = '';
@@ -367,17 +379,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                               "You didn't selected start date");
                                       return;
                                     }
-                                    setState(() {
-                                      _getleaveCount(
-                                          '${date.year}-${date.month}-${date.day}');
-                                    });
-
-                                    if (controllerOL.totalLeaveCount.isEmpty) {
-                                      Fluttertoast.showToast(
-                                          msg:
-                                              "Leave is not added for this academic year");
-                                      return;
-                                    }
+                                    _getleaveCount(
+                                        '${date.year}-${date.month}-${date.day}');
 
                                     getEndDate(date);
                                     startDT = date;

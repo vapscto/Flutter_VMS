@@ -100,8 +100,8 @@ class OpetionLeaveController extends GetxController {
     }
   }
 
-  RxList<TotalLeaveCountModelValues> totalLeaveCount =
-      <TotalLeaveCountModelValues>[].obs;
+  List<TotalLeaveCountModelValues> totalLeaveCount =
+      <TotalLeaveCountModelValues>[];
   void getData(List<TotalLeaveCountModelValues> data) {
     if (totalLeaveCount.isNotEmpty) {
       totalLeaveCount.clear();

@@ -61,7 +61,7 @@ class GetLeaveNameApi {
 
 class GetLeaveCountApi {
   GetLeaveCountApi.init();
-  static GetLeaveCountApi instance = GetLeaveCountApi.init();
+  static final GetLeaveCountApi instance = GetLeaveCountApi.init();
 
   getLeavesCount({
     required String base,
@@ -73,33 +73,18 @@ class GetLeaveCountApi {
     logger.i(api);
     logger.i(data);
     try {
-      final Response response = await ins.post(api,
+      var response = await ins.post(api,
           options: Options(headers: getSession()), data: data);
-
-      if (response.data['getemployeeleavedetails'] == null) {
-        return Future.error({
-          "errorTitle": "No Leaves Found",
-          "errorMsg":
-              "Sorry but we didn't find any leave which you can apply, it is deleted from db ask them to add leaves array",
-        });
+      if (response.statusCode == 200) {
+        TotalLeaveCountModel leaveNames = TotalLeaveCountModel.fromJson(
+            response.data['getemployeeleavedetails']);
+        opetionLeaveController.getData(leaveNames.values!);
       }
-      TotalLeaveCountModel leaveNames = TotalLeaveCountModel.fromJson(
-          response.data['getemployeeleavedetails']);
-      opetionLeaveController.getData(leaveNames.values!);
     } on DioError catch (e) {
       logger.e(e.message);
       logger.e(e.stackTrace);
-      return Future.error({
-        "errorTitle": "Unexpected error Occured",
-        "errorMsg": e.message,
-      });
     } on Exception catch (e) {
       logger.e(e.toString());
-      return Future.error({
-        "errorTitle": "Unexpected error Occured",
-        "errorMsg":
-            "An internal error occured while trying to create a view for you",
-      });
     }
   }
 }
