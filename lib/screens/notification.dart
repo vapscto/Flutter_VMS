@@ -1,36 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/apis/push_notification.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/model/notification_model.dart';
-import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
-import 'package:m_skool_flutter/staffs/coe/screens/coe_home.dart';
-// import 'package:m_skool_flutter/staffs/homework_classwork/screen/hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/screen/marks_entry_home.dart';
-import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
 import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dart';
 import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/student_attendance_staff_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
-import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
 import 'package:m_skool_flutter/student/attendance/screens/home_page.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
-// import 'package:m_skool_flutter/student/classwork/screen/classwork_home_screen.dart';
 import 'package:m_skool_flutter/student/coe/screen/coe_home.dart';
 import 'package:m_skool_flutter/student/exam/screen/exam_home.dart';
 import 'package:m_skool_flutter/student/fees/screens/fee_analysis_screen.dart';
 import 'package:m_skool_flutter/student/fees/screens/fee_receipt_home.dart';
 import 'package:m_skool_flutter/student/fees/screens/online_payment_screen.dart';
-// import 'package:m_skool_flutter/student/homework/screen/home_work_screen.dart';
-// import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/student/interaction/screen/messaging_section.dart';
 import 'package:m_skool_flutter/student/library/screen/library_home.dart';
@@ -278,25 +268,7 @@ class NotificationScreen extends StatelessWidget {
           ),
         );
         break;
-      case "classwork":
-        // Get.to(() => ClassWorkHomeScreen(
-        //     loginSuccessModel: loginSuccessModel,
-        //     mskoolController: mskoolController,
-        //     // hwCwNbController:
-        //     //     widget.hwCwNbController,
-        //     title: "${headerName.capitalize}"));
-        break;
-      case "homework":
-        // Get.to(
-        //   () => HomeWorkScreen(
-        //     loginSuccessModel: loginSuccessModel,
-        //     mskoolController: mskoolController,
-        //     // hwCwNbController:
-        //     //     widget.hwCwNbController,
-        //     title: "${headerName.capitalize}",
-        //   ),
-        // );
-        break;
+
       case "coe":
         Get.to(() => CoeHome(
               loginSuccessModel: loginSuccessModel,
@@ -306,27 +278,6 @@ class NotificationScreen extends StatelessWidget {
               // title:
               //     "${headerName.capitalize}"
             ));
-        break;
-      case "notice board":
-        // Get.to(
-        //   () => NoticeHome(
-        //     loginSuccessModel: loginSuccessModel,
-        //     mskoolController: mskoolController,
-        //     hwCwNbController: hwCwNbController!,
-        //     appBarTitle: "${headerName.capitalize}",
-        //   ),
-        // );
-        break;
-
-      case "noticeboard":
-        // Get.to(
-        //   () => NoticeHome(
-        //     loginSuccessModel: loginSuccessModel,
-        //     mskoolController: mskoolController,
-        //     hwCwNbController: hwCwNbController!,
-        //     appBarTitle: "${headerName.capitalize}",
-        //   ),
-        // );
         break;
       case "library":
         String base = baseUrlFromInsCode("portal", mskoolController);
@@ -413,14 +364,14 @@ class NotificationScreen extends StatelessWidget {
             mskoolController: mskoolController,
           ));
     }
-    if (headerName == "Mark Entry") {
-      Get.to(
-        () => MarksEntryHome(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ),
-      );
-    }
+    // if (headerName == "Mark Entry") {
+    //   Get.to(
+    //     () => MarksEntryHome(
+    //       loginSuccessModel: loginSuccessModel,
+    //       mskoolController: mskoolController,
+    //     ),
+    //   );
+    // }
 
     if (headerName == "Salary Details") {
       Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -457,26 +408,6 @@ class NotificationScreen extends StatelessWidget {
       return;
     }
 
-    if (headerName == "Notice Board") {
-      // Navigator.push(context, MaterialPageRoute(builder: (_) {
-      //   return ViewNoticeHome(
-      //     loginSuccessModel: loginSuccessModel,
-      //     mskoolController: mskoolController,
-      //     title: loginSuccessModel
-      //         .staffmobileappprivileges!.values!
-      //         .elementAt(index)
-      //         .pagename!,
-      //   );
-      // }));
-
-      // Notice Board Staff
-      // Get.to(() => NoticeBoardStaffHome(
-      //       loginSuccessModel: loginSuccessModel,
-      //       mskoolController: mskoolController,
-      //       title: "${headerName.capitalize}",
-      //     ));
-      return;
-    }
     if (headerName == "Punch Report") {
       Navigator.push(context, MaterialPageRoute(builder: (_) {
         return PunchReport(
@@ -488,73 +419,6 @@ class NotificationScreen extends StatelessWidget {
       return;
     }
 
-    if (headerName == "Verify Homework") {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (_) {
-      //       return VerifyHwCwHome(
-      //         loginSuccessModel: loginSuccessModel,
-      //         mskoolController: mskoolController,
-      //         title: "${headerName.capitalize}",
-      //         forHw: true,
-      //       );
-      //     },
-      //   ),
-      // );
-      return;
-    }
-    if (headerName == "Verify Classwork") {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (_) {
-      //       return VerifyHwCwHome(
-      //         loginSuccessModel: loginSuccessModel,
-      //         mskoolController: mskoolController,
-      //         title: "${headerName.capitalize}",
-      //         forHw: false,
-      //       );
-      //     },
-      //   ),
-      // );
-      return;
-    }
-    if (headerName == "Classwork") {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (_) {
-      //       return HwCwHome(
-      //         loginSuccessModel: loginSuccessModel,
-      //         mskoolController: mskoolController,
-      //         title: "${headerName.capitalize}",
-      //         forHw: false,
-      //         scroll: true,
-      //       );
-      //     },
-      //   ),
-      // );
-      return;
-    }
-    if (headerName == "Homework") {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (_) {
-      //       return HwCwHome(
-      //         loginSuccessModel: loginSuccessModel,
-      //         mskoolController: mskoolController,
-      //         title: "${headerName.capitalize}",
-      //         forHw: true,
-      //         scroll: true,
-      //       );
-      //     },
-      //   ),
-      // );
-
-      return;
-    }
     if (headerName == "Interaction") {
       if (redirectUrl == "InteractionReply" && transactionId.toInt() != 0) {
         logger.d("NO-> $transactionId");
@@ -620,26 +484,6 @@ class NotificationScreen extends StatelessWidget {
 
   void openUsingHeaderForManager(
       String s, BuildContext context, String redirectUrl, num transactionId) {
-    if (s.toLowerCase().contains("student")) {
-      // Navigator.push(context, MaterialPageRoute(builder: (_) {
-      //   return ManagerStudentDetails(
-      //     loginSuccessModel: loginSuccessModel,
-      //     mskoolController: mskoolController,
-      //     title: "Student Details",
-      //   );
-      // }));
-
-      return;
-    }
-
-    // if (s.toLowerCase().contains("notice")) {
-    //   Get.to(() => NoticeBoardStaffHome(
-    //         loginSuccessModel: loginSuccessModel,
-    //         mskoolController: mskoolController,
-    //         title: "Notice Board",
-    //       ));
-    // }
-
     if (s.toLowerCase().contains("fee")) {
       Navigator.push(
         context,

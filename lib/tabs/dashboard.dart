@@ -32,126 +32,12 @@ class DashboardTab extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            DynamicAnalytics(
-              dashboardController: controller,
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-            ),
             loginSuccessModel.staffmobileappprivileges == null ||
                     loginSuccessModel.staffmobileappprivileges!.values!.isEmpty
                 ? const SizedBox()
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      loginSuccessModel.roleforlogin!.toLowerCase() == "manager"
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  height: 16.0,
-                                ),
-                                Text(
-                                  "Quick Search",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .merge(
-                                        const TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                ),
-                                const SizedBox(
-                                  height: 16.0,
-                                ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: CustomContainer(
-                                        child: InkWell(
-                                          onTap: () {
-                                            // Navigator.push(context,
-                                            //     MaterialPageRoute(builder: (_) {
-                                            //   return ManagerStudentDetails(
-                                            //     loginSuccessModel:
-                                            //         loginSuccessModel,
-                                            //     mskoolController:
-                                            //         mskoolController,
-                                            //     title: 'Student Details',
-                                            //   );
-                                            // }));
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.all(8.0),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                                color: const Color(0xFFFAEFFE)),
-                                            child: Row(
-                                              children: [
-                                                Image.asset(
-                                                  "assets/images/stu_d.png",
-                                                  width: 36.0,
-                                                ),
-                                                const SizedBox(
-                                                  width: 12.0,
-                                                ),
-                                                const Expanded(
-                                                    child: Text("Student"))
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 12.0,
-                                    ),
-                                    Expanded(
-                                      child: CustomContainer(
-                                        child: InkWell(
-                                          onTap: () {
-                                            // Navigator.push(context,
-                                            //     MaterialPageRoute(builder: (_) {
-                                            //   return EmployeeDetailsHomeScreen(
-                                            //     loginSuccessModel:
-                                            //         loginSuccessModel,
-                                            //     mskoolController:
-                                            //         mskoolController,
-                                            //   );
-                                            // }));
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.all(8.0),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                                color: const Color(0xFFECF8FF)),
-                                            child: Row(
-                                              children: [
-                                                Image.asset(
-                                                  "assets/images/emp_d.png",
-                                                  width: 36.0,
-                                                ),
-                                                const SizedBox(
-                                                  width: 12.0,
-                                                ),
-                                                const Expanded(
-                                                    child: Text("Staff"))
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 16.0,
-                                ),
-                              ],
-                            )
-                          : const SizedBox(),
                       Text(
                         "Dashboard",
                         style: Theme.of(context).textTheme.titleMedium,

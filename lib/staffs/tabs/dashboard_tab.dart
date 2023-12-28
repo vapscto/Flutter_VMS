@@ -104,17 +104,17 @@ class Dashboard extends StatelessWidget {
                             mskoolController: mskoolController,
                           ));
                     }
-                    if (loginSuccessModel.staffmobileappprivileges!.values!
-                            .elementAt(index)
-                            .pagename ==
-                        "Mark Entry") {
-                      Get.to(
-                        () => MarksEntryHome(
-                          loginSuccessModel: loginSuccessModel,
-                          mskoolController: mskoolController,
-                        ),
-                      );
-                    }
+                    // if (loginSuccessModel.staffmobileappprivileges!.values!
+                    //         .elementAt(index)
+                    //         .pagename ==
+                    //     "Mark Entry") {
+                    //   Get.to(
+                    //     () => MarksEntryHome(
+                    //       loginSuccessModel: loginSuccessModel,
+                    //       mskoolController: mskoolController,
+                    //     ),
+                    //   );
+                    // }
 
                     if (loginSuccessModel.staffmobileappprivileges!.values!
                             .elementAt(index)
