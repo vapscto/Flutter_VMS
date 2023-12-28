@@ -103,7 +103,24 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                         0)
                     ? true
                     : false)
-            : Item(isApproved: true, isRejected: false));
+            : (widget.tadaController.editArrayList
+                        .elementAt(index)
+                        .sanctionLevelNo ==
+                    3)
+                ? Item(
+                    isApproved: (widget.tadaController.editArrayList
+                                .elementAt(index)
+                                .vTADAAAHSactionedAmount !=
+                            0)
+                        ? true
+                        : false,
+                    isRejected: (widget.tadaController.editArrayList
+                                .elementAt(index)
+                                .vTADAAAHSactionedAmount ==
+                            0)
+                        ? true
+                        : false)
+                : Item(isApproved: true, isRejected: false));
     setState(() {
       updateCounts();
       for (int index = 0;

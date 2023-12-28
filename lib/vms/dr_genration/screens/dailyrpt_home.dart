@@ -622,7 +622,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                       ),
                                       onChanged: (value) {
                                         if (_plannerDetailsController
-                                                .deviationCount.value >=
+                                                    .deviationCount.value +
+                                                3 >
                                             num.parse(_plannerDetailsController
                                                 .otherDaysEditingController
                                                 .value)) {
@@ -782,13 +783,13 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                       _plannerDetailsController.day.value ==
                                               'Others'
                                           ? DateTime.now()
-                                              .subtract(Duration(days: 1))
+                                              .subtract(const Duration(days: 1))
                                           : DateTime.now(),
                                   initialDate:
                                       _plannerDetailsController.day.value ==
                                               'Others'
                                           ? DateTime.now()
-                                              .subtract(Duration(days: 1))
+                                              .subtract(const Duration(days: 1))
                                           : DateTime.now(),
                                 ).then((value) async {
                                   _plannerDetailsController

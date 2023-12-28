@@ -760,7 +760,14 @@ void openMappedPages(
     return;
   }
 
-  if (pageName == "Cash Request") {
+  // if (pageName == "Cash Request") {
+  //   Get.to(() => PurchaserequisitionHome(
+  //         loginSuccessModel: loginSuccessModel,
+  //         mskoolController: mskoolController,
+  //       ));
+  //   return;
+  // }
+  if (pageName == "Purchase Requisition") {
     Get.to(() => PurchaserequisitionHome(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
