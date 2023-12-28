@@ -528,7 +528,7 @@ init() async{
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .titleSmall!
-                                                  .merge(TextStyle(
+                                                  .merge(const TextStyle(
                                                       fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.w100))),
@@ -558,7 +558,7 @@ init() async{
                                               .unitControllerList
                                               .elementAt(index),
                                           keyboardType: TextInputType.number,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w300),
                                         )),
@@ -582,7 +582,7 @@ init() async{
                                             controller: controller
                                                 .remarkControllerList
                                                 .elementAt(index),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w200),
                                           ),
