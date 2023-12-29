@@ -7,7 +7,6 @@ import 'package:m_skool_flutter/forgotpassword/screens/reset_password.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/theme_switcher.dart';
-import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
 import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
 import 'package:m_skool_flutter/staffs/salary_slip/screen/salary_slip_home.dart';
@@ -49,14 +48,14 @@ class StaffDashboardDrawer extends StatelessWidget {
                                     .elementAt(index)
                                     .pagename ==
                                 "Attendance Entry") {
-                              Get.to(
-                                // () => const MonthWiseAttendanceEntryHomeScreen(),
-                                () => AttendanceEntryHomeScreen(
-                                  loginSuccessModel: loginSuccessModel,
-                                  mskoolController: mskoolController,
-                                ),
-                                // () => const DayWiseAttendanceEntryHome(),
-                              );
+                              // Get.to(
+                              //   // () => const MonthWiseAttendanceEntryHomeScreen(),
+                              //   () => AttendanceEntryHomeScreen(
+                              //     loginSuccessModel: loginSuccessModel,
+                              //     mskoolController: mskoolController,
+                              //   ),
+                              //   // () => const DayWiseAttendanceEntryHome(),
+                              // );
                             }
                             if (loginSuccessModel
                                     .staffmobileappprivileges!.values!

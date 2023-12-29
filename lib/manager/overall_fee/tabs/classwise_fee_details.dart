@@ -7,8 +7,8 @@ import 'package:m_skool_flutter/manager/overall_fee/model/overallFeeAcademicYear
 import 'package:m_skool_flutter/manager/overall_fee/widget/manager_fee_bar_chart.dart';
 import 'package:m_skool_flutter/manager/overall_fee/widget/manager_fee_card.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
+import 'package:m_skool_flutter/widget/drop_down_level.dart';
 
 class ManagerClassWiseFeeDetails extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -123,7 +123,10 @@ class _ManagerClassWiseFeeDetailsState
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14.0,
                                 letterSpacing: 0.3)),
-                        hintText:overallClasswiseController.academicYearList.isNotEmpty ?  'Select Year': 'No data available',
+                        hintText: overallClasswiseController
+                                .academicYearList.isNotEmpty
+                            ? 'Select Year'
+                            : 'No data available',
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         label: const CustomDropDownLabel(
                           icon: 'assets/images/hat.png',

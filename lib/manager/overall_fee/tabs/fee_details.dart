@@ -7,8 +7,8 @@ import 'package:m_skool_flutter/manager/overall_fee/controller/overall_fee_detai
 import 'package:m_skool_flutter/manager/overall_fee/model/overallFeeAcademicYearModel.dart';
 import 'package:m_skool_flutter/manager/overall_fee/widget/manager_fee_bar_chart.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
+import 'package:m_skool_flutter/widget/drop_down_level.dart';
 
 class ManagerFeeDetails extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;

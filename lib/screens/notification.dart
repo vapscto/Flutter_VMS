@@ -7,7 +7,6 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
 import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/student_attendance_staff_home.dart';
@@ -343,14 +342,14 @@ class NotificationScreen extends StatelessWidget {
   void openUsingHeaderForStaff(String headerName, BuildContext context,
       String redirectUrl, num transactionId) {
     if (headerName == "Attendance Entry") {
-      Get.to(
-        // () => const MonthWiseAttendanceEntryHomeScreen(),
-        () => AttendanceEntryHomeScreen(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ),
-        // () => const DayWiseAttendanceEntryHome(),
-      );
+      // Get.to(
+      //   // () => const MonthWiseAttendanceEntryHomeScreen(),
+      //   () => AttendanceEntryHomeScreen(
+      //     loginSuccessModel: loginSuccessModel,
+      //     mskoolController: mskoolController,
+      //   ),
+      //   // () => const DayWiseAttendanceEntryHome(),
+      // );
     }
     if (headerName == "Student Attendance Staff") {
       Get.to(() => StudentAttendanceStaffHome(

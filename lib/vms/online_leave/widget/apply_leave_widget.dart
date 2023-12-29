@@ -9,24 +9,21 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/student/homework/model/upload_hw_cw_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/api/get_leaves_name.dart';
 import 'package:m_skool_flutter/vms/online_leave/api/ol_featch_api.dart';
 import 'package:m_skool_flutter/vms/online_leave/api/save_leave_application.dart';
 import 'package:m_skool_flutter/vms/online_leave/controller/ol_controller.dart';
-import 'package:m_skool_flutter/vms/online_leave/model/leave_count_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
-import 'package:m_skool_flutter/vms/online_leave/model/optional_leave_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/staff_list_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/widget/leave_attachment.dart';
 import 'package:m_skool_flutter/vms/profile/api/profile_api.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/vms/task%20creation/api/sava_task.dart';
-import 'package:m_skool_flutter/vms/utils/saveImage.dart';
 import 'package:m_skool_flutter/vms/utils/showDatePicker.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/drop_down_level.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
@@ -114,7 +111,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
       if (widget.values.hrmLLeaveCode == "SL") {
         initialDt = currentDate.subtract(Duration(days: min));
         firstDt = currentDate.subtract(Duration(days: min));
-        lastDt = currentDate.subtract(Duration(days: 1));
+        lastDt = currentDate.subtract(const Duration(days: 1));
       } else if (widget.values.hrmLLeaveCode == "EL") {
         initialDt = currentDate.subtract(Duration(days: min));
         firstDt = currentDate.subtract(Duration(days: min));
@@ -128,7 +125,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
       if (widget.values.hrmLLeaveCode == "SL") {
         initialDt = currentDate.add(Duration(days: min));
         firstDt = currentDate.add(Duration(days: min));
-        lastDt = currentDate.add(Duration(days: 1));
+        lastDt = currentDate.add(const Duration(days: 1));
       } else if (widget.values.hrmLLeaveCode == "EL") {
         initialDt = currentDate.add(Duration(days: transationLeave));
         firstDt = currentDate.add(Duration(days: min));

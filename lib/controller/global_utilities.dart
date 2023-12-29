@@ -17,7 +17,6 @@ import 'package:m_skool_flutter/model/categories_api_item.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/attachment_viewer.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
-import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
 import 'package:m_skool_flutter/student/coe/screen/video_screen.dart';
@@ -611,14 +610,14 @@ void openMappedPages(
     return;
   }
 
-  if (pageName == "Attendance Entry") {
-    Get.to(
-      () => AttendanceEntryHomeScreen(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-      ),
-    );
-  }
+  // if (pageName == "Attendance Entry") {
+  //   Get.to(
+  //     () => AttendanceEntryHomeScreen(
+  //       loginSuccessModel: loginSuccessModel,
+  //       mskoolController: mskoolController,
+  //     ),
+  //   );
+  // }
 
   if (pageName == "Planner Creation") {
     Get.to(() => PlannerCreateHomeScreen(

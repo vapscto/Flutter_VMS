@@ -5,7 +5,6 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/api/staff_dashboard_api.dart';
-import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
 import 'package:m_skool_flutter/staffs/controller/dashboard_controller.dart';
 import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
@@ -80,14 +79,14 @@ class Dashboard extends StatelessWidget {
                             .elementAt(index)
                             .pagename ==
                         "Attendance Entry") {
-                      Get.to(
-                        // () => const MonthWiseAttendanceEntryHomeScreen(),
-                        () => AttendanceEntryHomeScreen(
-                          loginSuccessModel: loginSuccessModel,
-                          mskoolController: mskoolController,
-                        ),
-                        // () => const DayWiseAttendanceEntryHome(),
-                      );
+                      // Get.to(
+                      //   // () => const MonthWiseAttendanceEntryHomeScreen(),
+                      //   () => AttendanceEntryHomeScreen(
+                      //     loginSuccessModel: loginSuccessModel,
+                      //     mskoolController: mskoolController,
+                      //   ),
+                      //   // () => const DayWiseAttendanceEntryHome(),
+                      // );
                     }
                     if (loginSuccessModel.staffmobileappprivileges!.values!
                             .elementAt(index)
