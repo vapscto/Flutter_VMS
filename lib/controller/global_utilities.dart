@@ -18,17 +18,11 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/attachment_viewer.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
-import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
-// import 'package:m_skool_flutter/staffs/view_notice/screens/view_notice_home_screen.dart';
-import 'package:m_skool_flutter/student/attendance/screens/home_page.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
 import 'package:m_skool_flutter/student/coe/screen/video_screen.dart';
-import 'package:m_skool_flutter/student/exam/screen/exam_home.dart';
 import 'package:m_skool_flutter/student/fees/screens/fee_receipt_home.dart';
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
-import 'package:m_skool_flutter/student/library/screen/library_home.dart';
-import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
@@ -508,12 +502,12 @@ void openMappedPages(
         mskoolController: mskoolController));
     return;
   }
-  if (pageName == "Attendance") {
-    Get.to(() => AttendanceHomeScreen(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController));
-    return;
-  }
+  // if (pageName == "Attendance") {
+  //   Get.to(() => AttendanceHomeScreen(
+  //       loginSuccessModel: loginSuccessModel,
+  //       mskoolController: mskoolController));
+  //   return;
+  // }
 
   // if (pageName == "Notice Board") {
   //   Get.to(() => NoticeHome(
@@ -555,15 +549,15 @@ void openMappedPages(
     return;
   }
   if (pageName == "Library") {
-    Get.to(
-      () => LibraryHome(
-        miId: loginSuccessModel.mIID!,
-        asmayId: loginSuccessModel.asmaYId!,
-        asmtId: loginSuccessModel.amsTId!,
-        base: baseUrlFromInsCode("portal", mskoolController),
-        title: pageName,
-      ),
-    );
+    // Get.to(
+    //   () => LibraryHome(
+    //     miId: loginSuccessModel.mIID!,
+    //     asmayId: loginSuccessModel.asmaYId!,
+    //     asmtId: loginSuccessModel.amsTId!,
+    //     base: baseUrlFromInsCode("portal", mskoolController),
+    //     title: pageName,
+    //   ),
+    // );
   }
 
   if (pageName == "GPS attendance") {
@@ -575,13 +569,13 @@ void openMappedPages(
     );
   }
 
-  if (pageName == "Exam") {
-    Get.to(() => ExamHome(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
-    return;
-  }
+  // if (pageName == "Exam") {
+  //   Get.to(() => ExamHome(
+  //         loginSuccessModel: loginSuccessModel,
+  //         mskoolController: mskoolController,
+  //       ));
+  //   return;
+  // }
   if (pageName == "Interaction") {
     Get.to(() => InteractionHomeScreen(
           loginSuccessModel: loginSuccessModel,
@@ -598,13 +592,13 @@ void openMappedPages(
     return;
   }
 
-  if (pageName == "Time Table") {
-    Get.to(() => TimeTableHome(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
-    return;
-  }
+  // if (pageName == "Time Table") {
+  //   Get.to(() => TimeTableHome(
+  //         loginSuccessModel: loginSuccessModel,
+  //         mskoolController: mskoolController,
+  //       ));
+  //   return;
+  // }
 
   if (pageName == "Fee Receipt") {
     Get.to(

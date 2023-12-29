@@ -15,7 +15,7 @@ class InstitutionlistModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['\$type'] = type;
     if (values != null) {
       data['\$values'] = values!.map((v) => v.toJson()).toList();
@@ -113,7 +113,7 @@ class InstitutionlistModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['mI_Id'] = mIId;
     data['mO_Id'] = mOId;
     data['mI_Name'] = mIName;

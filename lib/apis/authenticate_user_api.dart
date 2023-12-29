@@ -1,4 +1,3 @@
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -17,9 +16,7 @@ class AuthenticateUserApi {
     String mobiledeviceid,
   ) async {
     final Dio ins = getGlobalDio();
-    final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     String loginApiUrl = loginBaseUrl + URLS.login;
-    String mobileUniqueID = "";
 
     logger.d(loginApiUrl);
 

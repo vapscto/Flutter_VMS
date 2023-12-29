@@ -33,8 +33,7 @@ class _AppUpdateAlertDialogState extends State<AppUpdateAlertDialog>
 
   @override
   Widget build(BuildContext context) {
-    Color headerTextColor = Theme.of(context).textTheme.bodyText1!.color!;
-    Color suHeaderTextColor = Theme.of(context).textTheme.bodyText2!.color!;
+    Color headerTextColor = Theme.of(context).textTheme.bodyLarge!.color!;
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Material(

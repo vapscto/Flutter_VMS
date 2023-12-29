@@ -97,5 +97,5 @@ class MyApp extends StatelessWidget {
 }
 
 Future<void> backgroundHandler(RemoteMessage message) async {
-  print('Handling a background message ${message.messageId}');
+  logger.i('Handling a background message ${message.messageId}');
 }

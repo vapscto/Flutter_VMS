@@ -12,17 +12,13 @@ import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.da
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/student_attendance_staff_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
-import 'package:m_skool_flutter/student/attendance/screens/home_page.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
 import 'package:m_skool_flutter/student/coe/screen/coe_home.dart';
-import 'package:m_skool_flutter/student/exam/screen/exam_home.dart';
 import 'package:m_skool_flutter/student/fees/screens/fee_analysis_screen.dart';
 import 'package:m_skool_flutter/student/fees/screens/fee_receipt_home.dart';
 import 'package:m_skool_flutter/student/fees/screens/online_payment_screen.dart';
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/student/interaction/screen/messaging_section.dart';
-import 'package:m_skool_flutter/student/library/screen/library_home.dart';
-import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/vms/api/vms_notification_api.dart';
 import 'package:m_skool_flutter/vms/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/vms/model/vms_notification_model.dart';
@@ -237,10 +233,10 @@ class NotificationScreen extends StatelessWidget {
 
     switch (headerName.toLowerCase()) {
       case "attendance":
-        Get.to(() => AttendanceHomeScreen(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController));
-        break;
+      // Get.to(() => AttendanceHomeScreen(
+      //     loginSuccessModel: loginSuccessModel,
+      //     mskoolController: mskoolController));
+      // break;
       case "fee details":
         // Get.to(() => FeeHomeScreen(
         //     loginSuccessModel:
@@ -279,23 +275,23 @@ class NotificationScreen extends StatelessWidget {
         break;
       case "library":
         String base = baseUrlFromInsCode("portal", mskoolController);
-        Get.to(
-          () => LibraryHome(
-            miId: loginSuccessModel.mIID!,
-            asmayId: loginSuccessModel.asmaYId!,
-            asmtId: loginSuccessModel.amsTId!,
-            base: base,
-            title: "${headerName.capitalize}",
-          ),
-        );
+        // Get.to(
+        //   () => LibraryHome(
+        //     miId: loginSuccessModel.mIID!,
+        //     asmayId: loginSuccessModel.asmaYId!,
+        //     asmtId: loginSuccessModel.amsTId!,
+        //     base: base,
+        //     title: "${headerName.capitalize}",
+        //   ),
+        // );
         break;
       case "syllabus":
         break;
       case "exam":
-        Get.to(() => ExamHome(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-            ));
+        // Get.to(() => ExamHome(
+        //       loginSuccessModel: loginSuccessModel,
+        //       mskoolController: mskoolController,
+        //     ));
         break;
       case "interaction":
         if (redirectUrl == "InteractionReply" && transactionId.toInt() != 0) {
@@ -324,10 +320,10 @@ class NotificationScreen extends StatelessWidget {
             ));
         break;
       case "time table":
-        Get.to(() => TimeTableHome(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-            ));
+        // Get.to(() => TimeTableHome(
+        //       loginSuccessModel: loginSuccessModel,
+        //       mskoolController: mskoolController,
+        //     ));
         break;
       case "fee receipt":
         Get.to(

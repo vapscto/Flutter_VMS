@@ -15,10 +15,10 @@ class GridOptionslistModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -65,18 +65,18 @@ class GridOptionslistModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['VMMV_Id'] = this.vMMVId;
-    data['VMMV_VisitorName'] = this.vMMVVisitorName;
-    data['VMMV_FromPlace'] = this.vMMVFromPlace;
-    data['VMMV_MeetingPurpose'] = this.vMMVMeetingPurpose;
-    data['VMMV_MeetingDateTime'] = this.vMMVMeetingDateTime;
-    data['VMMV_EntryDateTime'] = this.vMMVEntryDateTime;
-    data['TOMEET'] = this.tOMEET;
-    data['ASSIGNEDBY'] = this.aSSIGNEDBY;
-    data['VMVTMT_Id'] = this.vMVTMTId;
-    data['VMVTMT_DateTime'] = this.vMVTMTDateTime;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['VMMV_Id'] = vMMVId;
+    data['VMMV_VisitorName'] = vMMVVisitorName;
+    data['VMMV_FromPlace'] = vMMVFromPlace;
+    data['VMMV_MeetingPurpose'] = vMMVMeetingPurpose;
+    data['VMMV_MeetingDateTime'] = vMMVMeetingDateTime;
+    data['VMMV_EntryDateTime'] = vMMVEntryDateTime;
+    data['TOMEET'] = tOMEET;
+    data['ASSIGNEDBY'] = aSSIGNEDBY;
+    data['VMVTMT_Id'] = vMVTMTId;
+    data['VMVTMT_DateTime'] = vMVTMTDateTime;
     return data;
   }
 }

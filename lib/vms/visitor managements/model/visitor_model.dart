@@ -15,7 +15,7 @@ class VisitorlistModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['\$type'] = type;
     if (values != null) {
       data['\$values'] = values!.map((v) => v.toJson()).toList();
@@ -110,7 +110,7 @@ class VisitorlistModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['vmmV_Id'] = vmmVId;
     data['vmaP_Id'] = vmaPId;
     data['mI_Id'] = mIId;

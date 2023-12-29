@@ -13,7 +13,6 @@ Future<StudentDashboardModel> getStudentDashboardData({
   required String base,
 }) async {
   var dio = Dio();
-  StudentDashboardModel logInData = StudentDashboardModel();
   try {
     final String url = base + URLS.studentDashboard;
     logger.i(url);

@@ -3,10 +3,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/apis/dashboard_exam_api.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/dynamic_analytics_controller.dart';
-import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/exam_graph_model.dart';
 import 'package:m_skool_flutter/model/exam_list.dart';
@@ -67,7 +65,7 @@ class _ChartDataLoaderState extends State<ChartDataLoader> {
     //     emeId: widget.selectedExam.eMEId ?? 0,
     //     base: baseUrlFromInsCode("portal", widget.mskoolController),
     //     dashboardController: widget.dashboardController);
-    // super.initState();
+    super.initState();
   }
 
   @override

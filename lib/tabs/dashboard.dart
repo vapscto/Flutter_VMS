@@ -4,8 +4,6 @@ import 'package:m_skool_flutter/controller/dynamic_analytics_controller.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/widget/custom_container.dart';
-import 'package:m_skool_flutter/widget/dynamic_analytics.dart';
 
 class DashboardTab extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;

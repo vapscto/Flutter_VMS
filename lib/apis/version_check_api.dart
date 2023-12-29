@@ -29,7 +29,6 @@ Future<VersionControlModel?> versionPermissionApi() async {
 Future checkVersionPermission() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   String numberVersion = packageInfo.version;
-  String buildNumber = packageInfo.buildNumber;
   VersionControlModel? version = await versionPermissionApi();
   if (version?.data?.responseCode == 109) {
     if (Platform.isAndroid) {

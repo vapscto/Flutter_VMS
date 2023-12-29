@@ -1,4 +1,3 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -361,20 +360,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                 snapshot.data!
-                                                          .userImagePath !=null?
-                                                CircleAvatar(
-                                                  backgroundColor:
-                                                      Colors.grey.shade100,
-                                                  radius: 36.0,
-                                                  backgroundImage: NetworkImage(
-                                                      snapshot.data!
-                                                          .userImagePath!),
-                                                ):CircleAvatar(
-                                                  backgroundColor:
-                                                      Colors.grey.shade100,
-                                                  radius: 36.0,
-                                                  child: Icon(Icons.person)),
+                                                snapshot.data!.userImagePath !=
+                                                        null
+                                                    ? CircleAvatar(
+                                                        backgroundColor: Colors
+                                                            .grey.shade100,
+                                                        radius: 36.0,
+                                                        backgroundImage:
+                                                            NetworkImage(snapshot
+                                                                .data!
+                                                                .userImagePath!),
+                                                      )
+                                                    : CircleAvatar(
+                                                        backgroundColor: Colors
+                                                            .grey.shade100,
+                                                        radius: 36.0,
+                                                        child: const Icon(
+                                                            Icons.person)),
                                                 const SizedBox(
                                                   height: 16.0,
                                                 ),

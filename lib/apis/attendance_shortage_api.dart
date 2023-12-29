@@ -39,6 +39,7 @@ class AttendanceShortageApi {
                 response.data['studentAttendanceList']);
         if (attendanceShortageModel.values != null &&
             attendanceShortageModel.values!.isNotEmpty) {
+          // ignore: use_build_context_synchronously
           showDialog(
               context: context,
               builder: (_) {

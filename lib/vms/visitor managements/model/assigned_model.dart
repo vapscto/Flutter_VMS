@@ -15,7 +15,7 @@ class AssignedlistModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['\$type'] = type;
     if (values != null) {
       data['\$values'] = values!.map((v) => v.toJson()).toList();
@@ -71,7 +71,7 @@ class AssignedlistModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['$type'] = type;
     data['VMMV_Id'] = vMMVId;
     data['VMMV_VisitorName'] = vMMVVisitorName;
