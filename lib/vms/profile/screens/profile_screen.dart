@@ -58,6 +58,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 desc: "We are under process to get your details from server.")
             : profileController.profileDataValue.isEmpty
                 ? const AnimatedProgressWidget(
+                    animatorHeight: 250,
                     animationPath: "assets/json/nodata.json",
                     title: "No Data Found",
                     desc:

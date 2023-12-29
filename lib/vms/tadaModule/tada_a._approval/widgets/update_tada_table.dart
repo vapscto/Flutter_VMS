@@ -104,7 +104,24 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
                         0)
                     ? true
                     : false)
-            : Item(isApproved: true, isRejected: false));
+            : (widget.tadaController.tadaEditValues
+                        .elementAt(index)
+                        .sanctionLevelNo ==
+                    3)
+                ? Item(
+                    isApproved: (widget.tadaController.tadaEditValues
+                                .elementAt(index)
+                                .vTADAAAAHSactionedAmount !=
+                            0)
+                        ? true
+                        : false,
+                    isRejected: (widget.tadaController.tadaEditValues
+                                .elementAt(index)
+                                .vTADAAAAHSactionedAmount ==
+                            0)
+                        ? true
+                        : false)
+                : Item(isApproved: true, isRejected: false));
     setState(() {
       updateCounts();
       for (int index = 0;

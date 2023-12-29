@@ -1,68 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:m_skool_flutter/apis/authentication_api.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/api/leave_approval_status.dart';
 import 'package:m_skool_flutter/vms/online_leave/controller/ol_controller.dart';
+import 'package:m_skool_flutter/vms/staff_leave_approval/api/approval_comment.dart';
+import 'package:m_skool_flutter/vms/staff_leave_approval/controller/leave_approve_controller.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:open_filex/open_filex.dart';
 
 class ApprovalLeaveDatePopUp extends StatefulWidget {
-  final int hrmeId;
+  final String hrelapId;
   final MskoolController mskoolController;
+  final LoginSuccessModel loginSuccessModel;
+  final int hrmeId;
   const ApprovalLeaveDatePopUp(
-      {super.key, required this.hrmeId, required this.mskoolController});
+      {super.key,
+      required this.hrelapId,
+      required this.mskoolController,
+      required this.loginSuccessModel,
+      required this.hrmeId});
 
   @override
   State<ApprovalLeaveDatePopUp> createState() => _ApprovalLeaveDatePopUpState();
 }
 
 class _ApprovalLeaveDatePopUpState extends State<ApprovalLeaveDatePopUp> {
-  OpetionLeaveController controller = Get.put(OpetionLeaveController());
+  LeaveApproveController controller = Get.put(LeaveApproveController());
   String approvedDate = '';
   String fromDate = '';
   String toDate = "";
   String fTopdate = '';
   String toTopDate = '';
   _getData() async {
-    controller.leaveCommentDataLoading(true);
-    await LeaveApprovalStatusAPI.instance.getLeavesComment(
-        miId: widget.hrmeId,
+    controller.dataLoading(true);
+    await LeaveApprovalCummentAPI.instance.getLeavesComment(
+        miId: widget.loginSuccessModel.mIID!,
         base: baseUrlFromInsCode("leave", widget.mskoolController),
-        opetionLeaveController: controller);
+        leaveApproveController: controller,
+        hrelapId: widget.hrelapId,
+        hrmeId: widget.hrmeId,
+        userId: widget.loginSuccessModel.userId!);
     var formatter = DateFormat('dd-MM-yyyy');
-    for (int index = 0; index < controller.leaveCommentList.length; index++) {
-      DateTime fDt = DateTime.parse(controller.leaveCommentList
-          .elementAt(index)
-          .hRELAPFromDate
-          .toString());
+    for (int index = 0; index < controller.newList.length; index++) {
+      DateTime fDt = DateTime.parse(
+          controller.newList.elementAt(index).hrelapAFromDate.toString());
       fTopdate = formatter.format(fDt);
 
       DateTime fDt1 = DateTime.parse(
-          controller.leaveCommentList.elementAt(index).hRELAPToDate.toString());
+          controller.newList.elementAt(index).hrelapAToDate.toString());
       toTopDate = formatter.format(fDt1);
-      if (controller.leaveCommentList.elementAt(index).hRELAPAFromDate !=
-          null) {
-        DateTime fDt = DateTime.parse(controller.leaveCommentList
-            .elementAt(index)
-            .hRELAPAFromDate
-            .toString());
+      if (controller.newList.elementAt(index).hrelapAFromDate != null) {
+        DateTime fDt = DateTime.parse(
+            controller.newList.elementAt(index).hrelapAFromDate.toString());
         fromDate = formatter.format(fDt);
       }
-      if (controller.leaveCommentList.elementAt(index).hRELAPAToDate != null) {
+      if (controller.newList.elementAt(index).hrelapAToDate != null) {
         DateTime tDt = DateTime.parse(
-            controller.leaveCommentList.elementAt(index).hRELAPAToDate ?? '');
+            controller.newList.elementAt(index).hrelapAToDate ?? '');
         toDate = formatter.format(tDt);
       }
 
-      if (controller.leaveCommentList.elementAt(index).updatedDate != null) {
-        DateTime tDt = DateTime.parse(
-            controller.leaveCommentList.elementAt(index).updatedDate!);
+      if (controller.newList.elementAt(index).createdDate != null) {
+        DateTime tDt =
+            DateTime.parse(controller.newList.elementAt(index).createdDate!);
         approvedDate = formatter.format(tDt);
       }
     }
-    controller.leaveCommentDataLoading(false);
+    controller.dataLoading(false);
   }
 
   @override
@@ -85,12 +93,12 @@ class _ApprovalLeaveDatePopUpState extends State<ApprovalLeaveDatePopUp> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              controller.leaveCommentLoading.value
+              controller.isDataLoading.value
                   ? const AnimatedProgressWidget(
                       title: "Loading applied leaves",
                       desc: "Please wait we are loading the leave status",
                       animationPath: "assets/json/default.json")
-                  : controller.leaveCommentList.isEmpty
+                  : controller.newList.isEmpty
                       ? const AnimatedProgressWidget(
                           title: "No Data",
                           desc: "",
@@ -233,21 +241,20 @@ class _ApprovalLeaveDatePopUpState extends State<ApprovalLeaveDatePopUp> {
                                             ),
                                           ),
                                         ),
-                                        DataColumn(
-                                          label: Align(
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              'Document',
-                                            ),
-                                          ),
-                                        ),
+                                        // DataColumn(
+                                        //   label: Align(
+                                        //     alignment: Alignment.center,
+                                        //     child: Text(
+                                        //       'Document',
+                                        //     ),
+                                        //   ),
+                                        // ),
                                       ],
                                       rows: List.generate(
-                                          controller.leaveCommentList.length,
-                                          (index) {
+                                          controller.newList.length, (index) {
                                         int i = index + 1;
-                                        var data = controller.leaveCommentList
-                                            .elementAt(index);
+                                        var data =
+                                            controller.newList.elementAt(index);
                                         return DataRow(cells: [
                                           DataCell(Align(
                                               alignment: Alignment.center,
@@ -255,58 +262,58 @@ class _ApprovalLeaveDatePopUpState extends State<ApprovalLeaveDatePopUp> {
                                           DataCell(Align(
                                               alignment: Alignment.center,
                                               child: Text(
-                                                  data.iVRMSTAULUserName ??
+                                                  data.hrmEEmployeeFirstName ??
                                                       ''))),
                                           DataCell(Align(
                                               alignment: Alignment.center,
                                               child: Text(
-                                                  data.updatedDate != null
+                                                  data.hrlrDUpdatedDate != null
                                                       ? approvedDate
                                                       : ''))),
                                           DataCell(Align(
                                             alignment: Alignment.center,
                                             child: Text(
-                                                data.hRELAPATotalDays != null
-                                                    ? data.hRELAPATotalDays
+                                                data.hrelapATotalDays != null
+                                                    ? data.hrelapATotalDays
                                                         .toString()
                                                     : ''),
                                           )),
                                           DataCell(Align(
                                               alignment: Alignment.center,
                                               child: Text(
-                                                  data.hRELAPAFromDate != null
+                                                  data.hrelapAFromDate != null
                                                       ? fromDate
                                                       : " "))),
                                           DataCell(Align(
                                               alignment: Alignment.center,
                                               child: Text(
-                                                  data.hRELAPAToDate != null
+                                                  data.hrelapAToDate != null
                                                       ? toDate
                                                       : ''))),
                                           DataCell(Align(
                                               alignment: Alignment.center,
                                               child: Text(
-                                                  data.hRELAPALeaveStatus ??
+                                                  data.hrelapALeaveStatus ??
                                                       ''))),
                                           DataCell(Align(
                                               alignment: Alignment.center,
                                               child: Text(
-                                                  data.hRELAPARemarks ?? ''))),
-                                          DataCell(
-                                              (data.hRELAPSupportingDocument !=
-                                                      null)
-                                                  ? IconButton(
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          createPreview(context,
-                                                              data.hRELAPSupportingDocument!);
-                                                        });
-                                                      },
-                                                      icon:
-                                                          const Icon(
-                                                              Icons.visibility))
-                                                  : const Icon(
-                                                      Icons.visibility_off)),
+                                                  data.hrelapARemarks ?? ''))),
+                                          // DataCell(
+                                          //     (data.hRELAPSupportingDocument !=
+                                          //             null)
+                                          //         ? IconButton(
+                                          //             onPressed: () {
+                                          //               setState(() {
+                                          //                 createPreview(context,
+                                          //                     data.hRELAPSupportingDocument!);
+                                          //               });
+                                          //             },
+                                          //             icon:
+                                          //                 const Icon(
+                                          //                     Icons.visibility))
+                                          //         : const Icon(
+                                          //             Icons.visibility_off)),
                                         ]);
                                       }),
                                     )))

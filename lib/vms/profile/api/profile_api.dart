@@ -3,6 +3,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
+import 'package:m_skool_flutter/vms/profile/model/birthday_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/profile_model.dart';
 
 class ProfileAPI {
@@ -27,6 +28,11 @@ class ProfileAPI {
         ProfileDataModel profileDataModel =
             ProfileDataModel.fromJson(response.data['emp_deatils']);
         profileController.getProfile(profileDataModel.values!);
+        if (response.data['birthdaylist'] != null) {
+          BirthDayListModel birthDayListModel =
+              BirthDayListModel.fromJson(response.data['birthdaylist']);
+          profileController.birthday(birthDayListModel.values!);
+        }
       }
     } on DioError catch (e) {
       logger.e(e.message);

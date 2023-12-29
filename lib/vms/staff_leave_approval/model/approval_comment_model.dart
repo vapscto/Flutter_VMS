@@ -1,15 +1,15 @@
-class LeaveNamesModel {
+class ApprovalCommentModel {
   String? type;
-  List<LeaveNamesModelValues>? values;
+  List<ApprovalCommentModelValues>? values;
 
-  LeaveNamesModel({this.type, this.values});
+  ApprovalCommentModel({this.type, this.values});
 
-  LeaveNamesModel.fromJson(Map<String, dynamic> json) {
+  ApprovalCommentModel.fromJson(Map<String, dynamic> json) {
     type = json['\$type'];
     if (json['\$values'] != null) {
-      values = <LeaveNamesModelValues>[];
+      values = <ApprovalCommentModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(LeaveNamesModelValues.fromJson(v));
+        values!.add(ApprovalCommentModelValues.fromJson(v));
       });
     }
   }
@@ -24,20 +24,32 @@ class LeaveNamesModel {
   }
 }
 
-class LeaveNamesModelValues {
+class ApprovalCommentModelValues {
+  int? duplicateCount;
+  bool? checkboxValue;
   int? hrmgTId;
   int? mIId;
+  int? ivrmuLId;
   int? hrmgTOrder;
   bool? hrmgTActiveFlag;
   int? hrmlDId;
   int? hrmLId;
+  int? hrlrDId;
+  String? hrlrDFromDate;
+  String? hrlrDToDate;
+  bool? hrlrDActiveFlg;
+  int? hrlrDCreatedBy;
+  int? hrlrDUpdatedBy;
+  String? hrlrDCreatedDate;
+  String? hrlrDUpdatedDate;
   int? hrmDId;
   int? hrmdeSId;
   int? hrmGId;
+  int? hrmldcMNoOfLeaves;
   int? hrmlDMaxLeaveApplicable;
   bool? hrmlDCarryForFlg;
   bool? hrmlDEncashFlg;
-  num? hrmlDEncashAmount;
+  dynamic hrmlDEncashAmount;
   int? hrmDOrder;
   bool? hrmDActiveFlag;
   int? hrmdeSBasicAmount;
@@ -45,8 +57,6 @@ class LeaveNamesModelValues {
   bool? hrmdeSDisplaySanctionedSeatsFlag;
   int? hrmdeSOrder;
   bool? hrmdeSActiveFlag;
-  String? hrmLLeaveName;
-  String? hrmLLeaveCode;
   bool? hrmLLeaveCreditFlg;
   int? ivrMMonthId;
   bool? isActive;
@@ -54,22 +64,25 @@ class LeaveNamesModelValues {
   int? hrmeDId;
   int? hrmedTId;
   bool? hrmeDActiveFlag;
-  double? hrmeDRoundOffFlag;
+  dynamic hrmeDRoundOffFlag;
   String? hrmeDEntryDate;
   int? loginId;
   bool? hrmEActiveFlag;
+  int? masterId;
   int? hrmEId;
+  int? hrmEIdMy;
+  String? hrmEEmployeeFirstName;
   String? hrmEDOL;
   int? hrmemnOMobileNo;
   int? hreobLId;
   int? hrmlYId;
   String? hreobLDate;
-  double? hreobLOBLeaves;
+  dynamic hreobLOBLeaves;
   int? hrelTId;
   int? hrelTLeaveId;
   String? hrelTFromDate;
   String? hrelTToDate;
-  double? hrelTTotDays;
+  dynamic hrelTTotDays;
   String? hrelTReportingdate;
   bool? hrelTActiveFlag;
   int? hrmldcfMId;
@@ -78,10 +91,10 @@ class LeaveNamesModelValues {
   int? hrelCId;
   String? hrelCDate;
   int? hrelCCrLeaves;
-  double? hrmGPayScaleFrom;
-  double? hrmGIncrementOf;
-  double? hrmGPayScaleTo;
-  int? hrmGOrder;
+  dynamic hrmGPayScaleFrom;
+  dynamic hrmGIncrementOf;
+  dynamic hrmGPayScaleTo;
+  dynamic hrmGOrder;
   bool? hrmGActiveFlag;
   int? hrlAId;
   int? hrlaoNId;
@@ -90,56 +103,79 @@ class LeaveNamesModelValues {
   int? hreltDId;
   String? hreltDFromDate;
   String? hreltDToDate;
-  double? hreltDTotDays;
+  dynamic hreltDTotDays;
   bool? hreltDLWPFlag;
+  dynamic hrmLNoOfDays;
   int? hrelSId;
-  double? hrelSOBLeaves;
-  double? hrelSCreditedLeaves;
-  double? hrelSTotalLeaves;
-  double? hrelSTransLeaves;
-  num? hrelSEncashedLeaves;
-  double? hrelSCBLeaves;
+  dynamic hrelSOBLeaves;
+  dynamic hrelSCreditedLeaves;
+  dynamic hrelSTotalLeaves;
+  dynamic hrelSTransLeaves;
+  int? hrelSEncashedLeaves;
+  dynamic hrelSCBLeaves;
   int? userId;
   int? hrelaPId;
-  double? hrelaPTotalDays;
-  int? hrelaPContactNoOnLeave;
+  String? hrelaPFromDateapprv;
+  String? hrelaPToDateapprv;
+  dynamic hrelaPTotalDaysapprv;
+  dynamic hrelaPTotalDays;
+  dynamic hrelaPContactNoOnLeave;
   bool? hrelaPFinalFlag;
   bool? hrelaPActiveFlag;
   String? hrmlYFromDate;
   String? hrmlYToDate;
   bool? hrmlYActiveFlag;
   int? hrmldcMId;
+  int? hrmldcMLCMonthCode;
   bool? hrmldcFMaxLeaveAplFlg;
-  int? hrmldcFMaxLeaveCF;
+  dynamic hrmldcFMaxLeaveCF;
   int? hrmldeCId;
   bool? hrmldeCServiceAplFlg;
   bool? hrmldeCMaxLeaveFlg;
-  int? hrmldeCMaxLeaves;
+  dynamic hrmldeCMaxLeaves;
   bool? hrmldeCMinLeaveFlg;
   int? hrmldeCMinLeaves;
   bool? hrmldeCVariableFixedFlg;
-  double? hrmldeCFixedAmount;
-  int? month;
-  int? year;
+  dynamic hrmldeCFixedAmount;
+  dynamic month;
+  dynamic year;
   int? hrelapAId;
-  bool? hrelapAFinalFlag;
+  String? hrelapASanctioningLevel;
+  String? hrelapARemarks;
   int? leavecode;
   int? count;
   bool? returnval;
   bool? editFlag;
+  bool? monthwisecredit;
   int? asmayId;
-  int? ivrmuLId;
+  String? hrelapAFromDate;
+  String? hrelapAToDate;
+  dynamic hrelapATotalDays;
+  String? hrelapALeaveStatus;
+  String? createdDate;
 
-  LeaveNamesModelValues(
-      {this.hrmgTId,
+  ApprovalCommentModelValues(
+      {this.duplicateCount,
+      this.checkboxValue,
+      this.hrmgTId,
       this.mIId,
+      this.ivrmuLId,
       this.hrmgTOrder,
       this.hrmgTActiveFlag,
       this.hrmlDId,
       this.hrmLId,
+      this.hrlrDId,
+      this.hrlrDFromDate,
+      this.hrlrDToDate,
+      this.hrlrDActiveFlg,
+      this.hrlrDCreatedBy,
+      this.hrlrDUpdatedBy,
+      this.hrlrDCreatedDate,
+      this.hrlrDUpdatedDate,
       this.hrmDId,
       this.hrmdeSId,
       this.hrmGId,
+      this.hrmldcMNoOfLeaves,
       this.hrmlDMaxLeaveApplicable,
       this.hrmlDCarryForFlg,
       this.hrmlDEncashFlg,
@@ -151,8 +187,6 @@ class LeaveNamesModelValues {
       this.hrmdeSDisplaySanctionedSeatsFlag,
       this.hrmdeSOrder,
       this.hrmdeSActiveFlag,
-      this.hrmLLeaveName,
-      this.hrmLLeaveCode,
       this.hrmLLeaveCreditFlg,
       this.ivrMMonthId,
       this.isActive,
@@ -164,7 +198,10 @@ class LeaveNamesModelValues {
       this.hrmeDEntryDate,
       this.loginId,
       this.hrmEActiveFlag,
+      this.masterId,
       this.hrmEId,
+      this.hrmEIdMy,
+      this.hrmEEmployeeFirstName,
       this.hrmEDOL,
       this.hrmemnOMobileNo,
       this.hreobLId,
@@ -198,6 +235,7 @@ class LeaveNamesModelValues {
       this.hreltDToDate,
       this.hreltDTotDays,
       this.hreltDLWPFlag,
+      this.hrmLNoOfDays,
       this.hrelSId,
       this.hrelSOBLeaves,
       this.hrelSCreditedLeaves,
@@ -207,6 +245,9 @@ class LeaveNamesModelValues {
       this.hrelSCBLeaves,
       this.userId,
       this.hrelaPId,
+      this.hrelaPFromDateapprv,
+      this.hrelaPToDateapprv,
+      this.hrelaPTotalDaysapprv,
       this.hrelaPTotalDays,
       this.hrelaPContactNoOnLeave,
       this.hrelaPFinalFlag,
@@ -215,6 +256,7 @@ class LeaveNamesModelValues {
       this.hrmlYToDate,
       this.hrmlYActiveFlag,
       this.hrmldcMId,
+      this.hrmldcMLCMonthCode,
       this.hrmldcFMaxLeaveAplFlg,
       this.hrmldcFMaxLeaveCF,
       this.hrmldeCId,
@@ -228,24 +270,42 @@ class LeaveNamesModelValues {
       this.month,
       this.year,
       this.hrelapAId,
-      this.hrelapAFinalFlag,
+      this.hrelapASanctioningLevel,
+      this.hrelapARemarks,
       this.leavecode,
       this.count,
       this.returnval,
       this.editFlag,
+      this.monthwisecredit,
       this.asmayId,
-      this.ivrmuLId});
+      this.hrelapAFromDate,
+      this.hrelapAToDate,
+      this.hrelapATotalDays,
+      this.hrelapALeaveStatus,
+      this.createdDate});
 
-  LeaveNamesModelValues.fromJson(Map<String, dynamic> json) {
+  ApprovalCommentModelValues.fromJson(Map<String, dynamic> json) {
+    duplicateCount = json['duplicateCount'];
+    checkboxValue = json['checkbox_value'];
     hrmgTId = json['hrmgT_Id'];
     mIId = json['mI_Id'];
+    ivrmuLId = json['ivrmuL_Id'];
     hrmgTOrder = json['hrmgT_Order'];
     hrmgTActiveFlag = json['hrmgT_ActiveFlag'];
     hrmlDId = json['hrmlD_Id'];
     hrmLId = json['hrmL_Id'];
+    hrlrDId = json['hrlrD_Id'];
+    hrlrDFromDate = json['hrlrD_FromDate'];
+    hrlrDToDate = json['hrlrD_ToDate'];
+    hrlrDActiveFlg = json['hrlrD_ActiveFlg'];
+    hrlrDCreatedBy = json['hrlrD_CreatedBy'];
+    hrlrDUpdatedBy = json['hrlrD_UpdatedBy'];
+    hrlrDCreatedDate = json['hrlrD_CreatedDate'];
+    hrlrDUpdatedDate = json['hrlrD_UpdatedDate'];
     hrmDId = json['hrmD_Id'];
     hrmdeSId = json['hrmdeS_Id'];
     hrmGId = json['hrmG_Id'];
+    hrmldcMNoOfLeaves = json['hrmldcM_NoOfLeaves'];
     hrmlDMaxLeaveApplicable = json['hrmlD_MaxLeaveApplicable'];
     hrmlDCarryForFlg = json['hrmlD_CarryForFlg'];
     hrmlDEncashFlg = json['hrmlD_EncashFlg'];
@@ -258,8 +318,6 @@ class LeaveNamesModelValues {
         json['hrmdeS_DisplaySanctionedSeatsFlag'];
     hrmdeSOrder = json['hrmdeS_Order'];
     hrmdeSActiveFlag = json['hrmdeS_ActiveFlag'];
-    hrmLLeaveName = json['hrmL_LeaveName'];
-    hrmLLeaveCode = json['hrmL_LeaveCode'];
     hrmLLeaveCreditFlg = json['hrmL_LeaveCreditFlg'];
     ivrMMonthId = json['ivrM_Month_Id'];
     isActive = json['is_Active'];
@@ -271,7 +329,10 @@ class LeaveNamesModelValues {
     hrmeDEntryDate = json['hrmeD_EntryDate'];
     loginId = json['loginId'];
     hrmEActiveFlag = json['hrmE_ActiveFlag'];
+    masterId = json['master_Id'];
     hrmEId = json['hrmE_Id'];
+    hrmEIdMy = json['hrmE_IdMy'];
+    hrmEEmployeeFirstName = json['hrmE_EmployeeFirstName'];
     hrmEDOL = json['hrmE_DOL'];
     hrmemnOMobileNo = json['hrmemnO_MobileNo'];
     hreobLId = json['hreobL_Id'];
@@ -305,6 +366,7 @@ class LeaveNamesModelValues {
     hreltDToDate = json['hreltD_ToDate'];
     hreltDTotDays = json['hreltD_TotDays'];
     hreltDLWPFlag = json['hreltD_LWPFlag'];
+    hrmLNoOfDays = json['hrmL_NoOfDays'];
     hrelSId = json['hrelS_Id'];
     hrelSOBLeaves = json['hrelS_OBLeaves'];
     hrelSCreditedLeaves = json['hrelS_CreditedLeaves'];
@@ -314,6 +376,9 @@ class LeaveNamesModelValues {
     hrelSCBLeaves = json['hrelS_CBLeaves'];
     userId = json['userId'];
     hrelaPId = json['hrelaP_Id'];
+    hrelaPFromDateapprv = json['hrelaP_FromDateapprv'];
+    hrelaPToDateapprv = json['hrelaP_ToDateapprv'];
+    hrelaPTotalDaysapprv = json['hrelaP_TotalDaysapprv'];
     hrelaPTotalDays = json['hrelaP_TotalDays'];
     hrelaPContactNoOnLeave = json['hrelaP_ContactNoOnLeave'];
     hrelaPFinalFlag = json['hrelaP_FinalFlag'];
@@ -322,6 +387,7 @@ class LeaveNamesModelValues {
     hrmlYToDate = json['hrmlY_ToDate'];
     hrmlYActiveFlag = json['hrmlY_ActiveFlag'];
     hrmldcMId = json['hrmldcM_Id'];
+    hrmldcMLCMonthCode = json['hrmldcM_LCMonthCode'];
     hrmldcFMaxLeaveAplFlg = json['hrmldcF_MaxLeaveAplFlg'];
     hrmldcFMaxLeaveCF = json['hrmldcF_MaxLeaveCF'];
     hrmldeCId = json['hrmldeC_Id'];
@@ -335,26 +401,44 @@ class LeaveNamesModelValues {
     month = json['month'];
     year = json['year'];
     hrelapAId = json['hrelapA_Id'];
-    hrelapAFinalFlag = json['hrelapA_FinalFlag'];
+    hrelapASanctioningLevel = json['hrelapA_SanctioningLevel'];
+    hrelapARemarks = json['hrelapA_Remarks'];
     leavecode = json['leavecode'];
     count = json['count'];
     returnval = json['returnval'];
     editFlag = json['edit_flag'];
+    monthwisecredit = json['monthwisecredit'];
     asmayId = json['asmay_id'];
-    ivrmuLId = json['ivrmuL_Id'];
+    hrelapAFromDate = json['hrelapA_FromDate'];
+    hrelapAToDate = json['hrelapA_ToDate'];
+    hrelapATotalDays = json['hrelapA_TotalDays'];
+    hrelapALeaveStatus = json['hrelapA_LeaveStatus'];
+    createdDate = json['createdDate'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['duplicateCount'] = duplicateCount;
+    data['checkbox_value'] = checkboxValue;
     data['hrmgT_Id'] = hrmgTId;
     data['mI_Id'] = mIId;
+    data['ivrmuL_Id'] = ivrmuLId;
     data['hrmgT_Order'] = hrmgTOrder;
     data['hrmgT_ActiveFlag'] = hrmgTActiveFlag;
     data['hrmlD_Id'] = hrmlDId;
     data['hrmL_Id'] = hrmLId;
+    data['hrlrD_Id'] = hrlrDId;
+    data['hrlrD_FromDate'] = hrlrDFromDate;
+    data['hrlrD_ToDate'] = hrlrDToDate;
+    data['hrlrD_ActiveFlg'] = hrlrDActiveFlg;
+    data['hrlrD_CreatedBy'] = hrlrDCreatedBy;
+    data['hrlrD_UpdatedBy'] = hrlrDUpdatedBy;
+    data['hrlrD_CreatedDate'] = hrlrDCreatedDate;
+    data['hrlrD_UpdatedDate'] = hrlrDUpdatedDate;
     data['hrmD_Id'] = hrmDId;
     data['hrmdeS_Id'] = hrmdeSId;
     data['hrmG_Id'] = hrmGId;
+    data['hrmldcM_NoOfLeaves'] = hrmldcMNoOfLeaves;
     data['hrmlD_MaxLeaveApplicable'] = hrmlDMaxLeaveApplicable;
     data['hrmlD_CarryForFlg'] = hrmlDCarryForFlg;
     data['hrmlD_EncashFlg'] = hrmlDEncashFlg;
@@ -367,8 +451,6 @@ class LeaveNamesModelValues {
         hrmdeSDisplaySanctionedSeatsFlag;
     data['hrmdeS_Order'] = hrmdeSOrder;
     data['hrmdeS_ActiveFlag'] = hrmdeSActiveFlag;
-    data['hrmL_LeaveName'] = hrmLLeaveName;
-    data['hrmL_LeaveCode'] = hrmLLeaveCode;
     data['hrmL_LeaveCreditFlg'] = hrmLLeaveCreditFlg;
     data['ivrM_Month_Id'] = ivrMMonthId;
     data['is_Active'] = isActive;
@@ -380,7 +462,10 @@ class LeaveNamesModelValues {
     data['hrmeD_EntryDate'] = hrmeDEntryDate;
     data['loginId'] = loginId;
     data['hrmE_ActiveFlag'] = hrmEActiveFlag;
+    data['master_Id'] = masterId;
     data['hrmE_Id'] = hrmEId;
+    data['hrmE_IdMy'] = hrmEIdMy;
+    data['hrmE_EmployeeFirstName'] = hrmEEmployeeFirstName;
     data['hrmE_DOL'] = hrmEDOL;
     data['hrmemnO_MobileNo'] = hrmemnOMobileNo;
     data['hreobL_Id'] = hreobLId;
@@ -414,6 +499,7 @@ class LeaveNamesModelValues {
     data['hreltD_ToDate'] = hreltDToDate;
     data['hreltD_TotDays'] = hreltDTotDays;
     data['hreltD_LWPFlag'] = hreltDLWPFlag;
+    data['hrmL_NoOfDays'] = hrmLNoOfDays;
     data['hrelS_Id'] = hrelSId;
     data['hrelS_OBLeaves'] = hrelSOBLeaves;
     data['hrelS_CreditedLeaves'] = hrelSCreditedLeaves;
@@ -423,6 +509,9 @@ class LeaveNamesModelValues {
     data['hrelS_CBLeaves'] = hrelSCBLeaves;
     data['userId'] = userId;
     data['hrelaP_Id'] = hrelaPId;
+    data['hrelaP_FromDateapprv'] = hrelaPFromDateapprv;
+    data['hrelaP_ToDateapprv'] = hrelaPToDateapprv;
+    data['hrelaP_TotalDaysapprv'] = hrelaPTotalDaysapprv;
     data['hrelaP_TotalDays'] = hrelaPTotalDays;
     data['hrelaP_ContactNoOnLeave'] = hrelaPContactNoOnLeave;
     data['hrelaP_FinalFlag'] = hrelaPFinalFlag;
@@ -431,6 +520,7 @@ class LeaveNamesModelValues {
     data['hrmlY_ToDate'] = hrmlYToDate;
     data['hrmlY_ActiveFlag'] = hrmlYActiveFlag;
     data['hrmldcM_Id'] = hrmldcMId;
+    data['hrmldcM_LCMonthCode'] = hrmldcMLCMonthCode;
     data['hrmldcF_MaxLeaveAplFlg'] = hrmldcFMaxLeaveAplFlg;
     data['hrmldcF_MaxLeaveCF'] = hrmldcFMaxLeaveCF;
     data['hrmldeC_Id'] = hrmldeCId;
@@ -444,13 +534,19 @@ class LeaveNamesModelValues {
     data['month'] = month;
     data['year'] = year;
     data['hrelapA_Id'] = hrelapAId;
-    data['hrelapA_FinalFlag'] = hrelapAFinalFlag;
+    data['hrelapA_SanctioningLevel'] = hrelapASanctioningLevel;
+    data['hrelapA_Remarks'] = hrelapARemarks;
     data['leavecode'] = leavecode;
     data['count'] = count;
     data['returnval'] = returnval;
     data['edit_flag'] = editFlag;
+    data['monthwisecredit'] = monthwisecredit;
     data['asmay_id'] = asmayId;
-    data['ivrmuL_Id'] = ivrmuLId;
+    data['hrelapA_FromDate'] = hrelapAFromDate;
+    data['hrelapA_ToDate'] = hrelapAToDate;
+    data['hrelapA_TotalDays'] = hrelapATotalDays;
+    data['hrelapA_LeaveStatus'] = hrelapALeaveStatus;
+    data['createdDate'] = createdDate;
     return data;
   }
 }

@@ -329,8 +329,10 @@ class _AppliedLeaveAprovalItemState extends State<AppliedLeaveAprovalItem> {
                       child: InkWell(
                           onTap: () {
                             Get.dialog(ApprovalLeaveDatePopUp(
-                              hrmeId: widget.value.hRELAPId!,
+                              hrelapId: widget.value.hRELAPId.toString(),
                               mskoolController: widget.mskoolController,
+                              loginSuccessModel: widget.loginSuccessModel,
+                              hrmeId: widget.value.hRMEId!,
                             ));
                           },
                           child: const Icon(

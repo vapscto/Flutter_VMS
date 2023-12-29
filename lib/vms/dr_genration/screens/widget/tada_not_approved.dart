@@ -47,7 +47,7 @@ class TADAAdvancenotApproveScreen extends StatelessWidget {
                                 )
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             ClipRRect(
@@ -239,11 +239,11 @@ class TADAAdvancenotApproveScreen extends StatelessWidget {
                             MSkollBtn(
                                 title: "Advance Approval",
                                 onPress: () {
+                                  Get.back();
                                   Get.to(() => TadaAdvanceApproveScreen(
                                         mskoolController: mskoolController,
                                         loginSuccessModel: loginSuccessModel,
                                       ));
-                                  Get.back();
                                 })
                           ],
                         )))),

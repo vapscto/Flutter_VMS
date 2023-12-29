@@ -69,6 +69,21 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
   TimeOfDay? fromTime;
   TimeOfDay? toTime;
 
+  bool validateFields() {
+
+  if (locationEt.text.isEmpty) {
+      Fluttertoast.showToast(msg: "Enter Location");
+      return false;
+    }
+
+    if (remartEt.text.isEmpty) {
+      Fluttertoast.showToast(msg: "Enter Remarks");
+      return false;
+    }
+
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -843,6 +858,11 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
                       size: const Size.fromWidth(100),
                       title: "Save",
                       onPress: () async {
+
+                        if (!validateFields()) {
+                          return;
+                        }
+
                         if (meetFlag.isTrue) {
                           logger.w({
                             "fhrors": hours,

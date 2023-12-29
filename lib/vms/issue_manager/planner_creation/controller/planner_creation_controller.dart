@@ -46,13 +46,47 @@ class PlannerCreationController extends GetxController {
   //Planner category List
   RxList<CategoryWisePlanModelValues> categoryWisePlan =
       <CategoryWisePlanModelValues>[].obs;
-
+  List<Map<String, dynamic>> categoryListModel = [];
   categoryList(List<CategoryWisePlanModelValues> value) {
     if (categoryWisePlan.isNotEmpty) {
       categoryWisePlan.clear();
     }
     for (int i = 0; i < value.length; i++) {
       categoryWisePlan.add(value.elementAt(i));
+      // effortDataValues.forEach((tt) {
+      //   double ddd = 0;
+      //   assignedTaskList.forEach((dd) {
+      //     if (int.parse(tt.ismmtcaTId.toString()) ==
+      //         int.parse(dd.ismmtcaTId.toString())) {
+      //       ddd += double.parse(dd.ismtcrastOEffortInHrs.toString());
+      //     }
+      //   });
+
+      //   double pp;
+      //   if (ddd != 0) {
+      //     pp = (double.parse(tt.ismmtcaTTaskPercentage.toString()) / 100) *
+      //         mineffort;
+      //   } else {
+      //     pp = (double.parse(tt.ismmtcaTTaskPercentage.toString()) / 100) *
+      //         mineffort;
+      //     categoryListModel.add({
+      //       'CATNAME': tt.ismmtcaTTaskCategoryName,
+      //       'RP': tt.ismmtcaTTaskPercentage,
+      //       'CWP': 0,
+      //       'CRE': pp,
+      //       'CCE': 0,
+      //     });
+      //   }
+
+      //   if (pp > ddd && ddd != 0) {
+      //     categoryListModel.add({
+      //       'CATNAME': tt.ismmtcaTTaskCategoryName,
+      //       'RP': tt.ismmtcaTTaskPercentage,
+      //       'CRE': pp,
+      //       'CCE': ddd,
+      //     });
+      //   }
+      // });
     }
   }
 
@@ -66,7 +100,7 @@ class PlannerCreationController extends GetxController {
       createdTaskList.clear();
     }
     for (int i = 0; i < value.length; i++) {
-      // assignedTaskList.add(value.elementAt(i));
+      assignedTaskList.add(value.elementAt(i));
       var val = value.elementAt(i);
       double min = 0.0;
       double taskEffort = val.iSMTCRASTOEffortInHrs!;
@@ -831,7 +865,6 @@ class PlannerCreationController extends GetxController {
     totalDay += (data.length);
     for (int i = 0; i < data.length; i++) {
       effortDataValues.add(data.elementAt(i));
-
       hour = data[i].wORKINGHOURS!;
     }
   }

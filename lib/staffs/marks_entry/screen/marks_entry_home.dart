@@ -15,7 +15,6 @@ import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
-import 'package:m_skool_flutter/widget/staff_home_fab.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../controller/mskoll_controller.dart';
@@ -49,8 +48,6 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
   SubjectlistValue? selectedSubjectName;
   SubsubjectlistValue? selectedSubSubject;
   SubExamListValues? selectedSubExam;
-  
- 
 
   void getAcademicYear() async {
     marksEntryController.isacademicyearloading(true);
@@ -203,8 +200,7 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
       if (value) {
         if (marksEntryController.subSubjectList.isNotEmpty) {
           selectedSubSubject = marksEntryController.subSubjectList.first;
-        marksEntryController.updateIsSelceted(false);
-
+          marksEntryController.updateIsSelceted(false);
         }
         if (marksEntryController.subExamList.isNotEmpty) {
           selectedSubExam = marksEntryController.subExamList.first;
@@ -239,7 +235,7 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
         leadingWidth: 25,
         title: const Text('Marks Entry'),
       ),
-      floatingActionButton:const HomeFab(),
+      floatingActionButton: const HomeFab(),
       //  StaffHomeFab(
       //   loginSuccessModel: widget.loginSuccessModel,
       //   mskoolController: widget.mskoolController,
@@ -795,7 +791,8 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
                                             .clear();
                                         selectedSubSubject = null;
                                         selectedSubExam = null;
-                                       marksEntryController.updateIsSelceted(true);
+                                        marksEntryController
+                                            .updateIsSelceted(true);
 
                                         getSubSubject(s.ismSId!.toInt());
                                       },
@@ -829,7 +826,7 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
                                             ),
                                             child: DropdownButtonFormField<
                                                 SubsubjectlistValue>(
-                                           //   value: selectedSubSubject,
+                                              //   value: selectedSubSubject,
                                               decoration: InputDecoration(
                                                 focusedBorder:
                                                     const OutlineInputBorder(
@@ -917,7 +914,8 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
                                               }),
                                               onChanged: (s) {
                                                 selectedSubSubject = s!;
-                                                marksEntryController.updateIsSelceted(true);
+                                                marksEntryController
+                                                    .updateIsSelceted(true);
                                               },
                                             ),
                                           )
@@ -1046,34 +1044,34 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
                                   marksEntryController
                                       .subjectNameList.isNotEmpty
                               ? () {
-                                   if(marksEntryController.isSelected.value){
-
-                                  Get.to(() => MarksEntryDetailScreen(
-                                        loginSuccessModel:
-                                            widget.loginSuccessModel,
-                                        mskoolController:
-                                            widget.mskoolController,
-                                        asmayId: selectedAcademicYear!.asmaYId!
-                                            .toInt(),
-                                        asmclId:
-                                            selectedClass!.asmcLId!.toInt(),
-                                        asmsId:
-                                            selectedSection!.asmSId!.toInt(),
-                                        emeId: selectedExam!.emEId!.toInt(),
-                                        ismsId: selectedSubjectName!.ismSId!
-                                            .toInt(),
-                                        emssId: selectedSubSubject == null
-                                            ? 0
-                                            : selectedSubSubject!.emsSId!
-                                                .toInt(),
-                                        emseId: selectedSubExam == null
-                                            ? 0
-                                            : selectedSubExam!.emsEId ?? 0,
-                                      ));
-                                   }else{
+                                  if (marksEntryController.isSelected.value) {
+                                    Get.to(() => MarksEntryDetailScreen(
+                                          loginSuccessModel:
+                                              widget.loginSuccessModel,
+                                          mskoolController:
+                                              widget.mskoolController,
+                                          asmayId: selectedAcademicYear!
+                                              .asmaYId!
+                                              .toInt(),
+                                          asmclId:
+                                              selectedClass!.asmcLId!.toInt(),
+                                          asmsId:
+                                              selectedSection!.asmSId!.toInt(),
+                                          emeId: selectedExam!.emEId!.toInt(),
+                                          ismsId: selectedSubjectName!.ismSId!
+                                              .toInt(),
+                                          emssId: selectedSubSubject == null
+                                              ? 0
+                                              : selectedSubSubject!.emsSId!
+                                                  .toInt(),
+                                          emseId: selectedSubExam == null
+                                              ? 0
+                                              : selectedSubExam!.emsEId ?? 0,
+                                        ));
+                                  } else {
                                     Fluttertoast.showToast(
-                                      msg: 'Select sub subject');
-                                   }
+                                        msg: 'Select sub subject');
+                                  }
                                 }
                               : () {
                                   Fluttertoast.showToast(

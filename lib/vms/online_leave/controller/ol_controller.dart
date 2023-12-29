@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/vms/online_leave/model/leave_count_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/optional_leave_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/staff_list_model.dart';
+import 'package:m_skool_flutter/vms/online_leave/model/total_leave_model.dart';
 
 class OpetionLeaveController extends GetxController {
   RxList<OpetionLeaveModelValues> optionalLeaveList =
@@ -96,6 +97,17 @@ class OpetionLeaveController extends GetxController {
     }
     for (int i = 0; i < leaveComment.length; i++) {
       leaveCommentList.add(leaveComment.elementAt(i));
+    }
+  }
+
+  List<TotalLeaveCountModelValues> totalLeaveCount =
+      <TotalLeaveCountModelValues>[];
+  void getData(List<TotalLeaveCountModelValues> data) {
+    if (totalLeaveCount.isNotEmpty) {
+      totalLeaveCount.clear();
+    }
+    for (int i = 0; i < data.length; i++) {
+      totalLeaveCount.add(data.elementAt(i));
     }
   }
 }
