@@ -47,15 +47,15 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
   String invmpiRemarks = '';
   var invmpiAmount;
   var invmpiId;
-  num amount = 0;
+ 
 
   TextEditingController? approvalAmountCountroller;
   addAmount(num i) {
-    amount += i;
+ controller.amount.value += i;
   }
 
   removeAmount(num i) {
-    amount -= i;
+   controller.amount.value -= i;
   }
 
   void saveData() {
@@ -100,8 +100,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
   @override
   void initState() {
    init();
-     
-     super.initState();
+   super.initState();
   }
 init() async{
    OnclickPurchaseApi.instance.getOnclickPurchaseApiApi(
@@ -114,8 +113,6 @@ init() async{
    setState(() {
   
    });
-  
-  
     // logger.w(controller.getOnclickList[0].iNVMPIAPPRejectFlg);
     // logger.w(controller.getOnclickList[1].iNVMPIAPPRejectFlg);
 }
@@ -132,6 +129,7 @@ init() async{
 
   @override
   void dispose() {
+    controller. amount.value =0;
     controller.selectedValue.clear();
     controller.getOnclickList.clear();
     super.dispose();
@@ -418,6 +416,8 @@ init() async{
                                       controller.getOnclickList.length,
                                       (index) {
                                     var i = index + 1;
+                                    controller. amount.value += controller.getOnclickList.elementAt(index).iNVTPIApproxAmount!.toDouble();
+
                                     logger.w(controller.getOnclickList.length);
                                     // remarkController.text = controller.getOnclickList.elementAt(index).iNVTPIRemarks.toString();
                                     // unitController.text = controller.getOnclickList.elementAt(index).iNVTPIPIUnitRate.toString();
@@ -491,7 +491,7 @@ init() async{
                                                 //     .totalApproxAmountControllerList
                                                 //     .elementAt(index)
                                                 //     .text);
-                                                (amount <= 0)
+                                                (controller. amount <= 0)
                                                     ? removeAmount(0)
                                                     : removeAmount(double.parse(
                                                         controller
@@ -618,9 +618,11 @@ init() async{
                                 "Total Approximate Amount:",
                                 style: Get.textTheme.titleSmall,
                               ),
-                              Text(
-                                amount.toString(),
-                                style: Get.textTheme.titleSmall,
+                              Obx(
+                                 ()=> Text(
+                                  controller.amount.toString(),
+                                  style: Get.textTheme.titleSmall,
+                                ),
                               ),
                             ],
                           ),
