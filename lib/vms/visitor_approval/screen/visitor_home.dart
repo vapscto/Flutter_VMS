@@ -27,8 +27,9 @@ class VisitorApprovalHomeState extends State<VisitorApprovalHome> {
   _loadData() async {
     controller.updateIsLoadingVisitor(true);
     await VisitorApprovalApi.instance.getVisitorApprovalApi(
-        base: baseUrlFromInsCode(
-            'visitorsManagementServiceHub', widget.mskoolController),
+        base: 'https://vmsstaging.vapssmartecampus.com:40020/',
+        // baseUrlFromInsCode(
+        //     'visitorsManagementServiceHub', widget.mskoolController),
         userId: widget.loginSuccessModel.userId!,
         controller: controller,
         miId: widget.loginSuccessModel.mIID!);
