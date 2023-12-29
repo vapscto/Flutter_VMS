@@ -10,6 +10,7 @@ class PurchaseController extends GetxController {
   RxBool isFromDataProvided = RxBool(false);
   RxBool isLoadingApproval = RxBool(false);
   RxBool isSaveLoaeding = RxBool(false);
+   RxNum amount = RxNum(0);
   RxList<Item> selectedValue = <Item>[].obs;
   void addToSelectedValueList(List<Item> value) {
     selectedValue.addAll(value);
@@ -109,7 +110,7 @@ class PurchaseController extends GetxController {
     );
 
     selectedValue.add(item);
-
+ // 
     totalApproxAmountControllerList.add(TextEditingController(
         text: nitin.elementAt(i).iNVTPIApproxAmount.toString()));
 }
