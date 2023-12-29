@@ -324,8 +324,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
           }
         }
         if (_plannerDetailsController.checkBoxList.elementAt(i) == true) {
-          totalhrs = double.parse(_plannerDetailsController.hoursEt[i].text) +
-              double.parse(_plannerDetailsController.minutesEt[i].text);
+          totalhrs = double.parse(
+              '${_plannerDetailsController.hoursEt[i].text}.${_plannerDetailsController.minutesEt[i].text}');
+          //  +
+          //     (double.parse(_plannerDetailsController.minutesEt[i].text) / 60);
           todayDailyReportGenaration.add({
             "ISMTPL_Id": value.iSMTPLId,
             "ISMTCR_Id": value.iSMTCRId,
@@ -519,6 +521,17 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                       onPress: () async {
                         if (_formKey.currentState!.validate()) {
                           if (selectCheckbox.isNotEmpty) {
+                            if (_plannerDetailsController.day.value ==
+                                'Others') {
+                              if (_plannerDetailsController
+                                      .plannernameDateController.value.text ==
+                                  '${todayDate.day}-${todayDate.month}-${todayDate.year}') {
+                                Fluttertoast.showToast(
+                                    msg:
+                                        "Other's Date Should Not Be Equal To Today's Date");
+                                return;
+                              }
+                            }
                             saveDaetails();
                           } else {
                             Fluttertoast.showToast(
@@ -1214,7 +1227,43 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   (value) {
                                                                 newselectedIndex =
                                                                     index;
-
+                                                                // if (_plannerDetailsController
+                                                                //         .day
+                                                                //         .value ==
+                                                                //     'Others') {
+                                                                //   if (todayDt
+                                                                //           .day <
+                                                                //       (currentDt
+                                                                //           .day)) {
+                                                                //     showDialog(
+                                                                //         context:
+                                                                //             context,
+                                                                //         builder:
+                                                                //             (_) {
+                                                                //           return AlertDialog(
+                                                                //             shape:
+                                                                //                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                                                //             content:
+                                                                //                 Column(crossAxisAlignment: CrossAxisAlignment.center, mainAxisSize: MainAxisSize.min, children: [
+                                                                //               Text(
+                                                                //                 "Selected Date is not Same as Planner Date",
+                                                                //                 style: Get.textTheme.titleMedium!.copyWith(color: Theme.of(context).primaryColor),
+                                                                //               ),
+                                                                //               TextButton(
+                                                                //                   onPressed: () {
+                                                                //                     Get.back();
+                                                                //                   },
+                                                                //                   child: Text(
+                                                                //                     "OK",
+                                                                //                     style: Get.textTheme.bodyMedium!.copyWith(color: Theme.of(context).primaryColor),
+                                                                //                   ))
+                                                                //             ]),
+                                                                //           );
+                                                                //         });
+                                                                //     return;
+                                                                //   }
+                                                                //   return;
+                                                                // }
                                                                 logger.i(
                                                                     newselectedIndex);
                                                                 value == true
