@@ -88,6 +88,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           widget.mskoolController.universalInsCodeModel!.value
                               .institutioNLOGO,
                           height: 40,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(),
                         ),
                         const SizedBox(
                           width: 12.0,
