@@ -1,8 +1,4 @@
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/manager/model/manager_dashboard_fee_details.dart';
-import 'package:m_skool_flutter/manager/model/manager_dashboard_fee_model.dart';
-import 'package:m_skool_flutter/manager/model/manager_dashboard_leaves_details.dart';
-import 'package:m_skool_flutter/manager/model/manager_dashboard_preadmission.dart';
 import 'package:m_skool_flutter/model/exam_graph_model.dart';
 import 'package:m_skool_flutter/model/exam_list.dart';
 import 'package:m_skool_flutter/model/student_dashboard_model.dart';
@@ -61,43 +57,6 @@ class DynamicAnalyticsController extends GetxController {
   }
 
   //Manager
-
-  RxList<ManagerDashboardFeeDetailsValues> feeDetails = RxList();
-
-  void updateDashboardFeeDetails(List<ManagerDashboardFeeDetailsValues> fee) {
-    if (feeDetails.isNotEmpty) {
-      feeDetails.clear();
-    }
-    feeDetails.addAll(fee);
-  }
-
-  RxList<ManagerDashboardLeaveDetailsValues> dashboardLeave = RxList();
-
-  void updateDashboardLeave(List<ManagerDashboardLeaveDetailsValues> leave) {
-    if (dashboardLeave.isNotEmpty) {
-      dashboardLeave.clear();
-    }
-    dashboardLeave.addAll(leave);
-  }
-
-  RxList<ManagerDashboardPreadmissionDetailsValues> preAdmission = RxList();
-
-  void updateDashboardPreAdmission(
-      List<ManagerDashboardPreadmissionDetailsValues> prAd) {
-    if (preAdmission.isNotEmpty) {
-      preAdmission.clear();
-    }
-    preAdmission.addAll(prAd);
-  }
-
-  RxList<DashboardFeeModelValues> fee = RxList();
-
-  void updateDashboardFees(List<DashboardFeeModelValues> punch) {
-    if (fee.isNotEmpty) {
-      fee.clear();
-    }
-    fee.addAll(punch);
-  }
 
   //Student
 

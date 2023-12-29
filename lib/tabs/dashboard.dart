@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:m_skool_flutter/apis/get_analytics_api.dart';
 import 'package:m_skool_flutter/controller/dynamic_analytics_controller.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -19,12 +18,12 @@ class DashboardTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        await GetAnalyticsApi.instance.getData(
-            controller: controller,
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            base: baseUrlFromInsCode("portal", mskoolController),
-            context: context);
+        // await GetAnalyticsApi.instance.getData(
+        //     controller: controller,
+        //     loginSuccessModel: loginSuccessModel,
+        //     mskoolController: mskoolController,
+        //     base: baseUrlFromInsCode("portal", mskoolController),
+        //     context: context);
       },
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(12.0),

@@ -12,7 +12,6 @@ import 'package:get_ip_address/get_ip_address.dart';
 import 'package:m_skool_flutter/apis/version_control_api.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/model/categories_api_item.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/attachment_viewer.dart';
@@ -855,22 +854,22 @@ void openMappedPages(
     //       title: pageName,
     //     ));
   }
-  if (pageName == "Overall Fee") {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) {
-          return OverallFeeHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            title: pageName,
-          );
-        },
-      ),
-    );
+  // if (pageName == "Overall Fee") {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (_) {
+  //         return OverallFeeHome(
+  //           loginSuccessModel: loginSuccessModel,
+  //           mskoolController: mskoolController,
+  //           title: pageName,
+  //         );
+  //       },
+  //     ),
+  //   );
 
-    return;
-  }
+  //   return;
+  // }
   if (pageName == "Health Checkup") {
     Get.to(
       () => HomeHCheckup(

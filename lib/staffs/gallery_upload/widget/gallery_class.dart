@@ -9,12 +9,6 @@ import 'package:m_skool_flutter/staffs/gallery_upload/api/get_gallery_section_Ap
 import 'package:m_skool_flutter/staffs/gallery_upload/controller/gallery_controller.dart';
 import 'package:m_skool_flutter/staffs/gallery_upload/model/gallery_classList_model.dart';
 import 'package:m_skool_flutter/staffs/gallery_upload/widget/gallery_section.dart';
-
-// import 'package:m_skool_flutter/staffs/gallery_upload/api/get_gallery_class_Api.dart';
-// import 'package:m_skool_flutter/staffs/gallery_upload/controller/gallery_controller.dart';
-// import 'package:m_skool_flutter/staffs/gallery_upload/model/gallery_classList_model.dart';
-// import 'package:m_skool_flutter/staffs/gallery_upload/widget/gallery_section.dart';
-
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
@@ -41,7 +35,7 @@ class GalleryClass extends StatelessWidget {
               const SizedBox(
                 height: 32.0,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               CustomContainer(

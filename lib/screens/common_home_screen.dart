@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/apis/attendance_shortage_api.dart';
-import 'package:m_skool_flutter/apis/fee_reminder_api.dart';
-import 'package:m_skool_flutter/apis/get_analytics_api.dart';
 import 'package:m_skool_flutter/controller/dynamic_analytics_controller.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -41,33 +38,33 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
   @override
   void initState() {
     version(widget.loginSuccessModel, widget.mskoolController);
-    GetAnalyticsApi.instance.getData(
-        controller: controller,
-        loginSuccessModel: widget.loginSuccessModel,
-        mskoolController: widget.mskoolController,
-        base: baseUrlFromInsCode("portal", widget.mskoolController),
-        context: context);
+    // GetAnalyticsApi.instance.getData(
+    //     controller: controller,
+    //     loginSuccessModel: widget.loginSuccessModel,
+    //     mskoolController: widget.mskoolController,
+    //     base: baseUrlFromInsCode("portal", widget.mskoolController),
+    //     context: context);
 
-    if (widget.loginSuccessModel.roleforlogin!.toLowerCase() == "student") {
-      FeeReminderApi.instance.showFeeReminder(
-        miId: widget.loginSuccessModel.mIID!,
-        asmayId: widget.loginSuccessModel.asmaYId!,
-        amstId: widget.loginSuccessModel.amsTId!,
-        asmclId: widget.loginSuccessModel.asmcLId!,
-        asmsId: widget.loginSuccessModel.asmSId!,
-        base: baseUrlFromInsCode("portal", widget.mskoolController),
-        context: context,
-        loginSuccessModel: widget.loginSuccessModel,
-        mskoolController: widget.mskoolController,
-      );
-      AttendanceShortageApi.instance.getShortage(
-          miId: widget.loginSuccessModel.mIID!,
-          asmayId: widget.loginSuccessModel.asmaYId!,
-          amstId: widget.loginSuccessModel.amsTId!,
-          percentage: 0,
-          base: baseUrlFromInsCode("portal", widget.mskoolController),
-          context: context);
-    }
+    // if (widget.loginSuccessModel.roleforlogin!.toLowerCase() == "student") {
+    //   FeeReminderApi.instance.showFeeReminder(
+    //     miId: widget.loginSuccessModel.mIID!,
+    //     asmayId: widget.loginSuccessModel.asmaYId!,
+    //     amstId: widget.loginSuccessModel.amsTId!,
+    //     asmclId: widget.loginSuccessModel.asmcLId!,
+    //     asmsId: widget.loginSuccessModel.asmSId!,
+    //     base: baseUrlFromInsCode("portal", widget.mskoolController),
+    //     context: context,
+    //     loginSuccessModel: widget.loginSuccessModel,
+    //     mskoolController: widget.mskoolController,
+    //   );
+    //   AttendanceShortageApi.instance.getShortage(
+    //       miId: widget.loginSuccessModel.mIID!,
+    //       asmayId: widget.loginSuccessModel.asmaYId!,
+    //       amstId: widget.loginSuccessModel.amsTId!,
+    //       percentage: 0,
+    //       base: baseUrlFromInsCode("portal", widget.mskoolController),
+    //       context: context);
+    // }
 
     homePage.addAll(
       [

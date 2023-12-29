@@ -8,7 +8,8 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/staffs/gallery_upload/controller/gallery_controller.dart';
-import 'package:m_skool_flutter/student/homework/model/upload_hw_cw_model.dart';
+import 'package:m_skool_flutter/vms/utils/upload_image.dart';
+// import 'package:m_skool_flutter/student/homework/model/upload_hw_cw_model.dart';
 import 'package:mime/mime.dart';
 
 class UploadGallery {
@@ -39,7 +40,9 @@ class UploadGallery {
       final Dio ins = getGlobalDio();
       List<UploadHwCwModel> attValues = [];
       int no = 0;
-      for (File? ele in mediatype=="I" ? controller.selectedMedia : controller.selectedVideos) {
+      for (File? ele in mediatype == "I"
+          ? controller.selectedMedia
+          : controller.selectedVideos) {
         no += 1;
         try {
           attValues.add(await uploadAtt(miId: miId, file: ele!));
@@ -74,14 +77,14 @@ class UploadGallery {
 
       for (var element in attValues) {
         att.add(
-           element.path,
-         );
+          element.path,
+        );
       }
       int n = 0;
       for (var element in controller.textEditors) {
         n += 1;
         att.add(
-           element.text,
+          element.text,
         );
       }
 
@@ -107,7 +110,7 @@ class UploadGallery {
         "IGA_CommonGalleryFlg": false,
         "IGA_Date ": date,
         "IGA_GalleryName": igaGalleryName,
-         "IGA_Id": null,
+        "IGA_Id": null,
         "IGA_Time ": time,
         "arraySection": sections,
         "images_list": att,
@@ -117,19 +120,18 @@ class UploadGallery {
 
       logger.d(api);
       logger.d(data);
-    final Response response = await ins.post(api,
-          options: Options(headers: getSession()), data: data);   
+      final Response response = await ins.post(api,
+          options: Options(headers: getSession()), data: data);
       return response.statusCode!.toString();
     } on DioError catch (e) {
-       logger.e(e.response!.realUri.toString());
-       logger.d(e.error);
+      logger.e(e.response!.realUri.toString());
+      logger.d(e.error);
       logger.e(e.stackTrace);
       return Future.error({
         "errorTitle": "Error Occured Connecting to server",
         "errorMsg": e.message,
       });
-     } catch (e) {
-           
+    } catch (e) {
       return Future.error({
         "errorTitle": "An Error Occured",
         "errorMsg": "An internal error Occured while saving Assignment",

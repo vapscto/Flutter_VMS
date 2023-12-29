@@ -3,9 +3,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/screens/forgot_password_screen.dart';
-import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/screen/leave_list_home.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
@@ -89,29 +87,29 @@ class ManagerDashboardDrawer extends StatelessWidget {
                             //       ));
                             // }
 
-                            if (loginSuccessModel
-                                    .staffmobileappprivileges!.values!
-                                    .elementAt(index)
-                                    .pagename ==
-                                "Overall Fee") {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) {
-                                    return OverallFeeHome(
-                                      loginSuccessModel: loginSuccessModel,
-                                      mskoolController: mskoolController,
-                                      title: loginSuccessModel
-                                          .staffmobileappprivileges!.values!
-                                          .elementAt(index)
-                                          .pagename!,
-                                    );
-                                  },
-                                ),
-                              );
+                            // if (loginSuccessModel
+                            //         .staffmobileappprivileges!.values!
+                            //         .elementAt(index)
+                            //         .pagename ==
+                            //     "Overall Fee") {
+                            //   Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (_) {
+                            //         return OverallFeeHome(
+                            //           loginSuccessModel: loginSuccessModel,
+                            //           mskoolController: mskoolController,
+                            //           title: loginSuccessModel
+                            //               .staffmobileappprivileges!.values!
+                            //               .elementAt(index)
+                            //               .pagename!,
+                            //         );
+                            //       },
+                            //     ),
+                            //   );
 
-                              return;
-                            }
+                            //   return;
+                            // }
                             // if (loginSuccessModel
                             //         .staffmobileappprivileges!.values!
                             //         .elementAt(index)

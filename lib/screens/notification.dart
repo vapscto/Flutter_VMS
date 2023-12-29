@@ -5,7 +5,6 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
@@ -477,22 +476,22 @@ class NotificationScreen extends StatelessWidget {
 
   void openUsingHeaderForManager(
       String s, BuildContext context, String redirectUrl, num transactionId) {
-    if (s.toLowerCase().contains("fee")) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) {
-            return OverallFeeHome(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-              title: "Overall Fee",
-            );
-          },
-        ),
-      );
+    // if (s.toLowerCase().contains("fee")) {
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (_) {
+    //         return OverallFeeHome(
+    //           loginSuccessModel: loginSuccessModel,
+    //           mskoolController: mskoolController,
+    //           title: "Overall Fee",
+    //         );
+    //       },
+    //     ),
+    //   );
 
-      return;
-    }
+    //   return;
+    // }
 
     if (s.toLowerCase().contains("Interaction")) {
       if (redirectUrl == "InteractionReply" && transactionId.toInt() != 0) {
