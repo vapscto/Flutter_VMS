@@ -67,25 +67,32 @@ Future<UploadDrImage> uploadDrImage(
 }
 
 //
-Future<OthersDayPlannedModel?> othersDayTask(
+othersDayTask(
     {required String base,
     required PlannerDetails controller,
     required Map<String, dynamic> body}) async {
   final Dio ins = getGlobalDio();
-  final String apiUrl = base + URLS.getTaskCheckList;
+  final String apiUrl = base + URLS.othersDayCount;
   logger.e(apiUrl);
   logger.e(body);
   try {
-    final Response response = await ins.post(apiUrl,
+    var response = await ins.post(apiUrl,
         options: Options(headers: getSession()), data: body);
-    if (response.data['getplannerdetails'] != null) {
-      OthersDayPlannedModel checkListModel =
-          OthersDayPlannedModel.fromJson(response.data['getplannerdetails']);
-      controller.getPlanner(checkListModel.values!);
-      return checkListModel;
+    if (response.statusCode == 200) {
+      logger.i(response.data['getplannerdetails']);
+      if (response.data['getplannerdetails'] != null) {
+        OthersDayPlannedModel checkListModel =
+            OthersDayPlannedModel.fromJson(response.data['getplannerdetails']);
+        controller.getPlanner(checkListModel.values!);
+        // return checkListModel;
+      } else {
+        controller.isPopup = true;
+      }
     }
 
-    return null;
+    // if (response.data['getplannerdetails'] == null) {
+    //   controller.isPopup = true;
+    // }
   } on DioError catch (e) {
     logger.e(e.message);
     return null;

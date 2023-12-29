@@ -140,6 +140,8 @@ class PlannerDetails extends GetxController {
       othersDayPlannerList.add(othersDayPlanner.elementAt(i));
     }
   }
+
+  bool isPopup = false;
 }
 
 class AtachmenDrtFile {

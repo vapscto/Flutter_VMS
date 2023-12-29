@@ -445,7 +445,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         body: {
           "MI_Id": widget.loginSuccessModel.mIID,
           "UserId": widget.loginSuccessModel.userId,
-          "ASMAY_Id": 0,
           "ISMDRPT_Date": todayDt.toIso8601String(),
           "roleId": widget.loginSuccessModel.roleId
         },
@@ -487,6 +486,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
           );
         },
       );
+      _plannerDetailsController.updateDayRadio('today');
+      _plannerDetailsController.plannernameDateController.value.text =
+          '${todayDate.day}-${todayDate.month}-${todayDate.year}';
       return;
     }
   }
@@ -623,9 +625,20 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                       value: "today",
                                       groupValue:
                                           _plannerDetailsController.day.value,
-                                      onChanged: (value) {
-                                        _plannerDetailsController
-                                            .updateDayRadio(value!);
+                                      onChanged: (value) async {
+                                        setState(() {
+                                          _plannerDetailsController
+                                              .updateDayRadio(value!);
+                                          _getplannedData(todayDt);
+                                          fliteresList =
+                                              _plannerDetailsController
+                                                  .getTaskDrList;
+                                          _plannerDetailsController
+                                                  .plannernameDateController
+                                                  .value
+                                                  .text =
+                                              '${todayDate.day}-${todayDate.month}-${todayDate.year}';
+                                        });
                                       },
                                       dense: true,
                                       activeColor:
