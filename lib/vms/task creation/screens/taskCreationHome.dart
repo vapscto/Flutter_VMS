@@ -330,11 +330,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          centerTitle: (widget.previousScreen == '1') ? true : false,
-          // titleSpacing: (widget.previousScreen == '1') ? 40 : 0,
-          leading: (widget.previousScreen == '0')
-              ? const CustomGoBackButton()
-              : const SizedBox(),
+          centerTitle: false,
+          leading: const CustomGoBackButton(),
           actions: [
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 12, 12, 12),
@@ -871,7 +868,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                       },
                     ),
                   )
-                : SizedBox()),
+                : const SizedBox()),
 
             // Task Title
             Padding(
@@ -946,7 +943,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
               ),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
 
