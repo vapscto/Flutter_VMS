@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/visitor_approval/api/visitor_api.dart';
 import 'package:m_skool_flutter/vms/visitor_approval/controller/visitor_approval_controller.dart';
+import 'package:m_skool_flutter/vms/visitor_approval/screen/approved_visitor.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
@@ -52,7 +53,6 @@ class VisitorApprovalHomeState extends State<VisitorApprovalHome> {
               ? const Center(
                   child: AnimatedProgressWidget(
                     animationPath: "assets/json/default.json",
-                    animatorHeight: 300,
                     title: "Loading Visitor Approval",
                     desc:
                         "Please wait while we laod detail table and create a view for you",
@@ -83,13 +83,13 @@ class VisitorApprovalHomeState extends State<VisitorApprovalHome> {
                                 borderRadius: BorderRadius.circular(10),
                                 child: DataTable(
                                   dataTextStyle: const TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 14,
                                       color: Color.fromRGBO(0, 0, 0, 0.95),
-                                      fontWeight: FontWeight.w500),
-                                  dataRowHeight: 45,
+                                      fontWeight: FontWeight.w400),
+                                  dataRowHeight: 80,
                                   headingRowHeight: 40,
                                   horizontalMargin: 10,
-                                  columnSpacing: 40,
+                                  columnSpacing: 10,
                                   dividerThickness: 1,
                                   headingTextStyle: const TextStyle(
                                       color: Colors.white,
@@ -130,6 +130,7 @@ class VisitorApprovalHomeState extends State<VisitorApprovalHome> {
                                         ),
                                       ),
                                     ),
+                                    DataColumn(label: Text('Visitor Address')),
                                     DataColumn(
                                       label: Align(
                                         alignment: Alignment.center,
@@ -140,12 +141,27 @@ class VisitorApprovalHomeState extends State<VisitorApprovalHome> {
                                       ),
                                     ),
                                     DataColumn(
-                                      label: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Appointment Date',
-                                          style: TextStyle(fontSize: 14),
-                                        ),
+                                      label: Text(
+                                        'Appointment Date',
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        'Request Time',
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        'Purpose',
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        'Place',
+                                        style: TextStyle(fontSize: 14),
                                       ),
                                     ),
                                     DataColumn(
@@ -180,17 +196,27 @@ class VisitorApprovalHomeState extends State<VisitorApprovalHome> {
                                       controller.getvisitorList.length,
                                       (index) {
                                     var i = index + 1;
+                                    var value = controller.getvisitorList
+                                        .elementAt(index);
+                                    DateTime dt = DateTime.parse(
+                                        value.vMAPEntryDateTime!);
+                                    var date =
+                                        '${dt.day}-${dt.month}-${dt.year}';
                                     return DataRow(
                                       cells: [
                                         DataCell(Align(
                                             alignment: Alignment.center,
                                             child: Text('$i'))),
-                                        DataCell(Align(
-                                          alignment: Alignment.center,
-                                          child: Text(controller.getvisitorList
-                                              .elementAt(index)
-                                              .mIName
-                                              .toString()),
+                                        DataCell(SizedBox(
+                                          width: 120,
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: Text(controller
+                                                .getvisitorList
+                                                .elementAt(index)
+                                                .mIName
+                                                .toString()),
+                                          ),
                                         )),
                                         DataCell(Align(
                                           alignment: Alignment.center,
@@ -198,6 +224,21 @@ class VisitorApprovalHomeState extends State<VisitorApprovalHome> {
                                               .elementAt(index)
                                               .vMAPVisitorName
                                               .toString()),
+                                        )),
+                                        DataCell(Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(controller.getvisitorList
+                                                .elementAt(index)
+                                                .vMAPVisitorEmailid!),
+                                            Text(controller.getvisitorList
+                                                .elementAt(index)
+                                                .vMAPVisitorContactNo
+                                                .toString())
+                                          ],
                                         )),
                                         DataCell(Align(
                                           alignment: Alignment.center,
@@ -208,28 +249,39 @@ class VisitorApprovalHomeState extends State<VisitorApprovalHome> {
                                         )),
                                         DataCell(Align(
                                           alignment: Alignment.center,
-                                          child: Text(controller.getvisitorList
-                                              .elementAt(index)
-                                              .vMAPEntryDateTime
-                                              .toString()),
+                                          child: Text(date),
                                         )),
-                                        DataCell(Align(
-                                          alignment: Alignment.center,
-                                          child: Text(controller.getvisitorList
+                                        DataCell(Text(
+                                            "${value.vMAPRequestFromTime} To ${value.vMAPRequestToTime}")),
+                                        DataCell(Text(
+                                            "${value.vMAPMeetingPurpose}")),
+                                        DataCell(
+                                            Text("${value.vMAPFromPlace}")),
+                                        DataCell(Text(
+                                          controller.getvisitorList
                                               .elementAt(index)
                                               .createdby
-                                              .toString()),
+                                              .toString(),
+                                          style: const TextStyle(
+                                              color: Colors.red),
                                         )),
-                                        DataCell(Align(
-                                          alignment: Alignment.center,
-                                          child: Text(controller.getvisitorList
-                                              .elementAt(index)
-                                              .vMAPStatus
-                                              .toString()),
-                                        )),
+                                        DataCell(Text(controller.getvisitorList
+                                            .elementAt(index)
+                                            .vMAPStatus
+                                            .toString())),
                                         DataCell(IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(Icons.visibility),
+                                          onPressed: () {
+                                            Get.to(ApproveVisitorsScreen(
+                                              loginSuccessModel:
+                                                  widget.loginSuccessModel,
+                                              mskoolController:
+                                                  widget.mskoolController,
+                                            ));
+                                          },
+                                          icon: const Icon(
+                                            Icons.visibility,
+                                            color: Colors.red,
+                                          ),
                                         )),
                                       ],
                                     );
