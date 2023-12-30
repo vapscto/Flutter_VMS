@@ -46,9 +46,11 @@ class NewTableModel {
   int? secondtrue;
   int? weekfirsttrue;
   int? weeksecondtrue;
+  String? time;
 
   NewTableModel(
-      {this.flag,
+      {this.time,
+      this.flag,
       this.iSMTCRASTOId,
       this.iSMTCRId,
       this.hRMDId,

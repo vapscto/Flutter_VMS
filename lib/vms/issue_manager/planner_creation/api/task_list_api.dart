@@ -19,6 +19,7 @@ class TaskListAPI {
     required String flag,
     required String startDate,
     required String endDate,
+    required int hrmeId,
   }) async {
     var dio = Dio();
     var url = base + URLS.assignTaskList;
@@ -34,7 +35,8 @@ class TaskListAPI {
         "ASMAY_Id": asmayId,
         "Role_flag": "S",
         "ISMTPL_StartDate": startDate,
-        "ISMTPL_EndDate": endDate
+        "ISMTPL_EndDate": endDate,
+        "HRME_Id": hrmeId,
       });
       logger.i(url);
       logger.i({
@@ -43,12 +45,14 @@ class TaskListAPI {
         "ASMAY_Id": asmayId,
         "Role_flag": "S",
         "ISMTPL_StartDate": startDate,
-        "ISMTPL_EndDate": endDate
+        "ISMTPL_EndDate": endDate,
+        "HRME_Id": hrmeId,
       });
       if (response.statusCode == 200) {
         CategoryWisePlanModel categoryWisePlanModel =
             CategoryWisePlanModel.fromJson(response.data['categorylist']);
-        plannerCreationController.categoryList(categoryWisePlanModel.values!);
+        plannerCreationController
+            .categoryListData(categoryWisePlanModel.values!);
         AssignedTaskList assignedTaskList =
             AssignedTaskList.fromJson(response.data['get_Assignedtasklist']);
         if (assignedTaskList.values!.isNotEmpty) {
@@ -57,14 +61,6 @@ class TaskListAPI {
         TotalEffortData totalEffortData =
             TotalEffortData.fromJson(response.data['get_effortdetails']);
         plannerCreationController.effortData(totalEffortData.values!);
-        // plannerCreationController.totalHour = 0;
-        // plannerCreationController.totalDay = 0;
-        // for (int e = 0; e < totalEffortData.values!.length; e++) {
-        // plannerCreationController.totalDay +=
-        //     double.parse(response.data['NOOFDAYS']);
-        //   plannerCreationController.totalHour +=
-        //       double.parse(totalEffortData.values![e].wORKINGHOURS.toString());
-        // }
       }
     } on DioError catch (e) {
       logger.e(e.message);

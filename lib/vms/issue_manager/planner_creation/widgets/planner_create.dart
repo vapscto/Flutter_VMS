@@ -51,9 +51,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   DateTime dt = DateTime.now();
   double totalday = 0.0;
   List<CreatePlannerTable> newTable = [];
-  List<CategoryPlanTable> categoryList = [];
-  // String startDate = '';
-  // String endDate = '';
   String assignedDate = '';
   double plannedEffort = 0.0;
   List<Map<String, dynamic>> plannerrArray = [];
@@ -87,8 +84,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
       }
       startDate = startDate.add(const Duration(days: 1));
     }
-    totalday = plannerCreationController.totalDay;
-    ;
 
     return weekdayCount;
   }
@@ -107,26 +102,13 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         startDate: (fromDate != null)
             ? fromDate!.toIso8601String()
             : dt.toIso8601String(),
-        endDate: (toDate != null)
-            ? toDate!.toIso8601String()
-            : dt.toIso8601String());
+        endDate:
+            (toDate != null) ? toDate!.toIso8601String() : dt.toIso8601String(),
+        hrmeId: plannerCreationController.plannerStatus.first.hRMEId!);
     if (plannerCreationController.categoryWisePlan.isNotEmpty) {
-      categoryList.clear();
       for (int index = 0;
           index < plannerCreationController.categoryWisePlan.length;
           index++) {
-        setState(() {
-          categoryList.add(CategoryPlanTable(
-              '${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskCategoryName}',
-              '${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage} %',
-              double.parse(
-                  "${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage! / 100 * plannerCreationController.hour * plannerCreationController.effortDataValues.length}"),
-              double.parse(
-                  "${plannerCreationController.categoryWisePlan.elementAt(index).ismtcrastOEffortInHrs}"),
-              double.parse(
-                  "${plannerCreationController.categoryWisePlan.elementAt(index).ismmtcaTTaskPercentage! / 100 * plannerCreationController.hour * plannerCreationController.effortDataValues.length}")));
-        });
-
         categoryArray.add({
           "ISMMTCAT_Id": plannerCreationController.categoryWisePlan
               .elementAt(index)
@@ -195,12 +177,10 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         });
       }
     }
-    plannerCreationController.totalDay = 0;
     plannerCreationController.totalHour = 0;
-    plannerCreationController.effortDataValues.forEach((element) {
-      plannerCreationController.totalDay++;
+    for (var element in plannerCreationController.effortDataValues) {
       plannerCreationController.totalHour += element.wORKINGHOURS!;
-    });
+    }
     plannerCreationController.taskLoading(false);
   }
 
@@ -212,6 +192,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         userId: widget.loginSuccessModel.userId!,
         plannerCreationController: plannerCreationController);
     plannerCreationController.plannerLoading(false);
+    getListData();
   }
 
   savePlanner() async {
@@ -233,7 +214,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   @override
   void initState() {
     getPlannerStatus();
-    getListData();
     super.initState();
   }
 
@@ -798,14 +778,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
           columns: [
             const DataColumn(
               numeric: true,
-              label: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'S.No',
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
+              label: Text(
+                'S.No',
               ),
             ),
             DataColumn(
@@ -847,41 +821,23 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               ),
             ),
             const DataColumn(
-              label: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Issue/Task',
-                  style: TextStyle(fontSize: 14),
-                ),
+              label: Text(
+                'Issue/Task',
               ),
             ),
             const DataColumn(
-              label: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Assigned By',
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
+              label: Text(
+                'Assigned By',
               ),
             ),
             const DataColumn(
-              label: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Date',
-                  style: TextStyle(fontSize: 14),
-                ),
+              label: Text(
+                'Date',
               ),
             ),
             const DataColumn(
-              label: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Effort(Hrs)',
-                  style: TextStyle(fontSize: 14),
-                ),
+              label: Text(
+                'Effort(Hrs)',
               ),
             ),
             const DataColumn(
@@ -1044,7 +1000,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                     )),
                     DataCell(Text(data.assignedby!)),
                     DataCell(Text('$startDate TO $endDate')),
-                    DataCell(Text('${data.iSMTCRASTOEffortInHrs} Hr')),
+                    DataCell(Text('${data.time} Hr')),
                     DataCell(TextFormField(
                       initialValue: data.iSMTCRASTORemarks ?? '',
                       onChanged: (value) {
@@ -1120,17 +1076,18 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             ),
           ],
           rows: [
-            ...List.generate(categoryList.length, (index) {
+            ...List.generate(plannerCreationController.categoryList.length,
+                (index) {
+              var value =
+                  plannerCreationController.categoryList.elementAt(index);
               return DataRow(cells: [
-                DataCell(Text(categoryList.elementAt(index).categoryName)),
-                DataCell(Text(categoryList.elementAt(index).percentage)),
-                DataCell(Text(
-                    '${categoryList.elementAt(index).effort.toStringAsFixed(2)} Hr')),
-                DataCell(Text(
-                    '${categoryList.elementAt(index).currentEffort.toStringAsFixed(2)} Hr')),
+                DataCell(Text(value.categoryName)),
+                DataCell(Text(value.percentage)),
+                DataCell(Text(value.effort)),
+                DataCell(Text(value.currentEffort)),
                 DataCell(
                   Text(
-                    '${categoryList.elementAt(index).requiredEffort.toStringAsFixed(2)} Hr',
+                    value.requiredEffort,
                     style:
                         Get.textTheme.titleSmall!.copyWith(color: Colors.red),
                   ),

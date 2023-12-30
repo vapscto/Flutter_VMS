@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/assigned_task_list.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/category_plan_table.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/category_wise_list.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/new_table_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/planner_status_list.dart';
@@ -43,50 +44,86 @@ class PlannerCreationController extends GetxController {
     }
   }
 
+  double totalHour = 0.0;
+  var hour = 0.0;
+  var newHour = 0.0;
+  RxList<TotalEffortDataValues> effortDataValues =
+      <TotalEffortDataValues>[].obs;
+  effortData(List<TotalEffortDataValues> data) {
+    if (effortDataValues.isNotEmpty) {
+      effortDataValues.clear();
+      hour = 0.0;
+      newHour = 0.0;
+    }
+
+    for (int i = 0; i < data.length; i++) {
+      effortDataValues.add(data.elementAt(i));
+      hour += data[i].wORKINGHOURS!;
+      logger.e(hour);
+      newHour = hour;
+    }
+  }
+
   //Planner category List
+  String convertDecimalToTime(double decimalHours) {
+    int hours = decimalHours.floor();
+    int minutes = ((decimalHours - hours) * 60).round();
+
+    String hoursStr = hours.toString().padLeft(2, '0');
+    String minutesStr = minutes.toString().padLeft(2, '0');
+
+    return '$hoursStr:$minutesStr';
+  }
+
+  String convertDecimalToTimeInPlanner(double decimalHours) {
+    int hours = decimalHours.floor();
+    int minutes = ((decimalHours - hours) * 60).round();
+
+    String hoursStr = hours.toString().padLeft(2, '0');
+    String minutesStr = minutes.toString().padLeft(2, '0');
+
+    return '$hoursStr:$minutesStr';
+  }
+
+  String convertDecimalToTimePlanner(double decimalHours) {
+    int hours = decimalHours.floor();
+    int minutes = ((decimalHours - hours) * 60).round();
+
+    String hoursStr = hours.toString().padLeft(2, '0');
+    String minutesStr = minutes.toString().padLeft(2, '0');
+
+    return '$hoursStr.$minutesStr';
+  }
+
   RxList<CategoryWisePlanModelValues> categoryWisePlan =
       <CategoryWisePlanModelValues>[].obs;
-  List<Map<String, dynamic>> categoryListModel = [];
-  categoryList(List<CategoryWisePlanModelValues> value) {
+  List<CategoryPlanTable> categoryList = [];
+  int effhrcat = 0;
+  int effmicat = 0;
+  String data = '';
+  String newDatePlanner = '';
+  String formattedTime = '';
+  void categoryListData(List<CategoryWisePlanModelValues> value) {
     if (categoryWisePlan.isNotEmpty) {
       categoryWisePlan.clear();
+      categoryList.clear();
     }
+    formattedTime = '';
     for (int i = 0; i < value.length; i++) {
       categoryWisePlan.add(value.elementAt(i));
-      // effortDataValues.forEach((tt) {
-      //   double ddd = 0;
-      //   assignedTaskList.forEach((dd) {
-      //     if (int.parse(tt.ismmtcaTId.toString()) ==
-      //         int.parse(dd.ismmtcaTId.toString())) {
-      //       ddd += double.parse(dd.ismtcrastOEffortInHrs.toString());
-      //     }
-      //   });
-
-      //   double pp;
-      //   if (ddd != 0) {
-      //     pp = (double.parse(tt.ismmtcaTTaskPercentage.toString()) / 100) *
-      //         mineffort;
-      //   } else {
-      //     pp = (double.parse(tt.ismmtcaTTaskPercentage.toString()) / 100) *
-      //         mineffort;
-      //     categoryListModel.add({
-      //       'CATNAME': tt.ismmtcaTTaskCategoryName,
-      //       'RP': tt.ismmtcaTTaskPercentage,
-      //       'CWP': 0,
-      //       'CRE': pp,
-      //       'CCE': 0,
-      //     });
-      //   }
-
-      //   if (pp > ddd && ddd != 0) {
-      //     categoryListModel.add({
-      //       'CATNAME': tt.ismmtcaTTaskCategoryName,
-      //       'RP': tt.ismmtcaTTaskPercentage,
-      //       'CRE': pp,
-      //       'CCE': ddd,
-      //     });
-      //   }
-      // });
+    }
+    for (var element in value) {
+      var minimumEffect = element.ismmtcaTTaskPercentage! / 100 * newHour;
+      String formattedTime = convertDecimalToTime(minimumEffect);
+      String newdt = formattedTime.replaceAll(":", ".");
+      double requiredEff = double.parse(newdt) -
+          double.parse("${element.ismtcrastOEffortInHrs}");
+      categoryList.add(CategoryPlanTable(
+          '${element.ismmtcaTTaskCategoryName}',
+          '${element.ismmtcaTTaskPercentage} %',
+          ("$formattedTime Hr"),
+          ("${element.ismtcrastOEffortInHrs} Hr"),
+          ("$requiredEff Hr")));
     }
   }
 
@@ -94,32 +131,37 @@ class PlannerCreationController extends GetxController {
   RxList<AssignedTaskListValues> assignedTaskList =
       <AssignedTaskListValues>[].obs;
   List<NewTableModel> createdTaskList = [];
+  double plannerDate = 0.0;
   assignedTask(List<AssignedTaskListValues> value) {
     if (createdTaskList.isNotEmpty) {
       assignedTaskList.clear();
       createdTaskList.clear();
+      data = '';
     }
     for (int i = 0; i < value.length; i++) {
       assignedTaskList.add(value.elementAt(i));
       var val = value.elementAt(i);
-      double min = 0.0;
       double taskEffort = val.iSMTCRASTOEffortInHrs!;
       int hrsEff = taskEffort.toInt();
       var minEff = ((taskEffort - hrsEff) * 60).round();
-      logger.w(taskEffort);
-      logger.i(minEff);
-      logger.e(hrsEff.toString().length);
       if (hrsEff.toString().length == 1) {
         hrsEff = int.parse('0${hrsEff.toString()}');
-      } else if (minEff.toString().length == 1) {
-        logger.v(minEff.toString().length);
-        String minEffString = (minEff.toString().padLeft(2, '0'));
-        minEff = int.parse('0${minEff.toString()}');
-        logger.d('==$minEffString');
+      } else {
+        hrsEff = hrsEff;
       }
-      val.iSMTCRASTOEffortInHrs = double.parse('$hrsEff.$minEff');
+      if (minEff.toString().length == 1) {
+        minEff = int.parse('0${minEff.toString()}');
+      } else {
+        minEff = minEff;
+      }
+      data = convertDecimalToTimeInPlanner(val.iSMTCRASTOEffortInHrs!);
+      String st = convertDecimalToTimePlanner(val.iSMTCRASTOEffortInHrs!);
+      plannerDate += double.parse(st);
+      logger.w(plannerDate);
+      val.iSMTCRASTOEffortInHrs = double.parse(data);
       if (val.iSMTPLTAPreviousTask == 1 || val.iSMTPLTAPreviousTask == '1') {
         createdTaskList.add(NewTableModel(
+            time: data,
             flag: true,
             iSMTCRASTOId: val.iSMTCRASTOId,
             iSMTCRId: val.iSMTCRId,
@@ -176,6 +218,7 @@ class PlannerCreationController extends GetxController {
               val.iSMTPLTAPreviousTask == '' ||
               val.iSMTPLTAPreviousTask == '0')) {
         createdTaskList.add(NewTableModel(
+            time: data,
             flag: true,
             iSMTCRASTOId: val.iSMTCRASTOId,
             iSMTCRId: val.iSMTCRId,
@@ -244,6 +287,7 @@ class PlannerCreationController extends GetxController {
               DateTime.parse(mm.pDates!)
                   .isAfter(DateTime.parse(val.iSMTCRASTOEndDate!))) {
             createdTaskList.add(NewTableModel(
+                time: data,
                 flag: true,
                 iSMTCRASTOId: val.iSMTCRASTOId,
                 iSMTCRId: val.iSMTCRId,
@@ -319,6 +363,7 @@ class PlannerCreationController extends GetxController {
                     DateTime.parse(mm.pDates!)
                         .isBefore(DateTime.parse(val.iSMTCRASTOEndDate!))) {
                   createdTaskList.add(NewTableModel(
+                      time: data,
                       flag: true,
                       iSMTCRASTOId: val.iSMTCRASTOId,
                       iSMTCRId: val.iSMTCRId,
@@ -394,6 +439,7 @@ class PlannerCreationController extends GetxController {
                       DateTime.parse(mm.pDates!)
                           .isBefore(DateTime.parse(val.iSMTCRASTOEndDate!))) {
                     createdTaskList.add(NewTableModel(
+                        time: data,
                         flag: true,
                         iSMTCRASTOId: val.iSMTCRASTOId,
                         iSMTCRId: val.iSMTCRId,
@@ -471,6 +517,7 @@ class PlannerCreationController extends GetxController {
                             DateTime.parse(mm.pDates!).isBefore(
                                 DateTime.parse(val.iSMTCRASTOEndDate!))) {
                           createdTaskList.add(NewTableModel(
+                              time: data,
                               flag: true,
                               iSMTCRASTOId: val.iSMTCRASTOId,
                               iSMTCRId: val.iSMTCRId,
@@ -560,6 +607,7 @@ class PlannerCreationController extends GetxController {
 
               if (newDate1 == endDate) {
                 createdTaskList.add(NewTableModel(
+                    time: data,
                     flag: true,
                     iSMTCRASTOId: val.iSMTCRASTOId,
                     iSMTCRId: val.iSMTCRId,
@@ -611,6 +659,7 @@ class PlannerCreationController extends GetxController {
 
               if (anewDate1 == endDate) {
                 createdTaskList.add(NewTableModel(
+                    time: data,
                     flag: true,
                     iSMTCRASTOId: val.iSMTCRASTOId,
                     iSMTCRId: val.iSMTCRId,
@@ -675,6 +724,7 @@ class PlannerCreationController extends GetxController {
         if (val.weekfirsttrue != 0) {
           if (val.firsttrue != 0) {
             createdTaskList.add(NewTableModel(
+                time: data,
                 flag: true,
                 iSMTCRASTOId: val.iSMTCRASTOId,
                 iSMTCRId: val.iSMTCRId,
@@ -726,6 +776,7 @@ class PlannerCreationController extends GetxController {
         } else if (val.weeksecondtrue != 0) {
           if (val.secondtrue != 0) {
             createdTaskList.add(NewTableModel(
+                time: data,
                 flag: true,
                 iSMTCRASTOId: val.iSMTCRASTOId,
                 iSMTCRId: val.iSMTCRId,
@@ -796,6 +847,7 @@ class PlannerCreationController extends GetxController {
 
           if (newdate1 == endDate) {
             createdTaskList.add(NewTableModel(
+                time: data,
                 flag: true,
                 iSMTCRASTOId: val.iSMTCRASTOId,
                 iSMTCRId: val.iSMTCRId,
@@ -850,24 +902,6 @@ class PlannerCreationController extends GetxController {
   }
 
   //effort list
-  double totalDay = 0.0;
-  double totalHour = 0.0;
-  double hour = 0.0;
-  RxList<TotalEffortDataValues> effortDataValues =
-      <TotalEffortDataValues>[].obs;
-  effortData(List<TotalEffortDataValues> data) {
-    if (effortDataValues.isNotEmpty) {
-      effortDataValues.clear();
-    }
-    totalHour = 0.0;
-    totalDay = 0.0;
-    hour = 0.0;
-    totalDay += (data.length);
-    for (int i = 0; i < data.length; i++) {
-      effortDataValues.add(data.elementAt(i));
-      hour = data[i].wORKINGHOURS!;
-    }
-  }
 
   String maxDate = '';
 }
