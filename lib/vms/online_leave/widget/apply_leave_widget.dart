@@ -116,6 +116,10 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
         initialDt = currentDate.subtract(Duration(days: min));
         firstDt = currentDate.subtract(Duration(days: min));
         lastDt = currentDate.subtract(Duration(days: transationLeave));
+      } else if (widget.values.hrmLLeaveCode == "COMPOFF") {
+        initialDt = currentDate.subtract(Duration(days: min));
+        firstDt = currentDate.subtract(Duration(days: min));
+        lastDt = currentDate.subtract(const Duration(days: 1));
       } else {
         initialDt = currentDate.subtract(Duration(days: min));
         firstDt = currentDate.subtract(const Duration(days: 30));
@@ -130,6 +134,10 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
         initialDt = currentDate.add(Duration(days: transationLeave));
         firstDt = currentDate.add(Duration(days: min));
         lastDt = currentDate.add(Duration(days: min));
+      } else if (widget.values.hrmLLeaveCode == "COMPOFF") {
+        initialDt = currentDate.add(Duration(days: min));
+        firstDt = currentDate.add(Duration(days: min));
+        lastDt = currentDate.add(const Duration(days: 1));
       } else {
         initialDt = currentDate.add(Duration(days: min));
         firstDt = currentDate.add(Duration(days: min));
@@ -383,6 +391,11 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                     startDT = date;
                                     startDate.text =
                                         "${date.day}-${date.month}-${date.year}";
+                                    if (widget.values.hrelSCBLeaves == 0.50) {
+                                      endDate.text =
+                                          "${date.day}-${date.month}-${date.year}";
+                                      totalDay.value = '0.5';
+                                    }
                                     if (widget.values.hrmLLeaveCode == "OL") {
                                       for (int i = 0;
                                           i <
@@ -553,7 +566,11 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                           msg: "Please select end date");
                                       return;
                                     }
-
+                                    if (widget.values.hrelSCBLeaves == 0.50) {
+                                      endDate.text = startDate.text;
+                                      totalDay.value = '0.5';
+                                      return;
+                                    }
                                     endDT = end;
                                     endDate.text =
                                         "${end.day}-${end.month}-${end.year}";
@@ -790,115 +807,128 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                             ],
                           ),
                         ),
-                        Expanded(
-                          child: Container(
-                            height: 38,
-                            // padding: const EdgeInsets.all(6.0),
-                            decoration: BoxDecoration(
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                borderRadius: BorderRadius.circular(24.0),
-                                boxShadow: CustomThemeData.getShadow()),
-                            child: Row(
-                              children: [
-                                Expanded(child: Obx(() {
-                                  return InkWell(
-                                    onTap: () {
-                                      if (startDate.text.isEmpty ||
-                                          endDate.text.isEmpty) {
-                                        Fluttertoast.showToast(
-                                            msg: "Please provide leave days");
-                                        return;
-                                      }
-                                      if (endDT.difference(startDT).inDays >=
-                                          1) {
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "You can't apply for half day, because you are applying for more than 1 day");
-                                        return;
-                                      }
-                                      var difference =
-                                          endDT.difference(startDT).inDays + 1;
-                                      isHalfDay.value = true;
-                                      totalDay.value = "${difference / 2}";
-                                    },
-                                    child: AnimatedContainer(
-                                        alignment: Alignment.center,
-                                        height: 38,
-                                        padding: const EdgeInsets.all(6.0),
-                                        decoration: BoxDecoration(
-                                          color: isHalfDay.value
-                                              ? Theme.of(context).primaryColor
-                                              : Theme.of(context)
-                                                  .scaffoldBackgroundColor,
-                                          borderRadius:
-                                              BorderRadius.circular(24.0),
-                                        ),
-                                        duration:
-                                            const Duration(microseconds: 300),
-                                        child: Text(
-                                          "Half Day",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: isHalfDay.value
-                                                ? Theme.of(context)
-                                                    .scaffoldBackgroundColor
-                                                : Theme.of(context)
-                                                    .textTheme
-                                                    .titleSmall!
-                                                    .color,
-                                          ),
-                                        )),
-                                  );
-                                })),
-                                Expanded(
-                                  child: Obx(() {
-                                    return InkWell(
-                                      onTap: () {
-                                        if (startDate.text.isEmpty ||
-                                            endDate.text.isEmpty) {
-                                          Fluttertoast.showToast(
-                                              msg: "Please provide leave days");
-                                          return;
-                                        }
-                                        isHalfDay.value = false;
-                                        totalDay.value =
-                                            "${endDT.difference(startDT).inDays + 1}";
-                                      },
-                                      child: AnimatedContainer(
-                                        height: 38.0,
-                                        curve: Curves.easeInOut,
-                                        alignment: Alignment.center,
-                                        padding: const EdgeInsets.all(6.0),
-                                        decoration: BoxDecoration(
-                                          color: isHalfDay.value
-                                              ? Colors.transparent
-                                              : Theme.of(context).primaryColor,
-                                          borderRadius:
-                                              BorderRadius.circular(24.0),
-                                        ),
-                                        duration:
-                                            const Duration(microseconds: 300),
-                                        child: Text(
-                                          "Full Day",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              color: isHalfDay.value
-                                                  ? Theme.of(context)
-                                                      .textTheme
-                                                      .titleSmall!
-                                                      .color
-                                                  : Theme.of(context)
-                                                      .scaffoldBackgroundColor),
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
+                        (widget.values.hrelSCBLeaves == 0.50)
+                            ? const SizedBox()
+                            : Expanded(
+                                child: Container(
+                                  height: 38,
+                                  // padding: const EdgeInsets.all(6.0),
+                                  decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      borderRadius: BorderRadius.circular(24.0),
+                                      boxShadow: CustomThemeData.getShadow()),
+                                  child: Row(
+                                    children: [
+                                      Expanded(child: Obx(() {
+                                        return InkWell(
+                                          onTap: () {
+                                            if (startDate.text.isEmpty ||
+                                                endDate.text.isEmpty) {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "Please provide leave days");
+                                              return;
+                                            }
+                                            if (endDT
+                                                    .difference(startDT)
+                                                    .inDays >=
+                                                1) {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "You can't apply for half day, because you are applying for more than 1 day");
+                                              return;
+                                            }
+                                            var difference = endDT
+                                                    .difference(startDT)
+                                                    .inDays +
+                                                1;
+                                            isHalfDay.value = true;
+                                            totalDay.value =
+                                                "${difference / 2}";
+                                          },
+                                          child: AnimatedContainer(
+                                              alignment: Alignment.center,
+                                              height: 38,
+                                              padding:
+                                                  const EdgeInsets.all(6.0),
+                                              decoration: BoxDecoration(
+                                                color: isHalfDay.value
+                                                    ? Theme.of(context)
+                                                        .primaryColor
+                                                    : Theme.of(context)
+                                                        .scaffoldBackgroundColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(24.0),
+                                              ),
+                                              duration: const Duration(
+                                                  microseconds: 300),
+                                              child: Text(
+                                                "Half Day",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: isHalfDay.value
+                                                      ? Theme.of(context)
+                                                          .scaffoldBackgroundColor
+                                                      : Theme.of(context)
+                                                          .textTheme
+                                                          .titleSmall!
+                                                          .color,
+                                                ),
+                                              )),
+                                        );
+                                      })),
+                                      Expanded(
+                                        child: Obx(() {
+                                          return InkWell(
+                                            onTap: () {
+                                              if (startDate.text.isEmpty ||
+                                                  endDate.text.isEmpty) {
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        "Please provide leave days");
+                                                return;
+                                              }
+                                              isHalfDay.value = false;
+                                              totalDay.value =
+                                                  "${endDT.difference(startDT).inDays + 1}";
+                                            },
+                                            child: AnimatedContainer(
+                                              height: 38.0,
+                                              curve: Curves.easeInOut,
+                                              alignment: Alignment.center,
+                                              padding:
+                                                  const EdgeInsets.all(6.0),
+                                              decoration: BoxDecoration(
+                                                color: isHalfDay.value
+                                                    ? Colors.transparent
+                                                    : Theme.of(context)
+                                                        .primaryColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(24.0),
+                                              ),
+                                              duration: const Duration(
+                                                  microseconds: 300),
+                                              child: Text(
+                                                "Full Day",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: isHalfDay.value
+                                                        ? Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall!
+                                                            .color
+                                                        : Theme.of(context)
+                                                            .scaffoldBackgroundColor),
+                                              ),
+                                            ),
+                                          );
+                                        }),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
                       ],
                     ),
                     const SizedBox(

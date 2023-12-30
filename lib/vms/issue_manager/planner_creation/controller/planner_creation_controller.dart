@@ -45,22 +45,16 @@ class PlannerCreationController extends GetxController {
   }
 
   double totalHour = 0.0;
-  var hour = 0.0;
-  var newHour = 0.0;
+  RxDouble hour = 0.0.obs;
   RxList<TotalEffortDataValues> effortDataValues =
       <TotalEffortDataValues>[].obs;
+  List<double> newHour = [];
   effortData(List<TotalEffortDataValues> data) {
     if (effortDataValues.isNotEmpty) {
       effortDataValues.clear();
-      hour = 0.0;
-      newHour = 0.0;
     }
-
-    for (int i = 0; i < data.length; i++) {
-      effortDataValues.add(data.elementAt(i));
-      hour += data[i].wORKINGHOURS!;
-      logger.e(hour);
-      newHour = hour;
+    for (var element in data) {
+      effortDataValues.add(element);
     }
   }
 
@@ -112,8 +106,13 @@ class PlannerCreationController extends GetxController {
     for (int i = 0; i < value.length; i++) {
       categoryWisePlan.add(value.elementAt(i));
     }
+    hour.value = 0;
+    for (var i in effortDataValues) {
+      hour.value = i.wORKINGHOURS! * categoryWisePlan.length;
+      logger.i(hour.value);
+    }
     for (var element in value) {
-      var minimumEffect = element.ismmtcaTTaskPercentage! / 100 * newHour;
+      var minimumEffect = element.ismmtcaTTaskPercentage! / 100 * hour.value;
       String formattedTime = convertDecimalToTime(minimumEffect);
       String newdt = formattedTime.replaceAll(":", ".");
       double requiredEff = double.parse(newdt) -
@@ -141,24 +140,10 @@ class PlannerCreationController extends GetxController {
     for (int i = 0; i < value.length; i++) {
       assignedTaskList.add(value.elementAt(i));
       var val = value.elementAt(i);
-      double taskEffort = val.iSMTCRASTOEffortInHrs!;
-      int hrsEff = taskEffort.toInt();
-      var minEff = ((taskEffort - hrsEff) * 60).round();
-      if (hrsEff.toString().length == 1) {
-        hrsEff = int.parse('0${hrsEff.toString()}');
-      } else {
-        hrsEff = hrsEff;
-      }
-      if (minEff.toString().length == 1) {
-        minEff = int.parse('0${minEff.toString()}');
-      } else {
-        minEff = minEff;
-      }
       data = convertDecimalToTimeInPlanner(val.iSMTCRASTOEffortInHrs!);
-      String st = convertDecimalToTimePlanner(val.iSMTCRASTOEffortInHrs!);
-      plannerDate += double.parse(st);
-      logger.w(plannerDate);
-      val.iSMTCRASTOEffortInHrs = double.parse(data);
+      String sst = data.replaceAll(":", ".");
+      plannerDate = double.parse(sst);
+      val.iSMTCRASTOEffortInHrs = double.parse(sst);
       if (val.iSMTPLTAPreviousTask == 1 || val.iSMTPLTAPreviousTask == '1') {
         createdTaskList.add(NewTableModel(
             time: data,

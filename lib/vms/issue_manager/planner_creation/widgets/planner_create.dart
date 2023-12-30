@@ -53,10 +53,13 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   List<CreatePlannerTable> newTable = [];
   String assignedDate = '';
   double plannedEffort = 0.0;
+  double newPlannedEffort = 0.0;
   List<Map<String, dynamic>> plannerrArray = [];
   List<Map<String, dynamic>> categoryArray = [];
   List<Map<String, dynamic>> newCategoryArray = [];
   double totalHour = 0;
+  double newTotalHour = 0;
+  String allHour = '';
   DateTime todayDate = DateTime.now();
   void addPlannedEffort(var plan) {
     plannedEffort -= plan;
@@ -88,9 +91,35 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     return weekdayCount;
   }
 
+  String convertDecimalToTime(double decimalHours) {
+    int hours = decimalHours.floor();
+    int minutes = ((decimalHours - hours) * 60).round();
+
+    String hoursStr = hours.toString().padLeft(2, '0');
+    String minutesStr = minutes.toString().padLeft(2, '0');
+
+    return '$hoursStr.$minutesStr';
+  }
+
+  String convertDecimalTotalTime(double decimalHours) {
+    int hours = decimalHours.floor();
+    int minutes = ((decimalHours - hours) * 60).round();
+
+    String hoursStr = hours.toString().padLeft(2, '0');
+    String minutesStr = minutes.toString().padLeft(2, '0');
+
+    return '$hoursStr.$minutesStr';
+  }
+
+  double count = 0;
+  double newCount = 0.0;
   getListData() async {
     plannedEffort = 0.0;
     totalHour = 0;
+    newPlannedEffort = 0.0;
+    newTotalHour = 0;
+    count = 0;
+    newCount = 0.0;
     plannerCreationController.taskLoading(true);
     await TaskListAPI.instance.getList(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
@@ -105,9 +134,9 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         endDate:
             (toDate != null) ? toDate!.toIso8601String() : dt.toIso8601String(),
         hrmeId: plannerCreationController.plannerStatus.first.hRMEId!);
-    if (plannerCreationController.categoryWisePlan.isNotEmpty) {
+    if (plannerCreationController.categoryList.isNotEmpty) {
       for (int index = 0;
-          index < plannerCreationController.categoryWisePlan.length;
+          index < plannerCreationController.categoryList.length;
           index++) {
         categoryArray.add({
           "ISMMTCAT_Id": plannerCreationController.categoryWisePlan
@@ -130,19 +159,31 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                     .elementAt(index)
                     .iSMTPLTAId! ==
                 0) {
-              plannedEffort += plannerCreationController.createdTaskList
+              newPlannedEffort += plannerCreationController.createdTaskList
                   .elementAt(index)
                   .iSMTCRASTOEffortInHrs!;
-              setState(() {});
+              String data = convertDecimalToTime(newPlannedEffort);
+              plannedEffort = double.tryParse(data)!;
             }
           }
           if (plannerCreationController.createdTaskList
                   .elementAt(index)
                   .iSMTCRASTOEffortInHrs !=
               null) {
-            totalHour += plannerCreationController.createdTaskList
+            newCount = plannerCreationController.createdTaskList
                 .elementAt(index)
                 .iSMTCRASTOEffortInHrs!;
+            String countHr = (newCount * 0.023400).toString();
+            count += plannerCreationController.createdTaskList
+                    .elementAt(index)
+                    .iSMTCRASTOEffortInHrs! +
+                double.parse(countHr);
+            String dt = convertDecimalTotalTime(count);
+            logger.v(dt);
+
+            totalHour = double.tryParse(dt)!;
+            logger.i("Total Planner :- $totalHour");
+            allHour = totalHour.toStringAsFixed(2);
           }
           //
         });
@@ -203,7 +244,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         plannerName: _plannerName.text,
         startDate: fromDate!.toIso8601String(),
         endDate: toDate!.toIso8601String(),
-        totalHour: totalHour.toInt(),
+        totalHour: allHour,
         remarks: _plannerGoal.text,
         catListId: categoryArray,
         taskplannerArray: plannerrArray);
@@ -219,8 +260,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
 
   @override
   void dispose() {
-    if (plannerCreationController.categoryWisePlan.isNotEmpty) {
-      plannerCreationController.categoryWisePlan.isEmpty;
+    if (plannerCreationController.categoryList.isNotEmpty) {
+      plannerCreationController.categoryList.isEmpty;
     }
     if (plannerCreationController.assignedTaskList.isNotEmpty) {
       plannerCreationController.assignedTaskList.isEmpty;
@@ -704,18 +745,17 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                                 color: Theme.of(context)
                                                     .primaryColor)),
                                     TextSpan(
-                                        text: '$totalHour Hr ',
+                                        text: '$allHour Hr ',
                                         style: Get.textTheme.titleSmall!
                                             .copyWith()),
                                   ])),
                                 ],
                               ),
                             )),
-                            (plannerCreationController
-                                    .categoryWisePlan.isNotEmpty)
+                            (plannerCreationController.categoryList.isNotEmpty)
                                 ? _createCategortTable()
                                 : const SizedBox(),
-                            (plannerCreationController.categoryWisePlan.isEmpty)
+                            (plannerCreationController.categoryList.isEmpty)
                                 ? Align(
                                     alignment: Alignment.bottomCenter,
                                     child: Padding(
