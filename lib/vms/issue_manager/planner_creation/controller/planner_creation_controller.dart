@@ -53,6 +53,7 @@ class PlannerCreationController extends GetxController {
     if (effortDataValues.isNotEmpty) {
       effortDataValues.clear();
     }
+    logger.i('Length ${effortDataValues.length}');
     for (var element in data) {
       effortDataValues.add(element);
     }
@@ -97,6 +98,8 @@ class PlannerCreationController extends GetxController {
   String data = '';
   String newDatePlanner = '';
   String formattedTime = '';
+  double totalEffort = 0.0;
+  double requiredEff = 0.0;
   void categoryListData(List<CategoryWisePlanModelValues> value) {
     if (categoryWisePlan.isNotEmpty) {
       categoryWisePlan.clear();
@@ -108,22 +111,50 @@ class PlannerCreationController extends GetxController {
     }
     hour.value = 0;
     for (var i in effortDataValues) {
-      hour.value = i.wORKINGHOURS! * categoryWisePlan.length;
+      hour.value = i.wORKINGHOURS! * 6; //effortDataValues.length;
       logger.i(hour.value);
     }
-    for (var element in value) {
-      var minimumEffect = element.ismmtcaTTaskPercentage! / 100 * hour.value;
-      String formattedTime = convertDecimalToTime(minimumEffect);
-      String newdt = formattedTime.replaceAll(":", ".");
-      double requiredEff = double.parse(newdt) -
-          double.parse("${element.ismtcrastOEffortInHrs}");
-      categoryList.add(CategoryPlanTable(
-          '${element.ismmtcaTTaskCategoryName}',
-          '${element.ismmtcaTTaskPercentage} %',
-          ("$formattedTime Hr"),
-          ("${element.ismtcrastOEffortInHrs} Hr"),
-          ("$requiredEff Hr")));
+    totalEffort = 0.0;
+    requiredEff = 0.0;
+    for (var i = 0; i < categoryWisePlan.length; i++) {
+      for (var index in createdTaskList) {
+        totalEffort += value[i].ismtcrastOEffortInHrs!;
+        var minimumEffect = value[i].ismmtcaTTaskPercentage! / 100 * hour.value;
+        formattedTime = convertDecimalToTime(minimumEffect);
+        String newdt = formattedTime.replaceAll(":", ".");
+        logger.i("----$newdt");
+        requiredEff = double.parse(newdt) - totalEffort;
+        logger.d(requiredEff);
+        if (categoryWisePlan[i].ismmtcaTId == index.iSMMTCATId) {
+          if (totalEffort < double.parse(newdt)) {
+            totalEffort += index.iSMTCRASTOEffortInHrs!;
+            categoryList.add(CategoryPlanTable(
+                '${value[i].ismmtcaTTaskCategoryName}',
+                '${value[i].ismmtcaTTaskPercentage} %',
+                ("$formattedTime Hr"),
+                ("$totalEffort Hr"),
+                ("${requiredEff.toStringAsFixed(2)} Hr")));
+          } else if (value[i].ismtcrastOEffortInHrs! == 0) {
+            totalEffort += index.iSMTCRASTOEffortInHrs!;
+            categoryList.add(CategoryPlanTable(
+                '${value[i].ismmtcaTTaskCategoryName}',
+                '${value[i].ismmtcaTTaskPercentage} %',
+                ("$formattedTime Hr"),
+                ("${value[i].ismtcrastOEffortInHrs} Hr"),
+                ("${requiredEff.toStringAsFixed(2)} Hr")));
+          }
+        } else {
+          value[i].ismtcrastOEffortInHrs = 0.0;
+          categoryList.add(CategoryPlanTable(
+              '${value[i].ismmtcaTTaskCategoryName}',
+              '${value[i].ismmtcaTTaskPercentage} %',
+              ("${value[i].ismtcrastOEffortInHrs} Hr"),
+              ("$totalEffort Hr"),
+              ("${requiredEff.toStringAsFixed(2)} Hr")));
+        }
+      }
     }
+    categoryList.toSet();
   }
 
   //Assigned plan list

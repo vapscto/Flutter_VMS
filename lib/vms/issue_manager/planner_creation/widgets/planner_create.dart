@@ -91,26 +91,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     return weekdayCount;
   }
 
-  String convertDecimalToTime(double decimalHours) {
-    int hours = decimalHours.floor();
-    int minutes = ((decimalHours - hours) * 60).round();
-
-    String hoursStr = hours.toString().padLeft(2, '0');
-    String minutesStr = minutes.toString().padLeft(2, '0');
-
-    return '$hoursStr.$minutesStr';
-  }
-
-  String convertDecimalTotalTime(double decimalHours) {
-    int hours = decimalHours.floor();
-    int minutes = ((decimalHours - hours) * 60).round();
-
-    String hoursStr = hours.toString().padLeft(2, '0');
-    String minutesStr = minutes.toString().padLeft(2, '0');
-
-    return '$hoursStr.$minutesStr';
-  }
-
   double count = 0;
   double newCount = 0.0;
   getListData() async {
@@ -159,31 +139,19 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                     .elementAt(index)
                     .iSMTPLTAId! ==
                 0) {
-              newPlannedEffort += plannerCreationController.createdTaskList
+              plannedEffort += plannerCreationController.createdTaskList
                   .elementAt(index)
                   .iSMTCRASTOEffortInHrs!;
-              String data = convertDecimalToTime(newPlannedEffort);
-              plannedEffort = double.tryParse(data)!;
             }
           }
           if (plannerCreationController.createdTaskList
                   .elementAt(index)
                   .iSMTCRASTOEffortInHrs !=
               null) {
-            newCount = plannerCreationController.createdTaskList
+            totalHour += plannerCreationController.createdTaskList
                 .elementAt(index)
                 .iSMTCRASTOEffortInHrs!;
-            String countHr = (newCount * 0.023400).toString();
-            count += plannerCreationController.createdTaskList
-                    .elementAt(index)
-                    .iSMTCRASTOEffortInHrs! +
-                double.parse(countHr);
-            String dt = convertDecimalTotalTime(count);
-            logger.v(dt);
-
-            totalHour = double.tryParse(dt)!;
             logger.i("Total Planner :- $totalHour");
-            allHour = totalHour.toStringAsFixed(2);
           }
           //
         });
@@ -244,7 +212,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         plannerName: _plannerName.text,
         startDate: fromDate!.toIso8601String(),
         endDate: toDate!.toIso8601String(),
-        totalHour: allHour,
+        totalHour: totalHour.toStringAsFixed(2),
         remarks: _plannerGoal.text,
         catListId: categoryArray,
         taskplannerArray: plannerrArray);
@@ -731,7 +699,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                                 color: Theme.of(context)
                                                     .primaryColor)),
                                     TextSpan(
-                                        text: '$plannedEffort Hr',
+                                        text:
+                                            '${plannedEffort.toStringAsFixed(2)} Hr',
                                         style: Get.textTheme.titleSmall!
                                             .copyWith()),
                                   ])),
@@ -745,7 +714,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                                 color: Theme.of(context)
                                                     .primaryColor)),
                                     TextSpan(
-                                        text: '$allHour Hr ',
+                                        text:
+                                            '${totalHour.toStringAsFixed(2)} Hr ',
                                         style: Get.textTheme.titleSmall!
                                             .copyWith()),
                                   ])),
@@ -1091,7 +1061,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               fontSize: 14,
               color: Color.fromRGBO(0, 0, 0, 0.95),
               fontWeight: FontWeight.w400),
-          horizontalMargin: 2,
+          horizontalMargin: 10,
           columnSpacing: MediaQuery.of(context).size.width * 0.04,
           dividerThickness: 1,
           headingTextStyle:

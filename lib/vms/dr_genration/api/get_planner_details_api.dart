@@ -43,17 +43,20 @@ Future<bool> getPlanerdetails({
       "IVRMRT_Id": ivrmrtId,
     });
     PlanerDeatails planerDeatailsList = PlanerDeatails.fromJson(response.data);
-    GetTaskDrListModel taskDrListModel =
-        GetTaskDrListModel.fromJson(response.data['gettasklist']);
-    controller.getTaskDrList.addAll(taskDrListModel.values!);
-    for (int i = 0; i < taskDrListModel.values!.length; i++) {
-      controller.hoursEt.add(TextEditingController(text: ''));
-      controller.minutesEt.add(TextEditingController(text: ''));
-      controller.statusEtField.add(TextEditingController(text: ''));
-      controller.deveationEtField.add(TextEditingController(text: ''));
-      controller.etResponse.add(TextEditingController(text: ''));
-      controller.checkBoxList.add(false);
+    if (response.data['gettasklist'] != null) {
+      GetTaskDrListModel taskDrListModel =
+          GetTaskDrListModel.fromJson(response.data['gettasklist']);
+      controller.getTaskDrList.addAll(taskDrListModel.values!);
+      for (int i = 0; i < taskDrListModel.values!.length; i++) {
+        controller.hoursEt.add(TextEditingController(text: ''));
+        controller.minutesEt.add(TextEditingController(text: ''));
+        controller.statusEtField.add(TextEditingController(text: ''));
+        controller.deveationEtField.add(TextEditingController(text: ''));
+        controller.etResponse.add(TextEditingController(text: ''));
+        controller.checkBoxList.add(false);
+      }
     }
+
     // adding status in the list
     DrstatusListModel drStatusListModel =
         DrstatusListModel.fromJson(response.data['get_Status']);
@@ -64,14 +67,19 @@ Future<bool> getPlanerdetails({
         DepartwisedeviationModel.fromJson(
             response.data['getdepartwisedeviationremrks']);
     controller.depWiseDevitnList.addAll(departwisedeviationModel.values!);
-    CloseTaskCoutnModel closeTaskList =
-        CloseTaskCoutnModel.fromJson(response.data['closeTaskCoutnDetails']);
-    controller.closeTaskCoutnList.addAll(closeTaskList.values!);
-    if (planerDeatailsList.plannername != null) {}
-    controller.plannernameEditingController.value.text =
-        planerDeatailsList.plannername ?? '';
-    controller.otherDaysEditingController.value =
-        planerDeatailsList.dailyreportothersdatecount!.toInt().toString();
+    if (response.data['closeTaskCoutnDetails'] != null) {
+      CloseTaskCoutnModel closeTaskList =
+          CloseTaskCoutnModel.fromJson(response.data['closeTaskCoutnDetails']);
+      controller.closeTaskCoutnList.addAll(closeTaskList.values!);
+    }
+
+    if (planerDeatailsList.plannername != null) {
+      controller.plannernameEditingController.value.text =
+          planerDeatailsList.plannername ?? '';
+      controller.otherDaysEditingController.value =
+          planerDeatailsList.dailyreportothersdatecount!.toInt().toString();
+    }
+
     if (response.data['drnotapprovedmessage'] != null) {
       Drnotapprovedmessage drnotapprovedmessage =
           Drnotapprovedmessage.fromJson(response.data['drnotapprovedmessage']);
@@ -108,7 +116,9 @@ Future<bool> getPlanerdetails({
           TADAApplyListModel.fromJson(response.data['applyList']);
       controller.getList(tadaApplyListModel.values!);
     }
-    controller.deviationCount.value = response.data['extensiondays'];
+    if (response.data['extensiondays'] != null) {
+      controller.deviationCount.value = response.data['extensiondays'];
+    }
 
     controller.updatePlannerDeatails(false);
     return true;
