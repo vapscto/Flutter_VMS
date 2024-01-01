@@ -651,6 +651,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                   .value
                                                   .text =
                                               '${todayDate.day}-${todayDate.month}-${todayDate.year}';
+                                          init();
                                         });
                                       },
                                       dense: true,
@@ -699,6 +700,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                 letterSpacing: 0.3)),
                                       ),
                                       onChanged: (value) {
+                                        init();
                                         if (_plannerDetailsController
                                                     .deviationCount.value +
                                                 3 >

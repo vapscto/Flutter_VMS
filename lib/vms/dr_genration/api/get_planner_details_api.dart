@@ -73,7 +73,7 @@ Future<bool> getPlanerdetails({
       controller.closeTaskCoutnList.addAll(closeTaskList.values!);
     }
 
-    if (planerDeatailsList.plannername != null) {
+    if (response.data['gettasklist'] != null) {
       controller.plannernameEditingController.value.text =
           planerDeatailsList.plannername ?? '';
       controller.otherDaysEditingController.value =

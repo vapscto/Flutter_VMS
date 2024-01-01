@@ -118,16 +118,16 @@ class PlannerCreationController extends GetxController {
     requiredEff = 0.0;
     for (var i = 0; i < categoryWisePlan.length; i++) {
       for (var index in createdTaskList) {
-        totalEffort += value[i].ismtcrastOEffortInHrs!;
         var minimumEffect = value[i].ismmtcaTTaskPercentage! / 100 * hour.value;
+        requiredEff = minimumEffect;
         formattedTime = convertDecimalToTime(minimumEffect);
         String newdt = formattedTime.replaceAll(":", ".");
         logger.i("----$newdt");
-        requiredEff = double.parse(newdt) - totalEffort;
         logger.d(requiredEff);
         if (categoryWisePlan[i].ismmtcaTId == index.iSMMTCATId) {
           if (totalEffort < double.parse(newdt)) {
             totalEffort += index.iSMTCRASTOEffortInHrs!;
+            requiredEff = double.parse(newdt) - totalEffort;
             categoryList.add(CategoryPlanTable(
                 '${value[i].ismmtcaTTaskCategoryName}',
                 '${value[i].ismmtcaTTaskPercentage} %',
@@ -148,8 +148,8 @@ class PlannerCreationController extends GetxController {
           categoryList.add(CategoryPlanTable(
               '${value[i].ismmtcaTTaskCategoryName}',
               '${value[i].ismmtcaTTaskPercentage} %',
+              ("$formattedTime Hr"),
               ("${value[i].ismtcrastOEffortInHrs} Hr"),
-              ("$totalEffort Hr"),
               ("${requiredEff.toStringAsFixed(2)} Hr")));
         }
       }
