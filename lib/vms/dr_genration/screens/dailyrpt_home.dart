@@ -700,7 +700,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                 letterSpacing: 0.3)),
                                       ),
                                       onChanged: (value) {
-                                        init();
                                         if (_plannerDetailsController
                                                     .deviationCount.value +
                                                 3 >
@@ -709,6 +708,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                 .value)) {
                                           _plannerDetailsController
                                               .updateDayRadio(value!);
+                                          init();
                                         } else {
                                           showDialog(
                                             barrierDismissible: false,

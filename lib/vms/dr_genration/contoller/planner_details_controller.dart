@@ -11,6 +11,7 @@ import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dar
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/drnotapprovedmessage_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/drnotsent_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/generated_dr_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/get_planner_details.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/hrplannerdetails_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/others_day_planned.dart';
@@ -142,6 +143,8 @@ class PlannerDetails extends GetxController {
   }
 
   bool isPopup = false;
+  RxList<GeneratedDrDetailsModelValues> generatedDrDetailsModelValues =
+      <GeneratedDrDetailsModelValues>[].obs;
 }
 
 class AtachmenDrtFile {
