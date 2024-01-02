@@ -10,26 +10,26 @@ import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/controller/tada
 class TadaSaveApi {
   TadaSaveApi.init();
   static final TadaSaveApi instance = TadaSaveApi.init();
-  tadaApplySave({
-    required String base,
-    required int ctId,
-    required String fromDate,
-    required String toDate,
-    required int clintId,
-    required double totalAppliedAmount,
-    required String toAddress,
-    required String remarks,
-    required int vtadaaaId,
-    required int vtadaaId,
-    required String departureTime,
-    required String arrivalTime,
-    required String clintMultiple,
-    required List<Map<String, dynamic>> allowanceArray,
-    required TadaApplyDataController tadaApplyController,
-    required List<Map<String, dynamic>> fileList,
-    required int userId,
-    required int miId,
-  }) async {
+  tadaApplySave(
+      {required String base,
+      required int ctId,
+      required String fromDate,
+      required String toDate,
+      required int clintId,
+      required double totalAppliedAmount,
+      required String toAddress,
+      required String remarks,
+      required int vtadaaaId,
+      required int vtadaaId,
+      required String departureTime,
+      required String arrivalTime,
+      required String clintMultiple,
+      required List<Map<String, dynamic>> allowanceArray,
+      required TadaApplyDataController tadaApplyController,
+      required List<Map<String, dynamic>> fileList,
+      required int userId,
+      required int miId,
+      required double extraBalance}) async {
     logger.i({
       "UserId": userId,
       "MI_Id": miId,
@@ -46,7 +46,8 @@ class TadaSaveApi {
       "VTADAA_DepartureTime": departureTime,
       "VTADAA_ArrivalTime": arrivalTime,
       // "vtadaaA_ClientMultiple": clintMultiple,
-      "filelist": fileList
+      "filelist": fileList,
+      "VTADAA_BalanceHRMS": extraBalance
     });
     var dio = Dio();
     var url = base + URLS.applyTada;

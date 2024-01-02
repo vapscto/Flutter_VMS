@@ -159,7 +159,9 @@ class TadaApplyDataController extends GetxController {
     if (checkPlanner.isNotEmpty) {
       checkPlanner.clear();
     }
-    checkPlanner.addAll(plan);
+    for (int i = 0; i < plan.length; i++) {
+      checkPlanner.add(plan.elementAt(i));
+    }
   }
 
   // attachment

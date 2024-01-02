@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/applied_deta_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/check_apply_planner_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/screens/tada_apply_home_screen.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 import '../../../../widget/animated_progress_widget.dart';
@@ -40,33 +38,21 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
     for (int i = 0;
         i < tadaApplyDataController.tadaSavedDataValues.length;
         i++) {
-      if (tadaApplyDataController.tadaSavedDataValues[i].vtadaaAFromDate !=
-          null) {
-        DateTime dt = DateTime.parse(
-            tadaApplyDataController.tadaSavedDataValues[i].vtadaaAFromDate!);
-
-        fromDt = '${numberList[dt.month]}-${numberList[dt.day]}-${dt.year}';
-      }
-      if (tadaApplyDataController.tadaSavedDataValues[i].vtadaaAToDate !=
-          null) {
-        DateTime dt = DateTime.parse(
-            tadaApplyDataController.tadaSavedDataValues[i].vtadaaAToDate!);
-
-        toDt = '${numberList[dt.month]}-${numberList[dt.day]}-${dt.year}';
-      }
-      checkPlanner(fromDt, toDate);
+      checkPlanner(
+          tadaApplyDataController.tadaSavedDataValues[i].vtadaaAFromDate!,
+          tadaApplyDataController.tadaSavedDataValues[i].vtadaaAToDate!);
     }
     tadaApplyDataController.appliedData(false);
   }
 
-  checkPlanner(String date, String todate) async {
+  checkPlanner(String date, String todate1) async {
     tadaApplyDataController.plannerCreate(true);
     await CheckPlannerAPI.instance.applyCheckPlannerAPI(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         userId: widget.loginSuccessModel.userId!,
         miId: widget.loginSuccessModel.mIID!,
         fromDate: date,
-        toDate: toDate,
+        toDate: todate1,
         tadaApplyController: tadaApplyDataController);
     tadaApplyDataController.plannerCreate(false);
   }
@@ -178,8 +164,6 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
                                           .tadaSavedDataValues[index]
                                           .vtadaaAFromDate!);
                                   date = '${dt.day}-${dt.month}-${dt.year}';
-                                  // fromDt =
-                                  //     '${numberList[dt.month]}-${numberList[dt.day]}-${dt.year}';
                                 }
                                 if (tadaApplyDataController
                                         .tadaSavedDataValues[index]
@@ -190,8 +174,6 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
                                           .tadaSavedDataValues[index]
                                           .vtadaaAToDate!);
                                   toDate = '${dt.day}-${dt.month}-${dt.year}';
-                                  // toDt =
-                                  //     '${numberList[dt.month]}-${numberList[dt.day]}-${dt.year}';
                                 }
 
                                 return DataRow(cells: [
@@ -249,8 +231,6 @@ class _TadaBalanceWidgetState extends State<TadaBalanceWidget> {
 
   var date = '';
   var toDate = '';
-  var fromDt = '';
-  var toDt = '';
 
   showPopup() {
     return AlertDialog(
