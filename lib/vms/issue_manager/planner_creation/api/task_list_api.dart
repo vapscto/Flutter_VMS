@@ -57,6 +57,14 @@ class TaskListAPI {
             AssignedTaskList.fromJson(response.data['get_Assignedtasklist']);
         if (assignedTaskList.values!.isNotEmpty) {
           plannerCreationController.assignedTask(assignedTaskList.values!);
+          for (int i = 0; i < assignedTaskList.values!.length; i++) {
+            var difference =
+                DateTime.parse(assignedTaskList.values![i].iSMTCRASTOEndDate!)
+                    .difference(DateTime.parse(
+                        assignedTaskList.values![i].iSMTCRASTOStartDate!))
+                    .inDays;
+            plannerCreationController.totalDays = difference + 1;
+          }
         }
         TotalEffortData totalEffortData =
             TotalEffortData.fromJson(response.data['get_effortdetails']);

@@ -100,6 +100,7 @@ class PlannerCreationController extends GetxController {
   String formattedTime = '';
   double totalEffort = 0.0;
   double requiredEff = 0.0;
+  double totalDays = 0.0;
   void categoryListData(List<CategoryWisePlanModelValues> value) {
     if (categoryWisePlan.isNotEmpty) {
       categoryWisePlan.clear();
@@ -133,7 +134,8 @@ class PlannerCreationController extends GetxController {
                 '${value[i].ismmtcaTTaskPercentage} %',
                 ("$formattedTime Hr"),
                 ("$totalEffort Hr"),
-                ("${requiredEff.toStringAsFixed(2)} Hr")));
+                ("${requiredEff.toStringAsFixed(2)} Hr"),
+                value[i].ismmtcaTId!));
           } else if (value[i].ismtcrastOEffortInHrs! == 0) {
             totalEffort += index.iSMTCRASTOEffortInHrs!;
             categoryList.add(CategoryPlanTable(
@@ -141,7 +143,8 @@ class PlannerCreationController extends GetxController {
                 '${value[i].ismmtcaTTaskPercentage} %',
                 ("$formattedTime Hr"),
                 ("${value[i].ismtcrastOEffortInHrs} Hr"),
-                ("${requiredEff.toStringAsFixed(2)} Hr")));
+                ("${requiredEff.toStringAsFixed(2)} Hr"),
+                value[i].ismmtcaTId!));
           }
         } else {
           value[i].ismtcrastOEffortInHrs = 0.0;
@@ -150,7 +153,8 @@ class PlannerCreationController extends GetxController {
               '${value[i].ismmtcaTTaskPercentage} %',
               ("$formattedTime Hr"),
               ("${value[i].ismtcrastOEffortInHrs} Hr"),
-              ("${requiredEff.toStringAsFixed(2)} Hr")));
+              ("${requiredEff.toStringAsFixed(2)} Hr"),
+              value[i].ismmtcaTId!));
         }
       }
     }

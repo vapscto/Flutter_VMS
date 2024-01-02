@@ -119,9 +119,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
           index < plannerCreationController.categoryList.length;
           index++) {
         categoryArray.add({
-          "ISMMTCAT_Id": plannerCreationController.categoryWisePlan
-              .elementAt(index)
-              .ismmtcaTId,
+          "ISMMTCAT_Id":
+              plannerCreationController.categoryList.elementAt(index).ismtcatId,
         });
         newCategoryArray.addAll(categoryArray.toSet());
       }
@@ -151,7 +150,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             totalHour += plannerCreationController.createdTaskList
                 .elementAt(index)
                 .iSMTCRASTOEffortInHrs!;
-            logger.i("Total Planner :- $totalHour");
           }
           //
         });
