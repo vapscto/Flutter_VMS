@@ -217,6 +217,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                           onPressed: () {
                             Get.back();
                             Get.back();
+                            Get.back();
                           },
                           child: Text(
                             "OK",
