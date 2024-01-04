@@ -16,9 +16,9 @@ class GetTaskDrListModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -36,13 +36,13 @@ class GetTaskDrListModelValues {
   String? iSMTCRDesc;
   String? iSMTCRStatus;
   bool? iSMTCRReOpenFlg;
- // Null? iSMTCRReOpenDate;
+  // Null? iSMTCRReOpenDate;
   String? iSMTCRTaskNo;
   int? iSMMCLTId;
   String? iSMMCLTClientName;
   int? iSMTPLPlannedBy;
   String? iSMTPLPlannerName;
- // Null? iSMTPLRemarks;
+  // Null? iSMTPLRemarks;
   String? iSMTPLStartDate;
   String? iSMTPLEndDate;
   double? iSMTPLTotalHrs;
@@ -53,7 +53,7 @@ class GetTaskDrListModelValues {
   String? iSMTPLTAEndDate;
   String? assignedby;
   String? createdemp;
- // Null? transferedbyemp;
+  // Null? transferedbyemp;
   //Null? iSMTCRTRTOTransferredDate;
   String? taskcategoryname;
   int? iSMMTCATId;
@@ -94,13 +94,13 @@ class GetTaskDrListModelValues {
       this.iSMTCRDesc,
       this.iSMTCRStatus,
       this.iSMTCRReOpenFlg,
-    //  this.iSMTCRReOpenDate,
+      //  this.iSMTCRReOpenDate,
       this.iSMTCRTaskNo,
       this.iSMMCLTId,
       this.iSMMCLTClientName,
       this.iSMTPLPlannedBy,
       this.iSMTPLPlannerName,
-     // this.iSMTPLRemarks,
+      // this.iSMTPLRemarks,
       this.iSMTPLStartDate,
       this.iSMTPLEndDate,
       this.iSMTPLTotalHrs,
@@ -111,8 +111,8 @@ class GetTaskDrListModelValues {
       this.iSMTPLTAEndDate,
       this.assignedby,
       this.createdemp,
-   //   this.transferedbyemp,
-   //   this.iSMTCRTRTOTransferredDate,
+      //   this.transferedbyemp,
+      //   this.iSMTCRTRTOTransferredDate,
       this.taskcategoryname,
       this.iSMMTCATId,
       this.iSMTAPLPeriodicity,
@@ -152,13 +152,13 @@ class GetTaskDrListModelValues {
     iSMTCRDesc = json['ISMTCR_Desc'];
     iSMTCRStatus = json['ISMTCR_Status'];
     iSMTCRReOpenFlg = json['ISMTCR_ReOpenFlg'];
-   // iSMTCRReOpenDate = json['ISMTCR_ReOpenDate'];
+    // iSMTCRReOpenDate = json['ISMTCR_ReOpenDate'];
     iSMTCRTaskNo = json['ISMTCR_TaskNo'];
     iSMMCLTId = json['ISMMCLT_Id'];
     iSMMCLTClientName = json['ISMMCLT_ClientName'];
     iSMTPLPlannedBy = json['ISMTPL_PlannedBy'];
     iSMTPLPlannerName = json['ISMTPL_PlannerName'];
-   // iSMTPLRemarks = json['ISMTPL_Remarks'];
+    // iSMTPLRemarks = json['ISMTPL_Remarks'];
     iSMTPLStartDate = json['ISMTPL_StartDate'];
     iSMTPLEndDate = json['ISMTPL_EndDate'];
     iSMTPLTotalHrs = json['ISMTPL_TotalHrs'];
@@ -169,8 +169,8 @@ class GetTaskDrListModelValues {
     iSMTPLTAEndDate = json['ISMTPLTA_EndDate'];
     assignedby = json['assignedby'];
     createdemp = json['createdemp'];
-  //  transferedbyemp = json['transferedbyemp'];
-   // iSMTCRTRTOTransferredDate = json['ISMTCRTRTO_TransferredDate'];
+    //  transferedbyemp = json['transferedbyemp'];
+    // iSMTCRTRTOTransferredDate = json['ISMTCRTRTO_TransferredDate'];
     taskcategoryname = json['taskcategoryname'];
     iSMMTCATId = json['ISMMTCAT_Id'];
     iSMTAPLPeriodicity = json['ISMTAPL_Periodicity'];
@@ -200,63 +200,63 @@ class GetTaskDrListModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['ISMTPL_Id'] = this.iSMTPLId;
-    data['ISMTCR_Id'] = this.iSMTCRId;
-    data['HRMPR_Id'] = this.hRMPRId;
-    data['HRMP_Name'] = this.hRMPName;
-    data['ISMTCR_BugOREnhancementFlg'] = this.iSMTCRBugOREnhancementFlg;
-    data['ISMTCR_CreationDate'] = this.iSMTCRCreationDate;
-    data['ISMTCR_Title'] = this.iSMTCRTitle;
-    data['ISMTCR_Desc'] = this.iSMTCRDesc;
-    data['ISMTCR_Status'] = this.iSMTCRStatus;
-    data['ISMTCR_ReOpenFlg'] = this.iSMTCRReOpenFlg;
-  //  data['ISMTCR_ReOpenDate'] = this.iSMTCRReOpenDate;
-    data['ISMTCR_TaskNo'] = this.iSMTCRTaskNo;
-    data['ISMMCLT_Id'] = this.iSMMCLTId;
-    data['ISMMCLT_ClientName'] = this.iSMMCLTClientName;
-    data['ISMTPL_PlannedBy'] = this.iSMTPLPlannedBy;
-    data['ISMTPL_PlannerName'] = this.iSMTPLPlannerName;
-  //  data['ISMTPL_Remarks'] = this.iSMTPLRemarks;
-    data['ISMTPL_StartDate'] = this.iSMTPLStartDate;
-    data['ISMTPL_EndDate'] = this.iSMTPLEndDate;
-    data['ISMTPL_TotalHrs'] = this.iSMTPLTotalHrs;
-    data['ISMTPL_ApprovalFlg'] = this.iSMTPLApprovalFlg;
-    data['ISMTPL_ApprovedBy'] = this.iSMTPLApprovedBy;
-    data['ISMTPL_ActiveFlg'] = this.iSMTPLActiveFlg;
-    data['ISMTPLTA_StartDate'] = this.iSMTPLTAStartDate;
-    data['ISMTPLTA_EndDate'] = this.iSMTPLTAEndDate;
-    data['assignedby'] = this.assignedby;
-    data['createdemp'] = this.createdemp;
-  //  data['transferedbyemp'] = this.transferedbyemp;
-  //  data['ISMTCRTRTO_TransferredDate'] = this.iSMTCRTRTOTransferredDate;
-    data['taskcategoryname'] = this.taskcategoryname;
-    data['ISMMTCAT_Id'] = this.iSMMTCATId;
-    data['ISMTAPL_Periodicity'] = this.iSMTAPLPeriodicity;
-    data['ISMTAPL_Day'] = this.iSMTAPLDay;
-    data['periodicitydailyflag'] = this.periodicitydailyflag;
-    data['ISMTAPL_ToDate'] = this.iSMTAPLToDate;
-    data['periodicityweeklyflag'] = this.periodicityweeklyflag;
-    data['periodicityendflag'] = this.periodicityendflag;
-    data['ISMTPLTA_Id'] = this.iSMTPLTAId;
-    data['ISMMTCAT_CompulsoryFlg'] = this.iSMMTCATCompulsoryFlg;
-    data['ISMDRPT_TimeTakenInHrsmins'] = this.iSMDRPTTimeTakenInHrsmins;
-    data['effortss'] = this.effortss;
-    data['maxtime'] = this.maxtime;
-    data['ISMTPLTA_EffortInHrs'] = this.iSMTPLTAEffortInHrs;
-    data['approvedflag'] = this.approvedflag;
-    data['ISMDRPT_Remarks'] = this.iSMDRPTRemarks;
-    data['ISMDRPT_Status'] = this.iSMDRPTStatus;
-    data['ISMDRPT_DeviationFlg'] = this.iSMDRPTDeviationFlg;
-    data['ISMDRPT_ExtraFlg'] = this.iSMDRPTExtraFlg;
-    data['ISMDRPT_TimeTakenInHrs'] = this.iSMDRPTTimeTakenInHrs;
-    data['dr_flag'] = this.drFlag;
-    data['ISMDR_Id'] = this.iSMDRId;
-    data['HRME_Id'] = this.hRMEId;
-    data['CreatedFlag'] = this.createdFlag;
-    data['ISMMPR_Id'] = this.iSMMPRId;
-    data['ProjectName'] = this.projectName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['ISMTPL_Id'] = iSMTPLId;
+    data['ISMTCR_Id'] = iSMTCRId;
+    data['HRMPR_Id'] = hRMPRId;
+    data['HRMP_Name'] = hRMPName;
+    data['ISMTCR_BugOREnhancementFlg'] = iSMTCRBugOREnhancementFlg;
+    data['ISMTCR_CreationDate'] = iSMTCRCreationDate;
+    data['ISMTCR_Title'] = iSMTCRTitle;
+    data['ISMTCR_Desc'] = iSMTCRDesc;
+    data['ISMTCR_Status'] = iSMTCRStatus;
+    data['ISMTCR_ReOpenFlg'] = iSMTCRReOpenFlg;
+    //  data['ISMTCR_ReOpenDate'] = this.iSMTCRReOpenDate;
+    data['ISMTCR_TaskNo'] = iSMTCRTaskNo;
+    data['ISMMCLT_Id'] = iSMMCLTId;
+    data['ISMMCLT_ClientName'] = iSMMCLTClientName;
+    data['ISMTPL_PlannedBy'] = iSMTPLPlannedBy;
+    data['ISMTPL_PlannerName'] = iSMTPLPlannerName;
+    //  data['ISMTPL_Remarks'] = this.iSMTPLRemarks;
+    data['ISMTPL_StartDate'] = iSMTPLStartDate;
+    data['ISMTPL_EndDate'] = iSMTPLEndDate;
+    data['ISMTPL_TotalHrs'] = iSMTPLTotalHrs;
+    data['ISMTPL_ApprovalFlg'] = iSMTPLApprovalFlg;
+    data['ISMTPL_ApprovedBy'] = iSMTPLApprovedBy;
+    data['ISMTPL_ActiveFlg'] = iSMTPLActiveFlg;
+    data['ISMTPLTA_StartDate'] = iSMTPLTAStartDate;
+    data['ISMTPLTA_EndDate'] = iSMTPLTAEndDate;
+    data['assignedby'] = assignedby;
+    data['createdemp'] = createdemp;
+    //  data['transferedbyemp'] = this.transferedbyemp;
+    //  data['ISMTCRTRTO_TransferredDate'] = this.iSMTCRTRTOTransferredDate;
+    data['taskcategoryname'] = taskcategoryname;
+    data['ISMMTCAT_Id'] = iSMMTCATId;
+    data['ISMTAPL_Periodicity'] = iSMTAPLPeriodicity;
+    data['ISMTAPL_Day'] = iSMTAPLDay;
+    data['periodicitydailyflag'] = periodicitydailyflag;
+    data['ISMTAPL_ToDate'] = iSMTAPLToDate;
+    data['periodicityweeklyflag'] = periodicityweeklyflag;
+    data['periodicityendflag'] = periodicityendflag;
+    data['ISMTPLTA_Id'] = iSMTPLTAId;
+    data['ISMMTCAT_CompulsoryFlg'] = iSMMTCATCompulsoryFlg;
+    data['ISMDRPT_TimeTakenInHrsmins'] = iSMDRPTTimeTakenInHrsmins;
+    data['effortss'] = effortss;
+    data['maxtime'] = maxtime;
+    data['ISMTPLTA_EffortInHrs'] = iSMTPLTAEffortInHrs;
+    data['approvedflag'] = approvedflag;
+    data['ISMDRPT_Remarks'] = iSMDRPTRemarks;
+    data['ISMDRPT_Status'] = iSMDRPTStatus;
+    data['ISMDRPT_DeviationFlg'] = iSMDRPTDeviationFlg;
+    data['ISMDRPT_ExtraFlg'] = iSMDRPTExtraFlg;
+    data['ISMDRPT_TimeTakenInHrs'] = iSMDRPTTimeTakenInHrs;
+    data['dr_flag'] = drFlag;
+    data['ISMDR_Id'] = iSMDRId;
+    data['HRME_Id'] = hRMEId;
+    data['CreatedFlag'] = createdFlag;
+    data['ISMMPR_Id'] = iSMMPRId;
+    data['ProjectName'] = projectName;
     return data;
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/add_extra_task_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/advance_tada_applied.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/countTask_model.dart';
@@ -18,7 +19,6 @@ import 'package:m_skool_flutter/vms/dr_genration/model/others_day_planned.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_details.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_file_upload_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/tada_not_approve_model.dart';
-import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 
 class PlannerDetails extends GetxController {
   RxList<PlanerDeatails> planerDeatails = <PlanerDeatails>[].obs;
@@ -145,6 +145,45 @@ class PlannerDetails extends GetxController {
   bool isPopup = false;
   RxList<GeneratedDrDetailsModelValues> generatedDrDetailsModelValues =
       <GeneratedDrDetailsModelValues>[].obs;
+
+  RxBool isExtraTaskloading = RxBool(false);
+  void updateErrorLoadingaddExtraTaskDR(bool loading) {
+    isExtraTaskloading.value = loading;
+  }
+
+  RxList<TextEditingController> startDateController =
+      <TextEditingController>[].obs;
+  RxList<TextEditingController> endDateController =
+      <TextEditingController>[].obs;
+  RxList<TextEditingController> remarksController =
+      <TextEditingController>[].obs;
+  void addStartDate(TextEditingController text1) {
+    startDateController.add(text1);
+  }
+
+  void addEndDate(TextEditingController text1) {
+    endDateController.add(text1);
+  }
+
+  void addRemarks(TextEditingController text1) {
+    remarksController.add(text1);
+  }
+
+  RxList<AddExtraTaskModelValues> addExtraTaskList =
+      <AddExtraTaskModelValues>[].obs;
+  void getExtratask(List<AddExtraTaskModelValues> addExtraTask) {
+    if (addExtraTaskList.isNotEmpty) {
+      addExtraTaskList.clear();
+    }
+    for (int i = 0; i < addExtraTask.length; i++) {
+      addExtraTaskList.add(addExtraTask.elementAt(i));
+      addStartDate(
+          TextEditingController(text: addExtraTask.elementAt(i).startDate));
+      addEndDate(
+          TextEditingController(text: addExtraTask.elementAt(i).endDate));
+      addRemarks(TextEditingController(text: ''));
+    }
+  }
 }
 
 class AtachmenDrtFile {

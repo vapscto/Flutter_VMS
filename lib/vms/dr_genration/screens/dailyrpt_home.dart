@@ -14,6 +14,7 @@ import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.
 import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_file_upload_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/screens/add_extra_task.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/category_checkList.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/dr_not_approved_popup.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/drnotApprovedScreen.dart';
@@ -325,8 +326,14 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
           }
         }
         if (_plannerDetailsController.checkBoxList.elementAt(i) == true) {
-          totalhrs = double.parse(
-              '${_plannerDetailsController.hoursEt[i].text}.${_plannerDetailsController.minutesEt[i].text}');
+          String countHr =
+              (double.parse(_plannerDetailsController.minutesEt[i].text) *
+                      0.0166667)
+                  .toStringAsFixed(2);
+          totalhrs = double.parse(_plannerDetailsController.hoursEt[i].text) +
+              double.parse(countHr);
+          // totalhrs = double.parse(
+          //     '${_plannerDetailsController.hoursEt[i].text}.${_plannerDetailsController.minutesEt[i].text}');
           //  +
           //     (double.parse(_plannerDetailsController.minutesEt[i].text) / 60);
           todayDailyReportGenaration.add({
@@ -334,8 +341,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
             "ISMTCR_Id": value.iSMTCRId,
             "ISMDRPT_Remarks":
                 _plannerDetailsController.etResponse.elementAt(i).text,
-            "ISMDRPT_TimeTakenInHrs":
-                '${_plannerDetailsController.hoursEt[i].text}.${_plannerDetailsController.minutesEt[i].text}',
+            "ISMDRPT_TimeTakenInHrs": '$totalhrs',
             "ISMDRPT_Status": _plannerDetailsController.statusEtField[i].text,
             "extraflag": 0,
             "ISMTPLTA_StartDate": value.iSMTPLTAStartDate,
@@ -1223,9 +1229,15 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       21,
                                                                       46,
                                                                       189),
-                                                              value: _plannerDetailsController
-                                                                      .checkBoxList[
-                                                                  index],
+                                                              value: (fliteresList
+                                                                          .elementAt(
+                                                                              index)
+                                                                          .drFlag ==
+                                                                      1)
+                                                                  ? true
+                                                                  : _plannerDetailsController
+                                                                          .checkBoxList[
+                                                                      index],
                                                               onChanged:
                                                                   (value) {
                                                                 newselectedIndex =
@@ -2148,6 +2160,46 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                 desc: " ",
                               ),
                       ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: SizedBox(
+                      //     height: 100,
+                      //     width: 200,
+                      //     child: Align(
+                      //       alignment: Alignment.bottomCenter,
+                      //       child: ElevatedButton(
+                      //           style: ElevatedButton.styleFrom(
+                      //               backgroundColor:
+                      //                   Theme.of(context).primaryColor,
+                      //               shape: RoundedRectangleBorder(
+                      //                   borderRadius:
+                      //                       BorderRadius.circular(20))),
+                      //           onPressed: () {
+                      //             Get.to(AddExtraTaskScreen(
+                      //               loginSuccessModel: widget.loginSuccessModel,
+                      //               mskoolController: widget.mskoolController,
+                      //               controller: _plannerDetailsController,
+                      //             ));
+                      //           },
+                      //           child: Row(
+                      //             crossAxisAlignment: CrossAxisAlignment.center,
+                      //             mainAxisAlignment: MainAxisAlignment.center,
+                      //             children: [
+                      //               const Icon(
+                      //                 Icons.add,
+                      //                 color: Colors.white,
+                      //               ),
+                      //               const SizedBox(width: 5),
+                      //               Text(
+                      //                 "Add Extra Task",
+                      //                 style: Get.textTheme.titleMedium!
+                      //                     .copyWith(color: Colors.white),
+                      //               )
+                      //             ],
+                      //           )),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

@@ -43,16 +43,47 @@ Future<bool> getPlanerdetails({
       "IVRMRT_Id": ivrmrtId,
     });
     PlanerDeatails planerDeatailsList = PlanerDeatails.fromJson(response.data);
+    // get Deviation task list
+    DepartwisedeviationModel departwisedeviationModel =
+        DepartwisedeviationModel.fromJson(
+            response.data['getdepartwisedeviationremrks']);
+    controller.depWiseDevitnList.addAll(departwisedeviationModel.values!);
     if (response.data['gettasklist'] != null) {
       GetTaskDrListModel taskDrListModel =
           GetTaskDrListModel.fromJson(response.data['gettasklist']);
       controller.getTaskDrList.addAll(taskDrListModel.values!);
       for (int i = 0; i < taskDrListModel.values!.length; i++) {
-        controller.hoursEt.add(TextEditingController(text: ''));
-        controller.minutesEt.add(TextEditingController(text: ''));
-        controller.statusEtField.add(TextEditingController(text: ''));
-        controller.deveationEtField.add(TextEditingController(text: ''));
-        controller.etResponse.add(TextEditingController(text: ''));
+        var v = taskDrListModel.values!.elementAt(i);
+        if (taskDrListModel.values!.elementAt(i).drFlag == 1) {
+          List<String> newList = [];
+          String deviation = '';
+          for (int j = 0; j < controller.depWiseDevitnList.length; j++) {
+            if (v.iSMDRId ==
+                controller.depWiseDevitnList.elementAt(j).ismdRId) {
+              deviation = controller.depWiseDevitnList[j].ismdRRemarks ?? '';
+            }
+          }
+          String newData = v.iSMDRPTTimeTakenInHrs.toString();
+          newList = newData.split('.');
+          controller.hoursEt.add(TextEditingController(
+              text:
+                  (v.iSMDRPTTimeTakenInHrsmins!.isNotEmpty) ? newList[0] : ''));
+          controller.minutesEt.add(TextEditingController(
+              text:
+                  (v.iSMDRPTTimeTakenInHrsmins!.isNotEmpty) ? newList[1] : ''));
+          controller.statusEtField
+              .add(TextEditingController(text: v.iSMDRPTStatus));
+          controller.etResponse
+              .add(TextEditingController(text: v.iSMDRPTRemarks));
+          controller.deveationEtField
+              .add(TextEditingController(text: deviation));
+        } else {
+          controller.hoursEt.add(TextEditingController(text: ''));
+          controller.minutesEt.add(TextEditingController(text: ''));
+          controller.statusEtField.add(TextEditingController(text: ''));
+          controller.deveationEtField.add(TextEditingController(text: ''));
+          controller.etResponse.add(TextEditingController(text: ''));
+        }
         controller.checkBoxList.add(false);
       }
     }
@@ -62,11 +93,6 @@ Future<bool> getPlanerdetails({
         DrstatusListModel.fromJson(response.data['get_Status']);
     controller.statusDrList.addAll(drStatusListModel.values!);
     // here add countTask
-    // get Deviation task list
-    DepartwisedeviationModel departwisedeviationModel =
-        DepartwisedeviationModel.fromJson(
-            response.data['getdepartwisedeviationremrks']);
-    controller.depWiseDevitnList.addAll(departwisedeviationModel.values!);
     if (response.data['closeTaskCoutnDetails'] != null) {
       CloseTaskCoutnModel closeTaskList =
           CloseTaskCoutnModel.fromJson(response.data['closeTaskCoutnDetails']);

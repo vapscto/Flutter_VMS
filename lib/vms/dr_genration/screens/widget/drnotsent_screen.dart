@@ -180,8 +180,7 @@ class DrnotsentScreen extends StatelessWidget {
                           userId: loginSuccessModel.userId!)
                       .then((value) {
                     if (value!) {
-                      Fluttertoast.showToast(
-                          msg: "Daily Report Update Successfully");
+                      Fluttertoast.showToast(msg: "Remark Captured");
                       Get.back();
                     }
                   });
