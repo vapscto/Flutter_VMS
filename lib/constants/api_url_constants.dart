@@ -681,4 +681,5 @@ class URLS {
 
   static String othersDayCount =
       'api/ISM_DailyReportGenerationFacade/Otherdaycount/';
+  static String punchList = 'api/ISMDashboardFacade/getdetails/';
 }

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/vms/punch_report/model/current_punch_details.dart';
 import 'package:m_skool_flutter/vms/punch_report/model/punch_report_model.dart';
 
 class PunchFilterController extends GetxController {
@@ -46,5 +47,21 @@ class PunchFilterController extends GetxController {
       reports.clear();
     }
     reports.addAll(va);
+  }
+
+  RxBool isPunchLoading = RxBool(false);
+  void punchLoading(bool loading) {
+    isPunchLoading.value = loading;
+  }
+
+  RxList<CurrentPunchDetailsModelValues> currentPunchList =
+      <CurrentPunchDetailsModelValues>[].obs;
+  void getPunch(List<CurrentPunchDetailsModelValues> currentPunch) {
+    if (currentPunchList.isNotEmpty) {
+      currentPunchList.clear();
+    }
+    for (int i = 0; i < currentPunch.length; i++) {
+      currentPunchList.add(currentPunch.elementAt(i));
+    }
   }
 }
