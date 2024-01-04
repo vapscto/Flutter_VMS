@@ -10,6 +10,7 @@ class ApprovalProxyListPopUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    newList.clear();
     if (value.proxyName != null) {
       newList
           .add({"proxy": value.proxyName, "deg": value.hRMDESDesignationName});
