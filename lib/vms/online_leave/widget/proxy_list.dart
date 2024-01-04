@@ -10,6 +10,7 @@ class ProxyListPopUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    newList.clear();
     if (value.proxy != null) {
       newList.add({"proxy": value.proxy, "deg": value.designation});
     }
