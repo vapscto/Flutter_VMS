@@ -98,7 +98,19 @@ class ApprovalProxyListPopUp extends StatelessWidget {
                               child: Text(data['deg']))),
                         ]);
                       }),
-                    )))
+                    ))),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: TextButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: Text(
+                    "Back",
+                    style:
+                        Get.textTheme.titleMedium!.copyWith(color: Colors.red),
+                  )),
+            )
           ],
         ),
       ),
