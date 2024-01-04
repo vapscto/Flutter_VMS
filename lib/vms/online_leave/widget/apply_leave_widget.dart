@@ -50,6 +50,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
   ProfileController profileController = Get.put(ProfileController());
 
   StaffPrevilegeListModelValues? selectedEmployee;
+
   _getProfileData() async {
     profileController.profileLoading(true);
     await ProfileAPI.instance.profileData(
@@ -71,6 +72,14 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
     getleaveDate();
     inti();
     super.initState();
+  }
+
+  @override
+  dispose() {
+    if (controllerOL.attachment.isNotEmpty) {
+      controllerOL.attachment.clear();
+    }
+    super.dispose();
   }
 
   inti() async {
@@ -102,6 +111,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
   getleaveDate() {
     max = widget.values.hrmLMaxLeavesApplyPerMonth;
     min = widget.values.hrmLNoOfDays.round();
+    logger.e('number days $min');
     transationLeave = widget.values.hrelSTransLeaves.round();
     if (widget.values.hrmLWhenToApplyFlg == "Both") {
       firstDt = currentDate.subtract(Duration(days: min));
@@ -115,7 +125,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
       } else if (widget.values.hrmLLeaveCode == "EL") {
         initialDt = currentDate.subtract(Duration(days: min));
         firstDt = currentDate.subtract(Duration(days: min));
-        lastDt = currentDate.subtract(Duration(days: transationLeave));
+        lastDt = currentDate.subtract(const Duration(days: 1));
       } else if (widget.values.hrmLLeaveCode == "COMPOFF") {
         initialDt = currentDate.subtract(Duration(days: min));
         firstDt = currentDate.subtract(Duration(days: min));
@@ -131,7 +141,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
         firstDt = currentDate.add(Duration(days: min));
         lastDt = currentDate.add(const Duration(days: 1));
       } else if (widget.values.hrmLLeaveCode == "EL") {
-        initialDt = currentDate.add(Duration(days: transationLeave));
+        initialDt = currentDate.add(const Duration(days: 1));
         firstDt = currentDate.add(Duration(days: min));
         lastDt = currentDate.add(Duration(days: min));
       } else if (widget.values.hrmLLeaveCode == "COMPOFF") {
@@ -150,16 +160,9 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
     logger.e(max);
     firstDt2 = date;
     initialDt2 = date;
-    if (widget.values.hrmLLeaveCode == "SL") {
-      if (date.day == currentDate.day - 1) {
-        lastDt2 = date;
-      } else if (date.day == currentDate.day - 2) {
-        lastDt2 = date.add(Duration(days: max - 2));
-      } else {
-        lastDt2 = date.add(Duration(days: max - 1));
-      }
-    } else if (widget.values.hrmLLeaveCode == "COMPOFF") {
-      lastDt2 = date.add(Duration(days: max));
+
+    if (date.day == currentDate.day - 1) {
+      lastDt2 = date;
     } else if (int.parse(widget.values.hrelSCBLeaves.round().toString()) >
         max) {
       lastDt2 = date.add(Duration(days: max - 1));
@@ -1069,14 +1072,14 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                             fontSize: 14.0,
                             letterSpacing: 0.3)),
                     hintText: controllerOL.employeeList.isNotEmpty
-                        ? 'Select Employee'
+                        ? 'Select Proxy'
                         : 'No data available',
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     isDense: true,
                     label: const CustomDropDownLabel(
                       icon: 'assets/images/ClassTeacher.png',
                       containerColor: Color.fromRGBO(250, 238, 253, 1),
-                      text: 'Select Employee',
+                      text: 'Select Proxy',
                       textColor: Color.fromRGBO(146, 79, 190, 1),
                     ),
                   ),
@@ -1116,7 +1119,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                   },
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
         const SizedBox(
           height: 20,
         ),
@@ -1216,10 +1219,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                           startDT.toLocal().toString(),
                                       "HRELAP_ToDate":
                                           endDT.toLocal().toString(),
-                                      "HRELAP_TotalDays": isHalfDay.value
-                                          ? endDT.difference(startDT).inDays ~/
-                                              2
-                                          : endDT.difference(startDT).inDays + 1
+                                      "HRELAP_TotalDays":
+                                          double.parse(totalDay.value)
                                     }
                                   ],
                                   temp: [
