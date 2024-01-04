@@ -158,6 +158,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
       } else {
         lastDt2 = date.add(Duration(days: max - 1));
       }
+    } else if (widget.values.hrmLLeaveCode == "COMPOFF") {
+      lastDt2 = date.add(Duration(days: max));
     } else if (int.parse(widget.values.hrelSCBLeaves.round().toString()) >
         max) {
       lastDt2 = date.add(Duration(days: max - 1));
@@ -574,8 +576,10 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                     endDT = end;
                                     endDate.text =
                                         "${end.day}-${end.month}-${end.year}";
+                                    DateTime dt =
+                                        end.add(const Duration(days: 1));
                                     reportingDate.text =
-                                        "${end.day + 1}-${end.month}-${end.year}";
+                                        "${dt.day}-${dt.month}-${dt.year}";
                                     Duration difference =
                                         endDT.difference(startDT);
                                     totalDay.value = "${difference.inDays + 1}";
