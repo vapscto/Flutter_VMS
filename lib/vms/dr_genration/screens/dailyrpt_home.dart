@@ -2160,46 +2160,44 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                 desc: " ",
                               ),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(8.0),
+                      const SizedBox(height: 16),
+                      // Align(
+                      //   alignment: Alignment.bottomCenter,
                       //   child: SizedBox(
-                      //     height: 100,
-                      //     width: 200,
-                      //     child: Align(
-                      //       alignment: Alignment.bottomCenter,
-                      //       child: ElevatedButton(
-                      //           style: ElevatedButton.styleFrom(
-                      //               backgroundColor:
-                      //                   Theme.of(context).primaryColor,
-                      //               shape: RoundedRectangleBorder(
-                      //                   borderRadius:
-                      //                       BorderRadius.circular(20))),
-                      //           onPressed: () {
-                      //             Get.to(AddExtraTaskScreen(
-                      //               loginSuccessModel: widget.loginSuccessModel,
-                      //               mskoolController: widget.mskoolController,
-                      //               controller: _plannerDetailsController,
-                      //             ));
-                      //           },
-                      //           child: Row(
-                      //             crossAxisAlignment: CrossAxisAlignment.center,
-                      //             mainAxisAlignment: MainAxisAlignment.center,
-                      //             children: [
-                      //               const Icon(
-                      //                 Icons.add,
-                      //                 color: Colors.white,
-                      //               ),
-                      //               const SizedBox(width: 5),
-                      //               Text(
-                      //                 "Add Extra Task",
-                      //                 style: Get.textTheme.titleMedium!
-                      //                     .copyWith(color: Colors.white),
-                      //               )
-                      //             ],
-                      //           )),
-                      //     ),
+                      //     height: 50,
+                      //     width: 180,
+                      //     child: ElevatedButton(
+                      //         style: ElevatedButton.styleFrom(
+                      //             backgroundColor:
+                      //                 Theme.of(context).primaryColor,
+                      //             shape: RoundedRectangleBorder(
+                      //                 borderRadius: BorderRadius.circular(20))),
+                      //         onPressed: () {
+                      //           Get.to(AddExtraTaskScreen(
+                      //             loginSuccessModel: widget.loginSuccessModel,
+                      //             mskoolController: widget.mskoolController,
+                      //             controller: _plannerDetailsController,
+                      //           ));
+                      //         },
+                      //         child: Row(
+                      //           crossAxisAlignment: CrossAxisAlignment.center,
+                      //           mainAxisAlignment: MainAxisAlignment.center,
+                      //           children: [
+                      //             const Icon(
+                      //               Icons.add,
+                      //               color: Colors.white,
+                      //             ),
+                      //             const SizedBox(width: 5),
+                      //             Text(
+                      //               "Add Extra Task",
+                      //               style: Get.textTheme.titleMedium!
+                      //                   .copyWith(color: Colors.white),
+                      //             )
+                      //           ],
+                      //         )),
                       //   ),
                       // ),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),
