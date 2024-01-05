@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:276785854051:android:55110ba2530f92a3f3ea56",
+        "mobilesdk_app_id": "1:276785854051:android:0c90d35310230387f3ea56",
         "android_client_info": {
-          "package_name": "com.app.vmsss"
+          "package_name": "com.app.vmss"
         }
       },
       "oauth_client": [],
