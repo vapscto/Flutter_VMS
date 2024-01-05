@@ -47,15 +47,14 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
   String invmpiRemarks = '';
   var invmpiAmount;
   var invmpiId;
- 
 
   TextEditingController? approvalAmountCountroller;
   addAmount(num i) {
- controller.amount.value += i;
+    controller.amount.value += i;
   }
 
   removeAmount(num i) {
-   controller.amount.value -= i;
+    controller.amount.value -= i;
   }
 
   void saveData() {
@@ -99,23 +98,23 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
   var date;
   @override
   void initState() {
-   init();
-   super.initState();
+    init();
+    super.initState();
   }
-init() async{
-   OnclickPurchaseApi.instance.getOnclickPurchaseApiApi(
+
+  init() async {
+    OnclickPurchaseApi.instance.getOnclickPurchaseApiApi(
         base: baseUrlFromInsCode('inventory', widget.mskoolController),
         userId: widget.loginSuccessModel.userId!,
         controller: controller,
         invmpiId: widget.invmpiId);
     DateTime dt = DateTime.parse(widget.values.iNVMPIPIDate!);
     date = '${dt.day}-${dt.month}-${dt.year}';
-   setState(() {
-  
-   });
+    setState(() {});
     // logger.w(controller.getOnclickList[0].iNVMPIAPPRejectFlg);
     // logger.w(controller.getOnclickList[1].iNVMPIAPPRejectFlg);
-}
+  }
+
   int approvedCount = 0;
   int rejectedCount = 0;
   void updateCounts() {
@@ -125,11 +124,11 @@ init() async{
         controller.selectedValue.where((item) => item.isRejected).length;
     logger.e("approved$approvedCount");
     logger.i("rejected$rejectedCount");
-   }
+  }
 
   @override
   void dispose() {
-    controller. amount.value =0;
+    controller.amount.value = 0;
     controller.selectedValue.clear();
     controller.getOnclickList.clear();
     super.dispose();
@@ -416,25 +415,37 @@ init() async{
                                       controller.getOnclickList.length,
                                       (index) {
                                     var i = index + 1;
-                                    controller. amount.value += controller.getOnclickList.elementAt(index).iNVTPIApproxAmount!.toDouble();
+                                    controller.amount.value += controller
+                                        .getOnclickList
+                                        .elementAt(index)
+                                        .iNVTPIApproxAmount!
+                                        .toDouble();
 
                                     logger.w(controller.getOnclickList.length);
                                     // remarkController.text = controller.getOnclickList.elementAt(index).iNVTPIRemarks.toString();
                                     // unitController.text = controller.getOnclickList.elementAt(index).iNVTPIPIUnitRate.toString();
 
                                     return DataRow(
+                                      color: MaterialStateColor.resolveWith(
+                                        (states) => controller
+                                                .selectedValue[index].isRejected
+                                            ? const Color.fromARGB(255, 255, 213, 210)
+                                            : Colors.transparent,
+                                      ),
                                       cells: [
                                         DataCell(Align(
                                             alignment: Alignment.center,
                                             child: Text('$i'))),
                                         DataCell(Obx(
-                                           ()=> Radio(
+                                          () => Radio(
                                             fillColor:
                                                 MaterialStateColor.resolveWith(
-                                                    (states) => Theme.of(context)
-                                                        .primaryColor),
+                                                    (states) =>
+                                                        Theme.of(context)
+                                                            .primaryColor),
                                             groupValue: controller
-                                                .selectedValue[index].isApproved,
+                                                .selectedValue[index]
+                                                .isApproved,
                                             value: true,
                                             onChanged: (value) {
                                               setState(() {
@@ -442,12 +453,13 @@ init() async{
                                                     .isApproved = value!;
                                                 controller.selectedValue[index]
                                                     .isRejected = !value;
-                                        
+
                                                 controller
                                                     .totalApproxAmountControllerList
                                                     .add(TextEditingController(
                                                         text: controller
-                                                            .getOnclickList[index]
+                                                            .getOnclickList[
+                                                                index]
                                                             .iNVTPIApproxAmount
                                                             .toString()));
                                                 // amount += num.parse(controller
@@ -458,20 +470,22 @@ init() async{
                                                     .totalApproxAmountControllerList
                                                     .elementAt(index)
                                                     .text));
-                                        
+
                                                 updateCounts();
                                               });
                                             },
                                           ),
                                         )),
                                         DataCell(Obx(
-                                           ()=> Radio(
+                                          () => Radio(
                                             fillColor:
                                                 MaterialStateColor.resolveWith(
-                                                    (states) => Theme.of(context)
-                                                        .primaryColor),
+                                                    (states) =>
+                                                        Theme.of(context)
+                                                            .primaryColor),
                                             groupValue: controller
-                                                .selectedValue[index].isRejected,
+                                                .selectedValue[index]
+                                                .isRejected,
                                             value: true,
                                             onChanged: (dynamic value) {
                                               setState(() {
@@ -479,26 +493,27 @@ init() async{
                                                     .isRejected = value;
                                                 controller.selectedValue[index]
                                                     .isApproved = !value;
-                                        
+
                                                 controller
                                                     .totalApproxAmountControllerList
                                                     .add(TextEditingController(
                                                         text: controller
-                                                            .getOnclickList[index]
+                                                            .getOnclickList[
+                                                                index]
                                                             .iNVTPIApproxAmount
                                                             .toString()));
                                                 // amount -= num.parse(controller
                                                 //     .totalApproxAmountControllerList
                                                 //     .elementAt(index)
                                                 //     .text);
-                                                (controller. amount <= 0)
+                                                (controller.amount <= 0)
                                                     ? removeAmount(0)
                                                     : removeAmount(double.parse(
                                                         controller
                                                             .totalApproxAmountControllerList
                                                             .elementAt(index)
                                                             .text));
-                                        
+
                                                 updateCounts();
                                               });
                                             },
@@ -619,7 +634,7 @@ init() async{
                                 style: Get.textTheme.titleSmall,
                               ),
                               Obx(
-                                 ()=> Text(
+                                () => Text(
                                   controller.amount.toString(),
                                   style: Get.textTheme.titleSmall,
                                 ),
