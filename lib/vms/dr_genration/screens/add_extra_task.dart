@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/api/add_extra_task_api.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
@@ -57,35 +59,104 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
     super.dispose();
   }
 
-  // addExtraTaskToDR() {
-  //   for (int i = 0; i < controller.checkboxExtraTask.length; i++) {
-  //     if (controller.checkboxExtraTask[i]) {
-  //       logger.d(
-  //           " Prathap ${controller.addExtraTaskDR.elementAt(i).iSMTCRTitle}");
-
-  //       // Log the values before adding to controller.getTaskDrList
-  //       logger.d("Adding ${controller.getTaskDrList.elementAt(i).iSMTCRTitle}");
-
-  //       controller.getTaskDrList.add(GetTaskDrListModelValues(
-  //         iSMTCRTitle: controller.addExtraTaskDR.elementAt(i).iSMTCRTitle,
-  //         iSMTCRTaskNo: controller.addExtraTaskDR.elementAt(i).iSMTCRTaskNo,
-  //         iSMTCRBugOREnhancementFlg:
-  //             controller.addExtraTaskDR.elementAt(i).iSMTCRBugOREnhancementFlg,
-  //         iSMMCLTClientName:
-  //             controller.addExtraTaskDR.elementAt(i).iSMMCLTClientName,
-  //         createdemp: controller.addExtraTaskDR.elementAt(i).createdby,
-  //         iSMTCRCreationDate:
-  //             controller.addExtraTaskDR.elementAt(i).iSMTCRCreationDate,
-  //         taskcategoryname:
-  //             controller.addExtraTaskDR.elementAt(i).taskcategoryname,
-  //         assignedby: controller.addExtraTaskDR.elementAt(i).assignedby,
-  //         iSMTPLStartDate: controller.addExtraTaskDR.elementAt(i).startDate,
-  //         iSMTPLEndDate: controller.addExtraTaskDR.elementAt(i).endDate,
-  //         iSMDRPTRemarks: controller.reasonController.elementAt(i).text,
-  //       ));
-  //     }
-  //   }
-  // }
+  String startDate = '';
+  String endDate = '';
+  addExtraTaskToDR() {
+    for (int i = 0; i < fliteresList.length; i++) {
+      var v = fliteresList.elementAt(i);
+      widget.controller.getTaskDrList.add(GetTaskDrListModelValues(
+        // iSMTPLId: 0,
+        iSMTCRId: v.iSMTCRId,
+        hRMPRId: v.hRMPRId,
+        hRMPName: v.hRMPName,
+        iSMTCRBugOREnhancementFlg: v.iSMTCRBugOREnhancementFlg,
+        iSMTCRCreationDate: v.iSMTCRCreationDate,
+        iSMTCRTitle: v.iSMTCRTitle,
+        iSMTCRDesc: v.iSMTCRDesc,
+        iSMTCRStatus: v.iSMTCRStatus,
+        iSMTCRReOpenFlg: v.iSMTCRReOpenFlg,
+        iSMTCRTaskNo: v.iSMTCRTaskNo,
+        iSMMCLTId: v.iSMMCLTId,
+        iSMMCLTClientName: v.iSMMCLTClientName,
+        // iSMTPLPlannedBy:0,
+        // iSMTPLPlannerName:v.,
+        iSMTPLStartDate: v.startdatenew,
+        iSMTPLEndDate: v.enddatenew,
+        // iSMTPLTotalHrs:v.iSMTPLTAEffortInHrs,
+        // iSMTPLApprovalFlg:,
+        // iSMTPLApprovedBy:v.assignedby,
+        // iSMTPLActiveFlg:v.ismtpl,
+        iSMTPLTAStartDate: v.startdatenew,
+        iSMTPLTAEndDate: v.startdatenew,
+        assignedby: v.assignedby,
+        createdemp: v.createdby,
+        taskcategoryname: v.taskcategoryname,
+        iSMMTCATId: v.iSMMTCATId,
+        // iSMTAPLPeriodicity:v.,
+        // iSMTAPLDay:v.ismtapl,
+        periodicitydailyflag: v.addtoplannerflag,
+        iSMTAPLToDate: v.startdatenew,
+        periodicityweeklyflag: v.addtoplannerflag,
+        // periodicityendflag:,
+        // iSMTPLTAId:v.ismtp,
+        iSMMTCATCompulsoryFlg: v.iSMMTCATCompulsoryFlg,
+        iSMDRPTTimeTakenInHrsmins: v.iSMDRPTTimeTakenInHrsmin,
+        effortss: v.efforts,
+        // maxtime:v.,
+        iSMTPLTAEffortInHrs: v.iSMTPLTAEffortInHrs,
+        // approvedflag:v,
+        iSMDRPTRemarks: widget.controller.remarksController.elementAt(i).text,
+        iSMDRPTStatus: v.iSMTCRStatus,
+        // iSMDRPTDeviationFlg:,
+        // iSMDRPTExtraFlg: v,
+        iSMDRPTTimeTakenInHrs: v.iSMTPLTAEffortInHrs,
+        drFlag: 0,
+        // iSMDRId: v.ismdrI,
+        hRMEId: v.hRMEId,
+        createdFlag: v.createdFlag,
+        // iSMMPRId:v.ismmp,
+        // projectName: v
+        // iSMMCLTId: widget.controller.addExtraTaskList.elementAt(i).iSMMCLTId,
+        // iSMMTCATId: widget.controller.addExtraTaskList.elementAt(i).iSMMTCATId,
+        // hRMPRId: widget.controller.addExtraTaskList.elementAt(i).hRMPRId,
+        // hRMEId: widget.controller.addExtraTaskList.elementAt(i).hRMEId,
+        // hRMPName: widget.controller.addExtraTaskList.elementAt(i).hRMPName,
+        // iSMTCRReOpenFlg:
+        //     widget.controller.addExtraTaskList.elementAt(i).iSMTCRReOpenFlg,
+        // iSMTCRDesc: widget.controller.addExtraTaskList.elementAt(i).iSMTCRDesc,
+        // iSMDRPTStatus:
+        //     widget.controller.addExtraTaskList.elementAt(i).iSMTCRStatus,
+        // createdFlag:
+        //     widget.controller.addExtraTaskList.elementAt(i).createdFlag,
+        // iSMTPLTAEffortInHrs:
+        //     widget.controller.addExtraTaskList.elementAt(i).iSMTPLTAEffortInHrs,
+        // iSMMTCATCompulsoryFlg: widget.controller.addExtraTaskList
+        //     .elementAt(i)
+        //     .iSMMTCATCompulsoryFlg,
+        // iSMTCRId: widget.controller.addExtraTaskList.elementAt(i).iSMTCRId,
+        // iSMTCRTitle:
+        //     widget.controller.addExtraTaskList.elementAt(i).iSMTCRTitle,
+        // iSMTCRTaskNo:
+        //     widget.controller.addExtraTaskList.elementAt(i).iSMTCRTaskNo,
+        // iSMTCRBugOREnhancementFlg: widget.controller.addExtraTaskList
+        //     .elementAt(i)
+        //     .iSMTCRBugOREnhancementFlg,
+        // iSMMCLTClientName:
+        //     widget.controller.addExtraTaskList.elementAt(i).iSMMCLTClientName,
+        // createdemp: widget.controller.addExtraTaskList.elementAt(i).createdby,
+        // iSMTCRCreationDate:
+        //     widget.controller.addExtraTaskList.elementAt(i).iSMTCRCreationDate,
+        // taskcategoryname:
+        //     widget.controller.addExtraTaskList.elementAt(i).taskcategoryname,
+        // assignedby: widget.controller.addExtraTaskList.elementAt(i).assignedby,
+        // iSMTPLStartDate:
+        //     widget.controller.addExtraTaskList.elementAt(i).startdatenew,
+        // iSMTPLEndDate:
+        //     widget.controller.addExtraTaskList.elementAt(i).enddatenew,
+        // iSMDRPTRemarks: widget.controller.remarksController.elementAt(i).text,
+      ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,253 +168,284 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
               padding: const EdgeInsets.all(8.0),
               child: BtnSave(
                 onPress: () async {
-                  setState(() {
-                    widget.controller.getTaskDrList.addAll(
-                        fliteresList.map((e) => GetTaskDrListModelValues()));
-                  });
-                  Get.back();
+                  if (fliteresList.isNotEmpty) {
+                    await addExtraTaskToDR();
+                    Get.back();
+                    Get.back();
+                  } else {
+                    Fluttertoast.showToast(msg: "Select task");
+                    return;
+                  }
                 },
                 title: "ADD",
               ),
             ),
           ],
         ),
-        body: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Obx(() => widget.controller.isExtraTaskloading.value
-                ? const AnimatedProgressWidget(
-                    animationPath: "assets/json/default.json",
-                    title: "Loading...",
-                    desc:
-                        "Please wait while we are loading Add Extra Task Details",
-                  )
-                : Container(
-                    margin: const EdgeInsets.only(top: 16.0),
-                    child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 3, left: 15, right: 15, bottom: 30),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: DataTable(
-                                  dataTextStyle: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color.fromRGBO(5, 5, 5, 0.945),
-                                    fontWeight: FontWeight.w500,
+        body: Obx(() {
+          return SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: widget.controller.isExtraTaskloading.value
+                  ? const AnimatedProgressWidget(
+                      animationPath: "assets/json/default.json",
+                      title: "Loading...",
+                      desc:
+                          "Please wait while we are loading Add Extra Task Details",
+                    )
+                  : Container(
+                      margin: const EdgeInsets.only(top: 16.0),
+                      child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.only(
+                              top: 3, left: 15, right: 15, bottom: 30),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: DataTable(
+                                dataTextStyle: const TextStyle(
+                                  fontSize: 15,
+                                  color: Color.fromRGBO(5, 5, 5, 0.945),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                dataRowHeight: 120,
+                                headingRowHeight: 55,
+                                horizontalMargin: 10,
+                                columnSpacing: 20,
+                                dividerThickness: 1,
+                                border: TableBorder.all(
+                                  color: Colors.black26,
+                                  borderRadius: const BorderRadius.only(
+                                    bottomRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10),
                                   ),
-                                  dataRowHeight: 150,
-                                  headingRowHeight: 55,
-                                  horizontalMargin: 10,
-                                  columnSpacing: 40,
-                                  dividerThickness: 1,
-                                  border: TableBorder.all(
-                                    color: Colors.black26,
-                                    borderRadius: const BorderRadius.only(
-                                      bottomRight: Radius.circular(10),
-                                      bottomLeft: Radius.circular(10),
+                                ),
+                                headingRowColor: MaterialStateProperty.all(
+                                    Theme.of(context).primaryColor),
+                                headingTextStyle: Get.textTheme.titleSmall!
+                                    .copyWith(color: Colors.white),
+                                columns: const [
+                                  DataColumn(
+                                    label: Text(
+                                      "Sl No",
                                     ),
                                   ),
-                                  headingRowColor: MaterialStateProperty.all(
-                                      Theme.of(context).primaryColor),
-                                  headingTextStyle: Get.textTheme.titleSmall!
-                                      .copyWith(color: Colors.white),
-                                  columns: const [
-                                    DataColumn(
-                                      label: Text(
-                                        "Sl No",
-                                      ),
+                                  DataColumn(
+                                    label: Text(
+                                      "",
                                     ),
-                                    DataColumn(
-                                      label: Text(
-                                        "",
-                                      ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
+                                      "Issue Details",
                                     ),
-                                    DataColumn(
-                                      label: Text(
-                                        "Issue Details",
-                                      ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
+                                      "Category",
                                     ),
-                                    DataColumn(
-                                      label: Text(
-                                        "Category",
-                                      ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
+                                      "Assigned By",
                                     ),
-                                    DataColumn(
-                                      label: Text(
-                                        "Assigned By",
-                                      ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
+                                      "Start Date",
                                     ),
-                                    DataColumn(
-                                      label: Text(
-                                        "Start Date",
-                                      ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
+                                      "End Date",
                                     ),
-                                    DataColumn(
-                                      label: Text(
-                                        "End Date",
-                                      ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
+                                      "Reason",
                                     ),
-                                    DataColumn(
-                                      label: Text(
-                                        "Reason",
-                                      ),
+                                  ),
+                                ],
+                                rows: List.generate(
+                                    widget.controller.addExtraTaskList.length,
+                                    (index) {
+                                  var v1 = index + 1;
+                                  var v = widget.controller.addExtraTaskList
+                                      .elementAt(index);
+                                  DateTime dt =
+                                      DateTime.parse(v.iSMTCRCreationDate!);
+                                  if (v.addtoplannerflag == 0) {
+                                    addPlanner = false;
+                                  } else {
+                                    addPlanner = true;
+                                  }
+                                  return DataRow(cells: [
+                                    DataCell(
+                                      Text(v1.toString()),
                                     ),
-                                  ],
-                                  rows: List.generate(
-                                      widget.controller.addExtraTaskList.length,
-                                      (index) {
-                                    var v1 = index + 1;
-                                    var v = widget.controller.addExtraTaskList
-                                        .elementAt(index);
-                                    DateTime dt =
-                                        DateTime.parse(v.iSMTCRCreationDate!);
-                                    // if (v.addtoplannerflag == 0) {
-                                    //   addPlanner = false;
-                                    // } else {
-                                    //   addPlanner = true;
-                                    // }
-                                    return DataRow(cells: [
-                                      DataCell(
-                                        Text(v1.toString()),
-                                      ),
-                                      DataCell(
-                                        Checkbox(
-                                            value: addPlanner,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                if (value!) {
-                                                  fliteresList.clear();
-                                                  fliteresList.add(widget
-                                                      .controller
-                                                      .addExtraTaskList
-                                                      .elementAt(index));
-                                                  v.addtoplannerflag = 1;
-                                                } else {
-                                                  fliteresList.removeAt(index);
-                                                  v.addtoplannerflag = 0;
-                                                }
-                                              });
-                                            }),
-                                      ),
-                                      DataCell(Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            v.iSMTCRTitle.toString(),
-                                            style: Get.textTheme.titleSmall,
-                                          ),
-                                          Text(
-                                              '${v.iSMTCRTaskNo}-${v.iSMTCRBugOREnhancementFlg}'),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: 'Clint: ',
-                                                style: Get.textTheme.titleSmall!
-                                                    .copyWith(
-                                                        color: Theme.of(context)
-                                                            .primaryColor)),
-                                            TextSpan(
-                                                text: v.iSMMCLTClientName,
-                                                style: Get.textTheme.titleSmall!
-                                                    .copyWith()),
-                                          ])),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: 'Created By: ',
-                                                style: Get.textTheme.titleSmall!
-                                                    .copyWith(
-                                                        color: Theme.of(context)
-                                                            .primaryColor)),
-                                            TextSpan(
-                                                text: v.createdby,
-                                                style: Get.textTheme.titleSmall!
-                                                    .copyWith()),
-                                          ])),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: 'Created Date: ',
-                                                style: Get.textTheme.titleSmall!
-                                                    .copyWith(
-                                                        color: Theme.of(context)
-                                                            .primaryColor)),
-                                            TextSpan(
-                                                text:
-                                                    '${dt.day}-${dt.month}-${dt.year}',
-                                                style: Get.textTheme.titleSmall!
-                                                    .copyWith()),
-                                          ])),
-                                        ],
-                                      )),
-                                      DataCell(Text(v.taskcategoryname!)),
-                                      DataCell(Text(v.assignedby!)),
-                                      DataCell(SizedBox(
-                                        width: 120,
-                                        child: TextFormField(
+                                    DataCell(
+                                      Checkbox(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(6)),
+                                          checkColor: Colors.indigo,
+                                          value: addPlanner,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              addPlanner = !addPlanner;
+                                              if (value!) {
+                                                fliteresList.clear();
+                                                fliteresList.add(widget
+                                                    .controller.addExtraTaskList
+                                                    .elementAt(index));
+                                                v.addtoplannerflag = 1;
+                                                logger.e(fliteresList
+                                                    .first.assignedby);
+                                              } else {
+                                                fliteresList.removeAt(index);
+                                                v.addtoplannerflag = 0;
+                                              }
+                                            });
+                                          }),
+                                    ),
+                                    DataCell(Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          v.iSMTCRTitle.toString(),
                                           style: Get.textTheme.titleSmall,
-                                          readOnly: true,
-                                          controller: widget
+                                        ),
+                                        Text(
+                                            '${v.iSMTCRTaskNo}-${v.iSMTCRBugOREnhancementFlg}'),
+                                        RichText(
+                                            text: TextSpan(children: [
+                                          TextSpan(
+                                              text: 'Clint: ',
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .primaryColor)),
+                                          TextSpan(
+                                              text: v.iSMMCLTClientName,
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith()),
+                                        ])),
+                                        RichText(
+                                            text: TextSpan(children: [
+                                          TextSpan(
+                                              text: 'Created By: ',
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .primaryColor)),
+                                          TextSpan(
+                                              text: v.createdby,
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith()),
+                                        ])),
+                                        RichText(
+                                            text: TextSpan(children: [
+                                          TextSpan(
+                                              text: 'Created Date: ',
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .primaryColor)),
+                                          TextSpan(
+                                              text:
+                                                  '${dt.day}-${dt.month}-${dt.year}',
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith()),
+                                        ])),
+                                      ],
+                                    )),
+                                    DataCell(Text(v.taskcategoryname!)),
+                                    DataCell(Text(v.assignedby!)),
+                                    DataCell(SizedBox(
+                                      width: 120,
+                                      child: TextFormField(
+                                        style: Get.textTheme.titleSmall,
+                                        readOnly: true,
+                                        controller: widget
+                                            .controller.startDateController
+                                            .elementAt(index),
+                                        decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                borderSide: const BorderSide(
+                                                    color: Colors.grey))),
+                                        onTap: () async {
+                                          widget.controller.startDateController
+                                                  .elementAt(index)
+                                                  .text =
+                                              (await getDate(v.startdatenew!))
+                                                  .toString();
+                                          DateTime dt = DateTime.parse(widget
                                               .controller.startDateController
-                                              .elementAt(index),
-                                          decoration: InputDecoration(
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  borderSide: const BorderSide(
-                                                      color: Colors.grey))),
-                                          onTap: () async {
-                                            widget.controller.startDateController
-                                                    .elementAt(index)
-                                                    .text =
-                                                (await getDate(v.startDate!))!;
-                                          },
-                                        ),
-                                      )),
-                                      DataCell(SizedBox(
-                                        width: 120,
-                                        child: TextFormField(
-                                          style: Get.textTheme.titleSmall,
-                                          readOnly: true,
-                                          controller: widget
+                                              .elementAt(index)
+                                              .text);
+                                          startDate =
+                                              '${dt.year}-${dt.month}-${dt.day}T00:00:00';
+                                          widget.controller.endDateController
+                                                  .elementAt(index)
+                                                  .text =
+                                              widget.controller
+                                                  .startDateController
+                                                  .elementAt(index)
+                                                  .text;
+                                        },
+                                      ),
+                                    )),
+                                    DataCell(SizedBox(
+                                      width: 120,
+                                      child: TextFormField(
+                                        style: Get.textTheme.titleSmall,
+                                        readOnly: true,
+                                        controller: widget
+                                            .controller.endDateController
+                                            .elementAt(index),
+                                        decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                borderSide: const BorderSide(
+                                                    color: Colors.grey))),
+                                        onTap: () async {
+                                          widget.controller.endDateController
+                                                  .elementAt(index)
+                                                  .text =
+                                              (await getDate(v.startdatenew!))
+                                                  .toString();
+                                          DateTime dt = DateTime.parse(widget
                                               .controller.endDateController
-                                              .elementAt(index),
-                                          decoration: InputDecoration(
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  borderSide: const BorderSide(
-                                                      color: Colors.grey))),
-                                          onTap: () async {
-                                            widget.controller.endDateController
-                                                    .elementAt(index)
-                                                    .text =
-                                                (await getDate(v.endDate!))!;
-                                          },
-                                        ),
-                                      )),
-                                      DataCell(SizedBox(
-                                        width: 140,
-                                        child: TextFormField(
-                                          style: Get.textTheme.titleSmall,
-                                          controller: widget
-                                              .controller.remarksController
-                                              .elementAt(index),
-                                          decoration: InputDecoration(
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  borderSide: const BorderSide(
-                                                      color: Colors.grey))),
-                                        ),
-                                      )),
-                                    ]);
-                                  })),
-                            )))))));
+                                              .elementAt(index)
+                                              .text);
+                                          endDate =
+                                              '${dt.year}-${dt.month}-${dt.day}T00:00:00';
+                                        },
+                                      ),
+                                    )),
+                                    DataCell(SizedBox(
+                                      width: 140,
+                                      child: TextFormField(
+                                        style: Get.textTheme.titleSmall,
+                                        controller: widget
+                                            .controller.remarksController
+                                            .elementAt(index),
+                                        decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                borderSide: const BorderSide(
+                                                    color: Colors.grey))),
+                                      ),
+                                    )),
+                                  ]);
+                                })),
+                          ))));
+        }));
   }
 
   DateTime? dt;
@@ -354,7 +456,7 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
         firstDate: DateTime.parse(fromDate),
         lastDate: DateTime(2050));
     if (dt != null) {
-      return '${dt!.day}-${dt!.month}-${dt!.year}';
+      return '${dt!.day}:${dt!.month}:${dt!.year}';
     }
     return 'Date is not Selected';
   }
