@@ -1,4 +1,5 @@
 class NewTableModel {
+  double? newTime;
   bool? flag;
   int? iSMTCRASTOId;
   int? iSMTCRId;
@@ -49,7 +50,8 @@ class NewTableModel {
   String? time;
 
   NewTableModel(
-      {this.time,
+      {this.newTime,
+      this.time,
       this.flag,
       this.iSMTCRASTOId,
       this.iSMTCRId,
