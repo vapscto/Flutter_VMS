@@ -7,7 +7,6 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
-import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/student_attendance_staff_home.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
 import 'package:m_skool_flutter/student/coe/screen/coe_home.dart';
 import 'package:m_skool_flutter/student/fees/screens/fee_analysis_screen.dart';
@@ -323,12 +322,12 @@ class NotificationScreen extends StatelessWidget {
       //   // () => const DayWiseAttendanceEntryHome(),
       // );
     }
-    if (headerName == "Student Attendance Staff") {
-      Get.to(() => StudentAttendanceStaffHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-          ));
-    }
+    // if (headerName == "Student Attendance Staff") {
+    //   Get.to(() => StudentAttendanceStaffHome(
+    //         loginSuccessModel: loginSuccessModel,
+    //         mskoolController: mskoolController,
+    //       ));
+    // }
     // if (headerName == "Mark Entry") {
     //   Get.to(
     //     () => MarksEntryHome(
