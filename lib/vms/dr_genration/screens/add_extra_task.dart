@@ -65,95 +65,29 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
     for (int i = 0; i < fliteresList.length; i++) {
       var v = fliteresList.elementAt(i);
       widget.controller.getTaskDrList.add(GetTaskDrListModelValues(
-        // iSMTPLId: 0,
-        iSMTCRId: v.iSMTCRId,
-        hRMPRId: v.hRMPRId,
-        hRMPName: v.hRMPName,
-        iSMTCRBugOREnhancementFlg: v.iSMTCRBugOREnhancementFlg,
-        iSMTCRCreationDate: v.iSMTCRCreationDate,
-        iSMTCRTitle: v.iSMTCRTitle,
-        iSMTCRDesc: v.iSMTCRDesc,
-        iSMTCRStatus: v.iSMTCRStatus,
-        iSMTCRReOpenFlg: v.iSMTCRReOpenFlg,
-        iSMTCRTaskNo: v.iSMTCRTaskNo,
         iSMMCLTId: v.iSMMCLTId,
+        iSMMTCATId: v.iSMMTCATId,
+        hRMPRId: v.hRMPRId,
+        hRMEId: v.hRMEId,
+        hRMPName: v.hRMPName,
+        iSMTCRReOpenFlg: v.iSMTCRReOpenFlg,
+        iSMTCRDesc: v.iSMTCRDesc,
+        iSMDRPTStatus: v.iSMTCRStatus,
+        createdFlag: v.createdFlag,
+        iSMTPLTAEffortInHrs: v.iSMTPLTAEffortInHrs,
+        iSMMTCATCompulsoryFlg: v.iSMMTCATCompulsoryFlg,
+        iSMTCRId: v.iSMTCRId,
+        iSMTCRTitle: v.iSMTCRTitle,
+        iSMTCRTaskNo: v.iSMTCRTaskNo,
+        iSMTCRBugOREnhancementFlg: v.iSMTCRBugOREnhancementFlg,
         iSMMCLTClientName: v.iSMMCLTClientName,
-        // iSMTPLPlannedBy:0,
-        // iSMTPLPlannerName:v.,
+        createdemp: v.createdby,
+        iSMTCRCreationDate: v.iSMTCRCreationDate,
+        taskcategoryname: v.taskcategoryname,
+        assignedby: v.assignedby,
         iSMTPLStartDate: v.startdatenew,
         iSMTPLEndDate: v.enddatenew,
-        // iSMTPLTotalHrs:v.iSMTPLTAEffortInHrs,
-        // iSMTPLApprovalFlg:,
-        // iSMTPLApprovedBy:v.assignedby,
-        // iSMTPLActiveFlg:v.ismtpl,
-        iSMTPLTAStartDate: v.startdatenew,
-        iSMTPLTAEndDate: v.startdatenew,
-        assignedby: v.assignedby,
-        createdemp: v.createdby,
-        taskcategoryname: v.taskcategoryname,
-        iSMMTCATId: v.iSMMTCATId,
-        // iSMTAPLPeriodicity:v.,
-        // iSMTAPLDay:v.ismtapl,
-        periodicitydailyflag: v.addtoplannerflag,
-        iSMTAPLToDate: v.startdatenew,
-        periodicityweeklyflag: v.addtoplannerflag,
-        // periodicityendflag:,
-        // iSMTPLTAId:v.ismtp,
-        iSMMTCATCompulsoryFlg: v.iSMMTCATCompulsoryFlg,
-        iSMDRPTTimeTakenInHrsmins: v.iSMDRPTTimeTakenInHrsmin,
-        effortss: v.efforts,
-        // maxtime:v.,
-        iSMTPLTAEffortInHrs: v.iSMTPLTAEffortInHrs,
-        // approvedflag:v,
         iSMDRPTRemarks: widget.controller.remarksController.elementAt(i).text,
-        iSMDRPTStatus: v.iSMTCRStatus,
-        // iSMDRPTDeviationFlg:,
-        // iSMDRPTExtraFlg: v,
-        iSMDRPTTimeTakenInHrs: v.iSMTPLTAEffortInHrs,
-        drFlag: 0,
-        // iSMDRId: v.ismdrI,
-        hRMEId: v.hRMEId,
-        createdFlag: v.createdFlag,
-        // iSMMPRId:v.ismmp,
-        // projectName: v
-        // iSMMCLTId: widget.controller.addExtraTaskList.elementAt(i).iSMMCLTId,
-        // iSMMTCATId: widget.controller.addExtraTaskList.elementAt(i).iSMMTCATId,
-        // hRMPRId: widget.controller.addExtraTaskList.elementAt(i).hRMPRId,
-        // hRMEId: widget.controller.addExtraTaskList.elementAt(i).hRMEId,
-        // hRMPName: widget.controller.addExtraTaskList.elementAt(i).hRMPName,
-        // iSMTCRReOpenFlg:
-        //     widget.controller.addExtraTaskList.elementAt(i).iSMTCRReOpenFlg,
-        // iSMTCRDesc: widget.controller.addExtraTaskList.elementAt(i).iSMTCRDesc,
-        // iSMDRPTStatus:
-        //     widget.controller.addExtraTaskList.elementAt(i).iSMTCRStatus,
-        // createdFlag:
-        //     widget.controller.addExtraTaskList.elementAt(i).createdFlag,
-        // iSMTPLTAEffortInHrs:
-        //     widget.controller.addExtraTaskList.elementAt(i).iSMTPLTAEffortInHrs,
-        // iSMMTCATCompulsoryFlg: widget.controller.addExtraTaskList
-        //     .elementAt(i)
-        //     .iSMMTCATCompulsoryFlg,
-        // iSMTCRId: widget.controller.addExtraTaskList.elementAt(i).iSMTCRId,
-        // iSMTCRTitle:
-        //     widget.controller.addExtraTaskList.elementAt(i).iSMTCRTitle,
-        // iSMTCRTaskNo:
-        //     widget.controller.addExtraTaskList.elementAt(i).iSMTCRTaskNo,
-        // iSMTCRBugOREnhancementFlg: widget.controller.addExtraTaskList
-        //     .elementAt(i)
-        //     .iSMTCRBugOREnhancementFlg,
-        // iSMMCLTClientName:
-        //     widget.controller.addExtraTaskList.elementAt(i).iSMMCLTClientName,
-        // createdemp: widget.controller.addExtraTaskList.elementAt(i).createdby,
-        // iSMTCRCreationDate:
-        //     widget.controller.addExtraTaskList.elementAt(i).iSMTCRCreationDate,
-        // taskcategoryname:
-        //     widget.controller.addExtraTaskList.elementAt(i).taskcategoryname,
-        // assignedby: widget.controller.addExtraTaskList.elementAt(i).assignedby,
-        // iSMTPLStartDate:
-        //     widget.controller.addExtraTaskList.elementAt(i).startdatenew,
-        // iSMTPLEndDate:
-        //     widget.controller.addExtraTaskList.elementAt(i).enddatenew,
-        // iSMDRPTRemarks: widget.controller.remarksController.elementAt(i).text,
       ));
     }
   }
@@ -169,46 +103,7 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
               child: BtnSave(
                 onPress: () async {
                   if (fliteresList.isNotEmpty) {
-                    fliteresList.map((v) {
-                      return GetTaskDrListModelValues(
-                        type: v.type,
-                        iSMTCRId: v.iSMTCRId,
-                        hRMPRId: v.hRMPRId,
-                        hRMPName: v.hRMPName,
-                        iSMTCRBugOREnhancementFlg: v.iSMTCRBugOREnhancementFlg,
-                        iSMTCRCreationDate: v.iSMTCRCreationDate,
-                        iSMTCRTitle: v.iSMTCRTitle,
-                        iSMTCRDesc: v.iSMTCRDesc,
-                        iSMTCRStatus: v.iSMTCRStatus,
-                        iSMTCRReOpenFlg: v.iSMTCRReOpenFlg,
-                        iSMTCRTaskNo: v.iSMTCRTaskNo,
-                        iSMMCLTId: v.iSMMCLTId,
-                        iSMMCLTClientName: v.iSMMCLTClientName,
-                        iSMTPLStartDate: v.startdatenew,
-                        iSMTPLEndDate: v.enddatenew,
-                        iSMTPLTAStartDate: v.startdatenew,
-                        iSMTPLTAEndDate: v.startdatenew,
-                        assignedby: v.assignedby,
-                        createdemp: v.createdby,
-                        taskcategoryname: v.taskcategoryname,
-                        iSMMTCATId: v.iSMMTCATId,
-                        // periodicitydailyflag: v.addtoplannerflag,
-                        iSMTAPLToDate: v.startdatenew,
-                        // periodicityweeklyflag: v.addtoplannerflag,
-                        iSMMTCATCompulsoryFlg: v.iSMMTCATCompulsoryFlg,
-                        iSMDRPTTimeTakenInHrsmins: v.iSMDRPTTimeTakenInHrsmin,
-                        effortss: v.efforts,
-                        iSMTPLTAEffortInHrs: v.iSMTPLTAEffortInHrs,
-                        iSMDRPTRemarks:
-                            widget.controller.remarksController.first.text,
-                        iSMDRPTStatus: v.iSMTCRStatus,
-                        iSMDRPTTimeTakenInHrs: v.iSMTPLTAEffortInHrs,
-                        drFlag: 0,
-                        hRMEId: v.hRMEId,
-                        createdFlag: v.createdFlag,
-                      );
-                    }).toList();
-                    // await addExtraTaskToDR();
+                    addExtraTaskToDR();
                     Get.back();
                   } else {
                     Fluttertoast.showToast(msg: "Select task");

@@ -77,21 +77,19 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!);
     _plannerDetailsController.drnotSentdetailsList.isNotEmpty
-        ? Get.dialog(
-            barrierDismissible: false,
-            AlertDialog(
-              insetPadding: const EdgeInsets.symmetric(horizontal: 16),
-              contentPadding: const EdgeInsets.all(8),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              content: SizedBox(
-                  width: Get.width,
-                  child: DrnotsentScreen(
-                    mskoolController: widget.mskoolController,
-                    loginSuccessModel: widget.loginSuccessModel,
-                    plannerDetailsController: _plannerDetailsController,
-                  )),
-            ))
+        ? Get.dialog(AlertDialog(
+            insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+            contentPadding: const EdgeInsets.all(8),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            content: SizedBox(
+                width: Get.width,
+                child: DrnotsentScreen(
+                  mskoolController: widget.mskoolController,
+                  loginSuccessModel: widget.loginSuccessModel,
+                  plannerDetailsController: _plannerDetailsController,
+                )),
+          ))
         : null;
     _plannerDetailsController.tadaApplyList.isNotEmpty
         ? Get.dialog(
@@ -216,8 +214,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                       const SizedBox(height: 16),
                       TextButton(
                           onPressed: () {
-                            Get.back();
-                            Get.back();
                             Get.back();
                           },
                           child: Text(
@@ -538,6 +534,13 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                         "Other's Date Should Not Be Equal To Today's Date");
                                 return;
                               }
+                            }
+                            if (_plannerDetailsController
+                                .closeTaskCoutnList.isNotEmpty) {
+                              Fluttertoast.showToast(
+                                  msg:
+                                      "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task");
+                              return;
                             }
                             saveDaetails();
                           } else {
@@ -1492,20 +1495,16 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                               .elementAt(index)
                                                               .iSMTCRTitle!,
                                                           maxLines: 3,
-                                                          style: Theme
-                                                                  .of(context)
+                                                          style: Theme.of(
+                                                                  context)
                                                               .textTheme
                                                               .titleSmall!
                                                               .merge(const TextStyle(
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          52,
-                                                                          82,
-                                                                          252),
+                                                                  color: Colors
+                                                                      .black,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w600,
+                                                                          .w400,
                                                                   fontSize:
                                                                       14)),
                                                         ),
@@ -1516,15 +1515,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             .textTheme
                                                             .titleSmall!
                                                             .merge(const TextStyle(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        52,
-                                                                        82,
-                                                                        252),
+                                                                color: Colors
+                                                                    .black,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .w600,
+                                                                        .w400,
                                                                 fontSize: 14)),
                                                       ),
                                                       Text(
@@ -1533,15 +1528,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             .textTheme
                                                             .titleSmall!
                                                             .merge(const TextStyle(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        52,
-                                                                        82,
-                                                                        252),
+                                                                color: Colors
+                                                                    .black,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .w600,
+                                                                        .w400,
                                                                 fontSize: 14)),
                                                       ),
                                                       Text(
@@ -1550,16 +1541,12 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             .textTheme
                                                             .titleSmall!
                                                             .merge(const TextStyle(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        52,
-                                                                        82,
-                                                                        252),
+                                                                color: Colors
+                                                                    .black,
                                                                 fontSize: 14,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .w600)),
+                                                                        .w400)),
                                                       ),
                                                       Text(
                                                         "Task End date : $endDt",
@@ -1567,15 +1554,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             .textTheme
                                                             .titleSmall!
                                                             .merge(const TextStyle(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        52,
-                                                                        82,
-                                                                        252),
+                                                                color: Colors
+                                                                    .black,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .w600,
+                                                                        .w400,
                                                                 fontSize: 14)),
                                                       )
                                                     ],
