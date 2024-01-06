@@ -10,7 +10,7 @@ import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_contr
 import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
-class DrnotsentScreen extends StatelessWidget {
+class DrnotsentScreen extends StatefulWidget {
   final MskoolController mskoolController;
   final LoginSuccessModel loginSuccessModel;
   final PlannerDetails plannerDetailsController;
@@ -19,8 +19,22 @@ class DrnotsentScreen extends StatelessWidget {
       required this.mskoolController,
       required this.loginSuccessModel,
       required this.plannerDetailsController});
-  // final PlannerDetails plannerDetailsController = Get.put(PlannerDetails());
+
+  @override
+  State<DrnotsentScreen> createState() => _DrnotsentScreenState();
+}
+
+class _DrnotsentScreenState extends State<DrnotsentScreen> {
   final _key = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    if (widget.plannerDetailsController.etRemark.isNotEmpty) {
+      widget.plannerDetailsController.etRemark.clear();
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -37,7 +51,8 @@ class DrnotsentScreen extends StatelessWidget {
           Obx(
             () => SizedBox(
                 width: MediaQuery.of(context).size.width,
-                child: Center(
+                child: Form(
+                    key: _key,
                     child: SingleChildScrollView(
                         padding: const EdgeInsets.symmetric(
                             vertical: 10, horizontal: 0),
@@ -104,7 +119,8 @@ class DrnotsentScreen extends StatelessWidget {
                                     ),
                                   ],
                                   rows: List.generate(
-                                      plannerDetailsController
+                                      widget
+                                          .plannerDetailsController
                                           .drnotSentdetailsList
                                           .length, (index) {
                                     int i = index + 1;
@@ -115,36 +131,45 @@ class DrnotsentScreen extends StatelessWidget {
                                       DataCell(Align(
                                           alignment: Alignment.center,
                                           child: Text(getDate(DateTime.parse(
-                                              plannerDetailsController
+                                              widget.plannerDetailsController
                                                   .drnotSentdetailsList
                                                   .elementAt(index)
                                                   .fromDate!))))),
-                                      DataCell(Align(
-                                          alignment: Alignment.center,
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 10),
-                                            child: SizedBox(
-                                              width: 150,
-                                              child: TextFormField(
-                                                maxLines: 3,
-                                                style: Theme.of(context)
+                                      DataCell(Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: SizedBox(
+                                          width: 150,
+                                          child: TextFormField(
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'Enter Remarks';
+                                              }
+                                              return null;
+                                            },
+                                            maxLines: 3,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall,
+                                            controller: widget
+                                                .plannerDetailsController
+                                                .etRemark
+                                                .elementAt(index),
+                                            decoration: InputDecoration(
+                                                hintText: "Enter Remark",
+                                                hintStyle: Theme.of(context)
                                                     .textTheme
                                                     .titleSmall,
-                                                controller:
-                                                    plannerDetailsController
-                                                        .etRemark
-                                                        .elementAt(index),
-                                                decoration: InputDecoration(
-                                                    hintText: "Enter Remark",
-                                                    hintStyle: Theme.of(context)
-                                                        .textTheme
-                                                        .titleSmall,
-                                                    border:
-                                                        const OutlineInputBorder()),
-                                              ),
-                                            ),
-                                          ))),
+                                                border:
+                                                    const OutlineInputBorder(),
+                                                errorBorder:
+                                                    const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color:
+                                                                Colors.red))),
+                                          ),
+                                        ),
+                                      )),
                                     ]);
                                   }),
                                 )),
@@ -160,27 +185,24 @@ class DrnotsentScreen extends StatelessWidget {
                 BtnSave(
                   title: 'Cancel',
                   onPress: () {
-                    Get.back();
+                    Navigator.of(context).pop();
                   },
                 ),
                 MSkollBtn(
                   title: "Save",
                   onPress: () async {
-                    if (plannerDetailsController.etRemark.isEmpty) {
-                      Fluttertoast.showToast(msg: "Enter Remarks");
-                      return;
-                    } else {
+                    if (_key.currentState!.validate()) {
                       for (int i = 0;
                           i <
-                              plannerDetailsController
+                              widget.plannerDetailsController
                                   .drnotSentdetailsList.length;
                           i++) {
                         drList.add({
-                          "drnotsentdate": plannerDetailsController
-                              .drnotSentdetailsList
+                          "drnotsentdate": widget
+                              .plannerDetailsController.drnotSentdetailsList
                               .elementAt(i)
                               .fromDate,
-                          "remarks": plannerDetailsController.etRemark
+                          "remarks": widget.plannerDetailsController.etRemark
                               .elementAt(i)
                               .text,
                           "Template": "DRNotSentRemarks"
@@ -189,15 +211,15 @@ class DrnotsentScreen extends StatelessWidget {
                       await drNotSaveDAPI(
                               todayDate: dt.toIso8601String(),
                               base: baseUrlFromInsCode(
-                                  'issuemanager', mskoolController),
-                              controller: plannerDetailsController,
+                                  'issuemanager', widget.mskoolController),
+                              controller: widget.plannerDetailsController,
                               drList: drList,
-                              miId: loginSuccessModel.mIID!,
-                              userId: loginSuccessModel.userId!)
+                              miId: widget.loginSuccessModel.mIID!,
+                              userId: widget.loginSuccessModel.userId!)
                           .then((value) {
                         if (value!) {
                           Fluttertoast.showToast(msg: "Remark Captured");
-                          Get.back();
+                          Navigator.of(context).pop();
                         }
                       });
                     }
@@ -212,5 +234,6 @@ class DrnotsentScreen extends StatelessWidget {
   }
 
   List<Map<String, dynamic>> drList = [];
+
   DateTime dt = DateTime.now();
 }

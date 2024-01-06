@@ -66,100 +66,75 @@ class NotificationScreen extends StatelessWidget {
             return ListView.separated(
               padding: const EdgeInsets.all(16.0),
               itemBuilder: (_, index) {
-                return InkWell(
-                  onTap: () {
-                    // if (snapshot.data!.elementAt(index).pNSDHeaderFlg == null) {
-                    //   Fluttertoast.showToast(
-                    //       msg:
-                    //           "Sorry but we are unable to redirect because page info is null");
-                    //   return;
-                    // }
-                    // if (openFor.toLowerCase() == "student") {
-                    //   logger.d(snapshot.data!.elementAt(index).pNSDHeaderFlg);
-                    //   openUsingHeaderForStudent(
-                    //       snapshot.data!.elementAt(index).pNSDHeaderFlg!,
-                    //       snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
-                    //       snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
-                    //           0);
-                    //   return;
-                    // }
+                return Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0)),
+                  child: InkWell(
+                    onTap: () {
+                      // if (snapshot.data!.elementAt(index).pNSDHeaderFlg == null) {
+                      //   Fluttertoast.showToast(
+                      //       msg:
+                      //           "Sorry but we are unable to redirect because page info is null");
+                      //   return;
+                      // }
+                      // if (openFor.toLowerCase() == "student") {
+                      //   logger.d(snapshot.data!.elementAt(index).pNSDHeaderFlg);
+                      //   openUsingHeaderForStudent(
+                      //       snapshot.data!.elementAt(index).pNSDHeaderFlg!,
+                      //       snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
+                      //       snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
+                      //           0);
+                      //   return;
+                      // }
 
-                    // if (openFor.toLowerCase() == "staff") {
-                    //   openUsingHeaderForStaff(
-                    //       snapshot.data!
-                    //           .elementAt(index)
-                    //           .pNSDHeaderFlg!
-                    //           .capitalize!,
-                    //       context,
-                    //       snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
-                    //       snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
-                    //           0);
-                    // }
-                    // if (openFor.toLowerCase() == "hod") {
-                    //   openUsingHeaderForStaff(
-                    //       snapshot.data!
-                    //           .elementAt(index)
-                    //           .pNSDHeaderFlg!
-                    //           .capitalize!,
-                    //       context,
-                    //       snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
-                    //       snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
-                    //           0);
-                    // }
+                      // if (openFor.toLowerCase() == "staff") {
+                      //   openUsingHeaderForStaff(
+                      //       snapshot.data!
+                      //           .elementAt(index)
+                      //           .pNSDHeaderFlg!
+                      //           .capitalize!,
+                      //       context,
+                      //       snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
+                      //       snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
+                      //           0);
+                      // }
+                      // if (openFor.toLowerCase() == "hod") {
+                      //   openUsingHeaderForStaff(
+                      //       snapshot.data!
+                      //           .elementAt(index)
+                      //           .pNSDHeaderFlg!
+                      //           .capitalize!,
+                      //       context,
+                      //       snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
+                      //       snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
+                      //           0);
+                      // }
 
-                    // if (openFor.toLowerCase() == "manager") {
-                    //   openUsingHeaderForManager(
-                    //     snapshot.data!
-                    //         .elementAt(index)
-                    //         .pNSDHeaderFlg!
-                    //         .capitalize!,
-                    //     context,
-                    //     snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
-                    //     snapshot.data!.elementAt(index).pNSDTRANSACTIONID ?? 0,
-                    //   );
-                    // }
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(12.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.0),
-                      color:
-                          snapshot.data!.elementAt(index).iSMNOModeFlg == null
-                              ? Colors.grey.shade300
-                              : getNotificationItem(snapshot.data!
-                                  .elementAt(index)
-                                  .iSMNOModeFlg!)['bgColor'],
-                    ),
-                    child: Row(children: [
-                      Container(
-                        padding: const EdgeInsets.all(
-                          8.0,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.0),
-                          color: snapshot.data!.elementAt(index).iSMNOModeFlg ==
-                                  null
-                              ? Colors.grey.shade300
-                              : getNotificationItem(snapshot.data!
-                                  .elementAt(index)
-                                  .iSMNOModeFlg!)['color'],
-                        ),
-                        child:
+                      // if (openFor.toLowerCase() == "manager") {
+                      //   openUsingHeaderForManager(
+                      //     snapshot.data!
+                      //         .elementAt(index)
+                      //         .pNSDHeaderFlg!
+                      //         .capitalize!,
+                      //     context,
+                      //     snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
+                      //     snapshot.data!.elementAt(index).pNSDTRANSACTIONID ?? 0,
+                      //   );
+                      // }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(12.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12.0),
+                        color:
                             snapshot.data!.elementAt(index).iSMNOModeFlg == null
-                                ? const Icon(Icons.broken_image)
-                                : Image.asset(
-                                    getNotificationItem(snapshot.data!
-                                        .elementAt(index)
-                                        .iSMNOModeFlg!)['image'],
-                                    color: Colors.white,
-                                    width: 28.0,
-                                    height: 28,
-                                  ),
+                                ? Colors.grey.shade300
+                                : getNotificationItem(snapshot.data!
+                                    .elementAt(index)
+                                    .iSMNOModeFlg!)['bgColor'],
                       ),
-                      const SizedBox(
-                        width: 12.0,
-                      ),
-                      Expanded(
+                      child: Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -192,7 +167,7 @@ class NotificationScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ]),
+                    ),
                   ),
                 );
               },
