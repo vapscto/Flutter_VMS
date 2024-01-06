@@ -13,8 +13,7 @@ class URLS {
   static String getProfile = "profile";
   static String updateProfile = "profile/update";
   static String fileUpload = "upload/file";
-  static String versionControl =
-      "api/ADMAttendenceFacade/Mobileversion_control";
+  static String versionControl = "api/EmployeePtalFacade/Mobileversion_control";
   static String getApiUrl = "api/LoginFacade/getinstitutionapiNew/";
 
   //Common ids used in all pages.
