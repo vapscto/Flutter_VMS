@@ -32,10 +32,10 @@ class CurrentPunchDetailsModelValues {
   String? depname;
   String? desgname;
   String? gtype;
-  String? punchdate;
-  String? intime;
-  String? outtime;
-  String? workingtime;
+  dynamic punchdate;
+  dynamic intime;
+  dynamic outtime;
+  dynamic workingtime;
 
   CurrentPunchDetailsModelValues(
       {this.type,

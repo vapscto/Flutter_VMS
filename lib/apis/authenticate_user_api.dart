@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -15,6 +16,7 @@ class AuthenticateUserApi {
     String loginBaseUrl,
     String mobiledeviceid,
   ) async {
+    getDeviceToken();
     final Dio ins = getGlobalDio();
     String loginApiUrl = loginBaseUrl + URLS.login;
 
@@ -25,7 +27,7 @@ class AuthenticateUserApi {
       "username": userName,
       "password": password,
       "Logintype": "Mobile",
-      "mobiledeviceid": mobiledeviceid,
+      "mobiledeviceid": deviceid,
     });
 
     // if (Platform.isAndroid) {
@@ -46,15 +48,7 @@ class AuthenticateUserApi {
       "username": userName,
       "password": password,
       "Logintype": "Mobile",
-      "mobiledeviceid": mobiledeviceid,
-    });
-
-    logger.d({
-      "MI_Id": miId,
-      "username": userName,
-      "password": password,
-      "Logintype": "Mobile",
-      "mobiledeviceid": mobiledeviceid,
+      "mobiledeviceid": deviceid,
     });
 
     if (response.data['message'] != null) {
@@ -126,9 +120,6 @@ class AuthenticateUserApi {
 
     final LoginSuccessModel loginSuccessModel =
         LoginSuccessModel.fromJson(response.data);
-    //logger.d(loginSuccessModel.toJson());
-    // logger.d(response.data);
-
     logger.d('=======${loginSuccessModel.roleId}');
     cookieBox!.put("cookie", response.headers.map['set-cookie']![0]);
     await importantIds!.put(URLS.miId, loginSuccessModel.mIID);
@@ -139,24 +130,17 @@ class AuthenticateUserApi {
     await importantIds!.put(URLS.amstId, loginSuccessModel.amsTId);
     await logInBox!.put("userName", userName);
     await logInBox!.put("password", password);
-    // await logInBox!.put("logBasUrl", loginBaseUrl);
     return Future.value(loginSuccessModel);
   }
 
-  // Future getDeviceToken() async {
-  //   FirebaseMessaging firebaseMessage = FirebaseMessaging.instance;
-  //   String? deviceToken = await firebaseMessage.getToken();
-  //   logger.d(deviceToken);
-  //   return (deviceToken == null) ? "" : deviceToken;
-  // }
-//   late FirebaseMessaging firebaseMessage;
-// Future getDeviceToken() async {
-//   String deviceToken = '';
-//   firebaseMessage = FirebaseMessaging.instance;
-//   await firebaseMessage.getToken().then((value) {
-//     (value == null) ? "" : deviceToken = value;
-//     logger.i('====$deviceToken');
-//   });
-//   return deviceToken;
-// }
+  late FirebaseMessaging firebaseMessage;
+  Future getDeviceToken() async {
+    String deviceToken = '';
+    firebaseMessage = FirebaseMessaging.instance;
+    await firebaseMessage.getToken().then((value) {
+      (value == null) ? "" : deviceToken = value;
+      deviceid = deviceToken;
+    });
+    return deviceToken;
+  }
 }

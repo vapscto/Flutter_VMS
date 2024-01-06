@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/apis/authenticate_user_api.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/screens/forgot_password_screen.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -37,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   getDeviceTokenForFCM() async {
     deviceToken = await getDeviceToken();
-    logger.d('Device Id : $deviceToken');
+    deviceid = deviceToken;
   }
 
   @override
@@ -355,7 +356,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   .value
                                                   .miId,
                                               loginBaseUrl,
-                                              deviceToken),
+                                              deviceid),
                                       builder: (_, snapshot) {
                                         if (snapshot.hasData) {
                                           return Padding(
@@ -537,7 +538,7 @@ Future getDeviceToken() async {
   firebaseMessage = FirebaseMessaging.instance;
   await firebaseMessage.getToken().then((value) {
     (value == null) ? "" : deviceToken = value;
-    logger.i('====$deviceToken');
+    deviceid = value!;
   });
   return deviceToken;
 }

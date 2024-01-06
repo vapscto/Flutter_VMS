@@ -44,6 +44,29 @@ class _PunchReportState extends State<PunchReport> {
     super.dispose();
   }
 
+  _getData() async {
+    DateTime dt = DateTime.now();
+    punchFilterController
+        .updateDisplayAbleStartFrom("${dt.day}-${dt.month}-${dt.year}");
+    punchFilterController.startFrom.value = DateTime.now();
+    punchFilterController.endTo.value = DateTime.now();
+    punchFilterController
+        .updateDisplayAbleEndTo("${dt.day}-${dt.month}-${dt.year}");
+    await PunchReportApi.instance.pcReports(
+        miId: widget.loginSuccessModel.mIID!,
+        userId: widget.loginSuccessModel.userId!,
+        fromDate: punchFilterController.startFrom.value.toLocal().toString(),
+        endDate: punchFilterController.endTo.value.toLocal().toString(),
+        base: baseUrlFromInsCode("portal", widget.mskoolController),
+        controller: punchFilterController);
+  }
+
+  @override
+  void initState() {
+    _getData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

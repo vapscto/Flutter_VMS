@@ -63,6 +63,7 @@ RxString passWord = "".obs;
 RxInt currentAuthTab = 0.obs;
 RxInt currentTab = 0.obs;
 Dio? dio;
+String deviceid = '';
 
 Dio getGlobalDio() {
   dio ??= Dio();

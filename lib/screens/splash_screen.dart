@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
     firebaseMessage = FirebaseMessaging.instance;
     await firebaseMessage.getToken().then((value) {
       (value == null) ? "" : deviceToken = value;
-      logger.i('====$deviceToken');
+      deviceid = deviceToken;
     });
     return deviceToken;
   }
@@ -55,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
       {required LoginSuccessModel loginSuccessModel,
       required MskoolController mskoolController}) async {
     deviceToken = await getDeviceToken();
-    logger.d('Device Id : $deviceToken');
+    deviceid = deviceToken;
     FirebaseMessaging.onMessage.listen(
       (RemoteMessage message) async {
         logger.d(message.data);
@@ -290,7 +290,7 @@ class _SplashScreenState extends State<SplashScreen> {
       }
       final LoginSuccessModel loginSuccessModel = await AuthenticateUserApi
           .instance
-          .authenticateNow(userName, password, miId, loginBaseUrl, deviceToken);
+          .authenticateNow(userName, password, miId, loginBaseUrl, deviceid);
       mskoolController.updateLoginSuccessModel(loginSuccessModel);
       getDeviceTokenForFCM(
           loginSuccessModel: loginSuccessModel,
