@@ -65,7 +65,6 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
     for (int i = 0; i < fliteresList.length; i++) {
       var v = fliteresList.elementAt(i);
       widget.controller.getTaskDrList.add(GetTaskDrListModelValues(
-        // iSMTPLId: 0,
         iSMTCRId: v.iSMTCRId,
         hRMPRId: v.hRMPRId,
         hRMPName: v.hRMPName,
@@ -78,44 +77,27 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
         iSMTCRTaskNo: v.iSMTCRTaskNo,
         iSMMCLTId: v.iSMMCLTId,
         iSMMCLTClientName: v.iSMMCLTClientName,
-        // iSMTPLPlannedBy:0,
-        // iSMTPLPlannerName:v.,
         iSMTPLStartDate: v.startdatenew,
         iSMTPLEndDate: v.enddatenew,
-        // iSMTPLTotalHrs:v.iSMTPLTAEffortInHrs,
-        // iSMTPLApprovalFlg:,
-        // iSMTPLApprovedBy:v.assignedby,
-        // iSMTPLActiveFlg:v.ismtpl,
         iSMTPLTAStartDate: v.startdatenew,
         iSMTPLTAEndDate: v.startdatenew,
         assignedby: v.assignedby,
         createdemp: v.createdby,
         taskcategoryname: v.taskcategoryname,
         iSMMTCATId: v.iSMMTCATId,
-        // iSMTAPLPeriodicity:v.,
-        // iSMTAPLDay:v.ismtapl,
         periodicitydailyflag: v.addtoplannerflag,
         iSMTAPLToDate: v.startdatenew,
         periodicityweeklyflag: v.addtoplannerflag,
-        // periodicityendflag:,
-        // iSMTPLTAId:v.ismtp,
         iSMMTCATCompulsoryFlg: v.iSMMTCATCompulsoryFlg,
         iSMDRPTTimeTakenInHrsmins: v.iSMDRPTTimeTakenInHrsmin,
         effortss: v.efforts,
-        // maxtime:v.,
         iSMTPLTAEffortInHrs: v.iSMTPLTAEffortInHrs,
-        // approvedflag:v,
         iSMDRPTRemarks: widget.controller.remarksController.elementAt(i).text,
         iSMDRPTStatus: v.iSMTCRStatus,
-        // iSMDRPTDeviationFlg:,
-        // iSMDRPTExtraFlg: v,
         iSMDRPTTimeTakenInHrs: v.iSMTPLTAEffortInHrs,
         drFlag: 0,
-        // iSMDRId: v.ismdrI,
         hRMEId: v.hRMEId,
         createdFlag: v.createdFlag,
-        // iSMMPRId:v.ismmp,
-        // projectName: v
         // iSMMCLTId: widget.controller.addExtraTaskList.elementAt(i).iSMMCLTId,
         // iSMMTCATId: widget.controller.addExtraTaskList.elementAt(i).iSMMTCATId,
         // hRMPRId: widget.controller.addExtraTaskList.elementAt(i).hRMPRId,
@@ -192,9 +174,7 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
                         createdemp: v.createdby,
                         taskcategoryname: v.taskcategoryname,
                         iSMMTCATId: v.iSMMTCATId,
-                        // periodicitydailyflag: v.addtoplannerflag,
                         iSMTAPLToDate: v.startdatenew,
-                        // periodicityweeklyflag: v.addtoplannerflag,
                         iSMMTCATCompulsoryFlg: v.iSMMTCATCompulsoryFlg,
                         iSMDRPTTimeTakenInHrsmins: v.iSMDRPTTimeTakenInHrsmin,
                         effortss: v.efforts,
@@ -207,7 +187,7 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
                         hRMEId: v.hRMEId,
                         createdFlag: v.createdFlag,
                       );
-                    }).toList();
+                    });
                     // await addExtraTaskToDR();
                     Get.back();
                   } else {
