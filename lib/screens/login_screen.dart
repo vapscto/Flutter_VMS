@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -30,14 +31,14 @@ class _LoginScreenState extends State<LoginScreen> {
   String deviceToken = '';
   @override
   void initState() {
-    // getDeviceTokenForFCM();
+    getDeviceTokenForFCM();
     super.initState();
   }
 
-  // getDeviceTokenForFCM() async {
-  //   deviceToken = await getDeviceToken();
-  //   logger.d('Device Id : $deviceToken');
-  // }
+  getDeviceTokenForFCM() async {
+    deviceToken = await getDeviceToken();
+    logger.d('Device Id : $deviceToken');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -530,13 +531,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-// late FirebaseMessaging firebaseMessage;
-// Future getDeviceToken() async {
-//   String deviceToken = '';
-//   firebaseMessage = FirebaseMessaging.instance;
-//   await firebaseMessage.getToken().then((value) {
-//     (value == null) ? "" : deviceToken = value;
-//     logger.i('====$deviceToken');
-//   });
-//   return deviceToken;
-// }
+late FirebaseMessaging firebaseMessage;
+Future getDeviceToken() async {
+  String deviceToken = '';
+  firebaseMessage = FirebaseMessaging.instance;
+  await firebaseMessage.getToken().then((value) {
+    (value == null) ? "" : deviceToken = value;
+    logger.i('====$deviceToken');
+  });
+  return deviceToken;
+}
