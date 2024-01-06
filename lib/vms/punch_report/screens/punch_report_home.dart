@@ -47,7 +47,6 @@ class _PunchReportState extends State<PunchReport> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButton:const HomeFab(),
       appBar: AppBar(
         title: Text(
           widget.title,
@@ -58,7 +57,6 @@ class _PunchReportState extends State<PunchReport> {
           ),
         ),
         centerTitle: (widget.previousScreen == '0') ? false : true,
-        // titleSpacing: 0,
         leading: (widget.previousScreen == '0')
             ? const CustomGoBackButton()
             : const SizedBox(),
@@ -179,7 +177,6 @@ class _PunchReportState extends State<PunchReport> {
               ),
             )),
       ),
-
       body: Obx(() {
         logger.d("message");
         return punchFilterController.start.value == 0

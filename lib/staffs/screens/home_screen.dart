@@ -6,7 +6,6 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/api/staff_dashboard_api.dart';
 import 'package:m_skool_flutter/staffs/controller/dashboard_controller.dart';
 import 'package:m_skool_flutter/staffs/tabs/dashboard_tab.dart';
-import 'package:m_skool_flutter/staffs/tabs/staff_profile_tab.dart';
 import 'package:m_skool_flutter/staffs/widget/drawer_widget.dart';
 import 'package:m_skool_flutter/vms/interaction/screen/interaction_home.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -62,9 +61,9 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
     //     showAppBar: false,
     //   ),
     // );
-    homeList.add(StaffProfileTab(
-        loginSuccessModel: widget.loginSuccessModel,
-        mskoolController: widget.mskoolController));
+    // homeList.add(StaffProfileTab(
+    //     loginSuccessModel: widget.loginSuccessModel,
+    //     mskoolController: widget.mskoolController));
 
     StaffDashboardApi.instance.loadDashboard(
         miId: widget.loginSuccessModel.mIID!,

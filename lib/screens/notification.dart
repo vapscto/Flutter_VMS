@@ -7,7 +7,6 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
-import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/student_attendance_staff_home.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
 import 'package:m_skool_flutter/student/coe/screen/coe_home.dart';
@@ -364,20 +363,20 @@ class NotificationScreen extends StatelessWidget {
     //   );
     // }
 
-    if (headerName == "Salary Details") {
-      Navigator.push(context, MaterialPageRoute(builder: (_) {
-        return
-            // SalarySlipHome(
-            //   loginSuccessModel: loginSuccessModel,
-            //   mskoolController: mskoolController,
-            // );
-            SalaryDetails(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        );
-      }));
-      return;
-    }
+    // if (headerName == "Salary Details") {
+    //   Navigator.push(context, MaterialPageRoute(builder: (_) {
+    //     return
+    //         // SalarySlipHome(
+    //         //   loginSuccessModel: loginSuccessModel,
+    //         //   mskoolController: mskoolController,
+    //         // );
+    //         SalaryDetails(
+    //       loginSuccessModel: loginSuccessModel,
+    //       mskoolController: mskoolController,
+    //     );
+    //   }));
+    //   return;
+    // }
     // if (headerName == "Staff Birth Day Report") {
     //   Navigator.push(context, MaterialPageRoute(builder: (_) {
     //     return StudentBdayHome(
