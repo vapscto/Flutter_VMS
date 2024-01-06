@@ -10,7 +10,6 @@ import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.da
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
 import 'package:m_skool_flutter/staffs/salary_slip/screen/salary_slip_home.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/student_attendance_staff_home.dart';
-import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/staffs/widget/staff_dashboard_container.dart';
 import 'package:m_skool_flutter/vms/interaction/screen/interaction_home.dart';
 
@@ -142,18 +141,18 @@ class Dashboard extends StatelessWidget {
                       }));
                       return;
                     }
-                    if (loginSuccessModel.staffmobileappprivileges!.values!
-                            .elementAt(index)
-                            .pagename ==
-                        "Student Birth Day Report") {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return StudentBdayHome(
-                          loginSuccessModel: loginSuccessModel,
-                          mskoolController: mskoolController,
-                        );
-                      }));
-                      return;
-                    }
+                    // if (loginSuccessModel.staffmobileappprivileges!.values!
+                    //         .elementAt(index)
+                    //         .pagename ==
+                    //     "Student Birth Day Report") {
+                    //   Navigator.push(context, MaterialPageRoute(builder: (_) {
+                    //     return StudentBdayHome(
+                    //       loginSuccessModel: loginSuccessModel,
+                    //       mskoolController: mskoolController,
+                    //     );
+                    //   }));
+                    //   return;
+                    // }
 
                     // if (loginSuccessModel.staffmobileappprivileges!.values!
                     //         .elementAt(index)

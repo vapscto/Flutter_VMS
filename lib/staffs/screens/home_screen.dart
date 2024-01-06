@@ -3,9 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/staffs/api/staff_dashboard_api.dart';
-import 'package:m_skool_flutter/staffs/coe/screens/coe_home.dart';
 import 'package:m_skool_flutter/staffs/controller/dashboard_controller.dart';
 import 'package:m_skool_flutter/staffs/tabs/dashboard_tab.dart';
 import 'package:m_skool_flutter/staffs/tabs/staff_profile_tab.dart';
@@ -107,26 +105,26 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
             _scaffold.currentState!.openDrawer();
           },
         ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) {
-                      return NotificationScreen(
-                        // appBarTitle: "Notice",
-                        loginSuccessModel: widget.loginSuccessModel,
-                        mskoolController: widget.mskoolController,
-                        openFor: 'staff',
-                      );
-                      // hwCwNbController: hwCwNbController);
-                    },
-                  ),
-                );
-              },
-              icon: SvgPicture.asset('assets/svg/bell.svg'))
-        ],
+        // actions: [
+        //   IconButton(
+        //       onPressed: () {
+        //         Navigator.push(
+        //           context,
+        //           MaterialPageRoute(
+        //             builder: (_) {
+        //               return NotificationScreen(
+        //                 // appBarTitle: "Notice",
+        //                 loginSuccessModel: widget.loginSuccessModel,
+        //                 mskoolController: widget.mskoolController,
+        //                 openFor: 'staff',
+        //               );
+        //               // hwCwNbController: hwCwNbController);
+        //             },
+        //           ),
+        //         );
+        //       },
+        //       icon: SvgPicture.asset('assets/svg/bell.svg'))
+        // ],
       ),
       drawer: Drawer(
         child: StaffDashboardDrawer(
