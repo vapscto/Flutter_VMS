@@ -77,21 +77,19 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!);
     _plannerDetailsController.drnotSentdetailsList.isNotEmpty
-        ? Get.dialog(
-            barrierDismissible: false,
-            AlertDialog(
-              insetPadding: const EdgeInsets.symmetric(horizontal: 16),
-              contentPadding: const EdgeInsets.all(8),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              content: SizedBox(
-                  width: Get.width,
-                  child: DrnotsentScreen(
-                    mskoolController: widget.mskoolController,
-                    loginSuccessModel: widget.loginSuccessModel,
-                    plannerDetailsController: _plannerDetailsController,
-                  )),
-            ))
+        ? Get.dialog(AlertDialog(
+            insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+            contentPadding: const EdgeInsets.all(8),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            content: SizedBox(
+                width: Get.width,
+                child: DrnotsentScreen(
+                  mskoolController: widget.mskoolController,
+                  loginSuccessModel: widget.loginSuccessModel,
+                  plannerDetailsController: _plannerDetailsController,
+                )),
+          ))
         : null;
     _plannerDetailsController.tadaApplyList.isNotEmpty
         ? Get.dialog(

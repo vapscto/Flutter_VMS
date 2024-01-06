@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/api/get_planner_details_api.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
+import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class DrnotsentScreen extends StatelessWidget {
@@ -153,41 +154,56 @@ class DrnotsentScreen extends StatelessWidget {
           // need to integrate api  holded beacuse of need create sencriao  test
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: MSkollBtn(
-              title: "Save",
-              onPress: () async {
-                if (plannerDetailsController.etRemark.isNotEmpty) {
-                  for (int i = 0;
-                      i < plannerDetailsController.drnotSentdetailsList.length;
-                      i++) {
-                    drList.add({
-                      "drnotsentdate": plannerDetailsController
-                          .drnotSentdetailsList
-                          .elementAt(i)
-                          .fromDate,
-                      "remarks":
-                          plannerDetailsController.etRemark.elementAt(i).text,
-                      "Template": "DRNotSentRemarks"
-                    });
-                  }
-                  await drNotSaveDAPI(
-                          todayDate: dt.toIso8601String(),
-                          base: baseUrlFromInsCode(
-                              'issuemanager', mskoolController),
-                          controller: plannerDetailsController,
-                          drList: drList,
-                          miId: loginSuccessModel.mIID!,
-                          userId: loginSuccessModel.userId!)
-                      .then((value) {
-                    if (value!) {
-                      Fluttertoast.showToast(msg: "Remark Captured");
-                      Get.back();
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                BtnSave(
+                  title: 'Cancel',
+                  onPress: () {
+                    Get.back();
+                  },
+                ),
+                MSkollBtn(
+                  title: "Save",
+                  onPress: () async {
+                    if (plannerDetailsController.etRemark.isEmpty) {
+                      Fluttertoast.showToast(msg: "Enter Remarks");
+                      return;
+                    } else {
+                      for (int i = 0;
+                          i <
+                              plannerDetailsController
+                                  .drnotSentdetailsList.length;
+                          i++) {
+                        drList.add({
+                          "drnotsentdate": plannerDetailsController
+                              .drnotSentdetailsList
+                              .elementAt(i)
+                              .fromDate,
+                          "remarks": plannerDetailsController.etRemark
+                              .elementAt(i)
+                              .text,
+                          "Template": "DRNotSentRemarks"
+                        });
+                      }
+                      await drNotSaveDAPI(
+                              todayDate: dt.toIso8601String(),
+                              base: baseUrlFromInsCode(
+                                  'issuemanager', mskoolController),
+                              controller: plannerDetailsController,
+                              drList: drList,
+                              miId: loginSuccessModel.mIID!,
+                              userId: loginSuccessModel.userId!)
+                          .then((value) {
+                        if (value!) {
+                          Fluttertoast.showToast(msg: "Remark Captured");
+                          Get.back();
+                        }
+                      });
                     }
-                  });
-                } else {
-                  Fluttertoast.showToast(msg: "Enter Remarks");
-                }
-              },
+                  },
+                ),
+              ],
             ),
           )
         ],
