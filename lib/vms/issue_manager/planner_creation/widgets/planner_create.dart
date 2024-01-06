@@ -140,7 +140,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                 0) {
               plannedEffort += plannerCreationController.createdTaskList
                   .elementAt(index)
-                  .iSMTCRASTOEffortInHrs!;
+                  .newTime!;
             }
           }
           if (plannerCreationController.createdTaskList
@@ -149,7 +149,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               null) {
             totalHour += plannerCreationController.createdTaskList
                 .elementAt(index)
-                .iSMTCRASTOEffortInHrs!;
+                .newTime!;
+            logger.v('Total Hour:- $totalHour');
           }
           //
         });
@@ -1008,7 +1009,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                     )),
                     DataCell(Text(data.assignedby!)),
                     DataCell(Text('$startDate TO $endDate')),
-                    DataCell(Text('${data.time} Hr')),
+                    DataCell(Text(
+                        '${data.iSMTCRASTOEffortInHrs!.toStringAsFixed(2)} Hr')),
                     DataCell(TextFormField(
                       initialValue: data.iSMTCRASTORemarks ?? '',
                       onChanged: (value) {

@@ -169,8 +169,46 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
               child: BtnSave(
                 onPress: () async {
                   if (fliteresList.isNotEmpty) {
-                    await addExtraTaskToDR();
-                    Get.back();
+                    fliteresList.map((v) {
+                      return GetTaskDrListModelValues(
+                        type: v.type,
+                        iSMTCRId: v.iSMTCRId,
+                        hRMPRId: v.hRMPRId,
+                        hRMPName: v.hRMPName,
+                        iSMTCRBugOREnhancementFlg: v.iSMTCRBugOREnhancementFlg,
+                        iSMTCRCreationDate: v.iSMTCRCreationDate,
+                        iSMTCRTitle: v.iSMTCRTitle,
+                        iSMTCRDesc: v.iSMTCRDesc,
+                        iSMTCRStatus: v.iSMTCRStatus,
+                        iSMTCRReOpenFlg: v.iSMTCRReOpenFlg,
+                        iSMTCRTaskNo: v.iSMTCRTaskNo,
+                        iSMMCLTId: v.iSMMCLTId,
+                        iSMMCLTClientName: v.iSMMCLTClientName,
+                        iSMTPLStartDate: v.startdatenew,
+                        iSMTPLEndDate: v.enddatenew,
+                        iSMTPLTAStartDate: v.startdatenew,
+                        iSMTPLTAEndDate: v.startdatenew,
+                        assignedby: v.assignedby,
+                        createdemp: v.createdby,
+                        taskcategoryname: v.taskcategoryname,
+                        iSMMTCATId: v.iSMMTCATId,
+                        // periodicitydailyflag: v.addtoplannerflag,
+                        iSMTAPLToDate: v.startdatenew,
+                        // periodicityweeklyflag: v.addtoplannerflag,
+                        iSMMTCATCompulsoryFlg: v.iSMMTCATCompulsoryFlg,
+                        iSMDRPTTimeTakenInHrsmins: v.iSMDRPTTimeTakenInHrsmin,
+                        effortss: v.efforts,
+                        iSMTPLTAEffortInHrs: v.iSMTPLTAEffortInHrs,
+                        iSMDRPTRemarks:
+                            widget.controller.remarksController.first.text,
+                        iSMDRPTStatus: v.iSMTCRStatus,
+                        iSMDRPTTimeTakenInHrs: v.iSMTPLTAEffortInHrs,
+                        drFlag: 0,
+                        hRMEId: v.hRMEId,
+                        createdFlag: v.createdFlag,
+                      );
+                    }).toList();
+                    // await addExtraTaskToDR();
                     Get.back();
                   } else {
                     Fluttertoast.showToast(msg: "Select task");
@@ -297,6 +335,7 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
                                                     .controller.addExtraTaskList
                                                     .elementAt(index));
                                                 v.addtoplannerflag = 1;
+                                                logger.i(fliteresList.toList());
                                                 logger.e(fliteresList
                                                     .first.assignedby);
                                               } else {
