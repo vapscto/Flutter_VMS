@@ -12,7 +12,7 @@ class PurchaseSave {
   purchaseSave({
     required String base,
     required String invmpiRemarks,
-    required int invmpiAmount,
+    required int totalAppxAmount,
     required List<Map<String, dynamic>> arrayList,
     required int invmpiId,
     required int miId,
@@ -30,7 +30,7 @@ class PurchaseSave {
         options: Options(headers: getSession()),
         data: {
           "INVMPI_Remarks": invmpiRemarks,
-          "INVMPI_ApproxTotAmount": invmpiAmount,
+          "INVMPI_ApproxTotAmount": totalAppxAmount,
           "arrayPI": arrayList,
           "INVMPI_Id": invmpiId,
           "MI_Id": miId,
@@ -40,7 +40,7 @@ class PurchaseSave {
       );
       logger.i({
         "INVMPI_Remarks": invmpiRemarks,
-        "INVMPI_ApproxTotAmount": invmpiAmount,
+        "INVMPI_ApproxTotAmount": totalAppxAmount,
         "arrayPI": arrayList,
         "INVMPI_Id": invmpiId,
         "MI_Id": miId,

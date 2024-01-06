@@ -84,7 +84,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
     PurchaseSave.instance.purchaseSave(
         base: baseUrlFromInsCode('inventory', widget.mskoolController),
         invmpiRemarks: remarkController.text,
-        invmpiAmount: widget.values.iNVMPIApproxTotAmount!.toInt(),
+        totalAppxAmount: controller.amount.toInt(),
         arrayList: transRowEdit,
         invmpiId: widget.values.iNVMPIId!,
         miId: widget.loginSuccessModel.mIID!,
@@ -100,6 +100,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
   void initState() {
     init();
     super.initState();
+    updateTotalAmount();
   }
 
   init() async {
@@ -415,21 +416,15 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                       controller.getOnclickList.length,
                                       (index) {
                                     var i = index + 1;
-                                    controller.amount.value += controller
-                                        .getOnclickList
-                                        .elementAt(index)
-                                        .iNVTPIApproxAmount!
-                                        .toDouble();
 
-                                    logger.w(controller.getOnclickList.length);
-                                    // remarkController.text = controller.getOnclickList.elementAt(index).iNVTPIRemarks.toString();
-                                    // unitController.text = controller.getOnclickList.elementAt(index).iNVTPIPIUnitRate.toString();
+                                    updateTotalAmount();
 
                                     return DataRow(
                                       color: MaterialStateColor.resolveWith(
                                         (states) => controller
                                                 .selectedValue[index].isRejected
-                                            ? const Color.fromARGB(255, 255, 213, 210)
+                                            ? const Color.fromARGB(
+                                                255, 255, 213, 210)
                                             : Colors.transparent,
                                       ),
                                       cells: [
@@ -454,23 +449,15 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                                 controller.selectedValue[index]
                                                     .isRejected = !value;
 
-                                                controller
-                                                    .totalApproxAmountControllerList
-                                                    .add(TextEditingController(
-                                                        text: controller
-                                                            .getOnclickList[
-                                                                index]
-                                                            .iNVTPIApproxAmount
-                                                            .toString()));
-                                                // amount += num.parse(controller
-                                                //     .totalApproxAmountControllerList
-                                                //     .elementAt(index)
-                                                //     .text);
-                                                addAmount(double.parse(controller
-                                                    .totalApproxAmountControllerList
-                                                    .elementAt(index)
-                                                    .text));
-
+                                                if (controller
+                                                    .selectedValue[index]
+                                                    .isApproved) {
+                                                  controller.amount.value +=
+                                                      controller
+                                                          .getOnclickList[index]
+                                                          .iNVTPIApproxAmount!
+                                                          .toDouble();
+                                                }
                                                 updateCounts();
                                               });
                                             },
@@ -494,25 +481,15 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                                 controller.selectedValue[index]
                                                     .isApproved = !value;
 
-                                                controller
-                                                    .totalApproxAmountControllerList
-                                                    .add(TextEditingController(
-                                                        text: controller
-                                                            .getOnclickList[
-                                                                index]
-                                                            .iNVTPIApproxAmount
-                                                            .toString()));
-                                                // amount -= num.parse(controller
-                                                //     .totalApproxAmountControllerList
-                                                //     .elementAt(index)
-                                                //     .text);
-                                                (controller.amount <= 0)
-                                                    ? removeAmount(0)
-                                                    : removeAmount(double.parse(
-                                                        controller
-                                                            .totalApproxAmountControllerList
-                                                            .elementAt(index)
-                                                            .text));
+                                                if (controller
+                                                    .selectedValue[index]
+                                                    .isRejected) {
+                                                  controller.amount.value -=
+                                                      controller
+                                                          .getOnclickList[index]
+                                                          .iNVTPIApproxAmount!
+                                                          .toDouble();
+                                                }
 
                                                 updateCounts();
                                               });
@@ -558,6 +535,11 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                         DataCell(Align(
                                           alignment: Alignment.center,
                                           child: TextFormField(
+                                            readOnly: controller
+                                                    .selectedValue[index]
+                                                    .isApproved
+                                                ? false
+                                                : true,
                                             controller:
                                                 approvalAmountCountroller,
                                             initialValue: controller
@@ -572,6 +554,11 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                           controller: controller
                                               .unitControllerList
                                               .elementAt(index),
+                                          readOnly: controller
+                                                  .selectedValue[index]
+                                                  .isApproved
+                                              ? false
+                                              : true,
                                           keyboardType: TextInputType.number,
                                           style: const TextStyle(
                                               fontSize: 14,
@@ -723,5 +710,15 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                   ],
                 ),
         ));
+  }
+
+  void updateTotalAmount() {
+    controller.amount.value = 0;
+    for (int index = 0; index < controller.getOnclickList.length; index++) {
+      if (controller.selectedValue[index].isApproved) {
+        controller.amount.value +=
+            controller.getOnclickList[index].iNVTPIApproxAmount!.toDouble();
+      }
+    }
   }
 }
