@@ -135,16 +135,15 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                     .elementAt(index)
                     .iSMTPLTAId! ==
                 0) {
-              plannedEffort += (plannerCreationController.createdTaskList
+              plannedEffort += plannerCreationController.createdTaskList
                   .elementAt(index)
-                  .iSMTCRASTOEffortInHrs!);
+                  .iSMTCRASTOEffortInHrs!;
             }
           }
 
-          totalHour += double.parse(plannerCreationController.createdTaskList
+          totalHour += (plannerCreationController.createdTaskList
               .elementAt(index)
-              .iSMTCRASTOEffortInHrs!
-              .toStringAsFixed(2));
+              .iSMTCRASTOEffortInHrs!);
           logger.v('Total Hour:- ${totalHour.toStringAsFixed(2)}');
         });
         plannerrArray.add({

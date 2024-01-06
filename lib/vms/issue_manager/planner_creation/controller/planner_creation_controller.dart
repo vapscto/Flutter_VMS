@@ -72,7 +72,7 @@ class PlannerCreationController extends GetxController {
     int minutes = ((decimalHours - hours) * 60).round();
     String hoursStr = hours.toString().padLeft(2, '0');
     String minutesStr = minutes.toString().padLeft(2, '0');
-    return '$hoursStr:$minutesStr';
+    return '$hoursStr.$minutesStr';
   }
 
   RxList<CategoryWisePlanModelValues> categoryWisePlan =
@@ -87,7 +87,7 @@ class PlannerCreationController extends GetxController {
   double totalEffort = 0.0;
   double requiredEff = 0.0;
   double totalDays = 0.0;
-
+  double totalhour = 0.0;
   //Assigned plan list
   RxList<AssignedTaskListValues> assignedTaskList =
       <AssignedTaskListValues>[].obs;
@@ -101,16 +101,14 @@ class PlannerCreationController extends GetxController {
     }
     String startDate = '';
     String endDate = '';
-
+    totalhour = 0.0;
     for (int i = 0; i < value.length; i++) {
       assignedTaskList.add(value.elementAt(i));
-
       var val = value.elementAt(i);
-      time = val.iSMTCRASTOEffortInHrs!;
-      data = convertDecimalToTimeInPlanner(val.iSMTCRASTOEffortInHrs!);
-      String sst = data.replaceAll(":", ".");
-      plannerDate = double.parse(sst);
-      val.iSMTCRASTOEffortInHrs = double.parse(sst);
+      val.iSMTCRASTOEffortInHrs = double.parse(
+          convertDecimalToTimeInPlanner(val.iSMTCRASTOEffortInHrs!));
+      logger.w(
+          '======= totalhour ${totalhour += double.parse(convertDecimalToTimeInPlanner(val.iSMTCRASTOEffortInHrs!))}');
 
       if (val.iSMTCRASTOStartDate == null || val.iSMTCRASTOStartDate == '') {
         startDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
@@ -327,7 +325,7 @@ class PlannerCreationController extends GetxController {
   _addDataToList(String data, AssignedTaskListValues val, String startDate,
       String endDate) {
     createdTaskList.add(NewTableModel(
-        newTime: time,
+        // newTime: time,
         time: data,
         flag: true,
         iSMTCRASTOId: val.iSMTCRASTOId,
