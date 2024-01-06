@@ -96,7 +96,7 @@ class PlannerCreationController extends GetxController {
   assignedTask(List<AssignedTaskListValues> value) {
     if (createdTaskList.isNotEmpty) {
       assignedTaskList.clear();
-
+      createdTaskList.clear();
       data = '';
     }
     String startDate = '';
@@ -147,9 +147,9 @@ class PlannerCreationController extends GetxController {
           if (mm.pDates != null &&
               mm.pDates != '' &&
               DateTime.parse(mm.pDates!)
-                  .isBefore(DateTime.parse(val.iSMTCRASTOStartDate!)) &&
+                  .isAfter(DateTime.parse(val.iSMTCRASTOStartDate!)) &&
               DateTime.parse(mm.pDates!)
-                  .isAfter(DateTime.parse(val.iSMTCRASTOEndDate!))) {
+                  .isBefore(DateTime.parse(val.iSMTCRASTOEndDate!))) {
             _addDataToList(data, val, startDate, endDate);
           }
         }
@@ -321,36 +321,11 @@ class PlannerCreationController extends GetxController {
     if (categoryWisePlan.isNotEmpty) {
       categoryWisePlan.clear();
     }
-    formattedTime = '';
     categoryWisePlan.addAll(value);
-    requiredEff = 0.0;
-    for (var i = 0; i < categoryWisePlan.length; i++) {
-      for (var index in assignedTaskList) {
-        var minimumEffect =
-            categoryWisePlan[i].ismmtcaTTaskPercentage! / 100 * totalHour;
-        formattedTime = convertDecimalToTime(minimumEffect);
-        String newdt = formattedTime.replaceAll(":", ".");
-        if (categoryWisePlan[i].ismmtcaTId == index.iSMMTCATId) {
-          requiredEff = double.parse(newdt) - totalEffort;
-          if (totalEffort < requiredEff || totalEffort == 0.0) {
-            categoryList.clear();
-            categoryList.add(CategoryPlanTable(
-                '${categoryWisePlan[i].ismmtcaTTaskCategoryName}',
-                '${categoryWisePlan[i].ismmtcaTTaskPercentage} %',
-                "$formattedTime Hr",
-                "$totalEffort Hr",
-                "${requiredEff.toStringAsFixed(2)} Hr",
-                categoryWisePlan[i].ismmtcaTId!));
-          }
-        }
-      }
-    }
-    categoryList.toSet();
   }
 
   _addDataToList(String data, AssignedTaskListValues val, String startDate,
       String endDate) {
-    createdTaskList.clear();
     createdTaskList.add(NewTableModel(
         newTime: time,
         time: data,

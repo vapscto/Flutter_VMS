@@ -114,13 +114,10 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         endDate:
             (toDate != null) ? toDate!.toIso8601String() : dt.toIso8601String(),
         hrmeId: plannerCreationController.plannerStatus.first.hRMEId!);
-    if (plannerCreationController.categoryList.isNotEmpty) {
-      for (int index = 0;
-          index < plannerCreationController.categoryList.length;
-          index++) {
+    if (categoryList.isNotEmpty) {
+      for (int index = 0; index < categoryList.length; index++) {
         categoryArray.add({
-          "ISMMTCAT_Id":
-              plannerCreationController.categoryList.elementAt(index).ismtcatId,
+          "ISMMTCAT_Id": categoryList.elementAt(index).ismtcatId,
         });
         newCategoryArray.addAll(categoryArray.toSet());
       }
@@ -138,21 +135,17 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                     .elementAt(index)
                     .iSMTPLTAId! ==
                 0) {
-              plannedEffort += plannerCreationController.createdTaskList
+              plannedEffort += (plannerCreationController.createdTaskList
                   .elementAt(index)
-                  .newTime!;
+                  .iSMTCRASTOEffortInHrs!);
             }
           }
-          if (plannerCreationController.createdTaskList
-                  .elementAt(index)
-                  .iSMTCRASTOEffortInHrs !=
-              null) {
-            totalHour += plannerCreationController.createdTaskList
-                .elementAt(index)
-                .newTime!;
-            logger.v('Total Hour:- $totalHour');
-          }
-          //
+
+          totalHour += double.parse(plannerCreationController.createdTaskList
+              .elementAt(index)
+              .iSMTCRASTOEffortInHrs!
+              .toStringAsFixed(2));
+          logger.v('Total Hour:- ${totalHour.toStringAsFixed(2)}');
         });
         plannerrArray.add({
           "ISMTCR_Id": plannerCreationController.createdTaskList
@@ -189,7 +182,40 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     for (var element in plannerCreationController.effortDataValues) {
       plannerCreationController.totalHour += element.wORKINGHOURS!;
     }
+    getCategory();
     plannerCreationController.taskLoading(false);
+  }
+
+  List<CategoryPlanTable> categoryList = [];
+  void getCategory() {
+    categoryList.clear();
+    for (var i = 0;
+        i < plannerCreationController.categoryWisePlan.length;
+        i++) {
+      for (var index in plannerCreationController.assignedTaskList) {
+        var minimumEffect = plannerCreationController
+                .categoryWisePlan[i].ismmtcaTTaskPercentage! /
+            100 *
+            plannerCreationController.totalHour;
+        String formattedTime =
+            plannerCreationController.convertDecimalToTime(minimumEffect);
+        String newdt = formattedTime.replaceAll(":", ".");
+        if (plannerCreationController.categoryWisePlan[i].ismmtcaTId ==
+            index.iSMMTCATId) {
+          double requiredEff =
+              double.parse(newdt) - plannerCreationController.totalEffort;
+          if (plannerCreationController.totalEffort < requiredEff) {
+            categoryList.add(CategoryPlanTable(
+                '${plannerCreationController.categoryWisePlan[i].ismmtcaTTaskCategoryName}',
+                '${plannerCreationController.categoryWisePlan[i].ismmtcaTTaskPercentage} %',
+                "$formattedTime Hr",
+                "${plannerCreationController.totalEffort} Hr",
+                "${requiredEff.toStringAsFixed(2)} Hr",
+                plannerCreationController.categoryWisePlan[i].ismmtcaTId!));
+          }
+        }
+      }
+    }
   }
 
   getPlannerStatus() async {
@@ -227,8 +253,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
 
   @override
   void dispose() {
-    if (plannerCreationController.categoryList.isNotEmpty) {
-      plannerCreationController.categoryList.isEmpty;
+    if (categoryList.isNotEmpty) {
+      categoryList.isEmpty;
     }
     if (plannerCreationController.assignedTaskList.isNotEmpty) {
       plannerCreationController.assignedTaskList.isEmpty;
@@ -721,10 +747,10 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                 ],
                               ),
                             )),
-                            (plannerCreationController.categoryList.isNotEmpty)
+                            (categoryList.isNotEmpty)
                                 ? _createCategortTable()
                                 : const SizedBox(),
-                            (plannerCreationController.categoryList.isEmpty)
+                            (categoryList.isEmpty)
                                 ? Align(
                                     alignment: Alignment.bottomCenter,
                                     child: Padding(
@@ -1008,9 +1034,22 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                       ),
                     )),
                     DataCell(Text(data.assignedby!)),
-                    DataCell(Text('$startDate TO $endDate')),
+                    DataCell(
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: startDate, style: Get.textTheme.titleSmall!),
+                        TextSpan(
+                            text: ' TO ',
+                            style: Get.textTheme.titleSmall!
+                                .copyWith(color: Colors.red)),
+                        TextSpan(
+                            text: endDate,
+                            style: Get.textTheme.titleSmall!.copyWith()),
+                      ])),
+                    ),
                     DataCell(Text(
-                        '${data.iSMTCRASTOEffortInHrs!.toStringAsFixed(2)} Hr')),
+                        '${data.iSMTCRASTOEffortInHrs!.toStringAsFixed(2).replaceAll(".", ":")} Hr')),
                     DataCell(TextFormField(
                       initialValue: data.iSMTCRASTORemarks ?? '',
                       onChanged: (value) {
@@ -1086,10 +1125,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             ),
           ],
           rows: [
-            ...List.generate(plannerCreationController.categoryList.length,
-                (index) {
-              var value =
-                  plannerCreationController.categoryList.elementAt(index);
+            ...List.generate(categoryList.length, (index) {
+              var value = categoryList.elementAt(index);
               return DataRow(cells: [
                 DataCell(Text(value.categoryName)),
                 DataCell(Text(value.percentage)),
