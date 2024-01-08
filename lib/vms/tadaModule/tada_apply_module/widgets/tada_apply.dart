@@ -429,7 +429,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         vtadaaId: (tadaApplyDataController.tadaSavedData.isNotEmpty)
             ? tadaApplyDataController.tadaSavedData.first.vtadaaAId!
             : 0,
-        extraBalance: double.parse(_extraAmountController.text));
+        extraBalance: double.parse(_extraAmountController.text),
+        finalDocument: isFinalSubmition);
     tadaApplyDataController.saveData(false);
     getStateList();
     Get.back();
@@ -501,8 +502,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         'docx',
         'xls',
         'xlsx',
-        'pdf',
-        'mp4'
+        'pdf'
       ],
     );
 
@@ -526,6 +526,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   //File Picker
   @override
   void initState() {
+    getStateList();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       stateNew;
     });
@@ -538,6 +539,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
     super.initState();
   }
 
+  bool isFinalSubmition = true;
   @override
   void dispose() {
     tadaApplyDataController.tadaSavedData.clear();
@@ -616,7 +618,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             accommodationRemarksController.clear();
                             accommodationRemarksController.clear();
                             tadaApplyDataController.allowenseData.clear();
-                            tadaApplyDataController.stateList.clear();
                             _startDate.text =
                                 "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
                             fromSelectedDate =
@@ -650,7 +651,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 accommodationRemarksController.clear();
                                 accommodationRemarksController.clear();
                                 tadaApplyDataController.allowenseData.clear();
-                                tadaApplyDataController.stateList.clear();
                                 _startDate.text =
                                     "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
                                 fromSelectedDate =
@@ -749,7 +749,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                               accommodationRemarksController.clear();
                               accommodationRemarksController.clear();
                               tadaApplyDataController.allowenseData.clear();
-                              tadaApplyDataController.stateList.clear();
                               _endDate.text =
                                   "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                               dayCount =
@@ -794,7 +793,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                   accommodationRemarksController.clear();
                                   accommodationRemarksController.clear();
                                   tadaApplyDataController.allowenseData.clear();
-                                  tadaApplyDataController.stateList.clear();
                                   _endDate.text =
                                       "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                                   dayCount =
@@ -983,7 +981,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 '${numberList[toTime!.hourOfPeriod]}:${numberList[toTime!.minute]} ${toTime!.period.name.toUpperCase()}';
                             calculateHour(_startDate.text, _startTime.text,
                                 _endDate.text, _endTime.text);
-                            getStateList();
+                            // getStateList();
                           }
                         } else {
                           Fluttertoast.showToast(
@@ -2459,8 +2457,25 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
             ])),
           ),
           const SizedBox(
-            height: 16,
+            height: 10,
           ),
+          CheckboxListTile(
+              visualDensity: const VisualDensity(vertical: 0, horizontal: 0),
+              contentPadding: EdgeInsets.zero,
+              controlAffinity: ListTileControlAffinity.leading,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6)),
+              checkColor: Colors.indigo,
+              value: isFinalSubmition,
+              title: Text(
+                "Final Submission",
+                style: Get.textTheme.titleMedium,
+              ),
+              onChanged: (value) {
+                setState(() {
+                  isFinalSubmition = value!;
+                });
+              }),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -2538,6 +2553,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             controller: tadaApplyDataController
                                 .newRemarksController
                                 .elementAt(index),
+                            decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.all(3)),
                           ),
                         ),
                       )),
