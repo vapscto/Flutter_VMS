@@ -524,6 +524,7 @@ class URLS {
   static String tadaApplyDeactive = 'api/TADA_ApplyFacade/deactive/';
   static String applyTada = 'api/TADA_ApplyFacade/savedta/';
   static String tadaApplyEdit = 'api/TADA_ApplyFacade/edit/';
+  static String saveImage = 'api/TADA_ApplyFacade/Updatefile/';
 
   ///***  PETTY CASH APPROVAL  ***///
 

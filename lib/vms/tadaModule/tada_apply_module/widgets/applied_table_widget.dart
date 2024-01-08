@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/tada_apply_edit_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/screens/tada_update_image.dart';
 
-class AppliedTableWidget extends StatelessWidget {
+class AppliedTableWidget extends StatefulWidget {
   final MskoolController mskoolController;
   final LoginSuccessModel loginSuccessModel;
   final TadaApplyDataController tadaApplyDataController;
@@ -18,6 +15,12 @@ class AppliedTableWidget extends StatelessWidget {
     required this.mskoolController,
     required this.loginSuccessModel,
   });
+
+  @override
+  State<AppliedTableWidget> createState() => _AppliedTableWidgetState();
+}
+
+class _AppliedTableWidgetState extends State<AppliedTableWidget> {
   var date = '';
   var time = '';
   var tosavedDate = '';
@@ -59,45 +62,48 @@ class AppliedTableWidget extends StatelessWidget {
               DataColumn(label: Text("Account Final Submission")),
               DataColumn(label: Text("Action")),
             ],
-            rows: List.generate(tadaApplyDataController.getSavedData.length,
-                (index) {
+            rows: List.generate(
+                widget.tadaApplyDataController.getSavedData.length, (index) {
               var value = index + 1;
-              if (tadaApplyDataController.getSavedData[index].vtadaAFromDate !=
+              if (widget.tadaApplyDataController.getSavedData[index]
+                      .vtadaAFromDate !=
                   null) {
-                DateTime dt = DateTime.parse(tadaApplyDataController
+                DateTime dt = DateTime.parse(widget.tadaApplyDataController
                     .getSavedData[index].vtadaAFromDate!);
                 date = '${dt.day}-${dt.month}-${dt.year}';
               }
-              if (tadaApplyDataController.getSavedData[index].vtadaAToDate !=
+              if (widget.tadaApplyDataController.getSavedData[index]
+                      .vtadaAToDate !=
                   null) {
-                DateTime dt = DateTime.parse(
-                    tadaApplyDataController.getSavedData[index].vtadaAToDate!);
+                DateTime dt = DateTime.parse(widget
+                    .tadaApplyDataController.getSavedData[index].vtadaAToDate!);
                 toSelectedDate = '${dt.day}-${dt.month}-${dt.year}';
               }
               //
               return DataRow(cells: [
                 DataCell(Text(value.toString())),
-                DataCell(Text(
-                    tadaApplyDataController.getSavedData[index].ivrmmcTName ??
-                        "")),
+                DataCell(Text(widget.tadaApplyDataController.getSavedData[index]
+                        .ivrmmcTName ??
+                    "")),
                 DataCell(Text(date)),
-                DataCell(Text(tadaApplyDataController
-                        .getSavedData[index].vtadaADepartureTime ??
+                DataCell(Text(widget.tadaApplyDataController.getSavedData[index]
+                        .vtadaADepartureTime ??
                     '')),
                 DataCell(Text(toSelectedDate)),
-                DataCell(Text(tadaApplyDataController
-                        .getSavedData[index].vtadaAArrivalTime ??
+                DataCell(Text(widget.tadaApplyDataController.getSavedData[index]
+                        .vtadaAArrivalTime ??
                     '')),
-                DataCell(Text(tadaApplyDataController
-                    .getSavedData[index].vtadaATotalAppliedAmount
+                DataCell(Text(widget.tadaApplyDataController.getSavedData[index]
+                    .vtadaATotalAppliedAmount
                     .toString())),
                 DataCell(InkWell(
                   onTap: () {
                     Get.to(() => TADAUpdateImage(
-                          loginSuccessModel: loginSuccessModel,
-                          mskoolController: mskoolController,
-                          tadaApplyDataController: tadaApplyDataController,
-                          vtadaaId: tadaApplyDataController
+                          loginSuccessModel: widget.loginSuccessModel,
+                          mskoolController: widget.mskoolController,
+                          tadaApplyDataController:
+                              widget.tadaApplyDataController,
+                          vtadaaId: widget.tadaApplyDataController
                               .getSavedData[index].vtadaAId!,
                         ));
                   },
@@ -107,8 +113,8 @@ class AppliedTableWidget extends StatelessWidget {
                   ),
                 )),
                 DataCell(
-                  (tadaApplyDataController
-                              .getSavedData[index].vtadaAFinaldocument ==
+                  (widget.tadaApplyDataController.getSavedData[index]
+                              .vtadaAFinaldocument ==
                           true)
                       ? const Icon(
                           Icons.check,
@@ -120,8 +126,8 @@ class AppliedTableWidget extends StatelessWidget {
                         ),
                 ),
                 DataCell(
-                  (tadaApplyDataController
-                              .getSavedData[index].vtadaAActiveFlg ==
+                  (widget.tadaApplyDataController.getSavedData[index]
+                              .vtadaAApprovedFlg ==
                           true)
                       ? const Icon(
                           Icons.check,
@@ -133,16 +139,16 @@ class AppliedTableWidget extends StatelessWidget {
                         ),
                 ),
                 DataCell(Text(
-                    tadaApplyDataController
-                            .getSavedData[index].vtadaAStatusFlg ??
+                    widget.tadaApplyDataController.getSavedData[index]
+                            .vtadaAStatusFlg ??
                         ' ',
                     style: TextStyle(
-                      color: (tadaApplyDataController
-                                  .getSavedData[index].vtadaAStatusFlg ==
+                      color: (widget.tadaApplyDataController.getSavedData[index]
+                                  .vtadaAStatusFlg ==
                               'Rejected')
                           ? Colors.red
-                          : (tadaApplyDataController
-                                      .getSavedData[index].vtadaAStatusFlg ==
+                          : (widget.tadaApplyDataController.getSavedData[index]
+                                      .vtadaAStatusFlg ==
                                   'Approved')
                               ? Colors.green
                               : Colors.black,

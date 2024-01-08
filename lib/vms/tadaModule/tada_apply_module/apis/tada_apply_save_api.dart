@@ -112,3 +112,73 @@ class TadaSaveApi {
     }
   }
 }
+
+// image upload
+class TadaImageSaveApi {
+  TadaImageSaveApi.init();
+  static final TadaImageSaveApi instance = TadaImageSaveApi.init();
+  tadaImageSave({
+    required String base,
+    required int vtadaaId,
+    required TadaApplyDataController tadaApplyController,
+    required List<Map<String, dynamic>> fileList,
+    required int userId,
+    required int miId,
+    required bool finalDocument,
+  }) async {
+    logger.i({
+      "UserId": userId,
+      "MI_Id": miId,
+      "VTADAA_Id": vtadaaId,
+      "filelist": fileList,
+      "VTADAA_Finaldocument": finalDocument,
+    });
+    var dio = Dio();
+    var url = 'base' + URLS.saveImage;
+    try {
+      if (tadaApplyController.isErrorLoading.value = false) {
+        tadaApplyController.errorLoading(false);
+      }
+      tadaApplyController.saveData(true);
+      var response =
+          await dio.post(url, options: Options(headers: getSession()), data: {
+        "UserId": userId,
+        "MI_Id": miId,
+        "VTADAA_Id": vtadaaId,
+        "filelist": fileList,
+        "VTADAA_Finaldocument": finalDocument,
+      });
+
+      logger.i(url);
+      logger.i(response.data);
+      logger.i(response.statusCode);
+      if (response.statusCode == 200) {
+        if (response.data['returnvalue'] == true) {
+          if (response.data['returnval'] == "Insert") {
+            Fluttertoast.showToast(msg: "Record Saved Successfully");
+            return Get.back();
+          } else if (response.data['returnval'] == "Failed") {
+            Fluttertoast.showToast(msg: "Record Not saved");
+          } else if (response.data['returnval'] == "DuplicateAdavance") {
+            Fluttertoast.showToast(msg: "Record Already Exist");
+          } else if (response.data['returnval'] == "Update") {
+            Fluttertoast.showToast(msg: "Record Update Successfully");
+            return Get.back();
+          } else if (response.data['returnval'] == "UpdateFailed") {
+            Fluttertoast.showToast(msg: "Record Not Update");
+          } else if (response.data['returnval'] == "") {
+            Fluttertoast.showToast(msg: "please contact administrator !");
+          } else {
+            Fluttertoast.showToast(msg: "Record is not Saved");
+          }
+        }
+        tadaApplyController.saveData(false);
+      }
+    } on DioError catch (e) {
+      tadaApplyController.errorLoading(true);
+      logger.e(e.message);
+    } on Exception catch (e) {
+      logger.i(e.toString());
+    }
+  }
+}

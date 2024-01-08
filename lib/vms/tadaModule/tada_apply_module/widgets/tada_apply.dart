@@ -502,8 +502,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         'docx',
         'xls',
         'xlsx',
-        'pdf',
-        'mp4'
+        'pdf'
       ],
     );
 

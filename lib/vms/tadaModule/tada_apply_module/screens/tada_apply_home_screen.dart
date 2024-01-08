@@ -28,6 +28,7 @@ class _TadaApplyHomeScreenState extends State<TadaApplyHomeScreen>
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
+    newController = tabController;
     super.initState();
   }
 

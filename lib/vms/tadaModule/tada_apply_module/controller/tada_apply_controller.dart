@@ -215,6 +215,23 @@ class TadaApplyDataController extends GetxController {
 
   RxList<EditUploadImageModelValues> addUpdatedImageList =
       <EditUploadImageModelValues>[].obs;
+  RxList<AtachmentFileList> imageList = <AtachmentFileList>[].obs;
+}
+
+class AtachmentFileList {
+  int? id;
+  String? fileName;
+  String? filePath;
+  String? remarks;
+  String? status;
+  int? vtadaaId;
+  AtachmentFileList(
+      {required this.id,
+      required this.fileName,
+      this.filePath,
+      this.remarks,
+      this.status,
+      this.vtadaaId});
 }
 
 class AtachmentFile {
