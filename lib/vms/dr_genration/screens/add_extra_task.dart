@@ -104,7 +104,7 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
     for(int i= 0; i<checkBoxCount.length;i++){
       setState(() {
          widget.controller.addExtraTaskList.removeAt(checkBoxCount.elementAt(i));
-         widget.controller.extraTaskCheckBox.clear();
+         widget.controller.extraTaskCheckBox.removeAt(checkBoxCount.elementAt(i));
        logger.w(checkBoxCount.length); 
       });
       
@@ -240,15 +240,12 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
                                              widget.controller.extraTaskCheckBox[index] = value!; 
                                              if(value){
                                               if(checkBoxCount.contains(index)){
-                                              checkBoxCount.remove(index);
-                                                logger.w(checkBoxCount.toList());
-                                              }else{
+                                               checkBoxCount.remove(index);
+                                               }else{
                                                 checkBoxCount.add(index);
-                                                logger.w(checkBoxCount.toList());
-                                              }
+                                               }
                                              }else{
                                                checkBoxCount.remove(index);
-                                                logger.w(checkBoxCount.toList());
                                              }
                                             }),
                                       ),
@@ -268,7 +265,7 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
                                         RichText(
                                             text: TextSpan(children: [
                                           TextSpan(
-                                              text: 'Clint: ',
+                                              text: 'Client: ',
                                               style: Get.textTheme.titleSmall!
                                                   .copyWith(
                                                       color: Theme.of(context)
