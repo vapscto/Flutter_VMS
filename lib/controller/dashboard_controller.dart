@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/apis/dashboard_apis.dart';
-import 'package:m_skool_flutter/model/exam_graph_model.dart';
+// import 'package:m_skool_flutter/model/exam_graph_model.dart';
 import 'package:m_skool_flutter/model/exam_list.dart';
 import 'package:m_skool_flutter/model/student_dashboard_model.dart';
 
@@ -10,14 +10,14 @@ class DashboardController extends GetxController {
   RxList<TimeTableList> timeTableList = <TimeTableList>[].obs;
   RxList<ExamListNew> examList = <ExamListNew>[].obs;
 
-  RxList<ExamGraphListValues> values = RxList();
+  // RxList<ExamGraphListValues> values = RxList();
 
-  void addToValues(List<ExamGraphListValues> val) {
-    if (values.isNotEmpty) {
-      values.clear();
-    }
-    values.addAll(val);
-  }
+  // void addToValues(List<ExamGraphListValues> val) {
+  //   if (values.isNotEmpty) {
+  //     values.clear();
+  //   }
+  //   values.addAll(val);
+  // }
 
   RxBool isLoadingGraphData = RxBool(false);
 

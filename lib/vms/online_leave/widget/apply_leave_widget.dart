@@ -393,6 +393,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                         '${date.year}-${date.month}-${date.day}');
 
                                     getEndDate(date);
+                                    endDate.clear();
+                                    totalDay.value = '0';
                                     startDT = date;
                                     startDate.text =
                                         "${date.day}-${date.month}-${date.year}";

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/model/exam_graph_model.dart';
+// import 'package:m_skool_flutter/model/exam_graph_model.dart';
 import 'package:m_skool_flutter/model/exam_list.dart';
 import 'package:m_skool_flutter/model/student_dashboard_model.dart';
 import 'package:m_skool_flutter/staffs/model/dashboard_coe_data_model.dart';
@@ -61,7 +61,7 @@ class DynamicAnalyticsController extends GetxController {
   //Student
 
   final RxList<BirthdayListValues> birthday = RxList<BirthdayListValues>([]);
-  final RxList<ExamGraphListValues> examGraphVal = RxList();
+  // final RxList<ExamGraphListValues> examGraphVal = RxList();
   final RxList<ExamListNewValues> examList = RxList();
   final RxList<AttendanceListValues> attendance = RxList();
   final RxList<FeesListValues> feeList = RxList();
@@ -77,12 +77,12 @@ class DynamicAnalyticsController extends GetxController {
     birthday.addAll(bday);
   }
 
-  void updateExamGraph(List<ExamGraphListValues> graph) {
-    if (examGraphVal.isNotEmpty) {
-      examGraphVal.clear();
-    }
-    examGraphVal.addAll(graph);
-  }
+  // void updateExamGraph(List<ExamGraphListValues> graph) {
+  //   if (examGraphVal.isNotEmpty) {
+  //     examGraphVal.clear();
+  //   }
+  //   examGraphVal.addAll(graph);
+  // }
 
   void updateExamList(List<ExamListNewValues> exam) {
     if (examList.isNotEmpty) {
