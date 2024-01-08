@@ -125,9 +125,9 @@ class _TADAUpdateImageState extends State<TADAUpdateImage> {
         element++) {
       uploadArray.add({
         "VTADAAF_FilePath":
-            widget.tadaApplyDataController.imageList[element].fileName,
-        "VTADAAF_FileName":
             widget.tadaApplyDataController.imageList[element].filePath,
+        "VTADAAF_FileName":
+            widget.tadaApplyDataController.imageList[element].fileName,
         "VTADAAF_Remarks": widget
             .tadaApplyDataController.uploadedImageRemarkController
             .elementAt(element)
