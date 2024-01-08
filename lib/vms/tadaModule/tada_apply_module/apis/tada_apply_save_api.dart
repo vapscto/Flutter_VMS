@@ -134,7 +134,7 @@ class TadaImageSaveApi {
       "VTADAA_Finaldocument": finalDocument,
     });
     var dio = Dio();
-    var url = 'base' + URLS.saveImage;
+    var url = base + URLS.saveImage;
     try {
       if (tadaApplyController.isErrorLoading.value = false) {
         tadaApplyController.errorLoading(false);

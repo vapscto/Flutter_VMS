@@ -58,20 +58,22 @@ class _TADAUpdateImageState extends State<TADAUpdateImage> {
     for (int i = 0;
         i < widget.tadaApplyDataController.addUpdatedImageList.length;
         i++) {
-      // widget.tadaApplyDataController.getRemarks(TextEditingController(
-      //     text: widget.tadaApplyDataController.addUpdatedImageList[i]
-      //             .vtadaaFRemarks ??
-      //         ''));
-      logger.w(widget
-          .tadaApplyDataController.addUpdatedImageList[i].vtadaaFRemarks!);
       addItemListBrowse(
           i,
           widget
               .tadaApplyDataController.addUpdatedImageList[i].vtadaaFFileName!,
           widget
               .tadaApplyDataController.addUpdatedImageList[i].vtadaaFFilePath!,
-          widget
-              .tadaApplyDataController.addUpdatedImageList[i].vtadaaFRemarks!);
+          widget.tadaApplyDataController.addUpdatedImageList[i]
+                  .vtadaaFRemarks ??
+              '',
+          widget.tadaApplyDataController.addUpdatedImageList[i]
+                  .vtadaaFStatusFlg ??
+              '');
+    }
+    if (widget.tadaApplyDataController.addUpdatedImageList.isEmpty) {
+      Fluttertoast.showToast(msg: "Data is not Available");
+      Get.back();
     }
     widget.tadaApplyDataController.updateData(false);
   }
@@ -91,21 +93,17 @@ class _TADAUpdateImageState extends State<TADAUpdateImage> {
     String name,
     String path,
     String remarks1,
+    String status1,
   ) {
     setState(() {
       widget.tadaApplyDataController.imageList.add(AtachmentFileList(
-        id: val,
-        fileName: name,
-        filePath: path,
-        remarks: remarks1,
-      ));
-      logger.e(remarks1);
-      // for (int i = 0;
-      //     i < widget.tadaApplyDataController.imageList.length;
-      //     i++) {
+          id: val,
+          fileName: name,
+          filePath: path,
+          remarks: remarks1,
+          status: status1));
       widget.tadaApplyDataController
           .getRemarks(TextEditingController(text: remarks1));
-      // }
     });
   }
 
@@ -118,36 +116,18 @@ class _TADAUpdateImageState extends State<TADAUpdateImage> {
   List<UploadHwCwModel> uploadAttachment = [];
   List<Map<String, dynamic>> uploadArray = [];
   saveAPI() async {
-    String iRemarks = '';
-    if (widget.tadaApplyDataController.imageList.isNotEmpty) {
-      for (int i = 0;
-          i < widget.tadaApplyDataController.imageList.length;
-          i++) {
-        iRemarks = widget.tadaApplyDataController.uploadedImageRemarkController
-            .elementAt(i)
-            .text;
-      }
-    }
-
-    for (var element in widget.tadaApplyDataController.imageList) {
-      try {
-        uploadAttachment.add(await uploadAtt(
-            miId: widget.loginSuccessModel.mIID!,
-            file: File(element.filePath!)));
-      } catch (e) {
-        Fluttertoast.showToast(msg: "Please Upload Image");
-        return Future.error({
-          "errorTitle": "An Error Occured",
-          "errorMsg":
-              "While trying to upload attchement, we encountered an error"
-        });
-      }
-    }
-    for (var element in uploadAttachment) {
+    for (var element = 0;
+        element < widget.tadaApplyDataController.imageList.length;
+        element++) {
       uploadArray.add({
-        "VTADAAF_FilePath": element.path,
-        "VTADAAF_FileName": element.name,
-        "VTADAAF_Remarks": iRemarks
+        "VTADAAF_FilePath":
+            widget.tadaApplyDataController.imageList[element].fileName,
+        "VTADAAF_FileName":
+            widget.tadaApplyDataController.imageList[element].filePath,
+        "VTADAAF_Remarks": widget
+            .tadaApplyDataController.uploadedImageRemarkController
+            .elementAt(element)
+            .text
       });
     }
     await await TadaImageSaveApi.instance.tadaImageSave(
@@ -292,7 +272,7 @@ class _TADAUpdateImageState extends State<TADAUpdateImage> {
                                       ),
                                     ),
                                   )),
-                                  const DataCell(Text('')),
+                                  DataCell(Text(v.status!)),
                                   DataCell(Align(
                                       alignment: Alignment.center,
                                       child: index ==
@@ -305,6 +285,7 @@ class _TADAUpdateImageState extends State<TADAUpdateImage> {
                                                     onTap: () {
                                                       addItemListBrowse(
                                                           index + 1,
+                                                          '',
                                                           '',
                                                           '',
                                                           '');
@@ -380,13 +361,28 @@ class _TADAUpdateImageState extends State<TADAUpdateImage> {
       } else {
         setState(() {
           File file = File(result.files.single.path!);
-          widget.tadaApplyDataController.imageList[index].filePath = file.path;
-          widget.tadaApplyDataController.imageList[index].fileName =
-              result.names.first;
+          _getImageUrl(file, index);
         });
       }
     } else {
       Fluttertoast.showToast(msg: "Image Is not Uploaded Please try Again");
+    }
+  }
+
+  _getImageUrl(File path, int index) async {
+    try {
+      uploadAttachment.add(
+          await uploadAtt(miId: widget.loginSuccessModel.mIID!, file: path));
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Please Upload Image");
+      return Future.error({
+        "errorTitle": "An Error Occured",
+        "errorMsg": "While trying to upload attchement, we encountered an error"
+      });
+    }
+    for (var i in uploadAttachment) {
+      widget.tadaApplyDataController.imageList[index].filePath = i.path;
+      widget.tadaApplyDataController.imageList[index].fileName = i.name;
     }
   }
 }
