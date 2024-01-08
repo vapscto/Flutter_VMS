@@ -358,7 +358,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     minutesEt.text == "0") {
                                   Fluttertoast.showToast(msg: "Enter Time");
                                   return;
-                                } else if (int.parse(hoursEt.text) < -1) {
+                                } else if (hoursEt.text.isEmpty) {
                                   Fluttertoast.showToast(
                                       msg:
                                           "Hour should not be empty, Please enter 0");

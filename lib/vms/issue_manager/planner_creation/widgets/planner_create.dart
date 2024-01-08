@@ -211,6 +211,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                 "${plannerCreationController.totalEffort} Hr",
                 "${requiredEff.toStringAsFixed(2)} Hr",
                 plannerCreationController.categoryWisePlan[i].ismmtcaTId!));
+          } else {
+            categoryList.clear();
           }
         }
       }
