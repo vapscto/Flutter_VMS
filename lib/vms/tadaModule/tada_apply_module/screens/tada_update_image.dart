@@ -4,23 +4,29 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/tada_apply_edit_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/model/tada_edit_image_model.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
+import 'package:open_filex/open_filex.dart';
 
 class TADAUpdateImage extends StatefulWidget {
   final MskoolController mskoolController;
   final LoginSuccessModel loginSuccessModel;
   final TadaApplyDataController tadaApplyDataController;
+  final int vtadaaId;
   const TADAUpdateImage(
       {super.key,
       required this.mskoolController,
       required this.loginSuccessModel,
-      required this.tadaApplyDataController});
+      required this.tadaApplyDataController,
+      required this.vtadaaId});
 
   @override
   State<TADAUpdateImage> createState() => _TADAUpdateImageState();
@@ -37,24 +43,51 @@ class _TADAUpdateImageState extends State<TADAUpdateImage> {
     }
   }
 
+  editData(int id) async {
+    widget.tadaApplyDataController.updateData(true);
+    await TadaApplyUpdateAPI.instance.tadaApplyEditData(
+        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
+        userId: widget.loginSuccessModel.userId!,
+        miId: widget.loginSuccessModel.mIID!,
+        vtadaaaId: id,
+        tadaApplyController: widget.tadaApplyDataController);
+    for (int i = 0;
+        i < widget.tadaApplyDataController.addUpdatedImageList.length;
+        i++) {
+      addItemListBrowse(
+          i + 1,
+          widget
+              .tadaApplyDataController.addUpdatedImageList[i].vtadaaFFileName!,
+          widget
+              .tadaApplyDataController.addUpdatedImageList[i].vtadaaFFilePath!);
+    }
+    widget.tadaApplyDataController.updateData(false);
+  }
+
   @override
   void initState() {
-    addRow(0);
+    editData(widget.vtadaaId);
     super.initState();
   }
 
-  void addUpdatedimageIndex(int v) {
+  void removeUpdatedimageIndex(int v) {
     widget.tadaApplyDataController.addUpdatedImageList.removeAt(v);
   }
 
-  addItemListBrowse(int val, String name) {
+  addItemListBrowse(int val, String name, String path) {
     setState(() {
-      widget.tadaApplyDataController.addUpdatedImageList.add('');
+      widget.tadaApplyDataController.addUpdatedImageList
+          .add(EditUploadImageModelValues(
+        id: val,
+        vtadaaFFileName: name,
+        vtadaaFFilePath: path,
+      ));
       for (int i = 0;
           i < widget.tadaApplyDataController.addUpdatedImageList.length;
           i++) {
-        widget.tadaApplyDataController
-            .getRemarks(TextEditingController(text: ''));
+        widget.tadaApplyDataController.getRemarks(TextEditingController(
+            text: widget.tadaApplyDataController.addUpdatedImageList[i]
+                .vtadaaFRemarks));
       }
     });
   }
@@ -65,7 +98,18 @@ class _TADAUpdateImageState extends State<TADAUpdateImage> {
       appBar:
           const CustomAppBar(title: "TADA Advance File Details").getAppBar(),
       body: Obx(() {
-        return ListView(
+        return
+            // widget.tadaApplyDataController.isUpdate.value
+            //     ? const Center(
+            //         child: AnimatedProgressWidget(
+            //             title: "Loading ",
+            //             desc:
+            //                 "Please wait while we load  and create a view for you.",
+            //             animationPath: "assets/json/default.json"),
+            //       )
+            //     : (widget.tadaApplyDataController.addUpdatedImageList.isEmpty)
+            //         ? const SizedBox():
+            ListView(
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
           children: [
             CheckboxListTile(
@@ -85,9 +129,16 @@ class _TADAUpdateImageState extends State<TADAUpdateImage> {
                     isFinalSubmition = value!;
                   });
                 }),
+            Padding(
+              padding: const EdgeInsets.only(left: 6, bottom: 10),
+              child: Text(
+                "* File size should be less than 5 MB",
+                style: Get.textTheme.titleSmall!.copyWith(color: Colors.red),
+              ),
+            ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 6),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: DataTable(
@@ -110,9 +161,12 @@ class _TADAUpdateImageState extends State<TADAUpdateImage> {
                     DataColumn(label: Text("Approval Remark")),
                     DataColumn(label: Text("Action")),
                   ],
-                  rows: List.generate(newList.length, (index) {
+                  rows: List.generate(
+                      widget.tadaApplyDataController.addUpdatedImageList.length,
+                      (index) {
                     var value = index + 1;
-                    //
+                    var v = widget.tadaApplyDataController.addUpdatedImageList
+                        .elementAt(index);
                     return DataRow(cells: [
                       DataCell(Text(value.toString())),
                       DataCell(InkWell(
@@ -134,7 +188,9 @@ class _TADAUpdateImageState extends State<TADAUpdateImage> {
                         ),
                       )),
                       DataCell(IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            OpenFilex.open(v.vtadaaFFilePath);
+                          },
                           icon: const Icon(Icons.visibility))),
                       DataCell(Padding(
                         padding: const EdgeInsets.all(4.0),
@@ -155,31 +211,35 @@ class _TADAUpdateImageState extends State<TADAUpdateImage> {
                           ),
                         ),
                       )),
-                      DataCell(Container()),
+                      DataCell(Text(v.vtadaaFApprovedFlg.toString())),
                       DataCell(Align(
                           alignment: Alignment.center,
-                          child: index == newList.length - 1
+                          child: index ==
+                                  widget.tadaApplyDataController
+                                          .addUpdatedImageList.length -
+                                      1
                               ? Row(
                                   children: [
                                     InkWell(
                                         onTap: () {
-                                          newList.add(index + 1);
+                                          addItemListBrowse(index + 1, "", "");
                                         },
                                         child: const Icon(Icons.add)),
                                     index >= 1
                                         ? InkWell(
                                             onTap: () {
-                                              newList.add(index - 1);
-                                              ;
+                                              removeUpdatedimageIndex(index);
                                             },
                                             child: const Icon(Icons.remove))
                                         : const SizedBox()
                                   ],
                                 )
-                              : index < newList.length
+                              : index <
+                                      widget.tadaApplyDataController
+                                          .addUpdatedImageList.length
                                   ? InkWell(
                                       onTap: () {
-                                        newList.add(index + 1);
+                                        removeUpdatedimageIndex(index);
                                       },
                                       child: const Icon(Icons.remove))
                                   : null)),
@@ -202,6 +262,7 @@ class _TADAUpdateImageState extends State<TADAUpdateImage> {
     );
   }
 
+  int maxFileSize = 5 * 1024 * 1024;
   Future<void> pickImage(int index) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -213,14 +274,26 @@ class _TADAUpdateImageState extends State<TADAUpdateImage> {
         'docx',
         'xls',
         'xlsx',
-        'pdf',
-        'mp4'
+        'pdf'
       ],
     );
 
     if (result != null) {
-      File file = File(result.files.single.path!);
-      XFile xFile = XFile(file.path);
+      int fileSize = result.files.single.size;
+      if (fileSize > maxFileSize) {
+        Fluttertoast.showToast(
+            msg: 'File size exceeds the maximum allowed size.');
+      } else {
+        setState(() {
+          File file = File(result.files.single.path!);
+          XFile xFile = XFile(file.path);
+          widget.tadaApplyDataController.addUpdatedImageList[index]
+              .vtadaaFFileName = result.names.first;
+          widget.tadaApplyDataController.addUpdatedImageList[index]
+              .vtadaaFFilePath = file.path;
+        });
+      }
+
       // tadaApplyDataController.addListBrowser[index].file = xFile;
       // tadaApplyDataController.addListBrowser[index].FileName =
       // result.names.first;

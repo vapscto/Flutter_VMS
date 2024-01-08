@@ -429,7 +429,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         vtadaaId: (tadaApplyDataController.tadaSavedData.isNotEmpty)
             ? tadaApplyDataController.tadaSavedData.first.vtadaaAId!
             : 0,
-        extraBalance: double.parse(_extraAmountController.text));
+        extraBalance: double.parse(_extraAmountController.text),
+        finalDocument: isFinalSubmition);
     tadaApplyDataController.saveData(false);
     getStateList();
     Get.back();
@@ -2558,6 +2559,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             controller: tadaApplyDataController
                                 .newRemarksController
                                 .elementAt(index),
+                            decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.all(3)),
                           ),
                         ),
                       )),
