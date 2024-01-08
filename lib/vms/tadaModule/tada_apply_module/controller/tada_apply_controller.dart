@@ -207,6 +207,7 @@ class TadaApplyDataController extends GetxController {
   void getEditImage(List<EditUploadImageModelValues> edituploadImage) {
     if (addUpdatedImageList.isNotEmpty) {
       addUpdatedImageList.clear();
+      imageList.clear();
     }
     for (int i = 0; i < edituploadImage.length; i++) {
       addUpdatedImageList.add(edituploadImage.elementAt(i));

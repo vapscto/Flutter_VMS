@@ -110,6 +110,10 @@ class _TADAUpdateImageState extends State<TADAUpdateImage> {
   @override
   void dispose() {
     widget.tadaApplyDataController.imageList.clear();
+    if (widget
+        .tadaApplyDataController.uploadedImageRemarkController.isNotEmpty) {
+      widget.tadaApplyDataController.uploadedImageRemarkController.clear();
+    }
     super.dispose();
   }
 
