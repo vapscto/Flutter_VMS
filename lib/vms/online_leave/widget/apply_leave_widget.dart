@@ -394,6 +394,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
 
                                     getEndDate(date);
                                     endDate.clear();
+                                    reportingDate.clear();
                                     totalDay.value = '0';
                                     startDT = date;
                                     startDate.text =
