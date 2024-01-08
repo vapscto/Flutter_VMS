@@ -41,6 +41,9 @@ class AddExtraTaskAPI {
         AddExtraTaskModel addExtraTaskDRListResponse =
             AddExtraTaskModel.fromJson(response.data['getextratasks']);
         controller.getExtratask(addExtraTaskDRListResponse.values!);
+        for(int i = 0; i < addExtraTaskDRListResponse.values!.length;i++){
+        controller.extraTaskCheckBox.add(false);
+        }
       }
     } on Exception catch (e) {
       logger.printError();
