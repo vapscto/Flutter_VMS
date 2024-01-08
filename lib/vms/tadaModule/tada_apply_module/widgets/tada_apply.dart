@@ -526,6 +526,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   //File Picker
   @override
   void initState() {
+    getStateList();
+    tadaApplyDataController.stateList.clear();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       stateNew;
     });
@@ -538,6 +540,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
     super.initState();
   }
 
+  bool isFinalSubmition = true;
   @override
   void dispose() {
     tadaApplyDataController.tadaSavedData.clear();
@@ -2459,8 +2462,25 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
             ])),
           ),
           const SizedBox(
-            height: 16,
+            height: 10,
           ),
+          CheckboxListTile(
+              visualDensity: const VisualDensity(vertical: 0, horizontal: 0),
+              contentPadding: EdgeInsets.zero,
+              controlAffinity: ListTileControlAffinity.leading,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6)),
+              checkColor: Colors.indigo,
+              value: isFinalSubmition,
+              title: Text(
+                "Final Submission",
+                style: Get.textTheme.titleMedium,
+              ),
+              onChanged: (value) {
+                setState(() {
+                  isFinalSubmition = value!;
+                });
+              }),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16),

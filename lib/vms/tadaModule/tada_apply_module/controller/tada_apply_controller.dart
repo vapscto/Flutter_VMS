@@ -188,6 +188,16 @@ class TadaApplyDataController extends GetxController {
       tadaSavedDataValues.add(values.elementAt(i));
     }
   }
+
+  // NewEnhancement
+  RxList<TextEditingController> uploadedImageRemarkController =
+      <TextEditingController>[].obs;
+  void getRemarks(TextEditingController textEditingController) {
+    uploadedImageRemarkController.add(textEditingController);
+  }
+
+  RxList<String> addUpdatedImageList = <String>[].obs;
+  void addUpdatedimageIndex(int v) {}
 }
 
 class AtachmentFile {
