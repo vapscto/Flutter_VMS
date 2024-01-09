@@ -183,13 +183,10 @@ class _VMSMessagingScreenState extends State<VMSMessagingScreen> {
                       staffInteractionComposeController.issubmitloading(true);
                       await sendVMSMessage(
                         miId: widget.loginSuccessModel.mIID!,
-                        amstId: widget.loginSuccessModel.amsTId!,
                         asmayId: widget.loginSuccessModel.asmaYId!,
                         message: textMessage.text,
-                        istintComposedByFlg: widget.ismintComposedById,
                         ismintId: widget.ismintId,
                         userId: widget.loginSuccessModel.userId!,
-                        image: [],
                         roleId: widget.loginSuccessModel.roleId!,
                         base: baseUrlFromInsCode(
                             'portal', widget.mskoolController),
