@@ -104,13 +104,12 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
               mskoolController: widget.mskoolController,
               title: 'Punch Report',
               previousScreen: '1',
-              // punchFilterController: punchFilterController,
             ),
             selectedColor: const Color(0xFFFFA901),
             size: 24.0),
         HomePageModel(
             title: "COE",
-            icon: 'assets/images/money.png',
+            icon: 'assets/images/event.png',
             page: CoeHomeScreen(
               loginSuccessModel: widget.loginSuccessModel,
               mskoolController: widget.mskoolController,
@@ -118,7 +117,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
               // previousScreen: '1',
               profileController: profileController,
             ),
-            selectedColor: const Color(0xFFFF008C),
+            selectedColor: Color.fromRGBO(247, 80, 80, 1),
             size: 24.0),
         HomePageModel(
           title: "Profile",
@@ -139,7 +138,6 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
   void dispose() {
     Get.delete<DynamicAnalyticsController>();
     pageController.dispose();
-
     super.dispose();
   }
 
