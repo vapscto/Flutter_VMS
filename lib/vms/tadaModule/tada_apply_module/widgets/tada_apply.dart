@@ -429,7 +429,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         vtadaaId: (tadaApplyDataController.tadaSavedData.isNotEmpty)
             ? tadaApplyDataController.tadaSavedData.first.vtadaaAId!
             : 0,
-        extraBalance: double.parse(_extraAmountController.text));
+        extraBalance: double.parse(_extraAmountController.text),
+        finalDocument: isFinalSubmition);
     tadaApplyDataController.saveData(false);
     getStateList();
     Get.back();
@@ -501,8 +502,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         'docx',
         'xls',
         'xlsx',
-        'pdf',
-        'mp4'
+        'pdf'
       ],
     );
 
@@ -527,7 +527,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   @override
   void initState() {
     getStateList();
-    tadaApplyDataController.stateList.clear();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       stateNew;
     });
@@ -619,7 +618,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             accommodationRemarksController.clear();
                             accommodationRemarksController.clear();
                             tadaApplyDataController.allowenseData.clear();
-                            tadaApplyDataController.stateList.clear();
                             _startDate.text =
                                 "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
                             fromSelectedDate =
@@ -653,7 +651,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 accommodationRemarksController.clear();
                                 accommodationRemarksController.clear();
                                 tadaApplyDataController.allowenseData.clear();
-                                tadaApplyDataController.stateList.clear();
                                 _startDate.text =
                                     "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
                                 fromSelectedDate =
@@ -752,7 +749,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                               accommodationRemarksController.clear();
                               accommodationRemarksController.clear();
                               tadaApplyDataController.allowenseData.clear();
-                              tadaApplyDataController.stateList.clear();
                               _endDate.text =
                                   "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                               dayCount =
@@ -797,7 +793,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                   accommodationRemarksController.clear();
                                   accommodationRemarksController.clear();
                                   tadaApplyDataController.allowenseData.clear();
-                                  tadaApplyDataController.stateList.clear();
                                   _endDate.text =
                                       "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                                   dayCount =
@@ -986,7 +981,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 '${numberList[toTime!.hourOfPeriod]}:${numberList[toTime!.minute]} ${toTime!.period.name.toUpperCase()}';
                             calculateHour(_startDate.text, _startTime.text,
                                 _endDate.text, _endTime.text);
-                            getStateList();
+                            // getStateList();
                           }
                         } else {
                           Fluttertoast.showToast(
@@ -2558,6 +2553,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             controller: tadaApplyDataController
                                 .newRemarksController
                                 .elementAt(index),
+                            decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.all(3)),
                           ),
                         ),
                       )),

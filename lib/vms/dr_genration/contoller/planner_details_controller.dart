@@ -184,6 +184,11 @@ class PlannerDetails extends GetxController {
       addRemarks(TextEditingController(text: ''));
     }
   }
+  /**
+   *  addExtraTask  checkbox List
+   */
+   RxList<bool> extraTaskCheckBox =  <bool>[].obs;
+
 }
 
 class AtachmenDrtFile {

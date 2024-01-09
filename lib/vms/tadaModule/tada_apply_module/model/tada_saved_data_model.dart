@@ -35,9 +35,11 @@ class TadaSavedModelValues {
   String? vtadaACreatedDate;
   int? vtadaAClientId;
   String? vtadaAToAddress;
+  String? vtadaARemarks;
   double? vtadaATotalAppliedAmount;
   double? vtadaATotalSactionedAmount;
   double? vtadaATotalPaidAmount;
+  String? emplYoeeName;
   int? ivrmmcTId;
   int? ivrmmSId;
   int? hrmdeSId;
@@ -46,6 +48,8 @@ class TadaSavedModelValues {
   String? vtadaADepartureTime;
   String? vtadaAArrivalTime;
   bool? vtadaAActiveFlg;
+  bool? vtadaAFinaldocument;
+  bool? vtadaAApprovedFlg;
 
   TadaSavedModelValues(
       {this.userId,
@@ -58,9 +62,11 @@ class TadaSavedModelValues {
       this.vtadaACreatedDate,
       this.vtadaAClientId,
       this.vtadaAToAddress,
+      this.vtadaARemarks,
       this.vtadaATotalAppliedAmount,
       this.vtadaATotalSactionedAmount,
       this.vtadaATotalPaidAmount,
+      this.emplYoeeName,
       this.ivrmmcTId,
       this.ivrmmSId,
       this.hrmdeSId,
@@ -68,7 +74,9 @@ class TadaSavedModelValues {
       this.ivrmmcTName,
       this.vtadaADepartureTime,
       this.vtadaAArrivalTime,
-      this.vtadaAActiveFlg});
+      this.vtadaAActiveFlg,
+      this.vtadaAFinaldocument,
+      this.vtadaAApprovedFlg});
 
   TadaSavedModelValues.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -81,9 +89,11 @@ class TadaSavedModelValues {
     vtadaACreatedDate = json['vtadaA_CreatedDate'];
     vtadaAClientId = json['vtadaA_ClientId'];
     vtadaAToAddress = json['vtadaA_ToAddress'];
+    vtadaARemarks = json['vtadaA_Remarks'];
     vtadaATotalAppliedAmount = json['vtadaA_TotalAppliedAmount'];
     vtadaATotalSactionedAmount = json['vtadaA_TotalSactionedAmount'];
     vtadaATotalPaidAmount = json['vtadaA_TotalPaidAmount'];
+    emplYoeeName = json['emplYoeeName'];
     ivrmmcTId = json['ivrmmcT_Id'];
     ivrmmSId = json['ivrmmS_Id'];
     hrmdeSId = json['hrmdeS_Id'];
@@ -92,6 +102,8 @@ class TadaSavedModelValues {
     vtadaADepartureTime = json['vtadaA_DepartureTime'];
     vtadaAArrivalTime = json['vtadaA_ArrivalTime'];
     vtadaAActiveFlg = json['vtadaA_ActiveFlg'];
+    vtadaAFinaldocument = json['vtadaA_Finaldocument'];
+    vtadaAApprovedFlg = json['vtadaA_ApprovedFlg'];
   }
 
   Map<String, dynamic> toJson() {
@@ -106,9 +118,11 @@ class TadaSavedModelValues {
     data['vtadaA_CreatedDate'] = vtadaACreatedDate;
     data['vtadaA_ClientId'] = vtadaAClientId;
     data['vtadaA_ToAddress'] = vtadaAToAddress;
+    data['vtadaA_Remarks'] = vtadaARemarks;
     data['vtadaA_TotalAppliedAmount'] = vtadaATotalAppliedAmount;
     data['vtadaA_TotalSactionedAmount'] = vtadaATotalSactionedAmount;
     data['vtadaA_TotalPaidAmount'] = vtadaATotalPaidAmount;
+    data['emplYoeeName'] = emplYoeeName;
     data['ivrmmcT_Id'] = ivrmmcTId;
     data['ivrmmS_Id'] = ivrmmSId;
     data['hrmdeS_Id'] = hrmdeSId;
@@ -117,6 +131,8 @@ class TadaSavedModelValues {
     data['vtadaA_DepartureTime'] = vtadaADepartureTime;
     data['vtadaA_ArrivalTime'] = vtadaAArrivalTime;
     data['vtadaA_ActiveFlg'] = vtadaAActiveFlg;
+    data['vtadaA_Finaldocument'] = vtadaAFinaldocument;
+    data['vtadaA_ApprovedFlg'] = vtadaAApprovedFlg;
     return data;
   }
 }

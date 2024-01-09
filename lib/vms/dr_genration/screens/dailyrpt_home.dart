@@ -535,13 +535,17 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                 return;
                               }
                             }
-                            if (_plannerDetailsController
-                                .closeTaskCoutnList.isNotEmpty) {
-                              Fluttertoast.showToast(
-                                  msg:
-                                      "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task");
-                              return;
-                            }
+                            /**
+                             *  plase check this condition
+                             */
+                            
+                            // if (_plannerDetailsController
+                            //     .closeTaskCoutnList.isNotEmpty) {
+                            //   Fluttertoast.showToast(
+                            //       msg:
+                            //           "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task");
+                            //   return;
+                            // }
                             saveDaetails();
                           } else {
                             Fluttertoast.showToast(
@@ -2144,42 +2148,42 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                               ),
                       ),
                       const SizedBox(height: 16),
-                      // Align(
-                      //   alignment: Alignment.bottomCenter,
-                      //   child: SizedBox(
-                      //     height: 50,
-                      //     width: 180,
-                      //     child: ElevatedButton(
-                      //         style: ElevatedButton.styleFrom(
-                      //             backgroundColor:
-                      //                 Theme.of(context).primaryColor,
-                      //             shape: RoundedRectangleBorder(
-                      //                 borderRadius: BorderRadius.circular(20))),
-                      //         onPressed: () {
-                      //           Get.to(AddExtraTaskScreen(
-                      //             loginSuccessModel: widget.loginSuccessModel,
-                      //             mskoolController: widget.mskoolController,
-                      //             controller: _plannerDetailsController,
-                      //           ));
-                      //         },
-                      //         child: Row(
-                      //           crossAxisAlignment: CrossAxisAlignment.center,
-                      //           mainAxisAlignment: MainAxisAlignment.center,
-                      //           children: [
-                      //             const Icon(
-                      //               Icons.add,
-                      //               color: Colors.white,
-                      //             ),
-                      //             const SizedBox(width: 5),
-                      //             Text(
-                      //               "Add Extra Task",
-                      //               style: Get.textTheme.titleMedium!
-                      //                   .copyWith(color: Colors.white),
-                      //             )
-                      //           ],
-                      //         )),
-                      //   ),
-                      // ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: SizedBox(
+                          height: 50,
+                          width: 180,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20))),
+                              onPressed: () {
+                                Get.to(AddExtraTaskScreen(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                  controller: _plannerDetailsController,
+                                ));
+                              },
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.add,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    "Add Extra Task",
+                                    style: Get.textTheme.titleMedium!
+                                        .copyWith(color: Colors.white),
+                                  )
+                                ],
+                              )),
+                        ),
+                      ),
                       const SizedBox(height: 10),
                     ],
                   ),

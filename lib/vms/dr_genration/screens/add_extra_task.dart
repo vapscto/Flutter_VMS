@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/vms/dr_genration/model/add_extra_task_model.dart
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
+import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
 class AddExtraTaskScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -30,9 +31,8 @@ class AddExtraTaskScreen extends StatefulWidget {
 class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
   final TextEditingController fromDate = TextEditingController();
   final TextEditingController toDate = TextEditingController();
-  List<AddExtraTaskModelValues> fliteresList = [];
-  AddExtraTaskModelValues? addExtraTaskModelValues;
-
+ AddExtraTaskModelValues? addExtraTaskModelValues;
+ RxList<int> checkBoxCount = RxList<int>();
   getExtraTask() async {
     widget.controller.updateErrorLoadingaddExtraTaskDR(true);
     await AddExtraTaskAPI.instance.addExtraTaskDR(
@@ -49,21 +49,25 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
   bool addPlanner = false;
   @override
   void initState() {
-    getExtraTask();
+    if(  widget.controller.addExtraTaskList.isEmpty){
+       getExtraTask();
+    } 
+    
     super.initState();
   }
 
   @override
   void dispose() {
-    fliteresList.clear();
-    super.dispose();
+  // widget.controller.addExtraTaskList.clear(); 
+   super.dispose();
   }
 
   String startDate = '';
   String endDate = '';
-  addExtraTaskToDR() {
-    for (int i = 0; i < fliteresList.length; i++) {
-      var v = fliteresList.elementAt(i);
+  Future<void> addExtraTaskToDR()async {
+    logger.w("Before ${widget.controller.getTaskDrList.length}");
+    for(int i = 0 ;i< checkBoxCount.length;i++){
+       var v = widget.controller.addExtraTaskList.elementAt(checkBoxCount.elementAt(i));
       widget.controller.getTaskDrList.add(GetTaskDrListModelValues(
         iSMMCLTId: v.iSMMCLTId,
         iSMMTCATId: v.iSMMTCATId,
@@ -89,22 +93,36 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
         iSMTPLEndDate: v.enddatenew,
         iSMDRPTRemarks: widget.controller.remarksController.elementAt(i).text,
       ));
+      widget.controller.etResponse.add(TextEditingController(text: ''));
+      widget.controller.hoursEt.add(TextEditingController(text: ''));
+      widget.controller.minutesEt.add(TextEditingController(text: ''));
+      widget.controller.statusEtField.add(TextEditingController(text: ''));
+      widget.controller.deveationEtField.add(TextEditingController(text:''));
+      widget.controller.checkBoxList.add(false);
+      logger.w("after ${widget.controller.getTaskDrList.length}");
+    }
+    for(int i= 0; i<checkBoxCount.length;i++){
+      setState(() {
+         widget.controller.addExtraTaskList.removeAt(checkBoxCount.elementAt(i));
+         widget.controller.extraTaskCheckBox.removeAt(checkBoxCount.elementAt(i));
+       logger.w(checkBoxCount.length); 
+      });
+      
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("ADD EXTRA TASK"),
-          actions: [
-            Padding(
+        appBar: CustomAppBar(title:  "ADD EXTRA TASK",
+        action: [
+              Padding(
               padding: const EdgeInsets.all(8.0),
               child: BtnSave(
                 onPress: () async {
-                  if (fliteresList.isNotEmpty) {
-                    addExtraTaskToDR();
-                    Get.back();
+                  if (checkBoxCount.isNotEmpty) {
+                  await  addExtraTaskToDR();
+                   Get.back();
                   } else {
                     Fluttertoast.showToast(msg: "Select task");
                     return;
@@ -112,9 +130,9 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
                 },
                 title: "ADD",
               ),
-            ),
-          ],
-        ),
+            ),  
+        ]
+        ).getAppBar(),
         body: Obx(() {
           return SingleChildScrollView(
               scrollDirection: Axis.vertical,
@@ -205,40 +223,32 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
                                       .elementAt(index);
                                   DateTime dt =
                                       DateTime.parse(v.iSMTCRCreationDate!);
-                                  if (v.addtoplannerflag == 0) {
-                                    addPlanner = false;
-                                  } else {
-                                    addPlanner = true;
-                                  }
+                                  
                                   return DataRow(cells: [
                                     DataCell(
                                       Text(v1.toString()),
                                     ),
                                     DataCell(
-                                      Checkbox(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(6)),
-                                          checkColor: Colors.indigo,
-                                          value: addPlanner,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              addPlanner = !addPlanner;
-                                              if (value!) {
-                                                fliteresList.clear();
-                                                fliteresList.add(widget
-                                                    .controller.addExtraTaskList
-                                                    .elementAt(index));
-                                                v.addtoplannerflag = 1;
-                                                logger.i(fliteresList.toList());
-                                                logger.e(fliteresList
-                                                    .first.assignedby);
-                                              } else {
-                                                fliteresList.removeAt(index);
-                                                v.addtoplannerflag = 0;
-                                              }
-                                            });
-                                          }),
+                                      Obx(
+                                        ()=> Checkbox(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(6)),
+                                            checkColor: Colors.indigo,
+                                            value:  widget.controller.extraTaskCheckBox[index],
+                                            onChanged: (value) {
+                                             widget.controller.extraTaskCheckBox[index] = value!; 
+                                             if(value){
+                                              if(checkBoxCount.contains(index)){
+                                               checkBoxCount.remove(index);
+                                               }else{
+                                                checkBoxCount.add(index);
+                                               }
+                                             }else{
+                                               checkBoxCount.remove(index);
+                                             }
+                                            }),
+                                      ),
                                     ),
                                     DataCell(Column(
                                       crossAxisAlignment:
@@ -255,7 +265,7 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
                                         RichText(
                                             text: TextSpan(children: [
                                           TextSpan(
-                                              text: 'Clint: ',
+                                              text: 'Client: ',
                                               style: Get.textTheme.titleSmall!
                                                   .copyWith(
                                                       color: Theme.of(context)
@@ -381,7 +391,7 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
                           ))));
         }));
   }
-
+  
   DateTime? dt;
   Future<String?> getDate(String fromDate) async {
     dt = await showDatePicker(

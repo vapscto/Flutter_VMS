@@ -185,25 +185,29 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     plannerCreationController.taskLoading(false);
   }
 
+  double effort = 0.0;
   List<CategoryPlanTable> categoryList = [];
   void getCategory() {
+    effort = 0.0;
     categoryList.clear();
     for (var i = 0;
         i < plannerCreationController.categoryWisePlan.length;
         i++) {
+      var minimumEffect = plannerCreationController
+              .categoryWisePlan[i].ismmtcaTTaskPercentage! /
+          100 *
+          plannerCreationController.totalHour;
+      String formattedTime =
+          plannerCreationController.convertDecimalToTime(minimumEffect);
+      String newdt = formattedTime.replaceAll(":", ".");
       for (var index in plannerCreationController.assignedTaskList) {
-        var minimumEffect = plannerCreationController
-                .categoryWisePlan[i].ismmtcaTTaskPercentage! /
-            100 *
-            plannerCreationController.totalHour;
-        String formattedTime =
-            plannerCreationController.convertDecimalToTime(minimumEffect);
-        String newdt = formattedTime.replaceAll(":", ".");
         if (plannerCreationController.categoryWisePlan[i].ismmtcaTId ==
             index.iSMMTCATId) {
+          effort += index.iSMTCRASTOEffortInHrs!;
           double requiredEff =
               double.parse(newdt) - plannerCreationController.totalEffort;
-          if (plannerCreationController.totalEffort < requiredEff) {
+          logger.w(effort);
+          if (effort < requiredEff) {
             categoryList.add(CategoryPlanTable(
                 '${plannerCreationController.categoryWisePlan[i].ismmtcaTTaskCategoryName}',
                 '${plannerCreationController.categoryWisePlan[i].ismmtcaTTaskPercentage} %',
@@ -214,9 +218,11 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
           } else {
             categoryList.clear();
           }
+          break;
         }
       }
     }
+    categoryList.toSet();
   }
 
   getPlannerStatus() async {
