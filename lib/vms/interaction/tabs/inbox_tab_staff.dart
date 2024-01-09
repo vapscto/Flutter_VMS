@@ -40,7 +40,7 @@ class _InboxTabStaffState extends State<InboxTabStaff> {
         userId: widget.loginSuccessModel.userId!,
         irmrtId: widget.loginSuccessModel.roleId!,
         flag: "S",
-        ismintrId: 234);
+        ismintrId: 233);
     staffInteractionComposeController.isgetdetailloading(false);
   }
 
