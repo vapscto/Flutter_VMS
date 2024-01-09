@@ -535,13 +535,17 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                 return;
                               }
                             }
-                            if (_plannerDetailsController
-                                .closeTaskCoutnList.isNotEmpty) {
-                              Fluttertoast.showToast(
-                                  msg:
-                                      "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task");
-                              return;
-                            }
+                            /**
+                             *  plase check this condition
+                             */
+                            
+                            // if (_plannerDetailsController
+                            //     .closeTaskCoutnList.isNotEmpty) {
+                            //   Fluttertoast.showToast(
+                            //       msg:
+                            //           "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task");
+                            //   return;
+                            // }
                             saveDaetails();
                           } else {
                             Fluttertoast.showToast(
