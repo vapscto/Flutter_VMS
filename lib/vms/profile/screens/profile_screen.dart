@@ -11,31 +11,33 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 class MyProfileScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final ProfileController profileController;
   const MyProfileScreen(
       {super.key,
       required this.loginSuccessModel,
-      required this.mskoolController});
+      required this.mskoolController,
+      required this.profileController});
 
   @override
   State<MyProfileScreen> createState() => _MyProfileScreenState();
 }
 
 class _MyProfileScreenState extends State<MyProfileScreen> {
-  ProfileController profileController = Get.put(ProfileController());
-  _getProfileData() async {
-    profileController.profileLoading(true);
-    await ProfileAPI.instance.profileData(
-        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
-        profileController: profileController,
-        miId: widget.loginSuccessModel.mIID!,
-        userId: widget.loginSuccessModel.userId!,
-        roleId: widget.loginSuccessModel.roleId!);
-    profileController.profileLoading(false);
-  }
+  // ProfileController profileController = Get.put(ProfileController());
+  // _getProfileData() async {
+  //   profileController.profileLoading(true);
+  //   await ProfileAPI.instance.profileData(
+  //       base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+  //       profileController: profileController,
+  //       miId: widget.loginSuccessModel.mIID!,
+  //       userId: widget.loginSuccessModel.userId!,
+  //       roleId: widget.loginSuccessModel.roleId!);
+  //   profileController.profileLoading(false);
+  // }
 
   @override
   void initState() {
-    _getProfileData();
+    // _getProfileData();
     super.initState();
   }
 
@@ -51,12 +53,12 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Obx(() {
-        return profileController.isProfileLoading.value
+        return widget.profileController.isProfileLoading.value
             ? const AnimatedProgressWidget(
                 animationPath: "assets/json/default.json",
                 title: "Loading Profile Details",
                 desc: "We are under process to get your details from server.")
-            : profileController.profileDataValue.isEmpty
+            : widget.profileController.profileDataValue.isEmpty
                 ? const AnimatedProgressWidget(
                     animatorHeight: 250,
                     animationPath: "assets/json/nodata.json",
@@ -90,8 +92,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                     height: Get.height * 0.04,
                                   ),
                                   Text(
-                                    profileController.profileDataValue.first
-                                            .employeename ??
+                                    widget.profileController.profileDataValue
+                                            .first.employeename ??
                                         "N/A",
                                     style: Theme.of(context)
                                         .textTheme
@@ -105,7 +107,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                     height: 8.0,
                                   ),
                                   Text(
-                                    " ${profileController.profileDataValue.first.hRMDDepartmentName ?? "N/a"} ",
+                                    " ${widget.profileController.profileDataValue.first.hRMDDepartmentName ?? "N/a"} ",
                                     style:
                                         Theme.of(context).textTheme.titleSmall,
                                   ),
@@ -113,7 +115,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                     height: 8.0,
                                   ),
                                   Text(
-                                    " ${profileController.profileDataValue.first.hRMDESDesignationName ?? "N/a"} ",
+                                    " ${widget.profileController.profileDataValue.first.hRMDESDesignationName ?? "N/a"} ",
                                     style:
                                         Theme.of(context).textTheme.titleSmall,
                                   ),
@@ -136,7 +138,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                       ),
                                       Expanded(
                                           child: Text(
-                                        "${profileController.profileDataValue.first.hRMEMNOMobileNo ?? "N/A"}",
+                                        "${widget.profileController.profileDataValue.first.hRMEMNOMobileNo ?? "N/A"}",
                                       )),
                                     ],
                                   ),
@@ -159,7 +161,10 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                       ),
                                       Expanded(
                                           child: Text(
-                                        profileController.profileDataValue.first
+                                        widget
+                                                .profileController
+                                                .profileDataValue
+                                                .first
                                                 .hRMEEmployeeCode ??
                                             "N/a",
                                       )),
@@ -186,7 +191,10 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                       ),
                                       Expanded(
                                           child: Text(
-                                        profileController.profileDataValue.first
+                                        widget
+                                                .profileController
+                                                .profileDataValue
+                                                .first
                                                 .hRMEEmailId ??
                                             "N/A",
                                       )),
@@ -221,10 +229,12 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                     child: CircleAvatar(
                                       backgroundColor: Colors.grey.shade100,
                                       radius: 40.0,
-                                      backgroundImage: NetworkImage(
-                                          profileController.profileDataValue
-                                                  .first.hRMEPhoto ??
-                                              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"),
+                                      backgroundImage: NetworkImage(widget
+                                              .profileController
+                                              .profileDataValue
+                                              .first
+                                              .hRMEPhoto ??
+                                          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"),
                                     ),
                                   ),
                                 ],

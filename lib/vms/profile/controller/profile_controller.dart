@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/vms/coe/model/holiday_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/birthday_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/profile_model.dart';
 
@@ -33,5 +34,14 @@ class ProfileController extends GetxController {
     for (int i = 0; i < birthday.length; i++) {
       birthdayList.add(birthday.elementAt(i));
     }
+  }
+
+  //Holiday\
+  RxList<HolidayListModelValues> holidayList = <HolidayListModelValues>[].obs;
+  void getHoliday(List<HolidayListModelValues> holiday) {
+    if (holidayList.isNotEmpty) {
+      holidayList.clear();
+    }
+    holidayList.addAll(holiday);
   }
 }

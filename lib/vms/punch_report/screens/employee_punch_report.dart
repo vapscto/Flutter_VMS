@@ -15,37 +15,39 @@ class EmployeePunchReport extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final String? previousScreen;
+  final PunchFilterController punchFilterController;
   const EmployeePunchReport(
       {super.key,
       required this.title,
       required this.loginSuccessModel,
       required this.mskoolController,
-      this.previousScreen});
+      this.previousScreen,
+      required this.punchFilterController});
 
   @override
   State<EmployeePunchReport> createState() => _EmployeePunchReportState();
 }
 
 class _EmployeePunchReportState extends State<EmployeePunchReport> {
-  PunchFilterController punchFilterController =
-      Get.put(PunchFilterController());
-  _getPunch() async {
-    punchFilterController.punchLoading(true);
-    await PunchApi.instance.pcReports(
-        body: {
-          "UserId": widget.loginSuccessModel.userId,
-          "MI_Id": widget.loginSuccessModel.mIID,
-          "IVRMRT_Id": widget.loginSuccessModel.roleId!,
-          "ASMAY_Id": widget.loginSuccessModel.asmaYId
-        },
-        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
-        controller: punchFilterController);
-    punchFilterController.punchLoading(false);
-  }
+  // PunchFilterController punchFilterController =
+  //     Get.put(PunchFilterController());
+  // _getPunch() async {
+  //   punchFilterController.punchLoading(true);
+  //   await PunchApi.instance.pcReports(
+  //       body: {
+  //         "UserId": widget.loginSuccessModel.userId,
+  //         "MI_Id": widget.loginSuccessModel.mIID,
+  //         "IVRMRT_Id": widget.loginSuccessModel.roleId!,
+  //         "ASMAY_Id": widget.loginSuccessModel.asmaYId
+  //       },
+  //       base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+  //       controller: punchFilterController);
+  //   punchFilterController.punchLoading(false);
+  // }
 
   @override
   void initState() {
-    _getPunch();
+    // _getPunch();
     super.initState();
   }
 
@@ -68,19 +70,19 @@ class _EmployeePunchReportState extends State<EmployeePunchReport> {
               ? const CustomGoBackButton()
               : const SizedBox(),
         ),
-        body: punchFilterController.isPunchLoading.value
+        body: widget.punchFilterController.isPunchLoading.value
             ? const Center(
                 child: AnimatedProgressWidget(
                     title: "Loading Punch Report",
                     desc: "Please wait, While we load Punch Report for you.",
                     animationPath: "assets/json/default.json"),
               )
-            : punchFilterController.currentPunchList.isEmpty
+            : widget.punchFilterController.currentPunchList.isEmpty
                 ? Center(
                     child: ErrWidget(
                       err: {
                         "errorTitle": "Unexpected Error Occured",
-                        "errorMsg": punchFilterController.message.value,
+                        "errorMsg": widget.punchFilterController.message.value,
                       },
                     ),
                   )
@@ -113,10 +115,11 @@ class _EmployeePunchReportState extends State<EmployeePunchReport> {
                                 DataColumn(label: Text("Working Hours")),
                               ],
                               rows: List.generate(
-                                  punchFilterController.currentPunchList.length,
-                                  (index) {
+                                  widget.punchFilterController.currentPunchList
+                                      .length, (index) {
                                 var i = index + 1;
-                                var v = punchFilterController.currentPunchList
+                                var v = widget
+                                    .punchFilterController.currentPunchList
                                     .elementAt(index);
                                 return DataRow(cells: [
                                   DataCell(Text(i.toString())),

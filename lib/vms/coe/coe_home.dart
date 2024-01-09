@@ -1,56 +1,101 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/profile/api/profile_api.dart';
+import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 
 class CoeHomeScreen extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final ProfileController profileController;
   const CoeHomeScreen(
       {super.key,
       required this.loginSuccessModel,
-      required this.mskoolController});
-
+      required this.mskoolController,
+      required this.profileController});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "COE",
-          style: Get.textTheme.titleMedium!.copyWith(color: Colors.white),
+    return Obx(() {
+      return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            "COE",
+            style: Get.textTheme.titleMedium!.copyWith(color: Colors.white),
+          ),
+          backgroundColor: Theme.of(context).primaryColor,
         ),
-      ),
-      body: ListView(
-        padding:
-            const EdgeInsetsDirectional.symmetric(vertical: 16, horizontal: 10),
-        children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: DataTable(
-                  dataRowHeight: 35,
-                  headingRowHeight: 40,
-                  columnSpacing: 20,
-                  headingTextStyle: const TextStyle(color: Colors.white),
-                  border: TableBorder.all(
-                    color: Colors.black,
-                    width: 0.6,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  headingRowColor: MaterialStateColor.resolveWith(
-                      (states) => Theme.of(context).primaryColor),
-                  columns: const [
-                    DataColumn(label: Text("SL.NO.")),
-                    DataColumn(label: Text("Holiday")),
-                    DataColumn(label: Text("Date")),
-                  ],
-                  rows: []),
-            ),
-          )
-        ],
-      ),
-    );
+        body: profileController.holidayList.isEmpty
+            ? const AnimatedProgressWidget(
+                animationPath: "assets/json/default.json",
+                title: "Loading",
+                desc: "We are under process to get your details from server.")
+            : ListView(
+                padding: const EdgeInsetsDirectional.symmetric(
+                    vertical: 16, horizontal: 10),
+                children: [
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: DataTable(
+                          dataRowHeight: 35,
+                          headingRowHeight: 40,
+                          columnSpacing: 20,
+                          headingTextStyle:
+                              const TextStyle(color: Colors.white),
+                          border: TableBorder.all(
+                            color: Colors.black,
+                            width: 0.6,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          headingRowColor: MaterialStateColor.resolveWith(
+                              (states) => Theme.of(context).primaryColor),
+                          columns: const [
+                            DataColumn(label: Text("SL.NO.")),
+                            DataColumn(label: Text("Holiday")),
+                            DataColumn(label: Text("Date")),
+                          ],
+                          rows: List.generate(
+                              profileController.holidayList.length, (index) {
+                            var v = index + 1;
+                            var val =
+                                profileController.holidayList.elementAt(index);
+                            DateTime dt = DateTime.parse(val.fomhwdDFromDate!);
+                            var date =
+                                '${getFormatedDate(dt)}, ${getDayName(dt.weekday)}';
+                            return DataRow(cells: [
+                              DataCell(Text(v.toString())),
+                              DataCell(Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('${val.fomhwdDName}  '),
+                                  (val.fohtwDHolidayWDType == "PH")
+                                      ? Text(
+                                          "(Public Holiday)",
+                                          style: Get.textTheme.titleSmall!
+                                              .copyWith(color: Colors.red),
+                                        )
+                                      : Text(
+                                          "(Optional)",
+                                          style: Get.textTheme.titleSmall!
+                                              .copyWith(),
+                                        )
+                                ],
+                              )),
+                              DataCell(Text(date))
+                            ]);
+                          })),
+                    ),
+                  )
+                ],
+              ),
+      );
+    });
   }
 }

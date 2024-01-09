@@ -8,7 +8,12 @@ import 'package:m_skool_flutter/model/home_page_model.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/tabs/dashboard.dart';
+import 'package:m_skool_flutter/vms/coe/coe_home.dart';
+import 'package:m_skool_flutter/vms/profile/api/profile_api.dart';
+import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/vms/profile/screens/profile_screen.dart';
+import 'package:m_skool_flutter/vms/punch_report/api/punch_api.dart';
+import 'package:m_skool_flutter/vms/punch_report/controller/punch_filter_controller.dart';
 import 'package:m_skool_flutter/vms/punch_report/screens/employee_punch_report.dart';
 import 'package:m_skool_flutter/vms/utils/common_drawer.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -32,9 +37,39 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
   final GlobalKey<ScaffoldState> _scaffold = GlobalKey();
   final DynamicAnalyticsController controller =
       Get.put(DynamicAnalyticsController());
+  final ProfileController profileController = Get.put(ProfileController());
+  final PunchFilterController punchFilterController =
+      Get.put(PunchFilterController());
+  _getPunch() async {
+    punchFilterController.punchLoading(true);
+    await PunchApi.instance.pcReports(
+        body: {
+          "UserId": widget.loginSuccessModel.userId,
+          "MI_Id": widget.loginSuccessModel.mIID,
+          "IVRMRT_Id": widget.loginSuccessModel.roleId!,
+          "ASMAY_Id": widget.loginSuccessModel.asmaYId
+        },
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+        controller: punchFilterController);
+    punchFilterController.punchLoading(false);
+  }
+
+  _getProfile() async {
+    profileController.profileLoading(true);
+    await ProfileAPI.instance.profileData(
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+        profileController: profileController,
+        miId: widget.loginSuccessModel.mIID!,
+        userId: widget.loginSuccessModel.userId!,
+        roleId: widget.loginSuccessModel.roleId!);
+    profileController.profileLoading(false);
+  }
+
   @override
   void initState() {
     version(widget.loginSuccessModel, widget.mskoolController);
+    _getPunch();
+    _getProfile();
     homePage.addAll(
       [
         HomePageModel(
@@ -68,8 +103,21 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
               mskoolController: widget.mskoolController,
               title: 'Punch Report',
               previousScreen: '1',
+              punchFilterController: punchFilterController,
             ),
             selectedColor: const Color(0xFFFFA901),
+            size: 24.0),
+        HomePageModel(
+            title: "COE",
+            icon: 'assets/images/money.png',
+            page: CoeHomeScreen(
+              loginSuccessModel: widget.loginSuccessModel,
+              mskoolController: widget.mskoolController,
+              // title: 'COE',
+              // previousScreen: '1',
+              profileController: profileController,
+            ),
+            selectedColor: const Color(0xFFFF008C),
             size: 24.0),
         HomePageModel(
           title: "Profile",
@@ -77,6 +125,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
           page: MyProfileScreen(
             loginSuccessModel: widget.loginSuccessModel,
             mskoolController: widget.mskoolController,
+            profileController: profileController,
           ),
           selectedColor: const Color(0xFF3D9292),
         ),
