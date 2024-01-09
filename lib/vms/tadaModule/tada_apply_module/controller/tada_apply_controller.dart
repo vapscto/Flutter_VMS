@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/clint_li
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/state_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/model/check_planner.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/model/tada_applied_data_model.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/model/tada_edit_image_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/model/tada_saved_data_model.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 
@@ -37,6 +38,7 @@ class TadaApplyDataController extends GetxController {
     isEdit.value = loading;
   }
 
+//
   RxList<String> addressListController = <String>[].obs;
   double foodAmount = 0.0;
   double accomodationAmount = 0.0;
@@ -159,7 +161,9 @@ class TadaApplyDataController extends GetxController {
     if (checkPlanner.isNotEmpty) {
       checkPlanner.clear();
     }
-    checkPlanner.addAll(plan);
+    for (int i = 0; i < plan.length; i++) {
+      checkPlanner.add(plan.elementAt(i));
+    }
   }
 
   // attachment
@@ -186,6 +190,49 @@ class TadaApplyDataController extends GetxController {
       tadaSavedDataValues.add(values.elementAt(i));
     }
   }
+
+  // NewEnhancement
+  RxList<TextEditingController> uploadedImageRemarkController =
+      <TextEditingController>[].obs;
+  void getRemarks(TextEditingController textEditingController) {
+    uploadedImageRemarkController.add(textEditingController);
+  }
+
+  // edit APi
+  RxBool isUpdate = RxBool(false);
+  void updateData(bool loading) {
+    isUpdate.value = loading;
+  }
+
+  void getEditImage(List<EditUploadImageModelValues> edituploadImage) {
+    if (addUpdatedImageList.isNotEmpty) {
+      addUpdatedImageList.clear();
+      imageList.clear();
+    }
+    for (int i = 0; i < edituploadImage.length; i++) {
+      addUpdatedImageList.add(edituploadImage.elementAt(i));
+    }
+  }
+
+  RxList<EditUploadImageModelValues> addUpdatedImageList =
+      <EditUploadImageModelValues>[].obs;
+  RxList<AtachmentFileList> imageList = <AtachmentFileList>[].obs;
+}
+
+class AtachmentFileList {
+  int? id;
+  String? fileName;
+  String? filePath;
+  String? remarks;
+  String? status;
+  int? vtadaaId;
+  AtachmentFileList(
+      {required this.id,
+      required this.fileName,
+      this.filePath,
+      this.remarks,
+      this.status,
+      this.vtadaaId});
 }
 
 class AtachmentFile {

@@ -25,7 +25,6 @@ import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/tada_apply
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/tada_apply_save_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/widgets/applied_table_widget.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/widgets/file_upload_widget.dart';
 import 'package:m_skool_flutter/vms/task%20creation/api/sava_task.dart';
 import 'package:m_skool_flutter/vms/widgets/level_widget.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
@@ -55,6 +54,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   final _addressController = TextEditingController();
   final _remarkController = TextEditingController();
   final _extraAmountController = TextEditingController();
+  final _remainingAmountController = TextEditingController();
   //
   StateListModelValues? stateListModelValues;
   CityListModelValues? citySelectedValue;
@@ -90,6 +90,9 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
     stateNew = tadaApplyDataController.stateList
         .where((value) => value.ivrmmSId! == (query))
         .toList();
+    for (int i = 0; i < stateNew.length; i++) {
+      state = stateNew[i].ivrmmSName ?? '';
+    }
   }
 
   void getClint(int query) {
@@ -149,6 +152,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         toDate = DateTime.parse(tadaApplyDataController.tadaSavedData
             .elementAt(index)
             .vtadaaAToDate!);
+        tadaApplyDataController.clintSelectedValues.first.ismmclTId =
+            tadaApplyDataController.tadaSavedData.elementAt(index).ivrmmcTId;
 
         //
         TimeOfDay startTime2 = TimeOfDay(
@@ -409,7 +414,9 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         fromDate: fromDate!.toIso8601String(),
         toDate: toDate!.toIso8601String(),
         clintId: clintId,
-        totalAppliedAmount: double.parse(allAmount.toString()),
+        totalAppliedAmount: (_extraAmountController.text.isNotEmpty)
+            ? double.parse(allAmount.toString())
+            : 0,
         toAddress: _addressController.text,
         remarks: _remarkController.text,
         vtadaaaId: vtadaaaId,
@@ -421,7 +428,9 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         fileList: uploadArray,
         vtadaaId: (tadaApplyDataController.tadaSavedData.isNotEmpty)
             ? tadaApplyDataController.tadaSavedData.first.vtadaaAId!
-            : 0);
+            : 0,
+        extraBalance: double.parse(_extraAmountController.text),
+        finalDocument: isFinalSubmition);
     tadaApplyDataController.saveData(false);
     getStateList();
     Get.back();
@@ -493,8 +502,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         'docx',
         'xls',
         'xlsx',
-        'pdf',
-        'mp4'
+        'pdf'
       ],
     );
 
@@ -518,7 +526,10 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   //File Picker
   @override
   void initState() {
-    // getStateList();
+    getStateList();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      stateNew;
+    });
     savedDataListAPI();
     addRow(1);
 
@@ -528,6 +539,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
     super.initState();
   }
 
+  bool isFinalSubmition = true;
   @override
   void dispose() {
     tadaApplyDataController.tadaSavedData.clear();
@@ -606,7 +618,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             accommodationRemarksController.clear();
                             accommodationRemarksController.clear();
                             tadaApplyDataController.allowenseData.clear();
-                            tadaApplyDataController.stateList.clear();
                             _startDate.text =
                                 "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
                             fromSelectedDate =
@@ -640,7 +651,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 accommodationRemarksController.clear();
                                 accommodationRemarksController.clear();
                                 tadaApplyDataController.allowenseData.clear();
-                                tadaApplyDataController.stateList.clear();
                                 _startDate.text =
                                     "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
                                 fromSelectedDate =
@@ -739,7 +749,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                               accommodationRemarksController.clear();
                               accommodationRemarksController.clear();
                               tadaApplyDataController.allowenseData.clear();
-                              tadaApplyDataController.stateList.clear();
                               _endDate.text =
                                   "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                               dayCount =
@@ -784,7 +793,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                   accommodationRemarksController.clear();
                                   accommodationRemarksController.clear();
                                   tadaApplyDataController.allowenseData.clear();
-                                  tadaApplyDataController.stateList.clear();
                                   _endDate.text =
                                       "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                                   dayCount =
@@ -973,7 +981,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 '${numberList[toTime!.hourOfPeriod]}:${numberList[toTime!.minute]} ${toTime!.period.name.toUpperCase()}';
                             calculateHour(_startDate.text, _startTime.text,
                                 _endDate.text, _endTime.text);
-                            getStateList();
+                            // getStateList();
                           }
                         } else {
                           Fluttertoast.showToast(
@@ -2126,7 +2134,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                           color:
                                               Theme.of(context).primaryColor),
                                     ),
-                                    Text(stateNew.first.ivrmmSName!,
+                                    Text(state,
                                         style: Get.textTheme.titleSmall),
                                   ],
                                 ),
@@ -2209,35 +2217,33 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                           color:
                                               Theme.of(context).primaryColor),
                                     ),
-                                    Text(address,
-                                        style: Get.textTheme.titleSmall),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.7,
+                                      child: Text(address,
+                                          style: Get.textTheme.titleSmall),
+                                    ),
                                   ],
                                 ),
                                 const SizedBox(height: 8),
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Remarks : ",
-                                        style: Get.textTheme.titleSmall!
-                                            .copyWith(
-                                                color: Theme.of(context)
-                                                    .primaryColor),
-                                      ),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.65,
-                                        child: Text(remarks,
-                                            maxLines: 10,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: Get.textTheme.titleSmall),
-                                      ),
-                                    ],
-                                  ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Remarks : ",
+                                      style: Get.textTheme.titleSmall!.copyWith(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                    Expanded(
+                                      // width: MediaQuery.of(context).size.width *
+                                      //     0.65,
+                                      child: Text(remarks,
+                                          maxLines: 10,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: Get.textTheme.titleSmall),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -2381,11 +2387,62 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                           ],
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 30),
+                        child: CustomContainer(
+                          child: TextFormField(
+                            controller: _remainingAmountController,
+                            keyboardType: TextInputType.number,
+                            style: Get.textTheme.titleSmall!
+                                .copyWith(fontSize: 15),
+                            decoration: InputDecoration(
+                              border: const OutlineInputBorder(
+                                  borderSide: BorderSide.none),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              hintText: "Extra Amount",
+                              label: Container(
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFDFFBFE),
+                                  borderRadius: BorderRadius.circular(24.0),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0, vertical: 6.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Image.asset(
+                                      "assets/images/cap.png",
+                                      height: 28.0,
+                                    ),
+                                    const SizedBox(
+                                      width: 6.0,
+                                    ),
+                                    Text(
+                                      " Remaining Paid Amount",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
+                                          .merge(
+                                            const TextStyle(
+                                                backgroundColor:
+                                                    Color(0xFFDFFBFE),
+                                                fontSize: 20.0,
+                                                color: Color(0xFF28B6C8)),
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
           Container(
-            margin: const EdgeInsets.only(top: 30, left: 16, right: 16),
+            margin: const EdgeInsets.only(top: 10, left: 16, right: 16),
             child: RichText(
                 text: TextSpan(children: [
               TextSpan(
@@ -2393,14 +2450,32 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                   style: Get.textTheme.titleSmall!
                       .copyWith(color: Theme.of(context).primaryColor)),
               TextSpan(
-                  text:
-                      " ₹ ${double.parse(foodAmt.toStringAsFixed(0)) + accommodationAmount + otherAmount}",
+                  text: (tadaApplyDataController.tadaSavedData.isEmpty)
+                      ? " ₹ ${double.parse(foodAmt.toStringAsFixed(0)) + accommodationAmount + otherAmount}"
+                      : '$allAmount',
                   style: Get.textTheme.titleSmall),
             ])),
           ),
           const SizedBox(
-            height: 16,
+            height: 10,
           ),
+          CheckboxListTile(
+              visualDensity: const VisualDensity(vertical: 0, horizontal: 0),
+              contentPadding: EdgeInsets.zero,
+              controlAffinity: ListTileControlAffinity.leading,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6)),
+              checkColor: Colors.indigo,
+              value: isFinalSubmition,
+              title: Text(
+                "Final Submission",
+                style: Get.textTheme.titleMedium,
+              ),
+              onChanged: (value) {
+                setState(() {
+                  isFinalSubmition = value!;
+                });
+              }),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -2478,6 +2553,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             controller: tadaApplyDataController
                                 .newRemarksController
                                 .elementAt(index),
+                            decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.all(3)),
                           ),
                         ),
                       )),
@@ -2537,6 +2614,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                         allAmount = foodAmt +
                             accommodationAmount +
                             otherAmount.toDouble();
+
                         if (_endTime.text.isEmail) {
                           Fluttertoast.showToast(msg: "Select Arrival Time");
                         } else if (_addressController.text.isEmpty) {

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/student/gallery_view/api/viewImageApi.dart';
 import 'package:m_skool_flutter/student/gallery_view/api/yearListApi.dart';
 import 'package:m_skool_flutter/student/gallery_view/controller/academicYear_controller.dart';
@@ -13,8 +12,8 @@ import 'package:m_skool_flutter/student/gallery_view/model/AcademicYearList.dart
 import 'package:m_skool_flutter/student/gallery_view/widget/previewImage.dart';
 import 'package:m_skool_flutter/student/gallery_view/widget/videoPlayerUrl.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
+import 'package:m_skool_flutter/widget/drop_down_level.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
-import 'package:flutter/cupertino.dart';
 
 class ViewGallery extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -37,18 +36,17 @@ class _ViewGalleryState extends State<ViewGallery> {
     super.initState();
   }
 
-  onLoad(){
-   GetFeatchApiImages.instance.featchApiImages(
-                            ctr: _controller,
-                            base: baseUrlFromInsCode(
-                                "portal", widget.mskoolController),
-                            miId: widget.loginSuccessModel.mIID.toString(),
-                            amstId: widget.loginSuccessModel.amsTId.toString(),
-                            asmayId: widget.loginSuccessModel.asmaYId.toString() ,
-                            userId: widget.loginSuccessModel.userId.toString(),
-                            roleId: widget.loginSuccessModel.roleId.toString(),
-                          );
- }
+  onLoad() {
+    GetFeatchApiImages.instance.featchApiImages(
+      ctr: _controller,
+      base: baseUrlFromInsCode("portal", widget.mskoolController),
+      miId: widget.loginSuccessModel.mIID.toString(),
+      amstId: widget.loginSuccessModel.amsTId.toString(),
+      asmayId: widget.loginSuccessModel.asmaYId.toString(),
+      userId: widget.loginSuccessModel.userId.toString(),
+      roleId: widget.loginSuccessModel.roleId.toString(),
+    );
+  }
 
   Future<void> loaddata() async {
     await GetAcademicYearDataApi.instance.getExamSelectedYear(

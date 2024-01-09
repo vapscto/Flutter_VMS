@@ -22,7 +22,6 @@ import 'package:m_skool_flutter/student/fees/model/payment_charges.dart';
 import 'package:m_skool_flutter/student/fees/model/payment_gateway_detail.dart';
 import 'package:m_skool_flutter/student/fees/screens/transaction_history.dart';
 import 'package:m_skool_flutter/student/fees/widgets/custom_detail_widget.dart';
-import 'package:m_skool_flutter/student/library/screen/library_home.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
@@ -177,7 +176,7 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                                               children: [
                                                 Container(
                                                   padding: const EdgeInsets
-                                                      .symmetric(
+                                                          .symmetric(
                                                       horizontal: 12.0,
                                                       vertical: 6.0),
                                                   decoration: BoxDecoration(
@@ -667,7 +666,7 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                                                               children: [
                                                                 Container(
                                                                   padding: const EdgeInsets
-                                                                      .symmetric(
+                                                                          .symmetric(
                                                                       horizontal:
                                                                           16.0,
                                                                       vertical:
@@ -870,7 +869,7 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                                                                 child: Padding(
                                                                   padding:
                                                                       const EdgeInsets
-                                                                          .all(
+                                                                              .all(
                                                                           16.0),
                                                                   child: Column(
                                                                     mainAxisSize:
@@ -1171,14 +1170,9 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                     return ErrWidget(
                         err: snapshot.error as Map<String, dynamic>);
                   }
-                  return  Column(
+                  return Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      CustomPgrWidget(
-                          title: "Processing Payment",
-                          desc:
-                              "Please wait sending payment detail to school, Don't press back button or navigate to different pages"),
-                    ],
+                    children: const [],
                   );
                 }),
           );
@@ -1232,14 +1226,9 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                     return ErrWidget(
                         err: snapshot.error as Map<String, dynamic>);
                   }
-                  return  Column(
+                  return Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      CustomPgrWidget(
-                          title: "Processing Payment",
-                          desc:
-                              "Please wait sending payment detail to school, Don't press back button or navigate to different pages"),
-                    ],
+                    children: const [],
                   );
                 }),
           );

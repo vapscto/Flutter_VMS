@@ -10,6 +10,7 @@ class ApprovalProxyListPopUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    newList.clear();
     if (value.proxyName != null) {
       newList
           .add({"proxy": value.proxyName, "deg": value.hRMDESDesignationName});
@@ -97,7 +98,19 @@ class ApprovalProxyListPopUp extends StatelessWidget {
                               child: Text(data['deg']))),
                         ]);
                       }),
-                    )))
+                    ))),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: TextButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: Text(
+                    "Back",
+                    style:
+                        Get.textTheme.titleMedium!.copyWith(color: Colors.red),
+                  )),
+            )
           ],
         ),
       ),

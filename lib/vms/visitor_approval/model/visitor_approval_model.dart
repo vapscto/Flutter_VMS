@@ -15,7 +15,7 @@ class VisitorApprovalModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['\$type'] = type;
     if (values != null) {
       data['\$values'] = values!.map((v) => v.toJson()).toList();
@@ -31,7 +31,7 @@ class VisitorApprovalModelValues {
   int? vMAPId;
   String? vMAPVisitorName;
   String? vMAPVisitTypeFlg;
-  Null? vMAPToMeet;
+  String? vMAPToMeet;
   String? vMAPEntryDateTime;
   String? vMAPFromPlace;
   String? vMAPStatus;
@@ -41,7 +41,7 @@ class VisitorApprovalModelValues {
   int? hrmEId;
   String? hrmEEmployeeFirstName;
   String? vMAPMeetingTiming;
-  Null? vMAPMeetingDateTime;
+  String? vMAPMeetingDateTime;
   int? vMAPVisitorContactNo;
   String? vMAPVisitorEmailid;
   String? vMAPMeetingTiming1;
@@ -110,7 +110,7 @@ class VisitorApprovalModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['$type'] = type;
     data['mI_Id'] = mIId;
     data['MI_Name'] = mIName;

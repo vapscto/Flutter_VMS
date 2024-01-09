@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/apis/dashboard_exam_api.dart';
 import 'package:m_skool_flutter/controller/dynamic_analytics_controller.dart';
-import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/exam_list.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/widget/punch_lop_analytics.dart';
 import 'package:m_skool_flutter/staffs/widget/staff_home_leave.dart';
 import 'package:m_skool_flutter/staffs/widget/staff_home_tt.dart';
-import 'package:m_skool_flutter/student/attendance/screens/home_page.dart';
-import 'package:m_skool_flutter/student/exam/screen/exam_home.dart';
-import 'package:m_skool_flutter/widget/card_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/dashbaord_fee_widget.dart';
-import 'package:m_skool_flutter/widget/dashboard_attendance.dart';
 import 'package:m_skool_flutter/widget/dashboard_line_chart.dart';
 import 'package:m_skool_flutter/widget/dashboard_timetable_widget.dart';
 import 'package:m_skool_flutter/widget/home_screen_carasouel.dart';
@@ -91,52 +85,52 @@ class StudentAnalytics extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  (dashboardController.attendance.isNotEmpty)
-                      ? Expanded(
-                          flex: 1,
-                          child: CardWidget(
-                            padding: const EdgeInsets.all(0),
-                            children: [
-                              SizedBox(
-                                height: 36,
-                                child: InkWell(
-                                  onTap: () {
-                                    Get.to(() => AttendanceHomeScreen(
-                                        loginSuccessModel: loginSuccessModel,
-                                        mskoolController: mskoolController));
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8.0, right: 8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Attendance",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium,
-                                        ),
-                                        const Icon(Icons.chevron_right_rounded),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                // trailing
-                              ),
-                              SizedBox(
-                                height: Get.width * 0.4329,
-                                child: DashBoardAttendance(
-                                  attendanceValue: dashboardController
-                                          .attendance.first.score ??
-                                      0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      : Container(),
+                  // (dashboardController.attendance.isNotEmpty)
+                  //     ? Expanded(
+                  //         flex: 1,
+                  //         child: CardWidget(
+                  //           padding: const EdgeInsets.all(0),
+                  //           children: [
+                  //             SizedBox(
+                  //               height: 36,
+                  //               child: InkWell(
+                  //                 onTap: () {
+                  //                   Get.to(() => AttendanceHomeScreen(
+                  //                       loginSuccessModel: loginSuccessModel,
+                  //                       mskoolController: mskoolController));
+                  //                 },
+                  //                 child: Padding(
+                  //                   padding: const EdgeInsets.only(
+                  //                       left: 8.0, right: 8.0),
+                  //                   child: Row(
+                  //                     mainAxisAlignment:
+                  //                         MainAxisAlignment.spaceBetween,
+                  //                     children: [
+                  //                       Text(
+                  //                         "Attendance",
+                  //                         style: Theme.of(context)
+                  //                             .textTheme
+                  //                             .titleMedium,
+                  //                       ),
+                  //                       const Icon(Icons.chevron_right_rounded),
+                  //                     ],
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //               // trailing
+                  //             ),
+                  //             SizedBox(
+                  //               height: Get.width * 0.4329,
+                  //               child: DashBoardAttendance(
+                  //                 attendanceValue: dashboardController
+                  //                         .attendance.first.score ??
+                  //                     0,
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       )
+                  //     : Container(),
                   const SizedBox(
                     width: 12.0,
                   ),
@@ -190,9 +184,9 @@ class StudentAnalytics extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () {
-                              Get.to(() => ExamHome(
-                                  loginSuccessModel: loginSuccessModel,
-                                  mskoolController: mskoolController));
+                              // Get.to(() => ExamHome(
+                              // loginSuccessModel: loginSuccessModel,
+                              // mskoolController: mskoolController));
                             },
                             child: Padding(
                               padding:

@@ -5,24 +5,15 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
 import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
-import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
-import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/student_attendance_staff_home.dart';
-import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
-import 'package:m_skool_flutter/student/attendance/screens/home_page.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
 import 'package:m_skool_flutter/student/coe/screen/coe_home.dart';
-import 'package:m_skool_flutter/student/exam/screen/exam_home.dart';
 import 'package:m_skool_flutter/student/fees/screens/fee_analysis_screen.dart';
 import 'package:m_skool_flutter/student/fees/screens/fee_receipt_home.dart';
 import 'package:m_skool_flutter/student/fees/screens/online_payment_screen.dart';
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/student/interaction/screen/messaging_section.dart';
-import 'package:m_skool_flutter/student/library/screen/library_home.dart';
-import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/vms/api/vms_notification_api.dart';
 import 'package:m_skool_flutter/vms/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/vms/model/vms_notification_model.dart';
@@ -74,100 +65,75 @@ class NotificationScreen extends StatelessWidget {
             return ListView.separated(
               padding: const EdgeInsets.all(16.0),
               itemBuilder: (_, index) {
-                return InkWell(
-                  onTap: () {
-                    // if (snapshot.data!.elementAt(index).pNSDHeaderFlg == null) {
-                    //   Fluttertoast.showToast(
-                    //       msg:
-                    //           "Sorry but we are unable to redirect because page info is null");
-                    //   return;
-                    // }
-                    // if (openFor.toLowerCase() == "student") {
-                    //   logger.d(snapshot.data!.elementAt(index).pNSDHeaderFlg);
-                    //   openUsingHeaderForStudent(
-                    //       snapshot.data!.elementAt(index).pNSDHeaderFlg!,
-                    //       snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
-                    //       snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
-                    //           0);
-                    //   return;
-                    // }
+                return Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0)),
+                  child: InkWell(
+                    onTap: () {
+                      // if (snapshot.data!.elementAt(index).pNSDHeaderFlg == null) {
+                      //   Fluttertoast.showToast(
+                      //       msg:
+                      //           "Sorry but we are unable to redirect because page info is null");
+                      //   return;
+                      // }
+                      // if (openFor.toLowerCase() == "student") {
+                      //   logger.d(snapshot.data!.elementAt(index).pNSDHeaderFlg);
+                      //   openUsingHeaderForStudent(
+                      //       snapshot.data!.elementAt(index).pNSDHeaderFlg!,
+                      //       snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
+                      //       snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
+                      //           0);
+                      //   return;
+                      // }
 
-                    // if (openFor.toLowerCase() == "staff") {
-                    //   openUsingHeaderForStaff(
-                    //       snapshot.data!
-                    //           .elementAt(index)
-                    //           .pNSDHeaderFlg!
-                    //           .capitalize!,
-                    //       context,
-                    //       snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
-                    //       snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
-                    //           0);
-                    // }
-                    // if (openFor.toLowerCase() == "hod") {
-                    //   openUsingHeaderForStaff(
-                    //       snapshot.data!
-                    //           .elementAt(index)
-                    //           .pNSDHeaderFlg!
-                    //           .capitalize!,
-                    //       context,
-                    //       snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
-                    //       snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
-                    //           0);
-                    // }
+                      // if (openFor.toLowerCase() == "staff") {
+                      //   openUsingHeaderForStaff(
+                      //       snapshot.data!
+                      //           .elementAt(index)
+                      //           .pNSDHeaderFlg!
+                      //           .capitalize!,
+                      //       context,
+                      //       snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
+                      //       snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
+                      //           0);
+                      // }
+                      // if (openFor.toLowerCase() == "hod") {
+                      //   openUsingHeaderForStaff(
+                      //       snapshot.data!
+                      //           .elementAt(index)
+                      //           .pNSDHeaderFlg!
+                      //           .capitalize!,
+                      //       context,
+                      //       snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
+                      //       snapshot.data!.elementAt(index).pNSDTRANSACTIONID ??
+                      //           0);
+                      // }
 
-                    // if (openFor.toLowerCase() == "manager") {
-                    //   openUsingHeaderForManager(
-                    //     snapshot.data!
-                    //         .elementAt(index)
-                    //         .pNSDHeaderFlg!
-                    //         .capitalize!,
-                    //     context,
-                    //     snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
-                    //     snapshot.data!.elementAt(index).pNSDTRANSACTIONID ?? 0,
-                    //   );
-                    // }
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(12.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.0),
-                      color:
-                          snapshot.data!.elementAt(index).iSMNOModeFlg == null
-                              ? Colors.grey.shade300
-                              : getNotificationItem(snapshot.data!
-                                  .elementAt(index)
-                                  .iSMNOModeFlg!)['bgColor'],
-                    ),
-                    child: Row(children: [
-                      Container(
-                        padding: const EdgeInsets.all(
-                          8.0,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.0),
-                          color: snapshot.data!.elementAt(index).iSMNOModeFlg ==
-                                  null
-                              ? Colors.grey.shade300
-                              : getNotificationItem(snapshot.data!
-                                  .elementAt(index)
-                                  .iSMNOModeFlg!)['color'],
-                        ),
-                        child:
+                      // if (openFor.toLowerCase() == "manager") {
+                      //   openUsingHeaderForManager(
+                      //     snapshot.data!
+                      //         .elementAt(index)
+                      //         .pNSDHeaderFlg!
+                      //         .capitalize!,
+                      //     context,
+                      //     snapshot.data!.elementAt(index).pNSDRedirectURL ?? "",
+                      //     snapshot.data!.elementAt(index).pNSDTRANSACTIONID ?? 0,
+                      //   );
+                      // }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(12.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12.0),
+                        color:
                             snapshot.data!.elementAt(index).iSMNOModeFlg == null
-                                ? const Icon(Icons.broken_image)
-                                : Image.asset(
-                                    getNotificationItem(snapshot.data!
-                                        .elementAt(index)
-                                        .iSMNOModeFlg!)['image'],
-                                    color: Colors.white,
-                                    width: 28.0,
-                                    height: 28,
-                                  ),
+                                ? Colors.grey.shade300
+                                : getNotificationItem(snapshot.data!
+                                    .elementAt(index)
+                                    .iSMNOModeFlg!)['bgColor'],
                       ),
-                      const SizedBox(
-                        width: 12.0,
-                      ),
-                      Expanded(
+                      child: Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -200,7 +166,7 @@ class NotificationScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ]),
+                    ),
                   ),
                 );
               },
@@ -237,10 +203,10 @@ class NotificationScreen extends StatelessWidget {
 
     switch (headerName.toLowerCase()) {
       case "attendance":
-        Get.to(() => AttendanceHomeScreen(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController));
-        break;
+      // Get.to(() => AttendanceHomeScreen(
+      //     loginSuccessModel: loginSuccessModel,
+      //     mskoolController: mskoolController));
+      // break;
       case "fee details":
         // Get.to(() => FeeHomeScreen(
         //     loginSuccessModel:
@@ -279,23 +245,23 @@ class NotificationScreen extends StatelessWidget {
         break;
       case "library":
         String base = baseUrlFromInsCode("portal", mskoolController);
-        Get.to(
-          () => LibraryHome(
-            miId: loginSuccessModel.mIID!,
-            asmayId: loginSuccessModel.asmaYId!,
-            asmtId: loginSuccessModel.amsTId!,
-            base: base,
-            title: "${headerName.capitalize}",
-          ),
-        );
+        // Get.to(
+        //   () => LibraryHome(
+        //     miId: loginSuccessModel.mIID!,
+        //     asmayId: loginSuccessModel.asmaYId!,
+        //     asmtId: loginSuccessModel.amsTId!,
+        //     base: base,
+        //     title: "${headerName.capitalize}",
+        //   ),
+        // );
         break;
       case "syllabus":
         break;
       case "exam":
-        Get.to(() => ExamHome(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-            ));
+        // Get.to(() => ExamHome(
+        //       loginSuccessModel: loginSuccessModel,
+        //       mskoolController: mskoolController,
+        //     ));
         break;
       case "interaction":
         if (redirectUrl == "InteractionReply" && transactionId.toInt() != 0) {
@@ -324,10 +290,10 @@ class NotificationScreen extends StatelessWidget {
             ));
         break;
       case "time table":
-        Get.to(() => TimeTableHome(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-            ));
+        // Get.to(() => TimeTableHome(
+        //       loginSuccessModel: loginSuccessModel,
+        //       mskoolController: mskoolController,
+        //     ));
         break;
       case "fee receipt":
         Get.to(
@@ -347,21 +313,21 @@ class NotificationScreen extends StatelessWidget {
   void openUsingHeaderForStaff(String headerName, BuildContext context,
       String redirectUrl, num transactionId) {
     if (headerName == "Attendance Entry") {
-      Get.to(
-        // () => const MonthWiseAttendanceEntryHomeScreen(),
-        () => AttendanceEntryHomeScreen(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ),
-        // () => const DayWiseAttendanceEntryHome(),
-      );
+      // Get.to(
+      //   // () => const MonthWiseAttendanceEntryHomeScreen(),
+      //   () => AttendanceEntryHomeScreen(
+      //     loginSuccessModel: loginSuccessModel,
+      //     mskoolController: mskoolController,
+      //   ),
+      //   // () => const DayWiseAttendanceEntryHome(),
+      // );
     }
-    if (headerName == "Student Attendance Staff") {
-      Get.to(() => StudentAttendanceStaffHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-          ));
-    }
+    // if (headerName == "Student Attendance Staff") {
+    //   Get.to(() => StudentAttendanceStaffHome(
+    //         loginSuccessModel: loginSuccessModel,
+    //         mskoolController: mskoolController,
+    //       ));
+    // }
     // if (headerName == "Mark Entry") {
     //   Get.to(
     //     () => MarksEntryHome(
@@ -371,29 +337,29 @@ class NotificationScreen extends StatelessWidget {
     //   );
     // }
 
-    if (headerName == "Salary Details") {
-      Navigator.push(context, MaterialPageRoute(builder: (_) {
-        return
-            // SalarySlipHome(
-            //   loginSuccessModel: loginSuccessModel,
-            //   mskoolController: mskoolController,
-            // );
-            SalaryDetails(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        );
-      }));
-      return;
-    }
-    if (headerName == "Staff Birth Day Report") {
-      Navigator.push(context, MaterialPageRoute(builder: (_) {
-        return StudentBdayHome(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        );
-      }));
-      return;
-    }
+    // if (headerName == "Salary Details") {
+    //   Navigator.push(context, MaterialPageRoute(builder: (_) {
+    //     return
+    //         // SalarySlipHome(
+    //         //   loginSuccessModel: loginSuccessModel,
+    //         //   mskoolController: mskoolController,
+    //         // );
+    //         SalaryDetails(
+    //       loginSuccessModel: loginSuccessModel,
+    //       mskoolController: mskoolController,
+    //     );
+    //   }));
+    //   return;
+    // }
+    // if (headerName == "Staff Birth Day Report") {
+    //   Navigator.push(context, MaterialPageRoute(builder: (_) {
+    //     return StudentBdayHome(
+    //       loginSuccessModel: loginSuccessModel,
+    //       mskoolController: mskoolController,
+    //     );
+    //   }));
+    //   return;
+    // }
 
     // if (headerName == "Online Leave Apply") {
     //   Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -482,22 +448,22 @@ class NotificationScreen extends StatelessWidget {
 
   void openUsingHeaderForManager(
       String s, BuildContext context, String redirectUrl, num transactionId) {
-    if (s.toLowerCase().contains("fee")) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) {
-            return OverallFeeHome(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-              title: "Overall Fee",
-            );
-          },
-        ),
-      );
+    // if (s.toLowerCase().contains("fee")) {
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (_) {
+    //         return OverallFeeHome(
+    //           loginSuccessModel: loginSuccessModel,
+    //           mskoolController: mskoolController,
+    //           title: "Overall Fee",
+    //         );
+    //       },
+    //     ),
+    //   );
 
-      return;
-    }
+    //   return;
+    // }
 
     if (s.toLowerCase().contains("Interaction")) {
       if (redirectUrl == "InteractionReply" && transactionId.toInt() != 0) {

@@ -55,8 +55,8 @@ class BirthDayListModelValues {
   int? ismtpLId;
   int? ismtpltAEffortInHrs;
   int? ismtplaptAId;
-  int? hrelSTotalLeaves;
-  int? hrelSCBLeaves;
+  double? hrelSTotalLeaves;
+  double? hrelSCBLeaves;
   int? totalcount;
   int? projectCount;
   int? taskCount;

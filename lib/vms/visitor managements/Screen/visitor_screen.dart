@@ -7,7 +7,6 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/api/assigned_api.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/api/employee_api.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/api/get_visit_api.dart';
@@ -21,6 +20,7 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/drop_down_level.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class VisitorManagementHome extends StatefulWidget {
@@ -70,8 +70,7 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
   TimeOfDay? toTime;
 
   bool validateFields() {
-
-  if (locationEt.text.isEmpty) {
+    if (locationEt.text.isEmpty) {
       Fluttertoast.showToast(msg: "Enter Location");
       return false;
     }
@@ -858,7 +857,6 @@ class _VisitorManagementHomeState extends State<VisitorManagementHome> {
                       size: const Size.fromWidth(100),
                       title: "Save",
                       onPress: () async {
-
                         if (!validateFields()) {
                           return;
                         }

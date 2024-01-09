@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/model/tada_edit_image_model.dart';
 
 class TadaEditAPI {
   TadaEditAPI.init();
@@ -28,6 +29,8 @@ class TadaEditAPI {
         options: Options(headers: getSession()),
         data: {"UserId": userId, "MI_Id": miId, "VTADAA_Id": vtadaaaId},
       );
+      logger.e({"UserId": userId, "MI_Id": miId, "VTADAA_Id": vtadaaaId});
+      logger.v(api);
       if (response.statusCode == 200) {
         if (response.data['returnvalue'] == true) {
           if (response.data['returnval'] == 'Delete') {
@@ -44,6 +47,46 @@ class TadaEditAPI {
           Fluttertoast.showToast(msg: "Please Contact Administrator!!!");
         }
         tadaApplyController.editData(false);
+      }
+    } on DioError catch (e) {
+      logger.e(e);
+    } on Error catch (e) {
+      logger.e(e);
+    }
+  }
+}
+
+class TadaApplyUpdateAPI {
+  TadaApplyUpdateAPI.init();
+  static final TadaApplyUpdateAPI instance = TadaApplyUpdateAPI.init();
+  tadaApplyEditData(
+      {required String base,
+      required int userId,
+      required int miId,
+      required int vtadaaaId,
+      required TadaApplyDataController tadaApplyController}) async {
+    var dio = Dio();
+    var api = base + URLS.tadaApplyEdit;
+
+    try {
+      if (tadaApplyController.isErrorLoading.value) {
+        tadaApplyController.errorLoading(false);
+      }
+      tadaApplyController.updateData(true);
+      var response = await dio.post(
+        api,
+        options: Options(headers: getSession()),
+        data: {"UserId": userId, "MI_Id": miId, "VTADAA_Id": vtadaaaId},
+      );
+      logger.e({"UserId": userId, "MI_Id": miId, "VTADAA_Id": vtadaaaId});
+      logger.v(api);
+      if (response.statusCode == 200) {
+        if (response.data['uplodaArray'] != null) {
+          EditUploadImageModel editUploadImageModel =
+              EditUploadImageModel.fromJson(response.data['uplodaArray']);
+          tadaApplyController.getEditImage(editUploadImageModel.values!);
+        }
+        tadaApplyController.updateData(false);
       }
     } on DioError catch (e) {
       logger.e(e);

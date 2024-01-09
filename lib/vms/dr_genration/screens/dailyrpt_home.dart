@@ -14,6 +14,7 @@ import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.
 import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_file_upload_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/screens/add_extra_task.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/category_checkList.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/dr_not_approved_popup.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/drnotApprovedScreen.dart';
@@ -76,21 +77,19 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!);
     _plannerDetailsController.drnotSentdetailsList.isNotEmpty
-        ? Get.dialog(
-            barrierDismissible: false,
-            AlertDialog(
-              insetPadding: const EdgeInsets.symmetric(horizontal: 16),
-              contentPadding: const EdgeInsets.all(8),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              content: SizedBox(
-                  width: Get.width,
-                  child: DrnotsentScreen(
-                    mskoolController: widget.mskoolController,
-                    loginSuccessModel: widget.loginSuccessModel,
-                    plannerDetailsController: _plannerDetailsController,
-                  )),
-            ))
+        ? Get.dialog(AlertDialog(
+            insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+            contentPadding: const EdgeInsets.all(8),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            content: SizedBox(
+                width: Get.width,
+                child: DrnotsentScreen(
+                  mskoolController: widget.mskoolController,
+                  loginSuccessModel: widget.loginSuccessModel,
+                  plannerDetailsController: _plannerDetailsController,
+                )),
+          ))
         : null;
     _plannerDetailsController.tadaApplyList.isNotEmpty
         ? Get.dialog(
@@ -216,7 +215,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                       TextButton(
                           onPressed: () {
                             Get.back();
-                            Get.back();
                           },
                           child: Text(
                             "OK",
@@ -324,15 +322,22 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
           }
         }
         if (_plannerDetailsController.checkBoxList.elementAt(i) == true) {
+          String countHr =
+              (double.parse(_plannerDetailsController.minutesEt[i].text) *
+                      0.0166667)
+                  .toStringAsFixed(2);
           totalhrs = double.parse(_plannerDetailsController.hoursEt[i].text) +
-              double.parse(_plannerDetailsController.minutesEt[i].text);
+              double.parse(countHr);
+          // totalhrs = double.parse(
+          //     '${_plannerDetailsController.hoursEt[i].text}.${_plannerDetailsController.minutesEt[i].text}');
+          //  +
+          //     (double.parse(_plannerDetailsController.minutesEt[i].text) / 60);
           todayDailyReportGenaration.add({
             "ISMTPL_Id": value.iSMTPLId,
             "ISMTCR_Id": value.iSMTCRId,
             "ISMDRPT_Remarks":
                 _plannerDetailsController.etResponse.elementAt(i).text,
-            "ISMDRPT_TimeTakenInHrs":
-                '${_plannerDetailsController.hoursEt[i].text}.${_plannerDetailsController.minutesEt[i].text}',
+            "ISMDRPT_TimeTakenInHrs": '$totalhrs',
             "ISMDRPT_Status": _plannerDetailsController.statusEtField[i].text,
             "extraflag": 0,
             "ISMTPLTA_StartDate": value.iSMTPLTAStartDate,
@@ -445,7 +450,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         body: {
           "MI_Id": widget.loginSuccessModel.mIID,
           "UserId": widget.loginSuccessModel.userId,
-          "ASMAY_Id": 0,
           "ISMDRPT_Date": todayDt.toIso8601String(),
           "roleId": widget.loginSuccessModel.roleId
         },
@@ -487,6 +491,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
           );
         },
       );
+      _plannerDetailsController.updateDayRadio('today');
+      _plannerDetailsController.plannernameDateController.value.text =
+          '${todayDate.day}-${todayDate.month}-${todayDate.year}';
       return;
     }
   }
@@ -517,6 +524,28 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                       onPress: () async {
                         if (_formKey.currentState!.validate()) {
                           if (selectCheckbox.isNotEmpty) {
+                            if (_plannerDetailsController.day.value ==
+                                'Others') {
+                              if (_plannerDetailsController
+                                      .plannernameDateController.value.text ==
+                                  '${todayDate.day}-${todayDate.month}-${todayDate.year}') {
+                                Fluttertoast.showToast(
+                                    msg:
+                                        "Other's Date Should Not Be Equal To Today's Date");
+                                return;
+                              }
+                            }
+                            /**
+                             *  plase check this condition
+                             */
+                            
+                            // if (_plannerDetailsController
+                            //     .closeTaskCoutnList.isNotEmpty) {
+                            //   Fluttertoast.showToast(
+                            //       msg:
+                            //           "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task");
+                            //   return;
+                            // }
                             saveDaetails();
                           } else {
                             Fluttertoast.showToast(
@@ -623,9 +652,21 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                       value: "today",
                                       groupValue:
                                           _plannerDetailsController.day.value,
-                                      onChanged: (value) {
-                                        _plannerDetailsController
-                                            .updateDayRadio(value!);
+                                      onChanged: (value) async {
+                                        setState(() {
+                                          _plannerDetailsController
+                                              .updateDayRadio(value!);
+                                          _getplannedData(todayDt);
+                                          fliteresList =
+                                              _plannerDetailsController
+                                                  .getTaskDrList;
+                                          _plannerDetailsController
+                                                  .plannernameDateController
+                                                  .value
+                                                  .text =
+                                              '${todayDate.day}-${todayDate.month}-${todayDate.year}';
+                                          init();
+                                        });
                                       },
                                       dense: true,
                                       activeColor:
@@ -681,6 +722,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                 .value)) {
                                           _plannerDetailsController
                                               .updateDayRadio(value!);
+                                          init();
                                         } else {
                                           showDialog(
                                             barrierDismissible: false,
@@ -1194,14 +1236,56 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       21,
                                                                       46,
                                                                       189),
-                                                              value: _plannerDetailsController
-                                                                      .checkBoxList[
-                                                                  index],
+                                                              value: (fliteresList
+                                                                          .elementAt(
+                                                                              index)
+                                                                          .drFlag ==
+                                                                      1)
+                                                                  ? true
+                                                                  : _plannerDetailsController
+                                                                          .checkBoxList[
+                                                                      index],
                                                               onChanged:
                                                                   (value) {
                                                                 newselectedIndex =
                                                                     index;
-
+                                                                // if (_plannerDetailsController
+                                                                //         .day
+                                                                //         .value ==
+                                                                //     'Others') {
+                                                                //   if (todayDt
+                                                                //           .day <
+                                                                //       (currentDt
+                                                                //           .day)) {
+                                                                //     showDialog(
+                                                                //         context:
+                                                                //             context,
+                                                                //         builder:
+                                                                //             (_) {
+                                                                //           return AlertDialog(
+                                                                //             shape:
+                                                                //                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                                                //             content:
+                                                                //                 Column(crossAxisAlignment: CrossAxisAlignment.center, mainAxisSize: MainAxisSize.min, children: [
+                                                                //               Text(
+                                                                //                 "Selected Date is not Same as Planner Date",
+                                                                //                 style: Get.textTheme.titleMedium!.copyWith(color: Theme.of(context).primaryColor),
+                                                                //               ),
+                                                                //               TextButton(
+                                                                //                   onPressed: () {
+                                                                //                     Get.back();
+                                                                //                   },
+                                                                //                   child: Text(
+                                                                //                     "OK",
+                                                                //                     style: Get.textTheme.bodyMedium!.copyWith(color: Theme.of(context).primaryColor),
+                                                                //                   ))
+                                                                //             ]),
+                                                                //           );
+                                                                //         });
+                                                                //     return;
+                                                                //   }
+                                                                //   return;
+                                                                // }
                                                                 logger.i(
                                                                     newselectedIndex);
                                                                 value == true
@@ -1415,20 +1499,16 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                               .elementAt(index)
                                                               .iSMTCRTitle!,
                                                           maxLines: 3,
-                                                          style: Theme
-                                                                  .of(context)
+                                                          style: Theme.of(
+                                                                  context)
                                                               .textTheme
                                                               .titleSmall!
                                                               .merge(const TextStyle(
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          52,
-                                                                          82,
-                                                                          252),
+                                                                  color: Colors
+                                                                      .black,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w600,
+                                                                          .w400,
                                                                   fontSize:
                                                                       14)),
                                                         ),
@@ -1439,15 +1519,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             .textTheme
                                                             .titleSmall!
                                                             .merge(const TextStyle(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        52,
-                                                                        82,
-                                                                        252),
+                                                                color: Colors
+                                                                    .black,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .w600,
+                                                                        .w400,
                                                                 fontSize: 14)),
                                                       ),
                                                       Text(
@@ -1456,15 +1532,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             .textTheme
                                                             .titleSmall!
                                                             .merge(const TextStyle(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        52,
-                                                                        82,
-                                                                        252),
+                                                                color: Colors
+                                                                    .black,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .w600,
+                                                                        .w400,
                                                                 fontSize: 14)),
                                                       ),
                                                       Text(
@@ -1473,16 +1545,12 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             .textTheme
                                                             .titleSmall!
                                                             .merge(const TextStyle(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        52,
-                                                                        82,
-                                                                        252),
+                                                                color: Colors
+                                                                    .black,
                                                                 fontSize: 14,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .w600)),
+                                                                        .w400)),
                                                       ),
                                                       Text(
                                                         "Task End date : $endDt",
@@ -1490,15 +1558,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             .textTheme
                                                             .titleSmall!
                                                             .merge(const TextStyle(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        52,
-                                                                        82,
-                                                                        252),
+                                                                color: Colors
+                                                                    .black,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .w600,
+                                                                        .w400,
                                                                 fontSize: 14)),
                                                       )
                                                     ],
@@ -2083,6 +2147,44 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                 desc: " ",
                               ),
                       ),
+                      const SizedBox(height: 16),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: SizedBox(
+                          height: 50,
+                          width: 180,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20))),
+                              onPressed: () {
+                                Get.to(AddExtraTaskScreen(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                  controller: _plannerDetailsController,
+                                ));
+                              },
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.add,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    "Add Extra Task",
+                                    style: Get.textTheme.titleMedium!
+                                        .copyWith(color: Colors.white),
+                                  )
+                                ],
+                              )),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),

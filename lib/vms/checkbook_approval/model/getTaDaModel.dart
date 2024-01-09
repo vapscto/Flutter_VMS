@@ -9,16 +9,17 @@ class GetTaDaModel {
     if (json['\$values'] != String) {
       values = <GetTaDaModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(  GetTaDaModelValues.fromJson(v));
+        values!.add(GetTaDaModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != String) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    // ignore: unrelated_type_equality_checks
+    if (values != String) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -42,7 +43,7 @@ class GetTaDaModelValues {
   String? iNVMSSupplierName;
   String? iNVMSSupplierCode;
   String? iNVMSSupplierConatctPerson;
-   int? iNVMSSupplierConatctNo;
+  int? iNVMSSupplierConatctNo;
   String? iNVMSEmailId;
   String? iNVMSSupplierAddress;
   String? hRMBDBankName;
@@ -152,47 +153,47 @@ class GetTaDaModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    data['MI_Id'] = this.mIId;
-    data['MI_Name'] = this.mIName;
-    data['VPAYVOU_Id'] = this.vPAYVOUId;
-    data['INVMS_Id'] = this.iNVMSId;
-    data['VPAYVOU_PaymentDate'] = this.vPAYVOUPaymentDate;
-    data['VPAYVOU_Remarks'] = this.vPAYVOURemarks;
-    data['VPAYVOU_AppliedAmount'] = this.vPAYVOUAppliedAmount;
-    data['VPAYVOU_ApprovedAmount'] = this.vPAYVOUApprovedAmount;
-    data['INVMPI_ApproxTotAmount'] = this.iNVMPIApproxTotAmount;
-    data['VPAYVOU_BankBalalnce'] = this.vPAYVOUBankBalalnce;
-    data['VPAYVOU_StatusFlg'] = this.vPAYVOUStatusFlg;
-    data['User_Id'] = this.userId;
-    data['SanctionLevelNo'] = this.sanctionLevelNo;
-    data['INVMS_SupplierName'] = this.iNVMSSupplierName;
-    data['INVMS_SupplierCode'] = this.iNVMSSupplierCode;
-    data['INVMS_SupplierConatctPerson'] = this.iNVMSSupplierConatctPerson;
-    data['INVMS_SupplierConatctNo'] = this.iNVMSSupplierConatctNo;
-    data['INVMS_EmailId'] = this.iNVMSEmailId;
-    data['INVMS_SupplierAddress'] = this.iNVMSSupplierAddress;
-    data['HRMBD_BankName'] = this.hRMBDBankName;
-    data['HRMBD_BankAccountNo'] = this.hRMBDBankAccountNo;
-    data['HRMBD_BankAddress'] = this.hRMBDBankAddress;
-    data['HRMBD_BranchName'] = this.hRMBDBranchName;
-    data['HRMBD_IFSCCode'] = this.hRMBDIFSCCode;
-    data['VPAYVOU_VoucherNo'] = this.vPAYVOUVoucherNo;
-    data['HRMBD_Id'] = this.hRMBDId;
-    data['VPAYVOU_ChequeNo'] = this.vPAYVOUChequeNo;
-    data['createdby'] = this.createdby;
-    data['MI_Logo'] = this.mILogo;
-    data['VPAYVOU_TDS'] = this.vPAYVOUTDS;
-    data['VPAYVOU_Penalty'] = this.vPAYVOUPenalty;
-    data['VPAYVOU_ToSupplierFlg'] = this.vPAYVOUToSupplierFlg;
-    data['VPAYVOU_PaymentTo'] = this.vPAYVOUPaymentTo;
-    data['VPAYVOU_ESICAmount'] = this.vPAYVOUESICAmount;
-    data['VPAYVOU_OtherAmount'] = this.vPAYVOUOtherAmount;
-    data['VPAYVOU_PaymentMode'] = this.vPAYVOUPaymentMode;
-    data['VPAYVOU_PaymentReference'] = this.vPAYVOUPaymentReference;
-    data['HRMBD_InterbankTransFlg'] = this.hRMBDInterbankTransFlg;
-    data['VPAYVOU_HRMBD_Id'] = this.vPAYVOUHRMBDId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    data['MI_Id'] = mIId;
+    data['MI_Name'] = mIName;
+    data['VPAYVOU_Id'] = vPAYVOUId;
+    data['INVMS_Id'] = iNVMSId;
+    data['VPAYVOU_PaymentDate'] = vPAYVOUPaymentDate;
+    data['VPAYVOU_Remarks'] = vPAYVOURemarks;
+    data['VPAYVOU_AppliedAmount'] = vPAYVOUAppliedAmount;
+    data['VPAYVOU_ApprovedAmount'] = vPAYVOUApprovedAmount;
+    data['INVMPI_ApproxTotAmount'] = iNVMPIApproxTotAmount;
+    data['VPAYVOU_BankBalalnce'] = vPAYVOUBankBalalnce;
+    data['VPAYVOU_StatusFlg'] = vPAYVOUStatusFlg;
+    data['User_Id'] = userId;
+    data['SanctionLevelNo'] = sanctionLevelNo;
+    data['INVMS_SupplierName'] = iNVMSSupplierName;
+    data['INVMS_SupplierCode'] = iNVMSSupplierCode;
+    data['INVMS_SupplierConatctPerson'] = iNVMSSupplierConatctPerson;
+    data['INVMS_SupplierConatctNo'] = iNVMSSupplierConatctNo;
+    data['INVMS_EmailId'] = iNVMSEmailId;
+    data['INVMS_SupplierAddress'] = iNVMSSupplierAddress;
+    data['HRMBD_BankName'] = hRMBDBankName;
+    data['HRMBD_BankAccountNo'] = hRMBDBankAccountNo;
+    data['HRMBD_BankAddress'] = hRMBDBankAddress;
+    data['HRMBD_BranchName'] = hRMBDBranchName;
+    data['HRMBD_IFSCCode'] = hRMBDIFSCCode;
+    data['VPAYVOU_VoucherNo'] = vPAYVOUVoucherNo;
+    data['HRMBD_Id'] = hRMBDId;
+    data['VPAYVOU_ChequeNo'] = vPAYVOUChequeNo;
+    data['createdby'] = createdby;
+    data['MI_Logo'] = mILogo;
+    data['VPAYVOU_TDS'] = vPAYVOUTDS;
+    data['VPAYVOU_Penalty'] = vPAYVOUPenalty;
+    data['VPAYVOU_ToSupplierFlg'] = vPAYVOUToSupplierFlg;
+    data['VPAYVOU_PaymentTo'] = vPAYVOUPaymentTo;
+    data['VPAYVOU_ESICAmount'] = vPAYVOUESICAmount;
+    data['VPAYVOU_OtherAmount'] = vPAYVOUOtherAmount;
+    data['VPAYVOU_PaymentMode'] = vPAYVOUPaymentMode;
+    data['VPAYVOU_PaymentReference'] = vPAYVOUPaymentReference;
+    data['HRMBD_InterbankTransFlg'] = hRMBDInterbankTransFlg;
+    data['VPAYVOU_HRMBD_Id'] = vPAYVOUHRMBDId;
     return data;
   }
 }

@@ -111,6 +111,18 @@ class InteractionListAPI {
       required int ismintrId}) async {
     var dio = Dio();
     var api = base + URLS.interactionAllList;
+
+    logger.d(api);
+
+    logger.d({
+        "MI_Id": miId,
+        "ASMAY_Id": asmayId,
+        "UserId": userId,
+        "Role_flag": flag,
+        "IVRMRT_Id": irmrtId,
+        "ISMINTR_Id": ismintrId
+      });
+      
     try {
       staffInteractionComposeController.isgetdetailloading(true);
       var response =
@@ -139,13 +151,10 @@ class InteractionListAPI {
 
 Future<bool> sendVMSMessage({
   required int miId,
-  required int amstId,
   required int asmayId,
   required String message,
-  required int istintComposedByFlg,
   required int ismintId,
   required int userId,
-  required List<String> image,
   required int roleId,
   required String base,
 }) async {

@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/apis/authenticate_user_api.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/screens/forgot_password_screen.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -31,14 +32,14 @@ class _LoginScreenState extends State<LoginScreen> {
   String deviceToken = '';
   @override
   void initState() {
-    // getDeviceTokenForFCM();
+    getDeviceTokenForFCM();
     super.initState();
   }
 
-  // getDeviceTokenForFCM() async {
-  //   deviceToken = await getDeviceToken();
-  //   logger.d('Device Id : $deviceToken');
-  // }
+  getDeviceTokenForFCM() async {
+    deviceToken = await getDeviceToken();
+    deviceid = deviceToken;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +90,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           widget.mskoolController.universalInsCodeModel!.value
                               .institutioNLOGO,
                           height: 40,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(),
                         ),
                         const SizedBox(
                           width: 12.0,
@@ -353,7 +356,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   .value
                                                   .miId,
                                               loginBaseUrl,
-                                              deviceToken),
+                                              deviceid),
                                       builder: (_, snapshot) {
                                         if (snapshot.hasData) {
                                           return Padding(
@@ -361,20 +364,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                 snapshot.data!
-                                                          .userImagePath !=null?
-                                                CircleAvatar(
-                                                  backgroundColor:
-                                                      Colors.grey.shade100,
-                                                  radius: 36.0,
-                                                  backgroundImage: NetworkImage(
-                                                      snapshot.data!
-                                                          .userImagePath!),
-                                                ):CircleAvatar(
-                                                  backgroundColor:
-                                                      Colors.grey.shade100,
-                                                  radius: 36.0,
-                                                  child: Icon(Icons.person)),
+                                                snapshot.data!.userImagePath !=
+                                                        null
+                                                    ? CircleAvatar(
+                                                        backgroundColor: Colors
+                                                            .grey.shade100,
+                                                        radius: 36.0,
+                                                        backgroundImage:
+                                                            NetworkImage(snapshot
+                                                                .data!
+                                                                .userImagePath!),
+                                                      )
+                                                    : CircleAvatar(
+                                                        backgroundColor: Colors
+                                                            .grey.shade100,
+                                                        radius: 36.0,
+                                                        child: const Icon(
+                                                            Icons.person)),
                                                 const SizedBox(
                                                   height: 16.0,
                                                 ),
@@ -526,13 +532,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-// late FirebaseMessaging firebaseMessage;
-// Future getDeviceToken() async {
-//   String deviceToken = '';
-//   firebaseMessage = FirebaseMessaging.instance;
-//   await firebaseMessage.getToken().then((value) {
-//     (value == null) ? "" : deviceToken = value;
-//     logger.i('====$deviceToken');
-//   });
-//   return deviceToken;
-// }
+late FirebaseMessaging firebaseMessage;
+Future getDeviceToken() async {
+  String deviceToken = '';
+  firebaseMessage = FirebaseMessaging.instance;
+  await firebaseMessage.getToken().then((value) {
+    (value == null) ? "" : deviceToken = value;
+    deviceid = value!;
+  });
+  return deviceToken;
+}

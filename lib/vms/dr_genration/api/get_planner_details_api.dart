@@ -43,35 +43,69 @@ Future<bool> getPlanerdetails({
       "IVRMRT_Id": ivrmrtId,
     });
     PlanerDeatails planerDeatailsList = PlanerDeatails.fromJson(response.data);
-    GetTaskDrListModel taskDrListModel =
-        GetTaskDrListModel.fromJson(response.data['gettasklist']);
-    controller.getTaskDrList.addAll(taskDrListModel.values!);
-    for (int i = 0; i < taskDrListModel.values!.length; i++) {
-      controller.hoursEt.add(TextEditingController(text: ''));
-      controller.minutesEt.add(TextEditingController(text: ''));
-      controller.statusEtField.add(TextEditingController(text: ''));
-      controller.deveationEtField.add(TextEditingController(text: ''));
-      controller.etResponse.add(TextEditingController(text: ''));
-      controller.checkBoxList.add(false);
-    }
-    // adding status in the list
-    DrstatusListModel drStatusListModel =
-        DrstatusListModel.fromJson(response.data['get_Status']);
-    controller.statusDrList.addAll(drStatusListModel.values!);
-    // here add countTask
     // get Deviation task list
     DepartwisedeviationModel departwisedeviationModel =
         DepartwisedeviationModel.fromJson(
             response.data['getdepartwisedeviationremrks']);
     controller.depWiseDevitnList.addAll(departwisedeviationModel.values!);
-    CloseTaskCoutnModel closeTaskList =
-        CloseTaskCoutnModel.fromJson(response.data['closeTaskCoutnDetails']);
-    controller.closeTaskCoutnList.addAll(closeTaskList.values!);
-    if (planerDeatailsList.plannername != null) {}
-    controller.plannernameEditingController.value.text =
-        planerDeatailsList.plannername ?? '';
-    controller.otherDaysEditingController.value =
-        planerDeatailsList.dailyreportothersdatecount!.toInt().toString();
+    if (response.data['gettasklist'] != null) {
+      GetTaskDrListModel taskDrListModel =
+          GetTaskDrListModel.fromJson(response.data['gettasklist']);
+      controller.getTaskDrList.addAll(taskDrListModel.values!);
+      for (int i = 0; i < taskDrListModel.values!.length; i++) {
+        var v = taskDrListModel.values!.elementAt(i);
+        if (taskDrListModel.values!.elementAt(i).drFlag == 1) {
+          List<String> newList = [];
+          String deviation = '';
+          for (int j = 0; j < controller.depWiseDevitnList.length; j++) {
+            if (v.iSMDRId ==
+                controller.depWiseDevitnList.elementAt(j).ismdRId) {
+              deviation = controller.depWiseDevitnList[j].ismdRRemarks ?? '';
+            }
+          }
+          String newData = v.iSMDRPTTimeTakenInHrs.toString();
+          newList = newData.split('.');
+          controller.hoursEt.add(TextEditingController(
+              text:
+                  (v.iSMDRPTTimeTakenInHrsmins!.isNotEmpty) ? newList[0] : ''));
+          controller.minutesEt.add(TextEditingController(
+              text:
+                  (v.iSMDRPTTimeTakenInHrsmins!.isNotEmpty) ? newList[1] : ''));
+          controller.statusEtField
+              .add(TextEditingController(text: v.iSMDRPTStatus));
+          controller.etResponse
+              .add(TextEditingController(text: v.iSMDRPTRemarks));
+          controller.deveationEtField
+              .add(TextEditingController(text: deviation));
+        } else {
+          controller.hoursEt.add(TextEditingController(text: ''));
+          controller.minutesEt.add(TextEditingController(text: ''));
+          controller.statusEtField.add(TextEditingController(text: ''));
+          controller.deveationEtField.add(TextEditingController(text: ''));
+          controller.etResponse.add(TextEditingController(text: ''));
+        }
+        controller.checkBoxList.add(false);
+      }
+    }
+
+    // adding status in the list
+    DrstatusListModel drStatusListModel =
+        DrstatusListModel.fromJson(response.data['get_Status']);
+    controller.statusDrList.addAll(drStatusListModel.values!);
+    // here add countTask
+    if (response.data['closeTaskCoutnDetails'] != null) {
+      CloseTaskCoutnModel closeTaskList =
+          CloseTaskCoutnModel.fromJson(response.data['closeTaskCoutnDetails']);
+      controller.closeTaskCoutnList.addAll(closeTaskList.values!);
+    }
+
+    if (response.data['gettasklist'] != null) {
+      controller.plannernameEditingController.value.text =
+          planerDeatailsList.plannername ?? '';
+      controller.otherDaysEditingController.value =
+          planerDeatailsList.dailyreportothersdatecount!.toInt().toString();
+    }
+
     if (response.data['drnotapprovedmessage'] != null) {
       Drnotapprovedmessage drnotapprovedmessage =
           Drnotapprovedmessage.fromJson(response.data['drnotapprovedmessage']);
@@ -108,7 +142,9 @@ Future<bool> getPlanerdetails({
           TADAApplyListModel.fromJson(response.data['applyList']);
       controller.getList(tadaApplyListModel.values!);
     }
-    controller.deviationCount.value = response.data['extensiondays'];
+    if (response.data['extensiondays'] != null) {
+      controller.deviationCount.value = response.data['extensiondays'];
+    }
 
     controller.updatePlannerDeatails(false);
     return true;

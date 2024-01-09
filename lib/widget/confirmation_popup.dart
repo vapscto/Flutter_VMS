@@ -57,11 +57,11 @@ class _ConfirmationPopupState extends State<ConfirmationPopup>
                   children: [
                     TextButton(
                         style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.red,
                             fixedSize: const Size(100, 30),
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)),
-                            primary: Colors.red,
-                            onPrimary: Colors.white),
+                                borderRadius: BorderRadius.circular(5))),
                         onPressed: () {
                           if (widget.onCancel != null) widget.onCancel!();
                           Get.back();
@@ -69,11 +69,12 @@ class _ConfirmationPopupState extends State<ConfirmationPopup>
                         child: const Text('Decline')),
                     TextButton(
                         style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
                             fixedSize: const Size(100, 30),
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)),
-                            primary: Theme.of(context).colorScheme.primary,
-                            onPrimary: Colors.white),
+                                borderRadius: BorderRadius.circular(5))),
                         onPressed: () {
                           widget.onConfirm();
                         },

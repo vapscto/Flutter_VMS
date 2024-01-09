@@ -1,9 +1,10 @@
 class CategoryPlanTable {
   String categoryName;
   String percentage;
-  double effort;
-  double currentEffort;
-  double requiredEffort;
+  String effort;
+  String currentEffort;
+  String requiredEffort;
+  int ismtcatId;
   CategoryPlanTable(this.categoryName, this.percentage, this.effort,
-      this.currentEffort, this.requiredEffort);
+      this.currentEffort, this.requiredEffort, this.ismtcatId);
 }

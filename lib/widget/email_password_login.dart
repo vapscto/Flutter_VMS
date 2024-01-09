@@ -141,7 +141,7 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
                             logInBox!.put("isLoggedIn", true);
                             //Get.offAll(() => const Home());
                           } else {
-                            print("Failed");
+                            logger.i("Failed");
                           }
                         });
                       } else {

@@ -9,16 +9,16 @@ class TaskEmployeeListModel {
     if (json['\$values'] != null) {
       values = <TaskEmployeeListModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new TaskEmployeeListModelValues.fromJson(v));
+        values!.add(TaskEmployeeListModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -53,14 +53,14 @@ class TaskEmployeeListModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    data['HRME_Id'] = this.hRMEId;
-    data['HRMD_Id'] = this.hRMDId;
-    data['HRMDC_ID'] = this.hRMDCID;
-    data['employeeName'] = this.employeeName;
-    data['HRMD_DepartmentName'] = this.hRMDDepartmentName;
-    data['HRMDES_DesignationName'] = this.hRMDESDesignationName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    data['HRME_Id'] = hRMEId;
+    data['HRMD_Id'] = hRMDId;
+    data['HRMDC_ID'] = hRMDCID;
+    data['employeeName'] = employeeName;
+    data['HRMD_DepartmentName'] = hRMDDepartmentName;
+    data['HRMDES_DesignationName'] = hRMDESDesignationName;
     return data;
   }
 }

@@ -15,7 +15,7 @@ class PlannerSaveAPI {
     required String plannerName,
     required String startDate,
     required String endDate,
-    required int totalHour,
+    required String totalHour,
     required String remarks,
     required List<Map<String, dynamic>> catListId,
     required List<Map<String, dynamic>> taskplannerArray,

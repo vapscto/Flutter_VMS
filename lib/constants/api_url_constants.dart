@@ -13,8 +13,7 @@ class URLS {
   static String getProfile = "profile";
   static String updateProfile = "profile/update";
   static String fileUpload = "upload/file";
-  static String versionControl =
-      "api/ADMAttendenceFacade/Mobileversion_control";
+  static String versionControl = "api/EmployeePtalFacade/Mobileversion_control";
   static String getApiUrl = "api/LoginFacade/getinstitutionapiNew/";
 
   //Common ids used in all pages.
@@ -165,6 +164,7 @@ class URLS {
   static String staffDailyTTGetDays = "api/EmployeeTTFacade/getdata/";
   static String getStaffDailyTT = "api/EmployeeTTFacade/getdaily_data/";
   static String getWeeklyTT = "api/EmployeeTTFacade/getdata/";
+  // ignore: non_constant_identifier_names
   static String nB_Attachment = "api/EmployeePtalFacade/viewnotice";
   static String filterViewNotice =
       "api/EmployeePtalFacade/onclick_noticeboard_datewise/";
@@ -402,6 +402,7 @@ class URLS {
       "api/FEESGroupHeadWiseDetailsSchoolFacade/Getdetails/";
   static String fillgroupfeedata =
       "api/FEESGroupHeadWiseDetailsSchoolFacade/Getdetails/";
+  // ignore: non_constant_identifier_names
   static String FeeHeadData =
       "api/FEESGroupHeadWiseDetailsSchoolFacade/Getdetails/";
   /////MANAGER TIME TABLE ////
@@ -467,14 +468,17 @@ class URLS {
   static String drDetailsApprove =
       "api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
 
+  // ignore: non_constant_identifier_names
   static String employee_model_list =
       "api/ISM_DailyReport_ApprovalFacade/DesgSelectionDetails/";
 
   static String getDrs = "api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
 
+  // ignore: non_constant_identifier_names
   static String DeptList =
       "api/ISM_DailyReport_ApprovalFacade/DeptSelectionDetails/";
 
+  // ignore: non_constant_identifier_names
   static String Security = "api/ISMDashboardFacade/getdetails";
 
   static String submit =
@@ -520,6 +524,7 @@ class URLS {
   static String tadaApplyDeactive = 'api/TADA_ApplyFacade/deactive/';
   static String applyTada = 'api/TADA_ApplyFacade/savedta/';
   static String tadaApplyEdit = 'api/TADA_ApplyFacade/edit/';
+  static String saveImage = 'api/TADA_ApplyFacade/Updatefile/';
 
   ///***  PETTY CASH APPROVAL  ***///
 
@@ -660,6 +665,7 @@ class URLS {
   static String drNotSave =
       'api/ISM_DailyReportGenerationFacade/SaveDRNotSentRemarks';
 
+  // ignore: non_constant_identifier_names
   static String OtpCheck = "api/CheckBookEntryFacade/geterifyEmail/";
 
   static String seacurityTaskSave =
@@ -675,4 +681,7 @@ class URLS {
 
   static String othersDayCount =
       'api/ISM_DailyReportGenerationFacade/Otherdaycount/';
+  static String punchList = 'api/ISMDashboardFacade/getdetails/';
+  static String addExtraTaskDR =
+      'api/ISM_DailyReportGenerationFacade/addextratask/';
 }

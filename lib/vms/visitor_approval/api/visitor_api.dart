@@ -12,14 +12,12 @@ class VisitorApprovalApi {
 
   getVisitorApprovalApi({
     required String base,
-    required String userId,
-    required String miId,
+    required int userId,
+    required int miId,
     required VisitorApprovalController controller,
   }) async {
     final Dio ins = getGlobalDio();
     final String api = base + URLS.visitorapprovalapi;
-    const String api2 =
-        "https://vmsstaging.vapssmartecampus.com:40020/api/V_AppointmentApprovalStatusFacade/getDetails/";
 
     if (controller.isErrorOccuredvisitor.value) {
       controller.updateIsErrorOccured(false);
@@ -30,13 +28,12 @@ class VisitorApprovalApi {
     logger.d(api);
 
     try {
-      final Response response = await ins.post(api2, data: {
-        "UserId": 60145, "MI_Id" : 17
-        //  options: Options(headers: getSession())
-      });
+      final Response response = await ins.post(api,
+          options: Options(headers: getSession()),
+          data: {"UserId": userId, "MI_Id": miId});
 
-logger.i({ "UserId": 60145, "MI_Id" : 17});
-logger.d(response.data);
+      logger.i({"UserId": userId, "MI_Id": miId});
+      logger.d(response.data);
 
       if (response.data['visitorlist'] != null) {
         controller.updateIsErrorOccured(true);

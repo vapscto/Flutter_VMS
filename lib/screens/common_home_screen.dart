@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/apis/attendance_shortage_api.dart';
-import 'package:m_skool_flutter/apis/fee_reminder_api.dart';
-import 'package:m_skool_flutter/apis/get_analytics_api.dart';
 import 'package:m_skool_flutter/controller/dynamic_analytics_controller.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/home_page_model.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
-// import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/tabs/dashboard.dart';
 import 'package:m_skool_flutter/vms/profile/screens/profile_screen.dart';
-import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart';
-import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
+import 'package:m_skool_flutter/vms/punch_report/screens/employee_punch_report.dart';
 import 'package:m_skool_flutter/vms/utils/common_drawer.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -35,40 +30,11 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
   final PageController pageController = PageController();
   final RxInt selectedPage = RxInt(0);
   final GlobalKey<ScaffoldState> _scaffold = GlobalKey();
-  // final HwCwNbController hwCwNbController = Get.put(HwCwNbController());
   final DynamicAnalyticsController controller =
       Get.put(DynamicAnalyticsController());
   @override
   void initState() {
     version(widget.loginSuccessModel, widget.mskoolController);
-    GetAnalyticsApi.instance.getData(
-        controller: controller,
-        loginSuccessModel: widget.loginSuccessModel,
-        mskoolController: widget.mskoolController,
-        base: baseUrlFromInsCode("portal", widget.mskoolController),
-        context: context);
-
-    if (widget.loginSuccessModel.roleforlogin!.toLowerCase() == "student") {
-      FeeReminderApi.instance.showFeeReminder(
-        miId: widget.loginSuccessModel.mIID!,
-        asmayId: widget.loginSuccessModel.asmaYId!,
-        amstId: widget.loginSuccessModel.amsTId!,
-        asmclId: widget.loginSuccessModel.asmcLId!,
-        asmsId: widget.loginSuccessModel.asmSId!,
-        base: baseUrlFromInsCode("portal", widget.mskoolController),
-        context: context,
-        loginSuccessModel: widget.loginSuccessModel,
-        mskoolController: widget.mskoolController,
-      );
-      AttendanceShortageApi.instance.getShortage(
-          miId: widget.loginSuccessModel.mIID!,
-          asmayId: widget.loginSuccessModel.asmaYId!,
-          amstId: widget.loginSuccessModel.amsTId!,
-          percentage: 0,
-          base: baseUrlFromInsCode("portal", widget.mskoolController),
-          context: context);
-    }
-
     homePage.addAll(
       [
         HomePageModel(
@@ -77,28 +43,27 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
           page: DashboardTab(
             loginSuccessModel: widget.loginSuccessModel,
             mskoolController: widget.mskoolController,
-            // hwcwNbController: hwCwNbController,
             controller: controller,
           ),
           selectedColor: const Color(0xFF9900F0),
         ),
-        HomePageModel(
-          title: "Salary Slip",
-          icon: 'assets/images/money.png',
-          page: SalarySlipHome(
-            loginSuccessModel: widget.loginSuccessModel,
-            mskoolController: widget.mskoolController,
-            // index: 1,
-            // previousScreen: '1',
-            // title: 'Rating Report',
-            // showAppBar: false,
-          ),
-          selectedColor: const Color(0xFFFF008C),
-        ),
+        // HomePageModel(
+        //   title: "Salary Slip",
+        //   icon: 'assets/images/money.png',
+        //   page: SalarySlipHome(
+        //     loginSuccessModel: widget.loginSuccessModel,
+        //     mskoolController: widget.mskoolController,
+        //     // index: 1,
+        //     // previousScreen: '1',
+        //     // title: 'Rating Report',
+        //     // showAppBar: false,
+        //   ),
+        //   selectedColor: const Color(0xFFFF008C),
+        // ),
         HomePageModel(
             title: "Punch Report",
             icon: 'assets/images/calendar.png',
-            page: PunchReport(
+            page: EmployeePunchReport(
               loginSuccessModel: widget.loginSuccessModel,
               mskoolController: widget.mskoolController,
               title: 'Punch Report',
@@ -123,7 +88,6 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
   @override
   void dispose() {
     Get.delete<DynamicAnalyticsController>();
-    // Get.delete<HwCwNbController>();
     pageController.dispose();
 
     super.dispose();
@@ -166,14 +130,11 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
                         MaterialPageRoute(
                           builder: (_) {
                             return NotificationScreen(
-                              // appBarTitle: "Notice",
                               loginSuccessModel: widget.loginSuccessModel,
                               mskoolController: widget.mskoolController,
                               openFor: widget.loginSuccessModel.roleforlogin!
                                   .toLowerCase(),
-                              // hwCwNbController: hwCwNbController,
                             );
-                            // hwCwNbController: hwCwNbController);
                           },
                         ),
                       );
@@ -191,7 +152,6 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
         drawer: Drawer(
           child: CommonDrawer(
             loginSuccessModel: widget.loginSuccessModel,
-            // hwCwNbController: hwCwNbController,
             mskoolController: widget.mskoolController,
           ),
         ),

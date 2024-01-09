@@ -9,7 +9,6 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/vms/api/vms_transation_api.dart';
 import 'package:m_skool_flutter/vms/controller/vms_common_controller.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/controller/dr_details_ctrlr.dart';
@@ -33,6 +32,7 @@ import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/drop_down_level.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:open_filex/open_filex.dart';
@@ -355,11 +355,8 @@ double calculateDaysToComplete(double totalDays, double completionPercentage) {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          centerTitle: (widget.previousScreen == '1') ? true : false,
-          // titleSpacing: (widget.previousScreen == '1') ? 40 : 0,
-          leading: (widget.previousScreen == '0')
-              ? const CustomGoBackButton()
-              : const SizedBox(),
+          centerTitle: false,
+          leading: const CustomGoBackButton(),
           actions: [
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 12, 12, 12),
@@ -385,6 +382,11 @@ double calculateDaysToComplete(double totalDays, double completionPercentage) {
                                 } else if (hoursEt.text == "0" &&
                                     minutesEt.text == "0") {
                                   Fluttertoast.showToast(msg: "Enter Time");
+                                  return;
+                                } else if (hoursEt.text.isEmpty) {
+                                  Fluttertoast.showToast(
+                                      msg:
+                                          "Hour should not be empty, Please enter 0");
                                   return;
                                 } else if (employeesID.isEmpty) {
                                   Fluttertoast.showToast(
@@ -896,7 +898,7 @@ double calculateDaysToComplete(double totalDays, double completionPercentage) {
                       },
                     ),
                   )
-                : SizedBox()),
+                : const SizedBox()),
 
             // Task Title
             Padding(

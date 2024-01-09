@@ -10,10 +10,8 @@ import 'package:m_skool_flutter/vms/punch_report/api/punch_report_api.dart';
 import 'package:m_skool_flutter/vms/punch_report/controller/punch_filter_controller.dart';
 import 'package:m_skool_flutter/vms/punch_report/widget/punch_report_item.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
-import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
-import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class PunchReport extends StatefulWidget {
   final String title;
@@ -46,10 +44,32 @@ class _PunchReportState extends State<PunchReport> {
     super.dispose();
   }
 
+  _getData() async {
+    DateTime dt = DateTime.now();
+    punchFilterController
+        .updateDisplayAbleStartFrom("${dt.day}-${dt.month}-${dt.year}");
+    punchFilterController.startFrom.value = DateTime.now();
+    punchFilterController.endTo.value = DateTime.now();
+    punchFilterController
+        .updateDisplayAbleEndTo("${dt.day}-${dt.month}-${dt.year}");
+    await PunchReportApi.instance.pcReports(
+        miId: widget.loginSuccessModel.mIID!,
+        userId: widget.loginSuccessModel.userId!,
+        fromDate: punchFilterController.startFrom.value.toLocal().toString(),
+        endDate: punchFilterController.endTo.value.toLocal().toString(),
+        base: baseUrlFromInsCode("portal", widget.mskoolController),
+        controller: punchFilterController);
+  }
+
+  @override
+  void initState() {
+    _getData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButton:const HomeFab(),
       appBar: AppBar(
         title: Text(
           widget.title,
@@ -60,7 +80,6 @@ class _PunchReportState extends State<PunchReport> {
           ),
         ),
         centerTitle: (widget.previousScreen == '0') ? false : true,
-        // titleSpacing: 0,
         leading: (widget.previousScreen == '0')
             ? const CustomGoBackButton()
             : const SizedBox(),
@@ -181,7 +200,6 @@ class _PunchReportState extends State<PunchReport> {
               ),
             )),
       ),
-
       body: Obx(() {
         logger.d("message");
         return punchFilterController.start.value == 0
