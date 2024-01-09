@@ -21,6 +21,7 @@ import 'package:m_skool_flutter/vms/task%20creation/api/sava_task.dart';
 import 'package:m_skool_flutter/vms/task%20creation/controller/task_client_module.dart';
 import 'package:m_skool_flutter/vms/task%20creation/controller/task_department_cntrlr.dart';
 import 'package:m_skool_flutter/vms/task%20creation/controller/task_projects_cntroller.dart';
+import 'package:m_skool_flutter/vms/task%20creation/model/employee_list_model.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_Tsk_Client.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_project_category.dart';
@@ -54,6 +55,8 @@ class TaskCreationHome extends StatefulWidget {
 }
 
 class _TaskCreationHomeState extends State<TaskCreationHome> {
+    GetDeptsValues? selectedDepartment;
+  EmplyeeEnhancementModelValues? selectedEmployee;
   final TaskDepartController _taskDepartController =
       Get.put(TaskDepartController());
   final ImagePicker _imagePicker = ImagePicker();
@@ -103,6 +106,13 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
 
   List<Map<String, dynamic>> taskEmpArray = [];
   DateTime date = DateTime.now();
+  
+  var index;
+  
+  var tables;
+  
+  var i;
+  
   @override
   void initState() {
     selectDate.text = getDate(date);
@@ -320,6 +330,21 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       },
     );
   }
+
+
+double calculateDaysToComplete(double totalDays, double completionPercentage) {
+  if (completionPercentage < 0 || completionPercentage > 100) {
+    // Handle invalid percentage
+    return -1;
+  }
+
+  double daysToComplete = (completionPercentage / 100) * totalDays;
+  return daysToComplete;
+}
+
+
+
+
 
   bool selectAll = false;
 
@@ -539,7 +564,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                           )
                         : Container(
                             margin: const EdgeInsets.only(
-                                top: 20, left: 16, right: 16, bottom: 16),
+                                top: 20, left: 16, right: 16, bottom: 110),
                             decoration: BoxDecoration(
                               color: Theme.of(context).scaffoldBackgroundColor,
                               borderRadius: BorderRadius.circular(16.0),
@@ -946,7 +971,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
               ),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
 
@@ -1324,7 +1349,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                     )),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Padding(
@@ -1351,7 +1376,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                         color: Colors.black)),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Obx(() => Wrap(
@@ -1409,7 +1434,9 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    Visibility(
+                    visible: _taskDepartController.taskAssingn.value == "N",
+                    child:  SizedBox(
                       width: 165,
                       child: RadioListTile(
                         dense: true,
@@ -1431,6 +1458,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                           _taskDepartController.updateTypeOfTask(v!);
                         },
                       ),
+                    ),
                     ),
                     SizedBox(
                       width: 150,
@@ -1555,7 +1583,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                       alignment: Alignment.center,
                                       child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor: Color.fromARGB(
+                                            backgroundColor: const Color.fromARGB(
                                                 255, 27, 59, 238),
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 14, vertical: 2.0),
@@ -1591,7 +1619,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                               .file!
                                               .path);
                                         },
-                                        child: Icon(Icons.visibility),
+                                        child: const Icon(Icons.visibility),
                                       ))),
                                   DataCell(Align(
                                       alignment: Alignment.center,
@@ -1738,7 +1766,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                               ? BorderRadius.zero
                                               : const BorderRadius.only(
                                                   topLeft: Radius.circular(10)),
-                                          color: Color.fromRGBO(12, 54, 238, 1),
+                                          color: const Color.fromRGBO(12, 54, 238, 1),
                                         ),
                                         child: const Align(
                                           alignment: Alignment.center,
@@ -2240,7 +2268,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                 const SizedBox(
                                                   height: 5,
                                                 ),
-                                                Text("HH")
+                                                const Text("HH")
                                               ],
                                             ),
                                             const SizedBox(
@@ -2589,9 +2617,1240 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             )))),
               ),
             ),
+                       Obx(
+              () => Visibility(
+                visible: _taskDepartController.taskAssingn.value == "N",
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "ENHANCEMENT",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ),
+            ),
             const SizedBox(
               height: 40,
             ),
+
+
+Obx(
+  () => Visibility(
+    visible: _taskDepartController.typesTask.value == "E",
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          labelText: "Total Days",
+          labelStyle: Theme.of(context).textTheme.labelSmall!.merge(
+                const TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16.0,
+                  letterSpacing: 0.3,
+                  color: Colors.black,
+                ),
+              ),
+        ),
+        style: Theme.of(context).textTheme.labelSmall!.merge(
+              const TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 16.0,
+                letterSpacing: 0.3,
+                color: Colors.black,
+              ),
+            ),
+      ),
+    ),
+  ),
+),
+
+
+
+Obx(
+  () => Visibility(
+    visible: _taskDepartController.taskAssingn.value == "N",
+    child: SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              Column(
+                children: [
+                  Obx(
+                    () => Visibility(
+                      visible: _taskDepartController.typesTask.value == "E",
+                      child: Container(
+                        width: 300,
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: Color.fromRGBO(12, 54, 238, 1),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                          ),
+                        ),
+                        child: const Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Department',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Obx(
+                    () => Visibility(
+                      visible: _taskDepartController.typesTask.value == "E",
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            left: BorderSide(width: 0.5, color: Colors.black54),
+                            right: BorderSide(width: 1, color: Colors.black54),
+                            bottom: BorderSide(width: 1, color: Colors.black54),
+                          ),
+                        ),
+                        width: 300,
+                        height: 210,
+                        child: Obx(() {
+                          return _taskDepartController.tskDeptErrorLoading.value
+                              ? const Center(
+                                  child: ErrWidget(
+                                    err: {
+                                      "errorTitle": "Unexpected Error Occurred",
+                                      "errorMsg":
+                                          "While loading company we encountered an error"
+                                    },
+                                  ),
+                                )
+                              : _taskDepartController.getDeptsList.isEmpty
+                                  ? const AnimatedProgressWidget(
+                                      animationPath: 'assets/json/default.json',
+                                      title: 'Loading data',
+                                      desc: "Please wait we are loading data",
+                                    )
+                                  : Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 30,
+                                          left: 16,
+                                          right: 16,
+                                          bottom: 110),
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .scaffoldBackgroundColor,
+                                        borderRadius:
+                                            BorderRadius.circular(16.0),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            offset: Offset(0, 1),
+                                            blurRadius: 8,
+                                            color: Colors.black12,
+                                          ),
+                                        ],
+                                      ),
+                                      child:
+                                          DropdownButtonFormField<GetDeptsValues>(
+                                        validator: (value) {
+                                          if (value == null) {
+                                            return "Please select a department";
+                                          }
+                                          return null;
+                                        },
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.transparent,
+                                            ),
+                                          ),
+                                          enabledBorder:
+                                              const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.transparent,
+                                            ),
+                                          ),
+                                          hintStyle: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall!
+                                              .merge(const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 15.0,
+                                                letterSpacing: 0.3,
+                                              )),
+                                          hintText:
+                                              _taskDepartController.getDeptsList
+                                                      .isNotEmpty
+                                                  ? 'Select Department'
+                                                  : 'No data available',
+                                          floatingLabelBehavior:
+                                              FloatingLabelBehavior.always,
+                                          isDense: true,
+                                          label: const CustomDropDownLabel(
+                                            icon: 'assets/images/hat.png',
+                                            containerColor: Color.fromRGBO(
+                                                223, 251, 254, 1),
+                                            text: 'Department',
+                                            textColor: Color.fromRGBO(
+                                                40, 182, 200, 1),
+                                          ),
+                                        ),
+                                        icon: const Padding(
+                                          padding: EdgeInsets.only(top: 3),
+                                          child: Icon(
+                                            Icons
+                                                .keyboard_arrow_down_rounded,
+                                            size: 07,
+                                          ),
+                                        ),
+                                        iconSize: 30,
+                                        items: List.generate(
+                                          _taskDepartController
+                                              .getDeptsList.length,
+                                          (index) {
+                                            return DropdownMenuItem(
+                                              value: _taskDepartController
+                                                  .getDeptsList[index],
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 13, left: 5),
+                                                child: Text(
+                                                  overflow: TextOverflow.clip,
+                                                  _taskDepartController
+                                                          .getDeptsList[index]
+                                                          .hrmDDepartmentName!,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .merge(const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: 13.0,
+                                                        letterSpacing: 0.3,
+                                                       ),
+                              ),
+                            )
+                            ));
+                          }),
+
+                          onChanged: (s) async {
+
+                                            setState(() {
+                                                selectedDepartment = s;
+                                                // Reset selected employee when department changes
+                                                selectedEmployee = null;
+                                              });
+                            _taskProjectsController.getTaskProjectsList.clear();
+                            _taskProjectsController.getTaskCategoryList.clear();
+                            hrmdIds = s!.hrmDId!;
+                            filterEmployees(s.hrmDDepartmentName!);
+                            await getTskPrjtCatgryList(
+                                base: baseUrlFromInsCode(
+                                  'issuemanager',
+                                  widget.mskoolController,
+                                ),
+                                controller: _taskProjectsController,
+                                userId: widget.loginSuccessModel.userId!,
+                                ivrmrtId: widget.loginSuccessModel.roleId!,
+                                miId: widget.loginSuccessModel.mIID!,
+                                HRME_Id: logInBox!.get("EmpId"),
+                                HRMD_Id: s.hrmDId!);
+                          },
+                        ),
+                      );
+                        }
+                      )
+                                        ),
+                                      ),
+                                    ),
+                ],
+              ),
+               // Only display the employee dropdown if a department is selected
+                  if (selectedDepartment != null)
+              Column(
+                children: [
+              Obx(
+                    () => Visibility(
+                      visible: _taskDepartController.typesTask.value == "E",
+                      child: Container(
+                        width: 300,
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: Color.fromRGBO(12, 54, 238, 1),
+                        ),
+                        child: const Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Employee Name',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  
+                  
+                    Obx(
+                                      () => Visibility(
+                                        visible: _taskDepartController
+                                                .typesTask.value ==
+                                            "E",
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            border: Border(
+                                                left: BorderSide(
+                                                    width: 0.5,
+                                                    color: Colors.black54),
+                                                right: BorderSide(
+                                                    width: 1,
+                                                    color: Colors.black54),
+                                                bottom: BorderSide(
+                                                    width: 1,
+                                                    color: Colors.black54)),
+                                          ),
+                                          width: 300,
+                                          height: 210,
+                                          child: Obx(() => _taskDepartController.employeeTasksloading.value
+                ? const Center(
+                    child: ErrWidget(
+                      err: {
+                        "errorTitle": "Unexpected Error Occured",
+                        "errorMsg":
+                            "While loading company we encountered an error"
+                      },
+                    ),
+                  )
+                : _taskDepartController.getemployeelist.isEmpty
+                    ? const AnimatedProgressWidget(
+                        animationPath: 'assets/json/default.json',
+                        title: 'Loading data',
+                        desc: "Please wait we are loading data",
+                      )
+                    : Container(
+                        margin: const EdgeInsets.only(
+                            top: 30, left: 16, right: 16, bottom: 110),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          borderRadius: BorderRadius.circular(16.0),
+                          boxShadow: const [
+                            BoxShadow(
+                              offset: Offset(0, 1),
+                              blurRadius: 8,
+                              color: Colors.black12,
+                            ),
+                          ],
+                        ),
+                        child: DropdownButtonFormField<EmplyeeEnhancementModelValues>(
+                          // value: _taskDepartController.getDeptsList.first,
+                          validator: (value) {
+                            if (value == null) {
+                              return "";
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                            hintStyle: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .merge(const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 15.0,
+                                    letterSpacing: 0.3)),
+                            hintText:
+                                _taskDepartController.getemployeelist.isNotEmpty
+                                    ? 'Select Employee'
+                                    : 'No data available',
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            isDense: true,
+                            label: const CustomDropDownLabel(
+                              icon: 'assets/images/hat.png',
+                              containerColor: Color.fromRGBO(223, 251, 254, 1),
+                              text: 'Employee',
+                              textColor: Color.fromRGBO(40, 182, 200, 1),
+                            ),
+                          ),
+                          icon: const Padding(
+                            padding: EdgeInsets.only(top: 3),
+                            child: Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              size: 07,
+                            ),
+                          ),
+                          iconSize: 30,
+                          items: List.generate(
+                              _taskDepartController.getemployeelist.length,
+                              (index) {
+                            return DropdownMenuItem(
+                              value: _taskDepartController.getemployeelist[index],
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 13, left: 5),
+                                child: Text(
+                                  overflow: TextOverflow.clip,
+                                  _taskDepartController
+                                      .getemployeelist[index].employeename!,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .merge(const TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 13.0,
+                                          letterSpacing: 0.3)),
+                                ),
+                              ),
+                            );
+                          }),
+
+                          onChanged: (s) async {
+                                          {
+                                              setState(() {
+                                                selectedEmployee = s;
+                                              });
+                                              _taskProjectsController
+                                                  .getTaskProjectsList
+                                                  .clear();
+                                              _taskProjectsController
+                                                  .getTaskCategoryList
+                                                  .clear();
+                                              hrmdIds = s!.hrmDId!;
+                                              filterEmployees(
+                                                  s.employeename!);
+                                              getTskPrjtCatgryList(
+                                               base: baseUrlFromInsCode(
+                                  'issuemanager',
+                                  widget.mskoolController,
+                                ),
+                                controller: _taskProjectsController,
+                                userId: widget.loginSuccessModel.userId!,
+                                ivrmrtId: widget.loginSuccessModel.roleId!,
+                                miId: widget.loginSuccessModel.mIID!,
+                                HRME_Id: logInBox!.get("EmpId"),
+                                                HRMD_Id: s.hrmDId!,
+                                              );
+                          };
+  }),
+                      )),
+                                        ),
+                                      ),
+                                    ),
+                ],
+              ),
+
+               Column(
+                children: [
+              Obx(
+                    () => Visibility(
+                      visible: _taskDepartController.typesTask.value == "E",
+                      child: Container(
+                        width: 250,
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: Color.fromRGBO(12, 54, 238, 1),
+                        ),
+                        child: const Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Percenatge',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Obx(
+                                      () => Visibility(
+                                        visible: _taskDepartController
+                                                .typesTask.value ==
+                                            "E",
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            border: Border(
+                                                left: BorderSide(
+                                                    width: 0.5,
+                                                    color: Colors.black54),
+                                                right: BorderSide(
+                                                    width: 1,
+                                                    color: Colors.black54),
+                                                bottom: BorderSide(
+                                                    width: 1,
+                                                    color: Colors.black54)),
+                                          ),
+                                          width: 250,
+                                          height: 210,
+                                           child:Padding(
+  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+  child: TextFormField(
+    validator: (value) {
+      if (value!.isEmpty) {
+        return 'Enter Percentage';
+      }
+
+      final double enteredValue = double.parse(value);
+      if (enteredValue > 100) {
+        return 'Percentage should not exceed 100%';
+      }
+
+      return null;
+    },
+    keyboardType: TextInputType.number,
+    inputFormatters: <TextInputFormatter>[
+      FilteringTextInputFormatter.digitsOnly
+    ],
+   onChanged: (value) {
+  if (value.isNotEmpty) {
+    final double enteredValue = double.parse(value);
+    if (enteredValue > 100) {
+      _descritpionETController.text = '100';
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Total Percentage Not Greater Than 100 % !'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      final double totalDays = double.parse(_taskDepartController.totalDaysController.text);
+      final double calculatedDays = calculateDaysToComplete(totalDays, enteredValue);
+
+      // You can use calculatedDays as needed.
+      print('Days to complete: $calculatedDays');
+    }
+  }
+},
+
+    maxLines: 1,
+    style: Theme.of(context).textTheme.titleSmall!.merge(
+      const TextStyle(
+        fontWeight: FontWeight.w500,
+        fontSize: 14.0,
+        letterSpacing: 0.3,
+        overflow: TextOverflow.clip,
+      ),
+    ),
+    decoration: InputDecoration(
+      hintText: 'Enter Percentage',
+      hintStyle: Theme.of(context).textTheme.titleSmall!.merge(
+        const TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 14.0,
+          letterSpacing: 0.3,
+          overflow: TextOverflow.clip,
+        ),
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+    ),
+    controller: _descritpionETController,
+  ),
+)
+
+
+                                        ),
+                                      ),
+                                    ),
+                ],
+              ),
+               Column(
+                children: [
+              Obx(
+                    () => Visibility(
+                      visible: _taskDepartController.typesTask.value == "E",
+                     
+                      child: Container(
+                        width: 250,
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: Color.fromRGBO(12, 54, 238, 1),
+                        ),
+                        child: const Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Days',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Obx(
+                                      () => Visibility(
+                                        visible: _taskDepartController
+                                                .typesTask.value ==
+                                            "E",
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            border: Border(
+                                                left: BorderSide(
+                                                    width: 0.5,
+                                                    color: Colors.black54),
+                                                right: BorderSide(
+                                                    width: 1,
+                                                    color: Colors.black54),
+                                                bottom: BorderSide(
+                                                    width: 1,
+                                                    color: Colors.black54)),
+                                          ),
+                                          width: 250,
+                                          height: 210,
+  
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: TextFormField(
+        readOnly: true,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          labelStyle: Theme.of(context).textTheme.labelSmall!.merge(
+                const TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16.0,
+                  letterSpacing: 0.3,
+                  color: Colors.black,
+                ),
+              ),
+        ),
+        style: Theme.of(context).textTheme.labelSmall!.merge(
+              const TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 16.0,
+                letterSpacing: 0.3,
+                color: Colors.black,
+              ),
+            ),
+      ),
+    ),
+  ),
+),
+                                        ),
+                                    
+                ],
+              ),
+               Column(
+                children: [
+              Obx(
+                    () => Visibility(
+                      visible: _taskDepartController.typesTask.value == "E",
+                      child: Container(
+                        width: 250,
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: Color.fromRGBO(12, 54, 238, 1),
+                        ),
+                        child: const Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Hours',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Obx(
+                                      () => Visibility(
+                                        visible: _taskDepartController
+                                                .typesTask.value ==
+                                            "E",
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            border: Border(
+                                                left: BorderSide(
+                                                    width: 0.5,
+                                                    color: Colors.black54),
+                                                right: BorderSide(
+                                                    width: 1,
+                                                    color: Colors.black54),
+                                                bottom: BorderSide(
+                                                    width: 1,
+                                                    color: Colors.black54)),
+                                          ),
+                                          width: 250,
+                                          height: 210,
+                                             child: Container(
+                                      width: 210,
+                                      height: 210,
+                                      decoration: const BoxDecoration(
+                                        border: Border(
+                                            right: BorderSide(
+                                                width: 1,
+                                                color: Colors.black54),
+                                            bottom: BorderSide(
+                                                width: 1,
+                                                color: Colors.black54)),
+                                      ),
+                                      child: Align(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  width: 60,
+                                                  child: TextField(
+                                                    inputFormatters: [
+                                                      FilteringTextInputFormatter
+                                                          .allow(
+                                                              RegExp('[0-9]')),
+                                                      LengthLimitingTextInputFormatter(
+                                                          2),
+                                                    ],
+                                                    keyboardType:
+                                                        const TextInputType
+                                                                .numberWithOptions(
+                                                            decimal: false),
+                                                    maxLines: 1,
+                                                    controller: hoursEt,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall!
+                                                        .merge(const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w100,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.3,
+                                                          overflow:
+                                                              TextOverflow.clip,
+                                                        )),
+                                                    decoration: InputDecoration(
+                                                        border: OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5))),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                const Text("HH")
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  width: 60,
+                                                  child: TextField(
+                                                    inputFormatters: [
+                                                      FilteringTextInputFormatter
+                                                          .allow(
+                                                              RegExp('[0-9]')),
+                                                      LengthLimitingTextInputFormatter(
+                                                          2),
+                                                    ],
+                                                    keyboardType:
+                                                        const TextInputType
+                                                                .numberWithOptions(
+                                                            decimal: false),
+                                                    maxLines: 1,
+                                                    decoration: InputDecoration(
+                                                        border: OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5))),
+                                                    controller: minutesEt,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall!
+                                                        .merge(const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w100,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.3,
+                                                          overflow:
+                                                              TextOverflow.clip,
+                                                        )),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                const Text('MM')
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                        ),
+                                      ),
+                                    ),
+                                    
+                ],
+              ),
+               Column(
+                children: [
+              Obx(
+                    () => Visibility(
+                      visible: _taskDepartController.typesTask.value == "E",
+                      child: Container(
+                        width: 250,
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: Color.fromRGBO(12, 54, 238, 1),
+                        ),
+                        child: const Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Start and End Date',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                    Obx(
+                                      () => Visibility(
+                                        visible: _taskDepartController
+                                                .typesTask.value ==
+                                            "E",
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            border: Border(
+                                                left: BorderSide(
+                                                    width: 0.5,
+                                                    color: Colors.black54),
+                                                right: BorderSide(
+                                                    width: 1,
+                                                    color: Colors.black54),
+                                                bottom: BorderSide(
+                                                    width: 1,
+                                                    color: Colors.black54)),
+                                          ),
+                                          width: 250,
+                                          height: 210,
+                                            child: Align(
+                                          alignment: Alignment.center,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                width: 200,
+                                                child: TextField(
+                                                  onTap: () {
+                                                    fromDate();
+                                                  },
+                                                  readOnly: true,
+                                                  controller: selectFromDate,
+                                                  decoration: InputDecoration(
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5)),
+                                                    suffixIcon: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              12),
+                                                      child: InkWell(
+                                                        onTap: () async {
+                                                          fromDate();
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                          "assets/svg/calendar_icon.svg",
+                                                          color: const Color(
+                                                              0xFF3E78AA),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    hintText:
+                                                        "Select From Date",
+                                                    hintStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall!
+                                                        .merge(const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w100,
+                                                          fontSize: 16.0,
+                                                          letterSpacing: 0.3,
+                                                          overflow:
+                                                              TextOverflow.clip,
+                                                        )),
+                                                  ),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .merge(const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w100,
+                                                        fontSize: 16.0,
+                                                        letterSpacing: 0.3,
+                                                        overflow:
+                                                            TextOverflow.clip,
+                                                      )),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              SizedBox(
+                                                width: 200,
+                                                child: TextField(
+                                                  onTap: () {
+                                                    toDate();
+                                                  },
+                                                  readOnly: true,
+                                                  controller: selectToDate,
+                                                  decoration: InputDecoration(
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5)),
+                                                    suffixIcon: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              12),
+                                                      child: InkWell(
+                                                        onTap: () async {
+                                                          toDate();
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                          "assets/svg/calendar_icon.svg",
+                                                          color: const Color(
+                                                              0xFF3E78AA),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    hintText: "Select To Date",
+                                                    hintStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall!
+                                                        .merge(const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w100,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.3,
+                                                          overflow:
+                                                              TextOverflow.clip,
+                                                        )),
+                                                  ),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .merge(const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w100,
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.3,
+                                                        overflow:
+                                                            TextOverflow.clip,
+                                                      )),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+
+                                        ),
+                                      ),
+                                    ),
+                ],
+              ),
+           Column(
+                children: [
+              Obx(
+                    () => Visibility(
+                      visible: _taskDepartController.typesTask.value == "E",
+                     
+                      child: Container(
+                        width: 250,
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: Color.fromRGBO(12, 54, 238, 1),
+                        ),
+                        child: const Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Level',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Obx(
+                                      () => Visibility(
+                                        visible: _taskDepartController
+                                                .typesTask.value ==
+                                            "E",
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            border: Border(
+                                                left: BorderSide(
+                                                    width: 0.5,
+                                                    color: Colors.black54),
+                                                right: BorderSide(
+                                                    width: 1,
+                                                    color: Colors.black54),
+                                                bottom: BorderSide(
+                                                    width: 1,
+                                                    color: Colors.black54)),
+                                          ),
+                                          width: 250,
+                                          height: 210,
+  
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: TextFormField(
+        readOnly: true,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          labelStyle: Theme.of(context).textTheme.labelSmall!.merge(
+                const TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16.0,
+                  letterSpacing: 0.3,
+                  color: Colors.black,
+                ),
+              ),
+        ),
+        style: Theme.of(context).textTheme.labelSmall!.merge(
+              const TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 16.0,
+                letterSpacing: 0.3,
+                color: Colors.black,
+              ),
+            ),
+      ),
+    ),
+  ),
+),
+                                        ),
+                                    
+                ],
+              ),
+
+
+               Column(
+                children: [
+              Obx(
+                    () => Visibility(
+                      visible: _taskDepartController.typesTask.value == "E",
+                      child: Container(
+                        width: 250,
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: Color.fromRGBO(12, 54, 238, 1),
+                        ),
+                        child: const Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Remark',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                   Obx(
+                                      () => Visibility(
+                                        visible: _taskDepartController
+                                                .typesTask.value ==
+                                            "E",
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            border: Border(
+                                                left: BorderSide(
+                                                    width: 0.5,
+                                                    color: Colors.black54),
+                                                right: BorderSide(
+                                                    width: 1,
+                                                    color: Colors.black54),
+                                                bottom: BorderSide(
+                                                    width: 1,
+                                                    color: Colors.black54)),
+                                          ),
+                                          width: 250,
+                                          height: 210,
+                                            child: Align(
+                                        alignment: Alignment.center,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: TextField(
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .merge(const TextStyle(
+                                                  fontWeight: FontWeight.w100,
+                                                  fontSize: 16.0,
+                                                  letterSpacing: 0.3,
+                                                  overflow: TextOverflow.clip,
+                                                )),
+                                            decoration: InputDecoration(
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5))),
+                                            controller: etRemarkControllers,
+                                            maxLines: 6,
+                                          ),
+                                        ),
+                                      ),
+                                        ),
+                                      ),
+                                    ),
+                ],
+              ),
+              const SizedBox(height: 30),
+          
+Column(
+      children: [
+        Obx(
+          () => Visibility(
+            visible: _taskDepartController.typesTask.value == "E",
+            child: Container(
+              width: 150,
+              height: 50,
+              decoration: const BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: Color.fromRGBO(12, 54, 238, 1),
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(10),
+                ),
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: const [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Action',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+    Obx(
+      () => Visibility(
+        visible: _taskDepartController.typesTask.value == "E",
+        child: Container(
+          decoration: const BoxDecoration(
+            border: Border(
+              left: BorderSide(width: 0.5, color: Colors.black54),
+              right: BorderSide(width: 1, color: Colors.black54),
+              bottom: BorderSide(width: 1, color: Colors.black54),
+            ),
+          ),
+          width: 150,
+          height: 70,
+          child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: const Icon( Icons.add, color: Colors.black),
+                    onPressed: () {
+                      setState(() {
+                        if (tables.isNotEmpty) {
+                          tables.removeLast();
+                        }
+                      });
+                    },
+        ),
+      ]),
+    ),
+))],
+),
+            ],
+          ),
+        ),
+      ),
+    ),
+  ),          
+),
+
             Align(
               alignment: Alignment.bottomRight,
               child: Padding(
@@ -2610,9 +3869,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
             const SizedBox(
               height: 40,
             ),
-          ]),
+          ])),
         ),
-      ),
     );
   }
 
@@ -2625,7 +3883,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     ).then((value) {
       setState(() {
         selectFromDate.text = getDateFrom(value);
-        selectToDate.text = getDateFrom(value!.add(Duration(days: 5)));
+        selectToDate.text = getDateFrom(value!.add(const Duration(days: 5)));
       });
     });
   }

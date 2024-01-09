@@ -660,7 +660,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                                                               .getrequestGetItemList[i]
                                                                               .invmIId!;
                                                                       logger.w(
-                                                                          "Prathap ${purchaseRequisitionController.selecString.value}");
+                                                                          "Prathap ${purchaseRequisitionController.selecString.value}"); 
                                                                       String
                                                                           selectedItemName =
                                                                           purchaseRequisitionController
@@ -904,7 +904,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                                                 borderSide: BorderSide(
                                                   color: Colors.transparent,
                                                 ),
-                                              ),
+                                              ),  
                                             ),
                                           ),
                                         ),
@@ -950,7 +950,7 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)),
                             ),
-                          ),
+                          ), 
                           const SizedBox(height: 30),
                           CustomContainer(
                             child: TextField(
