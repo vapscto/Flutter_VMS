@@ -31,7 +31,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final MskoolController mskoolController = Get.put(MskoolController());
-  String deviceToken = '';
   late FirebaseMessaging messaging;
   late FirebaseMessaging firebaseMessage;
   Future getDeviceToken() async {
@@ -40,6 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await firebaseMessage.getToken().then((value) {
       (value == null) ? "" : deviceToken = value;
       deviceid = deviceToken;
+      logger.i('Deviceid:- $deviceid');
     });
     return deviceToken;
   }
@@ -48,14 +48,13 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     messaging = FirebaseMessaging.instance;
     initializeFCMNotification();
+    getDeviceToken();
     super.initState();
   }
 
   getDeviceTokenForFCM(
       {required LoginSuccessModel loginSuccessModel,
       required MskoolController mskoolController}) async {
-    deviceToken = await getDeviceToken();
-    deviceid = deviceToken;
     FirebaseMessaging.onMessage.listen(
       (RemoteMessage message) async {
         logger.d(message.data);

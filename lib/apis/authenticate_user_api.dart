@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -16,7 +15,6 @@ class AuthenticateUserApi {
     String loginBaseUrl,
     String mobiledeviceid,
   ) async {
-    getDeviceToken();
     final Dio ins = getGlobalDio();
     String loginApiUrl = loginBaseUrl + URLS.login;
 
@@ -27,7 +25,7 @@ class AuthenticateUserApi {
       "username": userName,
       "password": password,
       "Logintype": "Mobile",
-      "mobiledeviceid": deviceid,
+      "mobiledeviceid": mobiledeviceid,
     });
 
     // if (Platform.isAndroid) {
@@ -48,7 +46,7 @@ class AuthenticateUserApi {
       "username": userName,
       "password": password,
       "Logintype": "Mobile",
-      "mobiledeviceid": deviceid,
+      "mobiledeviceid": mobiledeviceid,
     });
 
     if (response.data['message'] != null) {
@@ -131,16 +129,5 @@ class AuthenticateUserApi {
     await logInBox!.put("userName", userName);
     await logInBox!.put("password", password);
     return Future.value(loginSuccessModel);
-  }
-
-  late FirebaseMessaging firebaseMessage;
-  Future getDeviceToken() async {
-    String deviceToken = '';
-    firebaseMessage = FirebaseMessaging.instance;
-    await firebaseMessage.getToken().then((value) {
-      (value == null) ? "" : deviceToken = value;
-      deviceid = deviceToken;
-    });
-    return deviceToken;
   }
 }

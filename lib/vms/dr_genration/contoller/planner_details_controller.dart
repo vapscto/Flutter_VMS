@@ -10,6 +10,7 @@ import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model
 import 'package:m_skool_flutter/vms/dr_genration/model/countTask_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/dr_uploaded_file_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/drnotapprovedmessage_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/drnotsent_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/generated_dr_model.dart';
@@ -184,11 +185,19 @@ class PlannerDetails extends GetxController {
       addRemarks(TextEditingController(text: ''));
     }
   }
-  /**
-   *  addExtraTask  checkbox List
-   */
-   RxList<bool> extraTaskCheckBox =  <bool>[].obs;
 
+  // uploaded file list
+  RxList<DrUploadedFileModelValues> uploadedFileList =
+      <DrUploadedFileModelValues>[].obs;
+  void uploadedFile(List<DrUploadedFileModelValues> uploadedFile) {
+    if (uploadedFileList.isNotEmpty) {
+      uploadedFileList.clear();
+    }
+    uploadedFileList.addAll(uploadedFile);
+  }
+
+  //
+  RxList<bool> extraTaskCheckBox = <bool>[].obs;
 }
 
 class AtachmenDrtFile {

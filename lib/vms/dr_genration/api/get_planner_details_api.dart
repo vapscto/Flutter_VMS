@@ -10,11 +10,13 @@ import 'package:m_skool_flutter/vms/dr_genration/model/advance_tada_applied.dart
 import 'package:m_skool_flutter/vms/dr_genration/model/countTask_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/dr_uploaded_file_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/drnotapprovedmessage_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/drnotsent_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/get_planner_details.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/hrplannerdetails_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_details.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/planner_file_upload_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/tada_not_approve_model.dart';
 
 Future<bool> getPlanerdetails({
@@ -48,6 +50,11 @@ Future<bool> getPlanerdetails({
         DepartwisedeviationModel.fromJson(
             response.data['getdepartwisedeviationremrks']);
     controller.depWiseDevitnList.addAll(departwisedeviationModel.values!);
+    if (response.data['getfiledetails'] != null) {
+      DrUploadedFileModel drUploadedFileModel =
+          DrUploadedFileModel.fromJson(response.data['getfiledetails']);
+      controller.uploadedFile(drUploadedFileModel.values!);
+    }
     if (response.data['gettasklist'] != null) {
       GetTaskDrListModel taskDrListModel =
           GetTaskDrListModel.fromJson(response.data['gettasklist']);
@@ -77,6 +84,26 @@ Future<bool> getPlanerdetails({
               .add(TextEditingController(text: v.iSMDRPTRemarks));
           controller.deveationEtField
               .add(TextEditingController(text: deviation));
+          // add uploaded file
+          // if (controller.uploadedFileList.isNotEmpty) {
+          //   for (int k = 0; k < controller.uploadedFileList.length; k++) {
+          //     var v1 = controller.uploadedFileList.elementAt(k);
+          //     if (controller.uploadedFileList[k].ismtcRId == v.iSMTCRId &&
+          //         v.iSMTPLTAId == controller.uploadedFileList[k].ismtpltAId) {
+          //       logger.w(v1.ismdrptfLFilePath!);
+          //       logger.e('======$checkedIndex');
+          //       controller.uploadImages.add(PlannerFileUpload(
+          //         v1.ismdrptfLFileName!,
+          //         v1.ismdrptfLFilePath!,
+          //         checkedIndex[i],
+          //         v1.ismmtcaTId!,
+          //         v1.ismmtcatcLCheckListName!,
+          //       ));
+          //     }
+          //   }
+          // }
+
+          // controller.uploadImages.add(v.)
         } else {
           controller.hoursEt.add(TextEditingController(text: ''));
           controller.minutesEt.add(TextEditingController(text: ''));

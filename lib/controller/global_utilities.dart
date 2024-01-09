@@ -65,6 +65,7 @@ RxInt currentTab = 0.obs;
 Dio? dio;
 String deviceid = '';
 TabController? newController;
+List<int> checkedIndex = [];
 
 Dio getGlobalDio() {
   dio ??= Dio();

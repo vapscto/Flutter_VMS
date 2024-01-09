@@ -537,17 +537,19 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                 return;
                               }
                             }
-                            /**
-                             *  plase check this condition
-                             */
 
-                            // if (_plannerDetailsController
-                            //     .closeTaskCoutnList.isNotEmpty) {
-                            //   Fluttertoast.showToast(
-                            //       msg:
-                            //           "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task");
-                            //   return;
-                            // }
+                            if (_plannerDetailsController
+                                .closeTaskCoutnList.isNotEmpty) {
+                              if (_plannerDetailsController
+                                      .closeTaskCoutnList[0]
+                                      .iSMEDWTCCTaskCount! >
+                                  0) {
+                                Fluttertoast.showToast(
+                                    msg:
+                                        "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task");
+                                return;
+                              }
+                            }
                             saveDaetails();
                           } else {
                             Fluttertoast.showToast(
@@ -1251,43 +1253,41 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   (value) {
                                                                 newselectedIndex =
                                                                     index;
-                                                                // if (_plannerDetailsController
-                                                                //         .day
-                                                                //         .value ==
-                                                                //     'Others') {
-                                                                //   if (todayDt
-                                                                //           .day <
-                                                                //       (currentDt
-                                                                //           .day)) {
-                                                                //     showDialog(
-                                                                //         context:
-                                                                //             context,
-                                                                //         builder:
-                                                                //             (_) {
-                                                                //           return AlertDialog(
-                                                                //             shape:
-                                                                //                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                                                //             content:
-                                                                //                 Column(crossAxisAlignment: CrossAxisAlignment.center, mainAxisSize: MainAxisSize.min, children: [
-                                                                //               Text(
-                                                                //                 "Selected Date is not Same as Planner Date",
-                                                                //                 style: Get.textTheme.titleMedium!.copyWith(color: Theme.of(context).primaryColor),
-                                                                //               ),
-                                                                //               TextButton(
-                                                                //                   onPressed: () {
-                                                                //                     Get.back();
-                                                                //                   },
-                                                                //                   child: Text(
-                                                                //                     "OK",
-                                                                //                     style: Get.textTheme.bodyMedium!.copyWith(color: Theme.of(context).primaryColor),
-                                                                //                   ))
-                                                                //             ]),
-                                                                //           );
-                                                                //         });
-                                                                //     return;
-                                                                //   }
-                                                                //   return;
-                                                                // }
+                                                                if (fliteresList
+                                                                        .elementAt(
+                                                                            index)
+                                                                        .drFlag ==
+                                                                    1) {
+                                                                  if (_plannerDetailsController
+                                                                      .uploadedFileList
+                                                                      .isNotEmpty) {
+                                                                    logger.i(
+                                                                        "===00---");
+                                                                    for (int k =
+                                                                            0;
+                                                                        k < _plannerDetailsController.uploadedFileList.length;
+                                                                        k++) {
+                                                                      var v1 = _plannerDetailsController
+                                                                          .uploadedFileList
+                                                                          .elementAt(
+                                                                              k);
+                                                                      if (_plannerDetailsController.uploadedFileList[k].ismtcRId == fliteresList.elementAt(index).iSMTCRId &&
+                                                                          fliteresList.elementAt(index).iSMTPLTAId ==
+                                                                              _plannerDetailsController.uploadedFileList[k].ismtpltAId) {
+                                                                        _plannerDetailsController
+                                                                            .uploadImages
+                                                                            .add(PlannerFileUpload(
+                                                                          v1.ismdrptfLFileName!,
+                                                                          v1.ismdrptfLFilePath!,
+                                                                          index,
+                                                                          v1.ismmtcaTId!,
+                                                                          v1.ismmtcatcLCheckListName!,
+                                                                        ));
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+
                                                                 logger.i(
                                                                     newselectedIndex);
                                                                 value == true
@@ -1423,29 +1423,18 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       "https:"))
                                                               ? InkWell(
                                                                   onTap: () {
-                                                                    logger.i(_plannerDetailsController
-                                                                        .uploadImages[
-                                                                            index]
-                                                                        .path);
-                                                                    setState(
-                                                                        () {
-                                                                      // OpenFilex.open(_plannerDetailsController
-                                                                      //     .uploadImages[
-                                                                      //         index]
-                                                                      //     .path);
-                                                                      createPreview(
-                                                                          context,
-                                                                          _plannerDetailsController
-                                                                              .uploadImages[index]
-                                                                              .path);
-                                                                    });
+                                                                    createPreview(
+                                                                        context,
+                                                                        _plannerDetailsController
+                                                                            .uploadImages[index]
+                                                                            .path);
                                                                   },
                                                                   child: const Icon(
                                                                       Icons
                                                                           .visibility_outlined),
                                                                 )
                                                               : const SizedBox()
-                                                          : const SizedBox()
+                                                          : const SizedBox(),
                                                     ],
                                                   )),
                                                   DataCell(Column(
