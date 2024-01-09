@@ -333,7 +333,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
           //  +
           //     (double.parse(_plannerDetailsController.minutesEt[i].text) / 60);
           todayDailyReportGenaration.add({
-            "ISMTPL_Id": value.iSMTPLId,
+            "ISMTPL_Id": (value.iSMTPLId != null)
+                ? value.iSMTPLId
+                : _plannerDetailsController.getplannerdetails[0].ismtpLId!,
             "ISMTCR_Id": value.iSMTCRId,
             "ISMDRPT_Remarks":
                 _plannerDetailsController.etResponse.elementAt(i).text,
@@ -538,7 +540,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                             /**
                              *  plase check this condition
                              */
-                            
+
                             // if (_plannerDetailsController
                             //     .closeTaskCoutnList.isNotEmpty) {
                             //   Fluttertoast.showToast(
@@ -1526,19 +1528,27 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                         .w400,
                                                                 fontSize: 14)),
                                                       ),
-                                                      Text(
-                                                        "Project : ${fliteresList.elementAt(index).projectName}",
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .titleSmall!
-                                                            .merge(const TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                fontSize: 14)),
-                                                      ),
+                                                      (fliteresList
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .projectName !=
+                                                              null)
+                                                          ? Text(
+                                                              "Project : ${fliteresList.elementAt(index).projectName}",
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .merge(const TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      fontSize:
+                                                                          14)),
+                                                            )
+                                                          : const SizedBox(),
                                                       Text(
                                                         "Task Start date : $startDate",
                                                         style: Theme.of(context)

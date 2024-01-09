@@ -9,13 +9,13 @@ class GetTaskDrListModel {
     if (json['\$values'] != null) {
       values = <GetTaskDrListModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new GetTaskDrListModelValues.fromJson(v));
+        values!.add(GetTaskDrListModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['\$type'] = type;
     if (values != null) {
       data['\$values'] = values!.map((v) => v.toJson()).toList();

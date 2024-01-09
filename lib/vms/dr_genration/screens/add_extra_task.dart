@@ -31,8 +31,8 @@ class AddExtraTaskScreen extends StatefulWidget {
 class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
   final TextEditingController fromDate = TextEditingController();
   final TextEditingController toDate = TextEditingController();
- AddExtraTaskModelValues? addExtraTaskModelValues;
- RxList<int> checkBoxCount = RxList<int>();
+  AddExtraTaskModelValues? addExtraTaskModelValues;
+  RxList<int> checkBoxCount = RxList<int>();
   getExtraTask() async {
     widget.controller.updateErrorLoadingaddExtraTaskDR(true);
     await AddExtraTaskAPI.instance.addExtraTaskDR(
@@ -49,25 +49,26 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
   bool addPlanner = false;
   @override
   void initState() {
-    if(  widget.controller.addExtraTaskList.isEmpty){
-       getExtraTask();
-    } 
-    
+    if (widget.controller.addExtraTaskList.isEmpty) {
+      getExtraTask();
+    }
+
     super.initState();
   }
 
   @override
   void dispose() {
-  // widget.controller.addExtraTaskList.clear(); 
-   super.dispose();
+    // widget.controller.addExtraTaskList.clear();
+    super.dispose();
   }
 
   String startDate = '';
   String endDate = '';
-  Future<void> addExtraTaskToDR()async {
+  Future<void> addExtraTaskToDR() async {
     logger.w("Before ${widget.controller.getTaskDrList.length}");
-    for(int i = 0 ;i< checkBoxCount.length;i++){
-       var v = widget.controller.addExtraTaskList.elementAt(checkBoxCount.elementAt(i));
+    for (int i = 0; i < checkBoxCount.length; i++) {
+      var v = widget.controller.addExtraTaskList
+          .elementAt(checkBoxCount.elementAt(i));
       widget.controller.getTaskDrList.add(GetTaskDrListModelValues(
         iSMMCLTId: v.iSMMCLTId,
         iSMMTCATId: v.iSMMTCATId,
@@ -91,48 +92,48 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
         assignedby: v.assignedby,
         iSMTPLStartDate: v.startdatenew,
         iSMTPLEndDate: v.enddatenew,
+        iSMTPLTAStartDate: v.startdatenew,
+        iSMTPLTAEndDate: v.enddatenew,
         iSMDRPTRemarks: widget.controller.remarksController.elementAt(i).text,
       ));
       widget.controller.etResponse.add(TextEditingController(text: ''));
       widget.controller.hoursEt.add(TextEditingController(text: ''));
       widget.controller.minutesEt.add(TextEditingController(text: ''));
       widget.controller.statusEtField.add(TextEditingController(text: ''));
-      widget.controller.deveationEtField.add(TextEditingController(text:''));
+      widget.controller.deveationEtField.add(TextEditingController(text: ''));
       widget.controller.checkBoxList.add(false);
       logger.w("after ${widget.controller.getTaskDrList.length}");
     }
-    for(int i= 0; i<checkBoxCount.length;i++){
+    for (int i = 0; i < checkBoxCount.length; i++) {
       setState(() {
-         widget.controller.addExtraTaskList.removeAt(checkBoxCount.elementAt(i));
-         widget.controller.extraTaskCheckBox.removeAt(checkBoxCount.elementAt(i));
-       logger.w(checkBoxCount.length); 
+        widget.controller.addExtraTaskList.removeAt(checkBoxCount.elementAt(i));
+        widget.controller.extraTaskCheckBox
+            .removeAt(checkBoxCount.elementAt(i));
+        logger.w(checkBoxCount.length);
       });
-      
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title:  "ADD EXTRA TASK",
-        action: [
-              Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: BtnSave(
-                onPress: () async {
-                  if (checkBoxCount.isNotEmpty) {
-                  await  addExtraTaskToDR();
-                   Get.back();
-                  } else {
-                    Fluttertoast.showToast(msg: "Select task");
-                    return;
-                  }
-                },
-                title: "ADD",
-              ),
-            ),  
-        ]
-        ).getAppBar(),
+        appBar: CustomAppBar(title: "ADD EXTRA TASK", action: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: BtnSave(
+              onPress: () async {
+                if (checkBoxCount.isNotEmpty) {
+                  await addExtraTaskToDR();
+                  Get.back();
+                } else {
+                  Fluttertoast.showToast(msg: "Select task");
+                  return;
+                }
+              },
+              title: "ADD",
+            ),
+          ),
+        ]).getAppBar(),
         body: Obx(() {
           return SingleChildScrollView(
               scrollDirection: Axis.vertical,
@@ -223,30 +224,34 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
                                       .elementAt(index);
                                   DateTime dt =
                                       DateTime.parse(v.iSMTCRCreationDate!);
-                                  
+
                                   return DataRow(cells: [
                                     DataCell(
                                       Text(v1.toString()),
                                     ),
                                     DataCell(
                                       Obx(
-                                        ()=> Checkbox(
+                                        () => Checkbox(
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(6)),
                                             checkColor: Colors.indigo,
-                                            value:  widget.controller.extraTaskCheckBox[index],
+                                            value: widget.controller
+                                                .extraTaskCheckBox[index],
                                             onChanged: (value) {
-                                             widget.controller.extraTaskCheckBox[index] = value!; 
-                                             if(value){
-                                              if(checkBoxCount.contains(index)){
-                                               checkBoxCount.remove(index);
-                                               }else{
-                                                checkBoxCount.add(index);
-                                               }
-                                             }else{
-                                               checkBoxCount.remove(index);
-                                             }
+                                              widget.controller
+                                                      .extraTaskCheckBox[
+                                                  index] = value!;
+                                              if (value) {
+                                                if (checkBoxCount
+                                                    .contains(index)) {
+                                                  checkBoxCount.remove(index);
+                                                } else {
+                                                  checkBoxCount.add(index);
+                                                }
+                                              } else {
+                                                checkBoxCount.remove(index);
+                                              }
                                             }),
                                       ),
                                     ),
@@ -391,7 +396,7 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
                           ))));
         }));
   }
-  
+
   DateTime? dt;
   Future<String?> getDate(String fromDate) async {
     dt = await showDatePicker(
