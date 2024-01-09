@@ -585,13 +585,16 @@ class _HomeHCheckupState extends State<HomeHCheckup> {
                                                             },
                                                             child: const Icon(
                                                                 Icons.add)),
-                                                        InkWell(
-                                                            onTap: () {
-                                                              removeItemListBrowse(
-                                                                  index);
-                                                            },
-                                                            child: const Icon(
-                                                                Icons.remove))
+                                                        index >= 1
+                                                            ? InkWell(
+                                                                onTap: () {
+                                                                  removeItemListBrowse(
+                                                                      index);
+                                                                },
+                                                                child: const Icon(
+                                                                    Icons
+                                                                        .remove))
+                                                            : const SizedBox()
                                                       ],
                                                     )
                                                   : index <
