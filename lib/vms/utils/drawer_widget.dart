@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
 import '../../forgotpassword/screens/reset_password.dart';
 import '../../screens/theme_switcher.dart';
+import '../profile/controller/profile_controller.dart';
 
 class ManagerDashboardDrawer extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -22,7 +23,7 @@ class ManagerDashboardDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        StaffDrawerHeader(loginSuccessModel: loginSuccessModel),
+        // StaffDrawerHeader(loginSuccessModel: loginSuccessModel,profileController:,),
         Expanded(
           child: loginSuccessModel.staffmobileappprivileges == null
               ? const SizedBox()
@@ -256,7 +257,11 @@ class ManagerDashboardDrawer extends StatelessWidget {
 
 class StaffDrawerHeader extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
-  const StaffDrawerHeader({super.key, required this.loginSuccessModel});
+  final ProfileController profileController;
+  const StaffDrawerHeader(
+      {super.key,
+      required this.loginSuccessModel,
+      required this.profileController});
 
   @override
   State<StaffDrawerHeader> createState() => _StaffDrawerHeaderState();
@@ -281,27 +286,57 @@ class _StaffDrawerHeaderState extends State<StaffDrawerHeader> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            backgroundColor: Colors.white,
-            radius: 30.0,
-            backgroundImage: (widget.loginSuccessModel.userImagePath == null ||
-                    widget.loginSuccessModel.userImagePath!.isEmpty)
-                ? null
-                : NetworkImage(widget.loginSuccessModel.userImagePath!),
-            child: (widget.loginSuccessModel.userImagePath == null ||
-                    widget.loginSuccessModel.userImagePath!.isEmpty)
-                ?
-                // ?
-                const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.person,
-                      color: Colors.black,
-                      size: 36.0,
-                    ),
-                  )
-                : null,
-          ),
+          (widget.loginSuccessModel.roleforlogin == "ADMIN")
+              ? CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 30.0,
+                  backgroundImage: (widget.profileController.profileDataValue
+                                  .first.hRMEPhoto ==
+                              null ||
+                          widget.profileController.profileDataValue.first
+                              .hRMEPhoto!.isEmpty)
+                      ? null
+                      : NetworkImage(widget
+                          .profileController.profileDataValue.first.hRMEPhoto!),
+                  child: (widget.profileController.profileDataValue.first
+                                  .hRMEPhoto ==
+                              null ||
+                          widget.profileController.profileDataValue.first
+                              .hRMEPhoto!.isEmpty)
+                      ?
+                      // ?
+                      const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.black,
+                            size: 36.0,
+                          ),
+                        )
+                      : null,
+                )
+              : CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 30.0,
+                  backgroundImage: (widget.loginSuccessModel.userImagePath ==
+                              null ||
+                          widget.loginSuccessModel.userImagePath!.isEmpty)
+                      ? null
+                      : NetworkImage(widget.loginSuccessModel.userImagePath!),
+                  child: (widget.loginSuccessModel.userImagePath == null ||
+                          widget.loginSuccessModel.userImagePath!.isEmpty)
+                      ?
+                      // ?
+                      const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.black,
+                            size: 36.0,
+                          ),
+                        )
+                      : null,
+                ),
           const SizedBox(
             width: 12.0,
           ),

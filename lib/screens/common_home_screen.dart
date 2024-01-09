@@ -203,6 +203,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
           child: CommonDrawer(
             loginSuccessModel: widget.loginSuccessModel,
             mskoolController: widget.mskoolController,
+            profileController: profileController,
           ),
         ),
         body: PageView.builder(
