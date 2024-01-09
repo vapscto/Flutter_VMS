@@ -1253,40 +1253,40 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   (value) {
                                                                 newselectedIndex =
                                                                     index;
-                                                                if (fliteresList
-                                                                        .elementAt(
-                                                                            index)
-                                                                        .drFlag ==
-                                                                    1) {
-                                                                  if (_plannerDetailsController
-                                                                      .uploadedFileList
-                                                                      .isNotEmpty) {
-                                                                    logger.i(
-                                                                        "===00---");
-                                                                    for (int k =
-                                                                            0;
-                                                                        k < _plannerDetailsController.uploadedFileList.length;
-                                                                        k++) {
-                                                                      var v1 = _plannerDetailsController
-                                                                          .uploadedFileList
-                                                                          .elementAt(
-                                                                              k);
-                                                                      if (_plannerDetailsController.uploadedFileList[k].ismtcRId == fliteresList.elementAt(index).iSMTCRId &&
-                                                                          fliteresList.elementAt(index).iSMTPLTAId ==
-                                                                              _plannerDetailsController.uploadedFileList[k].ismtpltAId) {
-                                                                        _plannerDetailsController
-                                                                            .uploadImages
-                                                                            .add(PlannerFileUpload(
-                                                                          v1.ismdrptfLFileName!,
-                                                                          v1.ismdrptfLFilePath!,
-                                                                          index,
-                                                                          v1.ismmtcaTId!,
-                                                                          v1.ismmtcatcLCheckListName!,
-                                                                        ));
-                                                                      }
-                                                                    }
-                                                                  }
-                                                                }
+                                                                // if (fliteresList
+                                                                //         .elementAt(
+                                                                //             index)
+                                                                //         .drFlag ==
+                                                                //     1) {
+                                                                //   if (_plannerDetailsController
+                                                                //       .uploadedFileList
+                                                                //       .isNotEmpty) {
+                                                                //     logger.i(
+                                                                //         "===00---");
+                                                                //     for (int k =
+                                                                //             0;
+                                                                //         k < _plannerDetailsController.uploadedFileList.length;
+                                                                //         k++) {
+                                                                //       var v1 = _plannerDetailsController
+                                                                //           .uploadedFileList
+                                                                //           .elementAt(
+                                                                //               k);
+                                                                //       if (_plannerDetailsController.uploadedFileList[k].ismtcRId == fliteresList.elementAt(index).iSMTCRId &&
+                                                                //           fliteresList.elementAt(index).iSMTPLTAId ==
+                                                                //               _plannerDetailsController.uploadedFileList[k].ismtpltAId) {
+                                                                //         _plannerDetailsController
+                                                                //             .uploadImages
+                                                                //             .add(PlannerFileUpload(
+                                                                //           v1.ismdrptfLFileName!,
+                                                                //           v1.ismdrptfLFilePath!,
+                                                                //           index,
+                                                                //           v1.ismmtcaTId!,
+                                                                //           v1.ismmtcatcLCheckListName!,
+                                                                //         ));
+                                                                //       }
+                                                                //     }
+                                                                //   }
+                                                                // }
 
                                                                 logger.i(
                                                                     newselectedIndex);
