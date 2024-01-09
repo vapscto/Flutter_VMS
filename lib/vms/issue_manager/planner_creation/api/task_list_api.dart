@@ -64,20 +64,19 @@ class TaskListAPI {
                         assignedTaskList.values![i].iSMTCRASTOStartDate!))
                     .inDays;
             plannerCreationController.totalDays = difference + 1;
-            for (int j = 0; j < categoryWisePlanModel.values!.length; j++) {
-              plannerCreationController.totalEffort = 0.0;
-              if (assignedTaskList.values![i].iSMMTCATId ==
-                  categoryWisePlanModel.values![j].ismmtcaTId) {
-                plannerCreationController.totalEffort +=
-                    assignedTaskList.values![i].iSMTCRASTOEffortInHrs!;
-              }
-            }
+            // for (int j = 0; j < categoryWisePlanModel.values!.length; j++) {
+            //   plannerCreationController.totalEffort = 0.0;
+            //   if (assignedTaskList.values![i].iSMMTCATId ==
+            //       categoryWisePlanModel.values![j].ismmtcaTId) {
+            //     plannerCreationController.totalEffort +=
+            //         assignedTaskList.values![i].iSMTCRASTOEffortInHrs!;
+            //   }
+            // }
           }
         }
         TotalEffortData totalEffortData =
             TotalEffortData.fromJson(response.data['get_effortdetails']);
         plannerCreationController.effortData(totalEffortData.values!);
-       
       }
     } on DioError catch (e) {
       logger.e(e.message);
