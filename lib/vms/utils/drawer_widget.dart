@@ -281,8 +281,6 @@ class _StaffDrawerHeaderState extends State<StaffDrawerHeader> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Obx(() {
-          //   return
           CircleAvatar(
             backgroundColor: Colors.white,
             radius: 30.0,
@@ -303,15 +301,7 @@ class _StaffDrawerHeaderState extends State<StaffDrawerHeader> {
                     ),
                   )
                 : null,
-            // : Padding(
-            //     padding: const EdgeInsets.all(8.0),
-            //     child: Image.network(
-            //       widget.loginSuccessModel.userImagePath!,
-            //       fit: BoxFit.fill,
-            //     ),
-            //   ),
           ),
-          // }),
           const SizedBox(
             width: 12.0,
           ),
@@ -319,80 +309,43 @@ class _StaffDrawerHeaderState extends State<StaffDrawerHeader> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Obx(() {
-                // return
-                Text(
-                  widget.loginSuccessModel.studname ?? "N/A",
-                  style: Theme.of(context).textTheme.labelLarge!.merge(
-                        const TextStyle(
-                          color: Colors.white,
-                        ),
+                (widget.loginSuccessModel.roleforlogin == "ADMIN")
+                    ? Text(
+                        widget.loginSuccessModel.userName ?? "N/A",
+                        style: Theme.of(context).textTheme.labelLarge!.merge(
+                              const TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                      )
+                    : Text(
+                        widget.loginSuccessModel.studname ?? "N/A",
+                        style: Theme.of(context).textTheme.labelLarge!.merge(
+                              const TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
                       ),
-                ),
-                // }),
                 const SizedBox(
                   height: 6.0,
                 ),
-                // EmailWidget(userProfileController: controller),
-                const SizedBox(
-                  height: 6.0,
-                ),
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        widget.loginSuccessModel.roleforlogin!.toLowerCase() ==
-                                "student"
-                            ? Column(
-                                children: [
-                                  Text(
-                                    widget.loginSuccessModel.userId.toString(),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall!
-                                        .merge(
-                                          const TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                  ),
-                                  const SizedBox(
-                                    height: 6.0,
-                                  ),
-                                ],
-                              )
-                            : const SizedBox(),
-                        // Text(
-                        //   widget.loginSuccessModel.empcode.toString(),
-                        //   maxLines: 1,
-                        //   overflow: TextOverflow.ellipsis,
-                        //   style: Theme.of(context).textTheme.labelSmall!.merge(
-                        //         const TextStyle(
-                        //           color: Colors.white,
-                        //         ),
-                        //       ),
-                        // ),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 6.0,
-                ),
-                // Align(
-                //   alignment: Alignment.bottomRight,
-                //   child: IconButton(
-                //       onPressed: () {
-                //         Navigator.push(context, MaterialPageRoute(builder: (_) {
-                //           return const ThemeSwitcher();
-                //         }));
-                //       },
-                //       icon: Image.asset("assets/images/theme.png")),
-                // ),
-                // IconButton(onPressed: (){}, icon: Icon(Icons.setting))
+                (widget.loginSuccessModel.roleforlogin == "ADMIN")
+                    ? Text(
+                        widget.loginSuccessModel.designation ?? "N/A",
+                        style: Theme.of(context).textTheme.titleSmall!.merge(
+                              const TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                      )
+                    : Text(
+                        widget.loginSuccessModel.designation ?? "N/A",
+                        style: Theme.of(context).textTheme.titleSmall!.merge(
+                              const TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                      )
               ],
             ),
           ),

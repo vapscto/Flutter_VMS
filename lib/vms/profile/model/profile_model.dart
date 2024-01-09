@@ -38,8 +38,8 @@ class ProfileDataModelValues {
   String? hRMDESDesignationName;
   String? mIName;
   bool? hRMELeftFlag;
-  Null? hRMEDOL;
-  Null? hRMELeavingReason;
+  String? hRMEDOL;
+  String? hRMELeavingReason;
   String? hRMEPhoto;
 
   ProfileDataModelValues(
@@ -74,7 +74,7 @@ class ProfileDataModelValues {
     hRMDESDesignationName = json['HRMDES_DesignationName'];
     mIName = json['MI_Name'];
     hRMELeftFlag = json['HRME_LeftFlag'];
-    hRMEDOL = json['HRME_DOL'];
+    hRMEDOL = json['HRME_DOL'] ?? '';
     hRMELeavingReason = json['HRME_LeavingReason'];
     hRMEPhoto = json['HRME_Photo'];
   }
