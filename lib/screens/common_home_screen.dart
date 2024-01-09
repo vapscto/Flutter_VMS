@@ -15,6 +15,7 @@ import 'package:m_skool_flutter/vms/profile/screens/profile_screen.dart';
 import 'package:m_skool_flutter/vms/punch_report/api/punch_api.dart';
 import 'package:m_skool_flutter/vms/punch_report/controller/punch_filter_controller.dart';
 import 'package:m_skool_flutter/vms/punch_report/screens/employee_punch_report.dart';
+import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/vms/utils/common_drawer.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -98,12 +99,12 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
         HomePageModel(
             title: "Punch Report",
             icon: 'assets/images/calendar.png',
-            page: EmployeePunchReport(
+            page: PunchReport(
               loginSuccessModel: widget.loginSuccessModel,
               mskoolController: widget.mskoolController,
               title: 'Punch Report',
               previousScreen: '1',
-              punchFilterController: punchFilterController,
+              // punchFilterController: punchFilterController,
             ),
             selectedColor: const Color(0xFFFFA901),
             size: 24.0),

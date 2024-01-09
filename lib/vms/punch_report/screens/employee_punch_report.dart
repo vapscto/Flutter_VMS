@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/vms/punch_report/api/punch_api.dart';
 import 'package:m_skool_flutter/vms/punch_report/controller/punch_filter_controller.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
@@ -29,25 +27,8 @@ class EmployeePunchReport extends StatefulWidget {
 }
 
 class _EmployeePunchReportState extends State<EmployeePunchReport> {
-  // PunchFilterController punchFilterController =
-  //     Get.put(PunchFilterController());
-  // _getPunch() async {
-  //   punchFilterController.punchLoading(true);
-  //   await PunchApi.instance.pcReports(
-  //       body: {
-  //         "UserId": widget.loginSuccessModel.userId,
-  //         "MI_Id": widget.loginSuccessModel.mIID,
-  //         "IVRMRT_Id": widget.loginSuccessModel.roleId!,
-  //         "ASMAY_Id": widget.loginSuccessModel.asmaYId
-  //       },
-  //       base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
-  //       controller: punchFilterController);
-  //   punchFilterController.punchLoading(false);
-  // }
-
   @override
   void initState() {
-    // _getPunch();
     super.initState();
   }
 

@@ -52,6 +52,7 @@ class _PunchReportState extends State<PunchReport> {
     punchFilterController.endTo.value = DateTime.now();
     punchFilterController
         .updateDisplayAbleEndTo("${dt.day}-${dt.month}-${dt.year}");
+    punchFilterController.start.value += 1;
     await PunchReportApi.instance.pcReports(
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!,
