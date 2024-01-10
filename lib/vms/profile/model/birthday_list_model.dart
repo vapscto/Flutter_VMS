@@ -37,6 +37,7 @@ class BirthDayListModelValues {
   int? ismmpRId;
   int? hrmEId;
   String? hrmEEmployeeFirstName;
+  String? middleName;
   int? hrmEEmployeeCode;
   String? hrmEEmployeeLastName;
   String? hrmdeSDesignationName;
@@ -93,6 +94,7 @@ class BirthDayListModelValues {
       this.ismmpRId,
       this.hrmEId,
       this.hrmEEmployeeFirstName,
+      this.middleName,
       this.hrmEEmployeeCode,
       this.hrmEEmployeeLastName,
       this.hrmdeSDesignationName,
@@ -149,6 +151,7 @@ class BirthDayListModelValues {
     ismmpRId = json['ismmpR_Id'];
     hrmEId = json['hrmE_Id'];
     hrmEEmployeeFirstName = json['hrmE_EmployeeFirstName'];
+    middleName = json['hrmE_EmployeeMiddleName'];
     hrmEEmployeeCode = json['hrmE_EmployeeCode'];
     hrmEEmployeeLastName = json['hrmE_EmployeeLastName'];
     hrmdeSDesignationName = json['hrmdeS_DesignationName'];
@@ -207,6 +210,7 @@ class BirthDayListModelValues {
     data['ismmpR_Id'] = ismmpRId;
     data['hrmE_Id'] = hrmEId;
     data['hrmE_EmployeeFirstName'] = hrmEEmployeeFirstName;
+    data['hrmE_EmployeeMiddleName'] = middleName;
     data['hrmE_EmployeeCode'] = hrmEEmployeeCode;
     data['hrmE_EmployeeLastName'] = hrmEEmployeeLastName;
     data['hrmdeS_DesignationName'] = hrmdeSDesignationName;

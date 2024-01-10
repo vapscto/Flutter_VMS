@@ -80,22 +80,10 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
             loginSuccessModel: widget.loginSuccessModel,
             mskoolController: widget.mskoolController,
             controller: controller,
+            profileController: profileController,
           ),
           selectedColor: const Color(0xFF9900F0),
         ),
-        // HomePageModel(
-        //   title: "Salary Slip",
-        //   icon: 'assets/images/money.png',
-        //   page: SalarySlipHome(
-        //     loginSuccessModel: widget.loginSuccessModel,
-        //     mskoolController: widget.mskoolController,
-        //     // index: 1,
-        //     // previousScreen: '1',
-        //     // title: 'Rating Report',
-        //     // showAppBar: false,
-        //   ),
-        //   selectedColor: const Color(0xFFFF008C),
-        // ),
         HomePageModel(
             title: "Punch Report",
             icon: 'assets/images/calendar.png',
@@ -117,7 +105,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
               // previousScreen: '1',
               profileController: profileController,
             ),
-            selectedColor: Color.fromRGBO(247, 80, 80, 1),
+            selectedColor: const Color.fromRGBO(247, 80, 80, 1),
             size: 24.0),
         HomePageModel(
           title: "Profile",

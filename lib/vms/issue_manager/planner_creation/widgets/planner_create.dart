@@ -45,7 +45,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   bool selectAll = true;
   bool checked = false;
   List<int> checkList = [];
-  RxString remark = ''.obs;
+  List<String> remark = [];
   DateTime? fromDate;
   DateTime? toDate;
   DateTime dt = DateTime.now();
@@ -1057,34 +1057,47 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                     ),
                     DataCell(Text(
                         '${data.iSMTCRASTOEffortInHrs!.toStringAsFixed(2).replaceAll(".", ":")} Hr')),
-                    DataCell(TextFormField(
-                      initialValue: data.iSMTCRASTORemarks ?? '',
-                      onChanged: (value) {
-                        remark.value = value;
-                      },
-                      onTap: () {
-                        var checkTxt = checkList.contains(
-                                plannerCreationController.createdTaskList
-                                    .indexOf(plannerCreationController
-                                        .createdTaskList
-                                        .elementAt(index)))
+                    DataCell(Container(
+                      width: 150,
+                      child: TextFormField(
+                        maxLines: 7,
+                        // initialValue: data.iSMTCRASTORemarks ?? '',
+                        onChanged: (value) {
+                          plannerCreationController.createdTaskList
+                              .elementAt(index)
+                              .iSMTCRASTORemarks = value;
+                        },
+                        onTap: () {
+                          var checkTxt = checkList.contains(
+                                  plannerCreationController.createdTaskList
+                                      .indexOf(plannerCreationController
+                                          .createdTaskList
+                                          .elementAt(index)))
+                              ? false
+                              : true;
+                          if (checkTxt) {
+                            Fluttertoast.showToast(
+                                msg: "Please select checkbox");
+                          }
+                        },
+                        readOnly: checkList.contains(plannerCreationController
+                                .createdTaskList
+                                .indexOf(plannerCreationController
+                                    .createdTaskList
+                                    .elementAt(index)))
                             ? false
-                            : true;
-                        if (checkTxt) {
-                          Fluttertoast.showToast(msg: "Please select checkbox");
-                        }
-                      },
-                      readOnly: checkList.contains(plannerCreationController
-                              .createdTaskList
-                              .indexOf(plannerCreationController.createdTaskList
-                                  .elementAt(index)))
-                          ? false
-                          : true,
-                      style: Get.textTheme.titleSmall,
-                      decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.only(left: 4, right: 4),
-                          border: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue))),
+                            : true,
+                        style: Get.textTheme.titleSmall,
+                        decoration: InputDecoration(
+                            hintStyle: Get.textTheme.titleSmall!
+                                .copyWith(color: Colors.grey),
+                            hintText: 'Remarks...',
+                            contentPadding: const EdgeInsets.all(8),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide:
+                                    const BorderSide(color: Colors.blue))),
+                      ),
                     )),
                   ]);
             })
