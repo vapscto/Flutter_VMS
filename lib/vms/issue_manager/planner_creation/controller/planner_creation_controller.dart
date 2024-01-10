@@ -94,10 +94,9 @@ class PlannerCreationController extends GetxController {
   List<NewTableModel> createdTaskList = [];
   double plannerDate = 0.0;
   assignedTask(List<AssignedTaskListValues> value) {
-    if (createdTaskList.isNotEmpty) {
+    if (assignedTaskList.isNotEmpty) {
       assignedTaskList.clear();
       createdTaskList.clear();
-      data = '';
     }
     String startDate = '';
     String endDate = '';
@@ -107,16 +106,12 @@ class PlannerCreationController extends GetxController {
       var val = value.elementAt(i);
       val.iSMTCRASTOEffortInHrs = double.parse(
           convertDecimalToTimeInPlanner(val.iSMTCRASTOEffortInHrs!));
-      logger.w(
-          '======= totalhour ${totalhour += double.parse(convertDecimalToTimeInPlanner(val.iSMTCRASTOEffortInHrs!))}');
-
       if (val.iSMTCRASTOStartDate == null || val.iSMTCRASTOStartDate == '') {
         startDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
       } else {
         startDate = DateFormat('dd-MM-yyyy')
             .format(DateTime.parse(val.iSMTCRASTOStartDate!));
       }
-
       if (val.iSMTCRASTOEndDate == null || val.iSMTCRASTOEndDate == '') {
         endDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
       } else {
@@ -129,25 +124,38 @@ class PlannerCreationController extends GetxController {
               val.periodicity == null ||
               val.periodicity == '' ||
               val.periodicity!.toLowerCase() == 'once') &&
-          (val.iSMTPLTAPreviousTask == 0 || val.iSMTPLTAPreviousTask == null)) {
+          (val.iSMTPLTAPreviousTask == 0 ||
+              val.iSMTPLTAPreviousTask == null ||
+              val.iSMTPLTAPreviousTask == '' ||
+              val.iSMTPLTAPreviousTask == '0')) {
         _addDataToList(data, val, startDate, endDate);
       } else if (val.periodicity!.toLowerCase() == 'daily' &&
-          (val.iSMTPLTAPreviousTask == 0 || val.iSMTPLTAPreviousTask == null)) {
+          (val.iSMTPLTAPreviousTask == 0 ||
+              val.iSMTPLTAPreviousTask == null ||
+              val.iSMTPLTAPreviousTask == '' ||
+              val.iSMTPLTAPreviousTask == '0')) {
         for (var mm in effortDataValues) {
-          startDate = mm.pDates == null || mm.pDates == ''
-              ? DateFormat('dd-MM-yyyy').format(DateTime.now())
-              : DateFormat('dd-MM-yyyy').format(DateTime.parse(mm.pDates!));
-
-          endDate = mm.pDates == null || mm.pDates == ''
-              ? DateFormat('dd-MM-yyyy').format(DateTime.now())
-              : DateFormat('dd-MM-yyyy').format(DateTime.parse(mm.pDates!));
-
-          if (mm.pDates != null &&
-              mm.pDates != '' &&
-              DateTime.parse(mm.pDates!)
+          if (mm.pDates == null || mm.pDates == '') {
+            startDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+          } else {
+            startDate =
+                DateFormat('dd-MM-yyyy').format(DateTime.parse(mm.pDates!));
+          }
+          if (mm.pDates == null || mm.pDates == '') {
+            endDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+          } else {
+            endDate =
+                DateFormat('dd-MM-yyyy').format(DateTime.parse(mm.pDates!));
+          }
+          logger.i(
+              'From ===${DateTime.parse(mm.pDates!)}--${DateTime.parse(val.iSMTCRASTOStartDate!)}');
+          if (DateTime.parse(mm.pDates!)
+                  .add(Duration(days: 1))
                   .isAfter(DateTime.parse(val.iSMTCRASTOStartDate!)) &&
               DateTime.parse(mm.pDates!)
+                  .subtract(Duration(days: 1))
                   .isBefore(DateTime.parse(val.iSMTCRASTOEndDate!))) {
+            totalEffort += val.iSMTCRASTOEffortInHrs!;
             _addDataToList(data, val, startDate, endDate);
           }
         }
@@ -172,8 +180,10 @@ class PlannerCreationController extends GetxController {
                   DateFormat('dd-MM-yyyy').format(DateTime.parse(mm.pDates!));
             }
             if (DateTime.parse(mm.pDates!)
+                    .add(Duration(days: 1))
                     .isAfter(DateTime.parse(val.iSMTCRASTOStartDate!)) &&
                 DateTime.parse(mm.pDates!)
+                    .subtract(Duration(days: 1))
                     .isBefore(DateTime.parse(val.iSMTCRASTOEndDate!))) {
               _addDataToList(data, val, startDate, endDate);
             }
@@ -199,8 +209,10 @@ class PlannerCreationController extends GetxController {
               }
 
               if (DateTime.parse(mm.pDates!)
+                      .add(Duration(days: 1))
                       .isAfter(DateTime.parse(val.iSMTCRASTOStartDate!)) &&
                   DateTime.parse(mm.pDates!)
+                      .subtract(Duration(days: 1))
                       .isBefore(DateTime.parse(val.iSMTCRASTOEndDate!))) {
                 _addDataToList(data, val, startDate, endDate);
               } else if (int.parse(wrkd.toString()) <
@@ -226,9 +238,12 @@ class PlannerCreationController extends GetxController {
                     }
 
                     if (mm.pDates != null &&
-                        DateTime.parse(mm.pDates!).isAfter(
-                            DateTime.parse(val.iSMTCRASTOStartDate!)) &&
                         DateTime.parse(mm.pDates!)
+                            .add(Duration(days: 1))
+                            .isAfter(
+                                DateTime.parse(val.iSMTCRASTOStartDate!)) &&
+                        DateTime.parse(mm.pDates!)
+                            .subtract(Duration(days: 1))
                             .isBefore(DateTime.parse(val.iSMTCRASTOEndDate!))) {
                       _addDataToList(data, val, startDate, endDate);
                     }

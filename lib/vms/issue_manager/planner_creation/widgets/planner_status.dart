@@ -12,10 +12,12 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 class PlannerStatusWidget extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final PlannerCreationController plannerCreationController;
   const PlannerStatusWidget(
       {super.key,
       required this.loginSuccessModel,
-      required this.mskoolController});
+      required this.mskoolController,
+      required this.plannerCreationController});
 
   @override
   State<PlannerStatusWidget> createState() => _PlannerStatusWidgetState();
@@ -23,26 +25,29 @@ class PlannerStatusWidget extends StatefulWidget {
 
 class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
   List<PlannerStatusModel> statusList = [];
-  PlannerCreationController plannerCreationController =
-      Get.put(PlannerCreationController());
+  // PlannerCreationController plannerCreationController =
+  //     Get.put(PlannerCreationController());
 
   String fromDate = '';
   String toDate = '';
   String status = '';
   getPlannerStatus() async {
-    plannerCreationController.statusLoading(true);
-    await PlannerStatusList.instance.plannerStatusAPI(
-        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
-        miId: widget.loginSuccessModel.mIID!,
-        userId: widget.loginSuccessModel.userId!,
-        plannerCreationController: plannerCreationController);
-    plannerCreationController.statusLoading(false);
-    if (plannerCreationController.plannerStatus.isNotEmpty) {
+    // plannerCreationController.statusLoading(true);
+    // await PlannerStatusList.instance.plannerStatusAPI(
+    //     base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+    //     miId: widget.loginSuccessModel.mIID!,
+    //     userId: widget.loginSuccessModel.userId!,
+    //     plannerCreationController: plannerCreationController);
+    // plannerCreationController.statusLoading(false);
+    if (widget.plannerCreationController.plannerStatus.isNotEmpty) {
       for (int index = 0;
-          index < plannerCreationController.plannerStatus.length;
+          index < widget.plannerCreationController.plannerStatus.length;
           index++) {
-        var pl = plannerCreationController.plannerStatus.elementAt(index);
-        if (plannerCreationController.plannerStatus.elementAt(index).iSMTPLId ==
+        var pl =
+            widget.plannerCreationController.plannerStatus.elementAt(index);
+        if (widget.plannerCreationController.plannerStatus
+                .elementAt(index)
+                .iSMTPLId ==
             null) {
           if (pl.iSMTPLApprovalFlg == true || pl.iSMTPLApprovedBy != 0) {
             status = "Approved";
@@ -55,42 +60,44 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
           }
           logger.i(status);
         }
-        DateTime dt = DateTime.parse(plannerCreationController.plannerStatus
+        DateTime dt = DateTime.parse(widget
+            .plannerCreationController.plannerStatus
             .elementAt(index)
             .iSMTPLStartDate!);
         fromDate = '${dt.day}-${dt.month}-${dt.year}';
-        DateTime dt1 = DateTime.parse(plannerCreationController.plannerStatus
+        DateTime dt1 = DateTime.parse(widget
+            .plannerCreationController.plannerStatus
             .elementAt(index)
             .iSMTPLEndDate!);
         toDate = '${dt1.day}-${dt1.month}-${dt.year}';
         statusList.add(PlannerStatusModel(
-            plannerCreationController.plannerStatus
+            widget.plannerCreationController.plannerStatus
                 .elementAt(index)
                 .iSMTPLPlannerName!,
             fromDate,
             toDate,
-            '${plannerCreationController.plannerStatus.elementAt(index).iSMTPLTotalHrs} Hr',
-            (plannerCreationController.plannerStatus
+            '${widget.plannerCreationController.plannerStatus.elementAt(index).iSMTPLTotalHrs} Hr',
+            (widget.plannerCreationController.plannerStatus
                         .elementAt(index)
                         .iSMTPLApprovalFlg ==
                     true)
                 ? 'Approved'
-                : (plannerCreationController.plannerStatus
+                : (widget.plannerCreationController.plannerStatus
                             .elementAt(index)
                             .iSMTPLApprovedBy !=
                         0)
                     ? 'Rejected'
-                    : (plannerCreationController.plannerStatus
+                    : (widget.plannerCreationController.plannerStatus
                                 .elementAt(index)
                                 .iSMTPLApprovedBy ==
                             0)
                         ? 'Pending'
                         : '',
-            plannerCreationController.plannerStatus
+            widget.plannerCreationController.plannerStatus
                     .elementAt(index)
                     .approvedby ??
                 '',
-            plannerCreationController.plannerStatus
+            widget.plannerCreationController.plannerStatus
                     .elementAt(index)
                     .iSMTPLAPRemarks ??
                 ''));
@@ -112,14 +119,14 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
       body: Obx(() {
         return ListView(
           children: [
-            plannerCreationController.isstatusLoading.value
+            widget.plannerCreationController.isstatusLoading.value
                 ? const Center(
                     child: AnimatedProgressWidget(
                         title: "Getting Planner status",
                         desc: "We are loading Planner status... Please wait ",
                         animationPath: "assets/json/default.json"),
                   )
-                : (plannerCreationController.plannerStatus.isNotEmpty)
+                : (widget.plannerCreationController.plannerStatus.isNotEmpty)
                     ? SingleChildScrollView(
                         padding: const EdgeInsets.symmetric(
                             vertical: 16, horizontal: 16),
@@ -133,16 +140,14 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
                                 fontSize: 14,
                                 color: Color.fromRGBO(0, 0, 0, 0.95),
                                 fontWeight: FontWeight.w400),
-                            // dataRowHeight:
-                            //     MediaQuery.of(context).size.height * 0.1,
+                            dataRowHeight:
+                                MediaQuery.of(context).size.height * 0.1,
+                            // horizontalMargin: 10,
 
-                            // headingRowHeight: MediaQuery.of(context).size.height * 0.08,
-                            horizontalMargin: 2,
-                            columnSpacing:
-                                MediaQuery.of(context).size.width * 0.04,
                             dividerThickness: 1,
                             headingTextStyle: const TextStyle(
                                 color: Colors.white,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w700),
                             border: TableBorder.all(
                                 borderRadius: BorderRadius.circular(10),
@@ -164,7 +169,9 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
                                 label: Text('Total Effort'),
                               ),
                               DataColumn(
-                                label: Text('Status'),
+                                label: Align(
+                                    alignment: Alignment.center,
+                                    child: Text('Status')),
                               ),
                             ],
                             rows: [
@@ -178,16 +185,22 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
                                       textAlign: TextAlign.center,
                                     ),
                                   )),
-                                  DataCell(Text(statusList[index].planner,
-                                      style: Get.textTheme.titleSmall!.copyWith(
-                                          color:
-                                              Theme.of(context).primaryColor))),
+                                  DataCell(SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.3,
+                                    child: Text(statusList[index].planner,
+                                        overflow: TextOverflow.clip,
+                                        style: Get.textTheme.titleSmall!
+                                            .copyWith(
+                                                color: Theme.of(context)
+                                                    .primaryColor)),
+                                  )),
                                   DataCell(Text(statusList[index].startDate)),
                                   DataCell(Text(statusList[index].endDate)),
                                   DataCell(Text(statusList[index].totalEffort)),
                                   DataCell(SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.6,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.71,
                                     child: SingleChildScrollView(
                                       child: Column(
                                         crossAxisAlignment:
@@ -213,7 +226,7 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
                                                                       .primaryColor
                                                                   : Colors
                                                                       .green)),
-                                              (plannerCreationController
+                                              (widget.plannerCreationController
                                                           .plannerStatus
                                                           .elementAt(index)
                                                           .approvedby !=
@@ -228,7 +241,7 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
                                                   : const SizedBox(),
                                             ],
                                           ),
-                                          (plannerCreationController
+                                          (widget.plannerCreationController
                                                       .plannerStatus
                                                       .elementAt(index)
                                                       .iSMTPLAPRemarks !=

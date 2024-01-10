@@ -64,14 +64,6 @@ class TaskListAPI {
                         assignedTaskList.values![i].iSMTCRASTOStartDate!))
                     .inDays;
             plannerCreationController.totalDays = difference + 1;
-            // for (int j = 0; j < categoryWisePlanModel.values!.length; j++) {
-            //   plannerCreationController.totalEffort = 0.0;
-            //   if (assignedTaskList.values![i].iSMMTCATId ==
-            //       categoryWisePlanModel.values![j].ismmtcaTId) {
-            //     plannerCreationController.totalEffort +=
-            //         assignedTaskList.values![i].iSMTCRASTOEffortInHrs!;
-            //   }
-            // }
           }
         }
         TotalEffortData totalEffortData =
