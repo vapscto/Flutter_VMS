@@ -89,13 +89,26 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     return weekdayCount;
   }
 
+  String formatDecimal(double decimalValue) {
+    String stringValue = decimalValue.toString();
+
+    List<String> decimalIndex = stringValue.split('.');
+    if (decimalIndex[1].length >= 2) {
+      return decimalValue.toStringAsFixed(2);
+    } else {
+      return decimalValue.toStringAsFixed(1);
+    }
+  }
+
   int count1 = 0;
   int count2 = 0;
   double count3 = 0;
+  double count4 = 0;
   double newCount = 0.0;
   int pCount1 = 0;
   int pCount2 = 0;
   double pCount3 = 0;
+  double pCount4 = 0;
   String convertToDecimal(int totalMinutes) {
     int hours = totalMinutes ~/ 60;
     int remainingMinutes = totalMinutes % 60;
@@ -105,7 +118,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
 
   getListData() async {
     plannedEffort = 0.0;
-    totalHour = 0;
+    totalHour = 0.0;
     newPlannedEffort = 0.0;
     newTotalHour = 0;
     newCount = 0.0;
@@ -115,6 +128,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     pCount1 = 0;
     pCount2 = 0;
     pCount3 = 0;
+    pCount4 = 0;
+    count4 = 0;
     widget.plannerCreationController.taskLoading(true);
     await TaskListAPI.instance.getList(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
@@ -158,7 +173,9 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               pCount1 += int.parse(parts[0]);
               pCount2 += int.parse(parts[1]);
               pCount3 = double.parse(convertToDecimal(pCount2));
-              plannedEffort = pCount1 + pCount3;
+              pCount4 = pCount1 + pCount3;
+              String data1 = formatDecimal(pCount4);
+              plannedEffort = double.parse(data1);
             }
           }
           String j = widget.plannerCreationController.createdTaskList
@@ -169,7 +186,9 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
           count1 += int.parse(parts[0]);
           count2 += int.parse(parts[1]);
           count3 = double.parse(convertToDecimal(count2));
-          totalHour = count1 + count3;
+          count4 = count1 + count3;
+          String data1 = formatDecimal(count4);
+          totalHour = double.parse(data1);
         });
         plannerrArray.add({
           "ISMTCR_Id": widget.plannerCreationController.createdTaskList
@@ -301,11 +320,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   bool isDeta = false;
   @override
   void initState() {
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   setState(() {
-    //     widget.plannerCreationController.isstatusLoading.value = false;
-    //   });
-    // });
     super.initState();
   }
 
@@ -324,16 +338,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body:
-            //  isLoading == true
-            //     ? const Center(
-            //         child: AnimatedProgressWidget(
-            //             title: "Loading...",
-            //             desc: "We are loading Planner creation  Please wait ",
-            //             animationPath: "assets/json/default.json"),
-            //       )
-            //     :
-            Obx(() {
+    return Scaffold(body: Obx(() {
       return ListView(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
         children: [
@@ -763,7 +768,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                 style: Get.textTheme.titleSmall!.copyWith(
                                     color: Theme.of(context).primaryColor)),
                             TextSpan(
-                                text: '${plannedEffort.toStringAsFixed(2)} Hr',
+                                text: '$plannedEffort Hr',
                                 style: Get.textTheme.titleSmall!.copyWith()),
                           ])),
                           const SizedBox(height: 6),
@@ -774,7 +779,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                 style: Get.textTheme.titleSmall!.copyWith(
                                     color: Theme.of(context).primaryColor)),
                             TextSpan(
-                                text: '${totalHour.toStringAsFixed(2)} Hr ',
+                                text: '$totalHour Hr ',
                                 style: Get.textTheme.titleSmall!.copyWith()),
                           ])),
                         ],
@@ -815,9 +820,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                 ),
         ],
       );
-    })
-        // }),
-        );
+    }));
   }
 
 //
@@ -1138,9 +1141,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     );
   }
 
-  double d = 0.0;
-  double d1 = 0.0;
-  TimeOfDay? dtNew;
   _createCategortTable() {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
