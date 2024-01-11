@@ -15,7 +15,6 @@ import 'package:m_skool_flutter/student/fees/screens/online_payment_screen.dart'
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/student/interaction/screen/messaging_section.dart';
 import 'package:m_skool_flutter/vms/api/vms_notification_api.dart';
-import 'package:m_skool_flutter/vms/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/vms/model/vms_notification_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
@@ -25,13 +24,11 @@ class NotificationScreen extends StatelessWidget {
   final String openFor;
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  // final HwCwNbController? hwCwNbController;
   const NotificationScreen({
     super.key,
     required this.openFor,
     required this.loginSuccessModel,
     required this.mskoolController,
-    // this.hwCwNbController
   });
 
   @override
@@ -133,38 +130,35 @@ class NotificationScreen extends StatelessWidget {
                                     .elementAt(index)
                                     .iSMNOModeFlg!)['bgColor'],
                       ),
-                      child: Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              snapshot.data!.elementAt(index).createdby ??
-                                  "N/a",
-                              style:
-                                  Theme.of(context).textTheme.titleSmall!.merge(
-                                        const TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            snapshot.data!.elementAt(index).createdby ?? "N/a",
+                            style:
+                                Theme.of(context).textTheme.titleSmall!.merge(
+                                      const TextStyle(
+                                        fontWeight: FontWeight.w600,
                                       ),
-                            ),
-                            const SizedBox(
-                              height: 6.0,
-                            ),
-                            Text(snapshot.data!
-                                    .elementAt(index)
-                                    .iSMNONotification ??
-                                "N/a"),
-                            const SizedBox(
-                              height: 6.0,
-                            ),
-                            Text(snapshot.data!.elementAt(index).iSMNOModeFlg ??
-                                "N/a"),
-                            Text(snapshot.data!.elementAt(index).createdDate ==
-                                    null
-                                ? "N/a"
-                                : snapshot.data!.elementAt(index).createdDate!),
-                          ],
-                        ),
+                                    ),
+                          ),
+                          const SizedBox(
+                            height: 6.0,
+                          ),
+                          Text(snapshot.data!
+                                  .elementAt(index)
+                                  .iSMNONotification ??
+                              "N/a"),
+                          const SizedBox(
+                            height: 6.0,
+                          ),
+                          Text(snapshot.data!.elementAt(index).iSMNOModeFlg ??
+                              "N/a"),
+                          Text(snapshot.data!.elementAt(index).createdDate ==
+                                  null
+                              ? "N/a"
+                              : snapshot.data!.elementAt(index).createdDate!),
+                        ],
                       ),
                     ),
                   ),
@@ -186,7 +180,6 @@ class NotificationScreen extends StatelessWidget {
           }
 
           return const AnimatedProgressWidget(
-            //animatorHeight: 250,
             animationPath: 'assets/json/default.json',
             desc:
                 'We are loading your notification please wait while we load for you',
@@ -202,18 +195,6 @@ class NotificationScreen extends StatelessWidget {
     logger.d(headerName);
 
     switch (headerName.toLowerCase()) {
-      case "attendance":
-      // Get.to(() => AttendanceHomeScreen(
-      //     loginSuccessModel: loginSuccessModel,
-      //     mskoolController: mskoolController));
-      // break;
-      case "fee details":
-        // Get.to(() => FeeHomeScreen(
-        //     loginSuccessModel:
-        //         loginSuccessModel,
-        //     mskoolController:
-        //         mskoolController));
-        break;
       case "fee payment":
         Get.to(
           () => OnlinePaymentScreen(
@@ -237,35 +218,15 @@ class NotificationScreen extends StatelessWidget {
         Get.to(() => CoeHome(
               loginSuccessModel: loginSuccessModel,
               mskoolController: mskoolController,
-              // hwCwNbController:
-              //     widget.hwCwNbController,
-              // title:
-              //     "${headerName.capitalize}"
             ));
         break;
-      case "library":
-        String base = baseUrlFromInsCode("portal", mskoolController);
-        // Get.to(
-        //   () => LibraryHome(
-        //     miId: loginSuccessModel.mIID!,
-        //     asmayId: loginSuccessModel.asmaYId!,
-        //     asmtId: loginSuccessModel.amsTId!,
-        //     base: base,
-        //     title: "${headerName.capitalize}",
-        //   ),
-        // );
-        break;
+
       case "syllabus":
         break;
       case "exam":
-        // Get.to(() => ExamHome(
-        //       loginSuccessModel: loginSuccessModel,
-        //       mskoolController: mskoolController,
-        //     ));
         break;
       case "interaction":
         if (redirectUrl == "InteractionReply" && transactionId.toInt() != 0) {
-          // logger.d("NO-> $transactionId");
           Get.to(() => MessagingScreen(
                 ismintId: transactionId.toInt(),
                 hrmeId: 0,
@@ -289,12 +250,7 @@ class NotificationScreen extends StatelessWidget {
               mskoolController: mskoolController,
             ));
         break;
-      case "time table":
-        // Get.to(() => TimeTableHome(
-        //       loginSuccessModel: loginSuccessModel,
-        //       mskoolController: mskoolController,
-        //     ));
-        break;
+
       case "fee receipt":
         Get.to(
           () => FeeReceiptHome(
@@ -308,206 +264,5 @@ class NotificationScreen extends StatelessWidget {
         Fluttertoast.showToast(
             msg: "There is no page to open this notification");
     }
-  }
-
-  void openUsingHeaderForStaff(String headerName, BuildContext context,
-      String redirectUrl, num transactionId) {
-    if (headerName == "Attendance Entry") {
-      // Get.to(
-      //   // () => const MonthWiseAttendanceEntryHomeScreen(),
-      //   () => AttendanceEntryHomeScreen(
-      //     loginSuccessModel: loginSuccessModel,
-      //     mskoolController: mskoolController,
-      //   ),
-      //   // () => const DayWiseAttendanceEntryHome(),
-      // );
-    }
-    // if (headerName == "Student Attendance Staff") {
-    //   Get.to(() => StudentAttendanceStaffHome(
-    //         loginSuccessModel: loginSuccessModel,
-    //         mskoolController: mskoolController,
-    //       ));
-    // }
-    // if (headerName == "Mark Entry") {
-    //   Get.to(
-    //     () => MarksEntryHome(
-    //       loginSuccessModel: loginSuccessModel,
-    //       mskoolController: mskoolController,
-    //     ),
-    //   );
-    // }
-
-    // if (headerName == "Salary Details") {
-    //   Navigator.push(context, MaterialPageRoute(builder: (_) {
-    //     return
-    //         // SalarySlipHome(
-    //         //   loginSuccessModel: loginSuccessModel,
-    //         //   mskoolController: mskoolController,
-    //         // );
-    //         SalaryDetails(
-    //       loginSuccessModel: loginSuccessModel,
-    //       mskoolController: mskoolController,
-    //     );
-    //   }));
-    //   return;
-    // }
-    // if (headerName == "Staff Birth Day Report") {
-    //   Navigator.push(context, MaterialPageRoute(builder: (_) {
-    //     return StudentBdayHome(
-    //       loginSuccessModel: loginSuccessModel,
-    //       mskoolController: mskoolController,
-    //     );
-    //   }));
-    //   return;
-    // }
-
-    // if (headerName == "Online Leave Apply") {
-    //   Navigator.push(context, MaterialPageRoute(builder: (_) {
-    //     return OnlineLeaveApply(
-    //       loginSuccessModel: loginSuccessModel,
-    //       mskoolController: mskoolController,
-    //       title: "${headerName.capitalize}",
-    //     );
-    //   }));
-    //   return;
-    // }
-
-    if (headerName == "Punch Report") {
-      Navigator.push(context, MaterialPageRoute(builder: (_) {
-        return PunchReport(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-          title: "${headerName.capitalize}",
-        );
-      }));
-      return;
-    }
-
-    if (headerName == "Interaction") {
-      if (redirectUrl == "InteractionReply" && transactionId.toInt() != 0) {
-        logger.d("NO-> $transactionId");
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) {
-              return MessagingScreen(
-                ismintId: transactionId.toInt(),
-                hrmeId: 0,
-                ismintComposedById: 0,
-                istintId: 0,
-                loginSuccessModel: loginSuccessModel,
-                mskoolController: mskoolController,
-                isGroup: false,
-              );
-
-              // return MessagingScreen(
-              //   ismintId: ,
-              // );
-            },
-          ),
-        );
-        return;
-      }
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) {
-            return InteractionHome(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-              animateToInbox: true,
-            );
-
-            // return MessagingScreen(
-            //   ismintId: ,
-            // );
-          },
-        ),
-      );
-      return;
-    }
-
-    if (headerName == "COE") {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (_) {
-      //       return StaffCoeHome(
-      //         loginSuccessModel: loginSuccessModel,
-      //         mskoolController: mskoolController,
-      //         title: "${headerName.capitalize}",
-      //         //forHw: true,
-      //       );
-      //     },
-      //   ),
-      // );
-      return;
-    }
-    Fluttertoast.showToast(msg: "There is no page to open this notification");
-  }
-
-  void openUsingHeaderForManager(
-      String s, BuildContext context, String redirectUrl, num transactionId) {
-    // if (s.toLowerCase().contains("fee")) {
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (_) {
-    //         return OverallFeeHome(
-    //           loginSuccessModel: loginSuccessModel,
-    //           mskoolController: mskoolController,
-    //           title: "Overall Fee",
-    //         );
-    //       },
-    //     ),
-    //   );
-
-    //   return;
-    // }
-
-    if (s.toLowerCase().contains("Interaction")) {
-      if (redirectUrl == "InteractionReply" && transactionId.toInt() != 0) {
-        logger.d("NO-> $transactionId");
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) {
-              return MessagingScreen(
-                ismintId: transactionId.toInt(),
-                hrmeId: 0,
-                ismintComposedById: 0,
-                istintId: 0,
-                loginSuccessModel: loginSuccessModel,
-                mskoolController: mskoolController,
-                isGroup: false,
-              );
-
-              // return MessagingScreen(
-              //   ismintId: ,
-              // );
-            },
-          ),
-        );
-        return;
-      }
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) {
-            return InteractionHome(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-              animateToInbox: true,
-            );
-
-            // return MessagingScreen(
-            //   ismintId: ,
-            // );
-          },
-        ),
-      );
-      return;
-    }
-    Fluttertoast.showToast(msg: "There is no page to open this notification");
   }
 }
