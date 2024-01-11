@@ -1584,6 +1584,10 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                     TextInputType
                                                                         .number,
                                                                 decoration: InputDecoration(
+                                                                    contentPadding: const EdgeInsetsDirectional
+                                                                            .symmetric(
+                                                                        horizontal:
+                                                                            5),
                                                                     border: OutlineInputBorder(
                                                                         borderRadius:
                                                                             BorderRadius.circular(
@@ -1812,6 +1816,10 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                     TextInputType
                                                                         .text,
                                                                 decoration: InputDecoration(
+                                                                    contentPadding: const EdgeInsetsDirectional
+                                                                            .symmetric(
+                                                                        horizontal:
+                                                                            5),
                                                                     border: OutlineInputBorder(
                                                                         borderRadius:
                                                                             BorderRadius.circular(
@@ -1917,6 +1925,10 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                                     TextInputType
                                                                         .number,
                                                                 decoration: InputDecoration(
+                                                                    contentPadding: const EdgeInsetsDirectional
+                                                                            .symmetric(
+                                                                        horizontal:
+                                                                            5),
                                                                     border: OutlineInputBorder(
                                                                         borderRadius:
                                                                             BorderRadius.circular(
