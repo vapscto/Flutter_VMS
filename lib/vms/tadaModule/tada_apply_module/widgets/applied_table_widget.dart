@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/tada_apply_edit_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/screens/tada_update_image.dart';
 
@@ -27,6 +30,18 @@ class _AppliedTableWidgetState extends State<AppliedTableWidget> {
   var toSavedTime = '';
   var toSelectedDate = '';
   bool flag = false;
+  editData(int id) async {
+    widget.tadaApplyDataController.editData(true);
+    await TadaEditAPI.instance.tadaApplyEditData(
+        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
+        userId: widget.loginSuccessModel.userId!,
+        miId: widget.loginSuccessModel.mIID!,
+        vtadaaaId: id,
+        tadaApplyController: widget.tadaApplyDataController);
+
+    widget.tadaApplyDataController.editData(false);
+    Get.back();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,73 +153,75 @@ class _AppliedTableWidgetState extends State<AppliedTableWidget> {
                           color: Colors.red,
                         ),
                 ),
-                DataCell(Text(
-                    widget.tadaApplyDataController.getSavedData[index]
-                            .vtadaAStatusFlg ??
-                        ' ',
-                    style: TextStyle(
-                      color: (widget.tadaApplyDataController.getSavedData[index]
-                                  .vtadaAStatusFlg ==
-                              'Rejected')
-                          ? Colors.red
-                          : (widget.tadaApplyDataController.getSavedData[index]
-                                      .vtadaAStatusFlg ==
-                                  'Approved')
-                              ? Colors.green
-                              : Colors.black,
-                    ))),
-                // DataCell((tadaApplyDataController
-                //             .getSavedData[index].vtadaAStatusFlg !=
-                //         'Pending')
-                //     ? Text(
-                //         tadaApplyDataController
-                //                 .getSavedData[index].vtadaAStatusFlg ??
-                //             '',
-                //         style: TextStyle(
-                //           color: (tadaApplyDataController
-                //                       .getSavedData[index].vtadaAStatusFlg ==
-                //                   'Rejected')
-                //               ? Colors.red
-                //               : (tadaApplyDataController.getSavedData[index]
-                //                           .vtadaAStatusFlg ==
-                //                       'Approved')
-                //                   ? Colors.green
-                //                   : Colors.black,
-                //         ),
-                //       )
-                //     : InkWell(
-                //         onTap: () {
-                //           if (tadaApplyDataController.isDocumentUpload.isTrue) {
-                //             Fluttertoast.showToast(
-                //                 msg: "Previous TA-DA Is Pending,");
-                //           } else {
-                //             editData(tadaApplyDataController
-                //                 .getSavedData[index].vtadaAId!);
-                //           }
-                //         },
-                //         child: (tadaApplyDataController.getSavedData
-                //                     .elementAt(index)
-                //                     .vtadaAActiveFlg! ==
-                //                 true)
-                //             ? Row(
-                //                 children: [
-                //                   Text(
-                //                     "Deactivate",
-                //                     style: Get.textTheme.titleMedium!.copyWith(
-                //                         color: Colors.red,
-                //                         fontWeight: FontWeight.w200,
-                //                         fontStyle: FontStyle.italic),
-                //                   ),
-                //                 ],
-                //               )
-                //             : Text(
-                //                 "Activate",
-                //                 style: Get.textTheme.titleMedium!.copyWith(
-                //                     color: Colors.green,
-                //                     fontWeight: FontWeight.w200,
-                //                     fontStyle: FontStyle.italic),
-                //               ))
-                //               ),
+                // DataCell(Text(
+                //     widget.tadaApplyDataController.getSavedData[index]
+                //             .vtadaAStatusFlg ??
+                //         ' ',
+                //     style: TextStyle(
+                //       color: (widget.tadaApplyDataController.getSavedData[index]
+                //                   .vtadaAStatusFlg ==
+                //               'Rejected')
+                //           ? Colors.red
+                //           : (widget.tadaApplyDataController.getSavedData[index]
+                //                       .vtadaAStatusFlg ==
+                //                   'Approved')
+                //               ? Colors.green
+                //               : Colors.black,
+                //     ))),
+                DataCell((widget.tadaApplyDataController.getSavedData[index]
+                            .vtadaAStatusFlg !=
+                        'Pending')
+                    ? Text(
+                        widget.tadaApplyDataController.getSavedData[index]
+                                .vtadaAStatusFlg ??
+                            '',
+                        style: TextStyle(
+                          color: (widget.tadaApplyDataController
+                                      .getSavedData[index].vtadaAStatusFlg ==
+                                  'Rejected')
+                              ? Colors.red
+                              : (widget
+                                          .tadaApplyDataController
+                                          .getSavedData[index]
+                                          .vtadaAStatusFlg ==
+                                      'Approved')
+                                  ? Colors.green
+                                  : Colors.black,
+                        ),
+                      )
+                    : InkWell(
+                        onTap: () {
+                          if (widget.tadaApplyDataController.isDocumentUpload
+                              .isTrue) {
+                            Fluttertoast.showToast(
+                                msg: "Previous TA-DA Is Pending,");
+                          } else {
+                            editData(widget.tadaApplyDataController
+                                .getSavedData[index].vtadaAId!);
+                          }
+                        },
+                        child: (widget.tadaApplyDataController.getSavedData
+                                    .elementAt(index)
+                                    .vtadaAActiveFlg! ==
+                                true)
+                            ? Row(
+                                children: [
+                                  Text(
+                                    "Deactivate",
+                                    style: Get.textTheme.titleMedium!.copyWith(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.w200,
+                                        fontStyle: FontStyle.italic),
+                                  ),
+                                ],
+                              )
+                            : Text(
+                                "Activate",
+                                style: Get.textTheme.titleMedium!.copyWith(
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.w200,
+                                    fontStyle: FontStyle.italic),
+                              ))),
               ]);
             }),
           ),

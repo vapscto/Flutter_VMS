@@ -19,13 +19,11 @@ import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/clint_li
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/model/state_list_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/check_apply_planner_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/city_list_api.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/state_list_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/tada_apply_allowense_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/tada_apply_edit_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/tada_apply_save_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/widgets/applied_table_widget.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/widgets/select_state.dart';
 import 'package:m_skool_flutter/vms/task%20creation/api/sava_task.dart';
 import 'package:m_skool_flutter/vms/widgets/level_widget.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
@@ -143,38 +141,30 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
             .vtadaaAToDate!);
         _endDate.text = '${dt2.day}:${dt2.month}:${dt2.year}';
         //
-        TimeOfDay startTime = TimeOfDay(
-            hour: int.parse(widget.tadaApplyDataController.tadaSavedData[index]
-                .vtadaaADepartureTime!
-                .split(":")[0]),
-            minute: int.parse(widget.tadaApplyDataController
-                .tadaSavedData[index].vtadaaADepartureTime!
-                .split(":")[1]));
-        fromTime = startTime;
-        _startTime.text =
-            '${startTime.hourOfPeriod}:${startTime.minute} ${startTime.period.name.toUpperCase()}';
+        // DateFormat format = DateFormat.jm(); // 'jm' format represents 'h:mm a'
+        // DateTime dateTime = format.parse(widget.tadaApplyDataController
+        //     .tadaSavedData[index].vtadaaADepartureTime!);
+        // fromTime = dateTime;
+        _startTime.text = widget
+            .tadaApplyDataController.tadaSavedData[index].vtadaaADepartureTime!;
         fromDate = DateTime.parse(widget.tadaApplyDataController.tadaSavedData
             .elementAt(index)
             .vtadaaAFromDate!);
         toDate = DateTime.parse(widget.tadaApplyDataController.tadaSavedData
             .elementAt(index)
             .vtadaaAToDate!);
-        widget.tadaApplyDataController.clintSelectedValues.first.ismmclTId =
-            widget.tadaApplyDataController.tadaSavedData
-                .elementAt(index)
-                .ivrmmcTId;
 
         //
-        TimeOfDay startTime2 = TimeOfDay(
-            hour: int.parse(widget.tadaApplyDataController.tadaSavedData[index]
-                .vtadaaADepartureTime!
-                .split(":")[0]),
-            minute: int.parse(widget.tadaApplyDataController
-                .tadaSavedData[index].vtadaaADepartureTime!
-                .split(":")[1]));
-        toTime = startTime2;
-        _endTime.text =
-            '${startTime2.hourOfPeriod}:${startTime2.minute} ${startTime2.period.name.toUpperCase()}';
+        // TimeOfDay startTime2 = TimeOfDay(
+        //     hour: int.parse(widget.tadaApplyDataController.tadaSavedData[index]
+        //         .vtadaaADepartureTime!
+        //         .split(":")[0]),
+        //     minute: int.parse(widget.tadaApplyDataController
+        //         .tadaSavedData[index].vtadaaADepartureTime!
+        //         .split(":")[1]));
+        // toTime = startTime2;
+        _endTime.text = widget
+            .tadaApplyDataController.tadaSavedData[index].vtadaaAArrivalTime!;
         //
         getState(widget.tadaApplyDataController.tadaSavedData
             .elementAt(index)
@@ -430,7 +420,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         fromDate: fromDate!.toIso8601String(),
         toDate: toDate!.toIso8601String(),
         clintId: clintId,
-        totalAppliedAmount: (_extraAmountController.text.isNotEmpty)
+        totalAppliedAmount: (_extraAmountController.text.isEmpty)
             ? double.parse(allAmount.toString())
             : 0,
         toAddress: _addressController.text,
@@ -445,7 +435,9 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         vtadaaId: (widget.tadaApplyDataController.tadaSavedData.isNotEmpty)
             ? widget.tadaApplyDataController.tadaSavedData.first.vtadaaAId!
             : 0,
-        extraBalance: double.parse(_extraAmountController.text),
+        extraBalance: (_extraAmountController.text.isEmpty)
+            ? 0
+            : double.parse(_extraAmountController.text),
         finalDocument: isFinalSubmition);
     widget.tadaApplyDataController.saveData(false);
     getStateList();
@@ -601,438 +593,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
               ],
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 20, left: 16, right: 16),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: CustomContainer(
-                    child: TextField(
-                      style: Theme.of(context).textTheme.titleSmall,
-                      readOnly: true,
-                      controller: _startDate,
-                      onTap: () async {
-                        fromDate = await showDatePicker(
-                          context: context,
-                          helpText: "Select Data",
-                          firstDate:
-                              DateTime.now().subtract(const Duration(days: 30)),
-                          initialDate: DateTime.now(),
-                          lastDate: DateTime.now(),
-                        );
-                        if (fromDate != null) {
-                          setState(() {
-                            _endDate.clear();
-                            _startTime.clear();
-                            _endTime.clear();
-
-                            _startDate.text =
-                                "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
-                            fromSelectedDate =
-                                '${numberList[fromDate!.month]}-${numberList[fromDate!.day]}-${fromDate!.year}';
-                          });
-                        }
-                      },
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          onPressed: () async {
-                            fromDate = await showDatePicker(
-                              helpText: "Select Data",
-                              context: context,
-                              firstDate: DateTime.now()
-                                  .subtract(const Duration(days: 30)),
-                              initialDate: DateTime.now(),
-                              lastDate: DateTime.now(),
-                            );
-
-                            if (fromDate != null) {
-                              setState(() {
-                                _endDate.clear();
-                                _startTime.clear();
-                                _endTime.clear();
-
-                                _startDate.text =
-                                    "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
-                                fromSelectedDate =
-                                    '${numberList[fromDate!.month]}-${numberList[fromDate!.day]}-${fromDate!.year}';
-                              });
-                            }
-                          },
-                          icon: SvgPicture.asset(
-                            "assets/svg/calendar_icon.svg",
-                            color: const Color(0xFF3E78AA),
-                            height: 18,
-                          ),
-                        ),
-                        contentPadding:
-                            const EdgeInsets.only(top: 40.0, left: 12),
-                        border: const OutlineInputBorder(),
-                        label: Container(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(24.0),
-                              color: const Color(0xFFE5F3FF)),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SvgPicture.asset(
-                                "assets/svg/calendar_icon.svg",
-                                color: const Color(0xFF3E78AA),
-                                height: 18,
-                              ),
-                              const SizedBox(
-                                width: 6.0,
-                              ),
-                              Text(
-                                " Start Date ",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium!
-                                    .merge(
-                                      const TextStyle(
-                                        fontSize: 18.0,
-                                        color: Color(0xFF3E78AA),
-                                      ),
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        hintText: 'Select Date',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 12.0,
-                ),
-                Expanded(
-                  child: CustomContainer(
-                    child: TextField(
-                      readOnly: true,
-                      style: Theme.of(context).textTheme.titleSmall,
-                      controller: _endDate,
-                      onTap: () async {
-                        if (_startDate.text.isNotEmpty) {
-                          toDate = await showDatePicker(
-                            context: context,
-                            helpText: "Select Date",
-                            initialDate:
-                                DateTime.parse(fromDate!.toIso8601String()),
-                            firstDate:
-                                DateTime.parse(fromDate!.toIso8601String()),
-                            lastDate: DateTime.now(),
-                          );
-                          if (toDate != null) {
-                            setState(() {
-                              _startTime.clear();
-                              _endTime.clear();
-
-                              _endDate.text =
-                                  "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
-                              dayCount =
-                                  toDate!.difference(fromDate!).inDays + 1;
-                              toSelectedDate =
-                                  '${numberList[toDate!.month]}-${numberList[toDate!.day]}-${toDate!.year}';
-                              checkPlanner();
-                            });
-                          }
-                        } else {
-                          Fluttertoast.showToast(
-                              msg: "Please Select Start Date");
-                        }
-                      },
-                      decoration: InputDecoration(
-                        isDense: true,
-                        contentPadding:
-                            const EdgeInsets.only(top: 40.0, left: 12),
-                        suffixIcon: IconButton(
-                          onPressed: () async {
-                            if (_startDate.text.isNotEmpty) {
-                              toDate = await showDatePicker(
-                                context: context,
-                                helpText: "Select Date",
-                                initialDate:
-                                    DateTime.parse(fromDate!.toIso8601String()),
-                                firstDate:
-                                    DateTime.parse(fromDate!.toIso8601String()),
-                                lastDate: DateTime.now(),
-                              );
-                              if (toDate != null) {
-                                setState(() {
-                                  _startTime.clear();
-                                  _endTime.clear();
-
-                                  _endDate.text =
-                                      "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
-                                  dayCount =
-                                      toDate!.difference(fromDate!).inDays + 1;
-                                  toSelectedDate =
-                                      '${numberList[toDate!.month]}-${numberList[toDate!.day]}-${toDate!.year}';
-                                  checkPlanner();
-                                });
-                              }
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "Please Select Start Date");
-                            }
-                          },
-                          icon: SvgPicture.asset(
-                            "assets/svg/calendar_icon.svg",
-                            color: const Color(0xFF3E78AA),
-                            height: 18,
-                          ),
-                        ),
-                        border: const OutlineInputBorder(),
-                        label: Container(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(24.0),
-                              color: const Color(0xFFE5F3FF)),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SvgPicture.asset(
-                                "assets/svg/calendar_icon.svg",
-                                color: const Color(0xFF3E78AA),
-                                height: 18,
-                              ),
-                              const SizedBox(
-                                width: 6.0,
-                              ),
-                              Text(
-                                " End Date ",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium!
-                                    .merge(
-                                      const TextStyle(
-                                          fontSize: 18.0,
-                                          color: Color(0xFF3E78AA)),
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        hintText: 'Select Date',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 30, left: 16, right: 16),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: CustomContainer(
-                    child: TextField(
-                      style: Theme.of(context).textTheme.titleSmall,
-                      readOnly: true,
-                      controller: _startTime,
-                      onTap: () async {
-                        if (_endDate.text.isNotEmpty) {
-                          fromTime = await showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay.now(),
-                              initialEntryMode: TimePickerEntryMode.dialOnly,
-                              builder: (context, childWidget) {
-                                return MediaQuery(
-                                    data: MediaQuery.of(context)
-                                        .copyWith(alwaysUse24HourFormat: false),
-                                    child: childWidget!);
-                              });
-
-                          if (fromTime != null) {
-                            _startTime.text =
-                                '${numberList[fromTime!.hourOfPeriod]}:${numberList[fromTime!.minute]} ${fromTime!.period.name.toUpperCase()}';
-                          }
-                        } else {
-                          Fluttertoast.showToast(msg: "Please select Date");
-                        }
-                      },
-                      decoration: InputDecoration(
-                        suffixIcon: const Icon(
-                          Icons.watch_later_outlined,
-                          color: Color(0xFF3E78AA),
-                        ),
-                        contentPadding:
-                            const EdgeInsets.only(top: 40.0, left: 12),
-                        border: const OutlineInputBorder(),
-                        label: Container(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(24.0),
-                              color: const Color(0xFFE5F3FF)),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(
-                                Icons.watch_later_outlined,
-                                color: Color(0xFF3E78AA),
-                              ),
-                              const SizedBox(
-                                width: 6.0,
-                              ),
-                              Text(
-                                " Start Time ",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium!
-                                    .merge(
-                                      const TextStyle(
-                                        fontSize: 18.0,
-                                        color: Color(0xFF3E78AA),
-                                      ),
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        hintText: 'Select Time',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 12.0,
-                ),
-                Expanded(
-                  child: CustomContainer(
-                    child: TextField(
-                      readOnly: true,
-                      style: Theme.of(context).textTheme.titleSmall,
-                      controller: _endTime,
-                      onTap: () async {
-                        if (fromTime != null) {
-                          toTime = await showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay(
-                                  hour: fromTime!.hour,
-                                  minute: fromTime!.minute),
-                              builder: (context, childWidget) {
-                                return MediaQuery(
-                                    data: MediaQuery.of(context)
-                                        .copyWith(alwaysUse24HourFormat: false),
-                                    child: childWidget!);
-                              });
-                          if (toTime != null) {
-                            _endTime.text =
-                                '${numberList[toTime!.hourOfPeriod]}:${numberList[toTime!.minute]} ${toTime!.period.name.toUpperCase()}';
-                            calculateHour(_startDate.text, _startTime.text,
-                                _endDate.text, _endTime.text);
-                          }
-                        } else {
-                          Fluttertoast.showToast(
-                              msg: "Please Select Start Time");
-                        }
-                      },
-                      decoration: InputDecoration(
-                        // isDense: true,
-                        suffixIcon: const Icon(
-                          Icons.watch_later_outlined,
-                          color: Color(0xFF3E78AA),
-                        ),
-                        contentPadding:
-                            const EdgeInsets.only(top: 40.0, left: 12),
-
-                        border: const OutlineInputBorder(),
-
-                        label: Container(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(24.0),
-                              color: const Color(0xFFE5F3FF)),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(
-                                Icons.watch_later_outlined,
-                                color: Color(0xFF3E78AA),
-                              ),
-                              const SizedBox(
-                                width: 6.0,
-                              ),
-                              Text(
-                                " Arrival Time ",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium!
-                                    .merge(
-                                      const TextStyle(
-                                          fontSize: 18.0,
-                                          color: Color(0xFF3E78AA)),
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        hintText: 'Select Time',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
           (widget.tadaApplyDataController.tadaSavedData.isEmpty)
               ? (widget.tadaApplyDataController.isStateLoading.value)
                   ? const Center(
@@ -1045,6 +605,472 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Container(
+                          margin: const EdgeInsets.only(
+                              top: 20, left: 16, right: 16),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: CustomContainer(
+                                  child: TextField(
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
+                                    readOnly: true,
+                                    controller: _startDate,
+                                    onTap: () async {
+                                      fromDate = await showDatePicker(
+                                        context: context,
+                                        helpText: "Select Data",
+                                        firstDate: DateTime.now()
+                                            .subtract(const Duration(days: 30)),
+                                        initialDate: DateTime.now(),
+                                        lastDate: DateTime.now(),
+                                      );
+                                      if (fromDate != null) {
+                                        setState(() {
+                                          _endDate.clear();
+                                          _startTime.clear();
+                                          _endTime.clear();
+
+                                          _startDate.text =
+                                              "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
+                                          fromSelectedDate =
+                                              '${numberList[fromDate!.month]}-${numberList[fromDate!.day]}-${fromDate!.year}';
+                                        });
+                                      }
+                                    },
+                                    decoration: InputDecoration(
+                                      suffixIcon: IconButton(
+                                        onPressed: () async {
+                                          fromDate = await showDatePicker(
+                                            helpText: "Select Data",
+                                            context: context,
+                                            firstDate: DateTime.now().subtract(
+                                                const Duration(days: 30)),
+                                            initialDate: DateTime.now(),
+                                            lastDate: DateTime.now(),
+                                          );
+
+                                          if (fromDate != null) {
+                                            setState(() {
+                                              _endDate.clear();
+                                              _startTime.clear();
+                                              _endTime.clear();
+
+                                              _startDate.text =
+                                                  "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
+                                              fromSelectedDate =
+                                                  '${numberList[fromDate!.month]}-${numberList[fromDate!.day]}-${fromDate!.year}';
+                                            });
+                                          }
+                                        },
+                                        icon: SvgPicture.asset(
+                                          "assets/svg/calendar_icon.svg",
+                                          color: const Color(0xFF3E78AA),
+                                          height: 18,
+                                        ),
+                                      ),
+                                      contentPadding: const EdgeInsets.only(
+                                          top: 40.0, left: 12),
+                                      border: const OutlineInputBorder(),
+                                      label: Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 5),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12.0, vertical: 8.0),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(24.0),
+                                            color: const Color(0xFFE5F3FF)),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            SvgPicture.asset(
+                                              "assets/svg/calendar_icon.svg",
+                                              color: const Color(0xFF3E78AA),
+                                              height: 18,
+                                            ),
+                                            const SizedBox(
+                                              width: 6.0,
+                                            ),
+                                            Text(
+                                              " Start Date ",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium!
+                                                  .merge(
+                                                    const TextStyle(
+                                                      fontSize: 18.0,
+                                                      color: Color(0xFF3E78AA),
+                                                    ),
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      hintText: 'Select Date',
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      enabledBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 12.0,
+                              ),
+                              Expanded(
+                                child: CustomContainer(
+                                  child: TextField(
+                                    readOnly: true,
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
+                                    controller: _endDate,
+                                    onTap: () async {
+                                      if (_startDate.text.isNotEmpty) {
+                                        toDate = await showDatePicker(
+                                          context: context,
+                                          helpText: "Select Date",
+                                          initialDate: DateTime.parse(
+                                              fromDate!.toIso8601String()),
+                                          firstDate: DateTime.parse(
+                                              fromDate!.toIso8601String()),
+                                          lastDate: DateTime.now(),
+                                        );
+                                        if (toDate != null) {
+                                          setState(() {
+                                            _startTime.clear();
+                                            _endTime.clear();
+
+                                            _endDate.text =
+                                                "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                            dayCount = toDate!
+                                                    .difference(fromDate!)
+                                                    .inDays +
+                                                1;
+                                            toSelectedDate =
+                                                '${numberList[toDate!.month]}-${numberList[toDate!.day]}-${toDate!.year}';
+                                            checkPlanner();
+                                          });
+                                        }
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg: "Please Select Start Date");
+                                      }
+                                    },
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      contentPadding: const EdgeInsets.only(
+                                          top: 40.0, left: 12),
+                                      suffixIcon: IconButton(
+                                        onPressed: () async {
+                                          if (_startDate.text.isNotEmpty) {
+                                            toDate = await showDatePicker(
+                                              context: context,
+                                              helpText: "Select Date",
+                                              initialDate: DateTime.parse(
+                                                  fromDate!.toIso8601String()),
+                                              firstDate: DateTime.parse(
+                                                  fromDate!.toIso8601String()),
+                                              lastDate: DateTime.now(),
+                                            );
+                                            if (toDate != null) {
+                                              setState(() {
+                                                _startTime.clear();
+                                                _endTime.clear();
+
+                                                _endDate.text =
+                                                    "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                                dayCount = toDate!
+                                                        .difference(fromDate!)
+                                                        .inDays +
+                                                    1;
+                                                toSelectedDate =
+                                                    '${numberList[toDate!.month]}-${numberList[toDate!.day]}-${toDate!.year}';
+                                                checkPlanner();
+                                              });
+                                            }
+                                          } else {
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    "Please Select Start Date");
+                                          }
+                                        },
+                                        icon: SvgPicture.asset(
+                                          "assets/svg/calendar_icon.svg",
+                                          color: const Color(0xFF3E78AA),
+                                          height: 18,
+                                        ),
+                                      ),
+                                      border: const OutlineInputBorder(),
+                                      label: Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 5),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12.0, vertical: 8.0),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(24.0),
+                                            color: const Color(0xFFE5F3FF)),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            SvgPicture.asset(
+                                              "assets/svg/calendar_icon.svg",
+                                              color: const Color(0xFF3E78AA),
+                                              height: 18,
+                                            ),
+                                            const SizedBox(
+                                              width: 6.0,
+                                            ),
+                                            Text(
+                                              " End Date ",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium!
+                                                  .merge(
+                                                    const TextStyle(
+                                                        fontSize: 18.0,
+                                                        color:
+                                                            Color(0xFF3E78AA)),
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      hintText: 'Select Date',
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      enabledBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(
+                              top: 30, left: 16, right: 16),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: CustomContainer(
+                                  child: TextField(
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
+                                    readOnly: true,
+                                    controller: _startTime,
+                                    onTap: () async {
+                                      if (_endDate.text.isNotEmpty) {
+                                        fromTime = await showTimePicker(
+                                            context: context,
+                                            initialTime: TimeOfDay.now(),
+                                            initialEntryMode:
+                                                TimePickerEntryMode.dialOnly,
+                                            builder: (context, childWidget) {
+                                              return MediaQuery(
+                                                  data: MediaQuery.of(context)
+                                                      .copyWith(
+                                                          alwaysUse24HourFormat:
+                                                              false),
+                                                  child: childWidget!);
+                                            });
+
+                                        if (fromTime != null) {
+                                          _startTime.text =
+                                              '${numberList[fromTime!.hourOfPeriod]}:${numberList[fromTime!.minute]} ${fromTime!.period.name.toUpperCase()}';
+                                        }
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg: "Please select Date");
+                                      }
+                                    },
+                                    decoration: InputDecoration(
+                                      suffixIcon: const Icon(
+                                        Icons.watch_later_outlined,
+                                        color: Color(0xFF3E78AA),
+                                      ),
+                                      contentPadding: const EdgeInsets.only(
+                                          top: 40.0, left: 12),
+                                      border: const OutlineInputBorder(),
+                                      label: Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 5),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12.0, vertical: 8.0),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(24.0),
+                                            color: const Color(0xFFE5F3FF)),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const Icon(
+                                              Icons.watch_later_outlined,
+                                              color: Color(0xFF3E78AA),
+                                            ),
+                                            const SizedBox(
+                                              width: 6.0,
+                                            ),
+                                            Text(
+                                              " Start Time ",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium!
+                                                  .merge(
+                                                    const TextStyle(
+                                                      fontSize: 18.0,
+                                                      color: Color(0xFF3E78AA),
+                                                    ),
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      hintText: 'Select Time',
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      enabledBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 12.0,
+                              ),
+                              Expanded(
+                                child: CustomContainer(
+                                  child: TextField(
+                                    readOnly: true,
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
+                                    controller: _endTime,
+                                    onTap: () async {
+                                      if (fromTime != null) {
+                                        toTime = await showTimePicker(
+                                            context: context,
+                                            initialTime: TimeOfDay(
+                                                hour: fromTime!.hour,
+                                                minute: fromTime!.minute),
+                                            builder: (context, childWidget) {
+                                              return MediaQuery(
+                                                  data: MediaQuery.of(context)
+                                                      .copyWith(
+                                                          alwaysUse24HourFormat:
+                                                              false),
+                                                  child: childWidget!);
+                                            });
+                                        if (toTime != null) {
+                                          _endTime.text =
+                                              '${numberList[toTime!.hourOfPeriod]}:${numberList[toTime!.minute]} ${toTime!.period.name.toUpperCase()}';
+                                          calculateHour(
+                                              _startDate.text,
+                                              _startTime.text,
+                                              _endDate.text,
+                                              _endTime.text);
+                                        }
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg: "Please Select Start Time");
+                                      }
+                                    },
+                                    decoration: InputDecoration(
+                                      // isDense: true,
+                                      suffixIcon: const Icon(
+                                        Icons.watch_later_outlined,
+                                        color: Color(0xFF3E78AA),
+                                      ),
+                                      contentPadding: const EdgeInsets.only(
+                                          top: 40.0, left: 12),
+
+                                      border: const OutlineInputBorder(),
+
+                                      label: Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 5),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12.0, vertical: 8.0),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(24.0),
+                                            color: const Color(0xFFE5F3FF)),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const Icon(
+                                              Icons.watch_later_outlined,
+                                              color: Color(0xFF3E78AA),
+                                            ),
+                                            const SizedBox(
+                                              width: 6.0,
+                                            ),
+                                            Text(
+                                              " Arrival Time ",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium!
+                                                  .merge(
+                                                    const TextStyle(
+                                                        fontSize: 18.0,
+                                                        color:
+                                                            Color(0xFF3E78AA)),
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      hintText: 'Select Time',
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      enabledBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         widget.tadaApplyDataController.stateList.isEmpty
                             ? const SizedBox()
                             : Container(
@@ -1764,6 +1790,10 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                     keyboardType:
                                                         TextInputType.text,
                                                     decoration: InputDecoration(
+                                                        contentPadding:
+                                                            const EdgeInsetsDirectional
+                                                                    .symmetric(
+                                                                horizontal: 5),
                                                         border: OutlineInputBorder(
                                                             borderRadius:
                                                                 BorderRadius
@@ -1951,6 +1981,10 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                     keyboardType:
                                                         TextInputType.text,
                                                     decoration: InputDecoration(
+                                                        contentPadding:
+                                                            const EdgeInsetsDirectional
+                                                                    .symmetric(
+                                                                horizontal: 5),
                                                         border: OutlineInputBorder(
                                                             borderRadius:
                                                                 BorderRadius
@@ -2090,6 +2124,10 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                     keyboardType:
                                                         TextInputType.text,
                                                     decoration: InputDecoration(
+                                                        contentPadding:
+                                                            const EdgeInsetsDirectional
+                                                                    .symmetric(
+                                                                horizontal: 5),
                                                         border: OutlineInputBorder(
                                                             borderRadius:
                                                                 BorderRadius
@@ -2123,6 +2161,58 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "From Date : ",
+                                      style: Get.textTheme.titleSmall!.copyWith(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                    Text(_startDate.text,
+                                        style: Get.textTheme.titleSmall),
+                                  ],
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "From Time : ",
+                                      style: Get.textTheme.titleSmall!.copyWith(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                    Text(_startTime.text,
+                                        style: Get.textTheme.titleSmall),
+                                  ],
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "End Date : ",
+                                      style: Get.textTheme.titleSmall!.copyWith(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                    Text(_endDate.text,
+                                        style: Get.textTheme.titleSmall),
+                                  ],
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Arrival Time : ",
+                                      style: Get.textTheme.titleSmall!.copyWith(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                    Text(_endTime.text,
+                                        style: Get.textTheme.titleSmall),
+                                  ],
+                                ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
@@ -2217,7 +2307,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                     ),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width *
-                                          0.7,
+                                          0.6,
                                       child: Text(address,
                                           style: Get.textTheme.titleSmall),
                                     ),
@@ -2610,9 +2700,12 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                   : MSkollBtn(
                       title: "Save",
                       onPress: () {
-                        allAmount = foodAmt +
-                            accommodationAmount +
-                            otherAmount.toDouble();
+                        if (widget
+                            .tadaApplyDataController.tadaSavedData.isEmpty) {
+                          allAmount = foodAmt +
+                              accommodationAmount +
+                              otherAmount.toDouble();
+                        }
 
                         if (_addressController.text.isEmpty) {
                           Fluttertoast.showToast(msg: "Enter Address");
@@ -2622,8 +2715,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             .tadaApplyDataController.addListBrowser.isEmpty) {
                           Fluttertoast.showToast(
                               msg: "Bill File is Not Attached");
-                        } else if (widget.tadaApplyDataController
-                            .clintSelectedValues.isEmpty) {
+                        } else if (clintId == 0) {
                           Fluttertoast.showToast(msg: "Select Client");
                         } else {
                           int foodamountId = 0;
