@@ -25,20 +25,10 @@ class PlannerStatusWidget extends StatefulWidget {
 
 class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
   List<PlannerStatusModel> statusList = [];
-  // PlannerCreationController plannerCreationController =
-  //     Get.put(PlannerCreationController());
-
   String fromDate = '';
   String toDate = '';
   String status = '';
   getPlannerStatus() async {
-    // plannerCreationController.statusLoading(true);
-    // await PlannerStatusList.instance.plannerStatusAPI(
-    //     base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
-    //     miId: widget.loginSuccessModel.mIID!,
-    //     userId: widget.loginSuccessModel.userId!,
-    //     plannerCreationController: plannerCreationController);
-    // plannerCreationController.statusLoading(false);
     if (widget.plannerCreationController.plannerStatus.isNotEmpty) {
       for (int index = 0;
           index < widget.plannerCreationController.plannerStatus.length;

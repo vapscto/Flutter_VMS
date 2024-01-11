@@ -126,13 +126,17 @@ class PlannerCreationController extends GetxController {
               val.periodicity!.toLowerCase() == 'once') &&
           (val.iSMTPLTAPreviousTask == 0 ||
               val.iSMTPLTAPreviousTask == null ||
+              // ignore: unrelated_type_equality_checks
               val.iSMTPLTAPreviousTask == '' ||
+              // ignore: unrelated_type_equality_checks
               val.iSMTPLTAPreviousTask == '0')) {
         _addDataToList(data, val, startDate, endDate);
       } else if (val.periodicity!.toLowerCase() == 'daily' &&
           (val.iSMTPLTAPreviousTask == 0 ||
               val.iSMTPLTAPreviousTask == null ||
+              // ignore: unrelated_type_equality_checks
               val.iSMTPLTAPreviousTask == '' ||
+              // ignore: unrelated_type_equality_checks
               val.iSMTPLTAPreviousTask == '0')) {
         for (var mm in effortDataValues) {
           if (mm.pDates == null || mm.pDates == '') {
@@ -147,13 +151,12 @@ class PlannerCreationController extends GetxController {
             endDate =
                 DateFormat('dd-MM-yyyy').format(DateTime.parse(mm.pDates!));
           }
-          logger.i(
-              'From ===${DateTime.parse(mm.pDates!)}--${DateTime.parse(val.iSMTCRASTOStartDate!)}');
+
           if (DateTime.parse(mm.pDates!)
-                  .add(Duration(days: 1))
+                  .add(const Duration(days: 1))
                   .isAfter(DateTime.parse(val.iSMTCRASTOStartDate!)) &&
               DateTime.parse(mm.pDates!)
-                  .subtract(Duration(days: 1))
+                  .subtract(const Duration(days: 1))
                   .isBefore(DateTime.parse(val.iSMTCRASTOEndDate!))) {
             totalEffort += val.iSMTCRASTOEffortInHrs!;
             _addDataToList(data, val, startDate, endDate);
@@ -162,7 +165,9 @@ class PlannerCreationController extends GetxController {
       } else if (val.periodicity!.toLowerCase() == 'weekly' &&
           (val.iSMTPLTAPreviousTask == 0 ||
               val.iSMTPLTAPreviousTask == null ||
+              // ignore: unrelated_type_equality_checks
               val.iSMTPLTAPreviousTask == '' ||
+              // ignore: unrelated_type_equality_checks
               val.iSMTPLTAPreviousTask == '0')) {
         int wrkd = effortDataValues.length;
         if (wrkd >= int.parse(val.iSMTAPLDay!)) {
@@ -180,10 +185,10 @@ class PlannerCreationController extends GetxController {
                   DateFormat('dd-MM-yyyy').format(DateTime.parse(mm.pDates!));
             }
             if (DateTime.parse(mm.pDates!)
-                    .add(Duration(days: 1))
+                    .add(const Duration(days: 1))
                     .isAfter(DateTime.parse(val.iSMTCRASTOStartDate!)) &&
                 DateTime.parse(mm.pDates!)
-                    .subtract(Duration(days: 1))
+                    .subtract(const Duration(days: 1))
                     .isBefore(DateTime.parse(val.iSMTCRASTOEndDate!))) {
               _addDataToList(data, val, startDate, endDate);
             }
@@ -209,10 +214,10 @@ class PlannerCreationController extends GetxController {
               }
 
               if (DateTime.parse(mm.pDates!)
-                      .add(Duration(days: 1))
+                      .add(const Duration(days: 1))
                       .isAfter(DateTime.parse(val.iSMTCRASTOStartDate!)) &&
                   DateTime.parse(mm.pDates!)
-                      .subtract(Duration(days: 1))
+                      .subtract(const Duration(days: 1))
                       .isBefore(DateTime.parse(val.iSMTCRASTOEndDate!))) {
                 _addDataToList(data, val, startDate, endDate);
               } else if (int.parse(wrkd.toString()) <
@@ -239,11 +244,11 @@ class PlannerCreationController extends GetxController {
 
                     if (mm.pDates != null &&
                         DateTime.parse(mm.pDates!)
-                            .add(Duration(days: 1))
+                            .add(const Duration(days: 1))
                             .isAfter(
                                 DateTime.parse(val.iSMTCRASTOStartDate!)) &&
                         DateTime.parse(mm.pDates!)
-                            .subtract(Duration(days: 1))
+                            .subtract(const Duration(days: 1))
                             .isBefore(DateTime.parse(val.iSMTCRASTOEndDate!))) {
                       _addDataToList(data, val, startDate, endDate);
                     }
@@ -256,7 +261,9 @@ class PlannerCreationController extends GetxController {
       } else if (val.periodicity!.toLowerCase() == 'once in fortnight' &&
           (val.iSMTPLTAPreviousTask == 0 ||
               val.iSMTPLTAPreviousTask == null ||
+              // ignore: unrelated_type_equality_checks
               val.iSMTPLTAPreviousTask == '' ||
+              // ignore: unrelated_type_equality_checks
               val.iSMTPLTAPreviousTask == '0')) {
         int ddcnt = int.parse(val.iSMTAPLDay!) - 1;
         DateTime date = DateTime.now();
@@ -292,7 +299,9 @@ class PlannerCreationController extends GetxController {
       } else if (val.periodicity!.toLowerCase() == 'monthly' &&
           (val.iSMTPLTAPreviousTask == 0 ||
               val.iSMTPLTAPreviousTask == null ||
+              // ignore: unrelated_type_equality_checks
               val.iSMTPLTAPreviousTask == '' ||
+              // ignore: unrelated_type_equality_checks
               val.iSMTPLTAPreviousTask == '0')) {
         if (val.weekfirsttrue != 0) {
           if (val.firsttrue != 0) {
@@ -307,7 +316,9 @@ class PlannerCreationController extends GetxController {
               val.periodicity!.toLowerCase() == 'specific day') &&
           (val.iSMTPLTAPreviousTask == 0 ||
               val.iSMTPLTAPreviousTask == null ||
+              // ignore: unrelated_type_equality_checks
               val.iSMTPLTAPreviousTask == '' ||
+              // ignore: unrelated_type_equality_checks
               val.iSMTPLTAPreviousTask == '0')) {
         String newdate1 = DateFormat('dd-MM-yyyy')
             .format(DateTime.parse(val.oFFDate ?? '1970-01-01T00:00:00'));
