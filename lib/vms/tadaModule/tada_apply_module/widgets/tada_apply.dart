@@ -1157,11 +1157,11 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                     );
                                   }),
                                   onChanged: (s) {
-                                    // if (_endTime.text.isEmpty) {
-                                    //   Fluttertoast.showToast(
-                                    //       msg: "Select Arrival Time");
-                                    //   return;
-                                    // }
+                                    if (_endTime.text.isEmpty) {
+                                      Fluttertoast.showToast(
+                                          msg: "Select Arrival Time");
+                                      return;
+                                    }
                                     stateListModelValues = s!;
                                     getCity(stateListModelValues!.ivrmmCId!,
                                         stateListModelValues!.ivrmmSId!);
