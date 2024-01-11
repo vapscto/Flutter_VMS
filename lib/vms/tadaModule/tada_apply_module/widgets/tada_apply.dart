@@ -378,6 +378,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
 
   saveData() async {
     String iRemarks = '';
+    widget.tadaApplyDataController.saveData(true);
     if (widget.tadaApplyDataController.addListBrowser.isNotEmpty) {
       for (int i = 0;
           i < widget.tadaApplyDataController.addListBrowser.length;
@@ -409,7 +410,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         "VTADAAF_Remarks": iRemarks
       });
     }
-    widget.tadaApplyDataController.saveData(true);
+
     await TadaSaveApi.instance.tadaApplySave(
         userId: widget.loginSuccessModel.userId!,
         miId: widget.loginSuccessModel.mIID!,
