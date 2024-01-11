@@ -2614,9 +2614,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             accommodationAmount +
                             otherAmount.toDouble();
 
-                        if (_endTime.text.isEmail) {
-                          Fluttertoast.showToast(msg: "Select Arrival Time");
-                        } else if (_addressController.text.isEmpty) {
+                        if (_addressController.text.isEmpty) {
                           Fluttertoast.showToast(msg: "Enter Address");
                         } else if (allAmount == 0) {
                           Fluttertoast.showToast(msg: "Fill  Total Amount");
