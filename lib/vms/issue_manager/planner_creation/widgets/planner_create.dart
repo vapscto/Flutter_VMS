@@ -306,7 +306,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     setState(() {
       isLoading = false;
     });
-    getListData();
+    // getListData();
   }
 
   savePlanner() async {
@@ -981,7 +981,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               var i = index + 1;
               var data = widget.plannerCreationController.createdTaskList
                   .elementAt(index);
-
               // convert to date format
               DateTime startDt = DateTime.parse(
                   data.iSMTPLTAStartDate!.contains('1900-01-01T00:00:00')
@@ -1264,7 +1263,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                   onPress: () {
                     setState(() {
                       Get.back();
-                      getListData();
+                      // getListData();
                     });
                   })
             ],

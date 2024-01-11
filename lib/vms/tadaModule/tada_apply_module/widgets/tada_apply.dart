@@ -25,6 +25,7 @@ import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/tada_apply
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/apis/tada_apply_save_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/widgets/applied_table_widget.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/widgets/select_state.dart';
 import 'package:m_skool_flutter/vms/task%20creation/api/sava_task.dart';
 import 'package:m_skool_flutter/vms/widgets/level_widget.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
@@ -35,20 +36,22 @@ import 'package:open_filex/open_filex.dart';
 class TadaApplyWidget extends StatefulWidget {
   final MskoolController mskoolController;
   final LoginSuccessModel loginSuccessModel;
+  final TadaApplyDataController tadaApplyDataController;
   int previousScreen;
   TadaApplyWidget(
       {super.key,
       required this.mskoolController,
       required this.loginSuccessModel,
-      required this.previousScreen});
+      required this.previousScreen,
+      required this.tadaApplyDataController});
 
   @override
   State<TadaApplyWidget> createState() => _TadaApplyWidgetState();
 }
 
 class _TadaApplyWidgetState extends State<TadaApplyWidget> {
-  TadaApplyDataController tadaApplyDataController =
-      Get.put(TadaApplyDataController());
+  // widget.tadaApplyDataController widget.tadaApplyDataController =
+  //     Get.put(widget.tadaApplyDataController());
   final ScrollController _controller = ScrollController();
   final RxBool selectAllDepartment = RxBool(false);
   final _addressController = TextEditingController();
@@ -68,26 +71,28 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   //
   int stateId = 0;
   getStateList() async {
-    tadaApplyDataController.stateLoading(true);
-    tadaApplyDataController.cityListValues.clear();
-    await StateListAPI.instance.tadastateList(
-        miId: widget.loginSuccessModel.mIID!,
-        userId: widget.loginSuccessModel.userId!,
-        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
-        tadaApplyController: tadaApplyDataController);
-    if (tadaApplyDataController.stateList.isNotEmpty) {
-      stateListModelValues = tadaApplyDataController.stateList.first;
-      for (int i = 0; i < tadaApplyDataController.stateList.length; i++) {
-        stateId = tadaApplyDataController.stateList.elementAt(i).ivrmmSId!;
+    // widget.tadaApplyDataController.stateLoading(true);
+    // widget.tadaApplyDataController.cityListValues.clear();
+    // await StateListAPI.instance.tadastateList(
+    //     miId: widget.loginSuccessModel.mIID!,
+    //     userId: widget.loginSuccessModel.userId!,
+    //     base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
+    //     tadaApplyController: widget.tadaApplyDataController);
+    if (widget.tadaApplyDataController.stateList.isNotEmpty) {
+      stateListModelValues = widget.tadaApplyDataController.stateList.first;
+      for (int i = 0;
+          i < widget.tadaApplyDataController.stateList.length;
+          i++) {
+        stateId =
+            widget.tadaApplyDataController.stateList.elementAt(i).ivrmmSId!;
       }
-      // getCity(stateListModelValues!.ivrmmCId!, stateListModelValues!.ivrmmSId!);
     }
-    tadaApplyDataController.stateLoading(false);
+    // widget.tadaApplyDataController.stateLoading(false);
   }
 
 //After apply
   void getState(int query) {
-    stateNew = tadaApplyDataController.stateList
+    stateNew = widget.tadaApplyDataController.stateList
         .where((value) => value.ivrmmSId! == (query))
         .toList();
     for (int i = 0; i < stateNew.length; i++) {
@@ -96,7 +101,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   }
 
   void getClint(int query) {
-    clintlist = tadaApplyDataController.clintListValues
+    clintlist = widget.tadaApplyDataController.clintListValues
         .where((value) => value.ismmclTId! == (query))
         .toList();
     for (int i = 0; i < clintlist.length; i++) {
@@ -122,99 +127,107 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   int vtadaaId = 0;
 
   savedDataListAPI() async {
-    if (tadaApplyDataController.tadaSavedData.isNotEmpty) {
+    if (widget.tadaApplyDataController.tadaSavedData.isNotEmpty) {
       for (int index = 0;
-          index < tadaApplyDataController.tadaSavedData.length;
+          index < widget.tadaApplyDataController.tadaSavedData.length;
           index++) {
-        DateTime dt1 = DateTime.parse(tadaApplyDataController.tadaSavedData
+        DateTime dt1 = DateTime.parse(widget
+            .tadaApplyDataController.tadaSavedData
             .elementAt(index)
             .vtadaaAFromDate!);
         _startDate.text = '${dt1.day}:${dt1.month}:${dt1.year}';
         //
-        DateTime dt2 = DateTime.parse(tadaApplyDataController.tadaSavedData
+        DateTime dt2 = DateTime.parse(widget
+            .tadaApplyDataController.tadaSavedData
             .elementAt(index)
             .vtadaaAToDate!);
         _endDate.text = '${dt2.day}:${dt2.month}:${dt2.year}';
         //
         TimeOfDay startTime = TimeOfDay(
-            hour: int.parse(tadaApplyDataController
-                .tadaSavedData[index].vtadaaADepartureTime!
+            hour: int.parse(widget.tadaApplyDataController.tadaSavedData[index]
+                .vtadaaADepartureTime!
                 .split(":")[0]),
-            minute: int.parse(tadaApplyDataController
+            minute: int.parse(widget.tadaApplyDataController
                 .tadaSavedData[index].vtadaaADepartureTime!
                 .split(":")[1]));
         fromTime = startTime;
         _startTime.text =
             '${startTime.hourOfPeriod}:${startTime.minute} ${startTime.period.name.toUpperCase()}';
-        fromDate = DateTime.parse(tadaApplyDataController.tadaSavedData
+        fromDate = DateTime.parse(widget.tadaApplyDataController.tadaSavedData
             .elementAt(index)
             .vtadaaAFromDate!);
-        toDate = DateTime.parse(tadaApplyDataController.tadaSavedData
+        toDate = DateTime.parse(widget.tadaApplyDataController.tadaSavedData
             .elementAt(index)
             .vtadaaAToDate!);
-        tadaApplyDataController.clintSelectedValues.first.ismmclTId =
-            tadaApplyDataController.tadaSavedData.elementAt(index).ivrmmcTId;
+        widget.tadaApplyDataController.clintSelectedValues.first.ismmclTId =
+            widget.tadaApplyDataController.tadaSavedData
+                .elementAt(index)
+                .ivrmmcTId;
 
         //
         TimeOfDay startTime2 = TimeOfDay(
-            hour: int.parse(tadaApplyDataController
-                .tadaSavedData[index].vtadaaADepartureTime!
+            hour: int.parse(widget.tadaApplyDataController.tadaSavedData[index]
+                .vtadaaADepartureTime!
                 .split(":")[0]),
-            minute: int.parse(tadaApplyDataController
+            minute: int.parse(widget.tadaApplyDataController
                 .tadaSavedData[index].vtadaaADepartureTime!
                 .split(":")[1]));
         toTime = startTime2;
         _endTime.text =
             '${startTime2.hourOfPeriod}:${startTime2.minute} ${startTime2.period.name.toUpperCase()}';
         //
-        getState(
-            tadaApplyDataController.tadaSavedData.elementAt(index).ivrmmSId!);
-        getClint(tadaApplyDataController.tadaSavedData
+        getState(widget.tadaApplyDataController.tadaSavedData
+            .elementAt(index)
+            .ivrmmSId!);
+        getClint(widget.tadaApplyDataController.tadaSavedData
             .elementAt(index)
             .vtadaaAClientId!);
-        city =
-            tadaApplyDataController.tadaSavedData.elementAt(index).ivrmmcTName!;
+        city = widget.tadaApplyDataController.tadaSavedData
+            .elementAt(index)
+            .ivrmmcTName!;
         clintName = city;
-        ctId =
-            tadaApplyDataController.tadaSavedData.elementAt(index).ivrmmcTId!;
-        advanceAmount = tadaApplyDataController.tadaSavedData
+        ctId = widget.tadaApplyDataController.tadaSavedData
+            .elementAt(index)
+            .ivrmmcTId!;
+        advanceAmount = widget.tadaApplyDataController.tadaSavedData
             .elementAt(index)
             .vtadaaATotalAppliedAmount!
             .toInt();
-        paidAmount = tadaApplyDataController.tadaSavedData
+        paidAmount = widget.tadaApplyDataController.tadaSavedData
             .elementAt(index)
             .vtadaaATotalPaidAmount!
             .toInt();
         balanceAmount = ((advanceAmount) - (paidAmount));
         allAmount += balanceAmount;
         address =
-            '${tadaApplyDataController.tadaSavedData.elementAt(index).vtadaaAToAddress}';
+            '${widget.tadaApplyDataController.tadaSavedData.elementAt(index).vtadaaAToAddress}';
         remarks =
-            '${tadaApplyDataController.tadaSavedData.elementAt(index).vtadaaARemarks}';
+            '${widget.tadaApplyDataController.tadaSavedData.elementAt(index).vtadaaARemarks}';
         _remarkController.text = remarks;
         _addressController.text = address;
-        clintId = tadaApplyDataController.tadaSavedData
+        clintId = widget.tadaApplyDataController.tadaSavedData
             .elementAt(index)
             .vtadaaAClientId!;
-        vtadaaaId =
-            tadaApplyDataController.tadaSavedData.elementAt(index).vtadaaAId!;
-        // vtadaaId = tadaApplyDataController.tadaSavedData.elementAt(index).vtadaa
+        vtadaaaId = widget.tadaApplyDataController.tadaSavedData
+            .elementAt(index)
+            .vtadaaAId!;
+        // vtadaaId = widget.tadaApplyDataController.tadaSavedData.elementAt(index).vtadaa
       }
     }
   }
 
 //
   getCity(int countryId, int stateId) async {
-    tadaApplyDataController.cityLoading(true);
+    widget.tadaApplyDataController.cityLoading(true);
     await CityListAPI.instance.tadaCityList(
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!,
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         countryId: countryId,
         stateId: stateId,
-        tadaApplyController: tadaApplyDataController);
-    if (tadaApplyDataController.tadaSavedData.isEmpty) {
-      if (tadaApplyDataController.cityListValues.isEmpty) {
+        tadaApplyController: widget.tadaApplyDataController);
+    if (widget.tadaApplyDataController.tadaSavedData.isEmpty) {
+      if (widget.tadaApplyDataController.cityListValues.isEmpty) {
         // ignore: use_build_context_synchronously
         showDialog(
             context: context,
@@ -254,13 +267,13 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                 ),
               );
             });
-      } else if (tadaApplyDataController.cityListValues.isNotEmpty) {
-        citySelectedValue = tadaApplyDataController.cityListValues.last;
+      } else if (widget.tadaApplyDataController.cityListValues.isNotEmpty) {
+        citySelectedValue = widget.tadaApplyDataController.cityListValues.last;
         getAllowenseData(citySelectedValue!.ivrmmcTId!);
       }
     }
 
-    tadaApplyDataController.cityLoading(false);
+    widget.tadaApplyDataController.cityLoading(false);
   }
 
   //Controller
@@ -339,14 +352,14 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   double accommodationAmount = 0.0;
   double otherAmount = 0.0;
   getAllowenseData(int ctId) async {
-    tadaApplyDataController.allowenseLoading(true);
+    widget.tadaApplyDataController.allowenseLoading(true);
     await TadaAllowenceAPI.instance.getApplyAllowense(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         userId: widget.loginSuccessModel.userId!,
         miId: widget.loginSuccessModel.mIID!,
         ivrmCtId: ctId,
-        tadaApplyController: tadaApplyDataController);
-    tadaApplyDataController.allowenseLoading(false);
+        tadaApplyController: widget.tadaApplyDataController);
+    widget.tadaApplyDataController.allowenseLoading(false);
   }
 
   //
@@ -375,14 +388,17 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
 
   saveData() async {
     String iRemarks = '';
-    if (tadaApplyDataController.addListBrowser.isNotEmpty) {
-      for (int i = 0; i < tadaApplyDataController.addListBrowser.length; i++) {
-        iRemarks =
-            tadaApplyDataController.newRemarksController.elementAt(i).text;
+    if (widget.tadaApplyDataController.addListBrowser.isNotEmpty) {
+      for (int i = 0;
+          i < widget.tadaApplyDataController.addListBrowser.length;
+          i++) {
+        iRemarks = widget.tadaApplyDataController.newRemarksController
+            .elementAt(i)
+            .text;
       }
     }
 
-    for (var element in tadaApplyDataController.addListBrowser) {
+    for (var element in widget.tadaApplyDataController.addListBrowser) {
       try {
         uploadAttachment.add(await uploadAtt(
             miId: widget.loginSuccessModel.mIID!,
@@ -403,12 +419,12 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         "VTADAAF_Remarks": iRemarks
       });
     }
-    tadaApplyDataController.saveData(true);
+    widget.tadaApplyDataController.saveData(true);
     await TadaSaveApi.instance.tadaApplySave(
         userId: widget.loginSuccessModel.userId!,
         miId: widget.loginSuccessModel.mIID!,
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
-        ctId: ((tadaApplyDataController.tadaSavedData.isEmpty))
+        ctId: ((widget.tadaApplyDataController.tadaSavedData.isEmpty))
             ? citySelectedValue!.ivrmmcTId!
             : ctId,
         fromDate: fromDate!.toIso8601String(),
@@ -424,47 +440,47 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
         arrivalTime: _endTime.text,
         clintMultiple: clintName,
         allowanceArray: allowanceData,
-        tadaApplyController: tadaApplyDataController,
+        tadaApplyController: widget.tadaApplyDataController,
         fileList: uploadArray,
-        vtadaaId: (tadaApplyDataController.tadaSavedData.isNotEmpty)
-            ? tadaApplyDataController.tadaSavedData.first.vtadaaAId!
+        vtadaaId: (widget.tadaApplyDataController.tadaSavedData.isNotEmpty)
+            ? widget.tadaApplyDataController.tadaSavedData.first.vtadaaAId!
             : 0,
         extraBalance: double.parse(_extraAmountController.text),
         finalDocument: isFinalSubmition);
-    tadaApplyDataController.saveData(false);
+    widget.tadaApplyDataController.saveData(false);
     getStateList();
     Get.back();
   }
 
 //
   checkPlanner() async {
-    tadaApplyDataController.plannerCreate(true);
+    widget.tadaApplyDataController.plannerCreate(true);
     await CheckPlannerAPI.instance.applyCheckPlannerAPI(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         userId: widget.loginSuccessModel.userId!,
         miId: widget.loginSuccessModel.mIID!,
         fromDate: fromSelectedDate,
         toDate: toSelectedDate,
-        tadaApplyController: tadaApplyDataController);
-    if (tadaApplyDataController.checkPlanner.isEmpty) {
+        tadaApplyController: widget.tadaApplyDataController);
+    if (widget.tadaApplyDataController.checkPlanner.isEmpty) {
       Get.dialog(showPopup());
       _startDate.clear();
       _endDate.clear();
     }
-    tadaApplyDataController.plannerCreate(false);
+    widget.tadaApplyDataController.plannerCreate(false);
   }
 
 //
   editData(int id) {
-    tadaApplyDataController.editData(true);
+    widget.tadaApplyDataController.editData(true);
     TadaEditAPI.instance.tadaApplyEditData(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         userId: widget.loginSuccessModel.userId!,
         miId: widget.loginSuccessModel.mIID!,
         vtadaaaId: id,
-        tadaApplyController: tadaApplyDataController);
+        tadaApplyController: widget.tadaApplyDataController);
     getStateList();
-    tadaApplyDataController.editData(false);
+    widget.tadaApplyDataController.editData(false);
   }
 
   //
@@ -474,12 +490,14 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   //File Picker
   addItemListBrowse(int val, String name) {
     setState(() {
-      tadaApplyDataController.addListBrowser.add(AtachmentFile(
+      widget.tadaApplyDataController.addListBrowser.add(AtachmentFile(
         id: val,
         FileName: name,
       ));
-      for (int i = 0; i < tadaApplyDataController.addListBrowser.length; i++) {
-        tadaApplyDataController.newRemarksController
+      for (int i = 0;
+          i < widget.tadaApplyDataController.addListBrowser.length;
+          i++) {
+        widget.tadaApplyDataController.newRemarksController
             .add(TextEditingController(text: ''));
       }
     });
@@ -487,7 +505,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
 
   void removeRow(int value) {
     setState(() {
-      tadaApplyDataController.newList.removeAt(value);
+      widget.tadaApplyDataController.newList.removeAt(value);
     });
   }
 
@@ -509,8 +527,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
     if (result != null) {
       File file = File(result.files.single.path!);
       XFile xFile = XFile(file.path);
-      tadaApplyDataController.addListBrowser[index].file = xFile;
-      tadaApplyDataController.addListBrowser[index].FileName =
+      widget.tadaApplyDataController.addListBrowser[index].file = xFile;
+      widget.tadaApplyDataController.addListBrowser[index].FileName =
           result.names.first;
       setState(() {});
     } else {
@@ -519,7 +537,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   }
 
   removeItemListBrowse(int val) {
-    tadaApplyDataController.addListBrowser.removeAt(val);
+    widget.tadaApplyDataController.addListBrowser.removeAt(val);
     setState(() {});
   }
 
@@ -542,8 +560,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   bool isFinalSubmition = true;
   @override
   void dispose() {
-    tadaApplyDataController.tadaSavedData.clear();
-    tadaApplyDataController.addListBrowser.clear();
+    widget.tadaApplyDataController.tadaSavedData.clear();
+    widget.tadaApplyDataController.addListBrowser.clear();
     widget.previousScreen = 0;
     allowanceData.clear();
     super.dispose();
@@ -609,15 +627,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             _endDate.clear();
                             _startTime.clear();
                             _endTime.clear();
-                            tadaApplyDataController.cityListValues.clear();
-                            _addressController.clear();
-                            _remarkController.clear();
-                            allAmount = 0;
-                            foodTotalSlotController.clear();
-                            foodRemarksController.clear();
-                            accommodationRemarksController.clear();
-                            accommodationRemarksController.clear();
-                            tadaApplyDataController.allowenseData.clear();
+
                             _startDate.text =
                                 "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
                             fromSelectedDate =
@@ -642,15 +652,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 _endDate.clear();
                                 _startTime.clear();
                                 _endTime.clear();
-                                tadaApplyDataController.cityListValues.clear();
-                                _addressController.clear();
-                                _remarkController.clear();
-                                allAmount = 0;
-                                foodTotalSlotController.clear();
-                                foodRemarksController.clear();
-                                accommodationRemarksController.clear();
-                                accommodationRemarksController.clear();
-                                tadaApplyDataController.allowenseData.clear();
+
                                 _startDate.text =
                                     "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
                                 fromSelectedDate =
@@ -740,15 +742,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             setState(() {
                               _startTime.clear();
                               _endTime.clear();
-                              tadaApplyDataController.cityListValues.clear();
-                              _addressController.clear();
-                              _remarkController.clear();
-                              allAmount = 0;
-                              foodTotalSlotController.clear();
-                              foodRemarksController.clear();
-                              accommodationRemarksController.clear();
-                              accommodationRemarksController.clear();
-                              tadaApplyDataController.allowenseData.clear();
+
                               _endDate.text =
                                   "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                               dayCount =
@@ -783,16 +777,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 setState(() {
                                   _startTime.clear();
                                   _endTime.clear();
-                                  tadaApplyDataController.cityListValues
-                                      .clear();
-                                  _addressController.clear();
-                                  _remarkController.clear();
-                                  allAmount = 0;
-                                  foodTotalSlotController.clear();
-                                  foodRemarksController.clear();
-                                  accommodationRemarksController.clear();
-                                  accommodationRemarksController.clear();
-                                  tadaApplyDataController.allowenseData.clear();
+
                                   _endDate.text =
                                       "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
                                   dayCount =
@@ -981,7 +966,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                 '${numberList[toTime!.hourOfPeriod]}:${numberList[toTime!.minute]} ${toTime!.period.name.toUpperCase()}';
                             calculateHour(_startDate.text, _startTime.text,
                                 _endDate.text, _endTime.text);
-                            // getStateList();
                           }
                         } else {
                           Fluttertoast.showToast(
@@ -1049,8 +1033,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
               ],
             ),
           ),
-          (tadaApplyDataController.tadaSavedData.isEmpty)
-              ? (tadaApplyDataController.isStateLoading.value)
+          (widget.tadaApplyDataController.tadaSavedData.isEmpty)
+              ? (widget.tadaApplyDataController.isStateLoading.value)
                   ? const Center(
                       child: AnimatedProgressWidget(
                           title: "Loading TA-DA Entry",
@@ -1061,136 +1045,135 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        (_endTime.text.isNotEmpty)
-                            ? tadaApplyDataController.stateList.isEmpty
-                                ? const SizedBox()
-                                : Container(
-                                    margin: const EdgeInsets.only(
-                                        top: 30,
-                                        bottom: 0,
-                                        left: 16,
-                                        right: 16),
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .scaffoldBackgroundColor,
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          offset: Offset(0, 1),
-                                          blurRadius: 8,
-                                          color: Colors.black12,
-                                        ),
-                                      ],
+                        widget.tadaApplyDataController.stateList.isEmpty
+                            ? const SizedBox()
+                            : Container(
+                                margin: const EdgeInsets.only(
+                                    top: 30, bottom: 0, left: 16, right: 16),
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      offset: Offset(0, 1),
+                                      blurRadius: 8,
+                                      color: Colors.black12,
                                     ),
-                                    child: DropdownButtonFormField<
-                                        StateListModelValues>(
-                                      value: stateListModelValues,
-                                      decoration: InputDecoration(
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
+                                  ],
+                                ),
+                                child: DropdownButtonFormField<
+                                    StateListModelValues>(
+                                  value: stateListModelValues,
+                                  decoration: InputDecoration(
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                    isDense: true,
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall!
+                                        .merge(const TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.3)),
+                                    hintText: widget.tadaApplyDataController
+                                            .stateList.isNotEmpty
+                                        ? 'Select State'
+                                        : "No data available.",
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.always,
+                                    label: Container(
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFDFFBFE),
+                                        borderRadius:
+                                            BorderRadius.circular(24.0),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12.0, vertical: 6.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Image.asset(
+                                            "assets/images/cap.png",
+                                            height: 28.0,
                                           ),
-                                        ),
-                                        enabledBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
+                                          const SizedBox(
+                                            width: 6.0,
                                           ),
-                                        ),
-                                        isDense: true,
-                                        hintStyle: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall!
-                                            .merge(const TextStyle(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.3)),
-                                        hintText: tadaApplyDataController
-                                                .stateList.isNotEmpty
-                                            ? 'Select State'
-                                            : "No data available.",
-                                        floatingLabelBehavior:
-                                            FloatingLabelBehavior.always,
-                                        label: Container(
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xFFDFFBFE),
-                                            borderRadius:
-                                                BorderRadius.circular(24.0),
+                                          Text(
+                                            " State",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelMedium!
+                                                .merge(
+                                                  const TextStyle(
+                                                      backgroundColor:
+                                                          Color(0xFFDFFBFE),
+                                                      fontSize: 20.0,
+                                                      color: Color(0xFF28B6C8)),
+                                                ),
                                           ),
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 12.0, vertical: 6.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Image.asset(
-                                                "assets/images/cap.png",
-                                                height: 28.0,
-                                              ),
-                                              const SizedBox(
-                                                width: 6.0,
-                                              ),
-                                              Text(
-                                                " State",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .labelMedium!
-                                                    .merge(
-                                                      const TextStyle(
-                                                          backgroundColor:
-                                                              Color(0xFFDFFBFE),
-                                                          fontSize: 20.0,
-                                                          color: Color(
-                                                              0xFF28B6C8)),
-                                                    ),
-                                              ),
-                                            ],
-                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  icon: const Padding(
+                                    padding: EdgeInsets.only(top: 3),
+                                    child: Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      size: 30,
+                                    ),
+                                  ),
+                                  iconSize: 30,
+                                  items: List.generate(
+                                      widget.tadaApplyDataController.stateList
+                                          .length, (index) {
+                                    return DropdownMenuItem(
+                                      value: widget.tadaApplyDataController
+                                          .stateList[index],
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 13, left: 5),
+                                        child: Text(
+                                          widget.tadaApplyDataController
+                                              .stateList[index].ivrmmSName!,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall!
+                                              .merge(const TextStyle(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 16.0,
+                                                  letterSpacing: 0.3)),
                                         ),
                                       ),
-                                      icon: const Padding(
-                                        padding: EdgeInsets.only(top: 3),
-                                        child: Icon(
-                                          Icons.keyboard_arrow_down_rounded,
-                                          size: 30,
-                                        ),
-                                      ),
-                                      iconSize: 30,
-                                      items: List.generate(
-                                          tadaApplyDataController
-                                              .stateList.length, (index) {
-                                        return DropdownMenuItem(
-                                          value: tadaApplyDataController
-                                              .stateList[index],
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 13, left: 5),
-                                            child: Text(
-                                              tadaApplyDataController
-                                                  .stateList[index].ivrmmSName!,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .labelSmall!
-                                                  .merge(const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 16.0,
-                                                      letterSpacing: 0.3)),
-                                            ),
-                                          ),
-                                        );
-                                      }),
-                                      onChanged: (s) {
-                                        stateListModelValues = s!;
-                                        getCity(stateListModelValues!.ivrmmCId!,
-                                            stateListModelValues!.ivrmmSId!);
-                                      },
-                                    ),
-                                  )
-                            : const SizedBox(),
-                        tadaApplyDataController.isCityLoading.value
+                                    );
+                                  }),
+                                  onChanged: (s) {
+                                    // if (_endTime.text.isEmpty) {
+                                    //   Fluttertoast.showToast(
+                                    //       msg: "Select Arrival Time");
+                                    //   return;
+                                    // }
+                                    stateListModelValues = s!;
+                                    getCity(stateListModelValues!.ivrmmCId!,
+                                        stateListModelValues!.ivrmmSId!);
+                                  },
+                                ),
+                              ),
+                        widget.tadaApplyDataController.isCityLoading.value
                             ? const Center(
                                 child: CircularProgressIndicator(),
                               )
-                            : tadaApplyDataController.cityListValues.isNotEmpty
+                            : widget.tadaApplyDataController.cityListValues
+                                    .isNotEmpty
                                 ? Container(
                                     margin: const EdgeInsets.only(
                                         top: 30,
@@ -1231,7 +1214,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 14.0,
                                                 letterSpacing: 0.3)),
-                                        hintText: tadaApplyDataController
+                                        hintText: widget.tadaApplyDataController
                                                 .cityListValues.isNotEmpty
                                             ? 'Select City'
                                             : "No data available.",
@@ -1282,16 +1265,17 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                       ),
                                       iconSize: 30,
                                       items: List.generate(
-                                          tadaApplyDataController
+                                          widget.tadaApplyDataController
                                               .cityListValues.length, (index) {
                                         return DropdownMenuItem(
-                                          value: tadaApplyDataController
+                                          value: widget.tadaApplyDataController
                                               .cityListValues[index],
                                           child: Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 13, left: 5),
                                             child: Text(
-                                              tadaApplyDataController
+                                              widget
+                                                  .tadaApplyDataController
                                                   .cityListValues[index]
                                                   .ivrmmcTName
                                                   .toString(),
@@ -1315,150 +1299,163 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                     ),
                                   )
                                 : const SizedBox(),
-                        (_endTime.text.isNotEmpty)
-                            ? tadaApplyDataController.clintListValues.isNotEmpty
-                                ? Container(
-                                    margin: const EdgeInsets.only(
-                                        top: 30, left: 16, right: 16),
-                                    child: Stack(
-                                      clipBehavior: Clip.none,
-                                      children: [
-                                        Container(
-                                          height: 160,
-                                          padding: const EdgeInsets.only(
-                                              top: 10, bottom: 10),
-                                          decoration: BoxDecoration(
-                                            color: Theme.of(context)
-                                                .scaffoldBackgroundColor,
-                                            borderRadius:
-                                                BorderRadius.circular(16.0),
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                offset: Offset(0, 1),
-                                                blurRadius: 4,
-                                                color: Colors.black12,
-                                              ),
-                                            ],
+                        widget.tadaApplyDataController.clintListValues
+                                .isNotEmpty
+                            ? Container(
+                                margin: const EdgeInsets.only(
+                                    top: 30, left: 16, right: 16),
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Container(
+                                      height: 160,
+                                      padding: const EdgeInsets.only(
+                                          top: 10, bottom: 10),
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .scaffoldBackgroundColor,
+                                        borderRadius:
+                                            BorderRadius.circular(16.0),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            offset: Offset(0, 1),
+                                            blurRadius: 4,
+                                            color: Colors.black12,
                                           ),
-                                          child: RawScrollbar(
-                                            thumbColor: const Color(0xFF1E38FC),
-                                            trackColor: const Color.fromRGBO(
-                                                223, 239, 253, 1),
-                                            trackRadius:
-                                                const Radius.circular(10),
-                                            trackVisibility: true,
-                                            radius: const Radius.circular(10),
-                                            thickness: 14,
-                                            thumbVisibility: true,
-                                            controller: _controller,
-                                            child: SingleChildScrollView(
-                                              controller: _controller,
-                                              child: ListView.builder(
-                                                itemCount:
-                                                    tadaApplyDataController
-                                                        .clintListValues.length,
-                                                shrinkWrap: true,
-                                                physics:
-                                                    const NeverScrollableScrollPhysics(),
-                                                itemBuilder: (context, index) {
-                                                  return SizedBox(
-                                                      height: 35,
-                                                      child: Obx(() {
-                                                        return CheckBoxContainer(
-                                                            sectionName:
-                                                                "${tadaApplyDataController.clintListValues.elementAt(index).ismmclTClientName}",
-                                                            func: (b) {
-                                                              setState(() {
-                                                                if (b) {
-                                                                  tadaApplyDataController.addSelectedValues(tadaApplyDataController
+                                        ],
+                                      ),
+                                      child: RawScrollbar(
+                                        thumbColor: const Color(0xFF1E38FC),
+                                        trackColor: const Color.fromRGBO(
+                                            223, 239, 253, 1),
+                                        trackRadius: const Radius.circular(10),
+                                        trackVisibility: true,
+                                        radius: const Radius.circular(10),
+                                        thickness: 14,
+                                        thumbVisibility: true,
+                                        controller: _controller,
+                                        child: SingleChildScrollView(
+                                          controller: _controller,
+                                          child: ListView.builder(
+                                            itemCount: widget
+                                                .tadaApplyDataController
+                                                .clintListValues
+                                                .length,
+                                            shrinkWrap: true,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemBuilder: (context, index) {
+                                              return SizedBox(
+                                                  height: 35,
+                                                  child: Obx(() {
+                                                    return CheckBoxContainer(
+                                                        sectionName:
+                                                            "${widget.tadaApplyDataController.clintListValues.elementAt(index).ismmclTClientName}",
+                                                        func: (b) {
+                                                          setState(() {
+                                                            if (b) {
+                                                              widget
+                                                                  .tadaApplyDataController
+                                                                  .addSelectedValues(widget
+                                                                      .tadaApplyDataController
                                                                       .clintListValues
                                                                       .elementAt(
                                                                           index));
-                                                                  clintId = tadaApplyDataController
-                                                                      .clintListValues
-                                                                      .elementAt(
-                                                                          index)
-                                                                      .ismmclTId!;
-                                                                  clintName +=
-                                                                      '${index + 1} ) ${tadaApplyDataController.clintListValues.elementAt(index).ismmclTClientName} ';
+                                                              clintId = widget
+                                                                  .tadaApplyDataController
+                                                                  .clintListValues
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .ismmclTId!;
+                                                              clintName +=
+                                                                  '${index + 1} ) ${widget.tadaApplyDataController.clintListValues.elementAt(index).ismmclTClientName} ';
 
-                                                                  tadaApplyDataController.addAddress(tadaApplyDataController
+                                                              widget
+                                                                  .tadaApplyDataController
+                                                                  .addAddress(widget
+                                                                      .tadaApplyDataController
                                                                       .clintListValues
                                                                       .elementAt(
                                                                           index)
                                                                       .ismmclTAddress!);
-                                                                  int count = 0;
-                                                                  _addressController
-                                                                      .clear();
-                                                                  for (int i =
-                                                                          0;
-                                                                      i <
-                                                                          tadaApplyDataController
-                                                                              .addressListController
-                                                                              .length;
-                                                                      i++) {
-                                                                    count++;
-                                                                    _addressController
-                                                                            .text +=
-                                                                        ' $count ) ${tadaApplyDataController.addressListController[i]}  ';
-                                                                  }
-                                                                } else {
-                                                                  _addressController
-                                                                      .clear();
-                                                                  selectAllDepartment
-                                                                          .value =
-                                                                      false;
-                                                                  tadaApplyDataController.removeSelectedValues(tadaApplyDataController
+                                                              int count = 0;
+                                                              _addressController
+                                                                  .clear();
+                                                              for (int i = 0;
+                                                                  i <
+                                                                      widget
+                                                                          .tadaApplyDataController
+                                                                          .addressListController
+                                                                          .length;
+                                                                  i++) {
+                                                                count++;
+                                                                _addressController
+                                                                        .text +=
+                                                                    ' $count ) ${widget.tadaApplyDataController.addressListController[i]}  ';
+                                                              }
+                                                            } else {
+                                                              _addressController
+                                                                  .clear();
+                                                              selectAllDepartment
+                                                                      .value =
+                                                                  false;
+                                                              widget
+                                                                  .tadaApplyDataController
+                                                                  .removeSelectedValues(widget
+                                                                      .tadaApplyDataController
                                                                       .clintListValues
                                                                       .elementAt(
                                                                           index));
-                                                                  tadaApplyDataController.removeAddress(tadaApplyDataController
+                                                              widget
+                                                                  .tadaApplyDataController
+                                                                  .removeAddress(widget
+                                                                      .tadaApplyDataController
                                                                       .clintListValues
                                                                       .elementAt(
                                                                           index)
                                                                       .ismmclTAddress!);
-                                                                  for (int i =
-                                                                          0;
-                                                                      i <
-                                                                          tadaApplyDataController
-                                                                              .addressListController
-                                                                              .length;
-                                                                      i++) {
-                                                                    _addressController
-                                                                            .text =
-                                                                        '${i + 1} ) ${tadaApplyDataController.addressListController.elementAt(i)} ';
-                                                                  }
-                                                                }
-                                                              });
-                                                            },
-                                                            isChecked: RxBool(
-                                                              tadaApplyDataController
-                                                                  .clintSelectedValues
-                                                                  .contains(
-                                                                tadaApplyDataController
-                                                                    .clintListValues
-                                                                    .elementAt(
-                                                                        index),
-                                                              ),
-                                                            ));
-                                                      }));
-                                                },
-                                              ),
-                                            ),
+                                                              for (int i = 0;
+                                                                  i <
+                                                                      widget
+                                                                          .tadaApplyDataController
+                                                                          .addressListController
+                                                                          .length;
+                                                                  i++) {
+                                                                _addressController
+                                                                        .text =
+                                                                    '${i + 1} ) ${widget.tadaApplyDataController.addressListController.elementAt(i)} ';
+                                                              }
+                                                            }
+                                                          });
+                                                        },
+                                                        isChecked: RxBool(
+                                                          widget
+                                                              .tadaApplyDataController
+                                                              .clintSelectedValues
+                                                              .contains(
+                                                            widget
+                                                                .tadaApplyDataController
+                                                                .clintListValues
+                                                                .elementAt(
+                                                                    index),
+                                                          ),
+                                                        ));
+                                                  }));
+                                            },
                                           ),
                                         ),
-                                        const ContainerTitle(
-                                          iT: Color(0xFFFF6F67),
-                                          bg: Color.fromARGB(
-                                              255, 255, 236, 235),
-                                          image:
-                                              'assets/images/subjectfielicon.png',
-                                          title: 'Select Client',
-                                        ),
-                                      ],
+                                      ),
                                     ),
-                                  )
-                                : const SizedBox()
+                                    const ContainerTitle(
+                                      iT: Color(0xFFFF6F67),
+                                      bg: Color.fromARGB(255, 255, 236, 235),
+                                      image:
+                                          'assets/images/subjectfielicon.png',
+                                      title: 'Select Client',
+                                    ),
+                                  ],
+                                ),
+                              )
                             : const SizedBox(),
                         Container(
                           margin: const EdgeInsets.only(
@@ -1566,7 +1563,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                             ),
                           ),
                         ),
-                        tadaApplyDataController.allowenseData.isNotEmpty
+                        widget.tadaApplyDataController.allowenseData.isNotEmpty
                             ? SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 padding: const EdgeInsets.only(
@@ -1639,10 +1636,10 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                               ),
                                             ),
                                             const DataCell(Text('Food')),
-                                            DataCell(Text(
-                                                tadaApplyDataController
-                                                    .foodAmount
-                                                    .toString())),
+                                            DataCell(Text(widget
+                                                .tadaApplyDataController
+                                                .foodAmount
+                                                .toString())),
                                             DataCell(Text(dayCount.toString())),
                                             DataCell(Text('$foodSlot')),
                                             DataCell(
@@ -1677,12 +1674,12 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                               double.parse(
                                                                   value)) {
                                                             foodAmt = 0;
-                                                            foodAmt =
-                                                                (tadaApplyDataController
-                                                                        .foodAmount /
-                                                                    3.0 *
-                                                                    num.parse(
-                                                                        value));
+                                                            foodAmt = (widget
+                                                                    .tadaApplyDataController
+                                                                    .foodAmount /
+                                                                3.0 *
+                                                                num.parse(
+                                                                    value));
                                                           } else {
                                                             foodTotalSlotController
                                                                 .text = '';
@@ -1824,10 +1821,10 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                             ),
                                             const DataCell(
                                                 Text('Accommodation Amount')),
-                                            DataCell(Text(
-                                                tadaApplyDataController
-                                                    .accomodationAmount
-                                                    .toString())),
+                                            DataCell(Text(widget
+                                                .tadaApplyDataController
+                                                .accomodationAmount
+                                                .toString())),
                                             DataCell(Text(dayCount.toString())),
                                             DataCell(
                                                 Text('$accommudationSlot')),
@@ -1864,8 +1861,9 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                                                   value)) {
                                                             accommodationAmount =
                                                                 0;
-                                                            accommodationAmount = accommodationAmount =
-                                                                (tadaApplyDataController
+                                                            accommodationAmount =
+                                                                accommodationAmount = (widget
+                                                                            .tadaApplyDataController
                                                                             .accomodationAmount *
                                                                         num.parse(
                                                                             value))
@@ -2450,7 +2448,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                   style: Get.textTheme.titleSmall!
                       .copyWith(color: Theme.of(context).primaryColor)),
               TextSpan(
-                  text: (tadaApplyDataController.tadaSavedData.isEmpty)
+                  text: (widget.tadaApplyDataController.tadaSavedData.isEmpty)
                       ? " ₹ ${double.parse(foodAmt.toStringAsFixed(0)) + accommodationAmount + otherAmount}"
                       : '$allAmount',
                   style: Get.textTheme.titleSmall),
@@ -2501,7 +2499,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                     DataColumn(label: Text("Action")),
                   ],
                   rows: List.generate(
-                      tadaApplyDataController.addListBrowser.length, (index) {
+                      widget.tadaApplyDataController.addListBrowser.length,
+                      (index) {
                     var value = index + 1;
                     return DataRow(cells: [
                       DataCell(Text(value.toString())),
@@ -2531,10 +2530,10 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                           children: [
                             InkWell(
                               onTap: () {
-                                OpenFilex.open(tadaApplyDataController
+                                OpenFilex.open(widget.tadaApplyDataController
                                     .addListBrowser[index].file!.path);
                               },
-                              child: (tadaApplyDataController
+                              child: (widget.tadaApplyDataController
                                           .addListBrowser[index].file ==
                                       null)
                                   ? const Icon(Icons.visibility_off)
@@ -2550,8 +2549,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                           child: TextField(
                             style: Get.textTheme.titleSmall!
                                 .copyWith(color: Colors.black),
-                            controller: tadaApplyDataController
-                                .newRemarksController
+                            controller: widget
+                                .tadaApplyDataController.newRemarksController
                                 .elementAt(index),
                             decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.all(3)),
@@ -2561,8 +2560,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                       DataCell(Align(
                           alignment: Alignment.center,
                           child: index ==
-                                  tadaApplyDataController
-                                          .addListBrowser.length -
+                                  widget.tadaApplyDataController.addListBrowser
+                                          .length -
                                       1
                               ? Row(
                                   children: [
@@ -2584,7 +2583,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                   ],
                                 )
                               : index <
-                                      tadaApplyDataController
+                                      widget.tadaApplyDataController
                                           .addListBrowser.length
                                   ? InkWell(
                                       onTap: () {
@@ -2600,7 +2599,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
             padding: const EdgeInsets.only(top: 30),
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: tadaApplyDataController.isSave.value
+              child: widget.tadaApplyDataController.isSave.value
                   ? SizedBox(
                       height: 20,
                       width: 20,
@@ -2621,11 +2620,11 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                           Fluttertoast.showToast(msg: "Enter Address");
                         } else if (allAmount == 0) {
                           Fluttertoast.showToast(msg: "Fill  Total Amount");
-                        } else if (tadaApplyDataController
-                            .addListBrowser.isEmpty) {
+                        } else if (widget
+                            .tadaApplyDataController.addListBrowser.isEmpty) {
                           Fluttertoast.showToast(
                               msg: "Bill File is Not Attached");
-                        } else if (tadaApplyDataController
+                        } else if (widget.tadaApplyDataController
                             .clintSelectedValues.isEmpty) {
                           Fluttertoast.showToast(msg: "Select Client");
                         } else {
@@ -2683,7 +2682,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                       }),
             ),
           ),
-          (tadaApplyDataController.getSavedData.isEmpty)
+          (widget.tadaApplyDataController.getSavedData.isEmpty)
               ? const SizedBox()
               : Padding(
                   padding: const EdgeInsets.symmetric(
@@ -2702,7 +2701,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                         ),
                       ),
                       AppliedTableWidget(
-                        tadaApplyDataController: tadaApplyDataController,
+                        tadaApplyDataController: widget.tadaApplyDataController,
                         loginSuccessModel: widget.loginSuccessModel,
                         mskoolController: widget.mskoolController,
                       ),
@@ -2740,7 +2739,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                   title: "OK",
                   onPress: () {
                     setState(() {
-                      getStateList();
                       Get.back();
                     });
                   })

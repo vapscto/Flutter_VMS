@@ -206,7 +206,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task",
+                        "You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task",
                         // ignore: use_build_context_synchronously
                         style: Theme.of(context).textTheme.titleSmall!.merge(
                             TextStyle(color: Theme.of(context).primaryColor)),
@@ -537,19 +537,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                 return;
                               }
                             }
-
-                            if (_plannerDetailsController
-                                .closeTaskCoutnList.isNotEmpty) {
-                              if (_plannerDetailsController
-                                      .closeTaskCoutnList[0]
-                                      .iSMEDWTCCTaskCount! >
-                                  0) {
-                                Fluttertoast.showToast(
-                                    msg:
-                                        "You Can Not Generate Daily Report Because Still You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task");
-                                return;
-                              }
-                            }
                             saveDaetails();
                           } else {
                             Fluttertoast.showToast(
@@ -580,6 +567,21 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                       // ignore: prefer_is_empty
                       Column(
                     children: [
+                      (_plannerDetailsController.closeTaskCoutnList.isNotEmpty)
+                          ? (_plannerDetailsController.closeTaskCoutnList[0]
+                                      .iSMEDWTCCTaskCount! >
+                                  0)
+                              ? Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      12.0, 12, 12, 0),
+                                  child: Text(
+                                    "You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task",
+                                    style: Get.textTheme.titleSmall!
+                                        .copyWith(color: Colors.red),
+                                  ),
+                                )
+                              : const SizedBox()
+                          : const SizedBox(),
                       Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 30),
