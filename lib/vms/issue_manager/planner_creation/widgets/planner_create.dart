@@ -161,6 +161,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         newCategoryArray.addAll(categoryArray.toSet());
       }
     }
+    // Total hour calculation
     if (widget.plannerCreationController.createdTaskList.isNotEmpty) {
       for (int index = 0;
           index < widget.plannerCreationController.createdTaskList.length;
@@ -199,6 +200,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
           String data1 = formatDecimal(count4);
           totalHour = double.parse(data1);
         });
+        //Add details in array
         plannerrArray.add({
           "ISMTCR_Id": widget.plannerCreationController.createdTaskList
               .elementAt(index)
@@ -256,6 +258,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
       String formattedTime =
           widget.plannerCreationController.convertDecimalToTime(minimumEffect);
       String newdt = formattedTime.replaceAll(":", ".");
+      // Hour calculation
       for (var j in widget.plannerCreationController.createdTaskList) {
         if (j.iSMTPLTAId == 0) {
           if (widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId ==
@@ -266,8 +269,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             eCount2 += int.parse(parts1[1]);
             eCount3 = double.parse(convertToDecimal(eCount2));
             eCount4 = eCount1 + eCount3;
-            String data2 = formatDecimal(eCount4);
-            effort = (double.parse(data2));
+            effort = (double.parse(formatDecimal(eCount4)));
           } else {
             effort = (widget.plannerCreationController.categoryWisePlan
                 .elementAt(i)
@@ -277,6 +279,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         }
       }
       requiredEff = double.parse(newdt) - effort;
+      //Add in list
       if (effort < double.parse(newdt)) {
         categoryList.add(CategoryPlanTable(
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskCategoryName}',
@@ -978,24 +981,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               var i = index + 1;
               var data = widget.plannerCreationController.createdTaskList
                   .elementAt(index);
-              // if (data.iSMTPLTAId == 0) {
-              //   for (var i = 0;
-              //       i <
-              //           widget
-              //               .plannerCreationController.categoryWisePlan.length;
-              //       i++) {
-              //     if (widget.plannerCreationController.categoryWisePlan[i]
-              //             .ismmtcaTId ==
-              //         data.iSMMTCATId) {
-              //       totalEffort += data.iSMTCRASTOEffortInHrs!;
-              //     }
-              //     effort += totalEffort;
-              //     logger.i("Effort:- $effort");
-              //   }
-              // } else {
-              //   effort = 0.0;
-              // }
 
+              // convert to date format
               DateTime startDt = DateTime.parse(
                   data.iSMTPLTAStartDate!.contains('1900-01-01T00:00:00')
                       ? data.iSMTCRASTOStartDate.toString()
@@ -1157,7 +1144,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                     ),
                     DataCell(Text(
                         '${data.iSMTCRASTOEffortInHrs!.toStringAsFixed(2).replaceAll(".", ":")} Hr')),
-                    DataCell(Container(
+                    DataCell(SizedBox(
                       width: 150,
                       child: TextFormField(
                         maxLines: 7,
