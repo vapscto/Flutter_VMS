@@ -82,17 +82,17 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Red Font Name:- ",
-                          style: Get.textTheme.titleSmall!
-                              .copyWith(color: Colors.red),
-                        ),
+                        // Text(
+                        //   "Red Font Name:- ",
+                        //   style: Get.textTheme.titleSmall!
+                        //       .copyWith(color: Colors.red),
+                        // ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.57,
                           child: Text(
                             "Daily Report Approval Pending",
                             style: Get.textTheme.titleSmall!.copyWith(
-                                color: Theme.of(context).primaryColor),
+                                color: Color.fromARGB(255, 255, 106, 95)),
                           ),
                         ),
                       ],
@@ -110,7 +110,12 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                           children: [
                             (widget.plannerApprovalController.newplannerList
                                     .isEmpty)
-                                ? const SizedBox()
+                                ? const AnimatedProgressWidget(
+                                    animationPath: 'assets/json/nodata.json',
+                                    title: 'No Data Available',
+                                    desc: "No Planner List to Approve",
+                                    animatorHeight: 300,
+                                  )
                                 : Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 10),
