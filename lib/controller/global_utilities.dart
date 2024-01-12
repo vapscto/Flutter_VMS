@@ -66,6 +66,7 @@ Dio? dio;
 String deviceid = '';
 TabController? newController;
 List<int> checkedIndex = [];
+String latestVersion = '';
 
 Dio getGlobalDio() {
   dio ??= Dio();
@@ -443,6 +444,7 @@ void version(LoginSuccessModel loginSuccessModel,
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
   String version = packageInfo.version;
+  // latestVersion = version;
   logger.i(version);
   final VersionChangeModel? ctrl =
       await VersionControlApi.instance.checkVersionAndShowUpgrade(
@@ -453,8 +455,8 @@ void version(LoginSuccessModel loginSuccessModel,
       mskoolController,
     ),
   );
-
-  if (ctrl!.values!.first.iMVEAppVersion! == version) {
+  latestVersion = ctrl!.values!.last.iMVEAppVersion ?? '';
+  if (ctrl.values!.isNotEmpty) {
     Get.dialog(AlertDialog(
       title: const Text("Update App!"),
       content: const Text(

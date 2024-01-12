@@ -138,6 +138,13 @@ class CommonDrawer extends StatelessWidget {
                     }));
                   },
                 ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text(
+                    latestVersion,
+                    style: Get.textTheme.titleSmall,
+                  ),
+                ),
                 Padding(
                     padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
                     child: SizedBox(
