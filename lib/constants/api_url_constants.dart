@@ -385,7 +385,7 @@ class URLS {
 
   static String dynamicAnalytics = "api/AdmissionCtrl/UserDashboardDetails/";
 
-  static String appStorelink = "";
+  static String appStorelink = "https://apps.apple.com/us/app/vaps-management-system/id6470649988";
 
   static String empGetDepartment = "api/SalaryDetailsFacade/Getdepartment/";
 
