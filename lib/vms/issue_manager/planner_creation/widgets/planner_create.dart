@@ -247,6 +247,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   void getCategory() {
     categoryList.clear();
     String j1 = '';
+    effort = 0.0;
     for (var i = 0;
         i < widget.plannerCreationController.categoryWisePlan.length;
         i++) {
@@ -262,34 +263,31 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         logger.e(
             widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId ==
                 j.iSMMTCATId);
-        // if (j.iSMTPLTAId == 0) {
         if (widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId ==
                 j.iSMMTCATId ||
             j.iSMTPLTAId == 0) {
-          // List<String> parts1 =
-          //     j.iSMTCRASTOEffortInHrs!.toStringAsFixed(2).split('.');
-          // eCount1 += int.parse(parts1[0]);
-          // eCount2 += int.parse(parts1[1]);
-          // eCount3 = double.parse(convertToDecimal(eCount2));
-          // eCount4 = eCount1 + eCount3;
-          effort += (double.parse(j.iSMTCRASTOEffortInHrs!.toStringAsFixed(2)));
-          widget.plannerCreationController.categoryWisePlan[i]
-              .ismtcrastOEffortInHrs = effort;
+          List<String> parts1 =
+              j.iSMTCRASTOEffortInHrs!.toStringAsFixed(2).split('.');
+          eCount1 += int.parse(parts1[0]);
+          eCount2 += int.parse(parts1[1]);
+          eCount3 = double.parse(convertToDecimal(eCount2));
+          eCount4 = eCount1 + eCount3;
+          effort = (double.parse(formatDecimal(eCount4)));
+        } else {
+          effort = (widget.plannerCreationController.categoryWisePlan
+              .elementAt(i)
+              .ismtplaptAEffortInHrs!);
         }
-        logger.i(
-            'Effort :- ${widget.plannerCreationController.categoryWisePlan[i].ismtcrastOEffortInHrs}');
-        // }
+        logger.i('Effort :- $effort');
       }
-      requiredEff = double.parse(newdt) -
-          widget.plannerCreationController.categoryWisePlan[i]
-              .ismtcrastOEffortInHrs!;
+      requiredEff = double.parse(newdt) - effort;
       //Add in list
       if (effort < double.parse(newdt)) {
         categoryList.add(CategoryPlanTable(
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskCategoryName}',
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskPercentage} %',
             "$formattedTime Hr",
-            "${widget.plannerCreationController.categoryWisePlan[i].ismtcrastOEffortInHrs} Hr",
+            "$effort Hr",
             "$requiredEff Hr",
             widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId!));
       }
@@ -310,6 +308,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     setState(() {
       isLoading = false;
     });
+    // getListData();
   }
 
   savePlanner() async {
@@ -1266,6 +1265,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                   onPress: () {
                     setState(() {
                       Get.back();
+                      // getListData();
                     });
                   })
             ],
