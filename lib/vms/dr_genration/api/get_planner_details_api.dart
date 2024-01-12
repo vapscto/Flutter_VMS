@@ -62,7 +62,7 @@ Future<bool> getPlanerdetails({
       for (int i = 0; i < taskDrListModel.values!.length; i++) {
         var v = taskDrListModel.values!.elementAt(i);
         if (taskDrListModel.values!.elementAt(i).drFlag == 1) {
-          List<String> newList = [];
+          // List<String> newList = [];
           String deviation = '';
           for (int j = 0; j < controller.depWiseDevitnList.length; j++) {
             if (v.iSMDRId ==
@@ -70,14 +70,20 @@ Future<bool> getPlanerdetails({
               deviation = controller.depWiseDevitnList[j].ismdRRemarks ?? '';
             }
           }
-          String newData = v.iSMDRPTTimeTakenInHrs.toString();
-          newList = newData.split('.');
+          // logger.i(v.iSMDRPTTimeTakenInHrs);
+          // String newData = v.iSMDRPTTimeTakenInHrs.toString();
+          // newList = newData.split('.');
+          int hours = v.iSMDRPTTimeTakenInHrs!
+              .floor(); // Get the whole number part (hours)
+          int minutes = ((v.iSMDRPTTimeTakenInHrs! - hours) * 60).round();
           controller.hoursEt.add(TextEditingController(
-              text:
-                  (v.iSMDRPTTimeTakenInHrsmins!.isNotEmpty) ? newList[0] : ''));
+              text: (v.iSMDRPTTimeTakenInHrsmins!.isNotEmpty)
+                  ? hours.toString()
+                  : ''));
           controller.minutesEt.add(TextEditingController(
-              text:
-                  (v.iSMDRPTTimeTakenInHrsmins!.isNotEmpty) ? newList[1] : ''));
+              text: (v.iSMDRPTTimeTakenInHrsmins!.isNotEmpty)
+                  ? minutes.toString()
+                  : ''));
           controller.statusEtField
               .add(TextEditingController(text: v.iSMDRPTStatus));
           controller.etResponse

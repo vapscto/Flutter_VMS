@@ -246,7 +246,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   List<CategoryPlanTable> categoryList = [];
   void getCategory() {
     categoryList.clear();
-    String j1 = '';
     effort = 0.0;
     for (var i = 0;
         i < widget.plannerCreationController.categoryWisePlan.length;
@@ -266,6 +265,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         if (widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId ==
                 j.iSMMTCATId ||
             j.iSMTPLTAId == 0) {
+          int hour = j.iSMTCRASTOEffortInHrs!.floor();
+          // int minute=
           List<String> parts1 =
               j.iSMTCRASTOEffortInHrs!.toStringAsFixed(2).split('.');
           eCount1 += int.parse(parts1[0]);
@@ -282,7 +283,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
       }
       requiredEff = double.parse(newdt) - effort;
       //Add in list
-      if (effort < double.parse(newdt)) {
+      if (effort <= double.parse(newdt)) {
         categoryList.add(CategoryPlanTable(
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskCategoryName}',
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskPercentage} %',
