@@ -274,12 +274,13 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
           // eCount2 += int.parse(parts1[1]);
           // eCount3 = double.parse(convertToDecimal(eCount2));
           // eCount4 = eCount1 + eCount3;
-          effort += (double.parse('$hour.$minutes'));
-        } else {
-          effort = (widget.plannerCreationController.categoryWisePlan
-              .elementAt(i)
-              .ismtplaptAEffortInHrs!);
+          effort += j.iSMTCRASTOEffortInHrs!;
         }
+        // else {
+        //   effort = (widget.plannerCreationController.categoryWisePlan
+        //       .elementAt(i)
+        //       .ismtplaptAEffortInHrs!);
+        // }
         logger.i('Effort :- $effort');
       }
       requiredEff = double.parse(newdt) - effort;

@@ -91,7 +91,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                 )),
           ))
         : null;
-    _plannerDetailsController.tadaApplyList.isNotEmpty
+    (_plannerDetailsController.tadaApplyList.isNotEmpty)
         ? Get.dialog(
             barrierDismissible: false,
             AlertDialog(
@@ -136,15 +136,15 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
               ))
           : null;
     } else {
-      Get.dialog(
-          barrierDismissible: false,
-          AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            content: const DrnotApproveScreen(
-              title: 'Planner Not Created For This Week!!',
-            ),
-          ));
+      // Get.dialog(
+      //     barrierDismissible: false,
+      //     AlertDialog(
+      //       shape:
+      //           RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      //       content: const DrnotApproveScreen(
+      //         title: 'Planner Not Created For This Week!!',
+      //       ),
+      //     ));
     }
     if (_plannerDetailsController.getplannerdetails.isNotEmpty) {
       (_plannerDetailsController.getplannerdetails[0].ismtpLApprovalFlg ==
@@ -251,37 +251,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
       totalHours += excessHours;
       totalMinutes %= 60;
 
-      if (totalHours > 24) {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              content: const Text(
-                'Effort Should Be Less Than Equal To 24 Hours Per Day',
-                style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
-                    color: Colors.black54),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(
-                    'OK',
-                    style: Get.textTheme.titleMedium!
-                        .copyWith(color: Theme.of(context).primaryColor),
-                  ),
-                ),
-              ],
-            );
-          },
-        );
-
-        return;
-      }
-
       int currentDayOfWeek = 0;
       var totalworkinghrsflag = 0.0;
       int deviationId = 0;
@@ -321,6 +290,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
             }
           }
         }
+
         if (_plannerDetailsController.checkBoxList.elementAt(i) == true) {
           String countHr =
               (double.parse(_plannerDetailsController.minutesEt[i].text) *
@@ -328,10 +298,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                   .toStringAsFixed(2);
           totalhrs = double.parse(_plannerDetailsController.hoursEt[i].text) +
               double.parse(countHr);
-          // totalhrs = double.parse(
-          //     '${_plannerDetailsController.hoursEt[i].text}.${_plannerDetailsController.minutesEt[i].text}');
-          //  +
-          //     (double.parse(_plannerDetailsController.minutesEt[i].text) / 60);
+
           todayDailyReportGenaration.add({
             "ISMTPL_Id": (value.iSMTPLId != null)
                 ? value.iSMTPLId
@@ -1214,7 +1181,17 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                 DateTime currentDt =
                                                     DateTime.now();
                                                 DateTime? previousDt;
-
+                                                int hours = fliteresList
+                                                    .elementAt(index)
+                                                    .iSMTPLTAEffortInHrs!
+                                                    .floor();
+                                                int minutes = ((fliteresList
+                                                                .elementAt(
+                                                                    index)
+                                                                .iSMTPLTAEffortInHrs! -
+                                                            hours) *
+                                                        60)
+                                                    .round();
                                                 return DataRow(cells: [
                                                   DataCell(Align(
                                                       alignment:
@@ -1621,7 +1598,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             .center,
                                                     children: [
                                                       Text(
-                                                          "Actual Effort:- ${fliteresList.elementAt(index).iSMTPLTAEffortInHrs} Hr"),
+                                                          "Actual Effort:- $hours.$minutes Hr"),
                                                       const SizedBox(height: 5),
                                                       Row(
                                                         children: [

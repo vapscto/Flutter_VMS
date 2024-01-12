@@ -186,7 +186,8 @@ class TADANotApproveScreen extends StatelessWidget {
                                   DataCell(Align(
                                       alignment: Alignment.center,
                                       child: Text(
-                                          data.elementAt(index).empName!))),
+                                          data.elementAt(index).empName ??
+                                              ''))),
                                   DataCell(Align(
                                       alignment: Alignment.center,
                                       child: Text(appliedDate))),
@@ -196,16 +197,18 @@ class TADANotApproveScreen extends StatelessWidget {
                                   DataCell(Align(
                                       alignment: Alignment.center,
                                       child: Text(data
-                                          .elementAt(index)
-                                          .vTADAADepartureTime!))),
+                                              .elementAt(index)
+                                              .vTADAADepartureTime ??
+                                          ''))),
                                   DataCell(Align(
                                       alignment: Alignment.center,
                                       child: Text(toDate))),
                                   DataCell(Align(
                                       alignment: Alignment.center,
                                       child: Text(data
-                                          .elementAt(index)
-                                          .vTADAAArrivalTime!))),
+                                              .elementAt(index)
+                                              .vTADAAArrivalTime ??
+                                          ''))),
                                   DataCell(Align(
                                       alignment: Alignment.center,
                                       child: Text(data
@@ -215,16 +218,19 @@ class TADANotApproveScreen extends StatelessWidget {
                                   DataCell(Align(
                                       alignment: Alignment.center,
                                       child: Text(
-                                          data.elementAt(index).iVRMMSName!))),
+                                          data.elementAt(index).iVRMMSName ??
+                                              ''))),
                                   DataCell(Align(
                                       alignment: Alignment.center,
                                       child: Text(
-                                          data.elementAt(index).iVRMMCTName!))),
+                                          data.elementAt(index).iVRMMCTName ??
+                                              ''))),
                                   DataCell(Align(
                                       alignment: Alignment.center,
                                       child: Text(data
-                                          .elementAt(index)
-                                          .vTADAAToAddress!))),
+                                              .elementAt(index)
+                                              .vTADAAToAddress ??
+                                          ""))),
                                   DataCell(Align(
                                       alignment: Alignment.center,
                                       child: Text(
