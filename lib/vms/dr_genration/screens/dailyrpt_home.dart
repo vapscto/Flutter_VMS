@@ -638,6 +638,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                   .value
                                                   .text =
                                               '${todayDate.day}-${todayDate.month}-${todayDate.year}';
+                                          fliteresList.clear();
                                           init();
                                         });
                                       },
