@@ -39,7 +39,7 @@ class _PlannerCreateHomeScreenState extends State<PlannerCreateHomeScreen>
         userId: widget.loginSuccessModel.userId!,
         plannerCreationController: plannerCreationController);
     plannerCreationController.statusLoading(false);
-    getPlan();
+    // getPlan();
   }
 
   getPlan() async {

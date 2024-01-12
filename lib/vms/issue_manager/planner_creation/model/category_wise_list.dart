@@ -172,7 +172,7 @@ class CategoryWisePlanModelValues {
     ismtcrastOId = json['ismtcrastO_Id'];
     ismtcrastOAssignedDate = json['ismtcrastO_AssignedDate'];
     ismtcrastOAssignedBy = json['ismtcrastO_AssignedBy'];
-    ismtcrastOEffortInHrs = json['ismtcrastO_EffortInHrs'];
+    ismtcrastOEffortInHrs = json['ismtcrastO_EffortInHrs'] ?? 0.0;
     ismtcrastOActiveFlg = json['ismtcrastO_ActiveFlg'];
     ismtpltAId = json['ismtpltA_Id'];
     ismtpLId = json['ismtpL_Id'];

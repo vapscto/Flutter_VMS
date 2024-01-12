@@ -134,7 +134,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     pCount3 = 0;
     pCount4 = 0;
     count4 = 0;
-
     eCount1 = 0;
     eCount2 = 0;
     eCount3 = 0;
@@ -260,32 +259,37 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
       String newdt = formattedTime.replaceAll(":", ".");
       // Hour calculation
       for (var j in widget.plannerCreationController.createdTaskList) {
-        if (j.iSMTPLTAId == 0) {
-          if (widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId ==
-              j.iSMMTCATId) {
-            j1 = j.iSMTCRASTOEffortInHrs!.toStringAsFixed(2);
-            List<String> parts1 = j1.split('.');
-            eCount1 += int.parse(parts1[0]);
-            eCount2 += int.parse(parts1[1]);
-            eCount3 = double.parse(convertToDecimal(eCount2));
-            eCount4 = eCount1 + eCount3;
-            effort = (double.parse(formatDecimal(eCount4)));
-          } else {
-            effort = (widget.plannerCreationController.categoryWisePlan
-                .elementAt(i)
-                .ismtplaptAEffortInHrs!);
-          }
-          logger.i('Effort :- $effort');
+        logger.e(
+            widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId ==
+                j.iSMMTCATId);
+        // if (j.iSMTPLTAId == 0) {
+        if (widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId ==
+                j.iSMMTCATId ||
+            j.iSMTPLTAId == 0) {
+          // List<String> parts1 =
+          //     j.iSMTCRASTOEffortInHrs!.toStringAsFixed(2).split('.');
+          // eCount1 += int.parse(parts1[0]);
+          // eCount2 += int.parse(parts1[1]);
+          // eCount3 = double.parse(convertToDecimal(eCount2));
+          // eCount4 = eCount1 + eCount3;
+          effort += (double.parse(j.iSMTCRASTOEffortInHrs!.toStringAsFixed(2)));
+          widget.plannerCreationController.categoryWisePlan[i]
+              .ismtcrastOEffortInHrs = effort;
         }
+        logger.i(
+            'Effort :- ${widget.plannerCreationController.categoryWisePlan[i].ismtcrastOEffortInHrs}');
+        // }
       }
-      requiredEff = double.parse(newdt) - effort;
+      requiredEff = double.parse(newdt) -
+          widget.plannerCreationController.categoryWisePlan[i]
+              .ismtcrastOEffortInHrs!;
       //Add in list
       if (effort < double.parse(newdt)) {
         categoryList.add(CategoryPlanTable(
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskCategoryName}',
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskPercentage} %',
             "$formattedTime Hr",
-            "$effort Hr",
+            "${widget.plannerCreationController.categoryWisePlan[i].ismtcrastOEffortInHrs} Hr",
             "$requiredEff Hr",
             widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId!));
       }
@@ -306,7 +310,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     setState(() {
       isLoading = false;
     });
-    // getListData();
   }
 
   savePlanner() async {
@@ -1263,7 +1266,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                   onPress: () {
                     setState(() {
                       Get.back();
-                      // getListData();
                     });
                   })
             ],

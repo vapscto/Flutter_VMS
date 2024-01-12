@@ -2405,16 +2405,18 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                     value: amountSelectedValue1,
                                     onChanged: (value) {
                                       setState(() {
-                                        if (_extraAmountController
-                                            .text.isEmpty) {
-                                          Fluttertoast.showToast(
-                                              msg: "Please Enter Amount");
-                                        } else {
-                                          amountSelectedValue1 = value!;
-                                          amountSelectedValue2 = false;
-                                          if (amountSelectedValue1 == true) {
-                                            allAmount += int.parse(
-                                                _extraAmountController.text);
+                                        if (value == true) {
+                                          if (_extraAmountController
+                                              .text.isEmpty) {
+                                            Fluttertoast.showToast(
+                                                msg: "Please Enter Amount");
+                                          } else {
+                                            amountSelectedValue1 = value!;
+                                            amountSelectedValue2 = false;
+                                            if (amountSelectedValue1 == true) {
+                                              allAmount += int.parse(
+                                                  _extraAmountController.text);
+                                            }
                                           }
                                         }
                                       });
@@ -2445,16 +2447,18 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                                     value: amountSelectedValue2,
                                     onChanged: (value) {
                                       setState(() {
-                                        if (_extraAmountController
-                                            .text.isEmpty) {
-                                          Fluttertoast.showToast(
-                                              msg: "Please Enter Amount");
-                                        } else {
-                                          amountSelectedValue2 = value!;
-                                          amountSelectedValue1 = false;
-                                          if (amountSelectedValue2 == true) {
-                                            allAmount -= int.parse(
-                                                _extraAmountController.text);
+                                        if (value == true) {
+                                          if (_extraAmountController
+                                              .text.isEmpty) {
+                                            Fluttertoast.showToast(
+                                                msg: "Please Enter Amount");
+                                          } else {
+                                            amountSelectedValue2 = value!;
+                                            amountSelectedValue1 = false;
+                                            if (amountSelectedValue2 == true) {
+                                              allAmount -= int.parse(
+                                                  _extraAmountController.text);
+                                            }
                                           }
                                         }
                                       });
