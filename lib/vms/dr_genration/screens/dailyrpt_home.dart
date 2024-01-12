@@ -695,6 +695,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                 .value)) {
                                           _plannerDetailsController
                                               .updateDayRadio(value!);
+                                          fliteresList.clear();
                                           init();
                                         } else {
                                           showDialog(
