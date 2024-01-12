@@ -266,19 +266,21 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                 j.iSMMTCATId ||
             j.iSMTPLTAId == 0) {
           int hour = j.iSMTCRASTOEffortInHrs!.floor();
+          int minutes = ((j.iSMTCRASTOEffortInHrs! - hour) * 60).round();
           // int minute=
-          List<String> parts1 =
-              j.iSMTCRASTOEffortInHrs!.toStringAsFixed(2).split('.');
-          eCount1 += int.parse(parts1[0]);
-          eCount2 += int.parse(parts1[1]);
-          eCount3 = double.parse(convertToDecimal(eCount2));
-          eCount4 = eCount1 + eCount3;
-          effort = (double.parse(formatDecimal(eCount4)));
-        } else {
-          effort = (widget.plannerCreationController.categoryWisePlan
-              .elementAt(i)
-              .ismtplaptAEffortInHrs!);
+          // List<String> parts1 =
+          //     j.iSMTCRASTOEffortInHrs!.toStringAsFixed(2).split('.');
+          // eCount1 += int.parse(parts1[0]);
+          // eCount2 += int.parse(parts1[1]);
+          // eCount3 = double.parse(convertToDecimal(eCount2));
+          // eCount4 = eCount1 + eCount3;
+          effort += j.iSMTCRASTOEffortInHrs!;
         }
+        // else {
+        //   effort = (widget.plannerCreationController.categoryWisePlan
+        //       .elementAt(i)
+        //       .ismtplaptAEffortInHrs!);
+        // }
         logger.i('Effort :- $effort');
       }
       requiredEff = double.parse(newdt) - effort;

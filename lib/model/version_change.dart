@@ -28,17 +28,17 @@ class Values {
   String? type;
   int? iMVEId;
   int? mIId;
-  Null? iMVEAppTypeFlg;
-  Null? iMVEAppUserTypeFlg;
+  String? iMVEAppTypeFlg;
+  String? iMVEAppUserTypeFlg;
   String? iMVEAppVersion;
-  Null? iMVEAppUploadedDate;
+  String? iMVEAppUploadedDate;
   bool? iMVEActiveFlg;
-  Null? iMVECreatedBy;
-  Null? iMVEUpdatedBy;
-  Null? createdDate;
-  Null? updatedDate;
-  Null? vId;
-  Null? studentName;
+  int? iMVECreatedBy;
+  int? iMVEUpdatedBy;
+  String? createdDate;
+  String? updatedDate;
+  int? vId;
+  String? studentName;
 
   Values(
       {this.type,
@@ -60,17 +60,17 @@ class Values {
     type = json['$type'];
     iMVEId = json['IMVE_Id'];
     mIId = json['MI_Id'];
-    iMVEAppTypeFlg = json['IMVE_AppTypeFlg'];
-    iMVEAppUserTypeFlg = json['IMVE_AppUserTypeFlg'];
+    iMVEAppTypeFlg = json['IMVE_AppTypeFlg'] ?? '';
+    iMVEAppUserTypeFlg = json['IMVE_AppUserTypeFlg'] ?? '';
     iMVEAppVersion = json['IMVE_AppVersion'];
-    iMVEAppUploadedDate = json['IMVE_AppUploadedDate'];
-    iMVEActiveFlg = json['IMVE_ActiveFlg'];
-    iMVECreatedBy = json['IMVE_CreatedBy'];
-    iMVEUpdatedBy = json['IMVE_UpdatedBy'];
-    createdDate = json['CreatedDate'];
-    updatedDate = json['UpdatedDate'];
+    iMVEAppUploadedDate = json['IMVE_AppUploadedDate'] ?? '';
+    iMVEActiveFlg = json['IMVE_ActiveFlg'] ?? '';
+    iMVECreatedBy = json['IMVE_CreatedBy'] ?? '';
+    iMVEUpdatedBy = json['IMVE_UpdatedBy'] ?? '';
+    createdDate = json['CreatedDate'] ?? '';
+    updatedDate = json['UpdatedDate'] ?? '';
     vId = json['V_Id'];
-    studentName = json['Student_name'];
+    studentName = json['Student_name'] ?? '';
   }
 
   Map<String, dynamic> toJson() {

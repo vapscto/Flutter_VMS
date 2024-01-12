@@ -28,11 +28,11 @@ class TadaApprovaEditArrayModelValues {
   String? type;
   int? mIId;
   String? mIName;
-  int? vTADAAId;
   double? vTADACMAccommodationAmt;
   double? vTADACMTransportAmt;
   double? vTADACMFoodAmt;
   double? vTADACMTravelHour;
+  int? vTADAAId;
   int? hRMEId;
   String? vTADAAToAddress;
   String? vTADAAAppliedDate;
@@ -44,7 +44,7 @@ class TadaApprovaEditArrayModelValues {
   double? vTADAATotalAppliedAmount;
   double? vTADAATotalSactionedAmount;
   double? vTADAATotalPaidAmount;
-  String? vTADAAAStatusFlg;
+  String? vTADAAStatusFlg;
   int? userId;
   int? sanctionLevelNo;
   String? empName;
@@ -52,23 +52,22 @@ class TadaApprovaEditArrayModelValues {
   String? iVRMMCTName;
   int? vTADAADId;
   String? vTADAADExpenditureHead;
-  double? vTADAAAHSactionedAmount;
   double? vTADAADAmount;
+  double? vTADAAAHSactionedAmount;
+  String? vTADAADRemarks;
   double? vTADAADSlots;
-  double? vTADAADTotalSlots;
-  String? vTADAAADRemarks;
-  String? vTADAAAHRemarks;
+  double? vTADAADTotalslots;
   int? hCNT;
 
   TadaApprovaEditArrayModelValues(
       {this.type,
       this.mIId,
       this.mIName,
-      this.vTADAAId,
       this.vTADACMAccommodationAmt,
       this.vTADACMTransportAmt,
       this.vTADACMFoodAmt,
       this.vTADACMTravelHour,
+      this.vTADAAId,
       this.hRMEId,
       this.vTADAAToAddress,
       this.vTADAAAppliedDate,
@@ -80,7 +79,7 @@ class TadaApprovaEditArrayModelValues {
       this.vTADAATotalAppliedAmount,
       this.vTADAATotalSactionedAmount,
       this.vTADAATotalPaidAmount,
-      this.vTADAAAStatusFlg,
+      this.vTADAAStatusFlg,
       this.userId,
       this.sanctionLevelNo,
       this.empName,
@@ -88,23 +87,22 @@ class TadaApprovaEditArrayModelValues {
       this.iVRMMCTName,
       this.vTADAADId,
       this.vTADAADExpenditureHead,
-      this.vTADAAAHSactionedAmount,
       this.vTADAADAmount,
+      this.vTADAAAHSactionedAmount,
+      this.vTADAADRemarks,
       this.vTADAADSlots,
-      this.vTADAADTotalSlots,
-      this.vTADAAADRemarks,
-      this.vTADAAAHRemarks,
+      this.vTADAADTotalslots,
       this.hCNT});
 
   TadaApprovaEditArrayModelValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
     mIId = json['MI_Id'];
     mIName = json['MI_Name'];
-    vTADAAId = json['VTADAA_Id'];
     vTADACMAccommodationAmt = json['VTADACM_AccommodationAmt'];
     vTADACMTransportAmt = json['VTADACM_TransportAmt'];
     vTADACMFoodAmt = json['VTADACM_FoodAmt'];
-    vTADACMTravelHour = json['VTADACM_TravelHour'];
+    vTADACMTravelHour = json['VTADACM_TravelHour'] ?? 0.0;
+    vTADAAId = json['VTADAA_Id'];
     hRMEId = json['HRME_Id'];
     vTADAAToAddress = json['VTADAA_ToAddress'];
     vTADAAAppliedDate = json['VTADAA_AppliedDate'];
@@ -116,7 +114,7 @@ class TadaApprovaEditArrayModelValues {
     vTADAATotalAppliedAmount = json['VTADAA_TotalAppliedAmount'];
     vTADAATotalSactionedAmount = json['VTADAA_TotalSactionedAmount'];
     vTADAATotalPaidAmount = json['VTADAA_TotalPaidAmount'];
-    vTADAAAStatusFlg = json['VTADAAA_StatusFlg'];
+    vTADAAStatusFlg = json['VTADAA_StatusFlg'];
     userId = json['User_Id'];
     sanctionLevelNo = json['SanctionLevelNo'];
     empName = json['EmpName'];
@@ -124,12 +122,11 @@ class TadaApprovaEditArrayModelValues {
     iVRMMCTName = json['IVRMMCT_Name'];
     vTADAADId = json['VTADAAD_Id'];
     vTADAADExpenditureHead = json['VTADAAD_ExpenditureHead'];
-    vTADAAAHSactionedAmount = json['VTADAAAH_SactionedAmount'];
     vTADAADAmount = json['VTADAAD_Amount'];
+    vTADAAAHSactionedAmount = json['VTADAAAH_SactionedAmount'];
+    vTADAADRemarks = json['VTADAAD_Remarks'];
     vTADAADSlots = json['VTADAAD_Slots'];
-    vTADAADTotalSlots = json['VTADAAD_TotalSlots'];
-    vTADAAADRemarks = json['VTADAAAD_Remarks'];
-    vTADAAAHRemarks = json['VTADAAAH_Remarks'];
+    vTADAADTotalslots = json['VTADAAD_Totalslots'];
     hCNT = json['HCNT'];
   }
 
@@ -138,11 +135,11 @@ class TadaApprovaEditArrayModelValues {
     data['$type'] = type;
     data['MI_Id'] = mIId;
     data['MI_Name'] = mIName;
-    data['VTADAA_Id'] = vTADAAId;
     data['VTADACM_AccommodationAmt'] = vTADACMAccommodationAmt;
     data['VTADACM_TransportAmt'] = vTADACMTransportAmt;
     data['VTADACM_FoodAmt'] = vTADACMFoodAmt;
     data['VTADACM_TravelHour'] = vTADACMTravelHour;
+    data['VTADAA_Id'] = vTADAAId;
     data['HRME_Id'] = hRMEId;
     data['VTADAA_ToAddress'] = vTADAAToAddress;
     data['VTADAA_AppliedDate'] = vTADAAAppliedDate;
@@ -154,7 +151,7 @@ class TadaApprovaEditArrayModelValues {
     data['VTADAA_TotalAppliedAmount'] = vTADAATotalAppliedAmount;
     data['VTADAA_TotalSactionedAmount'] = vTADAATotalSactionedAmount;
     data['VTADAA_TotalPaidAmount'] = vTADAATotalPaidAmount;
-    data['VTADAAA_StatusFlg'] = vTADAAAStatusFlg;
+    data['VTADAA_StatusFlg'] = vTADAAStatusFlg;
     data['User_Id'] = userId;
     data['SanctionLevelNo'] = sanctionLevelNo;
     data['EmpName'] = empName;
@@ -162,12 +159,11 @@ class TadaApprovaEditArrayModelValues {
     data['IVRMMCT_Name'] = iVRMMCTName;
     data['VTADAAD_Id'] = vTADAADId;
     data['VTADAAD_ExpenditureHead'] = vTADAADExpenditureHead;
-    data['VTADAAAH_SactionedAmount'] = vTADAAAHSactionedAmount;
     data['VTADAAD_Amount'] = vTADAADAmount;
+    data['VTADAAAH_SactionedAmount'] = vTADAAAHSactionedAmount;
+    data['VTADAAD_Remarks'] = vTADAADRemarks;
     data['VTADAAD_Slots'] = vTADAADSlots;
-    data['VTADAAD_TotalSlots'] = vTADAADTotalSlots;
-    data['VTADAAAD_Remarks'] = vTADAAADRemarks;
-    data['VTADAAAH_Remarks'] = vTADAAAHRemarks;
+    data['VTADAAD_Totalslots'] = vTADAADTotalslots;
     data['HCNT'] = hCNT;
     return data;
   }

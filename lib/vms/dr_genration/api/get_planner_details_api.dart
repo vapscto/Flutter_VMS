@@ -70,9 +70,6 @@ Future<bool> getPlanerdetails({
               deviation = controller.depWiseDevitnList[j].ismdRRemarks ?? '';
             }
           }
-          // logger.i(v.iSMDRPTTimeTakenInHrs);
-          // String newData = v.iSMDRPTTimeTakenInHrs.toString();
-          // newList = newData.split('.');
           int hours = v.iSMDRPTTimeTakenInHrs!
               .floor(); // Get the whole number part (hours)
           int minutes = ((v.iSMDRPTTimeTakenInHrs! - hours) * 60).round();

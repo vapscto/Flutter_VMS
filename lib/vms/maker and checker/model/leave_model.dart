@@ -9,16 +9,16 @@ class GetListLeaveModel {
     if (json['\$values'] != null) {
       values = <GetListLeaveModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new GetListLeaveModelValues.fromJson(v));
+        values!.add(GetListLeaveModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -31,7 +31,7 @@ class GetListLeaveModelValues {
   String? hRMLLeaveName;
   String? hRELAPFromDate;
   String? hRELAPToDate;
-  int? hRELAPTotalDays;
+  double? hRELAPTotalDays;
   String? hRELAPReportingDate;
   String? hRELAPLeaveReason;
   int? hRMEId;
@@ -78,21 +78,21 @@ class GetListLeaveModelValues {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['HRME_EmployeeFirstName'] = this.hRMEEmployeeFirstName;
-    data['HRELAP_Id'] = this.hRELAPId;
-    data['HRML_LeaveName'] = this.hRMLLeaveName;
-    data['HRELAP_FromDate'] = this.hRELAPFromDate;
-    data['HRELAP_ToDate'] = this.hRELAPToDate;
-    data['HRELAP_TotalDays'] = this.hRELAPTotalDays;
-    data['HRELAP_ReportingDate'] = this.hRELAPReportingDate;
-    data['HRELAP_LeaveReason'] = this.hRELAPLeaveReason;
-    data['HRME_Id'] = this.hRMEId;
-    data['HRML_Id'] = this.hRMLId;
-    data['HRELAP_ApplicationID'] = this.hRELAPApplicationID;
-    data['HRELAP_SupportingDocument'] = this.hRELAPSupportingDocument;
-    data['HRELAPA_Remarks'] = this.hRELAPARemarks;
-    data['HRELAP_ApplicationDate'] = this.hRELAPApplicationDate;
+    data['$type'] = type;
+    data['HRME_EmployeeFirstName'] = hRMEEmployeeFirstName;
+    data['HRELAP_Id'] = hRELAPId;
+    data['HRML_LeaveName'] = hRMLLeaveName;
+    data['HRELAP_FromDate'] = hRELAPFromDate;
+    data['HRELAP_ToDate'] = hRELAPToDate;
+    data['HRELAP_TotalDays'] = hRELAPTotalDays;
+    data['HRELAP_ReportingDate'] = hRELAPReportingDate;
+    data['HRELAP_LeaveReason'] = hRELAPLeaveReason;
+    data['HRME_Id'] = hRMEId;
+    data['HRML_Id'] = hRMLId;
+    data['HRELAP_ApplicationID'] = hRELAPApplicationID;
+    data['HRELAP_SupportingDocument'] = hRELAPSupportingDocument;
+    data['HRELAPA_Remarks'] = hRELAPARemarks;
+    data['HRELAP_ApplicationDate'] = hRELAPApplicationDate;
     return data;
   }
 }

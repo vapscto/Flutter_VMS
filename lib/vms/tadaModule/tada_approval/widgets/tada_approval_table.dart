@@ -126,8 +126,8 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
       for (int index = 0;
           index < widget.tadaController.editArrayList.length;
           index++) {
-        widget.tadaController.textEditingControllerList
-            .add(TextEditingController(text: '0'));
+        logger.v(
+            widget.tadaController.editArrayList[index].vTADAAAHSactionedAmount);
         widget.tadaController.approvalTextEditingControllerList
             .add(TextEditingController(text: ''));
         widget.tadaController.textEditingControllerList[index].addListener(() {
@@ -146,9 +146,10 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
   }
 
   void addAllAmount(double sum) {
+    double value = 0;
     for (TextEditingController controller
         in widget.tadaController.textEditingControllerList) {
-      double value = double.tryParse(controller.text) ?? 0;
+      value = double.tryParse(controller.text) ?? 0;
       sum += value;
     }
     setState(() {
@@ -159,7 +160,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
   double sum = 0;
   removeAllAmount(double amount) {
     sum -= amount;
-    sanctionAmount = sum;
+    sanctionAmount -= amount;
     setState(() {});
   }
 
@@ -938,8 +939,6 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
   List<DataRow> createRow() {
     return List.generate(widget.tadaController.editArrayList.length, (index) {
       var value = index + 1;
-      logger.i(
-          '====${widget.tadaController.editArrayList[index].vTADAADTotalSlots}');
       return DataRow(cells: [
         DataCell(Text(value.toString())),
         DataCell(Radio(
@@ -952,21 +951,16 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
               widget.tadaController.selectedValue[index].isApproved = value!;
               widget.tadaController.selectedValue[index].isRejected = !value;
 
-              if (widget.tadaController.selectedValue[index].isApproved ==
-                  true) {
-                addAllAmount(double.parse(widget
-                    .tadaController.textEditingControllerList
-                    .elementAt(index)
-                    .text));
-                updateCounts();
+              if (widget.tadaController.selectedValue[index].isApproved) {
                 widget.tadaController.textEditingControllerList
                         .elementAt(index)
                         .text =
-                    widget.tadaController.editArrayList[index].vTADAADAmount
+                    widget.tadaController.editArrayList[index]
+                        .vTADAAAHSactionedAmount
                         .toString();
-              }
 
-              logger.i(widget.tadaController.selectedValue[index]);
+                updateCounts();
+              }
             });
           },
         )),
@@ -979,16 +973,13 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
             setState(() {
               widget.tadaController.selectedValue[index].isRejected = value;
               widget.tadaController.selectedValue[index].isApproved = !value;
-              (widget.tadaController.selectedValue[index].isRejected)
-                  ? widget.tadaController.textEditingControllerList
-                      .elementAt(index)
-                      .text = '0'
-                  : widget.tadaController.textEditingControllerList
-                          .elementAt(index)
-                          .text =
-                      widget.tadaController.editArrayList[index].vTADAADAmount
-                          .toString();
-              if (sanctionAmount >=
+              if (widget.tadaController.selectedValue[index].isRejected) {
+                widget.tadaController.textEditingControllerList
+                    .elementAt(index)
+                    .text = '0';
+              }
+              if (widget.tadaController.editArrayList[index]
+                      .vTADAAAHSactionedAmount! ==
                   double.parse(widget.tadaController.textEditingControllerList
                       .elementAt(index)
                       .text)) {
@@ -998,7 +989,6 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                     .text));
               }
               updateCounts();
-              logger.i(widget.tadaController.selectedValue[index]);
             });
           },
         )),
@@ -1015,7 +1005,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                 ? widget.tadaController.accommodationAmount.toString()
                 : '')),
         DataCell(Text(
-            '${widget.tadaController.editArrayList[index].vTADAADTotalSlots ?? ''}')),
+            '${widget.tadaController.editArrayList[index].vTADAADTotalslots ?? ''}')),
         DataCell(Text(
             '${widget.tadaController.editArrayList[index].vTADAADSlots ?? " "}')),
         DataCell(Text(
@@ -1067,6 +1057,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
                     double.parse(value)) {
                   double totalAmount = 0;
                   value = totalAmount.toStringAsFixed(2);
+                  addAllAmount(totalAmount);
                 } else {
                   widget.tadaController.textEditingControllerList
                           .elementAt(index)
