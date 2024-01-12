@@ -146,7 +146,7 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
                             title: "Close",
                             onPress: () {
                               Get.back();
-                              Get.back();
+                              // Get.back();
 
                               plannerApprovalController.leavePopUp.clear();
                             },
@@ -233,7 +233,7 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
                           title: "Close",
                           onPress: () {
                             Get.back();
-                            Get.back();
+                            // Get.back();
 
                             plannerApprovalController.leavePopUp.clear();
                           },
