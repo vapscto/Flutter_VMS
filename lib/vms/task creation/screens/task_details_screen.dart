@@ -316,7 +316,14 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                           )),
                                           DataCell(
                                               Text(value.iSMTCRCreationDate!)),
-                                          DataCell(Text(value.iSMTCRDesc!)),
+                                          DataCell(SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.6,
+                                              child: SingleChildScrollView(
+                                                  child: Text(
+                                                      value.iSMTCRDesc!)))),
                                         ]);
                                       })
                                     ],
