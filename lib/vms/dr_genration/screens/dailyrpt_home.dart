@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -10,8 +9,6 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/api/get_planner_details_api.dart';
 import 'package:m_skool_flutter/vms/dr_genration/api/get_task_check_list.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
-import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.dart';
-import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_file_upload_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/add_extra_task.dart';
@@ -25,7 +22,6 @@ import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
-import 'package:open_filex/open_filex.dart';
 
 class DailyReportGenration extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -70,6 +66,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   DateTime todayDate = DateTime.now();
   List<dynamic> newValues = [];
   init() async {
+    fliteresList.clear();
     await getPlanerdetails(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         controller: _plannerDetailsController,
@@ -256,7 +253,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
       int deviationId = 0;
       double effortss = 0.0;
       var totalhrs = 0.0;
-      for (int i = 0; i < _plannerDetailsController.checkBoxList.length; i++) {
+      for (int i = 0; i < fliteresList.length; i++) {
         var value = fliteresList.elementAt(i);
         DateTime startDate = DateTime.parse(
             _plannerDetailsController.getplannerdetails[0].ismtpLStartDate!);
@@ -638,7 +635,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                   .value
                                                   .text =
                                               '${todayDate.day}-${todayDate.month}-${todayDate.year}';
-                                          fliteresList.clear();
                                           init();
                                         });
                                       },
@@ -696,7 +692,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                 .value)) {
                                           _plannerDetailsController
                                               .updateDayRadio(value!);
-                                          fliteresList.clear();
                                           init();
                                         } else {
                                           showDialog(

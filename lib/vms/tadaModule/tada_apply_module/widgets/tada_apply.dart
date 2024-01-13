@@ -2711,17 +2711,23 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                               accommodationAmount +
                               otherAmount.toDouble();
                         }
-
-                        if (_addressController.text.isEmpty) {
+                        if (_endTime.text.isEmpty) {
+                          Fluttertoast.showToast(msg: "Select Arrival Time");
+                          return;
+                        } else if (_addressController.text.isEmpty) {
                           Fluttertoast.showToast(msg: "Enter Address");
-                        } else if (allAmount == 0) {
-                          Fluttertoast.showToast(msg: "Fill  Total Amount");
-                        } else if (widget
-                            .tadaApplyDataController.addListBrowser.isEmpty) {
+                          return;
+                        } else if (widget.tadaApplyDataController.addListBrowser
+                            .last.FileName!.isEmpty) {
                           Fluttertoast.showToast(
                               msg: "Bill File is Not Attached");
+                          return;
+                        } else if (allAmount == 0) {
+                          Fluttertoast.showToast(msg: "Fill  Total Amount");
+                          return;
                         } else if (clintId == 0) {
                           Fluttertoast.showToast(msg: "Select Client");
+                          return;
                         } else {
                           int foodamountId = 0;
                           int accamountId = 0;
