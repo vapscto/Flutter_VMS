@@ -142,6 +142,9 @@ class LeaveNames extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double progressValue = (leave.hrelSTotalLeaves! - leave.hrelSCBLeaves!) /
+        leave.hrelSTotalLeaves!;
+
     return SizedBox(
       width: Get.width * 0.42,
       child: CustomContainer(
@@ -153,8 +156,7 @@ class LeaveNames extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 CircularProgressIndicator(
-                  value: (leave.hrelSTotalLeaves! - leave.hrelSCBLeaves!) /
-                      leave.hrelSTotalLeaves!,
+                  value: progressValue.isFinite ? progressValue : 0.0,
                   backgroundColor: noticeBackgroundColor
                       .elementAt(backgroundColor)
                       .withOpacity(0.8),

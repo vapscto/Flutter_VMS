@@ -83,7 +83,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
           base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
           mi_id: widget.loginSuccessModel.mIID!,
           userId: widget.loginSuccessModel.userId!,
-          ivrmrt: widget.loginSuccessModel.roleTypeId!,
+          ivrmrt: widget.loginSuccessModel.roleId!,
           controller: controller,
           list: departList);
       if (statusCode == 200) {
@@ -306,7 +306,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                         const EdgeInsets.only(top: 13, left: 5),
                                     child: Text(
                                       overflow: TextOverflow.clip,
-                                      "${controller.departmentList[index].hRMDCName!} Developer",
+                                      "${controller.departmentList[index].hRMDCName!} Department",
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleSmall!
@@ -334,7 +334,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                     userId: widget.loginSuccessModel.userId!,
                                     controller: controller,
                                     ivrmrt:
-                                        widget.loginSuccessModel.roleTypeId!,
+                                        widget.loginSuccessModel.roleId!,
                                     list: departList);
                               },
                             ),
