@@ -38,7 +38,9 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
   }
 
   double totalEffort = 0.0;
+  double totalEffort1 = 0.0;
   double totalApprovedEffort = 0.0;
+  double totalApprovedEffort1 = 0.0;
   double totalRejectedEffort = 0.0;
   int appHours = 0;
   int appMinutes = 0;
@@ -56,28 +58,19 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
   int rCount2 = 0;
   double rCount3 = 0;
   double rCount4 = 0;
-
-  String convertToDecimal(int totalMinutes) {
-    int hours = totalMinutes ~/ 60;
-    int remainingMinutes = totalMinutes % 60;
-    return '$hours.$remainingMinutes';
-  }
-
-  String formatDecimal(double decimalValue) {
-    String stringValue = decimalValue.toString();
-
-    List<String> decimalIndex = stringValue.split('.');
-    if (decimalIndex[1].length >= 2) {
-      return decimalValue.toStringAsFixed(2);
-    } else {
-      return decimalValue.toStringAsFixed(1);
-    }
+  // calculate hour
+  double _calculateHour(double data) {
+    int hours = data.toInt();
+    int minutes = ((data - hours) * 60).toInt();
+    return double.parse('$hours.$minutes');
   }
 
   _getList(DateTime dt) async {
     totalEffort = 0.0;
+    totalEffort1 = 0.0;
     totalApprovedEffort = 0.0;
     totalRejectedEffort = 0.0;
+    totalApprovedEffort1 = 0.0;
     widget.controller.searchTaskList.clear();
     widget.controller.searchpreviousTaskDetailsList.clear();
     widget.controller.searchTaskLoading(true);
@@ -91,12 +84,10 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
         widget.controller.searchpreviousTaskDetailsList.first.ismdrptdWDate!));
     for (int i = 0; i < widget.controller.searchTaskList.length; i++) {
       var val = widget.controller.searchTaskList.elementAt(i);
-      int hours = val.efforts!.floor();
-      int minutes = ((val.efforts! - hours) * 60).round();
-      totalEffort += double.parse('$hours.$minutes');
-      int aHours = val.iSMDRPTApprovedTime!.floor();
-      int aMinutes = ((val.iSMDRPTApprovedTime! - aHours) * 60).round();
-      totalApprovedEffort += double.parse('$aHours.$aMinutes');
+      totalEffort1 += val.efforts!;
+      totalEffort = _calculateHour(totalEffort1);
+      totalApprovedEffort1 += val.iSMDRPTApprovedTime!;
+      totalApprovedEffort = _calculateHour(totalApprovedEffort1);
     }
     totalRejectedEffort = totalEffort - totalApprovedEffort;
     widget.controller.searchTaskLoading(false);
