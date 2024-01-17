@@ -7,8 +7,6 @@ import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/new_tab
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/planner_status_list.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/model/total_effort_data.dart';
 
-import '../../../../main.dart';
-
 class PlannerCreationController extends GetxController {
   RxBool isstatusLoading = RxBool(false);
   RxBool isErrorLoading = RxBool(false);
@@ -124,20 +122,10 @@ class PlannerCreationController extends GetxController {
               val.periodicity == null ||
               val.periodicity == '' ||
               val.periodicity!.toLowerCase() == 'once') &&
-          (val.iSMTPLTAPreviousTask == 0 ||
-              val.iSMTPLTAPreviousTask == null ||
-              // ignore: unrelated_type_equality_checks
-              val.iSMTPLTAPreviousTask == '' ||
-              // ignore: unrelated_type_equality_checks
-              val.iSMTPLTAPreviousTask == '0')) {
+          (val.iSMTPLTAPreviousTask == 0 || val.iSMTPLTAPreviousTask == null)) {
         _addDataToList(data, val, startDate, endDate);
       } else if (val.periodicity!.toLowerCase() == 'daily' &&
-          (val.iSMTPLTAPreviousTask == 0 ||
-              val.iSMTPLTAPreviousTask == null ||
-              // ignore: unrelated_type_equality_checks
-              val.iSMTPLTAPreviousTask == '' ||
-              // ignore: unrelated_type_equality_checks
-              val.iSMTPLTAPreviousTask == '0')) {
+          (val.iSMTPLTAPreviousTask == 0 || val.iSMTPLTAPreviousTask == null)) {
         for (var mm in effortDataValues) {
           if (mm.pDates == null || mm.pDates == '') {
             startDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
@@ -163,12 +151,7 @@ class PlannerCreationController extends GetxController {
           }
         }
       } else if (val.periodicity!.toLowerCase() == 'weekly' &&
-          (val.iSMTPLTAPreviousTask == 0 ||
-              val.iSMTPLTAPreviousTask == null ||
-              // ignore: unrelated_type_equality_checks
-              val.iSMTPLTAPreviousTask == '' ||
-              // ignore: unrelated_type_equality_checks
-              val.iSMTPLTAPreviousTask == '0')) {
+          (val.iSMTPLTAPreviousTask == 0 || val.iSMTPLTAPreviousTask == null)) {
         int wrkd = effortDataValues.length;
         if (wrkd >= int.parse(val.iSMTAPLDay!)) {
           for (var mm in effortDataValues) {

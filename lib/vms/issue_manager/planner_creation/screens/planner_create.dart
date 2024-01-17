@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
-import 'package:m_skool_flutter/vms/issue_manager/planner_creation/api/planner_status_api.dart';
-import 'package:m_skool_flutter/vms/issue_manager/planner_creation/api/task_list_api.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/controller/planner_creation_controller.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/widgets/planner_create.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/widgets/planner_status.dart';
@@ -31,33 +28,9 @@ class _PlannerCreateHomeScreenState extends State<PlannerCreateHomeScreen>
   TabController? tabController;
   PlannerCreationController plannerCreationController =
       Get.put(PlannerCreationController());
-  getPlannerStatus() async {
-    plannerCreationController.statusLoading(true);
-    await PlannerStatusList.instance.plannerStatusAPI(
-        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
-        miId: widget.loginSuccessModel.mIID!,
-        userId: widget.loginSuccessModel.userId!,
-        plannerCreationController: plannerCreationController);
-    plannerCreationController.statusLoading(false);
-    // getPlan();
-  }
-
-  getPlan() async {
-    await TaskListAPI.instance.getList(
-        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
-        plannerCreationController: plannerCreationController,
-        userId: widget.loginSuccessModel.userId!,
-        miId: widget.loginSuccessModel.mIID!,
-        asmayId: widget.loginSuccessModel.asmaYId!,
-        flag: 'S',
-        startDate: DateTime.now().toIso8601String(),
-        endDate: DateTime.now().toIso8601String(),
-        hrmeId: plannerCreationController.plannerStatus.first.hRMEId!);
-  }
 
   @override
   void initState() {
-    getPlannerStatus();
     tabController = TabController(length: 2, vsync: this);
     super.initState();
   }

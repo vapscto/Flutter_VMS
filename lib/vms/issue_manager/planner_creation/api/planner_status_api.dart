@@ -20,7 +20,7 @@ class PlannerStatusList {
       if (plannerCreationController.isErrorLoading.value) {
         plannerCreationController.errorLoading(false);
       }
-      plannerCreationController.statusLoading(true);
+      // plannerCreationController.statusLoading(true);
       var response = await dio.post(url,
           options: Options(headers: getSession()),
           data: {"MI_Id": miId, "UserId": userId});
@@ -34,11 +34,11 @@ class PlannerStatusList {
             response.data['plannerextapproval'];
         logger.i(plannerCreationController.isPlannerCreate.value);
         plannerCreationController.maxDate = response.data['plannerMaxdate'];
-        plannerCreationController.statusLoading(false);
+        // plannerCreationController.statusLoading(false);
       }
     } on DioError catch (e) {
       logger.i(e.message);
-      plannerCreationController.errorLoading(true);
+      // plannerCreationController.errorLoading(true);
     } on Exception catch (e) {
       logger.e(e);
     }
