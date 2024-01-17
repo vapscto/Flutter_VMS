@@ -35,6 +35,7 @@ class _ApprovalLeaveDatePopUpState extends State<ApprovalLeaveDatePopUp> {
   String toDate = "";
   String fTopdate = '';
   String toTopDate = '';
+  var formatter = DateFormat('dd-MM-yyyy');
   _getData() async {
     controller.dataLoading(true);
     await LeaveApprovalCummentAPI.instance.getLeavesComment(
@@ -44,32 +45,7 @@ class _ApprovalLeaveDatePopUpState extends State<ApprovalLeaveDatePopUp> {
         hrelapId: widget.hrelapId,
         hrmeId: widget.hrmeId,
         userId: widget.loginSuccessModel.userId!);
-    var formatter = DateFormat('dd-MM-yyyy');
-    for (int index = 0; index < controller.newList.length; index++) {
-      DateTime fDt = DateTime.parse(
-          controller.newList.elementAt(index).hrelapAFromDate.toString());
-      fTopdate = formatter.format(fDt);
 
-      DateTime fDt1 = DateTime.parse(
-          controller.newList.elementAt(index).hrelapAToDate.toString());
-      toTopDate = formatter.format(fDt1);
-      if (controller.newList.elementAt(index).hrelapAFromDate != null) {
-        DateTime fDt = DateTime.parse(
-            controller.newList.elementAt(index).hrelapAFromDate.toString());
-        fromDate = formatter.format(fDt);
-      }
-      if (controller.newList.elementAt(index).hrelapAToDate != null) {
-        DateTime tDt = DateTime.parse(
-            controller.newList.elementAt(index).hrelapAToDate ?? '');
-        toDate = formatter.format(tDt);
-      }
-
-      if (controller.newList.elementAt(index).createdDate != null) {
-        DateTime tDt =
-            DateTime.parse(controller.newList.elementAt(index).createdDate!);
-        approvedDate = formatter.format(tDt);
-      }
-    }
     controller.dataLoading(false);
   }
 
@@ -255,6 +231,34 @@ class _ApprovalLeaveDatePopUpState extends State<ApprovalLeaveDatePopUp> {
                                         int i = index + 1;
                                         var data =
                                             controller.newList.elementAt(index);
+                                        DateTime fDt = DateTime.parse(
+                                            data.hrelapAFromDate.toString());
+                                        fTopdate = formatter.format(fDt);
+
+                                        DateTime fDt1 = DateTime.parse(
+                                            data.hrelapAToDate.toString());
+                                        toTopDate = formatter.format(fDt1);
+                                        if (data.hrelapAFromDate != null) {
+                                          DateTime fDt = DateTime.parse(
+                                              data.hrelapAFromDate.toString());
+                                          fromDate = formatter.format(fDt);
+                                        }
+                                        if (data.hrelapAToDate != null) {
+                                          DateTime tDt = DateTime.parse(
+                                              data.hrelapAToDate ?? '');
+                                          toDate = formatter.format(tDt);
+                                        }
+
+                                        if (controller.newList
+                                                .elementAt(index)
+                                                .createdDate !=
+                                            null) {
+                                          DateTime tDt = DateTime.parse(
+                                              controller.newList
+                                                  .elementAt(index)
+                                                  .createdDate!);
+                                          approvedDate = formatter.format(tDt);
+                                        }
                                         return DataRow(cells: [
                                           DataCell(Align(
                                               alignment: Alignment.center,

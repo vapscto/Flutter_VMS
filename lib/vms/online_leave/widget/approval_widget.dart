@@ -26,43 +26,13 @@ class _ApprovalWidgetState extends State<ApprovalWidget> {
   String toDate = "";
   String fTopdate = '';
   String toTopDate = '';
+  var formatter = DateFormat('dd-MM-yyyy');
   _getData() async {
     controller.leaveCommentDataLoading(true);
     await LeaveApprovalStatusAPI.instance.getLeavesComment(
         miId: widget.hrmeId,
         base: baseUrlFromInsCode("leave", widget.mskoolController),
         opetionLeaveController: controller);
-    var formatter = DateFormat('dd-MM-yyyy');
-    for (int index = 0; index < controller.leaveCommentList.length; index++) {
-      DateTime fDt = DateTime.parse(controller.leaveCommentList
-          .elementAt(index)
-          .hRELAPFromDate
-          .toString());
-      fTopdate = formatter.format(fDt);
-
-      DateTime fDt1 = DateTime.parse(
-          controller.leaveCommentList.elementAt(index).hRELAPToDate.toString());
-      toTopDate = formatter.format(fDt1);
-      if (controller.leaveCommentList.elementAt(index).hRELAPAFromDate !=
-          null) {
-        DateTime fDt = DateTime.parse(controller.leaveCommentList
-            .elementAt(index)
-            .hRELAPAFromDate
-            .toString());
-        fromDate = formatter.format(fDt);
-      }
-      if (controller.leaveCommentList.elementAt(index).hRELAPAToDate != null) {
-        DateTime tDt = DateTime.parse(
-            controller.leaveCommentList.elementAt(index).hRELAPAToDate ?? '');
-        toDate = formatter.format(tDt);
-      }
-
-      if (controller.leaveCommentList.elementAt(index).updatedDate != null) {
-        DateTime tDt = DateTime.parse(
-            controller.leaveCommentList.elementAt(index).updatedDate!);
-        approvedDate = formatter.format(tDt);
-      }
-    }
     controller.leaveCommentDataLoading(false);
   }
 
@@ -243,6 +213,52 @@ class _ApprovalWidgetState extends State<ApprovalWidget> {
                                     int i = index + 1;
                                     var data = controller.leaveCommentList
                                         .elementAt(index);
+                                    DateTime fDt = DateTime.parse(controller
+                                        .leaveCommentList
+                                        .elementAt(index)
+                                        .hRELAPFromDate
+                                        .toString());
+                                    fTopdate = formatter.format(fDt);
+
+                                    DateTime fDt1 = DateTime.parse(controller
+                                        .leaveCommentList
+                                        .elementAt(index)
+                                        .hRELAPToDate
+                                        .toString());
+                                    toTopDate = formatter.format(fDt1);
+                                    if (controller.leaveCommentList
+                                            .elementAt(index)
+                                            .hRELAPAFromDate !=
+                                        null) {
+                                      DateTime fDt = DateTime.parse(controller
+                                          .leaveCommentList
+                                          .elementAt(index)
+                                          .hRELAPAFromDate
+                                          .toString());
+                                      fromDate = formatter.format(fDt);
+                                    }
+                                    if (controller.leaveCommentList
+                                            .elementAt(index)
+                                            .hRELAPAToDate !=
+                                        null) {
+                                      DateTime tDt = DateTime.parse(controller
+                                              .leaveCommentList
+                                              .elementAt(index)
+                                              .hRELAPAToDate ??
+                                          '');
+                                      toDate = formatter.format(tDt);
+                                    }
+
+                                    if (controller.leaveCommentList
+                                            .elementAt(index)
+                                            .updatedDate !=
+                                        null) {
+                                      DateTime tDt = DateTime.parse(controller
+                                          .leaveCommentList
+                                          .elementAt(index)
+                                          .updatedDate!);
+                                      approvedDate = formatter.format(tDt);
+                                    }
                                     return DataRow(cells: [
                                       DataCell(Align(
                                           alignment: Alignment.center,
