@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_contr
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_file_upload_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/add_extra_task.dart';
+import 'package:m_skool_flutter/vms/dr_genration/screens/search_previous_task.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/category_checkList.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/dr_not_approved_popup.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/drnotApprovedScreen.dart';
@@ -22,6 +23,7 @@ import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class DailyReportGenration extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -62,7 +64,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   List<Map<String, dynamic>> todayDailyReportGenaration = [];
   List<Map<String, dynamic>> dailyReportStatus = [];
   final reasonController = TextEditingController();
-  int image = -2;
+  // int image = -2;
   DateTime todayDate = DateTime.now();
   List<dynamic> newValues = [];
   init() async {
@@ -133,15 +135,15 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
               ))
           : null;
     } else {
-      // Get.dialog(
-      //     barrierDismissible: false,
-      //     AlertDialog(
-      //       shape:
-      //           RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      //       content: const DrnotApproveScreen(
-      //         title: 'Planner Not Created For This Week!!',
-      //       ),
-      //     ));
+      Get.dialog(
+          barrierDismissible: false,
+          AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            content: const DrnotApproveScreen(
+              title: 'Planner Not Created For This Week!!',
+            ),
+          ));
     }
     if (_plannerDetailsController.getplannerdetails.isNotEmpty) {
       (_plannerDetailsController.getplannerdetails[0].ismtpLApprovalFlg ==
@@ -977,6 +979,48 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                         ),
                       ),
                       Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: MSkollBtn(
+                            title: "   Search Previous Daily Report :-  ",
+                            onPress: () {
+                              Get.to(() => SearchPreviousTask(
+                                    loginSuccessModel: widget.loginSuccessModel,
+                                    mskoolController: widget.mskoolController,
+                                    controller: _plannerDetailsController,
+                                  ));
+                            }),
+                      ),
+                      // InkWell(
+                      //   onTap: () {
+                      //     Get.to(() => SearchPreviousTask(
+                      //           loginSuccessModel: widget.loginSuccessModel,
+                      //           mskoolController: widget.mskoolController,
+                      //           controller: _plannerDetailsController,
+                      //         ));
+                      //   },
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.symmetric(
+                      //         horizontal: 20, vertical: 10),
+                      //     child: CustomContainer(
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.all(8.0),
+                      //         child: Text(
+                      //           "Search Previous Daily Report :- ",
+                      //           style: Theme.of(context)
+                      //               .textTheme
+                      //               .labelMedium!
+                      //               .merge(
+                      //                 const TextStyle(
+                      //                     fontSize: 16.0,
+                      //                     color: Color.fromARGB(
+                      //                         255, 16, 103, 233)),
+                      //               ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
                         child: CustomContainer(
@@ -1298,8 +1342,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                               } else {
                                                                                 _plannerDetailsController.checkBoxList[index] = true;
                                                                               }
-                                                                              image = value;
-                                                                              setState(() {});
+                                                                              // image = value;
+                                                                              // setState(() {});
                                                                             });
                                                                           }
                                                                         },

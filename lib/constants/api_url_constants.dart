@@ -385,7 +385,8 @@ class URLS {
 
   static String dynamicAnalytics = "api/AdmissionCtrl/UserDashboardDetails/";
 
-  static String appStorelink = "https://apps.apple.com/us/app/vaps-management-system/id6470649988";
+  static String appStorelink =
+      "https://apps.apple.com/us/app/vaps-management-system/id6470649988";
 
   static String empGetDepartment = "api/SalaryDetailsFacade/Getdepartment/";
 
@@ -684,4 +685,6 @@ class URLS {
   static String punchList = 'api/ISMDashboardFacade/getdetails/';
   static String addExtraTaskDR =
       'api/ISM_DailyReportGenerationFacade/addextratask/';
+  static String previousTaskList =
+      'api/ISM_DailyReportGenerationFacade/searchpreviousdailyreport/';
 }

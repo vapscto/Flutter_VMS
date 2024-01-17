@@ -19,6 +19,8 @@ import 'package:m_skool_flutter/vms/dr_genration/model/hrplannerdetails_model.da
 import 'package:m_skool_flutter/vms/dr_genration/model/others_day_planned.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_details.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_file_upload_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/previous_task_details.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/search_previous_task_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/tada_not_approve_model.dart';
 
 class PlannerDetails extends GetxController {
@@ -198,6 +200,32 @@ class PlannerDetails extends GetxController {
 
   //
   RxList<bool> extraTaskCheckBox = <bool>[].obs;
+  // Search Previous task
+  RxBool isSearchLoading = RxBool(false);
+  void searchTaskLoading(bool task) {
+    isSearchLoading.value = task;
+  }
+
+  RxList<SearchPreviousTaskModelValues> searchTaskList =
+      <SearchPreviousTaskModelValues>[].obs;
+  void searchTask(List<SearchPreviousTaskModelValues> searchTask) {
+    if (searchTaskList.isNotEmpty) {
+      searchTaskList.clear();
+    }
+    for (int i = 0; i < searchTask.length; i++) {
+      searchTaskList.add(searchTask.elementAt(i));
+    }
+  }
+
+  RxList<SearchPreviousTaskDetailsModelValues> searchpreviousTaskDetailsList =
+      <SearchPreviousTaskDetailsModelValues>[].obs;
+  void previousTaskDetails(
+      List<SearchPreviousTaskDetailsModelValues> searchpreviousTaskDetails) {
+    if (searchpreviousTaskDetailsList.isNotEmpty) {
+      searchpreviousTaskDetailsList.clear();
+    }
+    searchpreviousTaskDetailsList.addAll(searchpreviousTaskDetails);
+  }
 }
 
 class AtachmenDrtFile {

@@ -110,6 +110,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   double pCount3 = 0;
   double pCount4 = 0;
   double effort = 0.0;
+  List<double> totalEffortCount = [];
   int eCount1 = 0;
   int eCount2 = 0;
   double eCount3 = 0;
@@ -265,6 +266,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         if (widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId ==
             j.iSMMTCATId) {
           if (j.iSMTPLTAId == 0) {
+            totalEffortCount.clear();
             List<String> parts1 =
                 j.iSMTCRASTOEffortInHrs!.toStringAsFixed(2).split('.');
             eCount1 += int.parse(parts1[0]);
@@ -272,23 +274,19 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             eCount3 = double.parse(convertToDecimal(eCount2));
             eCount4 = eCount1 + eCount3;
             effort = eCount4;
+            totalEffortCount[i] = (effort);
           }
         }
-        // else {
-        //   effort = (widget.plannerCreationController.categoryWisePlan
-        //       .elementAt(i)
-        //       .ismtplaptAEffortInHrs!);
-        // }
         logger.i('Effort :- $effort');
       }
       requiredEff = double.parse(newdt) - effort;
       //Add in list
-      if (effort <= double.parse(newdt)) {
+      if (totalEffortCount[i] <= double.parse(newdt)) {
         categoryList.add(CategoryPlanTable(
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskCategoryName}',
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskPercentage} %',
             "$formattedTime Hr",
-            "$effort Hr",
+            "${totalEffortCount[i]} Hr",
             "$requiredEff Hr",
             widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId!));
       }
