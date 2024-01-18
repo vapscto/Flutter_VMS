@@ -326,10 +326,10 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             // eCount3 = double.parse(convertToDecimal(eCount2));
             // eCount4 = eCount1 + eCount3;
             // effort = eCount4;
+            widget.plannerCreationController.categoryWisePlan[i]
+                .ismtcrastOEffortInHrs = effort1;
           }
         }
-        widget.plannerCreationController.categoryWisePlan[i]
-            .ismtcrastOEffortInHrs = effort1;
       }
       requiredEff = double.parse(newdt) -
           widget.plannerCreationController.categoryWisePlan[i]

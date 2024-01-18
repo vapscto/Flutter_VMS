@@ -25,7 +25,7 @@ class _BirthDaySliderState extends State<BirthDaySlider> {
           items: List.generate(widget.profileController.birthdayList.length,
               (index) {
             return Padding(
-              padding: const EdgeInsets.only(right: 8.0),
+              padding: const EdgeInsets.only(right: 12.0),
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
@@ -86,10 +86,16 @@ class _BirthDaySliderState extends State<BirthDaySlider> {
                               style: Get.textTheme.titleSmall!
                                   .copyWith(color: Colors.white),
                             ),
-                            Text(
-                              '${widget.profileController.birthdayList[index].hrmdeSDesignationName ?? ''} ',
-                              style: Get.textTheme.titleSmall!
-                                  .copyWith(color: Colors.white),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.55,
+                              child: Text(
+                                '${widget.profileController.birthdayList[index].hrmdeSDesignationName ?? ''} ',
+                                maxLines: 2,
+                                overflow: TextOverflow.fade,
+                                textAlign: TextAlign.center,
+                                style: Get.textTheme.titleSmall!
+                                    .copyWith(color: Colors.white),
+                              ),
                             )
                           ],
                         ),

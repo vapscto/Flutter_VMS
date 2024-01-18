@@ -121,7 +121,7 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
                                 }
 
                                 showDialog(
-                                  barrierDismissible: false,
+                                    barrierDismissible: false,
                                     context: context,
                                     builder: (_) {
                                       return Dialog(
@@ -185,7 +185,8 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
                                                         Navigator.pop(context);
                                                         showDialog(
                                                           context: context,
-                                                          barrierDismissible:false,
+                                                          barrierDismissible:
+                                                              false,
                                                           builder: (_) {
                                                             return Dialog(
                                                               child: FutureBuilder<
@@ -243,12 +244,12 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
                                                                               const SizedBox(
                                                                                 height: 6.0,
                                                                               ),
-                                                                              const Text("I approved all leaves that you told me to do.. "),
+                                                                              const Text("Leave Approved"),
                                                                               const SizedBox(
                                                                                 height: 6.0,
                                                                               ),
                                                                               MSkollBtn(
-                                                                                  title: "Ok UnderStood",
+                                                                                  title: "Ok",
                                                                                   onPress: () {
                                                                                     Navigator.pop(context);
                                                                                     Navigator.pop(context);
@@ -319,7 +320,8 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
                                                       ),
                                                       onPressed: () {
                                                         showDialog(
-                                                          barrierDismissible: false,
+                                                            barrierDismissible:
+                                                                false,
                                                             context: context,
                                                             builder: (_) {
                                                               return Dialog(
@@ -566,12 +568,12 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
                           ),
                           Text(isRejecting
                               ? "You successfully rejected the leave..."
-                              : "I approved the leave for you ...."),
+                              : "Leave Approved ...."),
                           const SizedBox(
                             height: 6.0,
                           ),
                           MSkollBtn(
-                              title: "Ok UnderStood",
+                              title: "Ok",
                               onPress: () {
                                 Navigator.pop(context);
                                 Navigator.pop(context);
