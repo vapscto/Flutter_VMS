@@ -282,14 +282,18 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId!));
       }
     }
-    if (categoryList.isNotEmpty) {
-      for (int index = 0; index < categoryList.length; index++) {
-        categoryArray.add({
-          "ISMMTCAT_Id": categoryList.elementAt(index).ismtcatId,
-        });
-        newCategoryArray.addAll(categoryArray.toSet());
-      }
+    // if (categoryList.isNotEmpty) {
+    for (int index = 0;
+        index < widget.plannerCreationController.categoryWisePlan.length;
+        index++) {
+      categoryArray.add({
+        "ISMMTCAT_Id": widget.plannerCreationController.categoryWisePlan
+            .elementAt(index)
+            .ismmtcaTId,
+      });
+      newCategoryArray.addAll(categoryArray.toSet());
     }
+    // }
     widget.plannerCreationController.taskLoading(false);
   }
 

@@ -118,12 +118,6 @@ class PlannerCreationController extends GetxController {
       }
       if (val.iSMTPLTAPreviousTask == 1) {
         _addDataToList(data, val, startDate, endDate);
-      } else if ((val.periodicity == " " ||
-              val.periodicity == null ||
-              val.periodicity == '' ||
-              val.periodicity!.toLowerCase() == 'once') &&
-          (val.iSMTPLTAPreviousTask == 0 || val.iSMTPLTAPreviousTask == null)) {
-        _addDataToList(data, val, startDate, endDate);
       } else if (val.periodicity!.toLowerCase() == 'daily' &&
           (val.iSMTPLTAPreviousTask == 0 || val.iSMTPLTAPreviousTask == null)) {
         for (var mm in effortDataValues) {
@@ -139,17 +133,21 @@ class PlannerCreationController extends GetxController {
             endDate =
                 DateFormat('dd-MM-yyyy').format(DateTime.parse(mm.pDates!));
           }
-
           if (DateTime.parse(mm.pDates!)
                   .add(const Duration(days: 1))
                   .isAfter(DateTime.parse(val.iSMTCRASTOStartDate!)) &&
               DateTime.parse(mm.pDates!)
                   .subtract(const Duration(days: 1))
                   .isBefore(DateTime.parse(val.iSMTCRASTOEndDate!))) {
-            totalEffort += val.iSMTCRASTOEffortInHrs!;
             _addDataToList(data, val, startDate, endDate);
           }
         }
+      } else if ((val.periodicity == " " ||
+              val.periodicity == null ||
+              val.periodicity == '' ||
+              val.periodicity!.toLowerCase() == 'once') &&
+          (val.iSMTPLTAPreviousTask == 0 || val.iSMTPLTAPreviousTask == null)) {
+        _addDataToList(data, val, startDate, endDate);
       } else if (val.periodicity!.toLowerCase() == 'weekly' &&
           (val.iSMTPLTAPreviousTask == 0 || val.iSMTPLTAPreviousTask == null)) {
         int wrkd = effortDataValues.length;
