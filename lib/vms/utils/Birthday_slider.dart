@@ -57,14 +57,14 @@ class _BirthDaySliderState extends State<BirthDaySlider> {
                         child: Image.network(
                           widget.profileController.birthdayList[index]
                                   .hrmEPhoto ??
-                              '',
-                          fit: BoxFit.fill,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Image.network(
                               'https://dcampusstrg.blob.core.windows.net/files/17/EmployeeProfilePics/2209bab7-d9ec-4006-8a37-aed750a36457.jfif',
-                              fit: BoxFit.fill,
-                            );
-                          },
+                          fit: BoxFit.fill,
+                          // errorBuilder: (context, error, stackTrace) {
+                          //   return Image.network(
+                          //     'https://dcampusstrg.blob.core.windows.net/files/17/EmployeeProfilePics/2209bab7-d9ec-4006-8a37-aed750a36457.jfif',
+                          //     fit: BoxFit.fill,
+                          //   );
+                          // },
                         ),
                       ),
                     ),

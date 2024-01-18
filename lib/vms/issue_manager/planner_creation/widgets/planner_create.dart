@@ -156,14 +156,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         endDate:
             (toDate != null) ? toDate!.toIso8601String() : dt.toIso8601String(),
         hrmeId: widget.plannerCreationController.plannerStatus.first.hRMEId!);
-    if (categoryList.isNotEmpty) {
-      for (int index = 0; index < categoryList.length; index++) {
-        categoryArray.add({
-          "ISMMTCAT_Id": categoryList.elementAt(index).ismtcatId,
-        });
-        newCategoryArray.addAll(categoryArray.toSet());
-      }
-    }
+
     // Total hour calculation
     if (widget.plannerCreationController.createdTaskList.isNotEmpty) {
       for (int index = 0;
@@ -260,72 +253,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
           if (j.iSMTPLTAId == 0) {
             effort1 += j.iSMTCRASTOEffortInHrs!;
             logger.v(effort1);
-            // List<String> parts1 =
-            //     j.iSMTCRASTOEffortInHrs!.toStringAsFixed(2).split('.');
-            // eCount1 += int.parse(parts1[0]);
-            // eCount2 += int.parse(parts1[1]);
-            // eCount3 = double.parse(convertToDecimal(eCount2));
-            // eCount4 = eCount1 + eCount3;
-            // effort = eCount4;
-          }
-        }
-        widget.plannerCreationController.categoryWisePlan[i]
-            .ismtcrastOEffortInHrs = effort1;
-      }
-      requiredEff = double.parse(newdt) -
-          widget.plannerCreationController.categoryWisePlan[i]
-              .ismtcrastOEffortInHrs!;
-      //Add in list
-      if (widget.plannerCreationController.categoryWisePlan[i]
-              .ismtcrastOEffortInHrs! >=
-          double.parse(newdt)) {
-        categoryList.remove(CategoryPlanTable(
-            '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskCategoryName}',
-            '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskPercentage} %',
-            "$formattedTime Hr",
-            "${widget.plannerCreationController.categoryWisePlan[i].ismtcrastOEffortInHrs} Hr",
-            "$requiredEff Hr",
-            widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId!));
-      } else {
-        categoryList.add(CategoryPlanTable(
-            '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskCategoryName}',
-            '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskPercentage} %',
-            "$formattedTime Hr",
-            "${widget.plannerCreationController.categoryWisePlan[i].ismtcrastOEffortInHrs} Hr",
-            "$requiredEff Hr",
-            widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId!));
-      }
-    }
-    widget.plannerCreationController.taskLoading(false);
-  }
-
-  double requiredEff = 0.0;
-  List<CategoryPlanTable> categoryList = [];
-  void getCategory() {
-    for (var i = 0;
-        i < widget.plannerCreationController.categoryWisePlan.length;
-        i++) {
-      var minimumEffect = widget.plannerCreationController.categoryWisePlan[i]
-              .ismmtcaTTaskPercentage! /
-          100 *
-          widget.plannerCreationController.totalHour;
-      String formattedTime =
-          widget.plannerCreationController.convertDecimalToTime(minimumEffect);
-      String newdt = formattedTime.replaceAll(":", ".");
-      // Hour calculation
-      for (var j in widget.plannerCreationController.createdTaskList) {
-        if (widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId ==
-            j.iSMMTCATId) {
-          if (j.iSMTPLTAId == 0) {
-            effort1 += j.iSMTCRASTOEffortInHrs!;
-            logger.v(effort1);
-            // List<String> parts1 =
-            //     j.iSMTCRASTOEffortInHrs!.toStringAsFixed(2).split('.');
-            // eCount1 += int.parse(parts1[0]);
-            // eCount2 += int.parse(parts1[1]);
-            // eCount3 = double.parse(convertToDecimal(eCount2));
-            // eCount4 = eCount1 + eCount3;
-            // effort = eCount4;
             widget.plannerCreationController.categoryWisePlan[i]
                 .ismtcrastOEffortInHrs = effort1;
           }
@@ -336,9 +263,9 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               .ismtcrastOEffortInHrs!;
       //Add in list
       if (widget.plannerCreationController.categoryWisePlan[i]
-              .ismtcrastOEffortInHrs! >=
+              .ismtcrastOEffortInHrs! <
           double.parse(newdt)) {
-        categoryList.remove(CategoryPlanTable(
+        categoryList.add(CategoryPlanTable(
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskCategoryName}',
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskPercentage} %',
             "$formattedTime Hr",
@@ -346,7 +273,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             "$requiredEff Hr",
             widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId!));
       } else {
-        categoryList.add(CategoryPlanTable(
+        categoryList.remove(CategoryPlanTable(
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskCategoryName}',
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskPercentage} %',
             "$formattedTime Hr",
@@ -355,8 +282,19 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId!));
       }
     }
-    // categoryList.toSet();
+    if (categoryList.isNotEmpty) {
+      for (int index = 0; index < categoryList.length; index++) {
+        categoryArray.add({
+          "ISMMTCAT_Id": categoryList.elementAt(index).ismtcatId,
+        });
+        newCategoryArray.addAll(categoryArray.toSet());
+      }
+    }
+    widget.plannerCreationController.taskLoading(false);
   }
+
+  double requiredEff = 0.0;
+  List<CategoryPlanTable> categoryList = [];
 
   bool isLoading = false;
   getPlannerStatus() async {
@@ -389,7 +327,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
 
   @override
   void initState() {
-    isLoading = false;
+    isLoading = true;
     getPlannerStatus();
     super.initState();
   }
@@ -399,9 +337,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     if (categoryList.isNotEmpty) {
       categoryList.isEmpty;
     }
-    if (widget.plannerCreationController.assignedTaskList.isNotEmpty) {
-      widget.plannerCreationController.assignedTaskList.isEmpty;
-    }
+    isLoading = true;
     super.dispose();
   }
 
@@ -409,510 +345,541 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body:
-        // isLoading == true
-        //     ? const Center(
-        //         child: AnimatedProgressWidget(
-        //             title: "Loading",
-        //             desc: "We are loading task list Please wait ",
-        //             animationPath: "assets/json/default.json"),
-        //       )
-        //     :
-        Obx(() {
-      return ListView(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-        children: [
-          (widget.plannerCreationController.isPlannerCreate.value != true)
-              ? const Padding(
-                  padding: EdgeInsets.only(top: 8.0, bottom: 30),
-                  child: TextScroll(
-                    "YOU CAN'T GENERATE PLANNER TODAY!!",
-                    delayBefore: Duration(milliseconds: 500),
-                    mode: TextScrollMode.endless,
-                    style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600),
-                    textAlign: TextAlign.left,
-                    selectable: true,
-                  ),
-                )
-              : const SizedBox(),
-          Form(
-            key: _key,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomContainer(
-                  child: TextField(
-                    style: Theme.of(context).textTheme.titleSmall,
-                    controller: _plannerName,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      label: Container(
-                        margin: const EdgeInsets.only(bottom: 12),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 6.0),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24.0),
-                            color: const Color(0xFFFFEBEA)),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image.asset(
-                              "assets/images/subjectfielicon.png",
-                              height: 24.0,
-                            ),
-                            const SizedBox(
-                              width: 6.0,
-                            ),
-                            Text(
-                              " Planner Name ",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .merge(
-                                    const TextStyle(
-                                        fontSize: 20.0,
-                                        color: Color(0xFFFF6F67)),
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      hintText: 'Enter here.',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        ),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 25),
-                CustomContainer(
-                  child: TextField(
-                    style: Theme.of(context).textTheme.titleSmall,
-                    controller: _plannerGoal,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: 3,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      label: Container(
-                        margin: const EdgeInsets.only(bottom: 12),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 6.0),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24.0),
-                            color: const Color(0xFFFFEBEA)),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image.asset(
-                              "assets/images/subjectfielicon.png",
-                              height: 24.0,
-                            ),
-                            const SizedBox(
-                              width: 6.0,
-                            ),
-                            Text(
-                              " Planner Goal ",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .merge(
-                                    const TextStyle(
-                                        fontSize: 20.0,
-                                        color: Color(0xFFFF6F67)),
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      hintText: 'Enter here.',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        ),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 25),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Scaffold(
+        body: isLoading == true
+            ? const Center(
+                child: AnimatedProgressWidget(
+                    title: "Loading",
+                    desc: "We are loading task list Please wait ",
+                    animationPath: "assets/json/default.json"),
+              )
+            : Obx(() {
+                return ListView(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                   children: [
-                    Expanded(
-                      child: CustomContainer(
-                        child: TextField(
-                          style: Theme.of(context).textTheme.titleSmall,
-                          readOnly: true,
-                          controller: _startDate,
-                          onTap: () async {
-                            fromDate = await showDatePicker(
-                              context: context,
-                              helpText: "Select From Data",
-                              firstDate: DateTime.parse(
-                                  widget.plannerCreationController.maxDate),
-                              initialDate: DateTime.parse(
-                                  widget.plannerCreationController.maxDate),
-                              lastDate: DateTime(3050),
-                            );
-                            if (fromDate != null) {
-                              setState(() {
-                                _startDate.text =
-                                    "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
-                              });
-                            }
-                          },
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              onPressed: () async {
-                                fromDate = await showDatePicker(
-                                  helpText: "Select From Data",
-                                  context: context,
-                                  firstDate: DateTime.parse(
-                                      widget.plannerCreationController.maxDate),
-                                  initialDate: DateTime.parse(
-                                      widget.plannerCreationController.maxDate),
-                                  lastDate: DateTime(3050),
-                                );
-                                if (fromDate != null) {
-                                  setState(() {
-                                    _startDate.text =
-                                        "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
-                                  });
-                                }
-                              },
-                              icon: SvgPicture.asset(
-                                "assets/svg/calendar_icon.svg",
-                                color: const Color(0xFF3E78AA),
-                                height: 18,
-                              ),
+                    (widget.plannerCreationController.isPlannerCreate.value !=
+                            true)
+                        ? const Padding(
+                            padding: EdgeInsets.only(top: 8.0, bottom: 30),
+                            child: TextScroll(
+                              "YOU CAN'T GENERATE PLANNER TODAY!!",
+                              delayBefore: Duration(milliseconds: 500),
+                              mode: TextScrollMode.endless,
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600),
+                              textAlign: TextAlign.left,
+                              selectable: true,
                             ),
-                            contentPadding:
-                                const EdgeInsets.only(top: 40.0, left: 12),
-                            border: const OutlineInputBorder(),
-                            label: Container(
-                              margin: const EdgeInsets.only(bottom: 5),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12.0, vertical: 8.0),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(24.0),
-                                  color: const Color(0xFFE5F3FF)),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/svg/calendar_icon.svg",
-                                    color: const Color(0xFF3E78AA),
-                                    height: 18,
-                                  ),
-                                  const SizedBox(
-                                    width: 6.0,
-                                  ),
-                                  Text(
-                                    " Start Date ",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .merge(
-                                          const TextStyle(
-                                            fontSize: 18.0,
-                                            color: Color(0xFF3E78AA),
-                                          ),
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            hintText: 'Select Date',
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                              ),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 12.0,
-                    ),
-                    Expanded(
-                      child: CustomContainer(
-                        child: TextField(
-                          readOnly: true,
-                          style: Theme.of(context).textTheme.titleSmall,
-                          controller: _endDate,
-                          onTap: () async {
-                            if (fromDate != null) {
-                              toDate = await showDatePicker(
-                                context: context,
-                                helpText: "Select To Date",
-                                firstDate: fromDate!,
-                                initialDate: fromDate!,
-                                lastDate: DateTime(3050),
-                              );
-                              if (toDate != null) {
-                                setState(() {
-                                  _endDate.text =
-                                      "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
-                                  calculateWeekdaysDifference(
-                                      fromDate!, toDate!);
-                                  getListData();
-                                });
-                              }
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "Please Select Start Date");
-                            }
-                          },
-                          decoration: InputDecoration(
-                            isDense: true,
-                            contentPadding:
-                                const EdgeInsets.only(top: 40.0, left: 12),
-                            suffixIcon: IconButton(
-                              onPressed: () async {
-                                if (fromDate != null) {
-                                  toDate = await showDatePicker(
-                                    context: context,
-                                    helpText: "Select To Date",
-                                    firstDate: fromDate!,
-                                    initialDate: fromDate!,
-                                    lastDate: DateTime(3050),
-                                    fieldHintText: 'Date:Month:Year',
-                                  );
-                                  if (toDate != null) {
-                                    setState(() {
-                                      _endDate.text =
-                                          "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
-                                      calculateWeekdaysDifference(
-                                          fromDate!, toDate!);
-                                      getListData();
-                                    });
-                                  }
-                                } else {
-                                  Fluttertoast.showToast(
-                                      msg: "Please Select Start Date");
-                                }
-                              },
-                              icon: SvgPicture.asset(
-                                "assets/svg/calendar_icon.svg",
-                                color: const Color(0xFF3E78AA),
-                                height: 18,
-                              ),
-                            ),
-                            border: const OutlineInputBorder(),
-                            label: Container(
-                              margin: const EdgeInsets.only(bottom: 5),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12.0, vertical: 8.0),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(24.0),
-                                  color: const Color(0xFFE5F3FF)),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/svg/calendar_icon.svg",
-                                    color: const Color(0xFF3E78AA),
-                                    height: 18,
-                                  ),
-                                  const SizedBox(
-                                    width: 6.0,
-                                  ),
-                                  Text(
-                                    " End Date ",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .merge(
-                                          const TextStyle(
-                                              fontSize: 18.0,
-                                              color: Color(0xFF3E78AA)),
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            hintText: 'Select Date',
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                              ),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          (widget.plannerCreationController.isAssignedTask.value)
-              ? const Center(
-                  child: AnimatedProgressWidget(
-                    animationPath: 'assets/json/default.json',
-                    title: 'Loading data',
-                    desc: "Please wait we are loading data",
-                  ),
-                )
-              : (widget.plannerCreationController.createdTaskList.isEmpty)
-                  ? const AnimatedProgressWidget(
-                      animationPath: 'assets/json/nodata.json',
-                      title: 'No data Available',
-                      desc: " ",
-                      animatorHeight: 250,
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 16.0),
-                          child: Text(
-                            "Planner Details",
-                            style: Get.textTheme.titleSmall!.copyWith(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        CustomContainer(
-                            child: Container(
-                          margin: const EdgeInsets.all(8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(
-                                    text: 'Total Task: ',
-                                    style: Get.textTheme.titleSmall!.copyWith(
-                                        color: Theme.of(context).primaryColor)),
-                                TextSpan(
-                                    text:
-                                        '${widget.plannerCreationController.createdTaskList.length} ',
-                                    style:
-                                        Get.textTheme.titleSmall!.copyWith()),
-                              ])),
-                              const SizedBox(height: 6),
-                              RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(
-                                    text: 'Total Working Days: ',
-                                    style: Get.textTheme.titleSmall!.copyWith(
-                                        color: Theme.of(context).primaryColor)),
-                                TextSpan(
-                                    text:
-                                        '${widget.plannerCreationController.effortDataValues.length}',
-                                    style:
-                                        Get.textTheme.titleSmall!.copyWith()),
-                              ])),
-                              const SizedBox(height: 6),
-                              RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(
-                                    text: 'Minimum Effort Required: ',
-                                    style: Get.textTheme.titleSmall!.copyWith(
-                                        color: Theme.of(context).primaryColor)),
-                                TextSpan(
-                                    text:
-                                        '${widget.plannerCreationController.totalHour} Hr',
-                                    style:
-                                        Get.textTheme.titleSmall!.copyWith()),
-                              ])),
-                              const SizedBox(height: 6),
-                              RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(
-                                    text: 'planned Effort: ',
-                                    style: Get.textTheme.titleSmall!.copyWith(
-                                        color: Theme.of(context).primaryColor)),
-                                TextSpan(
-                                    text: '$plannedEffort Hr',
-                                    style:
-                                        Get.textTheme.titleSmall!.copyWith()),
-                              ])),
-                              const SizedBox(height: 6),
-                              RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(
-                                    text: 'Total Effort: ',
-                                    style: Get.textTheme.titleSmall!.copyWith(
-                                        color: Theme.of(context).primaryColor)),
-                                TextSpan(
-                                    text: '$totalHour Hr ',
-                                    style:
-                                        Get.textTheme.titleSmall!.copyWith()),
-                              ])),
-                            ],
-                          ),
-                        )),
-                        (categoryList.isNotEmpty)
-                            ? _createCategortTable()
-                            : const SizedBox(),
-                        (categoryList.isEmpty)
-                            ? Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 16.0),
-                                  child: MSkollBtn(
-                                    title: "Save",
-                                    onPress: () {
-                                      if (_plannerName.text.isEmpty) {
-                                        Fluttertoast.showToast(
-                                            msg: "Please enter plan name");
-                                      } else if (plannedEffort <
-                                          widget.plannerCreationController
-                                              .totalHour) {
-                                        Get.dialog(showPopup());
-                                      } else if (widget
-                                              .plannerCreationController
-                                              .isPlannerCreate
-                                              .value ==
-                                          false) {
-                                        Get.dialog(plannerNotCreate());
-                                      } else {
-                                        savePlanner();
-                                      }
-                                    },
+                          )
+                        : const SizedBox(),
+                    Form(
+                      key: _key,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomContainer(
+                            child: TextField(
+                              style: Theme.of(context).textTheme.titleSmall,
+                              controller: _plannerName,
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                label: Container(
+                                  margin: const EdgeInsets.only(bottom: 12),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0, vertical: 6.0),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(24.0),
+                                      color: const Color(0xFFFFEBEA)),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/subjectfielicon.png",
+                                        height: 24.0,
+                                      ),
+                                      const SizedBox(
+                                        width: 6.0,
+                                      ),
+                                      Text(
+                                        " Planner Name ",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
+                                            .merge(
+                                              const TextStyle(
+                                                  fontSize: 20.0,
+                                                  color: Color(0xFFFF6F67)),
+                                            ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              )
-                            : const SizedBox(),
-                        _createPlannerTable(),
-                      ],
+                                hintText: 'Enter here.',
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 25),
+                          CustomContainer(
+                            child: TextField(
+                              style: Theme.of(context).textTheme.titleSmall,
+                              controller: _plannerGoal,
+                              keyboardType: TextInputType.multiline,
+                              maxLines: 3,
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                label: Container(
+                                  margin: const EdgeInsets.only(bottom: 12),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0, vertical: 6.0),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(24.0),
+                                      color: const Color(0xFFFFEBEA)),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/subjectfielicon.png",
+                                        height: 24.0,
+                                      ),
+                                      const SizedBox(
+                                        width: 6.0,
+                                      ),
+                                      Text(
+                                        " Planner Goal ",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
+                                            .merge(
+                                              const TextStyle(
+                                                  fontSize: 20.0,
+                                                  color: Color(0xFFFF6F67)),
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                hintText: 'Enter here.',
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 25),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: CustomContainer(
+                                  child: TextField(
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
+                                    readOnly: true,
+                                    controller: _startDate,
+                                    onTap: () async {
+                                      fromDate = await showDatePicker(
+                                        context: context,
+                                        helpText: "Select From Data",
+                                        firstDate: DateTime.parse(widget
+                                            .plannerCreationController.maxDate),
+                                        initialDate: DateTime.parse(widget
+                                            .plannerCreationController.maxDate),
+                                        lastDate: DateTime(3050),
+                                      );
+                                      if (fromDate != null) {
+                                        setState(() {
+                                          _startDate.text =
+                                              "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
+                                        });
+                                      }
+                                    },
+                                    decoration: InputDecoration(
+                                      suffixIcon: IconButton(
+                                        onPressed: () async {
+                                          fromDate = await showDatePicker(
+                                            helpText: "Select From Data",
+                                            context: context,
+                                            firstDate: DateTime.parse(widget
+                                                .plannerCreationController
+                                                .maxDate),
+                                            initialDate: DateTime.parse(widget
+                                                .plannerCreationController
+                                                .maxDate),
+                                            lastDate: DateTime(3050),
+                                          );
+                                          if (fromDate != null) {
+                                            setState(() {
+                                              _startDate.text =
+                                                  "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
+                                            });
+                                          }
+                                        },
+                                        icon: SvgPicture.asset(
+                                          "assets/svg/calendar_icon.svg",
+                                          color: const Color(0xFF3E78AA),
+                                          height: 18,
+                                        ),
+                                      ),
+                                      contentPadding: const EdgeInsets.only(
+                                          top: 40.0, left: 12),
+                                      border: const OutlineInputBorder(),
+                                      label: Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 5),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12.0, vertical: 8.0),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(24.0),
+                                            color: const Color(0xFFE5F3FF)),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            SvgPicture.asset(
+                                              "assets/svg/calendar_icon.svg",
+                                              color: const Color(0xFF3E78AA),
+                                              height: 18,
+                                            ),
+                                            const SizedBox(
+                                              width: 6.0,
+                                            ),
+                                            Text(
+                                              " Start Date ",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium!
+                                                  .merge(
+                                                    const TextStyle(
+                                                      fontSize: 18.0,
+                                                      color: Color(0xFF3E78AA),
+                                                    ),
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      hintText: 'Select Date',
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      enabledBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 12.0,
+                              ),
+                              Expanded(
+                                child: CustomContainer(
+                                  child: TextField(
+                                    readOnly: true,
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
+                                    controller: _endDate,
+                                    onTap: () async {
+                                      if (fromDate != null) {
+                                        toDate = await showDatePicker(
+                                          context: context,
+                                          helpText: "Select To Date",
+                                          firstDate: fromDate!,
+                                          initialDate: fromDate!,
+                                          lastDate: DateTime(3050),
+                                        );
+                                        if (toDate != null) {
+                                          setState(() {
+                                            _endDate.text =
+                                                "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                            calculateWeekdaysDifference(
+                                                fromDate!, toDate!);
+                                            getListData();
+                                          });
+                                        }
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg: "Please Select Start Date");
+                                      }
+                                    },
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      contentPadding: const EdgeInsets.only(
+                                          top: 40.0, left: 12),
+                                      suffixIcon: IconButton(
+                                        onPressed: () async {
+                                          if (fromDate != null) {
+                                            toDate = await showDatePicker(
+                                              context: context,
+                                              helpText: "Select To Date",
+                                              firstDate: fromDate!,
+                                              initialDate: fromDate!,
+                                              lastDate: DateTime(3050),
+                                              fieldHintText: 'Date:Month:Year',
+                                            );
+                                            if (toDate != null) {
+                                              setState(() {
+                                                _endDate.text =
+                                                    "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                                calculateWeekdaysDifference(
+                                                    fromDate!, toDate!);
+                                                getListData();
+                                              });
+                                            }
+                                          } else {
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    "Please Select Start Date");
+                                          }
+                                        },
+                                        icon: SvgPicture.asset(
+                                          "assets/svg/calendar_icon.svg",
+                                          color: const Color(0xFF3E78AA),
+                                          height: 18,
+                                        ),
+                                      ),
+                                      border: const OutlineInputBorder(),
+                                      label: Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 5),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12.0, vertical: 8.0),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(24.0),
+                                            color: const Color(0xFFE5F3FF)),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            SvgPicture.asset(
+                                              "assets/svg/calendar_icon.svg",
+                                              color: const Color(0xFF3E78AA),
+                                              height: 18,
+                                            ),
+                                            const SizedBox(
+                                              width: 6.0,
+                                            ),
+                                            Text(
+                                              " End Date ",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium!
+                                                  .merge(
+                                                    const TextStyle(
+                                                        fontSize: 18.0,
+                                                        color:
+                                                            Color(0xFF3E78AA)),
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      hintText: 'Select Date',
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      enabledBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-        ],
-      );
-    }));
+                    (widget.plannerCreationController.isAssignedTask.value)
+                        ? const Center(
+                            child: AnimatedProgressWidget(
+                              animationPath: 'assets/json/default.json',
+                              title: 'Loading data',
+                              desc: "Please wait we are loading data",
+                            ),
+                          )
+                        : (widget.plannerCreationController.createdTaskList
+                                .isEmpty)
+                            ? const AnimatedProgressWidget(
+                                animationPath: 'assets/json/nodata.json',
+                                title: 'No data Available',
+                                desc: " ",
+                                animatorHeight: 250,
+                              )
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 16.0),
+                                    child: Text(
+                                      "Planner Details",
+                                      style: Get.textTheme.titleSmall!.copyWith(
+                                          color: Theme.of(context).primaryColor,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  CustomContainer(
+                                      child: Container(
+                                    margin: const EdgeInsets.all(8),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        RichText(
+                                            text: TextSpan(children: [
+                                          TextSpan(
+                                              text: 'Total Task: ',
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .primaryColor)),
+                                          TextSpan(
+                                              text:
+                                                  '${widget.plannerCreationController.createdTaskList.length} ',
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith()),
+                                        ])),
+                                        const SizedBox(height: 6),
+                                        RichText(
+                                            text: TextSpan(children: [
+                                          TextSpan(
+                                              text: 'Total Working Days: ',
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .primaryColor)),
+                                          TextSpan(
+                                              text:
+                                                  '${widget.plannerCreationController.effortDataValues.length}',
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith()),
+                                        ])),
+                                        const SizedBox(height: 6),
+                                        RichText(
+                                            text: TextSpan(children: [
+                                          TextSpan(
+                                              text: 'Minimum Effort Required: ',
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .primaryColor)),
+                                          TextSpan(
+                                              text:
+                                                  '${widget.plannerCreationController.totalHour} Hr',
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith()),
+                                        ])),
+                                        const SizedBox(height: 6),
+                                        RichText(
+                                            text: TextSpan(children: [
+                                          TextSpan(
+                                              text: 'planned Effort: ',
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .primaryColor)),
+                                          TextSpan(
+                                              text: '$plannedEffort Hr',
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith()),
+                                        ])),
+                                        const SizedBox(height: 6),
+                                        RichText(
+                                            text: TextSpan(children: [
+                                          TextSpan(
+                                              text: 'Total Effort: ',
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .primaryColor)),
+                                          TextSpan(
+                                              text: '$totalHour Hr ',
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith()),
+                                        ])),
+                                      ],
+                                    ),
+                                  )),
+                                  (categoryList.isNotEmpty)
+                                      ? _createCategortTable()
+                                      : const SizedBox(),
+                                  (categoryList.isEmpty)
+                                      ? Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 16.0),
+                                            child: MSkollBtn(
+                                              title: "Save",
+                                              onPress: () {
+                                                if (_plannerName.text.isEmpty) {
+                                                  Fluttertoast.showToast(
+                                                      msg:
+                                                          "Please enter plan name");
+                                                } else if (plannedEffort <
+                                                    widget
+                                                        .plannerCreationController
+                                                        .totalHour) {
+                                                  Get.dialog(showPopup());
+                                                } else if (widget
+                                                        .plannerCreationController
+                                                        .isPlannerCreate
+                                                        .value ==
+                                                    false) {
+                                                  Get.dialog(
+                                                      plannerNotCreate());
+                                                } else {
+                                                  savePlanner();
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                        )
+                                      : const SizedBox(),
+                                  _createPlannerTable(),
+                                ],
+                              ),
+                  ],
+                );
+              }));
   }
 
 //

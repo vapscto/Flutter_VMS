@@ -92,7 +92,7 @@ class PlannerCreationController extends GetxController {
   List<NewTableModel> createdTaskList = [];
   double plannerDate = 0.0;
   assignedTask(List<AssignedTaskListValues> value) {
-    if (assignedTaskList.isNotEmpty) {
+    if (createdTaskList.isNotEmpty) {
       assignedTaskList.clear();
       createdTaskList.clear();
     }
