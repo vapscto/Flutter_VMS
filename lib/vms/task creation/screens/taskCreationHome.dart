@@ -366,7 +366,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   }
 
   List<int> newList = [];
-  int calculatedDays = 0;
+  List<double> calculatedDays = [];
   void addList(int i) {
     newList.add(i);
     for (int i = 0; i < newList.length; i++) {
@@ -374,7 +374,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       addHours(TextEditingController(text: '0'));
       addMinutes(TextEditingController(text: '0'));
       addDescription(TextEditingController(text: ''));
-      calculatedDays = 0;
+      calculatedDays.add(0);
     }
   }
 
@@ -1528,6 +1528,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             value: "E",
                             groupValue: _taskDepartController.typesTask.value,
                             onChanged: (v) {
+                              newList.clear();
                               _taskDepartController.updateTypeOfTask(v!);
                               addList(0);
                               setState(() {});
@@ -2792,7 +2793,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                       _taskDepartController.taskAssingn.value == "N",
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 16),
+                        vertical: 16, horizontal: 10),
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -2887,16 +2888,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                           FloatingLabelBehavior.always,
                                       isDense: true,
                                       labelText: 'Department',
-                                      labelStyle: Get.textTheme.titleSmall
-                                      // label: const CustomDropDownLabel(
-                                      //   icon: 'assets/images/hat.png',
-                                      //   containerColor:
-                                      //       Color.fromRGBO(223, 251, 254, 1),
-                                      //   text: 'Department',
-                                      //   textColor:
-                                      //       Color.fromRGBO(40, 182, 200, 1),
-                                      // ),
-                                      ),
+                                      labelStyle: Get.textTheme.titleSmall),
                                   icon: const Padding(
                                     padding: EdgeInsets.only(top: 3),
                                     child: Icon(
@@ -2944,19 +2936,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                         .clear();
                                     hrmdIds = s!.hrmDId!;
                                     filterEmployees(s.hrmDDepartmentName!);
-                                    await getTskPrjtCatgryList(
-                                        base: baseUrlFromInsCode(
-                                          'issuemanager',
-                                          widget.mskoolController,
-                                        ),
-                                        controller: _taskProjectsController,
-                                        userId:
-                                            widget.loginSuccessModel.userId!,
-                                        ivrmrtId:
-                                            widget.loginSuccessModel.roleId!,
-                                        miId: widget.loginSuccessModel.mIID!,
-                                        HRME_Id: logInBox!.get("EmpId"),
-                                        HRMD_Id: s.hrmDId!);
                                   },
                                 ),
                               ),
@@ -2969,8 +2948,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     )
                                   : DropdownButtonFormField<
                                           EmplyeeEnhancementModelValues>(
-                                      value: _taskDepartController
-                                          .getemployeelist.first,
                                       validator: (value) {
                                         if (value == null) {
                                           return "";
@@ -3008,24 +2985,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                         isDense: true,
                                         labelText: 'Employee',
                                         labelStyle: Get.textTheme.titleSmall,
-                                        // label:
-                                        //     const CustomDropDownLabel(
-                                        //   icon:
-                                        //       'assets/images/hat.png',
-                                        //   containerColor:
-                                        //       Color.fromRGBO(
-                                        //           223,
-                                        //           251,
-                                        //           254,
-                                        //           1),
-                                        //   text: 'Employee',
-                                        //   textColor:
-                                        //       Color.fromRGBO(
-                                        //           40,
-                                        //           182,
-                                        //           200,
-                                        //           1),
-                                        // ),
                                       ),
                                       icon: const Padding(
                                         padding: EdgeInsets.only(top: 3),
@@ -3074,23 +3033,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                               .clear();
                                           hrmdIds = s!.hrmDId!;
                                           filterEmployees(s.employeename!);
-                                          getTskPrjtCatgryList(
-                                            base: baseUrlFromInsCode(
-                                              'issuemanager',
-                                              widget.mskoolController,
-                                            ),
-                                            controller: _taskProjectsController,
-                                            userId: widget
-                                                .loginSuccessModel.userId!,
-                                            ivrmrtId: widget
-                                                .loginSuccessModel.roleId!,
-                                            miId:
-                                                widget.loginSuccessModel.mIID!,
-                                            HRME_Id: logInBox!.get("EmpId"),
-                                            HRMD_Id: s.hrmDId!,
-                                          );
                                         }
-                                        ;
                                       })),
                               DataCell(
                                 TextFormField(
@@ -3122,7 +3065,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                   onPressed: () {
                                                     percentageController[index]
                                                         .clear();
-                                                    calculatedDays = 0;
+                                                    calculatedDays[index] = 0;
                                                     Navigator.of(context).pop();
                                                   },
                                                   child: const Text('OK'),
@@ -3133,13 +3076,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                         );
                                       } else {
                                         setState(() {
-                                          calculatedDays =
+                                          calculatedDays[index] =
                                               calculateDaysToComplete(
-                                                      double.parse(
-                                                          totalDayController
-                                                              .text),
-                                                      double.parse(value))
-                                                  .toInt();
+                                                  double.parse(
+                                                      totalDayController.text),
+                                                  double.parse(value));
                                         });
                                         logger.i(
                                             'Days to complete: $calculatedDays');
@@ -3159,7 +3100,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                   controller: percentageController[index],
                                 ),
                               ),
-                              DataCell(Text(calculatedDays.toString())),
+                              DataCell(Text(
+                                  calculatedDays[index].round().toString())),
                               DataCell(
                                 Align(
                                   child: Row(
