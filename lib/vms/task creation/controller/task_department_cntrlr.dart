@@ -19,13 +19,15 @@ class TaskDepartController extends GetxController {
   var totalDaysController;
 
   var daysController;
-  void updateDisbleSubmitButton(bool val){
+  void updateDisbleSubmitButton(bool val) {
     disableSubmitButton.value = val;
   }
+
   void taskDeptLoading(bool val) {
     tskDeptLoading.value = val;
   }
-   void employeeloadingg(bool val) {
+
+  void employeeloadingg(bool val) {
     employeeloading.value = val;
   }
 
@@ -33,12 +35,13 @@ class TaskDepartController extends GetxController {
     tskDeptErrorLoading.value = val;
   }
 
-   void employeetaskLoading(bool val) {
+  void employeetaskLoading(bool val) {
     tskDeptErrorLoading.value = val;
   }
 
   RxList<GetDeptsValues> getDeptsList = <GetDeptsValues>[].obs;
-  RxList<EmplyeeEnhancementModelValues> getemployeelist = <EmplyeeEnhancementModelValues>[].obs;
+  RxList<EmplyeeEnhancementModelValues> getemployeelist =
+      <EmplyeeEnhancementModelValues>[].obs;
   RxList<GetPriorityModelValues> getPriorityModelList =
       <GetPriorityModelValues>[].obs;
   RxList<TaskEmployeeListModelValues> getTaskEmployeeList =
@@ -79,5 +82,6 @@ class TaskDepartController extends GetxController {
 
   String maxPlannerDate = '';
 
-  void setFilteredEmployeeList(List<EmplyeeEnhancementModelValues> filteredEmployeeList) {}
+  void setFilteredEmployeeList(
+      List<EmplyeeEnhancementModelValues> filteredEmployeeList) {}
 }

@@ -134,6 +134,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     taskEmployeeList.assignAll(_taskDepartController.getTaskEmployeeList);
 
     _etListControllerStatus.text = "Open";
+
     super.initState();
   }
 
@@ -343,6 +344,43 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   }
 
   bool selectAll = false;
+  final totalDayController = TextEditingController();
+  List<TextEditingController> remarksController = [];
+  void addRemarks(TextEditingController controller) {
+    remarksController.add(controller);
+  }
+
+  List<TextEditingController> hoursController = [];
+  void addHours(TextEditingController controller) {
+    hoursController.add(controller);
+  }
+
+  List<TextEditingController> minutesController = [];
+  void addMinutes(TextEditingController controller) {
+    minutesController.add(controller);
+  }
+
+  final List<TextEditingController> percentageController = [];
+  void addDescription(TextEditingController controller) {
+    percentageController.add(controller);
+  }
+
+  List<int> newList = [];
+  int calculatedDays = 0;
+  void addList(int i) {
+    newList.add(i);
+    for (int i = 0; i < newList.length; i++) {
+      addRemarks(TextEditingController(text: ''));
+      addHours(TextEditingController(text: '0'));
+      addMinutes(TextEditingController(text: '0'));
+      addDescription(TextEditingController(text: ''));
+      calculatedDays = 0;
+    }
+  }
+
+  void removeList(int i) {
+    newList.removeAt(i);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1491,6 +1529,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             groupValue: _taskDepartController.typesTask.value,
                             onChanged: (v) {
                               _taskDepartController.updateTypeOfTask(v!);
+                              addList(0);
+                              setState(() {});
                             },
                           ),
                         ),
@@ -2709,34 +2749,24 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 40,
-              ),
+              // const SizedBox(
+              //   height: 40,
+              // ),
 
-              Obx(
-                () => Visibility(
-                  visible: _taskDepartController.typesTask.value == "E",
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        labelText: "Total Days",
-                        labelStyle:
-                            Theme.of(context).textTheme.labelSmall!.merge(
-                                  const TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 16.0,
-                                    letterSpacing: 0.3,
-                                    color: Colors.black,
-                                  ),
-                                ),
+              Visibility(
+                visible: _taskDepartController.typesTask.value == "E" &&
+                    _taskDepartController.taskAssingn.value == "N",
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 16, right: 16),
+                  child: TextFormField(
+                    controller: totalDayController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      style: Theme.of(context).textTheme.labelSmall!.merge(
+                      labelText: "Total Days",
+                      labelStyle: Theme.of(context).textTheme.labelSmall!.merge(
                             const TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 16.0,
@@ -2745,1279 +2775,518 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                             ),
                           ),
                     ),
+                    style: Theme.of(context).textTheme.labelSmall!.merge(
+                          const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16.0,
+                            letterSpacing: 0.3,
+                            color: Colors.black,
+                          ),
+                        ),
                   ),
                 ),
               ),
 
-              Obx(
-                () => Visibility(
-                  visible: _taskDepartController.taskAssingn.value == "N",
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Center(
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 20),
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            Column(
-                              children: [
-                                Obx(
-                                  () => Visibility(
-                                    visible:
-                                        _taskDepartController.typesTask.value ==
-                                            "E",
-                                    child: Container(
-                                      width: 300,
-                                      height: 40,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        color: Color.fromRGBO(12, 54, 238, 1),
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10),
-                                        ),
-                                      ),
-                                      child: const Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Department',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Obx(
-                                  () => Visibility(
-                                    visible:
-                                        _taskDepartController.typesTask.value ==
-                                            "E",
-                                    child: Container(
-                                        decoration: const BoxDecoration(
-                                          border: Border(
-                                            left: BorderSide(
-                                                width: 0.5,
-                                                color: Colors.black54),
-                                            right: BorderSide(
-                                                width: 1,
-                                                color: Colors.black54),
-                                            bottom: BorderSide(
-                                                width: 1,
-                                                color: Colors.black54),
-                                          ),
-                                        ),
-                                        width: 300,
-                                        height: 210,
-                                        child: Obx(() {
-                                          return _taskDepartController
-                                                  .tskDeptErrorLoading.value
-                                              ? const Center(
-                                                  child: ErrWidget(
-                                                    err: {
-                                                      "errorTitle":
-                                                          "Unexpected Error Occurred",
-                                                      "errorMsg":
-                                                          "While loading company we encountered an error"
-                                                    },
-                                                  ),
-                                                )
-                                              : _taskDepartController
-                                                      .getDeptsList.isEmpty
-                                                  ? const AnimatedProgressWidget(
-                                                      animationPath:
-                                                          'assets/json/default.json',
-                                                      title: 'Loading data',
-                                                      desc:
-                                                          "Please wait we are loading data",
-                                                    )
-                                                  : Container(
-                                                      margin:
-                                                          const EdgeInsets.only(
-                                                              top: 30,
-                                                              left: 16,
-                                                              right: 16,
-                                                              bottom: 110),
-                                                      decoration: BoxDecoration(
-                                                        color: Theme.of(context)
-                                                            .scaffoldBackgroundColor,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(16.0),
-                                                        boxShadow: const [
-                                                          BoxShadow(
-                                                            offset:
-                                                                Offset(0, 1),
-                                                            blurRadius: 8,
-                                                            color:
-                                                                Colors.black12,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      child:
-                                                          DropdownButtonFormField<
-                                                              GetDeptsValues>(
-                                                        validator: (value) {
-                                                          if (value == null) {
-                                                            return "Please select a department";
-                                                          }
-                                                          return null;
-                                                        },
-                                                        decoration:
-                                                            InputDecoration(
-                                                          border:
-                                                              InputBorder.none,
-                                                          focusedBorder:
-                                                              const OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                              color: Colors
-                                                                  .transparent,
-                                                            ),
-                                                          ),
-                                                          enabledBorder:
-                                                              const OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                              color: Colors
-                                                                  .transparent,
-                                                            ),
-                                                          ),
-                                                          hintStyle: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .labelSmall!
-                                                              .merge(
-                                                                  const TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                fontSize: 15.0,
-                                                                letterSpacing:
-                                                                    0.3,
-                                                              )),
-                                                          hintText: _taskDepartController
-                                                                  .getDeptsList
-                                                                  .isNotEmpty
-                                                              ? 'Select Department'
-                                                              : 'No data available',
-                                                          floatingLabelBehavior:
-                                                              FloatingLabelBehavior
-                                                                  .always,
-                                                          isDense: true,
-                                                          label:
-                                                              const CustomDropDownLabel(
-                                                            icon:
-                                                                'assets/images/hat.png',
-                                                            containerColor:
-                                                                Color.fromRGBO(
-                                                                    223,
-                                                                    251,
-                                                                    254,
-                                                                    1),
-                                                            text: 'Department',
-                                                            textColor:
-                                                                Color.fromRGBO(
-                                                                    40,
-                                                                    182,
-                                                                    200,
-                                                                    1),
-                                                          ),
-                                                        ),
-                                                        icon: const Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  top: 3),
-                                                          child: Icon(
-                                                            Icons
-                                                                .keyboard_arrow_down_rounded,
-                                                            size: 07,
-                                                          ),
-                                                        ),
-                                                        iconSize: 30,
-                                                        items: List.generate(
-                                                            _taskDepartController
-                                                                .getDeptsList
-                                                                .length,
-                                                            (index) {
-                                                          return DropdownMenuItem(
-                                                              value: _taskDepartController
-                                                                      .getDeptsList[
-                                                                  index],
-                                                              child: Padding(
-                                                                  padding: const EdgeInsets
-                                                                          .only(
-                                                                      top: 13,
-                                                                      left: 5),
-                                                                  child: Text(
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .clip,
-                                                                    _taskDepartController
-                                                                        .getDeptsList[
-                                                                            index]
-                                                                        .hrmDDepartmentName!,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .merge(
-                                                                          const TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.w400,
-                                                                            fontSize:
-                                                                                13.0,
-                                                                            letterSpacing:
-                                                                                0.3,
-                                                                          ),
-                                                                        ),
-                                                                  )));
-                                                        }),
-                                                        onChanged: (s) async {
-                                                          setState(() {
-                                                            selectedDepartment =
-                                                                s;
-                                                            // Reset selected employee when department changes
-                                                            selectedEmployee =
-                                                                null;
-                                                          });
-                                                          _taskProjectsController
-                                                              .getTaskProjectsList
-                                                              .clear();
-                                                          _taskProjectsController
-                                                              .getTaskCategoryList
-                                                              .clear();
-                                                          hrmdIds = s!.hrmDId!;
-                                                          filterEmployees(s
-                                                              .hrmDDepartmentName!);
-                                                          await getTskPrjtCatgryList(
-                                                              base:
-                                                                  baseUrlFromInsCode(
-                                                                'issuemanager',
-                                                                widget
-                                                                    .mskoolController,
-                                                              ),
-                                                              controller:
-                                                                  _taskProjectsController,
-                                                              userId: widget
-                                                                  .loginSuccessModel
-                                                                  .userId!,
-                                                              ivrmrtId: widget
-                                                                  .loginSuccessModel
-                                                                  .roleId!,
-                                                              miId: widget
-                                                                  .loginSuccessModel
-                                                                  .mIID!,
-                                                              HRME_Id: logInBox!
-                                                                  .get("EmpId"),
-                                                              HRMD_Id:
-                                                                  s.hrmDId!);
-                                                        },
-                                                      ),
-                                                    );
-                                        })),
-                                  ),
-                                ),
-                              ],
+              Visibility(
+                  visible: _taskDepartController.typesTask.value == "E" &&
+                      _taskDepartController.taskAssingn.value == "N",
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 16),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: DataTable(
+                          headingRowColor: MaterialStatePropertyAll(
+                              Theme.of(context).primaryColor),
+                          dataTextStyle: const TextStyle(
+                              fontSize: 14,
+                              color: Color.fromRGBO(0, 0, 0, 0.95),
+                              fontWeight: FontWeight.w400),
+                          dataRowHeight:
+                              MediaQuery.of(context).size.height * 0.2,
+                          headingRowHeight:
+                              MediaQuery.of(context).size.height * 0.07,
+                          horizontalMargin: 10,
+                          columnSpacing:
+                              MediaQuery.of(context).size.width * 0.08,
+                          dividerThickness: 1,
+                          headingTextStyle: const TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w700),
+                          border: TableBorder.all(
+                              borderRadius: BorderRadius.circular(10),
+                              width: 0.5),
+                          columns: const [
+                            DataColumn(
+                              label: Text('S.No'),
                             ),
-                            // Only display the employee dropdown if a department is selected
-                            if (selectedDepartment != null)
-                              Column(
-                                children: [
-                                  Obx(
-                                    () => Visibility(
-                                      visible: _taskDepartController
-                                              .typesTask.value ==
-                                          "E",
-                                      child: Container(
-                                        width: 300,
-                                        height: 40,
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.rectangle,
-                                          color: Color.fromRGBO(12, 54, 238, 1),
-                                        ),
-                                        child: const Align(
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            'Employee Name',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Obx(
-                                    () => Visibility(
-                                      visible: _taskDepartController
-                                              .typesTask.value ==
-                                          "E",
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                          border: Border(
-                                              left: BorderSide(
-                                                  width: 0.5,
-                                                  color: Colors.black54),
-                                              right: BorderSide(
-                                                  width: 1,
-                                                  color: Colors.black54),
-                                              bottom: BorderSide(
-                                                  width: 1,
-                                                  color: Colors.black54)),
-                                        ),
-                                        width: 300,
-                                        height: 210,
-                                        child: Obx(() => _taskDepartController
-                                                .employeeTasksloading.value
-                                            ? const Center(
-                                                child: ErrWidget(
-                                                  err: {
-                                                    "errorTitle":
-                                                        "Unexpected Error Occured",
-                                                    "errorMsg":
-                                                        "While loading company we encountered an error"
-                                                  },
-                                                ),
-                                              )
-                                            : _taskDepartController
-                                                    .getemployeelist.isEmpty
-                                                ? const AnimatedProgressWidget(
-                                                    animationPath:
-                                                        'assets/json/default.json',
-                                                    title: 'Loading data',
-                                                    desc:
-                                                        "Please wait we are loading data",
-                                                  )
-                                                : Container(
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            top: 30,
-                                                            left: 16,
-                                                            right: 16,
-                                                            bottom: 110),
-                                                    decoration: BoxDecoration(
-                                                      color: Theme.of(context)
-                                                          .scaffoldBackgroundColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              16.0),
-                                                      boxShadow: const [
-                                                        BoxShadow(
-                                                          offset: Offset(0, 1),
-                                                          blurRadius: 8,
-                                                          color: Colors.black12,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    child: DropdownButtonFormField<
-                                                            EmplyeeEnhancementModelValues>(
-                                                        // value: _taskDepartController.getDeptsList.first,
-                                                        validator: (value) {
-                                                          if (value == null) {
-                                                            return "";
-                                                          }
-                                                          return null;
-                                                        },
-                                                        decoration:
-                                                            InputDecoration(
-                                                          border:
-                                                              InputBorder.none,
-                                                          focusedBorder:
-                                                              const OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                              color: Colors
-                                                                  .transparent,
-                                                            ),
-                                                          ),
-                                                          enabledBorder:
-                                                              const OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                              color: Colors
-                                                                  .transparent,
-                                                            ),
-                                                          ),
-                                                          hintStyle: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .labelSmall!
-                                                              .merge(const TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  fontSize:
-                                                                      15.0,
-                                                                  letterSpacing:
-                                                                      0.3)),
-                                                          hintText: _taskDepartController
-                                                                  .getemployeelist
-                                                                  .isNotEmpty
-                                                              ? 'Select Employee'
-                                                              : 'No data available',
-                                                          floatingLabelBehavior:
-                                                              FloatingLabelBehavior
-                                                                  .always,
-                                                          isDense: true,
-                                                          label:
-                                                              const CustomDropDownLabel(
-                                                            icon:
-                                                                'assets/images/hat.png',
-                                                            containerColor:
-                                                                Color.fromRGBO(
-                                                                    223,
-                                                                    251,
-                                                                    254,
-                                                                    1),
-                                                            text: 'Employee',
-                                                            textColor:
-                                                                Color.fromRGBO(
-                                                                    40,
-                                                                    182,
-                                                                    200,
-                                                                    1),
-                                                          ),
-                                                        ),
-                                                        icon: const Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  top: 3),
-                                                          child: Icon(
-                                                            Icons
-                                                                .keyboard_arrow_down_rounded,
-                                                            size: 07,
-                                                          ),
-                                                        ),
-                                                        iconSize: 30,
-                                                        items: List.generate(
-                                                            _taskDepartController
-                                                                .getemployeelist
-                                                                .length,
-                                                            (index) {
-                                                          return DropdownMenuItem(
-                                                            value: _taskDepartController
-                                                                    .getemployeelist[
-                                                                index],
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      top: 13,
-                                                                      left: 5),
-                                                              child: Text(
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .clip,
-                                                                _taskDepartController
-                                                                    .getemployeelist[
-                                                                        index]
-                                                                    .employeename!,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .titleSmall!
-                                                                    .merge(const TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w400,
-                                                                        fontSize:
-                                                                            13.0,
-                                                                        letterSpacing:
-                                                                            0.3)),
-                                                              ),
-                                                            ),
-                                                          );
-                                                        }),
-                                                        onChanged: (s) async {
-                                                          {
-                                                            setState(() {
-                                                              selectedEmployee =
-                                                                  s;
-                                                            });
-                                                            _taskProjectsController
-                                                                .getTaskProjectsList
-                                                                .clear();
-                                                            _taskProjectsController
-                                                                .getTaskCategoryList
-                                                                .clear();
-                                                            hrmdIds =
-                                                                s!.hrmDId!;
-                                                            filterEmployees(s
-                                                                .employeename!);
-                                                            getTskPrjtCatgryList(
-                                                              base:
-                                                                  baseUrlFromInsCode(
-                                                                'issuemanager',
-                                                                widget
-                                                                    .mskoolController,
-                                                              ),
-                                                              controller:
-                                                                  _taskProjectsController,
-                                                              userId: widget
-                                                                  .loginSuccessModel
-                                                                  .userId!,
-                                                              ivrmrtId: widget
-                                                                  .loginSuccessModel
-                                                                  .roleId!,
-                                                              miId: widget
-                                                                  .loginSuccessModel
-                                                                  .mIID!,
-                                                              HRME_Id: logInBox!
-                                                                  .get("EmpId"),
-                                                              HRMD_Id:
-                                                                  s.hrmDId!,
-                                                            );
-                                                          }
-                                                          ;
-                                                        }),
-                                                  )),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            DataColumn(
+                              label: Text("Department"),
+                            ),
+                            DataColumn(
+                              label: Text('Employee Name'),
+                            ),
+                            DataColumn(
+                              label: Text('Percenatge'),
+                            ),
+                            DataColumn(
+                              label: Text('Days'),
+                            ),
+                            DataColumn(
+                              label: Text('Hours'),
+                            ),
+                            DataColumn(
+                              label: Text('Start and End Date'),
+                            ),
+                            DataColumn(
+                              label: Text('Level'),
+                            ),
+                            DataColumn(
+                              label: Text('Remark'),
+                            ),
+                            DataColumn(
+                              label: Text('Action'),
+                            ),
+                          ],
+                          rows: List.generate(newList.length, (index) {
+                            var v = index + 1;
 
-                            Column(
-                              children: [
-                                Obx(
-                                  () => Visibility(
-                                    visible:
-                                        _taskDepartController.typesTask.value ==
-                                            "E",
-                                    child: Container(
-                                      width: 250,
-                                      height: 40,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        color: Color.fromRGBO(12, 54, 238, 1),
-                                      ),
-                                      child: const Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Percenatge',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
+                            return DataRow(cells: [
+                              DataCell(Text(v.toString())),
+                              DataCell(
+                                DropdownButtonFormField<GetDeptsValues>(
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return "Please select a department";
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: const BorderSide(
+                                          color: Colors.indigo,
                                         ),
                                       ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: const BorderSide(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      hintStyle: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                      hintText: _taskDepartController
+                                              .getDeptsList.isNotEmpty
+                                          ? 'Select Department'
+                                          : 'No data available',
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      isDense: true,
+                                      labelText: 'Department',
+                                      labelStyle: Get.textTheme.titleSmall
+                                      // label: const CustomDropDownLabel(
+                                      //   icon: 'assets/images/hat.png',
+                                      //   containerColor:
+                                      //       Color.fromRGBO(223, 251, 254, 1),
+                                      //   text: 'Department',
+                                      //   textColor:
+                                      //       Color.fromRGBO(40, 182, 200, 1),
+                                      // ),
+                                      ),
+                                  icon: const Padding(
+                                    padding: EdgeInsets.only(top: 3),
+                                    child: Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      size: 30,
                                     ),
                                   ),
-                                ),
-                                Obx(
-                                  () => Visibility(
-                                    visible:
-                                        _taskDepartController.typesTask.value ==
-                                            "E",
-                                    child: Container(
-                                        decoration: const BoxDecoration(
-                                          border: Border(
-                                              left: BorderSide(
-                                                  width: 0.5,
-                                                  color: Colors.black54),
-                                              right: BorderSide(
-                                                  width: 1,
-                                                  color: Colors.black54),
-                                              bottom: BorderSide(
-                                                  width: 1,
-                                                  color: Colors.black54)),
-                                        ),
-                                        width: 250,
-                                        height: 210,
+                                  iconSize: 30,
+                                  items: List.generate(
+                                      _taskDepartController.getDeptsList.length,
+                                      (index) {
+                                    return DropdownMenuItem(
+                                        value: _taskDepartController
+                                            .getDeptsList[index],
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 10),
-                                          child: TextFormField(
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return 'Enter Percentage';
-                                              }
-
-                                              final double enteredValue =
-                                                  double.parse(value);
-                                              if (enteredValue > 100) {
-                                                return 'Percentage should not exceed 100%';
-                                              }
-
-                                              return null;
-                                            },
-                                            keyboardType: TextInputType.number,
-                                            inputFormatters: <
-                                                TextInputFormatter>[
-                                              FilteringTextInputFormatter
-                                                  .digitsOnly
-                                            ],
-                                            onChanged: (value) {
-                                              if (value.isNotEmpty) {
-                                                final double enteredValue =
-                                                    double.parse(value);
-                                                if (enteredValue > 100) {
-                                                  _descritpionETController
-                                                      .text = '100';
-                                                  showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return AlertDialog(
-                                                        title: const Text(
-                                                            'Total Percentage Not Greater Than 100 % !'),
-                                                        actions: [
-                                                          TextButton(
-                                                            onPressed: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            child: const Text(
-                                                                'OK'),
-                                                          ),
-                                                        ],
-                                                      );
-                                                    },
-                                                  );
-                                                } else {
-                                                  final double totalDays =
-                                                      double.parse(
-                                                          _taskDepartController
-                                                              .totalDaysController
-                                                              .text);
-                                                  final double calculatedDays =
-                                                      calculateDaysToComplete(
-                                                          totalDays,
-                                                          enteredValue);
-
-                                                  // You can use calculatedDays as needed.
-                                                  print(
-                                                      'Days to complete: $calculatedDays');
-                                                }
-                                              }
-                                            },
-                                            maxLines: 1,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall!
-                                                .merge(
-                                                  const TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 14.0,
-                                                    letterSpacing: 0.3,
-                                                    overflow: TextOverflow.clip,
-                                                  ),
-                                                ),
-                                            decoration: InputDecoration(
-                                              hintText: 'Enter Percentage',
-                                              hintStyle: Theme.of(context)
+                                            padding: const EdgeInsets.only(
+                                                top: 13, left: 5),
+                                            child: Text(
+                                              overflow: TextOverflow.clip,
+                                              _taskDepartController
+                                                  .getDeptsList[index]
+                                                  .hrmDDepartmentName!,
+                                              style: Theme.of(context)
                                                   .textTheme
                                                   .titleSmall!
                                                   .merge(
                                                     const TextStyle(
                                                       fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 14.0,
+                                                          FontWeight.w400,
+                                                      fontSize: 13.0,
                                                       letterSpacing: 0.3,
-                                                      overflow:
-                                                          TextOverflow.clip,
                                                     ),
                                                   ),
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                            ),
-                                            controller:
-                                                _descritpionETController,
-                                          ),
-                                        )),
-                                  ),
+                                            )));
+                                  }),
+                                  onChanged: (s) async {
+                                    setState(() {
+                                      selectedDepartment = s;
+                                      // Reset selected employee when department changes
+                                      selectedEmployee = null;
+                                    });
+                                    _taskProjectsController.getTaskProjectsList
+                                        .clear();
+                                    _taskProjectsController.getTaskCategoryList
+                                        .clear();
+                                    hrmdIds = s!.hrmDId!;
+                                    filterEmployees(s.hrmDDepartmentName!);
+                                    await getTskPrjtCatgryList(
+                                        base: baseUrlFromInsCode(
+                                          'issuemanager',
+                                          widget.mskoolController,
+                                        ),
+                                        controller: _taskProjectsController,
+                                        userId:
+                                            widget.loginSuccessModel.userId!,
+                                        ivrmrtId:
+                                            widget.loginSuccessModel.roleId!,
+                                        miId: widget.loginSuccessModel.mIID!,
+                                        HRME_Id: logInBox!.get("EmpId"),
+                                        HRMD_Id: s.hrmDId!);
+                                  },
                                 ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Obx(
-                                  () => Visibility(
-                                    visible:
-                                        _taskDepartController.typesTask.value ==
-                                            "E",
-                                    child: Container(
-                                      width: 250,
-                                      height: 40,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        color: Color.fromRGBO(12, 54, 238, 1),
-                                      ),
-                                      child: const Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Days',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
+                              ),
+                              DataCell(_taskDepartController
+                                      .getemployeelist.isEmpty
+                                  ? const AnimatedProgressWidget(
+                                      animationPath: 'assets/json/default.json',
+                                      title: 'Loading data',
+                                      desc: "Please wait we are loading data",
+                                    )
+                                  : DropdownButtonFormField<
+                                          EmplyeeEnhancementModelValues>(
+                                      value: _taskDepartController
+                                          .getemployeelist.first,
+                                      validator: (value) {
+                                        if (value == null) {
+                                          return "";
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                            color: Colors.indigo,
                                           ),
                                         ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        hintStyle: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .merge(const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 15.0,
+                                                letterSpacing: 0.3)),
+                                        hintText: _taskDepartController
+                                                .getemployeelist.isNotEmpty
+                                            ? 'Select Employee'
+                                            : 'No data available',
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.always,
+                                        isDense: true,
+                                        labelText: 'Employee',
+                                        labelStyle: Get.textTheme.titleSmall,
+                                        // label:
+                                        //     const CustomDropDownLabel(
+                                        //   icon:
+                                        //       'assets/images/hat.png',
+                                        //   containerColor:
+                                        //       Color.fromRGBO(
+                                        //           223,
+                                        //           251,
+                                        //           254,
+                                        //           1),
+                                        //   text: 'Employee',
+                                        //   textColor:
+                                        //       Color.fromRGBO(
+                                        //           40,
+                                        //           182,
+                                        //           200,
+                                        //           1),
+                                        // ),
                                       ),
+                                      icon: const Padding(
+                                        padding: EdgeInsets.only(top: 3),
+                                        child: Icon(
+                                          Icons.keyboard_arrow_down_rounded,
+                                          size: 30,
+                                        ),
+                                      ),
+                                      iconSize: 30,
+                                      items: List.generate(
+                                          _taskDepartController
+                                              .getemployeelist.length, (index) {
+                                        return DropdownMenuItem(
+                                          value: _taskDepartController
+                                              .getemployeelist[index],
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 13, left: 5),
+                                            child: Text(
+                                              overflow: TextOverflow.clip,
+                                              _taskDepartController
+                                                  .getemployeelist[index]
+                                                  .employeename!,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .merge(const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 13.0,
+                                                      letterSpacing: 0.3)),
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                      onChanged: (s) async {
+                                        {
+                                          setState(() {
+                                            selectedEmployee = s;
+                                          });
+                                          _taskProjectsController
+                                              .getTaskProjectsList
+                                              .clear();
+                                          _taskProjectsController
+                                              .getTaskCategoryList
+                                              .clear();
+                                          hrmdIds = s!.hrmDId!;
+                                          filterEmployees(s.employeename!);
+                                          getTskPrjtCatgryList(
+                                            base: baseUrlFromInsCode(
+                                              'issuemanager',
+                                              widget.mskoolController,
+                                            ),
+                                            controller: _taskProjectsController,
+                                            userId: widget
+                                                .loginSuccessModel.userId!,
+                                            ivrmrtId: widget
+                                                .loginSuccessModel.roleId!,
+                                            miId:
+                                                widget.loginSuccessModel.mIID!,
+                                            HRME_Id: logInBox!.get("EmpId"),
+                                            HRMD_Id: s.hrmDId!,
+                                          );
+                                        }
+                                        ;
+                                      })),
+                              DataCell(
+                                TextFormField(
+                                  readOnly: (totalDayController.text.isEmpty)
+                                      ? true
+                                      : false,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Enter Percentage';
+                                    }
+                                    return null;
+                                  },
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly,
+                                  ],
+                                  onChanged: (value) {
+                                    if (value.isNotEmpty) {
+                                      // double enteredValue = double.parse(value);
+                                      if (double.parse(value) > 100) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: const Text(
+                                                  'Total Percentage Not Greater Than 100 % !'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    percentageController[index]
+                                                        .clear();
+                                                    calculatedDays = 0;
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: const Text('OK'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        setState(() {
+                                          calculatedDays =
+                                              calculateDaysToComplete(
+                                                      double.parse(
+                                                          totalDayController
+                                                              .text),
+                                                      double.parse(value))
+                                                  .toInt();
+                                        });
+                                        logger.i(
+                                            'Days to complete: $calculatedDays');
+                                      }
+                                    }
+                                  },
+                                  maxLines: 1,
+                                  style: Theme.of(context).textTheme.titleSmall,
+                                  decoration: InputDecoration(
+                                    hintText: 'Enter Percentage',
+                                    hintStyle:
+                                        Theme.of(context).textTheme.titleSmall,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
+                                  controller: percentageController[index],
                                 ),
-                                Obx(
-                                  () => Visibility(
-                                    visible:
-                                        _taskDepartController.typesTask.value ==
-                                            "E",
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        border: Border(
-                                            left: BorderSide(
-                                                width: 0.5,
-                                                color: Colors.black54),
-                                            right: BorderSide(
-                                                width: 1,
-                                                color: Colors.black54),
-                                            bottom: BorderSide(
-                                                width: 1,
-                                                color: Colors.black54)),
+                              ),
+                              DataCell(Text(calculatedDays.toString())),
+                              DataCell(
+                                Align(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            width: 60,
+                                            child: TextField(
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .allow(RegExp('[0-9]')),
+                                                LengthLimitingTextInputFormatter(
+                                                    2),
+                                              ],
+                                              keyboardType: const TextInputType
+                                                      .numberWithOptions(
+                                                  decimal: false),
+                                              maxLines: 1,
+                                              controller:
+                                                  hoursController[index],
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .merge(const TextStyle(
+                                                    fontWeight: FontWeight.w100,
+                                                    fontSize: 14.0,
+                                                    letterSpacing: 0.3,
+                                                    overflow: TextOverflow.clip,
+                                                  )),
+                                              decoration: InputDecoration(
+                                                  border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5))),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          const Text("HH")
+                                        ],
                                       ),
-                                      width: 250,
-                                      height: 210,
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 10),
-                                        child: TextFormField(
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            width: 60,
+                                            child: TextField(
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .allow(RegExp('[0-9]')),
+                                                LengthLimitingTextInputFormatter(
+                                                    2),
+                                              ],
+                                              keyboardType: const TextInputType
+                                                      .numberWithOptions(
+                                                  decimal: false),
+                                              maxLines: 1,
+                                              decoration: InputDecoration(
+                                                  border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5))),
+                                              controller:
+                                                  minutesController[index],
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .merge(const TextStyle(
+                                                    fontWeight: FontWeight.w100,
+                                                    fontSize: 14.0,
+                                                    letterSpacing: 0.3,
+                                                    overflow: TextOverflow.clip,
+                                                  )),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          const Text('MM')
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              DataCell(
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: 200,
+                                        child: TextField(
+                                          onTap: () {
+                                            fromDate();
+                                          },
                                           readOnly: true,
-                                          keyboardType: TextInputType.number,
+                                          controller: selectFromDate,
                                           decoration: InputDecoration(
                                             border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            labelStyle: Theme.of(context)
-                                                .textTheme
-                                                .labelSmall!
-                                                .merge(
-                                                  const TextStyle(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 16.0,
-                                                    letterSpacing: 0.3,
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                          ),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelSmall!
-                                              .merge(
-                                                const TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 16.0,
-                                                  letterSpacing: 0.3,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Obx(
-                                  () => Visibility(
-                                    visible:
-                                        _taskDepartController.typesTask.value ==
-                                            "E",
-                                    child: Container(
-                                      width: 250,
-                                      height: 40,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        color: Color.fromRGBO(12, 54, 238, 1),
-                                      ),
-                                      child: const Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Hours',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Obx(
-                                  () => Visibility(
-                                    visible:
-                                        _taskDepartController.typesTask.value ==
-                                            "E",
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        border: Border(
-                                            left: BorderSide(
-                                                width: 0.5,
-                                                color: Colors.black54),
-                                            right: BorderSide(
-                                                width: 1,
-                                                color: Colors.black54),
-                                            bottom: BorderSide(
-                                                width: 1,
-                                                color: Colors.black54)),
-                                      ),
-                                      width: 250,
-                                      height: 210,
-                                      child: Container(
-                                        width: 210,
-                                        height: 210,
-                                        decoration: const BoxDecoration(
-                                          border: Border(
-                                              right: BorderSide(
-                                                  width: 1,
-                                                  color: Colors.black54),
-                                              bottom: BorderSide(
-                                                  width: 1,
-                                                  color: Colors.black54)),
-                                        ),
-                                        child: Align(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 60,
-                                                    child: TextField(
-                                                      inputFormatters: [
-                                                        FilteringTextInputFormatter
-                                                            .allow(RegExp(
-                                                                '[0-9]')),
-                                                        LengthLimitingTextInputFormatter(
-                                                            2),
-                                                      ],
-                                                      keyboardType:
-                                                          const TextInputType
-                                                                  .numberWithOptions(
-                                                              decimal: false),
-                                                      maxLines: 1,
-                                                      controller: hoursEt,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .titleSmall!
-                                                          .merge(
-                                                              const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w100,
-                                                            fontSize: 14.0,
-                                                            letterSpacing: 0.3,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .clip,
-                                                          )),
-                                                      decoration: InputDecoration(
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5))),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  const Text("HH")
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 60,
-                                                    child: TextField(
-                                                      inputFormatters: [
-                                                        FilteringTextInputFormatter
-                                                            .allow(RegExp(
-                                                                '[0-9]')),
-                                                        LengthLimitingTextInputFormatter(
-                                                            2),
-                                                      ],
-                                                      keyboardType:
-                                                          const TextInputType
-                                                                  .numberWithOptions(
-                                                              decimal: false),
-                                                      maxLines: 1,
-                                                      decoration: InputDecoration(
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5))),
-                                                      controller: minutesEt,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .titleSmall!
-                                                          .merge(
-                                                              const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w100,
-                                                            fontSize: 14.0,
-                                                            letterSpacing: 0.3,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .clip,
-                                                          )),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  const Text('MM')
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Obx(
-                                  () => Visibility(
-                                    visible:
-                                        _taskDepartController.typesTask.value ==
-                                            "E",
-                                    child: Container(
-                                      width: 250,
-                                      height: 40,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        color: Color.fromRGBO(12, 54, 238, 1),
-                                      ),
-                                      child: const Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Start and End Date',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Obx(
-                                  () => Visibility(
-                                    visible:
-                                        _taskDepartController.typesTask.value ==
-                                            "E",
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        border: Border(
-                                            left: BorderSide(
-                                                width: 0.5,
-                                                color: Colors.black54),
-                                            right: BorderSide(
-                                                width: 1,
-                                                color: Colors.black54),
-                                            bottom: BorderSide(
-                                                width: 1,
-                                                color: Colors.black54)),
-                                      ),
-                                      width: 250,
-                                      height: 210,
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SizedBox(
-                                              width: 200,
-                                              child: TextField(
-                                                onTap: () {
+                                                borderRadius:
+                                                    BorderRadius.circular(5)),
+                                            suffixIcon: Padding(
+                                              padding: const EdgeInsets.all(12),
+                                              child: InkWell(
+                                                onTap: () async {
                                                   fromDate();
                                                 },
-                                                readOnly: true,
-                                                controller: selectFromDate,
-                                                decoration: InputDecoration(
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5)),
-                                                  suffixIcon: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            12),
-                                                    child: InkWell(
-                                                      onTap: () async {
-                                                        fromDate();
-                                                      },
-                                                      child: SvgPicture.asset(
-                                                        "assets/svg/calendar_icon.svg",
-                                                        color: const Color(
-                                                            0xFF3E78AA),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  hintText: "Select From Date",
-                                                  hintStyle: Theme.of(context)
-                                                      .textTheme
-                                                      .titleSmall!
-                                                      .merge(const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w100,
-                                                        fontSize: 16.0,
-                                                        letterSpacing: 0.3,
-                                                        overflow:
-                                                            TextOverflow.clip,
-                                                      )),
-                                                ),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleSmall!
-                                                    .merge(const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w100,
-                                                      fontSize: 16.0,
-                                                      letterSpacing: 0.3,
-                                                      overflow:
-                                                          TextOverflow.clip,
-                                                    )),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            SizedBox(
-                                              width: 200,
-                                              child: TextField(
-                                                onTap: () {
-                                                  toDate();
-                                                },
-                                                readOnly: true,
-                                                controller: selectToDate,
-                                                decoration: InputDecoration(
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5)),
-                                                  suffixIcon: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            12),
-                                                    child: InkWell(
-                                                      onTap: () async {
-                                                        toDate();
-                                                      },
-                                                      child: SvgPicture.asset(
-                                                        "assets/svg/calendar_icon.svg",
-                                                        color: const Color(
-                                                            0xFF3E78AA),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  hintText: "Select To Date",
-                                                  hintStyle: Theme.of(context)
-                                                      .textTheme
-                                                      .titleSmall!
-                                                      .merge(const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w100,
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.3,
-                                                        overflow:
-                                                            TextOverflow.clip,
-                                                      )),
-                                                ),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleSmall!
-                                                    .merge(const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w100,
-                                                      fontSize: 14.0,
-                                                      letterSpacing: 0.3,
-                                                      overflow:
-                                                          TextOverflow.clip,
-                                                    )),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Obx(
-                                  () => Visibility(
-                                    visible:
-                                        _taskDepartController.typesTask.value ==
-                                            "E",
-                                    child: Container(
-                                      width: 250,
-                                      height: 40,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        color: Color.fromRGBO(12, 54, 238, 1),
-                                      ),
-                                      child: const Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Level',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Obx(
-                                  () => Visibility(
-                                    visible:
-                                        _taskDepartController.typesTask.value ==
-                                            "E",
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        border: Border(
-                                            left: BorderSide(
-                                                width: 0.5,
-                                                color: Colors.black54),
-                                            right: BorderSide(
-                                                width: 1,
-                                                color: Colors.black54),
-                                            bottom: BorderSide(
-                                                width: 1,
-                                                color: Colors.black54)),
-                                      ),
-                                      width: 250,
-                                      height: 210,
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 10),
-                                        child: TextFormField(
-                                          readOnly: true,
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            labelStyle: Theme.of(context)
-                                                .textTheme
-                                                .labelSmall!
-                                                .merge(
-                                                  const TextStyle(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 16.0,
-                                                    letterSpacing: 0.3,
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                          ),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelSmall!
-                                              .merge(
-                                                const TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 16.0,
-                                                  letterSpacing: 0.3,
-                                                  color: Colors.black,
+                                                child: SvgPicture.asset(
+                                                  "assets/svg/calendar_icon.svg",
+                                                  color:
+                                                      const Color(0xFF3E78AA),
                                                 ),
                                               ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            Column(
-                              children: [
-                                Obx(
-                                  () => Visibility(
-                                    visible:
-                                        _taskDepartController.typesTask.value ==
-                                            "E",
-                                    child: Container(
-                                      width: 250,
-                                      height: 40,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        color: Color.fromRGBO(12, 54, 238, 1),
-                                      ),
-                                      child: const Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Remark',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Obx(
-                                  () => Visibility(
-                                    visible:
-                                        _taskDepartController.typesTask.value ==
-                                            "E",
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        border: Border(
-                                            left: BorderSide(
-                                                width: 0.5,
-                                                color: Colors.black54),
-                                            right: BorderSide(
-                                                width: 1,
-                                                color: Colors.black54),
-                                            bottom: BorderSide(
-                                                width: 1,
-                                                color: Colors.black54)),
-                                      ),
-                                      width: 250,
-                                      height: 210,
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: TextField(
-                                            style: Theme.of(context)
+                                            ),
+                                            hintText: "Select From Date",
+                                            hintStyle: Theme.of(context)
                                                 .textTheme
                                                 .titleSmall!
                                                 .merge(const TextStyle(
@@ -4026,106 +3295,1510 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                   letterSpacing: 0.3,
                                                   overflow: TextOverflow.clip,
                                                 )),
-                                            decoration: InputDecoration(
-                                                border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5))),
-                                            controller: etRemarkControllers,
-                                            maxLines: 6,
                                           ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .merge(const TextStyle(
+                                                fontWeight: FontWeight.w100,
+                                                fontSize: 16.0,
+                                                letterSpacing: 0.3,
+                                                overflow: TextOverflow.clip,
+                                              )),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 30),
-
-                            Column(
-                              children: [
-                                Obx(
-                                  () => Visibility(
-                                    visible:
-                                        _taskDepartController.typesTask.value ==
-                                            "E",
-                                    child: Container(
-                                      width: 150,
-                                      height: 50,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        color: Color.fromRGBO(12, 54, 238, 1),
-                                        borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(10),
-                                        ),
+                                      const SizedBox(
+                                        height: 10,
                                       ),
-                                      child: Stack(
-                                        alignment: Alignment.center,
-                                        children: const [
-                                          Align(
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              'Action',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
+                                      SizedBox(
+                                        width: 200,
+                                        child: TextField(
+                                          onTap: () {
+                                            toDate();
+                                          },
+                                          readOnly: true,
+                                          controller: selectToDate,
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(5)),
+                                            suffixIcon: Padding(
+                                              padding: const EdgeInsets.all(12),
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  toDate();
+                                                },
+                                                child: SvgPicture.asset(
+                                                  "assets/svg/calendar_icon.svg",
+                                                  color:
+                                                      const Color(0xFF3E78AA),
+                                                ),
                                               ),
                                             ),
+                                            hintText: "Select To Date",
+                                            hintStyle: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .merge(const TextStyle(
+                                                  fontWeight: FontWeight.w100,
+                                                  fontSize: 14.0,
+                                                  letterSpacing: 0.3,
+                                                  overflow: TextOverflow.clip,
+                                                )),
                                           ),
-                                        ],
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .merge(const TextStyle(
+                                                fontWeight: FontWeight.w100,
+                                                fontSize: 14.0,
+                                                letterSpacing: 0.3,
+                                                overflow: TextOverflow.clip,
+                                              )),
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ),
-                                Obx(() => Visibility(
-                                      visible: _taskDepartController
-                                              .typesTask.value ==
-                                          "E",
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                          border: Border(
-                                            left: BorderSide(
-                                                width: 0.5,
-                                                color: Colors.black54),
-                                            right: BorderSide(
-                                                width: 1,
-                                                color: Colors.black54),
-                                            bottom: BorderSide(
-                                                width: 1,
-                                                color: Colors.black54),
-                                          ),
-                                        ),
-                                        width: 150,
-                                        height: 70,
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              IconButton(
-                                                icon: const Icon(Icons.add,
-                                                    color: Colors.black),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    if (tables.isNotEmpty) {
-                                                      tables.removeLast();
-                                                    }
-                                                  });
+                              ),
+                              DataCell(Center(child: Text(v.toString()))),
+                              DataCell(
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: TextField(
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
+                                    decoration: InputDecoration(
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 8, horizontal: 4),
+                                        hintText: 'Remarks...',
+                                        hintStyle: Get.textTheme.titleSmall!
+                                            .copyWith(color: Colors.grey),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5))),
+                                    controller: remarksController[index],
+                                    maxLines: 6,
+                                  ),
+                                ),
+                              ),
+                              DataCell(Align(
+                                  alignment: Alignment.center,
+                                  child: index == newList.length - 1
+                                      ? Row(
+                                          children: [
+                                            InkWell(
+                                                onTap: () {
+                                                  addList(
+                                                    index + 1,
+                                                  );
+                                                  setState(() {});
                                                 },
-                                              ),
-                                            ]),
-                                      ),
-                                    ))
-                              ],
-                            ),
-                          ],
+                                                child: const Icon(Icons.add)),
+                                            index >= 1
+                                                ? InkWell(
+                                                    onTap: () {
+                                                      removeList(index);
+                                                      setState(() {});
+                                                    },
+                                                    child: const Icon(
+                                                        Icons.remove))
+                                                : const SizedBox()
+                                          ],
+                                        )
+                                      : index < newList.length
+                                          ? InkWell(
+                                              onTap: () {
+                                                removeList(index);
+                                                setState(() {});
+                                              },
+                                              child: const Icon(Icons.remove))
+                                          : null))
+                            ]);
+                          }),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              ),
+                  )),
+              // Obx(
+              //   () => Visibility(
+              //     visible: _taskDepartController.taskAssingn.value == "N",
+              //     child: SizedBox(
+              //       width: MediaQuery.of(context).size.width,
+              //       child: Center(
+              //         child: SingleChildScrollView(
+              //           padding: const EdgeInsets.symmetric(
+              //               vertical: 10, horizontal: 20),
+              //           scrollDirection: Axis.horizontal,
+              //           child: Row(
+              //             children: [
+              //               Column(
+              //                 children: [
+              //                   Obx(
+              //                     () => Visibility(
+              //                       visible:
+              //                           _taskDepartController.typesTask.value ==
+              //                               "E",
+              //                       child: Container(
+              //                         width: 300,
+              //                         height: 40,
+              //                         decoration: const BoxDecoration(
+              //                           shape: BoxShape.rectangle,
+              //                           color: Color.fromRGBO(12, 54, 238, 1),
+              //                           borderRadius: BorderRadius.only(
+              //                             topLeft: Radius.circular(10),
+              //                           ),
+              //                         ),
+              //                         child: const Align(
+              //                           alignment: Alignment.center,
+              //                           child: Text(
+              //                             'Department',
+              //                             style: TextStyle(
+              //                               fontSize: 14,
+              //                               fontWeight: FontWeight.bold,
+              //                               color: Colors.white,
+              //                             ),
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ),
+              //                   Obx(
+              //                     () => Visibility(
+              //                       visible:
+              //                           _taskDepartController.typesTask.value ==
+              //                               "E",
+              //                       child: Container(
+              //                           decoration: const BoxDecoration(
+              //                             border: Border(
+              //                               left: BorderSide(
+              //                                   width: 0.5,
+              //                                   color: Colors.black54),
+              //                               right: BorderSide(
+              //                                   width: 1,
+              //                                   color: Colors.black54),
+              //                               bottom: BorderSide(
+              //                                   width: 1,
+              //                                   color: Colors.black54),
+              //                             ),
+              //                           ),
+              //                           width: 300,
+              //                           height: 210,
+              //                           child: Obx(() {
+              //                             return _taskDepartController
+              //                                     .tskDeptErrorLoading.value
+              //                                 ? const Center(
+              //                                     child: ErrWidget(
+              //                                       err: {
+              //                                         "errorTitle":
+              //                                             "Unexpected Error Occurred",
+              //                                         "errorMsg":
+              //                                             "While loading company we encountered an error"
+              //                                       },
+              //                                     ),
+              //                                   )
+              //                                 : _taskDepartController
+              //                                         .getDeptsList.isEmpty
+              //                                     ? const AnimatedProgressWidget(
+              //                                         animationPath:
+              //                                             'assets/json/default.json',
+              //                                         title: 'Loading data',
+              //                                         desc:
+              //                                             "Please wait we are loading data",
+              //                                       )
+              //                                     : Container(
+              //                                         margin:
+              //                                             const EdgeInsets.only(
+              //                                                 top: 30,
+              //                                                 left: 16,
+              //                                                 right: 16,
+              //                                                 bottom: 110),
+              //                                         decoration: BoxDecoration(
+              //                                           color: Theme.of(context)
+              //                                               .scaffoldBackgroundColor,
+              //                                           borderRadius:
+              //                                               BorderRadius
+              //                                                   .circular(16.0),
+              //                                           boxShadow: const [
+              //                                             BoxShadow(
+              //                                               offset:
+              //                                                   Offset(0, 1),
+              //                                               blurRadius: 8,
+              //                                               color:
+              //                                                   Colors.black12,
+              //                                             ),
+              //                                           ],
+              //                                         ),
+              //                                         child:
+              //                                             DropdownButtonFormField<
+              //                                                 GetDeptsValues>(
+              //                                           validator: (value) {
+              //                                             if (value == null) {
+              //                                               return "Please select a department";
+              //                                             }
+              //                                             return null;
+              //                                           },
+              //                                           decoration:
+              //                                               InputDecoration(
+              //                                             border:
+              //                                                 InputBorder.none,
+              //                                             focusedBorder:
+              //                                                 const OutlineInputBorder(
+              //                                               borderSide:
+              //                                                   BorderSide(
+              //                                                 color: Colors
+              //                                                     .transparent,
+              //                                               ),
+              //                                             ),
+              //                                             enabledBorder:
+              //                                                 const OutlineInputBorder(
+              //                                               borderSide:
+              //                                                   BorderSide(
+              //                                                 color: Colors
+              //                                                     .transparent,
+              //                                               ),
+              //                                             ),
+              //                                             hintStyle: Theme.of(
+              //                                                     context)
+              //                                                 .textTheme
+              //                                                 .labelSmall!
+              //                                                 .merge(
+              //                                                     const TextStyle(
+              //                                                   fontWeight:
+              //                                                       FontWeight
+              //                                                           .w400,
+              //                                                   fontSize: 15.0,
+              //                                                   letterSpacing:
+              //                                                       0.3,
+              //                                                 )),
+              //                                             hintText: _taskDepartController
+              //                                                     .getDeptsList
+              //                                                     .isNotEmpty
+              //                                                 ? 'Select Department'
+              //                                                 : 'No data available',
+              //                                             floatingLabelBehavior:
+              //                                                 FloatingLabelBehavior
+              //                                                     .always,
+              //                                             isDense: true,
+              //                                             label:
+              //                                                 const CustomDropDownLabel(
+              //                                               icon:
+              //                                                   'assets/images/hat.png',
+              //                                               containerColor:
+              //                                                   Color.fromRGBO(
+              //                                                       223,
+              //                                                       251,
+              //                                                       254,
+              //                                                       1),
+              //                                               text: 'Department',
+              //                                               textColor:
+              //                                                   Color.fromRGBO(
+              //                                                       40,
+              //                                                       182,
+              //                                                       200,
+              //                                                       1),
+              //                                             ),
+              //                                           ),
+              //                                           icon: const Padding(
+              //                                             padding:
+              //                                                 EdgeInsets.only(
+              //                                                     top: 3),
+              //                                             child: Icon(
+              //                                               Icons
+              //                                                   .keyboard_arrow_down_rounded,
+              //                                               size: 07,
+              //                                             ),
+              //                                           ),
+              //                                           iconSize: 30,
+              //                                           items: List.generate(
+              //                                               _taskDepartController
+              //                                                   .getDeptsList
+              //                                                   .length,
+              //                                               (index) {
+              //                                             return DropdownMenuItem(
+              //                                                 value: _taskDepartController
+              //                                                         .getDeptsList[
+              //                                                     index],
+              //                                                 child: Padding(
+              //                                                     padding: const EdgeInsets
+              //                                                             .only(
+              //                                                         top: 13,
+              //                                                         left: 5),
+              //                                                     child: Text(
+              //                                                       overflow:
+              //                                                           TextOverflow
+              //                                                               .clip,
+              //                                                       _taskDepartController
+              //                                                           .getDeptsList[
+              //                                                               index]
+              //                                                           .hrmDDepartmentName!,
+              //                                                       style: Theme.of(
+              //                                                               context)
+              //                                                           .textTheme
+              //                                                           .titleSmall!
+              //                                                           .merge(
+              //                                                             const TextStyle(
+              //                                                               fontWeight:
+              //                                                                   FontWeight.w400,
+              //                                                               fontSize:
+              //                                                                   13.0,
+              //                                                               letterSpacing:
+              //                                                                   0.3,
+              //                                                             ),
+              //                                                           ),
+              //                                                     )));
+              //                                           }),
+              //                                           onChanged: (s) async {
+              //                                             setState(() {
+              //                                               selectedDepartment =
+              //                                                   s;
+              //                                               // Reset selected employee when department changes
+              //                                               selectedEmployee =
+              //                                                   null;
+              //                                             });
+              //                                             _taskProjectsController
+              //                                                 .getTaskProjectsList
+              //                                                 .clear();
+              //                                             _taskProjectsController
+              //                                                 .getTaskCategoryList
+              //                                                 .clear();
+              //                                             hrmdIds = s!.hrmDId!;
+              //                                             filterEmployees(s
+              //                                                 .hrmDDepartmentName!);
+              //                                             await getTskPrjtCatgryList(
+              //                                                 base:
+              //                                                     baseUrlFromInsCode(
+              //                                                   'issuemanager',
+              //                                                   widget
+              //                                                       .mskoolController,
+              //                                                 ),
+              //                                                 controller:
+              //                                                     _taskProjectsController,
+              //                                                 userId: widget
+              //                                                     .loginSuccessModel
+              //                                                     .userId!,
+              //                                                 ivrmrtId: widget
+              //                                                     .loginSuccessModel
+              //                                                     .roleId!,
+              //                                                 miId: widget
+              //                                                     .loginSuccessModel
+              //                                                     .mIID!,
+              //                                                 HRME_Id: logInBox!
+              //                                                     .get("EmpId"),
+              //                                                 HRMD_Id:
+              //                                                     s.hrmDId!);
+              //                                           },
+              //                                         ),
+              //                                       );
+              //                           })),
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //               // Only display the employee dropdown if a department is selected
+              //               if (selectedDepartment != null)
+              //                 Column(
+              //                   children: [
+              //                     Obx(
+              //                       () => Visibility(
+              //                         visible: _taskDepartController
+              //                                 .typesTask.value ==
+              //                             "E",
+              //                         child: Container(
+              //                           width: 300,
+              //                           height: 40,
+              //                           decoration: const BoxDecoration(
+              //                             shape: BoxShape.rectangle,
+              //                             color: Color.fromRGBO(12, 54, 238, 1),
+              //                           ),
+              //                           child: const Align(
+              //                             alignment: Alignment.center,
+              //                             child: Text(
+              //                               'Employee Name',
+              //                               style: TextStyle(
+              //                                 fontSize: 14,
+              //                                 fontWeight: FontWeight.bold,
+              //                                 color: Colors.white,
+              //                               ),
+              //                             ),
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     ),
+              //                     Obx(
+              //                       () => Visibility(
+              //                         visible: _taskDepartController
+              //                                 .typesTask.value ==
+              //                             "E",
+              //                         child: Container(
+              //                           decoration: const BoxDecoration(
+              //                             border: Border(
+              //                                 left: BorderSide(
+              //                                     width: 0.5,
+              //                                     color: Colors.black54),
+              //                                 right: BorderSide(
+              //                                     width: 1,
+              //                                     color: Colors.black54),
+              //                                 bottom: BorderSide(
+              //                                     width: 1,
+              //                                     color: Colors.black54)),
+              //                           ),
+              //                           width: 300,
+              //                           height: 210,
+              //                           child: Obx(() => _taskDepartController
+              //                                   .employeeTasksloading.value
+              //                               ? const Center(
+              //                                   child: ErrWidget(
+              //                                     err: {
+              //                                       "errorTitle":
+              //                                           "Unexpected Error Occured",
+              //                                       "errorMsg":
+              //                                           "While loading company we encountered an error"
+              //                                     },
+              //                                   ),
+              //                                 )
+              //                               : _taskDepartController
+              //                                       .getemployeelist.isEmpty
+              //                                   ? const AnimatedProgressWidget(
+              //                                       animationPath:
+              //                                           'assets/json/default.json',
+              //                                       title: 'Loading data',
+              //                                       desc:
+              //                                           "Please wait we are loading data",
+              //                                     )
+              //                                   : Container(
+              //                                       margin:
+              //                                           const EdgeInsets.only(
+              //                                               top: 30,
+              //                                               left: 16,
+              //                                               right: 16,
+              //                                               bottom: 110),
+              //                                       decoration: BoxDecoration(
+              //                                         color: Theme.of(context)
+              //                                             .scaffoldBackgroundColor,
+              //                                         borderRadius:
+              //                                             BorderRadius.circular(
+              //                                                 16.0),
+              //                                         boxShadow: const [
+              //                                           BoxShadow(
+              //                                             offset: Offset(0, 1),
+              //                                             blurRadius: 8,
+              //                                             color: Colors.black12,
+              //                                           ),
+              //                                         ],
+              //                                       ),
+              //                                       child: DropdownButtonFormField<
+              //                                               EmplyeeEnhancementModelValues>(
+              //                                           // value: _taskDepartController.getDeptsList.first,
+              //                                           validator: (value) {
+              //                                             if (value == null) {
+              //                                               return "";
+              //                                             }
+              //                                             return null;
+              //                                           },
+              //                                           decoration:
+              //                                               InputDecoration(
+              //                                             border:
+              //                                                 InputBorder.none,
+              //                                             focusedBorder:
+              //                                                 const OutlineInputBorder(
+              //                                               borderSide:
+              //                                                   BorderSide(
+              //                                                 color: Colors
+              //                                                     .transparent,
+              //                                               ),
+              //                                             ),
+              //                                             enabledBorder:
+              //                                                 const OutlineInputBorder(
+              //                                               borderSide:
+              //                                                   BorderSide(
+              //                                                 color: Colors
+              //                                                     .transparent,
+              //                                               ),
+              //                                             ),
+              //                                             hintStyle: Theme.of(
+              //                                                     context)
+              //                                                 .textTheme
+              //                                                 .labelSmall!
+              //                                                 .merge(const TextStyle(
+              //                                                     fontWeight:
+              //                                                         FontWeight
+              //                                                             .w400,
+              //                                                     fontSize:
+              //                                                         15.0,
+              //                                                     letterSpacing:
+              //                                                         0.3)),
+              //                                             hintText: _taskDepartController
+              //                                                     .getemployeelist
+              //                                                     .isNotEmpty
+              //                                                 ? 'Select Employee'
+              //                                                 : 'No data available',
+              //                                             floatingLabelBehavior:
+              //                                                 FloatingLabelBehavior
+              //                                                     .always,
+              //                                             isDense: true,
+              //                                             label:
+              //                                                 const CustomDropDownLabel(
+              //                                               icon:
+              //                                                   'assets/images/hat.png',
+              //                                               containerColor:
+              //                                                   Color.fromRGBO(
+              //                                                       223,
+              //                                                       251,
+              //                                                       254,
+              //                                                       1),
+              //                                               text: 'Employee',
+              //                                               textColor:
+              //                                                   Color.fromRGBO(
+              //                                                       40,
+              //                                                       182,
+              //                                                       200,
+              //                                                       1),
+              //                                             ),
+              //                                           ),
+              //                                           icon: const Padding(
+              //                                             padding:
+              //                                                 EdgeInsets.only(
+              //                                                     top: 3),
+              //                                             child: Icon(
+              //                                               Icons
+              //                                                   .keyboard_arrow_down_rounded,
+              //                                               size: 07,
+              //                                             ),
+              //                                           ),
+              //                                           iconSize: 30,
+              //                                           items: List.generate(
+              //                                               _taskDepartController
+              //                                                   .getemployeelist
+              //                                                   .length,
+              //                                               (index) {
+              //                                             return DropdownMenuItem(
+              //                                               value: _taskDepartController
+              //                                                       .getemployeelist[
+              //                                                   index],
+              //                                               child: Padding(
+              //                                                 padding:
+              //                                                     const EdgeInsets
+              //                                                             .only(
+              //                                                         top: 13,
+              //                                                         left: 5),
+              //                                                 child: Text(
+              //                                                   overflow:
+              //                                                       TextOverflow
+              //                                                           .clip,
+              //                                                   _taskDepartController
+              //                                                       .getemployeelist[
+              //                                                           index]
+              //                                                       .employeename!,
+              //                                                   style: Theme.of(
+              //                                                           context)
+              //                                                       .textTheme
+              //                                                       .titleSmall!
+              //                                                       .merge(const TextStyle(
+              //                                                           fontWeight:
+              //                                                               FontWeight
+              //                                                                   .w400,
+              //                                                           fontSize:
+              //                                                               13.0,
+              //                                                           letterSpacing:
+              //                                                               0.3)),
+              //                                                 ),
+              //                                               ),
+              //                                             );
+              //                                           }),
+              //                                           onChanged: (s) async {
+              //                                             {
+              //                                               setState(() {
+              //                                                 selectedEmployee =
+              //                                                     s;
+              //                                               });
+              //                                               _taskProjectsController
+              //                                                   .getTaskProjectsList
+              //                                                   .clear();
+              //                                               _taskProjectsController
+              //                                                   .getTaskCategoryList
+              //                                                   .clear();
+              //                                               hrmdIds =
+              //                                                   s!.hrmDId!;
+              //                                               filterEmployees(s
+              //                                                   .employeename!);
+              //                                               getTskPrjtCatgryList(
+              //                                                 base:
+              //                                                     baseUrlFromInsCode(
+              //                                                   'issuemanager',
+              //                                                   widget
+              //                                                       .mskoolController,
+              //                                                 ),
+              //                                                 controller:
+              //                                                     _taskProjectsController,
+              //                                                 userId: widget
+              //                                                     .loginSuccessModel
+              //                                                     .userId!,
+              //                                                 ivrmrtId: widget
+              //                                                     .loginSuccessModel
+              //                                                     .roleId!,
+              //                                                 miId: widget
+              //                                                     .loginSuccessModel
+              //                                                     .mIID!,
+              //                                                 HRME_Id: logInBox!
+              //                                                     .get("EmpId"),
+              //                                                 HRMD_Id:
+              //                                                     s.hrmDId!,
+              //                                               );
+              //                                             }
+              //                                             ;
+              //                                           }),
+              //                                     )),
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+
+              //               Column(
+              //                 children: [
+              //                   Obx(
+              //                     () => Visibility(
+              //                       visible:
+              //                           _taskDepartController.typesTask.value ==
+              //                               "E",
+              //                       child: Container(
+              //                         width: 250,
+              //                         height: 40,
+              //                         decoration: const BoxDecoration(
+              //                           shape: BoxShape.rectangle,
+              //                           color: Color.fromRGBO(12, 54, 238, 1),
+              //                         ),
+              //                         child: const Align(
+              //                           alignment: Alignment.center,
+              //                           child: Text(
+              //                             'Percenatge',
+              //                             style: TextStyle(
+              //                               fontSize: 14,
+              //                               fontWeight: FontWeight.bold,
+              //                               color: Colors.white,
+              //                             ),
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ),
+              //                   Obx(
+              //                     () => Visibility(
+              //                       visible:
+              //                           _taskDepartController.typesTask.value ==
+              //                               "E",
+              //                       child: Container(
+              //                           decoration: const BoxDecoration(
+              //                             border: Border(
+              //                                 left: BorderSide(
+              //                                     width: 0.5,
+              //                                     color: Colors.black54),
+              //                                 right: BorderSide(
+              //                                     width: 1,
+              //                                     color: Colors.black54),
+              //                                 bottom: BorderSide(
+              //                                     width: 1,
+              //                                     color: Colors.black54)),
+              //                           ),
+              //                           width: 250,
+              //                           height: 210,
+              //                           child: Padding(
+              //                             padding: const EdgeInsets.symmetric(
+              //                                 horizontal: 10, vertical: 10),
+              //                             child: TextFormField(
+              //                               validator: (value) {
+              //                                 if (value!.isEmpty) {
+              //                                   return 'Enter Percentage';
+              //                                 }
+
+              //                                 final double enteredValue =
+              //                                     double.parse(value);
+              //                                 if (enteredValue > 100) {
+              //                                   return 'Percentage should not exceed 100%';
+              //                                 }
+
+              //                                 return null;
+              //                               },
+              //                               keyboardType: TextInputType.number,
+              //                               inputFormatters: <
+              //                                   TextInputFormatter>[
+              //                                 FilteringTextInputFormatter
+              //                                     .digitsOnly
+              //                               ],
+              //                               onChanged: (value) {
+              //                                 if (value.isNotEmpty) {
+              //                                   final double enteredValue =
+              //                                       double.parse(value);
+              //                                   if (enteredValue > 100) {
+              //                                     _descritpionETController
+              //                                         .text = '100';
+              //                                     showDialog(
+              //                                       context: context,
+              //                                       builder:
+              //                                           (BuildContext context) {
+              //                                         return AlertDialog(
+              //                                           title: const Text(
+              //                                               'Total Percentage Not Greater Than 100 % !'),
+              //                                           actions: [
+              //                                             TextButton(
+              //                                               onPressed: () {
+              //                                                 Navigator.of(
+              //                                                         context)
+              //                                                     .pop();
+              //                                               },
+              //                                               child: const Text(
+              //                                                   'OK'),
+              //                                             ),
+              //                                           ],
+              //                                         );
+              //                                       },
+              //                                     );
+              //                                   } else {
+              //                                     final double totalDays =
+              //                                         double.parse(
+              //                                             _taskDepartController
+              //                                                 .totalDaysController
+              //                                                 .text);
+              //                                     final double calculatedDays =
+              //                                         calculateDaysToComplete(
+              //                                             totalDays,
+              //                                             enteredValue);
+
+              //                                     // You can use calculatedDays as needed.
+              //                                     print(
+              //                                         'Days to complete: $calculatedDays');
+              //                                   }
+              //                                 }
+              //                               },
+              //                               maxLines: 1,
+              //                               style: Theme.of(context)
+              //                                   .textTheme
+              //                                   .titleSmall!
+              //                                   .merge(
+              //                                     const TextStyle(
+              //                                       fontWeight: FontWeight.w500,
+              //                                       fontSize: 14.0,
+              //                                       letterSpacing: 0.3,
+              //                                       overflow: TextOverflow.clip,
+              //                                     ),
+              //                                   ),
+              //                               decoration: InputDecoration(
+              //                                 hintText: 'Enter Percentage',
+              //                                 hintStyle: Theme.of(context)
+              //                                     .textTheme
+              //                                     .titleSmall!
+              //                                     .merge(
+              //                                       const TextStyle(
+              //                                         fontWeight:
+              //                                             FontWeight.w500,
+              //                                         fontSize: 14.0,
+              //                                         letterSpacing: 0.3,
+              //                                         overflow:
+              //                                             TextOverflow.clip,
+              //                                       ),
+              //                                     ),
+              //                                 border: OutlineInputBorder(
+              //                                   borderRadius:
+              //                                       BorderRadius.circular(10),
+              //                                 ),
+              //                               ),
+              //                               controller:
+              //                                   _descritpionETController,
+              //                             ),
+              //                           )),
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //               Column(
+              //                 children: [
+              //                   Obx(
+              //                     () => Visibility(
+              //                       visible:
+              //                           _taskDepartController.typesTask.value ==
+              //                               "E",
+              //                       child: Container(
+              //                         width: 250,
+              //                         height: 40,
+              //                         decoration: const BoxDecoration(
+              //                           shape: BoxShape.rectangle,
+              //                           color: Color.fromRGBO(12, 54, 238, 1),
+              //                         ),
+              //                         child: const Align(
+              //                           alignment: Alignment.center,
+              //                           child: Text(
+              //                             'Days',
+              //                             style: TextStyle(
+              //                               fontSize: 14,
+              //                               fontWeight: FontWeight.bold,
+              //                               color: Colors.white,
+              //                             ),
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ),
+              //                   Obx(
+              //                     () => Visibility(
+              //                       visible:
+              //                           _taskDepartController.typesTask.value ==
+              //                               "E",
+              //                       child: Container(
+              //                         decoration: const BoxDecoration(
+              //                           border: Border(
+              //                               left: BorderSide(
+              //                                   width: 0.5,
+              //                                   color: Colors.black54),
+              //                               right: BorderSide(
+              //                                   width: 1,
+              //                                   color: Colors.black54),
+              //                               bottom: BorderSide(
+              //                                   width: 1,
+              //                                   color: Colors.black54)),
+              //                         ),
+              //                         width: 250,
+              //                         height: 210,
+              //                         child: Padding(
+              //                           padding: const EdgeInsets.symmetric(
+              //                               horizontal: 20, vertical: 10),
+              //                           child: TextFormField(
+              //                             readOnly: true,
+              //                             keyboardType: TextInputType.number,
+              //                             decoration: InputDecoration(
+              //                               border: OutlineInputBorder(
+              //                                 borderRadius:
+              //                                     BorderRadius.circular(10),
+              //                               ),
+              //                               labelStyle: Theme.of(context)
+              //                                   .textTheme
+              //                                   .labelSmall!
+              //                                   .merge(
+              //                                     const TextStyle(
+              //                                       fontWeight: FontWeight.w400,
+              //                                       fontSize: 16.0,
+              //                                       letterSpacing: 0.3,
+              //                                       color: Colors.black,
+              //                                     ),
+              //                                   ),
+              //                             ),
+              //                             style: Theme.of(context)
+              //                                 .textTheme
+              //                                 .labelSmall!
+              //                                 .merge(
+              //                                   const TextStyle(
+              //                                     fontWeight: FontWeight.w400,
+              //                                     fontSize: 16.0,
+              //                                     letterSpacing: 0.3,
+              //                                     color: Colors.black,
+              //                                   ),
+              //                                 ),
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //               Column(
+              //                 children: [
+              //                   Obx(
+              //                     () => Visibility(
+              //                       visible:
+              //                           _taskDepartController.typesTask.value ==
+              //                               "E",
+              //                       child: Container(
+              //                         width: 250,
+              //                         height: 40,
+              //                         decoration: const BoxDecoration(
+              //                           shape: BoxShape.rectangle,
+              //                           color: Color.fromRGBO(12, 54, 238, 1),
+              //                         ),
+              //                         child: const Align(
+              //                           alignment: Alignment.center,
+              //                           child: Text(
+              //                             'Hours',
+              //                             style: TextStyle(
+              //                               fontSize: 14,
+              //                               fontWeight: FontWeight.bold,
+              //                               color: Colors.white,
+              //                             ),
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ),
+              //                   Obx(
+              //                     () => Visibility(
+              //                       visible:
+              //                           _taskDepartController.typesTask.value ==
+              //                               "E",
+              //                       child: Container(
+              //                         decoration: const BoxDecoration(
+              //                           border: Border(
+              //                               left: BorderSide(
+              //                                   width: 0.5,
+              //                                   color: Colors.black54),
+              //                               right: BorderSide(
+              //                                   width: 1,
+              //                                   color: Colors.black54),
+              //                               bottom: BorderSide(
+              //                                   width: 1,
+              //                                   color: Colors.black54)),
+              //                         ),
+              //                         width: 250,
+              //                         height: 210,
+              //                         child: Container(
+              //                           width: 210,
+              //                           height: 210,
+              //                           decoration: const BoxDecoration(
+              //                             border: Border(
+              //                                 right: BorderSide(
+              //                                     width: 1,
+              //                                     color: Colors.black54),
+              //                                 bottom: BorderSide(
+              //                                     width: 1,
+              //                                     color: Colors.black54)),
+              //                           ),
+              //                           child: Align(
+              //                             child: Row(
+              //                               mainAxisAlignment:
+              //                                   MainAxisAlignment.center,
+              //                               children: [
+              //                                 Column(
+              //                                   mainAxisAlignment:
+              //                                       MainAxisAlignment.center,
+              //                                   children: [
+              //                                     SizedBox(
+              //                                       width: 60,
+              //                                       child: TextField(
+              //                                         inputFormatters: [
+              //                                           FilteringTextInputFormatter
+              //                                               .allow(RegExp(
+              //                                                   '[0-9]')),
+              //                                           LengthLimitingTextInputFormatter(
+              //                                               2),
+              //                                         ],
+              //                                         keyboardType:
+              //                                             const TextInputType
+              //                                                     .numberWithOptions(
+              //                                                 decimal: false),
+              //                                         maxLines: 1,
+              //                                         controller: hoursEt,
+              //                                         style: Theme.of(context)
+              //                                             .textTheme
+              //                                             .titleSmall!
+              //                                             .merge(
+              //                                                 const TextStyle(
+              //                                               fontWeight:
+              //                                                   FontWeight.w100,
+              //                                               fontSize: 14.0,
+              //                                               letterSpacing: 0.3,
+              //                                               overflow:
+              //                                                   TextOverflow
+              //                                                       .clip,
+              //                                             )),
+              //                                         decoration: InputDecoration(
+              //                                             border: OutlineInputBorder(
+              //                                                 borderRadius:
+              //                                                     BorderRadius
+              //                                                         .circular(
+              //                                                             5))),
+              //                                       ),
+              //                                     ),
+              //                                     const SizedBox(
+              //                                       height: 5,
+              //                                     ),
+              //                                     const Text("HH")
+              //                                   ],
+              //                                 ),
+              //                                 const SizedBox(
+              //                                   width: 5,
+              //                                 ),
+              //                                 Column(
+              //                                   mainAxisAlignment:
+              //                                       MainAxisAlignment.center,
+              //                                   children: [
+              //                                     SizedBox(
+              //                                       width: 60,
+              //                                       child: TextField(
+              //                                         inputFormatters: [
+              //                                           FilteringTextInputFormatter
+              //                                               .allow(RegExp(
+              //                                                   '[0-9]')),
+              //                                           LengthLimitingTextInputFormatter(
+              //                                               2),
+              //                                         ],
+              //                                         keyboardType:
+              //                                             const TextInputType
+              //                                                     .numberWithOptions(
+              //                                                 decimal: false),
+              //                                         maxLines: 1,
+              //                                         decoration: InputDecoration(
+              //                                             border: OutlineInputBorder(
+              //                                                 borderRadius:
+              //                                                     BorderRadius
+              //                                                         .circular(
+              //                                                             5))),
+              //                                         controller: minutesEt,
+              //                                         style: Theme.of(context)
+              //                                             .textTheme
+              //                                             .titleSmall!
+              //                                             .merge(
+              //                                                 const TextStyle(
+              //                                               fontWeight:
+              //                                                   FontWeight.w100,
+              //                                               fontSize: 14.0,
+              //                                               letterSpacing: 0.3,
+              //                                               overflow:
+              //                                                   TextOverflow
+              //                                                       .clip,
+              //                                             )),
+              //                                       ),
+              //                                     ),
+              //                                     const SizedBox(
+              //                                       height: 5,
+              //                                     ),
+              //                                     const Text('MM')
+              //                                   ],
+              //                                 ),
+              //                               ],
+              //                             ),
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //               Column(
+              //                 children: [
+              //                   Obx(
+              //                     () => Visibility(
+              //                       visible:
+              //                           _taskDepartController.typesTask.value ==
+              //                               "E",
+              //                       child: Container(
+              //                         width: 250,
+              //                         height: 40,
+              //                         decoration: const BoxDecoration(
+              //                           shape: BoxShape.rectangle,
+              //                           color: Color.fromRGBO(12, 54, 238, 1),
+              //                         ),
+              //                         child: const Align(
+              //                           alignment: Alignment.center,
+              //                           child: Text(
+              //                             'Start and End Date',
+              //                             style: TextStyle(
+              //                               fontSize: 14,
+              //                               fontWeight: FontWeight.bold,
+              //                               color: Colors.white,
+              //                             ),
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ),
+              //                   Obx(
+              //                     () => Visibility(
+              //                       visible:
+              //                           _taskDepartController.typesTask.value ==
+              //                               "E",
+              //                       child: Container(
+              //                         decoration: const BoxDecoration(
+              //                           border: Border(
+              //                               left: BorderSide(
+              //                                   width: 0.5,
+              //                                   color: Colors.black54),
+              //                               right: BorderSide(
+              //                                   width: 1,
+              //                                   color: Colors.black54),
+              //                               bottom: BorderSide(
+              //                                   width: 1,
+              //                                   color: Colors.black54)),
+              //                         ),
+              //                         width: 250,
+              //                         height: 210,
+              //                         child: Align(
+              //                           alignment: Alignment.center,
+              //                           child: Column(
+              //                             mainAxisAlignment:
+              //                                 MainAxisAlignment.center,
+              //                             children: [
+              //                               SizedBox(
+              //                                 width: 200,
+              //                                 child: TextField(
+              //                                   onTap: () {
+              //                                     fromDate();
+              //                                   },
+              //                                   readOnly: true,
+              //                                   controller: selectFromDate,
+              //                                   decoration: InputDecoration(
+              //                                     border: OutlineInputBorder(
+              //                                         borderRadius:
+              //                                             BorderRadius.circular(
+              //                                                 5)),
+              //                                     suffixIcon: Padding(
+              //                                       padding:
+              //                                           const EdgeInsets.all(
+              //                                               12),
+              //                                       child: InkWell(
+              //                                         onTap: () async {
+              //                                           fromDate();
+              //                                         },
+              //                                         child: SvgPicture.asset(
+              //                                           "assets/svg/calendar_icon.svg",
+              //                                           color: const Color(
+              //                                               0xFF3E78AA),
+              //                                         ),
+              //                                       ),
+              //                                     ),
+              //                                     hintText: "Select From Date",
+              //                                     hintStyle: Theme.of(context)
+              //                                         .textTheme
+              //                                         .titleSmall!
+              //                                         .merge(const TextStyle(
+              //                                           fontWeight:
+              //                                               FontWeight.w100,
+              //                                           fontSize: 16.0,
+              //                                           letterSpacing: 0.3,
+              //                                           overflow:
+              //                                               TextOverflow.clip,
+              //                                         )),
+              //                                   ),
+              //                                   style: Theme.of(context)
+              //                                       .textTheme
+              //                                       .titleSmall!
+              //                                       .merge(const TextStyle(
+              //                                         fontWeight:
+              //                                             FontWeight.w100,
+              //                                         fontSize: 16.0,
+              //                                         letterSpacing: 0.3,
+              //                                         overflow:
+              //                                             TextOverflow.clip,
+              //                                       )),
+              //                                 ),
+              //                               ),
+              //                               const SizedBox(
+              //                                 height: 10,
+              //                               ),
+              //                               SizedBox(
+              //                                 width: 200,
+              //                                 child: TextField(
+              //                                   onTap: () {
+              //                                     toDate();
+              //                                   },
+              //                                   readOnly: true,
+              //                                   controller: selectToDate,
+              //                                   decoration: InputDecoration(
+              //                                     border: OutlineInputBorder(
+              //                                         borderRadius:
+              //                                             BorderRadius.circular(
+              //                                                 5)),
+              //                                     suffixIcon: Padding(
+              //                                       padding:
+              //                                           const EdgeInsets.all(
+              //                                               12),
+              //                                       child: InkWell(
+              //                                         onTap: () async {
+              //                                           toDate();
+              //                                         },
+              //                                         child: SvgPicture.asset(
+              //                                           "assets/svg/calendar_icon.svg",
+              //                                           color: const Color(
+              //                                               0xFF3E78AA),
+              //                                         ),
+              //                                       ),
+              //                                     ),
+              //                                     hintText: "Select To Date",
+              //                                     hintStyle: Theme.of(context)
+              //                                         .textTheme
+              //                                         .titleSmall!
+              //                                         .merge(const TextStyle(
+              //                                           fontWeight:
+              //                                               FontWeight.w100,
+              //                                           fontSize: 14.0,
+              //                                           letterSpacing: 0.3,
+              //                                           overflow:
+              //                                               TextOverflow.clip,
+              //                                         )),
+              //                                   ),
+              //                                   style: Theme.of(context)
+              //                                       .textTheme
+              //                                       .titleSmall!
+              //                                       .merge(const TextStyle(
+              //                                         fontWeight:
+              //                                             FontWeight.w100,
+              //                                         fontSize: 14.0,
+              //                                         letterSpacing: 0.3,
+              //                                         overflow:
+              //                                             TextOverflow.clip,
+              //                                       )),
+              //                                 ),
+              //                               ),
+              //                             ],
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //               Column(
+              //                 children: [
+              //                   Obx(
+              //                     () => Visibility(
+              //                       visible:
+              //                           _taskDepartController.typesTask.value ==
+              //                               "E",
+              //                       child: Container(
+              //                         width: 250,
+              //                         height: 40,
+              //                         decoration: const BoxDecoration(
+              //                           shape: BoxShape.rectangle,
+              //                           color: Color.fromRGBO(12, 54, 238, 1),
+              //                         ),
+              //                         child: const Align(
+              //                           alignment: Alignment.center,
+              //                           child: Text(
+              //                             'Level',
+              //                             style: TextStyle(
+              //                               fontSize: 14,
+              //                               fontWeight: FontWeight.bold,
+              //                               color: Colors.white,
+              //                             ),
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ),
+              //                   Obx(
+              //                     () => Visibility(
+              //                       visible:
+              //                           _taskDepartController.typesTask.value ==
+              //                               "E",
+              //                       child: Container(
+              //                         decoration: const BoxDecoration(
+              //                           border: Border(
+              //                               left: BorderSide(
+              //                                   width: 0.5,
+              //                                   color: Colors.black54),
+              //                               right: BorderSide(
+              //                                   width: 1,
+              //                                   color: Colors.black54),
+              //                               bottom: BorderSide(
+              //                                   width: 1,
+              //                                   color: Colors.black54)),
+              //                         ),
+              //                         width: 250,
+              //                         height: 210,
+              //                         child: Padding(
+              //                           padding: const EdgeInsets.symmetric(
+              //                               horizontal: 20, vertical: 10),
+              //                           child: TextFormField(
+              //                             readOnly: true,
+              //                             keyboardType: TextInputType.number,
+              //                             decoration: InputDecoration(
+              //                               border: OutlineInputBorder(
+              //                                 borderRadius:
+              //                                     BorderRadius.circular(10),
+              //                               ),
+              //                               labelStyle: Theme.of(context)
+              //                                   .textTheme
+              //                                   .labelSmall!
+              //                                   .merge(
+              //                                     const TextStyle(
+              //                                       fontWeight: FontWeight.w400,
+              //                                       fontSize: 16.0,
+              //                                       letterSpacing: 0.3,
+              //                                       color: Colors.black,
+              //                                     ),
+              //                                   ),
+              //                             ),
+              //                             style: Theme.of(context)
+              //                                 .textTheme
+              //                                 .labelSmall!
+              //                                 .merge(
+              //                                   const TextStyle(
+              //                                     fontWeight: FontWeight.w400,
+              //                                     fontSize: 16.0,
+              //                                     letterSpacing: 0.3,
+              //                                     color: Colors.black,
+              //                                   ),
+              //                                 ),
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+
+              //               Column(
+              //                 children: [
+              //                   Obx(
+              //                     () => Visibility(
+              //                       visible:
+              //                           _taskDepartController.typesTask.value ==
+              //                               "E",
+              //                       child: Container(
+              //                         width: 250,
+              //                         height: 40,
+              //                         decoration: const BoxDecoration(
+              //                           shape: BoxShape.rectangle,
+              //                           color: Color.fromRGBO(12, 54, 238, 1),
+              //                         ),
+              //                         child: const Align(
+              //                           alignment: Alignment.center,
+              //                           child: Text(
+              //                             'Remark',
+              //                             style: TextStyle(
+              //                               fontSize: 14,
+              //                               fontWeight: FontWeight.bold,
+              //                               color: Colors.white,
+              //                             ),
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ),
+              //                   Obx(
+              //                     () => Visibility(
+              //                       visible:
+              //                           _taskDepartController.typesTask.value ==
+              //                               "E",
+              //                       child: Container(
+              //                         decoration: const BoxDecoration(
+              //                           border: Border(
+              //                               left: BorderSide(
+              //                                   width: 0.5,
+              //                                   color: Colors.black54),
+              //                               right: BorderSide(
+              //                                   width: 1,
+              //                                   color: Colors.black54),
+              //                               bottom: BorderSide(
+              //                                   width: 1,
+              //                                   color: Colors.black54)),
+              //                         ),
+              //                         width: 250,
+              //                         height: 210,
+              //                         child: Align(
+              //                           alignment: Alignment.center,
+              //                           child: Padding(
+              //                             padding: const EdgeInsets.symmetric(
+              //                                 horizontal: 10),
+              //                             child: TextField(
+              //                               style: Theme.of(context)
+              //                                   .textTheme
+              //                                   .titleSmall!
+              //                                   .merge(const TextStyle(
+              //                                     fontWeight: FontWeight.w100,
+              //                                     fontSize: 16.0,
+              //                                     letterSpacing: 0.3,
+              //                                     overflow: TextOverflow.clip,
+              //                                   )),
+              //                               decoration: InputDecoration(
+              //                                   border: OutlineInputBorder(
+              //                                       borderRadius:
+              //                                           BorderRadius.circular(
+              //                                               5))),
+              //                               controller: etRemarkControllers,
+              //                               maxLines: 6,
+              //                             ),
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //               const SizedBox(height: 30),
+
+              //               Column(
+              //                 children: [
+              //                   Obx(
+              //                     () => Visibility(
+              //                       visible:
+              //                           _taskDepartController.typesTask.value ==
+              //                               "E",
+              //                       child: Container(
+              //                         width: 150,
+              //                         height: 50,
+              //                         decoration: const BoxDecoration(
+              //                           shape: BoxShape.rectangle,
+              //                           color: Color.fromRGBO(12, 54, 238, 1),
+              //                           borderRadius: BorderRadius.only(
+              //                             topRight: Radius.circular(10),
+              //                           ),
+              //                         ),
+              //                         child: Stack(
+              //                           alignment: Alignment.center,
+              //                           children: const [
+              //                             Align(
+              //                               alignment: Alignment.center,
+              //                               child: Text(
+              //                                 'Action',
+              //                                 style: TextStyle(
+              //                                   fontSize: 14,
+              //                                   fontWeight: FontWeight.bold,
+              //                                   color: Colors.white,
+              //                                 ),
+              //                               ),
+              //                             ),
+              //                           ],
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ),
+              //                   Obx(() => Visibility(
+              //                         visible: _taskDepartController
+              //                                 .typesTask.value ==
+              //                             "E",
+              //                         child: Container(
+              //                           decoration: const BoxDecoration(
+              //                             border: Border(
+              //                               left: BorderSide(
+              //                                   width: 0.5,
+              //                                   color: Colors.black54),
+              //                               right: BorderSide(
+              //                                   width: 1,
+              //                                   color: Colors.black54),
+              //                               bottom: BorderSide(
+              //                                   width: 1,
+              //                                   color: Colors.black54),
+              //                             ),
+              //                           ),
+              //                           width: 150,
+              //                           height: 70,
+              //                           child: Row(
+              //                               mainAxisAlignment:
+              //                                   MainAxisAlignment.center,
+              //                               children: [
+              //                                 IconButton(
+              //                                   icon: const Icon(Icons.add,
+              //                                       color: Colors.black),
+              //                                   onPressed: () {
+              //                                     setState(() {
+              //                                       if (tables.isNotEmpty) {
+              //                                         tables.removeLast();
+              //                                       }
+              //                                     });
+              //                                   },
+              //                                 ),
+              //                               ]),
+              //                         ),
+              //                       ))
+              //                 ],
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
 
               Align(
                 alignment: Alignment.bottomRight,
