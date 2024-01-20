@@ -121,7 +121,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     return '$hours.$remainingMinutes';
   }
 
-  getListData() async {
+  Future<void> getListData() async {
     plannedEffort = 0.0;
     totalHour = 0.0;
     newPlannedEffort = 0.0;
@@ -624,13 +624,11 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                           lastDate: DateTime(3050),
                                         );
                                         if (toDate != null) {
-                                          setState(() {
-                                            _endDate.text =
-                                                "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
-                                            calculateWeekdaysDifference(
-                                                fromDate!, toDate!);
-                                            getListData();
-                                          });
+                                          _endDate.text =
+                                              "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                          calculateWeekdaysDifference(
+                                              fromDate!, toDate!);
+                                          await getListData();
                                         }
                                       } else {
                                         Fluttertoast.showToast(
@@ -653,13 +651,11 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                               fieldHintText: 'Date:Month:Year',
                                             );
                                             if (toDate != null) {
-                                              setState(() {
-                                                _endDate.text =
-                                                    "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
-                                                calculateWeekdaysDifference(
-                                                    fromDate!, toDate!);
-                                                getListData();
-                                              });
+                                              _endDate.text =
+                                                  "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                              calculateWeekdaysDifference(
+                                                  fromDate!, toDate!);
+                                              await getListData();
                                             }
                                           } else {
                                             Fluttertoast.showToast(
@@ -1310,11 +1306,9 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               const SizedBox(height: 40),
               MSkollBtn(
                   title: "OK",
-                  onPress: () {
-                    setState(() {
-                      Get.back();
-                      getListData();
-                    });
+                  onPress: () async {
+                    Get.back();
+                    await getListData();
                   })
             ],
           ),
