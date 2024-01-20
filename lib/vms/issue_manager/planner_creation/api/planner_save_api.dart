@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -57,6 +58,7 @@ class PlannerSaveAPI {
           } else if (response.data['ismtpL_Id'] > 0) {
             Fluttertoast.showToast(msg: "Record updated successfully");
           }
+          Get.back();
         }
       } else {
         Fluttertoast.showToast(msg: "Something Went Wrong");
