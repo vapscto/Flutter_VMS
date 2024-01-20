@@ -89,7 +89,7 @@ class AuthenticateUserApi {
         //     ),
         //   ),
         // );
-
+        logInBox!.put("isLoggedIn", false);
         return Future.error({
           "errorTitle": "Password Expired",
           "type": "exp",
@@ -108,7 +108,7 @@ class AuthenticateUserApi {
       //     "userName": userName,
       //   });
       // }
-
+      logInBox!.put("isLoggedIn", false);
       return Future.error({
         "errorTitle": response.data['message'],
         "type": "oth",

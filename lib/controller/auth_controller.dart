@@ -23,6 +23,7 @@ class AuthenticationController extends GetxController {
         return true;
       } else if (value.data!.responseCode == 104) {
         Fluttertoast.showToast(msg: "Incorrect password".tr);
+        logInBox!.put("isLoggedIn", false);
         return false;
       } else if (value.data!.responseCode == 107) {
         Fluttertoast.showToast(msg: "Exceeded password attempts".tr);

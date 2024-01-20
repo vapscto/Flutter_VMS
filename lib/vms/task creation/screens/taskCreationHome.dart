@@ -3898,7 +3898,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
               //                     ),
               //                   ],
               //                 ),
-
               //               Column(
               //                 children: [
               //                   Obx(
@@ -3955,13 +3954,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
               //                                 if (value!.isEmpty) {
               //                                   return 'Enter Percentage';
               //                                 }
-
               //                                 final double enteredValue =
               //                                     double.parse(value);
               //                                 if (enteredValue > 100) {
               //                                   return 'Percentage should not exceed 100%';
               //                                 }
-
               //                                 return null;
               //                               },
               //                               keyboardType: TextInputType.number,
@@ -4008,7 +4005,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
               //                                         calculateDaysToComplete(
               //                                             totalDays,
               //                                             enteredValue);
-
               //                                     // You can use calculatedDays as needed.
               //                                     print(
               //                                         'Days to complete: $calculatedDays');
@@ -4577,7 +4573,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
               //                   ),
               //                 ],
               //               ),
-
               //               Column(
               //                 children: [
               //                   Obx(
@@ -4657,7 +4652,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
               //                 ],
               //               ),
               //               const SizedBox(height: 30),
-
               //               Column(
               //                 children: [
               //                   Obx(
