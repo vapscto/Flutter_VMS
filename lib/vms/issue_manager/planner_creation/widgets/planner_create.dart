@@ -918,37 +918,11 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               label: Align(
                 alignment: Alignment.center,
                 child: Checkbox(
-                  checkColor: Colors.indigo,
-                  shape: ContinuousRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  value: selectAll,
-                  onChanged: (newValue) {
-                    setState(() {
-                      selectAll = newValue!;
-                      if (selectAll) {
-                        for (var i = 0;
-                            i <
-                                widget.plannerCreationController.createdTaskList
-                                    .length;
-                            i++) {
-                          checkList.add(i);
-                          widget.plannerCreationController.createdTaskList[i]
-                              .flag = true;
-                        }
-                      } else {
-                        for (var i = 0;
-                            i <
-                                widget.plannerCreationController.createdTaskList
-                                    .length;
-                            i++) {
-                          widget.plannerCreationController.createdTaskList[i]
-                              .flag = false;
-                        }
-                        checkList.clear();
-                      }
-                    });
-                  },
-                ),
+                    checkColor: Colors.white,
+                    shape: ContinuousRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    value: true,
+                    onChanged: null),
               ),
             ),
             const DataColumn(
@@ -1021,43 +995,8 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                             checkColor: Colors.indigo,
                             shape: ContinuousRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
-                            value: (widget.plannerCreationController
-                                        .createdTaskList[index].iSMTPLTAId ==
-                                    0)
-                                ? widget
-                                    .plannerCreationController.createdTaskList
-                                    .elementAt(index)
-                                    .flag
-                                : true,
-                            onChanged: (widget.plannerCreationController
-                                        .createdTaskList[index].iSMTPLTAId ==
-                                    0)
-                                ? (val) {
-                                    setState(() {
-                                      widget.plannerCreationController
-                                          .createdTaskList[index].flag = val!;
-                                      if (checkList.contains(index)) {
-                                        checkList.remove(index);
-                                        widget
-                                            .plannerCreationController
-                                            .createdTaskList[index]
-                                            .flag = false;
-                                        if (widget.plannerCreationController
-                                                .createdTaskList.length !=
-                                            checkList.length) {
-                                          selectAll = false;
-                                        }
-                                      } else {
-                                        checkList.add(index);
-                                        if (widget.plannerCreationController
-                                                .createdTaskList.length ==
-                                            checkList.length) {
-                                          selectAll = true;
-                                        }
-                                      }
-                                    });
-                                  }
-                                : null,
+                            value: true,
+                            onChanged: null,
                           )),
                     ),
                     DataCell(SizedBox(
