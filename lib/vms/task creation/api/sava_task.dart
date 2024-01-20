@@ -206,6 +206,7 @@ Future<bool> saveTask({
     logger.e(e.message);
     return false;
   } on Exception catch (e) {
+    logger.e(e);
     return false;
   }
 }

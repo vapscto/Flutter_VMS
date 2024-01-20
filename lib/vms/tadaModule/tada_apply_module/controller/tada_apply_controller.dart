@@ -9,7 +9,6 @@ import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/model/check_plan
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/model/tada_applied_data_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/model/tada_edit_image_model.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/model/tada_saved_data_model.dart';
-import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 
 class TadaApplyDataController extends GetxController {
   RxBool isStateLoading = RxBool(false);
@@ -261,9 +260,9 @@ class UploadAttachment {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ISMTCRAT_Attatchment'] = this.iSMTCRATAttatchment;
-    data['ISMTCRAT_File'] = this.iSMTCRATFile;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ISMTCRAT_Attatchment'] = iSMTCRATAttatchment;
+    data['ISMTCRAT_File'] = iSMTCRATFile;
     return data;
   }
 }

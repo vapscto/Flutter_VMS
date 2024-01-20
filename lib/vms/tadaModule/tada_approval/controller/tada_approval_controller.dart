@@ -7,8 +7,6 @@ import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_time.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/widgets/tada_approval_table.dart';
 
-import '../../../../main.dart';
-
 class TadaApprovalController extends GetxController {
   RxBool isDataLoading = RxBool(false);
   RxBool isDetailsLoading = RxBool(false);

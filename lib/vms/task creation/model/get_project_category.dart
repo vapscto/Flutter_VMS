@@ -9,16 +9,16 @@ class GeTskProjects {
     if (json['\$values'] != null) {
       values = <GeTskProjectsValues>[];
       json['\$values'].forEach((v) {
-        values!.add(  GeTskProjectsValues.fromJson(v));
+        values!.add(GeTskProjectsValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -98,33 +98,32 @@ class GeTskProjectsValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ismmcltpR_Id'] = this.ismmcltpRId;
-    data['ismmclT_Id'] = this.ismmclTId;
-    data['ismmmD_Id'] = this.ismmmDId;
-    data['ismmpR_Id'] = this.ismmpRId;
-    data['ismmmD_ModuleHeadId'] = this.ismmmDModuleHeadId;
-    data['ismmcltpR_ActiveFlag'] = this.ismmcltpRActiveFlag;
-    data['module_ActiveFlag'] = this.moduleActiveFlag;
-    data['ismmcltpR_CreatedBy'] = this.ismmcltpRCreatedBy;
-    data['ismmcltpR_UpdatedBy'] = this.ismmcltpRUpdatedBy;
-    data['mI_Id'] = this.mIId;
-    data['hrmD_Id'] = this.hrmDId;
-    data['ismmpR_ProjectName'] = this.ismmpRProjectName;
-    data['createdDate'] = this.createdDate;
-    data['updatedDate'] = this.updatedDate;
-    data['createdBy'] = this.createdBy;
-    data['updatedBy'] = this.updatedBy;
-    data['active_Flag'] = this.activeFlag;
-    data['ivrmM_Id'] = this.ivrmMId;
-    data['duplicate'] = this.duplicate;
-    data['userId'] = this.userId;
-    data['returnval'] = this.returnval;
-    data['projectid'] = this.projectid;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ismmcltpR_Id'] = ismmcltpRId;
+    data['ismmclT_Id'] = ismmclTId;
+    data['ismmmD_Id'] = ismmmDId;
+    data['ismmpR_Id'] = ismmpRId;
+    data['ismmmD_ModuleHeadId'] = ismmmDModuleHeadId;
+    data['ismmcltpR_ActiveFlag'] = ismmcltpRActiveFlag;
+    data['module_ActiveFlag'] = moduleActiveFlag;
+    data['ismmcltpR_CreatedBy'] = ismmcltpRCreatedBy;
+    data['ismmcltpR_UpdatedBy'] = ismmcltpRUpdatedBy;
+    data['mI_Id'] = mIId;
+    data['hrmD_Id'] = hrmDId;
+    data['ismmpR_ProjectName'] = ismmpRProjectName;
+    data['createdDate'] = createdDate;
+    data['updatedDate'] = updatedDate;
+    data['createdBy'] = createdBy;
+    data['updatedBy'] = updatedBy;
+    data['active_Flag'] = activeFlag;
+    data['ivrmM_Id'] = ivrmMId;
+    data['duplicate'] = duplicate;
+    data['userId'] = userId;
+    data['returnval'] = returnval;
+    data['projectid'] = projectid;
     return data;
   }
 }
-
 
 class GeTskCategory {
   String? type;
@@ -137,16 +136,16 @@ class GeTskCategory {
     if (json['\$values'] != null) {
       values = <GeTskCategoryValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new GeTskCategoryValues.fromJson(v));
+        values!.add(GeTskCategoryValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -202,23 +201,21 @@ class GeTskCategoryValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ismmtcaT_Id'] = this.ismmtcaTId;
-    data['mI_Id'] = this.mIId;
-    data['hrmD_Id'] = this.hrmDId;
-    data['ismmtcaT_TaskCategoryName'] = this.ismmtcaTTaskCategoryName;
-    data['ismmtcaT_TaskPercentage'] = this.ismmtcaTTaskPercentage;
-    data['ismmtcaT_TCRemarks'] = this.ismmtcaTTCRemarks;
-    data['ismmtcaT_ActiveFlag'] = this.ismmtcaTActiveFlag;
-    data['ismmtcaT_CreatedBy'] = this.ismmtcaTCreatedBy;
-    data['ismmtcaT_UpdatedBy'] = this.ismmtcaTUpdatedBy;
-    data['ismmtcaT_CreatedDate'] = this.ismmtcaTCreatedDate;
-    data['ismmtcaT_UpdatedDate'] = this.ismmtcaTUpdatedDate;
-    data['ismmtcaT_DurationFlg'] = this.ismmtcaTDurationFlg;
-    data['ismmtcaT_CompulsoryFlg'] = this.ismmtcaTCompulsoryFlg;
-    data['ismmtcaT_EachTaskMaxDuration'] = this.ismmtcaTEachTaskMaxDuration;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ismmtcaT_Id'] = ismmtcaTId;
+    data['mI_Id'] = mIId;
+    data['hrmD_Id'] = hrmDId;
+    data['ismmtcaT_TaskCategoryName'] = ismmtcaTTaskCategoryName;
+    data['ismmtcaT_TaskPercentage'] = ismmtcaTTaskPercentage;
+    data['ismmtcaT_TCRemarks'] = ismmtcaTTCRemarks;
+    data['ismmtcaT_ActiveFlag'] = ismmtcaTActiveFlag;
+    data['ismmtcaT_CreatedBy'] = ismmtcaTCreatedBy;
+    data['ismmtcaT_UpdatedBy'] = ismmtcaTUpdatedBy;
+    data['ismmtcaT_CreatedDate'] = ismmtcaTCreatedDate;
+    data['ismmtcaT_UpdatedDate'] = ismmtcaTUpdatedDate;
+    data['ismmtcaT_DurationFlg'] = ismmtcaTDurationFlg;
+    data['ismmtcaT_CompulsoryFlg'] = ismmtcaTCompulsoryFlg;
+    data['ismmtcaT_EachTaskMaxDuration'] = ismmtcaTEachTaskMaxDuration;
     return data;
   }
 }
-
- 
