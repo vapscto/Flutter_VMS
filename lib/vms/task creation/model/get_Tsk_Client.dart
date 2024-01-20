@@ -1,4 +1,4 @@
- class GeTskClient {
+class GeTskClient {
   String? type;
   List<GeTskClientValues>? values;
 
@@ -9,16 +9,16 @@
     if (json['\$values'] != null) {
       values = <GeTskClientValues>[];
       json['\$values'].forEach((v) {
-        values!.add(  GeTskClientValues.fromJson(v));
+        values!.add(GeTskClientValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -203,68 +203,67 @@ class GeTskClientValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['returnval'] = this.returnval;
-    data['transfer'] = this.transfer;
-    data['already_cnt'] = this.alreadyCnt;
-    data['taskeditable'] = this.taskeditable;
-    data['assigntaskeditable'] = this.assigntaskeditable;
-    data['userId'] = this.userId;
-    data['hrmdC_ID'] = this.hrmdCID;
-    data['hrmdC_Order'] = this.hrmdCOrder;
-    data['ivrmrT_Id'] = this.ivrmrTId;
-    data['localIndianTime'] = this.localIndianTime;
-    data['ismmaC_Id'] = this.ismmaCId;
-    data['mI_Id'] = this.mIId;
-    data['asmaY_Id'] = this.asmaYId;
-    data['hrmD_Id'] = this.hrmDId;
-    data['ismmpR_Id'] = this.ismmpRId;
-    data['hrmE_Id'] = this.hrmEId;
-    data['ivrmM_Id'] = this.ivrmMId;
-    data['ismmmD_Id'] = this.ismmmDId;
-    data['ismmmD_ModuleHeadId'] = this.ismmmDModuleHeadId;
-    data['ismmclT_Id'] = this.ismmclTId;
-    data['ismciM_IEList'] = this.ismciMIEList;
-    data['ismmclT_ClientName'] = this.ismmclTClientName;
-    data['ismtcR_Id'] = this.ismtcRId;
-    data['hrmpR_Id'] = this.hrmpRId;
-    data['ismtcR_ReOpenFlg'] = this.ismtcRReOpenFlg;
-    data['ismtcR_ActiveFlg'] = this.ismtcRActiveFlg;
-    data['taskCount'] = this.taskCount;
-    data['openCount'] = this.openCount;
-    data['closedCount'] = this.closedCount;
-    data['completedCount'] = this.completedCount;
-    data['inprogressCount'] = this.inprogressCount;
-    data['ismtcrastO_Id'] = this.ismtcrastOId;
-    data['ismtcrastO_AssignedDate'] = this.ismtcrastOAssignedDate;
-    data['ismtcrastO_AssignedBy'] = this.ismtcrastOAssignedBy;
-    data['ismtcrastO_EffortInHrs'] = this.ismtcrastOEffortInHrs;
-    data['ismtcrastO_ActiveFlg'] = this.ismtcrastOActiveFlg;
-    data['ismtcrtrtO_Id'] = this.ismtcrtrtOId;
-    data['ismtcrtrtO_TransferredDate'] = this.ismtcrtrtOTransferredDate;
-    data['ismtcrtrtO_TransferredBy'] = this.ismtcrtrtOTransferredBy;
-    data['ismtcrtrtO_EffortInHrs'] = this.ismtcrtrtOEffortInHrs;
-    data['ismtcrtrtO_ActiveFlg'] = this.ismtcrtrtOActiveFlg;
-    data['ismtcrtrtO_CreatedBy'] = this.ismtcrtrtOCreatedBy;
-    data['ismtcrtrtO_UpdatedBy'] = this.ismtcrtrtOUpdatedBy;
-    data['ismtcrreS_Id'] = this.ismtcrreSId;
-    data['ismtcrreS_ResponseDate'] = this.ismtcrreSResponseDate;
-    data['ismtcrreS_ActiveFlg'] = this.ismtcrreSActiveFlg;
-    data['ismtcrreS_CreatedBy'] = this.ismtcrreSCreatedBy;
-    data['ismtcrreS_UpdatedBy'] = this.ismtcrreSUpdatedBy;
-    data['eachTaskMaxDuration'] = this.eachTaskMaxDuration;
-    data['delettask'] = this.delettask;
-    data['byMecount'] = this.byMecount;
-    data['toMecount'] = this.toMecount;
-    data['mycountonly'] = this.mycountonly;
-    data['transferMecount'] = this.transferMecount;
-    data['transferMecountonly'] = this.transferMecountonly;
-    data['transferbycount'] = this.transferbycount;
-    data['hrmE_To'] = this.hrmETo;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['returnval'] = returnval;
+    data['transfer'] = transfer;
+    data['already_cnt'] = alreadyCnt;
+    data['taskeditable'] = taskeditable;
+    data['assigntaskeditable'] = assigntaskeditable;
+    data['userId'] = userId;
+    data['hrmdC_ID'] = hrmdCID;
+    data['hrmdC_Order'] = hrmdCOrder;
+    data['ivrmrT_Id'] = ivrmrTId;
+    data['localIndianTime'] = localIndianTime;
+    data['ismmaC_Id'] = ismmaCId;
+    data['mI_Id'] = mIId;
+    data['asmaY_Id'] = asmaYId;
+    data['hrmD_Id'] = hrmDId;
+    data['ismmpR_Id'] = ismmpRId;
+    data['hrmE_Id'] = hrmEId;
+    data['ivrmM_Id'] = ivrmMId;
+    data['ismmmD_Id'] = ismmmDId;
+    data['ismmmD_ModuleHeadId'] = ismmmDModuleHeadId;
+    data['ismmclT_Id'] = ismmclTId;
+    data['ismciM_IEList'] = ismciMIEList;
+    data['ismmclT_ClientName'] = ismmclTClientName;
+    data['ismtcR_Id'] = ismtcRId;
+    data['hrmpR_Id'] = hrmpRId;
+    data['ismtcR_ReOpenFlg'] = ismtcRReOpenFlg;
+    data['ismtcR_ActiveFlg'] = ismtcRActiveFlg;
+    data['taskCount'] = taskCount;
+    data['openCount'] = openCount;
+    data['closedCount'] = closedCount;
+    data['completedCount'] = completedCount;
+    data['inprogressCount'] = inprogressCount;
+    data['ismtcrastO_Id'] = ismtcrastOId;
+    data['ismtcrastO_AssignedDate'] = ismtcrastOAssignedDate;
+    data['ismtcrastO_AssignedBy'] = ismtcrastOAssignedBy;
+    data['ismtcrastO_EffortInHrs'] = ismtcrastOEffortInHrs;
+    data['ismtcrastO_ActiveFlg'] = ismtcrastOActiveFlg;
+    data['ismtcrtrtO_Id'] = ismtcrtrtOId;
+    data['ismtcrtrtO_TransferredDate'] = ismtcrtrtOTransferredDate;
+    data['ismtcrtrtO_TransferredBy'] = ismtcrtrtOTransferredBy;
+    data['ismtcrtrtO_EffortInHrs'] = ismtcrtrtOEffortInHrs;
+    data['ismtcrtrtO_ActiveFlg'] = ismtcrtrtOActiveFlg;
+    data['ismtcrtrtO_CreatedBy'] = ismtcrtrtOCreatedBy;
+    data['ismtcrtrtO_UpdatedBy'] = ismtcrtrtOUpdatedBy;
+    data['ismtcrreS_Id'] = ismtcrreSId;
+    data['ismtcrreS_ResponseDate'] = ismtcrreSResponseDate;
+    data['ismtcrreS_ActiveFlg'] = ismtcrreSActiveFlg;
+    data['ismtcrreS_CreatedBy'] = ismtcrreSCreatedBy;
+    data['ismtcrreS_UpdatedBy'] = ismtcrreSUpdatedBy;
+    data['eachTaskMaxDuration'] = eachTaskMaxDuration;
+    data['delettask'] = delettask;
+    data['byMecount'] = byMecount;
+    data['toMecount'] = toMecount;
+    data['mycountonly'] = mycountonly;
+    data['transferMecount'] = transferMecount;
+    data['transferMecountonly'] = transferMecountonly;
+    data['transferbycount'] = transferbycount;
+    data['hrmE_To'] = hrmETo;
     return data;
   }
 }
-
 
 class TaskModuleModel {
   String? type;
@@ -277,16 +276,16 @@ class TaskModuleModel {
     if (json['\$values'] != null) {
       values = <TaskModuleModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new TaskModuleModelValues.fromJson(v));
+        values!.add(TaskModuleModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -417,46 +416,46 @@ class TaskModuleModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['returnval'] = this.returnval;
-    data['roleflag'] = this.roleflag;
-    data['completed'] = this.completed;
-    data['pending'] = this.pending;
-    data['already_cnt'] = this.alreadyCnt;
-    data['userId'] = this.userId;
-    data['ivrmrT_Id'] = this.ivrmrTId;
-    data['plannerextapproval'] = this.plannerextapproval;
-    data['plannerMaxdate'] = this.plannerMaxdate;
-    data['ismmaC_Id'] = this.ismmaCId;
-    data['mI_Id'] = this.mIId;
-    data['miId'] = this.miId;
-    data['hrmE_Id'] = this.hrmEId;
-    data['asmaY_Id'] = this.asmaYId;
-    data['hrmD_Id'] = this.hrmDId;
-    data['ismmpR_Id'] = this.ismmpRId;
-    data['ivrmM_Id'] = this.ivrmMId;
-    data['ivrmM_ModuleName'] = this.ivrmMModuleName;
-    data['ismmmD_Id'] = this.ismmmDId;
-    data['ismmmD_ModuleHeadId'] = this.ismmmDModuleHeadId;
-    data['ismtcR_Id'] = this.ismtcRId;
-    data['hrmpR_Id'] = this.hrmpRId;
-    data['ismmtcaT_Id'] = this.ismmtcaTId;
-    data['ismtcR_ReOpenFlg'] = this.ismtcRReOpenFlg;
-    data['ismtcR_ActiveFlg'] = this.ismtcRActiveFlg;
-    data['ismtcR_CreatedBy'] = this.ismtcRCreatedBy;
-    data['ismtcR_UpdatedBy'] = this.ismtcRUpdatedBy;
-    data['ismtcrcL_Id'] = this.ismtcrcLId;
-    data['ismmclT_Id'] = this.ismmclTId;
-    data['ismtcrcL_ActiveFlg'] = this.ismtcrcLActiveFlg;
-    data['ismtcrcL_CreatedBy'] = this.ismtcrcLCreatedBy;
-    data['ismtcrcL_UpdatedBy'] = this.ismtcrcLUpdatedBy;
-    data['ismtcraT_Id'] = this.ismtcraTId;
-    data['ismtcraT_ActiveFlg'] = this.ismtcraTActiveFlg;
-    data['ismtcraT_CreatedBy'] = this.ismtcraTCreatedBy;
-    data['ismtcraT_UpdatedBy'] = this.ismtcraTUpdatedBy;
-    data['prioritycheck'] = this.prioritycheck;
-    data['ismciM_IEList'] = this.ismciMIEList;
-    data['effortinhrs'] = this.effortinhrs;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['returnval'] = returnval;
+    data['roleflag'] = roleflag;
+    data['completed'] = completed;
+    data['pending'] = pending;
+    data['already_cnt'] = alreadyCnt;
+    data['userId'] = userId;
+    data['ivrmrT_Id'] = ivrmrTId;
+    data['plannerextapproval'] = plannerextapproval;
+    data['plannerMaxdate'] = plannerMaxdate;
+    data['ismmaC_Id'] = ismmaCId;
+    data['mI_Id'] = mIId;
+    data['miId'] = miId;
+    data['hrmE_Id'] = hrmEId;
+    data['asmaY_Id'] = asmaYId;
+    data['hrmD_Id'] = hrmDId;
+    data['ismmpR_Id'] = ismmpRId;
+    data['ivrmM_Id'] = ivrmMId;
+    data['ivrmM_ModuleName'] = ivrmMModuleName;
+    data['ismmmD_Id'] = ismmmDId;
+    data['ismmmD_ModuleHeadId'] = ismmmDModuleHeadId;
+    data['ismtcR_Id'] = ismtcRId;
+    data['hrmpR_Id'] = hrmpRId;
+    data['ismmtcaT_Id'] = ismmtcaTId;
+    data['ismtcR_ReOpenFlg'] = ismtcRReOpenFlg;
+    data['ismtcR_ActiveFlg'] = ismtcRActiveFlg;
+    data['ismtcR_CreatedBy'] = ismtcRCreatedBy;
+    data['ismtcR_UpdatedBy'] = ismtcRUpdatedBy;
+    data['ismtcrcL_Id'] = ismtcrcLId;
+    data['ismmclT_Id'] = ismmclTId;
+    data['ismtcrcL_ActiveFlg'] = ismtcrcLActiveFlg;
+    data['ismtcrcL_CreatedBy'] = ismtcrcLCreatedBy;
+    data['ismtcrcL_UpdatedBy'] = ismtcrcLUpdatedBy;
+    data['ismtcraT_Id'] = ismtcraTId;
+    data['ismtcraT_ActiveFlg'] = ismtcraTActiveFlg;
+    data['ismtcraT_CreatedBy'] = ismtcraTCreatedBy;
+    data['ismtcraT_UpdatedBy'] = ismtcraTUpdatedBy;
+    data['prioritycheck'] = prioritycheck;
+    data['ismciM_IEList'] = ismciMIEList;
+    data['effortinhrs'] = effortinhrs;
     return data;
   }
 }

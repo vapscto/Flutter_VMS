@@ -27,7 +27,6 @@ import 'package:m_skool_flutter/vms/dr_genration/screens/dailyrpt_home.dart';
 import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/health_chequeup/screens/healtha_check_up.dart';
-import 'package:m_skool_flutter/vms/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/online_leave/screen/apply_leave_home.dart';

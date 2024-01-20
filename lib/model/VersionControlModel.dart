@@ -1,16 +1,14 @@
-/// message : "success"
-/// code : 100
-/// data : {"setting":{"_id":"5fbb607a36dc1c7b852db323","version":[{"active":true,"forceUpdate":false,"name":"android","version":"1.0.2+3","redirectUrl":"https://google.com","createdAt":7387482374},{"active":true,"forceUpdate":false,"name":"ios","version":"1.0.2+3","redirectUrl":"https://google.com","createdAt":7387482374}],"centerRadius":5000},"responseCode":109}
-
+// ignore: file_names
 class VersionControlModel {
   VersionControlModel({
-      String? message, 
-      int? code, 
-      Data? data,}){
+    String? message,
+    int? code,
+    Data? data,
+  }) {
     _message = message;
     _code = code;
     _data = data;
-}
+  }
 
   VersionControlModel.fromJson(dynamic json) {
     _message = json['message'];
@@ -34,7 +32,6 @@ class VersionControlModel {
     }
     return map;
   }
-
 }
 
 /// setting : {"_id":"5fbb607a36dc1c7b852db323","version":[{"active":true,"forceUpdate":false,"name":"android","version":"1.0.2+3","redirectUrl":"https://google.com","createdAt":7387482374},{"active":true,"forceUpdate":false,"name":"ios","version":"1.0.2+3","redirectUrl":"https://google.com","createdAt":7387482374}],"centerRadius":5000}
@@ -42,14 +39,16 @@ class VersionControlModel {
 
 class Data {
   Data({
-      Setting? setting, 
-      int? responseCode,}){
+    Setting? setting,
+    int? responseCode,
+  }) {
     _setting = setting;
     _responseCode = responseCode;
-}
+  }
 
   Data.fromJson(dynamic json) {
-    _setting = json['setting'] != null ? Setting.fromJson(json['setting']) : null;
+    _setting =
+        json['setting'] != null ? Setting.fromJson(json['setting']) : null;
     _responseCode = json['responseCode'];
   }
   Setting? _setting;
@@ -66,7 +65,6 @@ class Data {
     map['responseCode'] = _responseCode;
     return map;
   }
-
 }
 
 /// _id : "5fbb607a36dc1c7b852db323"
@@ -75,13 +73,14 @@ class Data {
 
 class Setting {
   Setting({
-      String? id, 
-      List<Version>? version, 
-      int? centerRadius,}){
+    String? id,
+    List<Version>? version,
+    int? centerRadius,
+  }) {
     _id = id;
     _version = version;
     _centerRadius = centerRadius;
-}
+  }
 
   Setting.fromJson(dynamic json) {
     _id = json['_id'];
@@ -110,7 +109,6 @@ class Setting {
     map['centerRadius'] = _centerRadius;
     return map;
   }
-
 }
 
 /// active : true
@@ -122,19 +120,20 @@ class Setting {
 
 class Version {
   Version({
-      bool? active, 
-      bool? forceUpdate, 
-      String? name, 
-      String? version, 
-      String? redirectUrl, 
-      int? createdAt,}){
+    bool? active,
+    bool? forceUpdate,
+    String? name,
+    String? version,
+    String? redirectUrl,
+    int? createdAt,
+  }) {
     _active = active;
     _forceUpdate = forceUpdate;
     _name = name;
     _version = version;
     _redirectUrl = redirectUrl;
     _createdAt = createdAt;
-}
+  }
 
   Version.fromJson(dynamic json) {
     _active = json['active'];
@@ -168,5 +167,4 @@ class Version {
     map['createdAt'] = _createdAt;
     return map;
   }
-
 }

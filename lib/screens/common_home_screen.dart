@@ -14,7 +14,6 @@ import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/vms/profile/screens/profile_screen.dart';
 import 'package:m_skool_flutter/vms/punch_report/api/punch_api.dart';
 import 'package:m_skool_flutter/vms/punch_report/controller/punch_filter_controller.dart';
-import 'package:m_skool_flutter/vms/punch_report/screens/employee_punch_report.dart';
 import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/vms/utils/common_drawer.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';

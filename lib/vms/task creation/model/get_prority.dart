@@ -9,16 +9,16 @@ class GetPrority {
     if (json['\$values'] != null) {
       values = <GetProrityValues>[];
       json['\$values'].forEach((v) {
-        values!.add(  GetProrityValues.fromJson(v));
+        values!.add(GetProrityValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -59,16 +59,16 @@ class GetProrityValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['hrmpR_Id'] = this.hrmpRId;
-    data['mI_Id'] = this.mIId;
-    data['hrmP_Name'] = this.hrmPName;
-    data['hrmP_Order'] = this.hrmPOrder;
-    data['hrmP_ActiveFlag'] = this.hrmPActiveFlag;
-    data['hrmP_CreatedBy'] = this.hrmPCreatedBy;
-    data['hrmP_UpdatedBy'] = this.hrmPUpdatedBy;
-    data['createdDate'] = this.createdDate;
-    data['updatedDate'] = this.updatedDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['hrmpR_Id'] = hrmpRId;
+    data['mI_Id'] = mIId;
+    data['hrmP_Name'] = hrmPName;
+    data['hrmP_Order'] = hrmPOrder;
+    data['hrmP_ActiveFlag'] = hrmPActiveFlag;
+    data['hrmP_CreatedBy'] = hrmPCreatedBy;
+    data['hrmP_UpdatedBy'] = hrmPUpdatedBy;
+    data['createdDate'] = createdDate;
+    data['updatedDate'] = updatedDate;
     return data;
   }
 }
