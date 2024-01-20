@@ -7,7 +7,6 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
-import 'package:m_skool_flutter/student/coe/screen/coe_home.dart';
 import 'package:m_skool_flutter/student/fees/screens/fee_analysis_screen.dart';
 import 'package:m_skool_flutter/student/fees/screens/fee_receipt_home.dart';
 import 'package:m_skool_flutter/student/fees/screens/online_payment_screen.dart';
@@ -214,10 +213,10 @@ class NotificationScreen extends StatelessWidget {
         break;
 
       case "coe":
-        Get.to(() => CoeHome(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-            ));
+        // Get.to(() => CoeHome(
+        //       loginSuccessModel: loginSuccessModel,
+        //       mskoolController: mskoolController,
+        //     ));
         break;
 
       case "syllabus":

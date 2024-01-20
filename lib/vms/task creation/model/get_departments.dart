@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:image_picker/image_picker.dart';
 
 class GetDepts {
@@ -13,16 +11,16 @@ class GetDepts {
     if (json['\$values'] != null) {
       values = <GetDeptsValues>[];
       json['\$values'].forEach((v) {
-        values!.add(  GetDeptsValues.fromJson(v));
+        values!.add(GetDeptsValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -156,79 +154,80 @@ class GetDeptsValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['returnval'] = this.returnval;
-    data['roleflag'] = this.roleflag;
-    data['completed'] = this.completed;
-    data['pending'] = this.pending;
-    data['already_cnt'] = this.alreadyCnt;
-    data['userId'] = this.userId;
-    data['ivrmrT_Id'] = this.ivrmrTId;
-    data['plannerextapproval'] = this.plannerextapproval;
-    data['plannerMaxdate'] = this.plannerMaxdate;
-    data['hrmD_DepartmentName'] = this.hrmDDepartmentName;
-    data['ismmaC_Id'] = this.ismmaCId;
-    data['mI_Id'] = this.mIId;
-    data['miId'] = this.miId;
-    data['hrmE_Id'] = this.hrmEId;
-    data['asmaY_Id'] = this.asmaYId;
-    data['hrmD_Id'] = this.hrmDId;
-    data['hrmdC_ID'] = this.hrmdCID;
-    data['ismmpR_Id'] = this.ismmpRId;
-    data['ivrmM_Id'] = this.ivrmMId;
-    data['ismmmD_Id'] = this.ismmmDId;
-    data['ismmmD_ModuleHeadId'] = this.ismmmDModuleHeadId;
-    data['ismtcR_Id'] = this.ismtcRId;
-    data['hrmpR_Id'] = this.hrmpRId;
-    data['ismmtcaT_Id'] = this.ismmtcaTId;
-    data['ismtcR_ReOpenFlg'] = this.ismtcRReOpenFlg;
-    data['ismtcR_ActiveFlg'] = this.ismtcRActiveFlg;
-    data['ismtcR_CreatedBy'] = this.ismtcRCreatedBy;
-    data['ismtcR_UpdatedBy'] = this.ismtcRUpdatedBy;
-    data['ismtcrcL_Id'] = this.ismtcrcLId;
-    data['ismmclT_Id'] = this.ismmclTId;
-    data['ismtcrcL_ActiveFlg'] = this.ismtcrcLActiveFlg;
-    data['ismtcrcL_CreatedBy'] = this.ismtcrcLCreatedBy;
-    data['ismtcrcL_UpdatedBy'] = this.ismtcrcLUpdatedBy;
-    data['ismtcraT_Id'] = this.ismtcraTId;
-    data['ismtcraT_ActiveFlg'] = this.ismtcraTActiveFlg;
-    data['ismtcraT_CreatedBy'] = this.ismtcraTCreatedBy;
-    data['ismtcraT_UpdatedBy'] = this.ismtcraTUpdatedBy;
-    data['prioritycheck'] = this.prioritycheck;
-    data['ismciM_IEList'] = this.ismciMIEList;
-    data['effortinhrs'] = this.effortinhrs;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['returnval'] = returnval;
+    data['roleflag'] = roleflag;
+    data['completed'] = completed;
+    data['pending'] = pending;
+    data['already_cnt'] = alreadyCnt;
+    data['userId'] = userId;
+    data['ivrmrT_Id'] = ivrmrTId;
+    data['plannerextapproval'] = plannerextapproval;
+    data['plannerMaxdate'] = plannerMaxdate;
+    data['hrmD_DepartmentName'] = hrmDDepartmentName;
+    data['ismmaC_Id'] = ismmaCId;
+    data['mI_Id'] = mIId;
+    data['miId'] = miId;
+    data['hrmE_Id'] = hrmEId;
+    data['asmaY_Id'] = asmaYId;
+    data['hrmD_Id'] = hrmDId;
+    data['hrmdC_ID'] = hrmdCID;
+    data['ismmpR_Id'] = ismmpRId;
+    data['ivrmM_Id'] = ivrmMId;
+    data['ismmmD_Id'] = ismmmDId;
+    data['ismmmD_ModuleHeadId'] = ismmmDModuleHeadId;
+    data['ismtcR_Id'] = ismtcRId;
+    data['hrmpR_Id'] = hrmpRId;
+    data['ismmtcaT_Id'] = ismmtcaTId;
+    data['ismtcR_ReOpenFlg'] = ismtcRReOpenFlg;
+    data['ismtcR_ActiveFlg'] = ismtcRActiveFlg;
+    data['ismtcR_CreatedBy'] = ismtcRCreatedBy;
+    data['ismtcR_UpdatedBy'] = ismtcRUpdatedBy;
+    data['ismtcrcL_Id'] = ismtcrcLId;
+    data['ismmclT_Id'] = ismmclTId;
+    data['ismtcrcL_ActiveFlg'] = ismtcrcLActiveFlg;
+    data['ismtcrcL_CreatedBy'] = ismtcrcLCreatedBy;
+    data['ismtcrcL_UpdatedBy'] = ismtcrcLUpdatedBy;
+    data['ismtcraT_Id'] = ismtcraTId;
+    data['ismtcraT_ActiveFlg'] = ismtcraTActiveFlg;
+    data['ismtcraT_CreatedBy'] = ismtcraTCreatedBy;
+    data['ismtcraT_UpdatedBy'] = ismtcraTUpdatedBy;
+    data['prioritycheck'] = prioritycheck;
+    data['ismciM_IEList'] = ismciMIEList;
+    data['effortinhrs'] = effortinhrs;
     return data;
   }
 }
 
-class AtachmentFile{
+class AtachmentFile {
   int? id;
   String? FileName;
   XFile? file;
- AtachmentFile({required this.id,required this.FileName,   this.file}) ;
+  AtachmentFile({required this.id, required this.FileName, this.file});
 }
+
 class UploadAttachment {
   String? iSMTCRATAttatchment;
   String? iSMTCRATFile;
 
-  UploadAttachment({ required this.iSMTCRATAttatchment,required this.iSMTCRATFile});
+  UploadAttachment(
+      {required this.iSMTCRATAttatchment, required this.iSMTCRATFile});
 
   UploadAttachment.fromJson(Map<String, dynamic> json) {
     iSMTCRATAttatchment = json['ISMTCRAT_Attatchment'];
     iSMTCRATFile = json['ISMTCRAT_File'];
   }
- 
-factory  UploadAttachment.fromMap(Map<String, dynamic> map) {
-  return UploadAttachment(
-iSMTCRATAttatchment: map['ISMTCRAT_Attatchment'] as String,
-iSMTCRATFile:map['ISMTCRAT_File'] as String
-  );
-}
+
+  factory UploadAttachment.fromMap(Map<String, dynamic> map) {
+    return UploadAttachment(
+        iSMTCRATAttatchment: map['ISMTCRAT_Attatchment'] as String,
+        iSMTCRATFile: map['ISMTCRAT_File'] as String);
+  }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ISMTCRAT_Attatchment'] = this.iSMTCRATAttatchment;
-    data['ISMTCRAT_File'] = this.iSMTCRATFile;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ISMTCRAT_Attatchment'] = iSMTCRATAttatchment;
+    data['ISMTCRAT_File'] = iSMTCRATFile;
     return data;
   }
 }
