@@ -67,6 +67,23 @@ class TaskListAPI {
             var val = assignedTaskList.values!.elementAt(i);
             val.iSMTCRASTOEffortInHrs = double.parse(
                 convertDecimalToTimeInPlanner(val.iSMTCRASTOEffortInHrs!));
+            // Date Calculation
+
+            if (val.iSMTCRASTOStartDate == null ||
+                val.iSMTCRASTOStartDate == '') {
+              startDate = getCurrentDate();
+            } else {
+              startDate = DateFormat('dd-MM-yyyy')
+                  .format(DateTime.parse(val.iSMTCRASTOStartDate!));
+            }
+
+            if (val.iSMTCRASTOEndDate == null || val.iSMTCRASTOEndDate == '') {
+              endDate = getCurrentDate();
+            } else {
+              endDate = DateFormat('dd-MM-yyyy')
+                  .format(DateTime.parse(val.iSMTCRASTOEndDate!));
+            }
+            //
             if (val.iSMTPLTAPreviousTask == 1) {
               plannerCreationController.addDataToList(val, startDate, endDate);
               logger.i('1');
@@ -306,4 +323,8 @@ String convertDecimalToTimeInPlanner(double decimalHours) {
   String hoursStr = hours.toString().padLeft(2, '0');
   String minutesStr = minutes.toString().padLeft(2, '0');
   return '$hoursStr.$minutesStr';
+}
+
+String getCurrentDate() {
+  return DateFormat('dd-MM-yyyy').format(DateTime.now());
 }

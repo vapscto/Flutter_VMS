@@ -962,19 +962,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               var i = index + 1;
               var data = widget.plannerCreationController.createdTaskList
                   .elementAt(index);
-              // convert to date format
-              DateTime startDt = DateTime.parse(
-                  data.iSMTPLTAStartDate!.contains('1900-01-01T00:00:00')
-                      ? data.iSMTCRASTOStartDate.toString()
-                      : data.iSMTPLTAStartDate.toString());
-              var startDate =
-                  '${numberList[startDt.day]}:${numberList[startDt.month]}:${startDt.year}';
-              DateTime endDt = DateTime.parse(
-                  data.iSMTPLTAEndDate!.contains('1900-01-01T00:00:00')
-                      ? data.iSMTCRASTOEndDate.toString()
-                      : data.iSMTPLTAEndDate!);
-              var endDate =
-                  '${numberList[endDt.day]}:${numberList[endDt.month]}:${endDt.year}';
               id = data.iSMTPLTAId!;
               DateTime dt =
                   DateTime.parse(data.iSMTCRASTOAssignedDate.toString());
@@ -1074,18 +1061,22 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                     )),
                     DataCell(Text(data.assignedby!)),
                     DataCell(
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: startDate, style: Get.textTheme.titleSmall!),
-                        TextSpan(
-                            text: ' TO ',
-                            style: Get.textTheme.titleSmall!
-                                .copyWith(color: Colors.red)),
-                        TextSpan(
-                            text: endDate,
-                            style: Get.textTheme.titleSmall!.copyWith()),
-                      ])),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        child: RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: data.iSMTCRASTOStartDate,
+                              style: Get.textTheme.titleSmall!),
+                          TextSpan(
+                              text: ' TO ',
+                              style: Get.textTheme.titleSmall!
+                                  .copyWith(color: Colors.red)),
+                          TextSpan(
+                              text: data.iSMTCRASTOEndDate,
+                              style: Get.textTheme.titleSmall!.copyWith()),
+                        ])),
+                      ),
                     ),
                     DataCell(Text(
                         '${data.iSMTCRASTOEffortInHrs!.toStringAsFixed(2).replaceAll(".", ":")} Hr')),

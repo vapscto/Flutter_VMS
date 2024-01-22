@@ -52,6 +52,7 @@ Future<bool> saveTask({
   required String ismtcrHour,
   required String ismtcrDay,
   required int ismtcrMainGroupTask,
+  required List<Map<String, dynamic>> multiTask,
 }) async {
   final Dio ins = getGlobalDio();
   var dataMap;
@@ -59,10 +60,39 @@ Future<bool> saveTask({
   List<Map<String, dynamic>> att = [];
   List<UploadHwCwModel> uploadAttachment = [];
   logger.d(apiUrl);
-
+  logger.v({
+    "transnumbconfigurationsettingsss": trnsNumConfig,
+    "UserId": userID,
+    "Role_flag": "S",
+    "roletype": roletype,
+    "IVRMRT_Id": ivrmrtId,
+    "plannerextapproval": false,
+    "plannerMaxdate": "0001-01-01T00:00:00",
+    "MI_Id": miId,
+    "HRME_Id": hrme,
+    "ASMAY_Id": academicYear,
+    "HRMD_Id": HRMD_Id,
+    "HRMDC_ID": null,
+    "ISMMPR_Id": ISMMPR_Id,
+    "IVRMM_Id": IVRMM_Id,
+    "ISMTCR_BugOREnhancementFlg": ISMTCR_BugOREnhancementFlg,
+    "assignto": assignto,
+    "ISMTCR_CreationDate": ISMTCR_CreationDate,
+    "ISMTCR_Title": ISMTCR_Title,
+    "HRMPR_Id": HRMPR_Id,
+    "ISMMTCAT_Id": ISMMTCAT_Id,
+    "ISMTCR_Desc": ISMTCR_Desc,
+    "ISMTCR_Status": "Open",
+    "ISMTCRCL_Id": 0,
+    "ISMMCLT_Id": ISMMCLT_Id,
+    "attachmentArray": att,
+    "ISMTCR_Hours": ismtcrHour,
+    "ISMTCR_Days": ismtcrDay,
+    "ISMTCR_MainGroupTaskFlg": ismtcrMainGroupTask,
+    "MulttaskDepartments": multiTask
+  });
   for (var element in controller.addListBrowser) {
     if (element.FileName == "") {
-      print("File not exist");
     } else {
       try {
         uploadAttachment
@@ -191,7 +221,8 @@ Future<bool> saveTask({
       "attachmentArray": att,
       "ISMTCR_Hours": ismtcrHour,
       "ISMTCR_Days": ismtcrDay,
-      "ISMTCR_MainGroupTaskFlg": ismtcrMainGroupTask
+      "ISMTCR_MainGroupTaskFlg": ismtcrMainGroupTask,
+      "MulttaskDepartments": multiTask
     };
   }
 
