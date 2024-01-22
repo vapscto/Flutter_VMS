@@ -81,17 +81,48 @@ class PreviousDrReport {
       if (response.data['getsearchdailyreport'] == null) {
         controller.searchTaskLoading(true);
       } else if (response.data['getsearchdailyreport'] != null) {
-        controller.searchTaskLoading(false);
-        SearchPreviousTaskModel searchPreviousTaskModel =
-            SearchPreviousTaskModel.fromJson(
-                response.data['getsearchdailyreport']);
-        controller.searchTask(searchPreviousTaskModel.values!);
-      }
-      if (response.data['droveralldetailsdatewise'] != null) {
         SearchPreviousTaskDetailsModel searchPreviousTaskDetailsModel =
             SearchPreviousTaskDetailsModel.fromJson(
                 response.data['droveralldetailsdatewise']);
         controller.previousTaskDetails(searchPreviousTaskDetailsModel.values!);
+        SearchPreviousTaskModel searchPreviousTaskModel =
+            SearchPreviousTaskModel.fromJson(
+                response.data['getsearchdailyreport']);
+        controller.searchTask(searchPreviousTaskModel.values!);
+        double totalDrHrs = 0;
+        double totalApprovedHrs = 0;
+        for (var dd in searchPreviousTaskModel.values!) {
+          double decimalTimeTot = dd.efforts!;
+          totalDrHrs += decimalTimeTot;
+
+          if (dd.iSMDRPTApprovedTime != null && dd.iSMDRPTApprovedTime != "") {
+            double decimalTimeTotApproved = dd.iSMDRPTApprovedTime!;
+            totalApprovedHrs += decimalTimeTotApproved;
+          }
+        }
+        int totalDrHr = totalDrHrs.toInt();
+        int totalDrMin = ((totalDrHrs - totalDrHr) * 60).round();
+
+        int totalDrApprovedHr = totalApprovedHrs.toInt();
+        int totalDrApprovedMin =
+            ((totalApprovedHrs - totalDrApprovedHr) * 60).round();
+
+        // Calculate and update rejected hours
+        controller.totalDrApproveHrs =
+            '$totalDrApprovedHr:$totalDrApprovedMin Hrs';
+        controller.totalDrHrs = '$totalDrHr:$totalDrMin Hrs';
+
+        // Calculate and update rejected hours
+        double rejectedHrs = totalDrHrs - totalApprovedHrs;
+        int totalDrRejectedHr = rejectedHrs.toInt();
+        int totalDrRejectedMin =
+            ((rejectedHrs - totalDrRejectedHr) * 60).round();
+
+        (totalDrApprovedHr != 0)
+            ? controller.totalDrRejectedHrs =
+                '$totalDrRejectedHr:$totalDrRejectedMin Hrs'
+            : "0.0 Hrs";
+        controller.searchTaskLoading(false);
       }
     } on Exception catch (e) {
       logger.e(e.toString());

@@ -37,11 +37,6 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
     super.dispose();
   }
 
-  double totalEffort = 0.0;
-  double totalEffort1 = 0.0;
-  double totalApprovedEffort = 0.0;
-  double totalApprovedEffort1 = 0.0;
-  double totalRejectedEffort = 0.0;
   int appHours = 0;
   int appMinutes = 0;
   int count1 = 0;
@@ -59,18 +54,8 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
   double rCount3 = 0;
   double rCount4 = 0;
   // calculate hour
-  double _calculateHour(double data) {
-    int hours = data.toInt();
-    int minutes = ((data - hours) * 60).toInt();
-    return double.parse('$hours.$minutes');
-  }
 
   _getList(DateTime dt) async {
-    totalEffort = 0.0;
-    totalEffort1 = 0.0;
-    totalApprovedEffort = 0.0;
-    totalRejectedEffort = 0.0;
-    totalApprovedEffort1 = 0.0;
     widget.controller.searchTaskList.clear();
     widget.controller.searchpreviousTaskDetailsList.clear();
     widget.controller.searchTaskLoading(true);
@@ -82,14 +67,6 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
         controller: widget.controller);
     date = await getDateNeed(DateTime.parse(
         widget.controller.searchpreviousTaskDetailsList.first.ismdrptdWDate!));
-    for (int i = 0; i < widget.controller.searchTaskList.length; i++) {
-      var val = widget.controller.searchTaskList.elementAt(i);
-      totalEffort1 += val.efforts!;
-      totalEffort = _calculateHour(totalEffort1);
-      totalApprovedEffort1 += val.iSMDRPTApprovedTime!;
-      totalApprovedEffort = _calculateHour(totalApprovedEffort1);
-    }
-    totalRejectedEffort = totalEffort - totalApprovedEffort;
     widget.controller.searchTaskLoading(false);
   }
 
@@ -108,7 +85,8 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
                   await showDatePicker(
                     context: context,
                     firstDate: DateTime(2000),
-                    lastDate: DateTime.now().subtract(const Duration(days: 1)),
+                    lastDate:
+                        DateTime.now(), //.subtract(const Duration(days: 1)),
                     initialDate:
                         DateTime.now().subtract(const Duration(days: 1)),
                   ).then((newValue) async {
@@ -195,7 +173,7 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
                               text: 'Daily Report Time Taken :- ',
                               style: Get.textTheme.titleSmall!),
                           TextSpan(
-                              text: '${totalEffort.toStringAsFixed(2)} Hrs',
+                              text: '${widget.controller.totalDrHrs} ',
                               style: Get.textTheme.titleSmall!.copyWith(
                                   color: Theme.of(context).primaryColor)),
                         ])),
@@ -205,8 +183,7 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
                               text: 'Daily Report Approved Time :- ',
                               style: Get.textTheme.titleSmall!),
                           TextSpan(
-                              text:
-                                  '${totalApprovedEffort.toStringAsFixed(2)} Hrs',
+                              text: '${widget.controller.totalDrApproveHrs} ',
                               style: Get.textTheme.titleSmall!.copyWith(
                                   color: Theme.of(context).primaryColor)),
                         ])),
@@ -216,8 +193,7 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
                               text: 'Daily Report Rejected Time :- ',
                               style: Get.textTheme.titleSmall!),
                           TextSpan(
-                              text:
-                                  '${totalRejectedEffort.toStringAsFixed(2)} Hrs',
+                              text: '${widget.controller.totalDrRejectedHrs} ',
                               style: Get.textTheme.titleSmall!.copyWith(
                                   color: Theme.of(context).primaryColor)),
                         ])),
@@ -247,7 +223,7 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
                 : (widget.controller.searchTaskList.isNotEmpty)
                     ? SingleChildScrollView(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 16),
+                            vertical: 16, horizontal: 6),
                         scrollDirection: Axis.horizontal,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
@@ -262,8 +238,8 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
                                 MediaQuery.of(context).size.height * 0.21,
                             headingRowHeight:
                                 MediaQuery.of(context).size.height * 0.08,
-                            horizontalMargin: 10,
-                            columnSpacing: 10,
+                            horizontalMargin: 15,
+                            columnSpacing: 20,
                             dividerThickness: 1,
                             headingTextStyle: const TextStyle(
                                 color: Colors.white,
@@ -306,6 +282,7 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
                               int hours = val.efforts!.floor();
                               int minutes =
                                   ((val.efforts! - hours) * 60).round();
+
                               if (val.iSMDRPTApprovedTime != null) {
                                 appHours = val.iSMDRPTApprovedTime!.floor();
                                 appMinutes =

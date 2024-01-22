@@ -217,6 +217,10 @@ class PlannerDetails extends GetxController {
     }
   }
 
+  String totalDrApproveHrs = "00:00";
+  String totalDrHrs = "00:00";
+  String totalDrRejectedHrs = "00:00";
+
   RxList<SearchPreviousTaskDetailsModelValues> searchpreviousTaskDetailsList =
       <SearchPreviousTaskDetailsModelValues>[].obs;
   void previousTaskDetails(
