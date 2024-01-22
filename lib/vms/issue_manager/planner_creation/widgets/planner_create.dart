@@ -252,7 +252,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             j.iSMMTCATId) {
           if (j.iSMTPLTAId == 0) {
             effort1 += j.iSMTCRASTOEffortInHrs!;
-            logger.v(effort1);
             widget.plannerCreationController.categoryWisePlan[i]
                 .ismtcrastOEffortInHrs = effort1;
           }
@@ -282,7 +281,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId!));
       }
     }
-    // if (categoryList.isNotEmpty) {
     for (int index = 0;
         index < widget.plannerCreationController.categoryWisePlan.length;
         index++) {
@@ -293,7 +291,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
       });
       newCategoryArray.addAll(categoryArray.toSet());
     }
-    // }
     widget.plannerCreationController.taskLoading(false);
   }
 
@@ -1062,7 +1059,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                     DataCell(Text(data.assignedby!)),
                     DataCell(
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.3,
+                        width: MediaQuery.of(context).size.width * 0.25,
                         child: RichText(
                             text: TextSpan(children: [
                           TextSpan(

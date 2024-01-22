@@ -67,8 +67,7 @@ class TaskListAPI {
             var val = assignedTaskList.values!.elementAt(i);
             val.iSMTCRASTOEffortInHrs = double.parse(
                 convertDecimalToTimeInPlanner(val.iSMTCRASTOEffortInHrs!));
-            // Date Calculation
-
+            // Date Calculation//
             if (val.iSMTCRASTOStartDate == null ||
                 val.iSMTCRASTOStartDate == '') {
               startDate = getCurrentDate();
@@ -83,23 +82,41 @@ class TaskListAPI {
               endDate = DateFormat('dd-MM-yyyy')
                   .format(DateTime.parse(val.iSMTCRASTOEndDate!));
             }
-            //
             if (val.iSMTPLTAPreviousTask == 1) {
+              for (var mm in totalEffortData.values!) {
+                // if (mm.pDates == null || mm.pDates == '') {
+                //   startDate = getCurrentDate();
+                // } else {
+                //   startDate = DateFormat('dd-MM-yyyy')
+                //       .format(DateTime.parse(val.iSMTCRASTOStartDate!));
+                // }
+                //   if (mm.pDates == null || mm.pDates == '') {
+                //     endDate = getCurrentDate();
+                //   } else {
+                //     endDate = DateFormat('dd-MM-yyyy')
+                //         .format(DateTime.parse(val.iSMTCRASTOStartDate!).add(const Duration(days: 1)));
+                //   }
+                // if (DateTime.parse(mm.pDates!)
+                //         .add(const Duration(days: 1))
+                //         .isAfter(DateTime.parse(val.iSMTCRASTOStartDate!)) &&
+                //     DateTime.parse(mm.pDates!)
+                //         .subtract(const Duration(days: 1))
+                //         .isBefore(DateTime.parse(val.iSMTCRASTOEndDate!))) {
+                // }
+              }
               plannerCreationController.addDataToList(val, startDate, endDate);
-              logger.i('1');
             } else if (val.periodicity!.toLowerCase() == 'daily' &&
                     val.iSMTPLTAPreviousTask == 0 ||
                 val.iSMTPLTAPreviousTask == null) {
               for (var mm in totalEffortData.values!) {
-                logger.e('2');
                 if (mm.pDates == null || mm.pDates == '') {
-                  startDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+                  startDate = getCurrentDate();
                 } else {
                   startDate = DateFormat('dd-MM-yyyy')
                       .format(DateTime.parse(mm.pDates!));
                 }
                 if (mm.pDates == null || mm.pDates == '') {
-                  endDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+                  endDate = getCurrentDate();
                 } else {
                   endDate = DateFormat('dd-MM-yyyy')
                       .format(DateTime.parse(mm.pDates!));
@@ -119,7 +136,9 @@ class TaskListAPI {
                     val.periodicity == '' ||
                     val.periodicity!.toLowerCase() == 'once') &&
                 (val.iSMTPLTAPreviousTask == 0 ||
-                    val.iSMTPLTAPreviousTask == null)) {
+                    val.iSMTPLTAPreviousTask == null ||
+                    val.iSMTPLTAPreviousTask == '' ||
+                    val.iSMTPLTAPreviousTask == '0')) {
               plannerCreationController.addDataToList(val, startDate, endDate);
             } else if (val.periodicity!.toLowerCase() == 'weekly' &&
                 (val.iSMTPLTAPreviousTask == 0 ||
@@ -128,13 +147,13 @@ class TaskListAPI {
               if (wrkd >= int.parse(val.iSMTAPLDay!)) {
                 for (var mm in totalEffortData.values!) {
                   if (mm.pDates == null || mm.pDates == '') {
-                    startDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+                    startDate = getCurrentDate();
                   } else {
                     startDate = DateFormat('dd-MM-yyyy')
                         .format(DateTime.parse(mm.pDates!));
                   }
                   if (mm.pDates == null || mm.pDates == '') {
-                    endDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+                    endDate = getCurrentDate();
                   } else {
                     endDate = DateFormat('dd-MM-yyyy')
                         .format(DateTime.parse(mm.pDates!));
