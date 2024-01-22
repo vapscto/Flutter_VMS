@@ -392,6 +392,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   final List<TextEditingController> fromDateController = [];
   void addFromDate(TextEditingController controller) {
     fromDateController.add(controller);
+    logger.i(fromDateController);
   }
 
   final List<TextEditingController> toDateController = [];
@@ -399,6 +400,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     toDateController.add(controller);
   }
 
+  DateTime? startDate;
+  DateTime? endDate;
   List<int> newList = [];
   List<double> calculatedDays = [];
   void addList(int i) {
@@ -409,8 +412,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       addMinutes(TextEditingController(text: '0'));
       addDescription(TextEditingController(text: ''));
       calculatedDays.add(0);
-      addFromDate(TextEditingController(text: getDateFrom(DateTime.now())));
-      addToDate(TextEditingController(text: getDateFrom(DateTime.now())));
+
+      fromDateController
+          .add(TextEditingController(text: getDateFrom(DateTime.now())));
+      toDateController
+          .add(TextEditingController(text: getDateFrom(DateTime.now())));
       hrmdId.add(0);
       hrmeId.add(0);
     }
@@ -3238,8 +3244,24 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                       SizedBox(
                                         width: 200,
                                         child: TextField(
-                                          onTap: () {
-                                            fromDate();
+                                          onTap: () async {
+                                            // fromDate();
+                                            startDate = await showDatePicker(
+                                              context: context,
+                                              firstDate: DateTime.now(),
+                                              lastDate: DateTime(2055),
+                                              initialDate: DateTime.now(),
+                                            );
+                                            if (startDate != null) {
+                                              setState(() {
+                                                fromDateController[index].text =
+                                                    getDateFrom(startDate);
+                                                toDateController[index].text =
+                                                    getDateFrom(startDate!.add(
+                                                        const Duration(
+                                                            days: 5)));
+                                              });
+                                            }
                                           },
                                           readOnly: true,
                                           controller: fromDateController[index],
@@ -3251,7 +3273,29 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                               padding: const EdgeInsets.all(12),
                                               child: InkWell(
                                                 onTap: () async {
-                                                  fromDate();
+                                                  // fromDate();
+                                                  startDate =
+                                                      await showDatePicker(
+                                                    context: context,
+                                                    firstDate: DateTime.now(),
+                                                    lastDate: DateTime(2055),
+                                                    initialDate: DateTime.now(),
+                                                  );
+                                                  if (startDate != null) {
+                                                    setState(() {
+                                                      fromDateController[index]
+                                                              .text =
+                                                          getDateFrom(
+                                                              startDate);
+                                                      toDateController[index]
+                                                              .text =
+                                                          getDateFrom(startDate!
+                                                              .add(
+                                                                  const Duration(
+                                                                      days:
+                                                                          5)));
+                                                    });
+                                                  }
                                                 },
                                                 child: SvgPicture.asset(
                                                   "assets/svg/calendar_icon.svg",
@@ -3288,8 +3332,20 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                       SizedBox(
                                         width: 200,
                                         child: TextField(
-                                          onTap: () {
-                                            toDate();
+                                          onTap: () async {
+                                            // fromDate();
+                                            endDate = await showDatePicker(
+                                              context: context,
+                                              firstDate: DateTime.now(),
+                                              lastDate: DateTime(2055),
+                                              initialDate: DateTime.now(),
+                                            );
+                                            if (endDate != null) {
+                                              setState(() {
+                                                toDateController[index].text =
+                                                    getDateFrom(startDate);
+                                              });
+                                            }
                                           },
                                           readOnly: true,
                                           controller: toDateController[index],
@@ -3301,7 +3357,22 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                               padding: const EdgeInsets.all(12),
                                               child: InkWell(
                                                 onTap: () async {
-                                                  toDate();
+                                                  // fromDate();
+                                                  endDate =
+                                                      await showDatePicker(
+                                                    context: context,
+                                                    firstDate: DateTime.now(),
+                                                    lastDate: DateTime(2055),
+                                                    initialDate: DateTime.now(),
+                                                  );
+                                                  if (endDate != null) {
+                                                    setState(() {
+                                                      toDateController[index]
+                                                              .text =
+                                                          getDateFrom(
+                                                              startDate);
+                                                    });
+                                                  }
                                                 },
                                                 child: SvgPicture.asset(
                                                   "assets/svg/calendar_icon.svg",
@@ -3431,8 +3502,10 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       setState(() {
         selectFromDate.text = getDateFrom(value);
         selectToDate.text = getDateFrom(value!.add(const Duration(days: 5)));
-        addFromDate(TextEditingController(text: getDateFrom(value)));
-        addToDate(TextEditingController(
+        logger.v(selectFromDate.text);
+        logger.w(getDateFrom(value));
+        fromDateController.add(TextEditingController(text: getDateFrom(value)));
+        toDateController.add(TextEditingController(
             text: getDateFrom(value.add(const Duration(days: 5)))));
       });
     });
@@ -3447,7 +3520,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     ).then((value) {
       setState(() {
         selectToDate.text = getDateFrom(value);
-        addToDate(TextEditingController(text: getDateFrom(value)));
+        toDateController.add(TextEditingController(text: getDateFrom(value)));
       });
     });
   }
