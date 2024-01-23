@@ -312,7 +312,11 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     });
   }
 
+  bool isPlannerLoading = false;
   savePlanner() async {
+    setState(() {
+      isPlannerLoading = true;
+    });
     await PlannerSaveAPI.instance.saveDataAPI(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         userId: widget.loginSuccessModel.userId!,
@@ -324,6 +328,9 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         remarks: _plannerGoal.text,
         catListId: categoryArray,
         taskplannerArray: plannerrArray);
+    setState(() {
+      isPlannerLoading = false;
+    });
   }
 
   @override
@@ -844,30 +851,33 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                                           child: Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 16.0),
-                                            child: MSkollBtn(
-                                              title: "Save",
-                                              onPress: () {
-                                                if (_plannerName.text.isEmpty) {
-                                                  Fluttertoast.showToast(
-                                                      msg:
-                                                          "Please enter plan name");
-                                                } else if (plannedEffort <
-                                                    widget
-                                                        .plannerCreationController
-                                                        .totalHour) {
-                                                  Get.dialog(showPopup());
-                                                } else if (widget
-                                                        .plannerCreationController
-                                                        .isPlannerCreate
-                                                        .value ==
-                                                    false) {
-                                                  Get.dialog(
-                                                      plannerNotCreate());
-                                                } else {
-                                                  savePlanner();
-                                                }
-                                              },
-                                            ),
+                                            child: isPlannerLoading == true
+                                                ? const SizedBox()
+                                                : MSkollBtn(
+                                                    title: "Save",
+                                                    onPress: () {
+                                                      if (_plannerName
+                                                          .text.isEmpty) {
+                                                        Fluttertoast.showToast(
+                                                            msg:
+                                                                "Please enter plan name");
+                                                      } else if (plannedEffort <
+                                                          widget
+                                                              .plannerCreationController
+                                                              .totalHour) {
+                                                        Get.dialog(showPopup());
+                                                      } else if (widget
+                                                              .plannerCreationController
+                                                              .isPlannerCreate
+                                                              .value ==
+                                                          false) {
+                                                        Get.dialog(
+                                                            plannerNotCreate());
+                                                      } else {
+                                                        savePlanner();
+                                                      }
+                                                    },
+                                                  ),
                                           ),
                                         )
                                       : const SizedBox(),
