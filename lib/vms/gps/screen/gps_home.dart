@@ -17,6 +17,9 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/drop_down_level.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:dropdown_search/dropdown_search.dart';
+
+import '../../../main.dart';
 
 class GpasHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -70,6 +73,8 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
     );
   }
 
+  GetGpsClientDetailsValues? selecteditem;
+  final clientController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,7 +164,7 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
         ],
       ),
       body: Obx(() => getEmpDetailsController.mapLoading.value
-          ? Container(
+          ? SizedBox(
               width: MediaQuery.of(context).size.width,
               child: const AnimatedProgressWidget(
                 animationPath: 'assets/json/gpsJson.json',
@@ -217,112 +222,221 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                                 desc: "Please wait we are loading data",
                               )
                             : getEmpDetailsController.gpsClientList.isNotEmpty
-                                ? Container(
-                                    margin: const EdgeInsets.only(
-                                        top: 40,
-                                        left: 16,
-                                        right: 16,
-                                        bottom: 16),
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .scaffoldBackgroundColor,
-                                      borderRadius: BorderRadius.circular(16.0),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          offset: Offset(0, 1),
-                                          blurRadius: 8,
-                                          color: Colors.black12,
-                                        ),
-                                      ],
-                                    ),
-                                    child: DropdownButtonFormField<
-                                        GetGpsClientDetailsValues>(
-                                      validator: (value) {
-                                        if (value == null) {
-                                          return "";
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
-                                          ),
-                                        ),
-                                        enabledBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
-                                          ),
-                                        ),
-                                        hintStyle: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall!
-                                            .merge(const TextStyle(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.3)),
-                                        hintText: getEmpDetailsController
-                                                .gpsClientList.isNotEmpty
-                                            ? 'Select Client'
-                                            : 'No data available',
-                                        floatingLabelBehavior:
-                                            FloatingLabelBehavior.always,
-                                        isDense: true,
-                                        label: const CustomDropDownLabel(
-                                          icon: 'assets/images/prof4.png',
-                                          containerColor:
-                                              Color.fromRGBO(231, 223, 254, 1),
-                                          text: 'Client',
-                                          textColor:
-                                              Color.fromRGBO(96, 40, 200, 1),
-                                        ),
-                                      ),
-                                      icon: const Padding(
-                                        padding: EdgeInsets.only(top: 3),
-                                        child: Icon(
-                                          Icons.keyboard_arrow_down_rounded,
-                                          size: 30,
-                                        ),
-                                      ),
-                                      iconSize: 30,
-                                      items: List.generate(
-                                          getEmpDetailsController
-                                              .gpsClientList.length, (index) {
-                                        return DropdownMenuItem(
-                                          value: getEmpDetailsController
-                                              .gpsClientList[index],
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 13, left: 5),
-                                            child: SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  1.5,
-                                              child: Text(
-                                                getEmpDetailsController
-                                                    .gpsClientList[index]
-                                                    .ismmclTClientName!,
-                                                maxLines: 3,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleSmall!
-                                                    .merge(const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.3)),
-                                              ),
+                                ? Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 16, horizontal: 20),
+                                    child: Container(
+                                        height: 63,
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .scaffoldBackgroundColor,
+                                          borderRadius:
+                                              BorderRadius.circular(16.0),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              offset: Offset(0, 1),
+                                              blurRadius: 8,
+                                              color: Colors.black12,
                                             ),
-                                          ),
-                                        );
-                                      }),
-                                      onChanged: (s) async {
-                                        clientId = s!.ismmclTId!;
-                                      },
-                                    ),
+                                          ],
+                                        ),
+                                        child: DropdownSearch<
+                                            GetGpsClientDetailsValues>(
+                                          validator: (value) {
+                                            if (value == null) {
+                                              return "";
+                                            }
+                                            return null;
+                                          },
+                                          dropdownButtonProps:
+                                              const IconButtonProps(
+                                                  icon: Icon(
+                                            Icons.keyboard_arrow_down,
+                                            size: 30,
+                                            color: Colors.black,
+                                          )),
+                                          popupProps: PopupProps.menu(
+                                              showSearchBox: true,
+                                              textStyle:
+                                                  Get.textTheme.titleSmall,
+                                              menuProps: MenuProps(
+                                                  textStyle:
+                                                      Get.textTheme.titleSmall,
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10))),
+                                              loadingBuilder:
+                                                  (context, searchEntry) {
+                                                return const CircularProgressIndicator();
+                                              },
+                                              searchFieldProps: TextFieldProps(
+                                                  controller: clientController,
+                                                  style:
+                                                      Get.textTheme.titleSmall),
+                                              scrollbarProps:
+                                                  const ScrollbarProps(
+                                                thickness: 1,
+                                              )),
+                                          // selectedItem: getEmpDetailsController
+                                          //     .gpsClientList.first,
+                                          dropdownSearchTextStyle:
+                                              Get.textTheme.titleSmall,
+                                          dropdownSearchDecoration:
+                                              InputDecoration(
+                                                  contentPadding:
+                                                      const EdgeInsets
+                                                              .symmetric(
+                                                          vertical: 10,
+                                                          horizontal: 10),
+                                                  floatingLabelBehavior:
+                                                      FloatingLabelBehavior
+                                                          .always,
+                                                  hintText: 'Select Client',
+                                                  hintStyle: Get
+                                                      .textTheme.titleSmall!
+                                                      .copyWith(
+                                                          color: Colors.grey),
+                                                  label:
+                                                      const CustomDropDownLabel(
+                                                    icon:
+                                                        'assets/images/prof4.png',
+                                                    containerColor:
+                                                        Color.fromRGBO(
+                                                            231, 223, 254, 1),
+                                                    text: 'Client',
+                                                    textColor: Color.fromRGBO(
+                                                        96, 40, 200, 1),
+                                                  ),
+                                                  border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      borderSide:
+                                                          BorderSide.none)),
+                                          dropdownSearchTextAlign:
+                                              TextAlign.center,
+                                          items: getEmpDetailsController
+                                              .gpsClientList,
+                                          itemAsString: (item) =>
+                                              item.ismmclTClientName!,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              selecteditem = value;
+                                              clientId = value!.ismmclTId!;
+                                              logger.i(clientId);
+                                            });
+                                          },
+                                          selectedItem: selecteditem,
+                                        )),
                                   )
+
+                                // Container(
+                                //     margin: const EdgeInsets.only(
+                                //         top: 40,
+                                //         left: 16,
+                                //         right: 16,
+                                //         bottom: 16),
+                                //     decoration: BoxDecoration(
+                                //       color: Theme.of(context)
+                                //           .scaffoldBackgroundColor,
+                                //       borderRadius: BorderRadius.circular(16.0),
+                                //       boxShadow: const [
+                                //         BoxShadow(
+                                //           offset: Offset(0, 1),
+                                //           blurRadius: 8,
+                                //           color: Colors.black12,
+                                //         ),
+                                //       ],
+                                //     ),
+                                //     child: DropdownButtonFormField<
+                                //         GetGpsClientDetailsValues>(
+                                //       validator: (value) {
+                                //         if (value == null) {
+                                //           return "";
+                                //         }
+                                //         return null;
+                                //       },
+                                //       decoration: InputDecoration(
+                                //         border: InputBorder.none,
+                                //         focusedBorder: const OutlineInputBorder(
+                                //           borderSide: BorderSide(
+                                //             color: Colors.transparent,
+                                //           ),
+                                //         ),
+                                //         enabledBorder: const OutlineInputBorder(
+                                //           borderSide: BorderSide(
+                                //             color: Colors.transparent,
+                                //           ),
+                                //         ),
+                                //         hintStyle: Theme.of(context)
+                                //             .textTheme
+                                //             .labelSmall!
+                                //             .merge(const TextStyle(
+                                //                 fontWeight: FontWeight.w400,
+                                //                 fontSize: 14.0,
+                                //                 letterSpacing: 0.3)),
+                                //         hintText: getEmpDetailsController
+                                //                 .gpsClientList.isNotEmpty
+                                //             ? 'Select Client'
+                                //             : 'No data available',
+                                //         floatingLabelBehavior:
+                                //             FloatingLabelBehavior.always,
+                                //         isDense: true,
+                                //         label: const CustomDropDownLabel(
+                                //           icon: 'assets/images/prof4.png',
+                                //           containerColor:
+                                //               Color.fromRGBO(231, 223, 254, 1),
+                                //           text: 'Client',
+                                //           textColor:
+                                //               Color.fromRGBO(96, 40, 200, 1),
+                                //         ),
+                                //       ),
+                                //       icon: const Padding(
+                                //         padding: EdgeInsets.only(top: 3),
+                                //         child: Icon(
+                                //           Icons.keyboard_arrow_down_rounded,
+                                //           size: 30,
+                                //         ),
+                                //       ),
+                                //       iconSize: 30,
+                                //       items: List.generate(
+                                //           getEmpDetailsController
+                                //               .gpsClientList.length, (index) {
+                                //         return DropdownMenuItem(
+                                //           value: getEmpDetailsController
+                                //               .gpsClientList[index],
+                                //           child: Padding(
+                                //             padding: const EdgeInsets.only(
+                                //                 top: 13, left: 5),
+                                //             child: SizedBox(
+                                //               width: MediaQuery.of(context)
+                                //                       .size
+                                //                       .width /
+                                //                   1.5,
+                                //               child: Text(
+                                //                 getEmpDetailsController
+                                //                     .gpsClientList[index]
+                                //                     .ismmclTClientName!,
+                                //                 maxLines: 3,
+                                //                 style: Theme.of(context)
+                                //                     .textTheme
+                                //                     .titleSmall!
+                                //                     .merge(const TextStyle(
+                                //                         fontWeight:
+                                //                             FontWeight.w300,
+                                //                         fontSize: 14.0,
+                                //                         letterSpacing: 0.3)),
+                                //               ),
+                                //             ),
+                                //           ),
+                                //         );
+                                //       }),
+                                //       onChanged: (s) async {
+                                //         clientId = s!.ismmclTId!;
+                                //       },
+                                //     ),
+                                //   )
                                 : const AnimatedProgressWidget(
                                     animationPath: 'assets/json/nodata.json',
                                     title: 'No Data',

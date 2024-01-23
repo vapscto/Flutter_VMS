@@ -66,7 +66,9 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
                 .iSMTPLPlannerName!,
             fromDate,
             toDate,
-            '${widget.plannerCreationController.plannerStatus.elementAt(index).iSMTPLTotalHrs} Hr',
+            widget.plannerCreationController.plannerStatus
+                .elementAt(index)
+                .iSMTPLTotalHrs!,
             (widget.plannerCreationController.plannerStatus
                         .elementAt(index)
                         .iSMTPLApprovalFlg ==
@@ -103,6 +105,16 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
     super.initState();
   }
 
+  String convertDecimalToTime(double decimalHours) {
+    int hours = decimalHours.toInt();
+    int minutes = ((decimalHours - hours) * 60).toInt();
+
+    String formattedHours = hours.toString().padLeft(2, '0');
+    String formattedMinutes = minutes.toString().padLeft(2, '0');
+
+    return '$formattedHours:$formattedMinutes Hr';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,7 +145,6 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
                             dataRowHeight:
                                 MediaQuery.of(context).size.height * 0.1,
                             // horizontalMargin: 10,
-
                             dividerThickness: 1,
                             headingTextStyle: const TextStyle(
                                 color: Colors.white,
@@ -167,6 +178,8 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
                             rows: [
                               ...List.generate(statusList.length, (index) {
                                 var i = index + 1;
+                                String effort = convertDecimalToTime(
+                                    statusList[index].totalEffort);
                                 return DataRow(cells: [
                                   DataCell(Padding(
                                     padding: const EdgeInsets.all(4.0),
@@ -187,7 +200,7 @@ class _PlannerStatusWidgetState extends State<PlannerStatusWidget> {
                                   )),
                                   DataCell(Text(statusList[index].startDate)),
                                   DataCell(Text(statusList[index].endDate)),
-                                  DataCell(Text(statusList[index].totalEffort)),
+                                  DataCell(Text(effort)),
                                   DataCell(SizedBox(
                                     width: MediaQuery.of(context).size.width *
                                         0.71,

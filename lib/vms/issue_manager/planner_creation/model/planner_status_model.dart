@@ -2,7 +2,7 @@ class PlannerStatusModel {
   String planner;
   String startDate;
   String endDate;
-  String totalEffort;
+  double totalEffort;
   String status;
   String assignedBy;
   String remarks;
