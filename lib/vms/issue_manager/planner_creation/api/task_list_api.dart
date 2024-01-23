@@ -68,42 +68,28 @@ class TaskListAPI {
             val.iSMTCRASTOEffortInHrs = double.parse(
                 convertDecimalToTimeInPlanner(val.iSMTCRASTOEffortInHrs!));
             // Date Calculation//
-            if (val.iSMTCRASTOStartDate == null ||
-                val.iSMTCRASTOStartDate == '') {
-              startDate = getCurrentDate();
-            } else {
+            if (
+                // val.iSMTPLTAStartDate == null &&
+                //   val.iSMTPLTAStartDate == '' &&
+                val.iSMTPLTAStartDate!.contains('1900-01-01T00:00:00')) {
               startDate = DateFormat('dd-MM-yyyy')
                   .format(DateTime.parse(val.iSMTCRASTOStartDate!));
+            } else {
+              startDate = DateFormat('dd-MM-yyyy').format(
+                  DateTime.parse(val.iSMTPLTAStartDate!)); //getCurrentDate();
             }
 
-            if (val.iSMTCRASTOEndDate == null || val.iSMTCRASTOEndDate == '') {
-              endDate = getCurrentDate();
-            } else {
+            if (
+                // val.iSMTPLTAEndDate == null &&
+                //   val.iSMTPLTAEndDate == '' &&
+                val.iSMTPLTAStartDate!.contains('1900-01-01T00:00:00')) {
               endDate = DateFormat('dd-MM-yyyy')
                   .format(DateTime.parse(val.iSMTCRASTOEndDate!));
+            } else {
+              endDate = DateFormat('dd-MM-yyyy').format(
+                  DateTime.parse(val.iSMTPLTAEndDate!)); //getCurrentDate();
             }
             if (val.iSMTPLTAPreviousTask == 1) {
-              for (var mm in totalEffortData.values!) {
-                // if (mm.pDates == null || mm.pDates == '') {
-                //   startDate = getCurrentDate();
-                // } else {
-                //   startDate = DateFormat('dd-MM-yyyy')
-                //       .format(DateTime.parse(val.iSMTCRASTOStartDate!));
-                // }
-                //   if (mm.pDates == null || mm.pDates == '') {
-                //     endDate = getCurrentDate();
-                //   } else {
-                //     endDate = DateFormat('dd-MM-yyyy')
-                //         .format(DateTime.parse(val.iSMTCRASTOStartDate!).add(const Duration(days: 1)));
-                //   }
-                // if (DateTime.parse(mm.pDates!)
-                //         .add(const Duration(days: 1))
-                //         .isAfter(DateTime.parse(val.iSMTCRASTOStartDate!)) &&
-                //     DateTime.parse(mm.pDates!)
-                //         .subtract(const Duration(days: 1))
-                //         .isBefore(DateTime.parse(val.iSMTCRASTOEndDate!))) {
-                // }
-              }
               plannerCreationController.addDataToList(val, startDate, endDate);
             } else if (val.periodicity!.toLowerCase() == 'daily' &&
                     val.iSMTPLTAPreviousTask == 0 ||

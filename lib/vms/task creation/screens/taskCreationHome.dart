@@ -99,7 +99,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   ].obs;
   RxString dropdownValue = "Daily".obs;
   int hrmdIds = 0;
-  List<int> hrmdId = [];
+  List<GetDeptsValues> hrmdId = [];
   List<int> hrmeId = [];
   String priorityId = "";
   int clinetId = 0;
@@ -181,18 +181,18 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
         _taskDepartController.taskAssingn.value == "N") {
       multiTaskList.clear();
       for (int index = 0; index < newList.length; index++) {
-        String countHr =
+        String countHr1 =
             (double.parse(minutesController[index].text) * 0.0166667)
                 .toStringAsFixed(2);
         double countHrs =
-            double.parse(hoursController[index].text) + double.parse(countHr);
+            double.parse(hoursController[index].text) + double.parse(countHr1);
         multiTaskList.add({
-          "TTEDDP_HRMDCID": hrmdId[index],
+          "TTEDDP_HRMDCID": int.parse(departmentController[index].text),
           "TTEDDP_Percentage": percentageController[index].text,
           "TTEDDP_Days": calculatedDays[index],
           "TTEDDP_level": index + 1,
           "TTEDDP_Remarks": remarksController[index].text,
-          "HRME_Id": hrmeId[index],
+          "HRME_Id": int.parse(employeeController[index].text),
           "TTEDDP_FromDate": fromDateController[index].text,
           "TTEDDP_ToDate": toDateController[index].text,
           "TTEDDP_Hours": countHrs
@@ -400,6 +400,16 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     toDateController.add(controller);
   }
 
+  final List<TextEditingController> departmentController = [];
+  void addDepartment(TextEditingController controller) {
+    departmentController.add(controller);
+  }
+
+  final List<TextEditingController> employeeController = [];
+  void addEmployee(TextEditingController controller) {
+    employeeController.add(controller);
+  }
+
   DateTime? startDate;
   DateTime? endDate;
   List<int> newList = [];
@@ -412,13 +422,12 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       addMinutes(TextEditingController(text: '0'));
       addDescription(TextEditingController(text: ''));
       calculatedDays.add(0);
-
       fromDateController
           .add(TextEditingController(text: getDateFrom(DateTime.now())));
       toDateController
           .add(TextEditingController(text: getDateFrom(DateTime.now())));
-      hrmdId.add(0);
-      hrmeId.add(0);
+      addDepartment(TextEditingController(text: ''));
+      addEmployee(TextEditingController(text: ''));
     }
   }
 
@@ -2780,7 +2789,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
               ),
               Obx(
                 () => Visibility(
-                  visible: _taskDepartController.taskAssingn.value == "N",
+                  visible: _taskDepartController.typesTask.value == "E" &&
+                      _taskDepartController.taskAssingn.value == "N",
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     child: Align(
@@ -2970,26 +2980,22 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                   }),
                                   onChanged: (s) async {
                                     setState(() {
-                                      selectedDepartment = s;
-                                      // Reset selected employee when department changes
-                                      selectedEmployee = null;
+                                      departmentController[index].text =
+                                          s!.hrmdCID.toString();
+                                      // hrmdId.add(s!);
+                                      // logger.i(hrmdId.first);
+                                      filterEmployees(s.hrmDDepartmentName!);
                                     });
-                                    _taskProjectsController.getTaskProjectsList
-                                        .clear();
-                                    _taskProjectsController.getTaskCategoryList
-                                        .clear();
-                                    hrmdIds = s!.hrmDId!;
-                                    hrmdId.add(s.hrmDId!);
-                                    filterEmployees(s.hrmDDepartmentName!);
                                   },
                                 ),
                               ),
                               DataCell(_taskDepartController
                                       .getemployeelist.isEmpty
-                                  ? const AnimatedProgressWidget(
-                                      animationPath: 'assets/json/default.json',
-                                      title: 'Loading data',
-                                      desc: "Please wait we are loading data",
+                                  ? Center(
+                                      child: Text(
+                                        "No Data Available",
+                                        style: Get.textTheme.titleSmall,
+                                      ),
                                     )
                                   : DropdownButtonFormField<
                                           EmplyeeEnhancementModelValues>(
@@ -3066,13 +3072,12 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                         );
                                       }),
                                       onChanged: (s) async {
-                                        {
-                                          setState(() {
-                                            selectedEmployee = s;
-                                            hrmeId.add(s!.hrmEId!);
-                                          });
-                                          filterEmployees(s!.employeename!);
-                                        }
+                                        setState(() {
+                                          employeeController[index].text =
+                                              s!.hrmEId!.toString();
+                                          // hrmeId.add(s!.hrmEId!);
+                                          // logger.v(hrmeId.first);
+                                        });
                                       })),
                               DataCell(
                                 TextFormField(
@@ -3256,10 +3261,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                               setState(() {
                                                 fromDateController[index].text =
                                                     getDateFrom(startDate);
-                                                toDateController[index].text =
-                                                    getDateFrom(startDate!.add(
-                                                        const Duration(
-                                                            days: 5)));
                                               });
                                             }
                                           },
@@ -3287,13 +3288,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                               .text =
                                                           getDateFrom(
                                                               startDate);
-                                                      toDateController[index]
-                                                              .text =
-                                                          getDateFrom(startDate!
-                                                              .add(
-                                                                  const Duration(
-                                                                      days:
-                                                                          5)));
                                                     });
                                                   }
                                                 },
@@ -3343,7 +3337,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                             if (endDate != null) {
                                               setState(() {
                                                 toDateController[index].text =
-                                                    getDateFrom(startDate);
+                                                    getDateFrom(endDate);
                                               });
                                             }
                                           },
@@ -3369,8 +3363,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                     setState(() {
                                                       toDateController[index]
                                                               .text =
-                                                          getDateFrom(
-                                                              startDate);
+                                                          getDateFrom(endDate);
                                                     });
                                                   }
                                                 },
