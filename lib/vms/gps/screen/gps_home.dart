@@ -226,7 +226,7 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 16, horizontal: 20),
                                     child: Container(
-                                        height: 63,
+                                        height: 60,
                                         decoration: BoxDecoration(
                                           color: Theme.of(context)
                                               .scaffoldBackgroundColor,
@@ -242,12 +242,6 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                                         ),
                                         child: DropdownSearch<
                                             GetGpsClientDetailsValues>(
-                                          validator: (value) {
-                                            if (value == null) {
-                                              return "";
-                                            }
-                                            return null;
-                                          },
                                           dropdownButtonProps:
                                               const IconButtonProps(
                                                   icon: Icon(
@@ -256,32 +250,57 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                                             color: Colors.black,
                                           )),
                                           popupProps: PopupProps.menu(
-                                              showSearchBox: true,
-                                              textStyle:
-                                                  Get.textTheme.titleSmall,
-                                              menuProps: MenuProps(
-                                                  textStyle:
-                                                      Get.textTheme.titleSmall,
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10))),
-                                              loadingBuilder:
-                                                  (context, searchEntry) {
-                                                return const CircularProgressIndicator();
-                                              },
-                                              searchFieldProps: TextFieldProps(
-                                                  controller: clientController,
-                                                  style:
-                                                      Get.textTheme.titleSmall),
-                                              scrollbarProps:
-                                                  const ScrollbarProps(
-                                                thickness: 1,
-                                              )),
-                                          // selectedItem: getEmpDetailsController
-                                          //     .gpsClientList.first,
-                                          dropdownSearchTextStyle:
-                                              Get.textTheme.titleSmall,
+                                            showSearchBox: true,
+                                            textStyle: Get.textTheme.titleSmall!
+                                                .copyWith(
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                            menuProps: MenuProps(
+                                                textStyle: Get
+                                                    .textTheme.titleSmall!
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10))),
+                                            loadingBuilder:
+                                                (context, searchEntry) {
+                                              return const CircularProgressIndicator();
+                                            },
+                                            searchFieldProps: TextFieldProps(
+                                                decoration: InputDecoration(
+                                                  contentPadding:
+                                                      const EdgeInsets.all(6),
+                                                  hintText:
+                                                      'Search Client name',
+                                                  hintStyle: Get
+                                                      .textTheme.titleSmall!
+                                                      .copyWith(
+                                                          color: Colors.grey),
+                                                  border: OutlineInputBorder(
+                                                      borderRadius: BorderRadius
+                                                          .circular(10),
+                                                      borderSide:
+                                                          const BorderSide(
+                                                              color:
+                                                                  Colors.grey)),
+                                                ),
+                                                controller: clientController,
+                                                style: Get.textTheme.titleSmall!
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w400)),
+                                            scrollbarProps:
+                                                const ScrollbarProps(
+                                              thickness: 1,
+                                            ),
+                                          ),
+                                          dropdownSearchTextStyle: Get
+                                              .textTheme.titleSmall!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w400),
                                           dropdownSearchDecoration:
                                               InputDecoration(
                                                   contentPadding:
@@ -296,7 +315,9 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                                                   hintStyle: Get
                                                       .textTheme.titleSmall!
                                                       .copyWith(
-                                                          color: Colors.grey),
+                                                          color: Colors.grey,
+                                                          fontWeight:
+                                                              FontWeight.w400),
                                                   label:
                                                       const CustomDropDownLabel(
                                                     icon:
@@ -315,7 +336,7 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                                                       borderSide:
                                                           BorderSide.none)),
                                           dropdownSearchTextAlign:
-                                              TextAlign.center,
+                                              TextAlign.start,
                                           items: getEmpDetailsController
                                               .gpsClientList,
                                           itemAsString: (item) =>

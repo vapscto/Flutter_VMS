@@ -69,6 +69,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   List<dynamic> newValues = [];
   init() async {
     fliteresList.clear();
+    _plannerDetailsController.uploadImages.clear();
     await getPlanerdetails(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         controller: _plannerDetailsController,
@@ -230,6 +231,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
 
   List<Map<String, dynamic>> uploadImageList = [];
   saveDaetails() async {
+    uploadImageList.clear();
     if (fliteresList.isNotEmpty) {
       // Calculate the total hours and minutes
       int totalHours = 0;
@@ -253,15 +255,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
       int currentDayOfWeek = 0;
       var totalworkinghrsflag = 0.0;
       int deviationId = 0;
-      double effortss = 0.0;
       var totalhrs = 0.0;
-      for (int i = 0; i < fliteresList.length; i++) {
-        var value = fliteresList.elementAt(i);
-        DateTime startDate = DateTime.parse(
-            _plannerDetailsController.getplannerdetails[0].ismtpLStartDate!);
-        DateTime endDate = DateTime.parse(
-            _plannerDetailsController.getplannerdetails[0].ismtpLEndDate!);
-        int totalDays = endDate.difference(startDate).inDays + 1;
+      for (int index = 0;
+          index < _plannerDetailsController.checkBoxList.length;
+          index++) {
+        var value = fliteresList.elementAt(index);
         DateTime currentDate = DateTime.now();
         currentDayOfWeek = currentDate.weekday;
         if (currentDayOfWeek == 6) {
@@ -270,10 +268,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
           deviationId = 2;
         }
         //
-        uploadImageList.clear();
+
         if (_plannerDetailsController.uploadImages.isNotEmpty) {
           for (var j in _plannerDetailsController.uploadImages) {
-            if (i == j.index) {
+            if (index == j.index) {
               logger.i(j.name);
               fileName = j.name;
               filePath = j.path;
@@ -288,15 +286,17 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
               });
             }
           }
+          logger.i(uploadImageList.toList());
         }
 
-        if (_plannerDetailsController.checkBoxList.elementAt(i) == true) {
+        if (_plannerDetailsController.checkBoxList.elementAt(index) == true) {
           String countHr =
-              (double.parse(_plannerDetailsController.minutesEt[i].text) *
+              (double.parse(_plannerDetailsController.minutesEt[index].text) *
                       0.0166667)
                   .toStringAsFixed(2);
-          totalhrs = double.parse(_plannerDetailsController.hoursEt[i].text) +
-              double.parse(countHr);
+          totalhrs =
+              double.parse(_plannerDetailsController.hoursEt[index].text) +
+                  double.parse(countHr);
 
           todayDailyReportGenaration.add({
             "ISMTPL_Id": (value.iSMTPLId != null)
@@ -304,9 +304,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                 : _plannerDetailsController.getplannerdetails[0].ismtpLId!,
             "ISMTCR_Id": value.iSMTCRId,
             "ISMDRPT_Remarks":
-                _plannerDetailsController.etResponse.elementAt(i).text,
+                _plannerDetailsController.etResponse.elementAt(index).text,
             "ISMDRPT_TimeTakenInHrs": '$totalhrs',
-            "ISMDRPT_Status": _plannerDetailsController.statusEtField[i].text,
+            "ISMDRPT_Status":
+                _plannerDetailsController.statusEtField[index].text,
             "extraflag": 0,
             "ISMTPLTA_StartDate": value.iSMTPLTAStartDate,
             "ISMTPLTA_EndDate": value.iSMTPLTAEndDate,
@@ -324,8 +325,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         }
         if (halfDay.value == false) {
           if (totalhrs >=
-              double.parse(
-                  fliteresList.elementAt(i).iSMTPLTAEffortInHrs.toString())) {
+              double.parse(fliteresList
+                  .elementAt(index)
+                  .iSMTPLTAEffortInHrs
+                  .toString())) {
             totalworkinghrsflag = 1;
           }
 
@@ -990,36 +993,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                   ));
                             }),
                       ),
-                      // InkWell(
-                      //   onTap: () {
-                      //     Get.to(() => SearchPreviousTask(
-                      //           loginSuccessModel: widget.loginSuccessModel,
-                      //           mskoolController: widget.mskoolController,
-                      //           controller: _plannerDetailsController,
-                      //         ));
-                      //   },
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.symmetric(
-                      //         horizontal: 20, vertical: 10),
-                      //     child: CustomContainer(
-                      //       child: Padding(
-                      //         padding: const EdgeInsets.all(8.0),
-                      //         child: Text(
-                      //           "Search Previous Daily Report :- ",
-                      //           style: Theme.of(context)
-                      //               .textTheme
-                      //               .labelMedium!
-                      //               .merge(
-                      //                 const TextStyle(
-                      //                     fontSize: 16.0,
-                      //                     color: Color.fromARGB(
-                      //                         255, 16, 103, 233)),
-                      //               ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
@@ -1273,43 +1246,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   (value) {
                                                                 newselectedIndex =
                                                                     index;
-                                                                // if (fliteresList
-                                                                //         .elementAt(
-                                                                //             index)
-                                                                //         .drFlag ==
-                                                                //     1) {
-                                                                //   if (_plannerDetailsController
-                                                                //       .uploadedFileList
-                                                                //       .isNotEmpty) {
-                                                                //     logger.i(
-                                                                //         "===00---");
-                                                                //     for (int k =
-                                                                //             0;
-                                                                //         k < _plannerDetailsController.uploadedFileList.length;
-                                                                //         k++) {
-                                                                //       var v1 = _plannerDetailsController
-                                                                //           .uploadedFileList
-                                                                //           .elementAt(
-                                                                //               k);
-                                                                //       if (_plannerDetailsController.uploadedFileList[k].ismtcRId == fliteresList.elementAt(index).iSMTCRId &&
-                                                                //           fliteresList.elementAt(index).iSMTPLTAId ==
-                                                                //               _plannerDetailsController.uploadedFileList[k].ismtpltAId) {
-                                                                //         _plannerDetailsController
-                                                                //             .uploadImages
-                                                                //             .add(PlannerFileUpload(
-                                                                //           v1.ismdrptfLFileName!,
-                                                                //           v1.ismdrptfLFilePath!,
-                                                                //           index,
-                                                                //           v1.ismmtcaTId!,
-                                                                //           v1.ismmtcatcLCheckListName!,
-                                                                //         ));
-                                                                //       }
-                                                                //     }
-                                                                //   }
-                                                                // }
 
-                                                                logger.i(
-                                                                    newselectedIndex);
                                                                 value == true
                                                                     ? getCategoryChecklistDetails(
                                                                             base:
@@ -1319,9 +1256,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                             ismmcatId: fliteresList.elementAt(index).iSMMTCATId!)
                                                                         .then(
                                                                         (value) {
-                                                                          WidgetsBinding
-                                                                              .instance
-                                                                              .addPostFrameCallback((_) {});
                                                                           if (value!
                                                                               .values!
                                                                               .isNotEmpty) {
@@ -1342,8 +1276,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                               } else {
                                                                                 _plannerDetailsController.checkBoxList[index] = true;
                                                                               }
-                                                                              // image = value;
-                                                                              // setState(() {});
+                                                                              setState(() {});
                                                                             });
                                                                           }
                                                                         },
@@ -1363,7 +1296,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                     selectCheckbox
                                                                         .add(
                                                                             index);
-
                                                                     String previousDateStr = fliteresList
                                                                         .elementAt(
                                                                             index)
@@ -1380,12 +1312,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                                 1));
                                                                     logger.e(
                                                                         "====$previousDt");
-
                                                                     DateTime
                                                                         currentDate =
                                                                         DateTime
                                                                             .now();
-
                                                                     if (currentDate
                                                                         .isAfter(
                                                                             previousDate)) {
@@ -1439,8 +1369,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   .uploadImages[
                                                                       index]
                                                                   .path
-                                                                  .contains(
-                                                                      "https:"))
+                                                                  .isNotEmpty)
                                                               ? InkWell(
                                                                   onTap: () {
                                                                     createPreview(

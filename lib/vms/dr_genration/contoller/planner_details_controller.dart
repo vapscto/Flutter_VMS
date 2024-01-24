@@ -42,6 +42,8 @@ class PlannerDetails extends GetxController {
   RxList<TextEditingController> statusEtField = <TextEditingController>[].obs;
   RxList<TextEditingController> deveationEtField =
       <TextEditingController>[].obs;
+  RxList<TextEditingController> deveationIdEtField =
+      <TextEditingController>[].obs;
   // adding status in the list
   RxList<DrstatusListModelValues> statusDrList =
       <DrstatusListModelValues>[].obs;
