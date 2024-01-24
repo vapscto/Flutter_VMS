@@ -289,7 +289,10 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
                                     ((val.iSMDRPTApprovedTime! - hours) * 60)
                                         .round();
                               }
-
+                              if (val.iSMDRPTDate != null) {
+                                DateTime dt = DateTime.parse(val.iSMDRPTDate!);
+                                var date = '${dt.day}-${dt.month}-${dt.year}';
+                              }
                               return DataRow(cells: [
                                 DataCell(Text(v.toString())),
                                 DataCell(Column(
@@ -349,7 +352,9 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
                                     Row(
                                       children: [
                                         const Text('DR Date :- '),
-                                        Text(val.iSMDRPTDate ?? ''),
+                                        Text((val.iSMDRPTDate != null)
+                                            ? date
+                                            : ''),
                                       ],
                                     ),
                                     const SizedBox(height: 3),

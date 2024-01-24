@@ -49,9 +49,9 @@ Future<bool> saveTask({
   required String? roletype,
   required String? startdate,
   required List<Map<String, dynamic>> taskEmpArray,
-  required String ismtcrHour,
-  required String ismtcrDay,
-  required int ismtcrMainGroupTask,
+  required double ismtcrHour,
+  required double ismtcrDay,
+  required bool ismtcrMainGroupTask,
   required List<Map<String, dynamic>> multiTask,
 }) async {
   final Dio ins = getGlobalDio();
