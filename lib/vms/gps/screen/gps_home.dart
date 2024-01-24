@@ -315,7 +315,6 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                                                   hintStyle: Get
                                                       .textTheme.titleSmall!
                                                       .copyWith(
-                                                          color: Colors.grey,
                                                           fontWeight:
                                                               FontWeight.w400),
                                                   label:
@@ -576,7 +575,8 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                                 ),
                                 child: Checkbox(
                                   value: punchFlag.value,
-                                  activeColor: Color.fromARGB(255, 33, 54, 243),
+                                  activeColor:
+                                      const Color.fromARGB(255, 33, 54, 243),
                                   shape: ContinuousRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)),
                                   onChanged: (value) {

@@ -313,7 +313,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
             "ISMTPLTA_EndDate": value.iSMTPLTAEndDate,
             "ISMTPLTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
             "deviationflag": deviation,
-            "ISMDR_Id": value.iSMDRId,
+            "ISMDR_Id": int.parse(_plannerDetailsController
+                .deveationIdEtField[index].text), //value.iSMDRId,
             "ISMDRPT_TimeTakenInHrsmin": "Hours",
             "periodicityendflag": value.periodicityendflag,
             "ISMTAPL_Periodicity": value.iSMTAPLPeriodicity,
@@ -2005,6 +2006,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                         _plannerDetailsController
                                                                             .deveationEtField[index]
                                                                             .text = _plannerDetailsController.depWiseDevitnList[i].ismdRRemarks!;
+                                                                        _plannerDetailsController.deveationIdEtField[index].text = _plannerDetailsController
+                                                                            .depWiseDevitnList[i]
+                                                                            .ismdRId!
+                                                                            .toString();
                                                                         setState(
                                                                             () {});
                                                                       },
