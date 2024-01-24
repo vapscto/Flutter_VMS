@@ -140,7 +140,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       id: val,
       FileName: name,
     ));
-
     setState(() {});
   }
 
@@ -149,9 +148,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     setState(() {});
   }
 
+  double totalHours = 0.0;
   List<Map<String, dynamic>> multiTaskList = [];
   Future<void> loadImages() async {
     controller.updateTabLoading(true);
+    totalHours = 0.0;
     String countHr =
         (double.parse(minutesEt.text) * 0.0166667).toStringAsFixed(2);
     double count = double.parse(hoursEt.text) + double.parse(countHr);
@@ -197,6 +198,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
           "TTEDDP_ToDate": toDateController[index].text,
           "TTEDDP_Hours": countHrs
         });
+        totalHours += countHrs;
       }
     }
 
@@ -264,9 +266,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
             roletype: widget.loginSuccessModel.roleforlogin,
             startdate: selectFromDate.text,
             taskEmpArray: taskEmpArray,
-            ismtcrDay: '',
-            ismtcrHour: '',
-            ismtcrMainGroupTask: 0,
+            ismtcrDay: (totalDayController.text.isNotEmpty)
+                ? double.parse(totalDayController.text)
+                : 0,
+            ismtcrHour: totalHours,
+            ismtcrMainGroupTask: (multiTaskList.isNotEmpty) ? true : false,
             multiTask: multiTaskList)
         .then(
       (value) {
@@ -413,7 +417,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   DateTime? startDate;
   DateTime? endDate;
   List<int> newList = [];
-  List<double> calculatedDays = [];
+  List<int> calculatedDays = [];
+  int totalPercentage = 100;
   void addList(int i) {
     newList.add(i);
     for (int i = 0; i < newList.length; i++) {
@@ -435,6 +440,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     newList.removeAt(i);
   }
 
+  int allPercentage = 0;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -492,6 +498,15 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                               } else if (_taskDepartController
                                       .taskAssingn.value ==
                                   'N') {
+                                if (_taskDepartController.typesTask.value ==
+                                    "E") {
+                                  if (_taskDepartController
+                                      .addListBrowser.isEmpty) {
+                                    Fluttertoast.showToast(
+                                        msg: "Upload BRD Image");
+                                    return;
+                                  }
+                                }
                                 _taskDepartController
                                     .updateDisbleSubmitButton(false);
                                 await loadImages();
@@ -2816,6 +2831,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                   child: TextFormField(
                     controller: totalDayController,
                     keyboardType: TextInputType.number,
+                    // onChanged: (value) {
+                    //   if (percentageController.isNotEmpty) {
+                    //     percentageController.clear();
+                    //   }
+                    // },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -2912,12 +2932,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                               DataCell(Text(v.toString())),
                               DataCell(
                                 DropdownButtonFormField<GetDeptsValues>(
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return "Please select a department";
-                                    }
-                                    return null;
-                                  },
+                                  value:
+                                      _taskDepartController.getDeptsList.first,
                                   decoration: InputDecoration(
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(10),
@@ -2982,8 +2998,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     setState(() {
                                       departmentController[index].text =
                                           s!.hrmdCID.toString();
-                                      // hrmdId.add(s!);
-                                      // logger.i(hrmdId.first);
                                       filterEmployees(s.hrmDDepartmentName!);
                                     });
                                   },
@@ -2999,12 +3013,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     )
                                   : DropdownButtonFormField<
                                           EmplyeeEnhancementModelValues>(
-                                      validator: (value) {
-                                        if (value == null) {
-                                          return "";
-                                        }
-                                        return null;
-                                      },
                                       decoration: InputDecoration(
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
@@ -3075,8 +3083,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                         setState(() {
                                           employeeController[index].text =
                                               s!.hrmEId!.toString();
-                                          // hrmeId.add(s!.hrmEId!);
-                                          // logger.v(hrmeId.first);
                                         });
                                       })),
                               DataCell(
@@ -3084,20 +3090,16 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                   readOnly: (totalDayController.text.isEmpty)
                                       ? true
                                       : false,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Enter Percentage';
-                                    }
-                                    return null;
-                                  },
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.digitsOnly,
                                   ],
                                   onChanged: (value) {
                                     if (value.isNotEmpty) {
-                                      // double enteredValue = double.parse(value);
-                                      if (double.parse(value) > 100) {
+                                      double enteredValue = double.parse(value);
+                                      if (double.parse(value) >
+                                          totalPercentage) {
+                                      // validation(double.parse(value), index);
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
@@ -3122,9 +3124,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                         setState(() {
                                           calculatedDays[index] =
                                               calculateDaysToComplete(
-                                                  double.parse(
-                                                      totalDayController.text),
-                                                  double.parse(value));
+                                                      double.parse(
+                                                          totalDayController
+                                                              .text),
+                                                      double.parse(value))
+                                                  .toInt();
                                         });
                                         logger.i(
                                             'Days to complete: $calculatedDays');
@@ -3542,6 +3546,29 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
             employee.hRMDDepartmentName!.toLowerCase().trim() ==
                 query.toLowerCase().trim())
         .toList();
+  }
+
+  void validation(double data, int index) {
+    if (double.parse(totalDayController.text) > 0) {
+      double percentage = 0;
+      percentage += data;
+      if (data < percentage) {
+        Fluttertoast.showToast(
+            msg: "Total Percentage Not Greater Than 100 % !");
+        percentageController[index].clear();
+        return;
+      } else {
+        double ismtcR_Days = 0;
+        ismtcR_Days =
+            (double.parse(totalDayController.text) * percentage / 100);
+        calculatedDays[index] = ismtcR_Days.round();
+        return;
+      }
+    } else {
+      Fluttertoast.showToast(msg: "Please Enter Total Days !");
+      percentageController[index].text = "0";
+      return;
+    }
   }
 
   @override

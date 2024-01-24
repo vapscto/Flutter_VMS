@@ -286,7 +286,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
               });
             }
           }
-          logger.i(uploadImageList.toList());
         }
 
         if (_plannerDetailsController.checkBoxList.elementAt(index) == true) {
