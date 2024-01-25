@@ -1,8 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/screens/login_screen.dart';
 
 class AuthenticateUserApi {
   AuthenticateUserApi.init();
@@ -41,7 +44,7 @@ class AuthenticateUserApi {
     //   mobiledeviceid = await getDeviceToken();
     // }
 
-    Response response = await ins.post(loginApiUrl, data: {
+    var response = await ins.post(loginApiUrl, data: {
       "MI_Id": miId,
       "username": userName,
       "password": password,
@@ -99,16 +102,9 @@ class AuthenticateUserApi {
         });
       }
 
-      // if (response.data['staffanalyticalprivileges'] == null) {
-      //   return Future.error({
-      //     "errorTitle": "Staff Analytical Privileges not mapped",
-      //     "type": "oth",
-      //     "errorMsg":
-      //         "Staff Analytics Privlages Not found, we can't open dashboard",
-      //     "userName": userName,
-      //   });
-      // }
       logInBox!.put("isLoggedIn", false);
+      final mskoolController = MskoolController();
+      Get.offAll(() => LoginScreen(mskoolController: mskoolController));
       return Future.error({
         "errorTitle": response.data['message'],
         "type": "oth",

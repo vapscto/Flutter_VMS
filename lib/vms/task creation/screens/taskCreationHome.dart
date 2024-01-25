@@ -499,13 +499,12 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                       .taskAssingn.value ==
                                   'N') {
                                 if (_taskDepartController.typesTask.value ==
-                                    "E") {
-                                  if (_taskDepartController
-                                      .addListBrowser.isEmpty) {
-                                    Fluttertoast.showToast(
-                                        msg: "Upload BRD Image");
-                                    return;
-                                  }
+                                        "E" ||
+                                    _taskDepartController
+                                        .addListBrowser.isEmpty) {
+                                  Fluttertoast.showToast(
+                                      msg: "Upload BRD Image");
+                                  return;
                                 }
                                 _taskDepartController
                                     .updateDisbleSubmitButton(false);
@@ -3099,7 +3098,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                       double enteredValue = double.parse(value);
                                       if (double.parse(value) >
                                           totalPercentage) {
-                                      // validation(double.parse(value), index);
+                                        // validation(double.parse(value), index);
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
