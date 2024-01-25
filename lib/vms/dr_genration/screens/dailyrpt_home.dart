@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/screens/multiple_attachment_viewer.dart';
 import 'package:m_skool_flutter/vms/dr_genration/api/get_planner_details_api.dart';
 import 'package:m_skool_flutter/vms/dr_genration/api/get_task_check_list.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
@@ -1378,11 +1379,16 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   .isNotEmpty)
                                                               ? InkWell(
                                                                   onTap: () {
-                                                                    createPreview(
-                                                                        context,
-                                                                        _plannerDetailsController
-                                                                            .uploadImages[index]
-                                                                            .path);
+                                                                    Get.dialog(
+                                                                        MultipleAttachmentViewer(
+                                                                      value: _plannerDetailsController
+                                                                          .uploadImages,
+                                                                    ));
+                                                                    // createPreview(
+                                                                    //     context,
+                                                                    //     _plannerDetailsController
+                                                                    //         .uploadImages[index]
+                                                                    //         .path);
                                                                   },
                                                                   child: const Icon(
                                                                       Icons

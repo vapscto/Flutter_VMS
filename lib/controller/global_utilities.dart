@@ -825,30 +825,3 @@ void createPreview(BuildContext context, String url) {
     }));
   }
 }
-
-void createMultiplePreview(BuildContext context, List<String> url) {
-  for (int i = 0; i < url.length; i++) {
-    if (!url[i].isExcelFileName &&
-        !url[i].isPPTFileName &&
-        !url[i].isPDFFileName &&
-        !url[i].isVideoFileName &&
-        !url[i].isImageFileName &&
-        !url[i].isDocumentFileName &&
-        !url[i].isAudioFileName) {
-      launchUrl(Uri.parse(url[i]), mode: LaunchMode.externalApplication);
-      return;
-    }
-    if (url[i].isVideoFileName) {
-      Navigator.push(context, MaterialPageRoute(builder: (_) {
-        return VideoScreen(videoUrl: url[i]);
-      }));
-    } else {
-      Navigator.push(context, MaterialPageRoute(builder: (_) {
-        return AttachmentViewer(
-          loadFromRawData: false,
-          url: url[i],
-        );
-      }));
-    }
-  }
-}
