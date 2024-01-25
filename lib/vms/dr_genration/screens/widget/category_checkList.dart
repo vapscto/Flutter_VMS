@@ -64,8 +64,7 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
         'docx',
         'xls',
         'xlsx',
-        'pdf',
-        'mp4'
+        'pdf'
       ],
     );
 

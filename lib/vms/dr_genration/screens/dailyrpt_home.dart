@@ -70,6 +70,12 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   init() async {
     fliteresList.clear();
     _plannerDetailsController.uploadImages.clear();
+    _plannerDetailsController.etResponse.clear;
+    _plannerDetailsController.hoursEt.clear();
+    _plannerDetailsController.minutesEt.clear();
+    _plannerDetailsController.statusEtField.clear();
+    _plannerDetailsController.deveationEtField.clear();
+    _plannerDetailsController.deveationIdEtField.clear();
     await getPlanerdetails(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         controller: _plannerDetailsController,
