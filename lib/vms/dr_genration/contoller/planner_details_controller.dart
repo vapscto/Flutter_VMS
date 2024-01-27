@@ -22,6 +22,7 @@ import 'package:m_skool_flutter/vms/dr_genration/model/planner_file_upload_model
 import 'package:m_skool_flutter/vms/dr_genration/model/previous_task_details.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/search_previous_task_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/tada_not_approve_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/upload_dr_image.dart';
 
 class PlannerDetails extends GetxController {
   RxList<PlanerDeatails> planerDeatails = <PlanerDeatails>[].obs;
@@ -232,7 +233,10 @@ class PlannerDetails extends GetxController {
     }
     searchpreviousTaskDetailsList.addAll(searchpreviousTaskDetails);
   }
+
+  List<UploadDrImage> uploadAllAttachment = [];
 }
+//
 
 class AtachmenDrtFile {
   int? id;

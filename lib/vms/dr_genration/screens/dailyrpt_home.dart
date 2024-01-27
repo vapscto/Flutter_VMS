@@ -1379,11 +1379,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   .isNotEmpty)
                                                               ? InkWell(
                                                                   onTap: () {
-                                                                    Get.dialog(
+                                                                    Get.to(() =>
                                                                         MultipleAttachmentViewer(
-                                                                      value: _plannerDetailsController
-                                                                          .uploadImages,
-                                                                    ));
+                                                                          value:
+                                                                              _plannerDetailsController.uploadImages,
+                                                                        ));
                                                                     // createPreview(
                                                                     //     context,
                                                                     //     _plannerDetailsController

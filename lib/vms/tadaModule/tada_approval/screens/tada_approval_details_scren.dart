@@ -397,7 +397,7 @@ class _TADAApprovalDetailsScreenState extends State<TADAApprovalDetailsScreen> {
     return const [
       DataColumn(label: Text("SL.NO.")),
       DataColumn(label: Text("File Name")),
-      DataColumn(label: Text("DR View")),
+      DataColumn(label: Text("Remarks")),
       DataColumn(label: Text("Files")),
     ];
   }

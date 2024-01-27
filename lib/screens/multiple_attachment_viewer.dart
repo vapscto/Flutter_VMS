@@ -15,10 +15,13 @@ class MultipleAttachmentViewer extends StatefulWidget {
 class _MultipleAttachmentViewerState extends State<MultipleAttachmentViewer> {
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      content: SizedBox(
-        height: MediaQuery.of(context).size.width * 0.3,
+    return Scaffold(
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: widget.value.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
@@ -27,22 +30,25 @@ class _MultipleAttachmentViewerState extends State<MultipleAttachmentViewer> {
             childAspectRatio: 0.75,
           ),
           itemBuilder: (context, index) {
-            return InkWell(
-                onTap: () {
-                  createPreview(context, widget.value[index].path);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color.fromARGB(255, 185, 194, 247)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.file_copy,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ));
+            return (widget.value[index].path.isNotEmpty)
+                ? InkWell(
+                    onTap: () {
+                      createPreview(context, widget.value[index].path);
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      height: 150,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Color.fromARGB(255, 187, 196, 247)),
+                      child: const Center(
+                        child: Icon(
+                          Icons.file_copy,
+                          color: Colors.pink,
+                        ),
+                      ),
+                    ))
+                : const SizedBox();
           },
         ),
       ),
