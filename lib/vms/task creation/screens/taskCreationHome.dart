@@ -506,12 +506,13 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                       .taskAssingn.value ==
                                   'N') {
                                 if (_taskDepartController.typesTask.value ==
-                                        "E" ||
-                                    _taskDepartController
-                                        .addListBrowser.isEmpty) {
-                                  Fluttertoast.showToast(
-                                      msg: "Upload BRD Image");
-                                  return;
+                                    "E") {
+                                  if (_taskDepartController
+                                      .addListBrowser.isEmpty) {
+                                    Fluttertoast.showToast(
+                                        msg: "Upload BRD Image");
+                                    return;
+                                  }
                                 }
                                 _taskDepartController
                                     .updateDisbleSubmitButton(false);
@@ -2997,24 +2998,22 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                               )));
                                     }),
                                     onChanged: (s) async {
-                                      // setState(() {
                                       departmentController[index].text =
                                           s!.hrmdCID.toString();
                                       employeeList(s.hrmDId!);
-                                      // });
                                     },
                                   ),
                                 ),
-                                DataCell(_taskDepartController
-                                        .getemployeelist.isEmpty
+                                DataCell(newTaskEmployeeList.isEmpty
                                     ? Center(
                                         child: Text(
-                                          "No Data ",
+                                          "No Employee Available ",
                                           style: Get.textTheme.titleSmall,
                                         ),
                                       )
                                     : DropdownButtonFormField<
                                             EmplyeeEnhancementModelValues>(
+                                        value: newTaskEmployeeList.first,
                                         decoration: InputDecoration(
                                           focusedBorder: OutlineInputBorder(
                                             borderRadius:

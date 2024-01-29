@@ -56,8 +56,9 @@ Future<bool> saveTask({
 }) async {
   final Dio ins = getGlobalDio();
   var dataMap;
-  final String apiUrl = 'base' + URLS.saveTaskCreation;
+  final String apiUrl = base + URLS.saveTaskCreation;
   List<Map<String, dynamic>> att = [];
+
   List<UploadHwCwModel> uploadAttachment = [];
   logger.d(apiUrl);
   logger.v({
