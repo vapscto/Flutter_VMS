@@ -386,29 +386,32 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                                     file: element.file!)
                                 .then((value) {
                               if (value.name.isNotEmpty) {
-                                if (!uploadAttachment.any(
-                                    (element) => element.name == value.name)) {
-                                  uploadAttachment.add(UploadDrImage(
-                                      name: value.name, path: value.path));
-                                }
+                                // if (!uploadAttachment.any(
+                                //     (element) => element.name == value.name)) {
+                                uploadAttachment.add(UploadDrImage(
+                                    name: value.name, path: value.path));
+                                // }
                               }
                             });
                           }
-
-                          widget.plannerDetailsController
-                              .uploadImages[widget.index].index = widget.index;
-                          widget
-                              .plannerDetailsController
-                              .uploadImages[widget.index]
-                              .name = uploadAttachment.first.name;
-                          widget
-                              .plannerDetailsController
-                              .uploadImages[widget.index]
-                              .path = uploadAttachment.first.path;
-                          widget.plannerDetailsController
-                              .uploadImages[widget.index].id = id;
-                          widget.plannerDetailsController
-                              .uploadImages[widget.index].imageType = drName;
+                          for (int j = 0; j < uploadAttachment.length; j++) {
+                            widget
+                                .plannerDetailsController
+                                .uploadImages[widget.index]
+                                .index = widget.index;
+                            widget
+                                .plannerDetailsController
+                                .uploadImages[widget.index]
+                                .name = uploadAttachment[j].name;
+                            widget
+                                .plannerDetailsController
+                                .uploadImages[widget.index]
+                                .path = uploadAttachment[j].path;
+                            widget.plannerDetailsController
+                                .uploadImages[widget.index].id = id;
+                            widget.plannerDetailsController
+                                .uploadImages[widget.index].imageType = drName;
+                          }
 
                           if (uploadAttachment.isNotEmpty) {
                             setState(() {

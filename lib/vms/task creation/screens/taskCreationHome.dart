@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -112,10 +113,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   List<int> level = [];
   DateTime date = DateTime.now();
   // calculate hour
-  double percentage = 0;
-  double totalAllHour = 0;
-  var dayDifference = 0;
-  var countHrs = 0.00;
   @override
   void initState() {
     selectDate.text = getDate(date);
@@ -141,7 +138,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     super.initState();
   }
 
-  double totalEnhancementHours = 0.0;
+  String totalEnhancementHours = ' 0.0';
 
   addItemListBrowse(int val, String name) {
     _taskDepartController.addListBrowser.add(AtachmentFile(
@@ -397,7 +394,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   }
 
   final List<TextEditingController> percentageController = [];
-  void addDescription(TextEditingController controller) {
+  void addPercentage(TextEditingController controller) {
     percentageController.add(controller);
   }
 
@@ -434,7 +431,12 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       addRemarks(TextEditingController(text: ''));
       addHours(TextEditingController(text: '0'));
       addMinutes(TextEditingController(text: '0'));
-      addDescription(TextEditingController(text: ''));
+      addPercentage(TextEditingController(text: '0'));
+      // for (int i = 0; i < percentageController.length; i++) {
+      //   percentageController[i].addListener(() {
+      //     validation(0, 0);
+      //   });
+      // }
       calculatedDays.add(0);
       fromDateController
           .add(TextEditingController(text: getDateFrom(DateTime.now())));
@@ -3108,44 +3110,44 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                   ],
                                   controller: percentageController[index],
                                   onChanged: (value) {
-                                    if (value.isNotEmpty) {
-                                      validation(double.parse(value), index);
-                                      // if (enteredValue > totalPercentage) {
-                                      //   showDialog(
-                                      //     context: context,
-                                      //     builder: (BuildContext context) {
-                                      //       return AlertDialog(
-                                      //         title: const Text(
-                                      //             'Total Percentage Not Greater Than 100 % !'),
-                                      //         actions: [
-                                      //           TextButton(
-                                      //             onPressed: () {
-                                      //               percentageController[index]
-                                      //                   .clear();
-                                      //               calculatedDays[index] = 0;
-                                      //               Navigator.of(context).pop();
-                                      //             },
-                                      //             child: const Text('OK'),
-                                      //           ),
-                                      //         ],
-                                      //       );
-                                      //     },
-                                      //   );
-                                      // } else {
-                                      //   setState(() {
-                                      //     calculatedDays[index] =
-                                      //         calculateDaysToComplete(
-                                      //                 double.parse(
-                                      //                     totalDayController
-                                      //                         .text),
-                                      //                 double.parse(value))
-                                      //             .toInt();
-                                      //   });
-                                      //   logger.i(
-                                      //       'Days to complete: $calculatedDays');
-                                      // }
-                                      setState(() {});
-                                    }
+                                    // if (value.isNotEmpty) {
+                                    validation(double.parse(value), index);
+                                    // if (enteredValue > totalPercentage) {
+                                    //   showDialog(
+                                    //     context: context,
+                                    //     builder: (BuildContext context) {
+                                    //       return AlertDialog(
+                                    //         title: const Text(
+                                    //             'Total Percentage Not Greater Than 100 % !'),
+                                    //         actions: [
+                                    //           TextButton(
+                                    //             onPressed: () {
+                                    //               percentageController[index]
+                                    //                   .clear();
+                                    //               calculatedDays[index] = 0;
+                                    //               Navigator.of(context).pop();
+                                    //             },
+                                    //             child: const Text('OK'),
+                                    //           ),
+                                    //         ],
+                                    //       );
+                                    //     },
+                                    //   );
+                                    // } else {
+                                    //   setState(() {
+                                    //     calculatedDays[index] =
+                                    //         calculateDaysToComplete(
+                                    //                 double.parse(
+                                    //                     totalDayController
+                                    //                         .text),
+                                    //                 double.parse(value))
+                                    //             .toInt();
+                                    //   });
+                                    //   logger.i(
+                                    //       'Days to complete: $calculatedDays');
+                                    // }
+                                    // setState(() {});
+                                    // }
                                   },
                                   maxLines: 1,
                                   style: Theme.of(context).textTheme.titleSmall,
@@ -3201,7 +3203,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                               5))),
                                               onChanged: (value) {
                                                 setState(() {
-                                                  calculateTotalHours(index);
+                                                  totalHoursCalculate();
                                                 });
                                               },
                                             ),
@@ -3250,7 +3252,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                   )),
                                               onChanged: (value) {
                                                 setState(() {
-                                                  calculateTotalHours(index);
+                                                  totalHoursCalculate();
                                                 });
                                               },
                                             ),
@@ -3300,7 +3302,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                               setState(() {
                                                 fromDateController[index].text =
                                                     getDateFrom(startDate);
-                                                calculateTotalHours(index);
+                                                totalHoursCalculate();
                                               });
                                             }
                                           },
@@ -3344,8 +3346,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                               .text =
                                                           getDateFrom(
                                                               startDate);
-                                                      calculateTotalHours(
-                                                          index);
+                                                      totalHoursCalculate();
                                                     });
                                                   }
                                                 },
@@ -3396,7 +3397,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                               setState(() {
                                                 toDateController[index].text =
                                                     getDateFrom(endDate);
-                                                calculateTotalHours(index);
+                                                totalHoursCalculate();
                                               });
                                             }
                                           },
@@ -3423,8 +3424,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                       toDateController[index]
                                                               .text =
                                                           getDateFrom(endDate);
-                                                      calculateTotalHours(
-                                                          index);
+                                                      totalHoursCalculate();
                                                     });
                                                   }
                                                 },
@@ -3532,7 +3532,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                       visible: _taskDepartController.typesTask.value == "E" &&
                           _taskDepartController.taskAssingn.value == "N",
                       child: Text(
-                        'Total Hour:- ${totalEnhancementHours.toStringAsFixed(2)} Hr',
+                        'Total Hour:- $totalEnhancementHours Hr',
                         style: Get.textTheme.titleMedium!
                             .copyWith(color: Theme.of(context).primaryColor),
                       )),
@@ -3620,9 +3620,16 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
         .toList();
   }
 
-  void validation(double data, int index) {
+  double p = 0;
+  validation(double data, int index) {
     if (double.parse(totalDayController.text) > 0) {
-      percentage += data;
+      double percentage = 0;
+
+      // for (var i in percentageController) {
+      percentage += double.parse(percentageController[index].text);
+      // p += percentage;
+      // logger.v(p);
+      // }
       logger.i(percentage);
       if (percentage > totalPercentage) {
         Fluttertoast.showToast(
@@ -3631,10 +3638,9 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
         calculatedDays[index] = 0;
         return;
       } else {
-        double ismtcR_Days = 0;
-        ismtcR_Days =
-            (double.parse(totalDayController.text) * percentage / 100);
-        calculatedDays[index] = ismtcR_Days.round();
+        double days = 0;
+        days = (double.parse(totalDayController.text) * percentage / 100);
+        calculatedDays[index] = days.round();
         return;
       }
     } else {
@@ -3644,36 +3650,55 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     }
   }
 
-  void calculateTotalHours(int index) {
-    var countHrs1 = (double.parse(minutesController[index].text) * 0.0166667);
-    countHrs = double.parse(hoursController[index].text) + (countHrs1);
+  void totalHoursCalculate() {
+    double totalHours = 0;
 
-    var firstDate1 =
-        formatDate(DateTime.parse(fromDateController[index].text), "dd/MM/yy");
-    var secondDate1 =
-        formatDate(DateTime.parse(toDateController[index].text), "dd/MM/yy");
+    if (newList.isNotEmpty) {
+      for (var i = 0; i < newList.length; i++) {
+        double dayDifference = 0;
+        String countHrs1 = ' 0.00';
+        countHrs1 = (double.parse(minutesController[i].text) * 0.0166667)
+            .toStringAsFixed(2);
+        double countHrs =
+            double.parse(hoursController[i].text) + double.parse(countHrs1);
 
-    DateTime date1 = formatString(firstDate1);
-    DateTime date2 = formatString(secondDate1);
+        // ---- Correct ----
+        var firstDate1 = DateFormat('dd/MM/yy')
+            .format(DateTime.parse(fromDateController[i].text));
+        var secondDate1 = DateFormat('dd/MM/yy')
+            .format(DateTime.parse(toDateController[i].text));
 
-    Duration timeDiff = date2.difference(date1);
-    dayDifference = (timeDiff.inSeconds / (3600 * 24)).ceil();
+        var date2 = DateTime.parse(formatString(secondDate1).toIso8601String());
+        var date1 = DateTime.parse(formatString(firstDate1).toIso8601String());
 
-    if (totalAllHour > 0) {
-      int days = 1;
-      if (dayDifference > 0) {
-        days = dayDifference;
+        var timeDiff = date2.difference(date1).inMilliseconds;
+        dayDifference = (timeDiff / (1000 * 3600 * 24)).ceil().toDouble();
+
+        if (totalHours > 0) {
+          double days = 1;
+          if (dayDifference > 0) {
+            days = dayDifference;
+          }
+          totalHours = (countHrs * days) + totalHours;
+        } else {
+          double days = 1;
+          if (dayDifference > 0) {
+            days = dayDifference;
+          }
+          totalHours = countHrs * days;
+          logger.w(totalHours);
+        }
       }
-      totalAllHour += countHrs * days;
-    } else {
-      int days = 1;
-      if (dayDifference > 0) {
-        days = dayDifference;
-      }
-      totalAllHour = countHrs * days;
-      logger.e(totalAllHour);
+
+      totalEnhancementHours = convertToHoursAndMinutes(totalHours);
     }
-    totalEnhancementHours = totalAllHour;
+  }
+
+  String convertToHoursAndMinutes(double decimalValue) {
+    int hours = decimalValue.floor();
+    double minutesDouble = (decimalValue - hours) * 60;
+    int minutes = minutesDouble.round();
+    return '$hours.$minutes';
   }
 
   String formatDate(DateTime date, String format) {
@@ -3728,6 +3753,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     employeesID.clear();
     _taskDepartController.checkBox.clear();
     transnumbconfiguration.clear();
+    totalEnhancementHours = '0.0';
     selectAll = false;
     super.dispose();
   }

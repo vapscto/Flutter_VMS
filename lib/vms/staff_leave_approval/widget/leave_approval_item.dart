@@ -628,7 +628,7 @@ class _AppliedLeaveAprovalItemState extends State<AppliedLeaveAprovalItem> {
                                                                     height: 6.0,
                                                                   ),
                                                                   const Text(
-                                                                      "I approved leaves that you told me to do.. "),
+                                                                      "Leave Approved"),
                                                                   const SizedBox(
                                                                     height: 6.0,
                                                                   ),
