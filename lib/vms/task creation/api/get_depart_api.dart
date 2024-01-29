@@ -44,7 +44,8 @@ Future<bool> getTskCompaniesList({
     GetEmployeeId getEmployeeId = GetEmployeeId.fromJson(response.data);
     logInBox!.put("EmpId", getEmployeeId.hrmEId);
     GetDepts getDepts = GetDepts.fromJson(response.data['get_department']);
-     EmplyeeEnhancementModel emplyeeEnhancementModel = EmplyeeEnhancementModel.fromJson(response.data['emplyeeEnhancements']);
+    EmplyeeEnhancementModel emplyeeEnhancementModel =
+        EmplyeeEnhancementModel.fromJson(response.data['emplyeeEnhancements']);
     GetPriorityModel priorityModelList =
         GetPriorityModel.fromJson(response.data['get_priority']);
     TaskEmployeeListModel employeeListModel =
@@ -60,7 +61,7 @@ Future<bool> getTskCompaniesList({
     controller.getTaskEmployeeList.addAll(employeeListModel.values!);
     controller.getPriorityModelList.addAll(priorityModelList.values!);
     controller.getDeptsList.addAll(getDepts.values!);
-   controller.getemployeelist.addAll(emplyeeEnhancementModel.values!);
+    controller.getemployeelist.addAll(emplyeeEnhancementModel.values!);
     controller.taskDeptLoading(false);
     return true;
   } on DioError catch (e) {
@@ -70,7 +71,6 @@ Future<bool> getTskCompaniesList({
   } on Exception catch (e) {
     logger.e(e.toString());
     controller.taskDeptErrorLoading(true);
-
 
     return false;
   }

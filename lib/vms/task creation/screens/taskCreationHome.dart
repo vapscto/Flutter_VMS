@@ -91,8 +91,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
   List<int> employeesID = [];
   RxList<TaskEmployeeListModelValues> taskEmployeeList =
       <TaskEmployeeListModelValues>[].obs;
-  RxList<TaskEmployeeListModelValues> newTaskEmployeeList =
-      <TaskEmployeeListModelValues>[].obs;
+  RxList<EmplyeeEnhancementModelValues> newTaskEmployeeList =
+      <EmplyeeEnhancementModelValues>[].obs;
   RxList<String> periodicityList = <String>[
     "Daily",
     "Weekly",
@@ -432,11 +432,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       addHours(TextEditingController(text: '0'));
       addMinutes(TextEditingController(text: '0'));
       addPercentage(TextEditingController(text: '0'));
-      // for (int i = 0; i < percentageController.length; i++) {
-      //   percentageController[i].addListener(() {
-      //     validation(0, 0);
-      //   });
-      // }
       calculatedDays.add(0);
       fromDateController
           .add(TextEditingController(text: getDateFrom(DateTime.now())));
@@ -444,6 +439,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
           .add(TextEditingController(text: getDateFrom(DateTime.now())));
       addDepartment(TextEditingController(text: ''));
       addEmployee(TextEditingController(text: ''));
+      employeeList(0);
     }
   }
 
@@ -2841,11 +2837,6 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                   child: TextFormField(
                     controller: totalDayController,
                     keyboardType: TextInputType.number,
-                    // onChanged: (value) {
-                    //   if (percentageController.isNotEmpty) {
-                    //     percentageController.clear();
-                    //   }
-                    // },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -2872,162 +2863,78 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                 ),
               ),
 
-              Visibility(
-                  visible: _taskDepartController.typesTask.value == "E" &&
-                      _taskDepartController.taskAssingn.value == "N",
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 10),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: DataTable(
-                          headingRowColor: MaterialStatePropertyAll(
-                              Theme.of(context).primaryColor),
-                          dataTextStyle: const TextStyle(
-                              fontSize: 14,
-                              color: Color.fromRGBO(0, 0, 0, 0.95),
-                              fontWeight: FontWeight.w400),
-                          dataRowHeight:
-                              MediaQuery.of(context).size.height * 0.2,
-                          headingRowHeight:
-                              MediaQuery.of(context).size.height * 0.07,
-                          horizontalMargin: 10,
-                          columnSpacing:
-                              MediaQuery.of(context).size.width * 0.08,
-                          dividerThickness: 1,
-                          headingTextStyle: const TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w700),
-                          border: TableBorder.all(
-                              borderRadius: BorderRadius.circular(10),
-                              width: 0.5),
-                          columns: const [
-                            DataColumn(
-                              label: Text('S.No'),
-                            ),
-                            DataColumn(
-                              label: Text("Department"),
-                            ),
-                            DataColumn(
-                              label: Text('Employee Name'),
-                            ),
-                            DataColumn(
-                              label: Text('Percenatge'),
-                            ),
-                            DataColumn(
-                              label: Text('Days'),
-                            ),
-                            DataColumn(
-                              label: Text('Hours'),
-                            ),
-                            DataColumn(
-                              label: Text('Start and End Date'),
-                            ),
-                            DataColumn(
-                              label: Text('Level'),
-                            ),
-                            DataColumn(
-                              label: Text('Remark'),
-                            ),
-                            DataColumn(
-                              label: Text('Action'),
-                            ),
-                          ],
-                          rows: List.generate(newList.length, (index) {
-                            var v = index + 1;
-                            // if (percentageController[index].text.isNotEmpty) {
-                            //   double data = double.parse(
-                            //       percentageController[index].text);
-                            //   enteredValue += data;
-                            //   logger.i(enteredValue);
-                            // }
-
-                            return DataRow(cells: [
-                              DataCell(Text(v.toString())),
-                              DataCell(
-                                DropdownButtonFormField<GetDeptsValues>(
-                                  decoration: InputDecoration(
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: const BorderSide(
-                                          color: Colors.indigo,
-                                        ),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: const BorderSide(
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                      hintStyle: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall,
-                                      hintText: _taskDepartController
-                                              .getDeptsList.isNotEmpty
-                                          ? 'Select Department'
-                                          : 'No data available',
-                                      floatingLabelBehavior:
-                                          FloatingLabelBehavior.always,
-                                      isDense: true,
-                                      labelText: 'Department',
-                                      labelStyle: Get.textTheme.titleSmall),
-                                  icon: const Padding(
-                                    padding: EdgeInsets.only(top: 3),
-                                    child: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      size: 30,
-                                    ),
-                                  ),
-                                  iconSize: 30,
-                                  items: List.generate(
-                                      _taskDepartController.getDeptsList.length,
-                                      (index) {
-                                    return DropdownMenuItem(
-                                        value: _taskDepartController
-                                            .getDeptsList[index],
-                                        child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 13, left: 5),
-                                            child: Text(
-                                              overflow: TextOverflow.clip,
-                                              _taskDepartController
-                                                  .getDeptsList[index]
-                                                  .hrmDDepartmentName!,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall!
-                                                  .merge(
-                                                    const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 13.0,
-                                                      letterSpacing: 0.3,
-                                                    ),
-                                                  ),
-                                            )));
-                                  }),
-                                  onChanged: (s) async {
-                                    setState(() {
-                                      departmentController[index].text =
-                                          s!.hrmdCID.toString();
-                                      employeeList(s.hrmDDepartmentName!);
-                                    });
-                                  },
-                                ),
+              Obx(() {
+                return Visibility(
+                    visible: _taskDepartController.typesTask.value == "E" &&
+                        _taskDepartController.taskAssingn.value == "N",
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 10),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: DataTable(
+                            headingRowColor: MaterialStatePropertyAll(
+                                Theme.of(context).primaryColor),
+                            dataTextStyle: const TextStyle(
+                                fontSize: 14,
+                                color: Color.fromRGBO(0, 0, 0, 0.95),
+                                fontWeight: FontWeight.w400),
+                            dataRowHeight:
+                                MediaQuery.of(context).size.height * 0.2,
+                            headingRowHeight:
+                                MediaQuery.of(context).size.height * 0.07,
+                            horizontalMargin: 10,
+                            columnSpacing:
+                                MediaQuery.of(context).size.width * 0.08,
+                            dividerThickness: 1,
+                            headingTextStyle: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700),
+                            border: TableBorder.all(
+                                borderRadius: BorderRadius.circular(10),
+                                width: 0.5),
+                            columns: const [
+                              DataColumn(
+                                label: Text('S.No'),
                               ),
-                              DataCell(_taskDepartController
-                                      .getemployeelist.isEmpty
-                                  ? Center(
-                                      child: Text(
-                                        "No Data Available",
-                                        style: Get.textTheme.titleSmall,
-                                      ),
-                                    )
-                                  : DropdownButtonFormField<
-                                          EmplyeeEnhancementModelValues>(
-                                      decoration: InputDecoration(
+                              DataColumn(
+                                label: Text("Department"),
+                              ),
+                              DataColumn(
+                                label: Text('Employee Name'),
+                              ),
+                              DataColumn(
+                                label: Text('Percenatge'),
+                              ),
+                              DataColumn(
+                                label: Text('Days'),
+                              ),
+                              DataColumn(
+                                label: Text('Hours'),
+                              ),
+                              DataColumn(
+                                label: Text('Start and End Date'),
+                              ),
+                              DataColumn(
+                                label: Text('Level'),
+                              ),
+                              DataColumn(
+                                label: Text('Remark'),
+                              ),
+                              DataColumn(
+                                label: Text('Action'),
+                              ),
+                            ],
+                            rows: List.generate(newList.length, (index) {
+                              var v = index + 1;
+                              return DataRow(cells: [
+                                DataCell(Text(v.toString())),
+                                DataCell(
+                                  DropdownButtonFormField<GetDeptsValues>(
+                                    decoration: InputDecoration(
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -3044,321 +2951,388 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                         ),
                                         hintStyle: Theme.of(context)
                                             .textTheme
-                                            .labelSmall!
-                                            .merge(const TextStyle(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 15.0,
-                                                letterSpacing: 0.3)),
+                                            .titleSmall,
                                         hintText: _taskDepartController
-                                                .getemployeelist.isNotEmpty
-                                            ? 'Select Employee'
+                                                .getDeptsList.isNotEmpty
+                                            ? 'Select Department'
                                             : 'No data available',
                                         floatingLabelBehavior:
                                             FloatingLabelBehavior.always,
                                         isDense: true,
-                                        labelText: 'Employee',
-                                        labelStyle: Get.textTheme.titleSmall,
+                                        labelText: 'Department',
+                                        labelStyle: Get.textTheme.titleSmall),
+                                    icon: const Padding(
+                                      padding: EdgeInsets.only(top: 3),
+                                      child: Icon(
+                                        Icons.keyboard_arrow_down_rounded,
+                                        size: 30,
                                       ),
-                                      icon: const Padding(
-                                        padding: EdgeInsets.only(top: 3),
-                                        child: Icon(
-                                          Icons.keyboard_arrow_down_rounded,
-                                          size: 30,
-                                        ),
-                                      ),
-                                      iconSize: 30,
-                                      items: List.generate(
-                                          _taskDepartController
-                                              .getemployeelist.length, (index) {
-                                        return DropdownMenuItem(
+                                    ),
+                                    iconSize: 30,
+                                    items: List.generate(
+                                        _taskDepartController
+                                            .getDeptsList.length, (index) {
+                                      return DropdownMenuItem(
                                           value: _taskDepartController
-                                              .getemployeelist[index],
+                                              .getDeptsList[index],
                                           child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 13, left: 5),
-                                            child: Text(
-                                              overflow: TextOverflow.clip,
-                                              _taskDepartController
-                                                  .getemployeelist[index]
-                                                  .employeename!,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall!
-                                                  .merge(const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 13.0,
-                                                      letterSpacing: 0.3)),
+                                              padding: const EdgeInsets.only(
+                                                  top: 13, left: 5),
+                                              child: Text(
+                                                overflow: TextOverflow.clip,
+                                                _taskDepartController
+                                                    .getDeptsList[index]
+                                                    .hrmDDepartmentName!,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .merge(
+                                                      const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: 13.0,
+                                                        letterSpacing: 0.3,
+                                                      ),
+                                                    ),
+                                              )));
+                                    }),
+                                    onChanged: (s) async {
+                                      // setState(() {
+                                      departmentController[index].text =
+                                          s!.hrmdCID.toString();
+                                      employeeList(s.hrmDId!);
+                                      // });
+                                    },
+                                  ),
+                                ),
+                                DataCell(_taskDepartController
+                                        .getemployeelist.isEmpty
+                                    ? Center(
+                                        child: Text(
+                                          "No Data ",
+                                          style: Get.textTheme.titleSmall,
+                                        ),
+                                      )
+                                    : DropdownButtonFormField<
+                                            EmplyeeEnhancementModelValues>(
+                                        decoration: InputDecoration(
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: const BorderSide(
+                                              color: Colors.indigo,
                                             ),
                                           ),
-                                        );
-                                      }),
-                                      onChanged: (s) async {
-                                        setState(() {
-                                          employeeController[index].text =
-                                              s!.hrmEId!.toString();
-                                        });
-                                      })),
-                              DataCell(
-                                TextFormField(
-                                  readOnly: (totalDayController.text.isEmpty)
-                                      ? true
-                                      : false,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.digitsOnly,
-                                  ],
-                                  controller: percentageController[index],
-                                  onChanged: (value) {
-                                    // if (value.isNotEmpty) {
-                                    validation(double.parse(value), index);
-                                    // if (enteredValue > totalPercentage) {
-                                    //   showDialog(
-                                    //     context: context,
-                                    //     builder: (BuildContext context) {
-                                    //       return AlertDialog(
-                                    //         title: const Text(
-                                    //             'Total Percentage Not Greater Than 100 % !'),
-                                    //         actions: [
-                                    //           TextButton(
-                                    //             onPressed: () {
-                                    //               percentageController[index]
-                                    //                   .clear();
-                                    //               calculatedDays[index] = 0;
-                                    //               Navigator.of(context).pop();
-                                    //             },
-                                    //             child: const Text('OK'),
-                                    //           ),
-                                    //         ],
-                                    //       );
-                                    //     },
-                                    //   );
-                                    // } else {
-                                    //   setState(() {
-                                    //     calculatedDays[index] =
-                                    //         calculateDaysToComplete(
-                                    //                 double.parse(
-                                    //                     totalDayController
-                                    //                         .text),
-                                    //                 double.parse(value))
-                                    //             .toInt();
-                                    //   });
-                                    //   logger.i(
-                                    //       'Days to complete: $calculatedDays');
-                                    // }
-                                    // setState(() {});
-                                    // }
-                                  },
-                                  maxLines: 1,
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                  decoration: InputDecoration(
-                                    hintText: 'Enter Percentage',
-                                    hintStyle:
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: const BorderSide(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          hintStyle: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall!
+                                              .merge(const TextStyle(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 14.0,
+                                                  letterSpacing: 0.3)),
+                                          hintText:
+                                              newTaskEmployeeList.isNotEmpty
+                                                  ? 'Select Employee'
+                                                  : 'No Data',
+                                          floatingLabelBehavior:
+                                              FloatingLabelBehavior.always,
+                                          isDense: true,
+                                          labelText: 'Employee',
+                                          labelStyle: Get.textTheme.titleSmall,
+                                        ),
+                                        icon: const Padding(
+                                          padding: EdgeInsets.only(top: 3),
+                                          child: Icon(
+                                            Icons.keyboard_arrow_down_rounded,
+                                            size: 30,
+                                          ),
+                                        ),
+                                        iconSize: 30,
+                                        items: List.generate(
+                                            newTaskEmployeeList.length,
+                                            (index) {
+                                          return DropdownMenuItem(
+                                            value: newTaskEmployeeList[index],
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 13, left: 5),
+                                              child: Text(
+                                                overflow: TextOverflow.clip,
+                                                newTaskEmployeeList[index]
+                                                    .employeename!,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .merge(const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: 13.0,
+                                                        letterSpacing: 0.3)),
+                                              ),
+                                            ),
+                                          );
+                                        }),
+                                        onChanged: (s) async {
+                                          setState(() {
+                                            employeeController[index].text =
+                                                s!.hrmEId!.toString();
+                                          });
+                                        })),
+                                DataCell(
+                                  TextFormField(
+                                    readOnly: (totalDayController.text.isEmpty)
+                                        ? true
+                                        : false,
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly,
+                                    ],
+                                    controller: percentageController[index],
+                                    onChanged: (value) {
+                                      validation(index);
+                                    },
+                                    maxLines: 1,
+                                    style:
                                         Theme.of(context).textTheme.titleSmall,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
+                                    decoration: InputDecoration(
+                                      hintText: 'Enter Percentage',
+                                      hintStyle: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              DataCell(Text(
-                                  calculatedDays[index].round().toString())),
-                              DataCell(
-                                Align(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            width: 60,
-                                            child: TextField(
-                                              inputFormatters: [
-                                                FilteringTextInputFormatter
-                                                    .allow(RegExp('[0-9]')),
-                                                LengthLimitingTextInputFormatter(
-                                                    2),
-                                              ],
-                                              keyboardType: const TextInputType
-                                                      .numberWithOptions(
-                                                  decimal: false),
-                                              maxLines: 1,
-                                              controller:
-                                                  hoursController[index],
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall!
-                                                  .merge(const TextStyle(
-                                                    fontWeight: FontWeight.w100,
-                                                    fontSize: 14.0,
-                                                    letterSpacing: 0.3,
-                                                    overflow: TextOverflow.clip,
-                                                  )),
-                                              decoration: InputDecoration(
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5))),
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  totalHoursCalculate();
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          const Text("HH")
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            width: 60,
-                                            child: TextField(
-                                              inputFormatters: [
-                                                FilteringTextInputFormatter
-                                                    .allow(RegExp('[0-9]')),
-                                                LengthLimitingTextInputFormatter(
-                                                    2),
-                                              ],
-                                              keyboardType: const TextInputType
-                                                      .numberWithOptions(
-                                                  decimal: false),
-                                              maxLines: 1,
-                                              decoration: InputDecoration(
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5))),
-                                              controller:
-                                                  minutesController[index],
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall!
-                                                  .merge(const TextStyle(
-                                                    fontWeight: FontWeight.w100,
-                                                    fontSize: 14.0,
-                                                    letterSpacing: 0.3,
-                                                    overflow: TextOverflow.clip,
-                                                  )),
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  totalHoursCalculate();
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          const Text('MM')
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              DataCell(
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        width: 200,
-                                        child: TextField(
-                                          onTap: () async {
-                                            // fromDate();
-                                            startDate = await showDatePicker(
-                                              context: context,
-                                              firstDate: (toDateController[
-                                                          index]
-                                                      .text
-                                                      .isEmpty)
-                                                  ? DateTime.now()
-                                                  : DateTime.parse(
-                                                      toDateController[index]
-                                                          .text),
-                                              lastDate: DateTime(2055),
-                                              initialDate: (toDateController[
-                                                          index]
-                                                      .text
-                                                      .isEmpty)
-                                                  ? DateTime.now()
-                                                  : DateTime.parse(
-                                                      toDateController[index]
-                                                          .text),
-                                            );
-                                            if (startDate != null) {
-                                              setState(() {
-                                                fromDateController[index].text =
-                                                    getDateFrom(startDate);
-                                                totalHoursCalculate();
-                                              });
-                                            }
-                                          },
-                                          readOnly: true,
-                                          controller: fromDateController[index],
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
-                                            suffixIcon: Padding(
-                                              padding: const EdgeInsets.all(12),
-                                              child: InkWell(
-                                                onTap: () async {
-                                                  // fromDate();
-                                                  startDate =
-                                                      await showDatePicker(
-                                                    context: context,
-                                                    firstDate:
-                                                        (toDateController[index]
-                                                                .text
-                                                                .isEmpty)
-                                                            ? DateTime.now()
-                                                            : DateTime.parse(
-                                                                toDateController[
-                                                                        index]
-                                                                    .text),
-                                                    lastDate: DateTime(2055),
-                                                    initialDate:
-                                                        (toDateController[index]
-                                                                .text
-                                                                .isEmpty)
-                                                            ? DateTime.now()
-                                                            : DateTime.parse(
-                                                                toDateController[
-                                                                        index]
-                                                                    .text),
-                                                  );
-                                                  if (startDate != null) {
-                                                    setState(() {
-                                                      fromDateController[index]
-                                                              .text =
-                                                          getDateFrom(
-                                                              startDate);
-                                                      totalHoursCalculate();
-                                                    });
-                                                  }
+                                DataCell(Text(
+                                    calculatedDays[index].round().toString())),
+                                DataCell(
+                                  Align(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              width: 60,
+                                              child: TextField(
+                                                inputFormatters: [
+                                                  FilteringTextInputFormatter
+                                                      .allow(RegExp('[0-9]')),
+                                                  LengthLimitingTextInputFormatter(
+                                                      2),
+                                                ],
+                                                keyboardType:
+                                                    const TextInputType
+                                                            .numberWithOptions(
+                                                        decimal: false),
+                                                maxLines: 1,
+                                                controller:
+                                                    hoursController[index],
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .merge(const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w100,
+                                                      fontSize: 14.0,
+                                                      letterSpacing: 0.3,
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                    )),
+                                                decoration: InputDecoration(
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5))),
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    totalHoursCalculate();
+                                                  });
                                                 },
-                                                child: SvgPicture.asset(
-                                                  "assets/svg/calendar_icon.svg",
-                                                  color:
-                                                      const Color(0xFF3E78AA),
-                                                ),
                                               ),
                                             ),
-                                            hintText: "Select From Date",
-                                            hintStyle: Theme.of(context)
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            const Text("HH")
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              width: 60,
+                                              child: TextField(
+                                                inputFormatters: [
+                                                  FilteringTextInputFormatter
+                                                      .allow(RegExp('[0-9]')),
+                                                  LengthLimitingTextInputFormatter(
+                                                      2),
+                                                ],
+                                                keyboardType:
+                                                    const TextInputType
+                                                            .numberWithOptions(
+                                                        decimal: false),
+                                                maxLines: 1,
+                                                decoration: InputDecoration(
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5))),
+                                                controller:
+                                                    minutesController[index],
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .merge(const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w100,
+                                                      fontSize: 14.0,
+                                                      letterSpacing: 0.3,
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                    )),
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    totalHoursCalculate();
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            const Text('MM')
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          width: 200,
+                                          child: TextField(
+                                            onTap: () async {
+                                              // fromDate();
+                                              startDate = await showDatePicker(
+                                                context: context,
+                                                firstDate: (toDateController[
+                                                            index]
+                                                        .text
+                                                        .isEmpty)
+                                                    ? DateTime.now()
+                                                    : DateTime.parse(
+                                                        toDateController[index]
+                                                            .text),
+                                                lastDate: DateTime(2055),
+                                                initialDate: (toDateController[
+                                                            index]
+                                                        .text
+                                                        .isEmpty)
+                                                    ? DateTime.now()
+                                                    : DateTime.parse(
+                                                        toDateController[index]
+                                                            .text),
+                                              );
+                                              if (startDate != null) {
+                                                setState(() {
+                                                  fromDateController[index]
+                                                          .text =
+                                                      getDateFrom(startDate);
+                                                  totalHoursCalculate();
+                                                });
+                                              }
+                                            },
+                                            readOnly: true,
+                                            controller:
+                                                fromDateController[index],
+                                            decoration: InputDecoration(
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              suffixIcon: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(12),
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    // fromDate();
+                                                    startDate =
+                                                        await showDatePicker(
+                                                      context: context,
+                                                      firstDate: (toDateController[
+                                                                  index]
+                                                              .text
+                                                              .isEmpty)
+                                                          ? DateTime.now()
+                                                          : DateTime.parse(
+                                                              toDateController[
+                                                                      index]
+                                                                  .text),
+                                                      lastDate: DateTime(2055),
+                                                      initialDate:
+                                                          (toDateController[
+                                                                      index]
+                                                                  .text
+                                                                  .isEmpty)
+                                                              ? DateTime.now()
+                                                              : DateTime.parse(
+                                                                  toDateController[
+                                                                          index]
+                                                                      .text),
+                                                    );
+                                                    if (startDate != null) {
+                                                      setState(() {
+                                                        fromDateController[
+                                                                    index]
+                                                                .text =
+                                                            getDateFrom(
+                                                                startDate);
+                                                        totalHoursCalculate();
+                                                      });
+                                                    }
+                                                  },
+                                                  child: SvgPicture.asset(
+                                                    "assets/svg/calendar_icon.svg",
+                                                    color:
+                                                        const Color(0xFF3E78AA),
+                                                  ),
+                                                ),
+                                              ),
+                                              hintText: "Select From Date",
+                                              hintStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .merge(const TextStyle(
+                                                    fontWeight: FontWeight.w100,
+                                                    fontSize: 16.0,
+                                                    letterSpacing: 0.3,
+                                                    overflow: TextOverflow.clip,
+                                                  )),
+                                            ),
+                                            style: Theme.of(context)
                                                 .textTheme
                                                 .titleSmall!
                                                 .merge(const TextStyle(
@@ -3368,75 +3342,78 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                   overflow: TextOverflow.clip,
                                                 )),
                                           ),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall!
-                                              .merge(const TextStyle(
-                                                fontWeight: FontWeight.w100,
-                                                fontSize: 16.0,
-                                                letterSpacing: 0.3,
-                                                overflow: TextOverflow.clip,
-                                              )),
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      SizedBox(
-                                        width: 200,
-                                        child: TextField(
-                                          onTap: () async {
-                                            // fromDate();
-                                            endDate = await showDatePicker(
-                                              context: context,
-                                              firstDate: DateTime.now(),
-                                              lastDate: DateTime(2055),
-                                              initialDate: DateTime.now(),
-                                            );
-                                            if (endDate != null) {
-                                              setState(() {
-                                                toDateController[index].text =
-                                                    getDateFrom(endDate);
-                                                totalHoursCalculate();
-                                              });
-                                            }
-                                          },
-                                          readOnly: true,
-                                          controller: toDateController[index],
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
-                                            suffixIcon: Padding(
-                                              padding: const EdgeInsets.all(12),
-                                              child: InkWell(
-                                                onTap: () async {
-                                                  // fromDate();
-                                                  endDate =
-                                                      await showDatePicker(
-                                                    context: context,
-                                                    firstDate: DateTime.now(),
-                                                    lastDate: DateTime(2055),
-                                                    initialDate: DateTime.now(),
-                                                  );
-                                                  if (endDate != null) {
-                                                    setState(() {
-                                                      toDateController[index]
-                                                              .text =
-                                                          getDateFrom(endDate);
-                                                      totalHoursCalculate();
-                                                    });
-                                                  }
-                                                },
-                                                child: SvgPicture.asset(
-                                                  "assets/svg/calendar_icon.svg",
-                                                  color:
-                                                      const Color(0xFF3E78AA),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        SizedBox(
+                                          width: 200,
+                                          child: TextField(
+                                            onTap: () async {
+                                              // fromDate();
+                                              endDate = await showDatePicker(
+                                                context: context,
+                                                firstDate: DateTime.now(),
+                                                lastDate: DateTime(2055),
+                                                initialDate: DateTime.now(),
+                                              );
+                                              if (endDate != null) {
+                                                setState(() {
+                                                  toDateController[index].text =
+                                                      getDateFrom(endDate);
+                                                  totalHoursCalculate();
+                                                });
+                                              }
+                                            },
+                                            readOnly: true,
+                                            controller: toDateController[index],
+                                            decoration: InputDecoration(
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              suffixIcon: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(12),
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    // fromDate();
+                                                    endDate =
+                                                        await showDatePicker(
+                                                      context: context,
+                                                      firstDate: DateTime.now(),
+                                                      lastDate: DateTime(2055),
+                                                      initialDate:
+                                                          DateTime.now(),
+                                                    );
+                                                    if (endDate != null) {
+                                                      setState(() {
+                                                        toDateController[index]
+                                                                .text =
+                                                            getDateFrom(
+                                                                endDate);
+                                                        totalHoursCalculate();
+                                                      });
+                                                    }
+                                                  },
+                                                  child: SvgPicture.asset(
+                                                    "assets/svg/calendar_icon.svg",
+                                                    color:
+                                                        const Color(0xFF3E78AA),
+                                                  ),
                                                 ),
                                               ),
+                                              hintText: "Select To Date",
+                                              hintStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .merge(const TextStyle(
+                                                    fontWeight: FontWeight.w100,
+                                                    fontSize: 14.0,
+                                                    letterSpacing: 0.3,
+                                                    overflow: TextOverflow.clip,
+                                                  )),
                                             ),
-                                            hintText: "Select To Date",
-                                            hintStyle: Theme.of(context)
+                                            style: Theme.of(context)
                                                 .textTheme
                                                 .titleSmall!
                                                 .merge(const TextStyle(
@@ -3446,82 +3423,74 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                                   overflow: TextOverflow.clip,
                                                 )),
                                           ),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall!
-                                              .merge(const TextStyle(
-                                                fontWeight: FontWeight.w100,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.3,
-                                                overflow: TextOverflow.clip,
-                                              )),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              DataCell(Center(child: Text(v.toString()))),
-                              DataCell(
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  child: TextField(
-                                    style:
-                                        Theme.of(context).textTheme.titleSmall,
-                                    decoration: InputDecoration(
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                vertical: 8, horizontal: 4),
-                                        hintText: 'Remarks...',
-                                        hintStyle: Get.textTheme.titleSmall!
-                                            .copyWith(color: Colors.grey),
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5))),
-                                    controller: remarksController[index],
-                                    maxLines: 6,
+                                DataCell(Center(child: Text(v.toString()))),
+                                DataCell(
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                    child: TextField(
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                      decoration: InputDecoration(
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 8, horizontal: 4),
+                                          hintText: 'Remarks...',
+                                          hintStyle: Get.textTheme.titleSmall!
+                                              .copyWith(color: Colors.grey),
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5))),
+                                      controller: remarksController[index],
+                                      maxLines: 6,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              DataCell(Align(
-                                  alignment: Alignment.center,
-                                  child: index == newList.length - 1
-                                      ? Row(
-                                          children: [
-                                            InkWell(
+                                DataCell(Align(
+                                    alignment: Alignment.center,
+                                    child: index == newList.length - 1
+                                        ? Row(
+                                            children: [
+                                              InkWell(
+                                                  onTap: () {
+                                                    addList(
+                                                      index + 1,
+                                                    );
+                                                    setState(() {});
+                                                  },
+                                                  child: const Icon(Icons.add)),
+                                              index >= 1
+                                                  ? InkWell(
+                                                      onTap: () {
+                                                        removeList(index);
+                                                        setState(() {});
+                                                      },
+                                                      child: const Icon(
+                                                          Icons.remove))
+                                                  : const SizedBox()
+                                            ],
+                                          )
+                                        : index < newList.length
+                                            ? InkWell(
                                                 onTap: () {
-                                                  addList(
-                                                    index + 1,
-                                                  );
+                                                  removeList(index);
                                                   setState(() {});
                                                 },
-                                                child: const Icon(Icons.add)),
-                                            index >= 1
-                                                ? InkWell(
-                                                    onTap: () {
-                                                      removeList(index);
-                                                      setState(() {});
-                                                    },
-                                                    child: const Icon(
-                                                        Icons.remove))
-                                                : const SizedBox()
-                                          ],
-                                        )
-                                      : index < newList.length
-                                          ? InkWell(
-                                              onTap: () {
-                                                removeList(index);
-                                                setState(() {});
-                                              },
-                                              child: const Icon(Icons.remove))
-                                          : null))
-                            ]);
-                          }),
+                                                child: const Icon(Icons.remove))
+                                            : null))
+                              ]);
+                            }),
+                          ),
                         ),
                       ),
-                    ),
-                  )),
+                    ));
+              }),
 
               Padding(
                 padding:
@@ -3620,22 +3589,20 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
         .toList();
   }
 
-  double p = 0;
-  validation(double data, int index) {
+  validation(int index) {
+    double totalAmount = 0;
     if (double.parse(totalDayController.text) > 0) {
       double percentage = 0;
-
-      // for (var i in percentageController) {
+      for (TextEditingController controller in percentageController) {
+        totalAmount += double.tryParse(controller.text) ?? 0;
+      }
       percentage += double.parse(percentageController[index].text);
-      // p += percentage;
-      // logger.v(p);
-      // }
       logger.i(percentage);
-      if (percentage > totalPercentage) {
+      if (totalAmount > totalPercentage) {
         Fluttertoast.showToast(
             msg: "Total Percentage Not Greater Than 100 % !");
-        percentageController[index].text = '0';
-        calculatedDays[index] = 0;
+        percentageController[index].clear();
+        calculatedDays[index] = int.parse('');
         return;
       } else {
         double days = 0;
@@ -3645,7 +3612,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
       }
     } else {
       Fluttertoast.showToast(msg: "Please Enter Total Days !");
-      percentageController[index].text = "0";
+      percentageController[index].clear();
       return;
     }
   }
@@ -3711,14 +3678,9 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
         int.parse(parts[2]), int.parse(parts[1]), int.parse(parts[0]));
   }
 
-  void employeeList(String materal) {
-    newTaskEmployeeList.value = _taskDepartController.getTaskEmployeeList
-        .where((employee) =>
-            employee.employeeName!
-                .toLowerCase()
-                .contains(materal.toLowerCase()) ||
-            employee.hRMDDepartmentName!.toLowerCase().trim() ==
-                materal.toLowerCase().trim())
+  void employeeList(int id) {
+    newTaskEmployeeList.value = _taskDepartController.getemployeelist
+        .where((employee) => employee.hrmDId! == id)
         .toList();
   }
 
