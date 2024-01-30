@@ -26,81 +26,66 @@ class _BirthDaySliderState extends State<BirthDaySlider> {
               (index) {
             return Padding(
               padding: const EdgeInsets.only(right: 12.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).primaryColor,
-                    boxShadow: const [
-                      BoxShadow(
-                          offset: Offset(1, 2.1),
-                          blurRadius: 0,
-                          spreadRadius: 0,
-                          color: Colors.grey)
-                    ]),
-                padding: const EdgeInsets.all(8),
-                child: Row(
+              child: Card(
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                child: Stack(
+                  alignment: Alignment.center,
                   children: [
-                    Container(
-                      height: 90,
-                      width: 90,
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                                offset: Offset(1, 2.1),
-                                blurRadius: 0,
-                                spreadRadius: -1,
-                                color: Colors.grey)
-                          ]),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(300),
-                        child: Image.network(
-                          widget.profileController.birthdayList[index]
-                                  .hrmEPhoto ??
-                              'https://dcampusstrg.blob.core.windows.net/files/17/EmployeeProfilePics/2209bab7-d9ec-4006-8a37-aed750a36457.jfif',
-                          fit: BoxFit.fill,
-                          // errorBuilder: (context, error, stackTrace) {
-                          //   return Image.network(
-                          //     'https://dcampusstrg.blob.core.windows.net/files/17/EmployeeProfilePics/2209bab7-d9ec-4006-8a37-aed750a36457.jfif',
-                          //     fit: BoxFit.fill,
-                          //   );
-                          // },
-                        ),
-                      ),
+                    Image.asset(
+                      'assets/images/finalizedframe.png',
+                      fit: BoxFit.fill,
                     ),
-                    const SizedBox(width: 8),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: EdgeInsets.only(top: size.height * 0.04),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              "HAPPY BIRTHDAY",
-                              style: Get.textTheme.titleMedium!
-                                  .copyWith(color: Colors.white),
-                            ),
-                            Text(
-                              '${widget.profileController.birthdayList[index].hrmEEmployeeFirstName!} ${widget.profileController.birthdayList[index].middleName ?? ''} ${widget.profileController.birthdayList[index].hrmEEmployeeLastName ?? ''}',
-                              style: Get.textTheme.titleSmall!
-                                  .copyWith(color: Colors.white),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.55,
-                              child: Text(
-                                '${widget.profileController.birthdayList[index].hrmdeSDesignationName ?? ''} ',
-                                maxLines: 2,
-                                overflow: TextOverflow.fade,
-                                textAlign: TextAlign.center,
-                                style: Get.textTheme.titleSmall!
-                                    .copyWith(color: Colors.white),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: SizedBox(
+                            height: 92,
+                            width: 92,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(300),
+                              child: Image.network(
+                                widget.profileController.birthdayList[index]
+                                        .hrmEPhoto ??
+                                    'https://dcampusstrg.blob.core.windows.net/files/17/EmployeeProfilePics/2209bab7-d9ec-4006-8a37-aed750a36457.jfif',
+                                fit: BoxFit.fill,
                               ),
-                            )
-                          ],
+                            ),
+                          ),
                         ),
-                      ),
-                    )
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.04),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "HAPPY BIRTHDAY",
+                                style: Get.textTheme.titleMedium!.copyWith(
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                              Text(
+                                '${widget.profileController.birthdayList[index].hrmEEmployeeFirstName!} ${widget.profileController.birthdayList[index].middleName ?? ''} ${widget.profileController.birthdayList[index].hrmEEmployeeLastName ?? ''}',
+                                style: Get.textTheme.titleSmall!.copyWith(
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                child: Text(
+                                  '${widget.profileController.birthdayList[index].hrmdeSDesignationName ?? ''} ',
+                                  maxLines: 2,
+                                  overflow: TextOverflow.fade,
+                                  textAlign: TextAlign.center,
+                                  style: Get.textTheme.titleSmall!.copyWith(
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ),
