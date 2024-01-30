@@ -90,6 +90,10 @@ class TaskListAPI {
                   DateTime.parse(val.iSMTPLTAEndDate!)); //getCurrentDate();
             }
             if (val.iSMTPLTAPreviousTask == 1) {
+              startDate = DateFormat('dd-MM-yyyy')
+                  .format(DateTime.parse(val.iSMTPLTAStartDate!));
+              startDate = DateFormat('dd-MM-yyyy')
+                  .format(DateTime.parse(val.iSMTPLTAStartDate!));
               plannerCreationController.addDataToList(val, startDate, endDate);
             } else if (val.periodicity!.toLowerCase() == 'daily' &&
                     val.iSMTPLTAPreviousTask == 0 ||
