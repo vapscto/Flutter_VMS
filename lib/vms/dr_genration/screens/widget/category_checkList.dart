@@ -395,6 +395,13 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                             });
                           }
                           for (int j = 0; j < uploadAttachment.length; j++) {
+                            // widget.plannerDetailsController.uploadImages.add(
+                            //     PlannerFileUpload(
+                            //         uploadAttachment[j].name,
+                            //         uploadAttachment[j].path,
+                            //         widget.index,
+                            //         id,
+                            //         drName));
                             widget
                                 .plannerDetailsController
                                 .uploadImages[widget.index]

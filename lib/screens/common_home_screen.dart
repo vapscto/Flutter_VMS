@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/dynamic_analytics_controller.dart';
@@ -140,6 +141,10 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setSystemUIOverlayStyle(
+    //     SystemUiOverlayStyle(statusBarColor: Color.fromARGB(255, 255, 83, 77)
+    //         //color set to purple or set your own color
+    //         ));
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(

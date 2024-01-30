@@ -1379,16 +1379,16 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                   .isNotEmpty)
                                                               ? InkWell(
                                                                   onTap: () {
-                                                                    Get.to(() =>
-                                                                        MultipleAttachmentViewer(
-                                                                          value:
-                                                                              _plannerDetailsController.uploadImages,
-                                                                        ));
-                                                                    // createPreview(
-                                                                    //     context,
-                                                                    //     _plannerDetailsController
-                                                                    //         .uploadImages[index]
-                                                                    //         .path);
+                                                                    // Get.to(() =>
+                                                                    //     MultipleAttachmentViewer(
+                                                                    //       value:
+                                                                    //           _plannerDetailsController.uploadImages,
+                                                                    //     ));
+                                                                    createPreview(
+                                                                        context,
+                                                                        _plannerDetailsController
+                                                                            .uploadImages[index]
+                                                                            .path);
                                                                   },
                                                                   child: const Icon(
                                                                       Icons

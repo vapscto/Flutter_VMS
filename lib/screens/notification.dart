@@ -60,6 +60,9 @@ class NotificationScreen extends StatelessWidget {
             return ListView.separated(
               padding: const EdgeInsets.all(16.0),
               itemBuilder: (_, index) {
+                DateTime dt = DateTime.parse(
+                    snapshot.data!.elementAt(index).createdDate!);
+                var date = '${dt.day}-${dt.month}-${dt.year}';
                 return Card(
                   elevation: 4,
                   shape: RoundedRectangleBorder(
@@ -133,29 +136,40 @@ class NotificationScreen extends StatelessWidget {
                         children: [
                           Text(
                             snapshot.data!.elementAt(index).createdby ?? "N/a",
-                            style:
-                                Theme.of(context).textTheme.titleSmall!.merge(
-                                      const TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
                           const SizedBox(
                             height: 6.0,
                           ),
-                          Text(snapshot.data!
-                                  .elementAt(index)
-                                  .iSMNONotification ??
-                              "N/a"),
+                          Text(
+                            snapshot.data!.elementAt(index).iSMNONotification ??
+                                "N/a",
+                            style: Get.textTheme.titleSmall!
+                                .copyWith(color: Colors.blue),
+                          ),
                           const SizedBox(
                             height: 6.0,
                           ),
                           Text(snapshot.data!.elementAt(index).iSMNOModeFlg ??
                               "N/a"),
-                          Text(snapshot.data!.elementAt(index).createdDate ==
-                                  null
-                              ? "N/a"
-                              : snapshot.data!.elementAt(index).createdDate!),
+                          Row(
+                            children: [
+                              Text(
+                                  snapshot.data!.elementAt(index).createdDate ==
+                                          null
+                                      ? " "
+                                      : date),
+                              const SizedBox(width: 5),
+                              Text(
+                                  snapshot.data!.elementAt(index).createdTime ??
+                                      ''),
+                            ],
+                          ),
                         ],
                       ),
                     ),
