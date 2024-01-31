@@ -10,14 +10,13 @@ import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 class ViewAllHC extends StatefulWidget {
   final int mIID;
   final MskoolController mskoolController;
-   const ViewAllHC({
-    required this.mIID,
-    required this.mskoolController,
-    super.key});
+  const ViewAllHC(
+      {required this.mIID, required this.mskoolController, super.key});
 
   @override
   State<ViewAllHC> createState() => _ViewAllHCState();
 }
+
 // view all
 class _ViewAllHCState extends State<ViewAllHC> {
   final HealthCheckUpController healthCheckUpController =
@@ -161,9 +160,10 @@ class _ViewAllHCState extends State<ViewAllHC> {
                                   DataCell(Align(
                                       alignment: Alignment.center,
                                       child: Text(healthCheckUpController
-                                          .getHCData
-                                          .elementAt(index)
-                                          .visitedDate!))),
+                                              .getHCData
+                                              .elementAt(index)
+                                              .visitedDate ??
+                                          ''))),
                                   DataCell(Align(
                                       alignment: Alignment.center,
                                       child: SizedBox(
@@ -181,31 +181,35 @@ class _ViewAllHCState extends State<ViewAllHC> {
                                           .getHCData
                                           .elementAt(index)
                                           .status!))),
-                                    DataCell(Align(
+                                  DataCell(Align(
                                       alignment: Alignment.center,
                                       child: InkWell(
-                                        onTap: () async{
-                                           getDocxApi(
-                                            base:  baseUrlFromInsCode('issuemanager', widget.mskoolController ),
-                                            miId: widget.mIID,
-                                            hcupID: healthCheckUpController
-                                          .getHCData
-                                          .elementAt(index).hwhchuPId!
-                                          ).then(
-                                            (value) {
-                                              if(value!.values!.isNotEmpty){
-                                              Get.to(() => AttachmentViewer(
-                                              loadFromRawData: true,
-                                              url: value.values!.first.filepath,
-                                            )
-                                          );  
-                                              }
-                                            
-                                            },
-                                          );
-                                      
-                                        },
-                                        child: Icon(Icons.visibility)))),
+                                          onTap: () async {
+                                            getDocxApi(
+                                                    base: baseUrlFromInsCode(
+                                                        'issuemanager',
+                                                        widget
+                                                            .mskoolController),
+                                                    miId: widget.mIID,
+                                                    hcupID:
+                                                        healthCheckUpController
+                                                            .getHCData
+                                                            .elementAt(index)
+                                                            .hwhchuPId!)
+                                                .then(
+                                              (value) {
+                                                if (value!.values!.isNotEmpty) {
+                                                  Get.to(() => AttachmentViewer(
+                                                        loadFromRawData: true,
+                                                        url: value.values!.first
+                                                            .filepath,
+                                                      ));
+                                                }
+                                              },
+                                            );
+                                          },
+                                          child:
+                                              const Icon(Icons.visibility)))),
                                 ]);
                               }),
                             ))))),

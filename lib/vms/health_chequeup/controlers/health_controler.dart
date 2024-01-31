@@ -7,16 +7,17 @@ import 'package:m_skool_flutter/vms/health_chequeup/models/hc_emp_list.dart';
 import 'package:m_skool_flutter/vms/health_chequeup/models/institute_model.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 
-class HealthCheckUpController extends GetxController{
-  RxList<InstituteListModelValues> getInstituteList = <InstituteListModelValues>[].obs;
+class HealthCheckUpController extends GetxController {
+  RxList<InstituteListModelValues> getInstituteList =
+      <InstituteListModelValues>[].obs;
   RxList<ClientListModelValues> getClientList = <ClientListModelValues>[].obs;
   RxList<GetHCEmpListModelValues> getEmpList = <GetHCEmpListModelValues>[].obs;
   RxList<AtachmentFile> addListBrowser = <AtachmentFile>[].obs;
   RxList<GetHCDataModelValues> getHCData = <GetHCDataModelValues>[].obs;
   RxList<HCDocModelValues> getHCDocxList = <HCDocModelValues>[].obs;
-  final ImagePicker _imagePicker = ImagePicker();
+  final ImagePicker imagePicker = ImagePicker();
   RxBool loadpage = RxBool(false);
-  updateLoadPage(bool val){
-  loadpage.value = val;
+  updateLoadPage(bool val) {
+    loadpage.value = val;
   }
 }

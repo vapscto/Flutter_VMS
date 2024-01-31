@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/vms/maker%20and%20checker/model/department_list.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/dr_details_model.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/employee_details.dart';
 
