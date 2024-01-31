@@ -77,6 +77,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
     _plannerDetailsController.statusEtField.clear();
     _plannerDetailsController.deveationEtField.clear();
     _plannerDetailsController.deveationIdEtField.clear();
+    _plannerDetailsController.checkBoxList.clear();
+    selectCheckbox.clear();
     await getPlanerdetails(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         controller: _plannerDetailsController,
