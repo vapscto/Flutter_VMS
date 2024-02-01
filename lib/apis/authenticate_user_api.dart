@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/login_screen.dart';
+import 'package:m_skool_flutter/screens/splash_screen.dart';
 
 class AuthenticateUserApi {
   AuthenticateUserApi.init();
@@ -103,8 +104,7 @@ class AuthenticateUserApi {
       }
 
       logInBox!.put("isLoggedIn", false);
-      final mskoolController = MskoolController();
-      Get.offAll(() => LoginScreen(mskoolController: mskoolController));
+      Get.offAll(() => const SplashScreen());
       return Future.error({
         "errorTitle": response.data['message'],
         "type": "oth",

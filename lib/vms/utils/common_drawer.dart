@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/screens/forgot_password_screen.dart';
+import 'package:m_skool_flutter/vms/controller/vms_common_controller.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/vms/utils/drawer_widget.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/theme_switcher.dart';
+import 'package:m_skool_flutter/vms/utils/institute_change.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
 import '../../forgotpassword/screens/reset_password.dart';
@@ -15,11 +17,13 @@ class CommonDrawer extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final ProfileController profileController;
+  final VmsTransationController vmsTransationController;
   const CommonDrawer({
     super.key,
     required this.loginSuccessModel,
     required this.mskoolController,
     required this.profileController,
+    required this.vmsTransationController,
   });
 
   @override
@@ -70,7 +74,7 @@ class CommonDrawer extends StatelessWidget {
                                       .pagename ??
                                   "N/a"),
                             ),
-                          )
+                          ),
                         ],
                       )
                     : const SizedBox(),
@@ -118,6 +122,27 @@ class CommonDrawer extends StatelessWidget {
                         ));
                   },
                 ),
+                (loginSuccessModel.roleforlogin == "ADMIN")
+                    ? ListTile(
+                        leading: Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.amber[50]),
+                          child: const CircleAvatar(
+                            // radius: 18,
+                            backgroundImage: AssetImage(
+                              "assets/images/change.png",
+                            ),
+                            backgroundColor: Color.fromARGB(255, 253, 253, 253),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.pop(context);
+                          instituteChange(context, vmsTransationController,
+                              loginSuccessModel);
+                        },
+                        title: const Text('Select Institute'),
+                      )
+                    : const SizedBox(),
                 ListTile(
                   title: const Text("Select Theme"),
                   leading: Container(

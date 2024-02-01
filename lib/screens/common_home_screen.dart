@@ -7,7 +7,9 @@ import 'package:m_skool_flutter/model/home_page_model.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/tabs/dashboard.dart';
+import 'package:m_skool_flutter/vms/api/institute_api.dart';
 import 'package:m_skool_flutter/vms/coe/coe_home.dart';
+import 'package:m_skool_flutter/vms/controller/vms_common_controller.dart';
 import 'package:m_skool_flutter/vms/profile/api/profile_api.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/vms/profile/screens/profile_screen.dart';
@@ -37,6 +39,8 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
   final ProfileController profileController = Get.put(ProfileController());
   final PunchFilterController punchFilterController =
       Get.put(PunchFilterController());
+  final VmsTransationController vmsTransationController =
+      Get.put(VmsTransationController());
   _getPunch() async {
     punchFilterController.punchLoading(true);
     await PunchApi.instance.pcReports(
@@ -62,11 +66,23 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
     profileController.profileLoading(false);
   }
 
+  _getInstitute() async {
+    vmsTransationController.instituteLoading(true);
+    await await InstituteListAPI.instance.instituteList(
+        base: baseUrlFromInsCode("login", widget.mskoolController),
+        controller: vmsTransationController,
+        miId: widget.loginSuccessModel.mIID!,
+        userId: widget.loginSuccessModel.userId!,
+        roleId: widget.loginSuccessModel.roleId!);
+    vmsTransationController.instituteLoading(false);
+  }
+
   @override
   void initState() {
     version(widget.loginSuccessModel, widget.mskoolController);
     _getPunch();
     _getProfile();
+    _getInstitute();
     homePage.addAll(
       [
         HomePageModel(
@@ -189,6 +205,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
             loginSuccessModel: widget.loginSuccessModel,
             mskoolController: widget.mskoolController,
             profileController: profileController,
+            vmsTransationController: vmsTransationController,
           ),
         ),
         body: PageView.builder(

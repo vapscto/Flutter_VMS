@@ -687,4 +687,6 @@ class URLS {
       'api/ISM_DailyReportGenerationFacade/addextratask/';
   static String previousTaskList =
       'api/ISM_DailyReportGenerationFacade/searchpreviousdailyreport/';
+
+  static String instituteList = 'api/LoginFacade/getMIdataMaster';
 }
