@@ -90,7 +90,13 @@ instituteChange(
                                         padding: const EdgeInsets.all(8),
                                         child: Text(
                                           v.mIName!,
-                                          style: Get.textTheme.titleSmall,
+                                          style: Get.textTheme.titleSmall!
+                                              .copyWith(
+                                                  color: (v.mIId ==
+                                                          institutionalCode!
+                                                              .get(URLS.miId))
+                                                      ? Colors.red
+                                                      : Colors.black),
                                         ),
                                       ),
                                     ),
