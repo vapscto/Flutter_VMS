@@ -39,13 +39,14 @@ instituteChange(
                             topLeft: Radius.circular(30)),
                       ),
                       color: Colors.white),
-                  height: 242,
+                  height: MediaQuery.of(context).size.height * 0.3,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 10),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Align(
                             alignment: Alignment.center,
