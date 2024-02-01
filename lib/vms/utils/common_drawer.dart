@@ -140,7 +140,7 @@ class CommonDrawer extends StatelessWidget {
                           instituteChange(context, vmsTransationController,
                               loginSuccessModel);
                         },
-                        title: const Text('Select Institute'),
+                        title: const Text('Select Company'),
                       )
                     : const SizedBox(),
                 ListTile(

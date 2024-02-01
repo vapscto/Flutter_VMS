@@ -50,7 +50,7 @@ instituteChange(
                           Align(
                             alignment: Alignment.center,
                             child: Text(
-                              "Institutions",
+                              "Companies",
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
