@@ -438,7 +438,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                                     logInBox!.put(
                                                         "isLoggedIn", true);
-                                                    Get.off(() =>
+                                                    Get.offAll(() =>
                                                         CommonHomeScreen(
                                                           loginSuccessModel:
                                                               snapshot.data!,
