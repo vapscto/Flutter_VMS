@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/controller/dynamic_analytics_controller.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
@@ -10,26 +9,17 @@ import 'package:m_skool_flutter/vms/utils/Birthday_slider.dart';
 class DashboardTab extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  final DynamicAnalyticsController controller;
   final ProfileController profileController;
   const DashboardTab(
       {super.key,
       required this.loginSuccessModel,
       required this.mskoolController,
-      required this.controller,
       required this.profileController});
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async {
-        // await GetAnalyticsApi.instance.getData(
-        //     controller: controller,
-        //     loginSuccessModel: loginSuccessModel,
-        //     mskoolController: mskoolController,
-        //     base: baseUrlFromInsCode("portal", mskoolController),
-        //     context: context);
-      },
+      onRefresh: () async {},
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(12.0),
         child: Column(

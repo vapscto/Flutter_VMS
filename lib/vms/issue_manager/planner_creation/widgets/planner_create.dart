@@ -17,7 +17,6 @@ import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:text_scroll/text_scroll.dart';
 
 import '../../../../controller/global_utilities.dart';
-import '../../../../main.dart';
 
 class PlannerCreateWidget extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;

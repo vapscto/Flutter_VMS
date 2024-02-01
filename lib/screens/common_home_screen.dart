@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/controller/dynamic_analytics_controller.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/home_page_model.dart';
@@ -36,8 +35,6 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
   final PageController pageController = PageController();
   final RxInt selectedPage = RxInt(0);
   final GlobalKey<ScaffoldState> _scaffold = GlobalKey();
-  final DynamicAnalyticsController controller =
-      Get.put(DynamicAnalyticsController());
   final ProfileController profileController = Get.put(ProfileController());
   final PunchFilterController punchFilterController =
       Get.put(PunchFilterController());
@@ -79,7 +76,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
           page: DashboardTab(
             loginSuccessModel: widget.loginSuccessModel,
             mskoolController: widget.mskoolController,
-            controller: controller,
+            // controller: controller,
             profileController: profileController,
           ),
           selectedColor: const Color(0xFF9900F0),
@@ -124,7 +121,6 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
 
   @override
   void dispose() {
-    Get.delete<DynamicAnalyticsController>();
     pageController.dispose();
     super.dispose();
   }
