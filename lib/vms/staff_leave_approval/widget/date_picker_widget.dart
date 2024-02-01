@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
@@ -96,10 +95,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
                     });
                   });
                 },
-                onViewChanged: (DateRangePickerViewChangedArgs args) {
-                  final PickerDateRange visibleDates = args.visibleDateRange;
-                  final DateRangePickerView view = args.view;
-                },
+                onViewChanged: (DateRangePickerViewChangedArgs args) {},
               ),
               Align(
                 alignment: Alignment.center,

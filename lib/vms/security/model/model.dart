@@ -9,16 +9,16 @@ class qRcodeActivityDetails {
     if (json['\$values'] != null) {
       values = <qRcodeActivityDetailsValues>[];
       json['\$values'].forEach((v) {
-        values!.add(  qRcodeActivityDetailsValues.fromJson(v));
+        values!.add(qRcodeActivityDetailsValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -71,21 +71,20 @@ class qRcodeActivityDetailsValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['Id'] = this.id;
-    data['HRMB_BuildingName'] = this.hRMBBuildingName;
-    data['HRMF_FloorName'] = this.hRMFFloorName;
-    data['HRMAR_Id'] = this.hRMARId;
-    data['HRMARACT_Id'] = this.hRMARACTId;
-    data['HRMARACTT_Id'] = this.hRMARACTTId;
-    data['HRMAR_AreaName'] = this.hRMARAreaName;
-    data['HRMARACT_ActivityName'] = this.hRMARACTActivityName;
-    data['HRMARACTT_Time'] = this.hRMARACTTTime;
-    data['HRMARACTT_ActivityDuration'] = this.hRMARACTTActivityDuration;
-    data['UserName'] = this.userName;
-    data['HRMARACTSTMAP_Date'] = this.hRMARACTSTMAPDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['Id'] = id;
+    data['HRMB_BuildingName'] = hRMBBuildingName;
+    data['HRMF_FloorName'] = hRMFFloorName;
+    data['HRMAR_Id'] = hRMARId;
+    data['HRMARACT_Id'] = hRMARACTId;
+    data['HRMARACTT_Id'] = hRMARACTTId;
+    data['HRMAR_AreaName'] = hRMARAreaName;
+    data['HRMARACT_ActivityName'] = hRMARACTActivityName;
+    data['HRMARACTT_Time'] = hRMARACTTTime;
+    data['HRMARACTT_ActivityDuration'] = hRMARACTTActivityDuration;
+    data['UserName'] = userName;
+    data['HRMARACTSTMAP_Date'] = hRMARACTSTMAPDate;
     return data;
   }
 }
-

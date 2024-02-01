@@ -53,7 +53,7 @@ class _SalaryLineChartState extends State<SalaryLineChart> {
       builder: (dynamic data, dynamic point, dynamic series, int pointIndex,
           int seriesIndex) {
         return Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(5),
@@ -61,7 +61,7 @@ class _SalaryLineChartState extends State<SalaryLineChart> {
           ),
           child: Text(
             'Month: ${data.month}\n${series.name}: ${data.salary}k',
-            style: TextStyle(fontSize: 12),
+            style: const TextStyle(fontSize: 12),
           ),
         );
       },
@@ -87,7 +87,7 @@ class _SalaryLineChartState extends State<SalaryLineChart> {
                 child: SfCartesianChart(
                   primaryYAxis: NumericAxis(labelFormat: "{value}K"),
                   primaryXAxis: CategoryAxis(
-                      name: "Months", labelStyle: TextStyle(fontSize: 9)),
+                      name: "Months", labelStyle: const TextStyle(fontSize: 9)),
                   tooltipBehavior: _tooltipBehavior,
                   series: <LineSeries>[
                     LineSeries<SalaryGraphDetModel, String>(

@@ -26,7 +26,7 @@ class _DemoResponseScreenState extends State<DemoResponseScreen> {
   String selectedStatus = 'Select';
   List<String> selectedItemValue = <String>[];
   List<String> items = ['Select', 'HOT', 'WARM', 'COLD'];
-  List<DropdownMenuItem<String>> _getDropDownItem() {
+  List<DropdownMenuItem<String>> getDropDownItem() {
     return items
         .map((e) => DropdownMenuItem(
               value: e,
@@ -97,7 +97,7 @@ class _DemoResponseScreenState extends State<DemoResponseScreen> {
                       label: Text('Remark'),
                     ),
                   ],
-                  rows: []),
+                  rows: const []),
             ),
           ),
         ],

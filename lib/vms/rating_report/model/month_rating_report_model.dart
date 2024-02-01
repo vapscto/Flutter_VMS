@@ -15,10 +15,10 @@ class MonthRatingReportModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -50,13 +50,13 @@ class MonthRatingReportModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ivrM_Month_Id'] = this.ivrMMonthId;
-    data['ivrM_Month_Name'] = this.ivrMMonthName;
-    data['is_Active'] = this.isActive;
-    data['ivrM_Month_Max_Days'] = this.ivrMMonthMaxDays;
-    data['createdDate'] = this.createdDate;
-    data['updatedDate'] = this.updatedDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ivrM_Month_Id'] = ivrMMonthId;
+    data['ivrM_Month_Name'] = ivrMMonthName;
+    data['is_Active'] = isActive;
+    data['ivrM_Month_Max_Days'] = ivrMMonthMaxDays;
+    data['createdDate'] = createdDate;
+    data['updatedDate'] = updatedDate;
     return data;
   }
 }

@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/gallery_upload/widget/gallery_checkbox.container.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/api/check_planner_api.dart';
@@ -40,7 +41,6 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
   final _endDate = TextEditingController();
   final _startTime = TextEditingController();
   final _endTime = TextEditingController();
-  final _key = GlobalKey<FormState>();
   //Food
   final foodTotalSlotController = TextEditingController();
   final foodRemarksController = TextEditingController();
@@ -201,7 +201,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
     DateTime endDate = dateFormat.parse(endDateStr);
     Duration duration = endDate.difference(startDate);
     double totalHours = duration.inSeconds / 3600.0;
-    print('Total hours between the two dates: $totalHours hours');
+    logger.i('Total hours between the two dates: $totalHours hours');
     var fSlot = totalHours / 8;
     var aSlot = totalHours / 24;
     foodSlot = double.parse(fSlot.toStringAsFixed(0));

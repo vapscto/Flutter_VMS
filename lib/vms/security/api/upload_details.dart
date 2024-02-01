@@ -6,24 +6,21 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/security/controller/security_controller.dart';
 
- 
-
-Future<bool> savedataSecurityTask(
-    {required int miId,
-    required int userId,
-    required String base,
-    required int hrmarId,
-    required int hrmaractId,
-    required int hracttId,
-    required String remark,
-    required String status,
-    required SecurtyWorkController securtyWorkController,
-    }) async {
+Future<bool> savedataSecurityTask({
+  required int miId,
+  required int userId,
+  required String base,
+  required int hrmarId,
+  required int hrmaractId,
+  required int hracttId,
+  required String remark,
+  required String status,
+  required SecurtyWorkController securtyWorkController,
+}) async {
   final Dio ins = getGlobalDio();
   final String apiUrl = base + URLS.seacurityTaskSave;
- // logger.e(apiUrl);
- 
- 
+  // logger.e(apiUrl);
+
   try {
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
@@ -59,8 +56,8 @@ Future<bool> savedataSecurityTask(
     // }
     // );
     if (response.statusCode == 200) {
-      //logger.e(response.data); 
-       return true;
+      //logger.e(response.data);
+      return true;
     }
     return false;
   } on DioError catch (e) {
@@ -71,5 +68,3 @@ Future<bool> savedataSecurityTask(
     return false;
   }
 }
-
- 

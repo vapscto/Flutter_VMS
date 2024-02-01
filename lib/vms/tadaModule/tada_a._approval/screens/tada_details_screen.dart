@@ -330,11 +330,6 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
     return List.generate(widget.tadaController.newTimeArray.length, (index) {
       var value = index + 1;
       var v = widget.tadaController.newTimeArray.elementAt(index);
-      var dTime =
-          '${widget.tadaController.newTimeArray[index].vtadaaADepartureTime}';
-
-      var endTime =
-          '${widget.tadaController.newTimeArray[index].vtadaaAArrivalTime}';
 
       return DataRow(cells: [
         DataCell(Text(value.toString())),

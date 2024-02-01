@@ -10,7 +10,6 @@ import 'package:m_skool_flutter/vms/salary_details/widget/salary_line_chart.dart
 import 'package:m_skool_flutter/vms/salary_details/widget/salary_month_item.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
-import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class SalaryHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;

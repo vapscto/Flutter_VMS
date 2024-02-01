@@ -9,13 +9,13 @@ class YearListRatingReportModel {
     if (json['\$values'] != null) {
       values = <YearListRatingReportModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new YearListRatingReportModelValues.fromJson(v));
+        values!.add(YearListRatingReportModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['\$type'] = type;
     if (values != null) {
       data['\$values'] = values!.map((v) => v.toJson()).toList();
@@ -113,7 +113,7 @@ class YearListRatingReportModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['asmaY_Id'] = asmaYId;
     data['mI_Id'] = mIId;
     data['asmaY_Year'] = asmaYYear;

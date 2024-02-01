@@ -15,7 +15,7 @@ class TimeArrayTADAData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['\$type'] = type;
     if (values != null) {
       data['\$values'] = values!.map((v) => v.toJson()).toList();
@@ -98,7 +98,7 @@ class TimeArrayTADADataValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['vtadaaA_Id'] = vtadaaAId;
     data['mI_Id'] = mIId;
     data['hrmE_Id'] = hrmEId;

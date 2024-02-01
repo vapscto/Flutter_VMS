@@ -53,7 +53,7 @@ class TadaApplyList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['userId'] = userId;
     data['mI_Id'] = mIId;
     data['vtadaA_Id'] = vtadaAId;
@@ -92,7 +92,7 @@ class Getadvancetada {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['\$type'] = type;
     if (values != null) {
       data['\$values'] = values!.map((v) => v.toJson()).toList();
@@ -175,7 +175,7 @@ class GetadvancetadaValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['\$type'] = type;
     data['MI_Id'] = mIId;
     data['MI_Name'] = mIName;

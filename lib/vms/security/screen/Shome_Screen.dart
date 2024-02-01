@@ -343,14 +343,14 @@ class _ShomeScreenState extends State<ShomeScreen> {
                                                                                   context: context,
                                                                                   builder: (context) {
                                                                                     return AlertDialog(
-                                                                                      content: Container(
+                                                                                      content: SizedBox(
                                                                                         height: 130,
                                                                                         child: Column(
                                                                                           children: [
                                                                                             Center(
                                                                                               child: Text("Task uploading completed", style: Theme.of(context).textTheme.titleSmall!.merge(const TextStyle(color: Color.fromARGB(255, 24, 54, 223), fontSize: 20, fontWeight: FontWeight.bold))),
                                                                                             ),
-                                                                                            Expanded(child: SizedBox()),
+                                                                                            const Expanded(child: SizedBox()),
                                                                                             MSkollBtn(
                                                                                                 title: "OK",
                                                                                                 onPress: () {
