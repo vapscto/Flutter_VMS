@@ -9,13 +9,13 @@ class LeaveApprovePopUp {
     if (json['\$values'] != null) {
       values = <LeaveApprovePopUpValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new LeaveApprovePopUpValues.fromJson(v));
+        values!.add(LeaveApprovePopUpValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['$type'] = type;
     if (values != null) {
       data['\$values'] = values!.map((v) => v.toJson()).toList();
@@ -77,7 +77,7 @@ class LeaveApprovePopUpValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['$type'] = type;
     data['HRME_EmployeeFirstName'] = hRMEEmployeeFirstName;
     data['HRELAP_Id'] = hRELAPId;

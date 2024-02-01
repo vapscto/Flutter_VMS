@@ -68,6 +68,7 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
                     )),
                 content: SizedBox(
                   // height: 300,
+                  // ignore: use_build_context_synchronously
                   width: MediaQuery.of(context).size.width,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
@@ -138,7 +139,7 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
                         ),
                         // const Expanded(
                         //   child: SizedBox(
-                  
+
                         //       ),
                         // ),
                         const SizedBox(height: 10),
@@ -149,7 +150,7 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
                               onPress: () {
                                 Get.back();
                                 // Get.back();
-                  
+
                                 plannerApprovalController.leavePopUp.clear();
                               },
                             ),
@@ -165,7 +166,7 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
                                     title: "Leave Approval",
                                   );
                                 }));
-                  
+
                                 //     plannerApprovalController.leavePopUp.clear();
                               },
                             )

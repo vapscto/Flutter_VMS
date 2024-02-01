@@ -16,35 +16,33 @@ class GetGpsLocation {
 
   GetGpsLocation.fromJson(Map<String, dynamic> json) {
     annotations = json['annotations'] != null
-        ? new Annotations.fromJson(json['annotations'])
+        ? Annotations.fromJson(json['annotations'])
         : null;
-    bounds =
-        json['bounds'] != null ? new Bounds.fromJson(json['bounds']) : null;
+    bounds = json['bounds'] != null ? Bounds.fromJson(json['bounds']) : null;
     components = json['components'] != null
-        ? new Components.fromJson(json['components'])
+        ? Components.fromJson(json['components'])
         : null;
     confidence = json['confidence'];
     formatted = json['formatted'];
-    geometry = json['geometry'] != null
-        ? new Northeast.fromJson(json['geometry'])
-        : null;
+    geometry =
+        json['geometry'] != null ? Northeast.fromJson(json['geometry']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.annotations != null) {
-      data['annotations'] = this.annotations!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (annotations != null) {
+      data['annotations'] = annotations!.toJson();
     }
-    if (this.bounds != null) {
-      data['bounds'] = this.bounds!.toJson();
+    if (bounds != null) {
+      data['bounds'] = bounds!.toJson();
     }
-    if (this.components != null) {
-      data['components'] = this.components!.toJson();
+    if (components != null) {
+      data['components'] = components!.toJson();
     }
-    data['confidence'] = this.confidence;
-    data['formatted'] = this.formatted;
-    if (this.geometry != null) {
-      data['geometry'] = this.geometry!.toJson();
+    data['confidence'] = confidence;
+    data['formatted'] = formatted;
+    if (geometry != null) {
+      data['geometry'] = geometry!.toJson();
     }
     return data;
   }
@@ -87,70 +85,66 @@ class Annotations {
       this.wikidata});
 
   Annotations.fromJson(Map<String, dynamic> json) {
-    dMS = json['DMS'] != null ? new DMS.fromJson(json['DMS']) : null;
+    dMS = json['DMS'] != null ? DMS.fromJson(json['DMS']) : null;
     mGRS = json['MGRS'];
     maidenhead = json['Maidenhead'];
-    mercator = json['Mercator'] != null
-        ? new Mercator.fromJson(json['Mercator'])
-        : null;
-    oSM = json['OSM'] != null ? new OSM.fromJson(json['OSM']) : null;
-    uNM49 = json['UN_M49'] != null ? new UNM49.fromJson(json['UN_M49']) : null;
+    mercator =
+        json['Mercator'] != null ? Mercator.fromJson(json['Mercator']) : null;
+    oSM = json['OSM'] != null ? OSM.fromJson(json['OSM']) : null;
+    uNM49 = json['UN_M49'] != null ? UNM49.fromJson(json['UN_M49']) : null;
     callingcode = json['callingcode'];
-    currency = json['currency'] != null
-        ? new Currency.fromJson(json['currency'])
-        : null;
+    currency =
+        json['currency'] != null ? Currency.fromJson(json['currency']) : null;
     flag = json['flag'];
     geohash = json['geohash'];
     qibla = json['qibla'];
-    roadinfo = json['roadinfo'] != null
-        ? new Roadinfo.fromJson(json['roadinfo'])
-        : null;
-    sun = json['sun'] != null ? new Sun.fromJson(json['sun']) : null;
-    timezone = json['timezone'] != null
-        ? new Timezone.fromJson(json['timezone'])
-        : null;
+    roadinfo =
+        json['roadinfo'] != null ? Roadinfo.fromJson(json['roadinfo']) : null;
+    sun = json['sun'] != null ? Sun.fromJson(json['sun']) : null;
+    timezone =
+        json['timezone'] != null ? Timezone.fromJson(json['timezone']) : null;
     what3words = json['what3words'] != null
-        ? new What3words.fromJson(json['what3words'])
+        ? What3words.fromJson(json['what3words'])
         : null;
     wikidata = json['wikidata'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.dMS != null) {
-      data['DMS'] = this.dMS!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (dMS != null) {
+      data['DMS'] = dMS!.toJson();
     }
-    data['MGRS'] = this.mGRS;
-    data['Maidenhead'] = this.maidenhead;
-    if (this.mercator != null) {
-      data['Mercator'] = this.mercator!.toJson();
+    data['MGRS'] = mGRS;
+    data['Maidenhead'] = maidenhead;
+    if (mercator != null) {
+      data['Mercator'] = mercator!.toJson();
     }
-    if (this.oSM != null) {
-      data['OSM'] = this.oSM!.toJson();
+    if (oSM != null) {
+      data['OSM'] = oSM!.toJson();
     }
-    if (this.uNM49 != null) {
-      data['UN_M49'] = this.uNM49!.toJson();
+    if (uNM49 != null) {
+      data['UN_M49'] = uNM49!.toJson();
     }
-    data['callingcode'] = this.callingcode;
-    if (this.currency != null) {
-      data['currency'] = this.currency!.toJson();
+    data['callingcode'] = callingcode;
+    if (currency != null) {
+      data['currency'] = currency!.toJson();
     }
-    data['flag'] = this.flag;
-    data['geohash'] = this.geohash;
-    data['qibla'] = this.qibla;
-    if (this.roadinfo != null) {
-      data['roadinfo'] = this.roadinfo!.toJson();
+    data['flag'] = flag;
+    data['geohash'] = geohash;
+    data['qibla'] = qibla;
+    if (roadinfo != null) {
+      data['roadinfo'] = roadinfo!.toJson();
     }
-    if (this.sun != null) {
-      data['sun'] = this.sun!.toJson();
+    if (sun != null) {
+      data['sun'] = sun!.toJson();
     }
-    if (this.timezone != null) {
-      data['timezone'] = this.timezone!.toJson();
+    if (timezone != null) {
+      data['timezone'] = timezone!.toJson();
     }
-    if (this.what3words != null) {
-      data['what3words'] = this.what3words!.toJson();
+    if (what3words != null) {
+      data['what3words'] = what3words!.toJson();
     }
-    data['wikidata'] = this.wikidata;
+    data['wikidata'] = wikidata;
     return data;
   }
 }
@@ -167,9 +161,9 @@ class DMS {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['lat'] = this.lat;
-    data['lng'] = this.lng;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['lat'] = lat;
+    data['lng'] = lng;
     return data;
   }
 }
@@ -186,9 +180,9 @@ class Mercator {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['x'] = this.x;
-    data['y'] = this.y;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['x'] = x;
+    data['y'] = y;
     return data;
   }
 }
@@ -207,10 +201,10 @@ class OSM {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['edit_url'] = this.editUrl;
-    data['note_url'] = this.noteUrl;
-    data['url'] = this.url;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['edit_url'] = editUrl;
+    data['note_url'] = noteUrl;
+    data['url'] = url;
     return data;
   }
 }
@@ -223,16 +217,16 @@ class UNM49 {
 
   UNM49.fromJson(Map<String, dynamic> json) {
     regions =
-        json['regions'] != null ? new Regions.fromJson(json['regions']) : null;
+        json['regions'] != null ? Regions.fromJson(json['regions']) : null;
     statisticalGroupings = json['statistical_groupings'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.regions != null) {
-      data['regions'] = this.regions!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (regions != null) {
+      data['regions'] = regions!.toJson();
     }
-    data['statistical_groupings'] = this.statisticalGroupings;
+    data['statistical_groupings'] = statisticalGroupings;
     return data;
   }
 }
@@ -253,11 +247,11 @@ class Regions {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ASIA'] = this.aSIA;
-    data['IN'] = this.iN;
-    data['SOUTHERN_ASIA'] = this.sOUTHERNASIA;
-    data['WORLD'] = this.wORLD;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ASIA'] = aSIA;
+    data['IN'] = iN;
+    data['SOUTHERN_ASIA'] = sOUTHERNASIA;
+    data['WORLD'] = wORLD;
     return data;
   }
 }
@@ -306,19 +300,19 @@ class Currency {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['alternate_symbols'] = this.alternateSymbols;
-    data['decimal_mark'] = this.decimalMark;
-    data['html_entity'] = this.htmlEntity;
-    data['iso_code'] = this.isoCode;
-    data['iso_numeric'] = this.isoNumeric;
-    data['name'] = this.name;
-    data['smallest_denomination'] = this.smallestDenomination;
-    data['subunit'] = this.subunit;
-    data['subunit_to_unit'] = this.subunitToUnit;
-    data['symbol'] = this.symbol;
-    data['symbol_first'] = this.symbolFirst;
-    data['thousands_separator'] = this.thousandsSeparator;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['alternate_symbols'] = alternateSymbols;
+    data['decimal_mark'] = decimalMark;
+    data['html_entity'] = htmlEntity;
+    data['iso_code'] = isoCode;
+    data['iso_numeric'] = isoNumeric;
+    data['name'] = name;
+    data['smallest_denomination'] = smallestDenomination;
+    data['subunit'] = subunit;
+    data['subunit_to_unit'] = subunitToUnit;
+    data['symbol'] = symbol;
+    data['symbol_first'] = symbolFirst;
+    data['thousands_separator'] = thousandsSeparator;
     return data;
   }
 }
@@ -337,10 +331,10 @@ class Roadinfo {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['drive_on'] = this.driveOn;
-    data['road'] = this.road;
-    data['speed_in'] = this.speedIn;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['drive_on'] = driveOn;
+    data['road'] = road;
+    data['speed_in'] = speedIn;
     return data;
   }
 }
@@ -352,17 +346,17 @@ class Sun {
   Sun({this.rise, this.set});
 
   Sun.fromJson(Map<String, dynamic> json) {
-    rise = json['rise'] != null ? new Rise.fromJson(json['rise']) : null;
-    set = json['set'] != null ? new Rise.fromJson(json['set']) : null;
+    rise = json['rise'] != null ? Rise.fromJson(json['rise']) : null;
+    set = json['set'] != null ? Rise.fromJson(json['set']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.rise != null) {
-      data['rise'] = this.rise!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (rise != null) {
+      data['rise'] = rise!.toJson();
     }
-    if (this.set != null) {
-      data['set'] = this.set!.toJson();
+    if (set != null) {
+      data['set'] = set!.toJson();
     }
     return data;
   }
@@ -384,11 +378,11 @@ class Rise {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['apparent'] = this.apparent;
-    data['astronomical'] = this.astronomical;
-    data['civil'] = this.civil;
-    data['nautical'] = this.nautical;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['apparent'] = apparent;
+    data['astronomical'] = astronomical;
+    data['civil'] = civil;
+    data['nautical'] = nautical;
     return data;
   }
 }
@@ -416,12 +410,12 @@ class Timezone {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['now_in_dst'] = this.nowInDst;
-    data['offset_sec'] = this.offsetSec;
-    data['offset_string'] = this.offsetString;
-    data['short_name'] = this.shortName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['now_in_dst'] = nowInDst;
+    data['offset_sec'] = offsetSec;
+    data['offset_string'] = offsetString;
+    data['short_name'] = shortName;
     return data;
   }
 }
@@ -436,8 +430,8 @@ class What3words {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['words'] = this.words;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['words'] = words;
     return data;
   }
 }
@@ -450,20 +444,20 @@ class Bounds {
 
   Bounds.fromJson(Map<String, dynamic> json) {
     northeast = json['northeast'] != null
-        ? new Northeast.fromJson(json['northeast'])
+        ? Northeast.fromJson(json['northeast'])
         : null;
     southwest = json['southwest'] != null
-        ? new Northeast.fromJson(json['southwest'])
+        ? Northeast.fromJson(json['southwest'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.northeast != null) {
-      data['northeast'] = this.northeast!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (northeast != null) {
+      data['northeast'] = northeast!.toJson();
     }
-    if (this.southwest != null) {
-      data['southwest'] = this.southwest!.toJson();
+    if (southwest != null) {
+      data['southwest'] = southwest!.toJson();
     }
     return data;
   }
@@ -481,9 +475,9 @@ class Northeast {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['lat'] = this.lat;
-    data['lng'] = this.lng;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['lat'] = lat;
+    data['lng'] = lng;
     return data;
   }
 }
@@ -553,26 +547,26 @@ class Components {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ISO_3166-1_alpha-2'] = this.iSO31661Alpha2;
-    data['ISO_3166-1_alpha-3'] = this.iSO31661Alpha3;
-    data['ISO_3166-2'] = this.iSO31662;
-    data['_category'] = this.sCategory;
-    data['_type'] = this.sType;
-    data['city'] = this.city;
-    data['city_district'] = this.cityDistrict;
-    data['continent'] = this.continent;
-    data['country'] = this.country;
-    data['country_code'] = this.countryCode;
-    data['county'] = this.county;
-    data['house_number'] = this.houseNumber;
-    data['postcode'] = this.postcode;
-    data['road'] = this.road;
-    data['school'] = this.school;
-    data['state'] = this.state;
-    data['state_code'] = this.stateCode;
-    data['state_district'] = this.stateDistrict;
-    data['suburb'] = this.suburb;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ISO_3166-1_alpha-2'] = iSO31661Alpha2;
+    data['ISO_3166-1_alpha-3'] = iSO31661Alpha3;
+    data['ISO_3166-2'] = iSO31662;
+    data['_category'] = sCategory;
+    data['_type'] = sType;
+    data['city'] = city;
+    data['city_district'] = cityDistrict;
+    data['continent'] = continent;
+    data['country'] = country;
+    data['country_code'] = countryCode;
+    data['county'] = county;
+    data['house_number'] = houseNumber;
+    data['postcode'] = postcode;
+    data['road'] = road;
+    data['school'] = school;
+    data['state'] = state;
+    data['state_code'] = stateCode;
+    data['state_district'] = stateDistrict;
+    data['suburb'] = suburb;
     return data;
   }
 }

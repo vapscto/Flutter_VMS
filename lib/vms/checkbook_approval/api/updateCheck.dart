@@ -1,4 +1,4 @@
- import 'package:dio/dio.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 
@@ -14,13 +14,10 @@ Future<int> updateCheque({
   required GetDetailedToDo controller,
 }) async {
   final Dio ins = getGlobalDio();
-  final String apiUrl =
-       base+URLS.updateCheck;
+  final String apiUrl = base + URLS.updateCheck;
 
-  
-
-  logger.d("show data${apiUrl}");
-    logger.d(  {"UserId": userId, "MI_Id": mi_id});
+  logger.d("show data$apiUrl");
+  logger.d({"UserId": userId, "MI_Id": mi_id});
   try {
     controller.updateisLoading(true);
 
@@ -55,8 +52,7 @@ Future<int> updateCheque({
               ? ""
               : "",
         ));
-        controller.checkList.add(
-          false  );
+        controller.checkList.add(false);
         controller.radioSelect.add(controller.getTaDaModelList
                     .elementAt(i)
                     .vPAYVOUStatusFlg
@@ -65,7 +61,7 @@ Future<int> updateCheque({
             ? 0
             : 1);
       }
-      
+
       return response.statusCode!;
     }
 

@@ -10,16 +10,16 @@ class CloseTaskCoutnModel {
     if (json['\$values'] != null) {
       values = <CloseTaskCoutnModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(  CloseTaskCoutnModelValues.fromJson(v));
+        values!.add(CloseTaskCoutnModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -37,9 +37,9 @@ class CloseTaskCoutnModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    data['ISMEDWTCC_TaskCount'] = this.iSMEDWTCCTaskCount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    data['ISMEDWTCC_TaskCount'] = iSMEDWTCCTaskCount;
     return data;
   }
 }

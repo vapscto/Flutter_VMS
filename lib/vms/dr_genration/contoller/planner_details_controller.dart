@@ -264,9 +264,9 @@ class UploadAttachment {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ISMTCRAT_Attatchment'] = this.iSMTCRATAttatchment;
-    data['ISMTCRAT_File'] = this.iSMTCRATFile;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ISMTCRAT_Attatchment'] = iSMTCRATAttatchment;
+    data['ISMTCRAT_File'] = iSMTCRATFile;
     return data;
   }
 }

@@ -9,7 +9,6 @@ import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/all_p
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/widgets/dr_not_submit.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
-import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class PlannerApprovalHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -31,7 +30,7 @@ class PlannerApprovalHomeScreen extends StatefulWidget {
 class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
   @override
   void initState() {
-    // _getPlannerData();
+    // getPlannerData();
     super.initState();
   }
 
@@ -44,7 +43,7 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
 
   PlannerApprovalController plannerApprovalController =
       Get.put(PlannerApprovalController());
-  _getPlannerData() async {
+  getPlannerData() async {
     plannerApprovalController.plannerLoading(true);
     await PlannerListAPI.instance.plannerListAPI(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
@@ -92,7 +91,7 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                           child: Text(
                             "Daily Report Approval Pending",
                             style: Get.textTheme.titleSmall!.copyWith(
-                                color: Color.fromARGB(255, 255, 106, 95)),
+                                color: const Color.fromARGB(255, 255, 106, 95)),
                           ),
                         ),
                       ],

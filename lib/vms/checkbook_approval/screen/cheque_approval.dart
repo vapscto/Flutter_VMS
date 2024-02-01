@@ -79,7 +79,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
             .sanctionLevelNo!,
       });
     }
-    print(detailsList);
+    // print(detailsList);
     int status = await approveApi(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         userId: widget.loginSuccessModel.userId!,
@@ -134,7 +134,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
           titleSpacing: 0,
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 0),
+          padding: const EdgeInsets.symmetric(horizontal: 0),
           child: Column(children: [
             Obx(
               () => _chequeController.isErrorOccuredWhileLoading.value
@@ -529,7 +529,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                                 .vPAYVOUStatusFlg!
                                                                 .toString() ==
                                                             "Rejected"
-                                                        ? SizedBox()
+                                                        ? const SizedBox()
                                                         : Checkbox(
                                                             activeColor:
                                                                 const Color

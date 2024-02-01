@@ -8,7 +8,6 @@ import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/dr_not_
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/leave_approve_popup_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/planner_list_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/model/planner_status_model.dart';
-import 'package:m_skool_flutter/vms/staff_leave_approval/model/leave_approval_model.dart';
 
 class PlannerListAPI {
   PlannerListAPI.init();

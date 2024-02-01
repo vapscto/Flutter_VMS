@@ -9,16 +9,16 @@ class StaffListModel {
     if (json['\$values'] != null) {
       values = <StaffListValues>[];
       json['\$values'].forEach((v) {
-        values!.add( StaffListValues.fromJson(v));
+        values!.add(StaffListValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -50,13 +50,13 @@ class StaffListValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['mI_Id'] = this.mIId;
-    data['hrmD_Id'] = this.hrmDId;
-    data['hrmdeS_Id'] = this.hrmdeSId;
-    data['hrmE_Id'] = this.hrmEId;
-    data['ename'] = this.ename;
-    data['hrmE_EmployeeCode'] = this.hrmEEmployeeCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['mI_Id'] = mIId;
+    data['hrmD_Id'] = hrmDId;
+    data['hrmdeS_Id'] = hrmdeSId;
+    data['hrmE_Id'] = hrmEId;
+    data['ename'] = ename;
+    data['hrmE_EmployeeCode'] = hrmEEmployeeCode;
     return data;
   }
 }

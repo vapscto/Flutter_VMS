@@ -9,16 +9,16 @@ class Drnotapprovedmessage {
     if (json['\$values'] != null) {
       values = <DrnotapprovedmessageValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new DrnotapprovedmessageValues.fromJson(v));
+        values!.add(DrnotapprovedmessageValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -56,15 +56,15 @@ class DrnotapprovedmessageValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['HRME_Id'] = this.hRMEId;
-    data['EmployeeName'] = this.employeeName;
-    data['HRME_EmployeeCode'] = this.hRMEEmployeeCode;
-    data['Dr_Date'] = this.drDate;
-    data['ISMDRPT_OrdersDateFlg'] = this.iSMDRPTOrdersDateFlg;
-    data['DR_GDate'] = this.dRGDate;
-    data['ISMDRPT_Date'] = this.iSMDRPTDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['HRME_Id'] = hRMEId;
+    data['EmployeeName'] = employeeName;
+    data['HRME_EmployeeCode'] = hRMEEmployeeCode;
+    data['Dr_Date'] = drDate;
+    data['ISMDRPT_OrdersDateFlg'] = iSMDRPTOrdersDateFlg;
+    data['DR_GDate'] = dRGDate;
+    data['ISMDRPT_Date'] = iSMDRPTDate;
     return data;
   }
 }

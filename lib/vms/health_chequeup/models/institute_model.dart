@@ -9,16 +9,16 @@ class InstituteListModel {
     if (json['\$values'] != null) {
       values = <InstituteListModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new InstituteListModelValues.fromJson(v));
+        values!.add(InstituteListModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -110,33 +110,33 @@ class InstituteListModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['mI_Id'] = this.mIId;
-    data['mO_Id'] = this.mOId;
-    data['mI_Name'] = this.mIName;
-    data['mI_Code'] = this.mICode;
-    data['mI_Type'] = this.mIType;
-    data['mI_Address1'] = this.mIAddress1;
-    data['mI_Address2'] = this.mIAddress2;
-    data['mI_Address3'] = this.mIAddress3;
-    data['ivrmmcT_Name'] = this.ivrmmcTName;
-    data['ivrmmS_Id'] = this.ivrmmSId;
-    data['ivrmmC_Id'] = this.ivrmmCId;
-    data['mI_Pincode'] = this.mIPincode;
-    data['mI_FormColor'] = this.mIFormColor;
-    data['mI_FontColor'] = this.mIFontColor;
-    data['mI_FontSize'] = this.mIFontSize;
-    data['mI_Logo'] = this.mILogo;
-    data['mI_ActiveFlag'] = this.mIActiveFlag;
-    data['mI_FranchiseFlag'] = this.mIFranchiseFlag;
-    data['mI_Affiliation'] = this.mIAffiliation;
-    data['mI_Subdomain'] = this.mISubdomain;
-    data['mI_AboutInstitute'] = this.mIAboutInstitute;
-    data['mI_ContactDetails'] = this.mIContactDetails;
-    data['mI_SchoolCollegeFlag'] = this.mISchoolCollegeFlag;
-    data['mI_GSTNO'] = this.mIGSTNO;
-    data['createdDate'] = this.createdDate;
-    data['updatedDate'] = this.updatedDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['mI_Id'] = mIId;
+    data['mO_Id'] = mOId;
+    data['mI_Name'] = mIName;
+    data['mI_Code'] = mICode;
+    data['mI_Type'] = mIType;
+    data['mI_Address1'] = mIAddress1;
+    data['mI_Address2'] = mIAddress2;
+    data['mI_Address3'] = mIAddress3;
+    data['ivrmmcT_Name'] = ivrmmcTName;
+    data['ivrmmS_Id'] = ivrmmSId;
+    data['ivrmmC_Id'] = ivrmmCId;
+    data['mI_Pincode'] = mIPincode;
+    data['mI_FormColor'] = mIFormColor;
+    data['mI_FontColor'] = mIFontColor;
+    data['mI_FontSize'] = mIFontSize;
+    data['mI_Logo'] = mILogo;
+    data['mI_ActiveFlag'] = mIActiveFlag;
+    data['mI_FranchiseFlag'] = mIFranchiseFlag;
+    data['mI_Affiliation'] = mIAffiliation;
+    data['mI_Subdomain'] = mISubdomain;
+    data['mI_AboutInstitute'] = mIAboutInstitute;
+    data['mI_ContactDetails'] = mIContactDetails;
+    data['mI_SchoolCollegeFlag'] = mISchoolCollegeFlag;
+    data['mI_GSTNO'] = mIGSTNO;
+    data['createdDate'] = createdDate;
+    data['updatedDate'] = updatedDate;
     return data;
   }
 }

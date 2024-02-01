@@ -5,7 +5,6 @@ import 'package:m_skool_flutter/vms/employee_punch/controller/employee_salary_co
 import 'package:m_skool_flutter/vms/employee_punch/model/month_list_model.dart';
 import 'package:m_skool_flutter/vms/employee_punch/model/yearlist_dropdown_model.dart';
 import 'package:m_skool_flutter/vms/employee_punch/widget/staff_dd.dart';
-import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 import '../../../controller/mskoll_controller.dart';

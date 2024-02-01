@@ -5,8 +5,6 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/student/interaction/apis/messaging_api.dart';
-import 'package:m_skool_flutter/student/interaction/controller/interaction_controller.dart';
 import 'package:m_skool_flutter/student/interaction/widget/chat_box.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_text_file.dart';
 import 'package:m_skool_flutter/vms/interaction/api/staff_interaction_compose_related_api.dart';

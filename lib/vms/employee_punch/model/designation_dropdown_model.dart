@@ -9,16 +9,16 @@ class DesignationDropdownModel {
     if (json['\$values'] != null) {
       values = <DesignationDropdownValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new DesignationDropdownValues.fromJson(v));
+        values!.add(DesignationDropdownValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -47,12 +47,12 @@ class DesignationDropdownValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['mI_Id'] = this.mIId;
-    data['hrmD_Id'] = this.hrmDId;
-    data['hrmdeS_Id'] = this.hrmdeSId;
-    data['hrmdeS_DesignationName'] = this.hrmdeSDesignationName;
-    data['hrmE_Id'] = this.hrmEId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['mI_Id'] = mIId;
+    data['hrmD_Id'] = hrmDId;
+    data['hrmdeS_Id'] = hrmdeSId;
+    data['hrmdeS_DesignationName'] = hrmdeSDesignationName;
+    data['hrmE_Id'] = hrmEId;
     return data;
   }
 }

@@ -9,16 +9,16 @@ class CategoryCheckListModel {
     if (json['\$values'] != null) {
       values = <CategoryCheckListModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new CategoryCheckListModelValues.fromJson(v));
+        values!.add(CategoryCheckListModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -56,15 +56,15 @@ class CategoryCheckListModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ismmtcatcL_Id'] = this.ismmtcatcLId;
-    data['ismmtcaT_Id'] = this.ismmtcaTId;
-    data['ismmtcatcL_CheckListName'] = this.ismmtcatcLCheckListName;
-    data['ismmtcatcL_UploadEnterFlg'] = this.ismmtcatcLUploadEnterFlg;
-    data['ismmtcatcL_ActiveFlag'] = this.ismmtcatcLActiveFlag;
-    data['ismmtcatcL_CreatedBy'] = this.ismmtcatcLCreatedBy;
-    data['ismmtcatcL_UpdatedBy'] = this.ismmtcatcLUpdatedBy;
-    data['ismmtcatcL_CreatedDate'] = this.ismmtcatcLCreatedDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ismmtcatcL_Id'] = ismmtcatcLId;
+    data['ismmtcaT_Id'] = ismmtcaTId;
+    data['ismmtcatcL_CheckListName'] = ismmtcatcLCheckListName;
+    data['ismmtcatcL_UploadEnterFlg'] = ismmtcatcLUploadEnterFlg;
+    data['ismmtcatcL_ActiveFlag'] = ismmtcatcLActiveFlag;
+    data['ismmtcatcL_CreatedBy'] = ismmtcatcLCreatedBy;
+    data['ismmtcatcL_UpdatedBy'] = ismmtcatcLUpdatedBy;
+    data['ismmtcatcL_CreatedDate'] = ismmtcatcLCreatedDate;
     return data;
   }
 }

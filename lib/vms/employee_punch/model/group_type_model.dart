@@ -9,16 +9,16 @@ class GroupTypeDropdownModel {
     if (json['\$values'] != null) {
       values = <GroupTypeDropdownValues>[];
       json['\$values'].forEach((v) {
-        values!.add( GroupTypeDropdownValues.fromJson(v));
+        values!.add(GroupTypeDropdownValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -47,13 +47,12 @@ class GroupTypeDropdownValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['mI_Id'] = this.mIId;
-    data['hrmD_Id'] = this.hrmDId;
-    data['hrmD_DepartmentName'] = this.hrmDDepartmentName;
-    data['hrmdeS_Id'] = this.hrmdeSId;
-    data['hrmE_Id'] = this.hrmEId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['mI_Id'] = mIId;
+    data['hrmD_Id'] = hrmDId;
+    data['hrmD_DepartmentName'] = hrmDDepartmentName;
+    data['hrmdeS_Id'] = hrmdeSId;
+    data['hrmE_Id'] = hrmEId;
     return data;
   }
-  
 }

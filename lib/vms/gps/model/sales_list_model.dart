@@ -9,16 +9,16 @@ class GetGpsSalesDetails {
     if (json['\$values'] != null) {
       values = <GetGpsSalesDetailsValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new GetGpsSalesDetailsValues.fromJson(v));
+        values!.add(GetGpsSalesDetailsValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -146,45 +146,45 @@ class GetGpsSalesDetailsValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ismslE_Id'] = this.ismslEId;
-    data['ismslE_VerifiedFlg'] = this.ismslEVerifiedFlg;
-    data['mI_Id'] = this.mIId;
-    data['ismsmcA_Id'] = this.ismsmcAId;
-    data['ismsmsO_Id'] = this.ismsmsOId;
-    data['hrmE_Id'] = this.hrmEId;
-    data['ismsmcP_Id'] = this.ismsmcPId;
-    data['ismsmcP_ChannelPartnerFlg'] = this.ismsmcPChannelPartnerFlg;
-    data['ismslE_LeadName'] = this.ismslELeadName;
-    data['ismslE_ContactPerson'] = this.ismslEContactPerson;
-    data['ismslE_ContactNo'] = this.ismslEContactNo;
-    data['ismslE_LeadAddress1'] = this.ismslELeadAddress1;
-    data['ismslE_VisitedDate'] = this.ismslEVisitedDate;
-    data['ismslE_EmailId'] = this.ismslEEmailId;
-    data['ismsmsT_Id'] = this.ismsmsTId;
-    data['ismslE_ContactDesignation'] = this.ismslEContactDesignation;
-    data['ivrmmC_Id'] = this.ivrmmCId;
-    data['ivrmmS_Id'] = this.ivrmmSId;
-    data['ismslE_StudentStrength'] = this.ismslEStudentStrength;
-    data['ismslE_StaffStrength'] = this.ismslEStaffStrength;
-    data['ismslE_NoOfInstitutions'] = this.ismslENoOfInstitutions;
-    data['ismslE_OrderConfirmedFlg'] = this.ismslEOrderConfirmedFlg;
-    data['ismslE_ActiveFlag'] = this.ismslEActiveFlag;
-    data['createdDate'] = this.createdDate;
-    data['ismslE_CreatedBy'] = this.ismslECreatedBy;
-    data['ismslE_UpdatedBy'] = this.ismslEUpdatedBy;
-    data['ismslE_DedicatedHostingFlg'] = this.ismslEDedicatedHostingFlg;
-    data['ismslE_DedicatedMobileAppFlg'] = this.ismslEDedicatedMobileAppFlg;
-    data['ismslE_Remarks'] = this.ismslERemarks;
-    data['updatedDate'] = this.updatedDate;
-    data['ismslE_ConfirmedBy'] = this.ismslEConfirmedBy;
-    data['ismslE_Reference'] = this.ismslEReference;
-    data['ismslE_LeadAddress2'] = this.ismslELeadAddress2;
-    data['ismslE_LeadAddress3'] = this.ismslELeadAddress3;
-    data['ismslE_Pincode'] = this.ismslEPincode;
-    data['ismslE_LeadCode'] = this.ismslELeadCode;
-    data['ismslE_QuotationValue'] = this.ismslEQuotationValue;
-    data['ismslE_HostingServer'] = this.ismslEHostingServer;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ismslE_Id'] = ismslEId;
+    data['ismslE_VerifiedFlg'] = ismslEVerifiedFlg;
+    data['mI_Id'] = mIId;
+    data['ismsmcA_Id'] = ismsmcAId;
+    data['ismsmsO_Id'] = ismsmsOId;
+    data['hrmE_Id'] = hrmEId;
+    data['ismsmcP_Id'] = ismsmcPId;
+    data['ismsmcP_ChannelPartnerFlg'] = ismsmcPChannelPartnerFlg;
+    data['ismslE_LeadName'] = ismslELeadName;
+    data['ismslE_ContactPerson'] = ismslEContactPerson;
+    data['ismslE_ContactNo'] = ismslEContactNo;
+    data['ismslE_LeadAddress1'] = ismslELeadAddress1;
+    data['ismslE_VisitedDate'] = ismslEVisitedDate;
+    data['ismslE_EmailId'] = ismslEEmailId;
+    data['ismsmsT_Id'] = ismsmsTId;
+    data['ismslE_ContactDesignation'] = ismslEContactDesignation;
+    data['ivrmmC_Id'] = ivrmmCId;
+    data['ivrmmS_Id'] = ivrmmSId;
+    data['ismslE_StudentStrength'] = ismslEStudentStrength;
+    data['ismslE_StaffStrength'] = ismslEStaffStrength;
+    data['ismslE_NoOfInstitutions'] = ismslENoOfInstitutions;
+    data['ismslE_OrderConfirmedFlg'] = ismslEOrderConfirmedFlg;
+    data['ismslE_ActiveFlag'] = ismslEActiveFlag;
+    data['createdDate'] = createdDate;
+    data['ismslE_CreatedBy'] = ismslECreatedBy;
+    data['ismslE_UpdatedBy'] = ismslEUpdatedBy;
+    data['ismslE_DedicatedHostingFlg'] = ismslEDedicatedHostingFlg;
+    data['ismslE_DedicatedMobileAppFlg'] = ismslEDedicatedMobileAppFlg;
+    data['ismslE_Remarks'] = ismslERemarks;
+    data['updatedDate'] = updatedDate;
+    data['ismslE_ConfirmedBy'] = ismslEConfirmedBy;
+    data['ismslE_Reference'] = ismslEReference;
+    data['ismslE_LeadAddress2'] = ismslELeadAddress2;
+    data['ismslE_LeadAddress3'] = ismslELeadAddress3;
+    data['ismslE_Pincode'] = ismslEPincode;
+    data['ismslE_LeadCode'] = ismslELeadCode;
+    data['ismslE_QuotationValue'] = ismslEQuotationValue;
+    data['ismslE_HostingServer'] = ismslEHostingServer;
     return data;
   }
 }

@@ -39,18 +39,18 @@ class PlanerDeatails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['userId'] = this.userId;
-    data['asmaY_Id'] = this.asmaYId;
-    data['roleId'] = this.roleId;
-    data['returnval'] = this.returnval;
-    data['plannername'] = this.plannername;
-    data['plannerlength'] = this.plannerlength;
-    data['dailyreportcount'] = this.dailyreportcount;
-    data['dailyreportothersdatecount'] = this.dailyreportothersdatecount;
-    data['dailyreportblockedcount'] = this.dailyreportblockedcount;
-    data['approvalflag'] = this.approvalflag;
-    data['othersdayenable'] = this.othersdayenable;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['userId'] = userId;
+    data['asmaY_Id'] = asmaYId;
+    data['roleId'] = roleId;
+    data['returnval'] = returnval;
+    data['plannername'] = plannername;
+    data['plannerlength'] = plannerlength;
+    data['dailyreportcount'] = dailyreportcount;
+    data['dailyreportothersdatecount'] = dailyreportothersdatecount;
+    data['dailyreportblockedcount'] = dailyreportblockedcount;
+    data['approvalflag'] = approvalflag;
+    data['othersdayenable'] = othersdayenable;
     return data;
   }
 }

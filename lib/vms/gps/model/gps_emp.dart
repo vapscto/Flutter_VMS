@@ -9,16 +9,16 @@ class GetGpsEmployeeDetails {
     if (json['\$values'] != null) {
       values = <GetGpsEmployeeDetailsValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new GetGpsEmployeeDetailsValues.fromJson(v));
+        values!.add(GetGpsEmployeeDetailsValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -80,23 +80,23 @@ class GetGpsEmployeeDetailsValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['vmsatgpsL_Id'] = this.vmsatgpsLId;
-    data['mI_Id'] = this.mIId;
-    data['hrmE_Id'] = this.hrmEId;
-    data['ismmclT_Id'] = this.ismmclTId;
-    data['ismslE_Id'] = this.ismslEId;
-    data['vmsatgpsL_ActiveFlg'] = this.vmsatgpsLActiveFlg;
-    data['vmsatgpsL_CreatedBy'] = this.vmsatgpsLCreatedBy;
-    data['vmsatgpsL_UpdatedBy'] = this.vmsatgpsLUpdatedBy;
-    data['userId'] = this.userId;
-    data['hrmE_EmployeeFirstName'] = this.hrmEEmployeeFirstName;
-    data['hrmE_DOJ'] = this.hrmEDOJ;
-    data['hrmE_MobileNo'] = this.hrmEMobileNo;
-    data['hrmE_EmailId'] = this.hrmEEmailId;
-    data['hrmdeS_DesignationName'] = this.hrmdeSDesignationName;
-    data['hrmE_EmployeeCode'] = this.hrmEEmployeeCode;
-    data['punchflag'] = this.punchflag;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['vmsatgpsL_Id'] = vmsatgpsLId;
+    data['mI_Id'] = mIId;
+    data['hrmE_Id'] = hrmEId;
+    data['ismmclT_Id'] = ismmclTId;
+    data['ismslE_Id'] = ismslEId;
+    data['vmsatgpsL_ActiveFlg'] = vmsatgpsLActiveFlg;
+    data['vmsatgpsL_CreatedBy'] = vmsatgpsLCreatedBy;
+    data['vmsatgpsL_UpdatedBy'] = vmsatgpsLUpdatedBy;
+    data['userId'] = userId;
+    data['hrmE_EmployeeFirstName'] = hrmEEmployeeFirstName;
+    data['hrmE_DOJ'] = hrmEDOJ;
+    data['hrmE_MobileNo'] = hrmEMobileNo;
+    data['hrmE_EmailId'] = hrmEEmailId;
+    data['hrmdeS_DesignationName'] = hrmdeSDesignationName;
+    data['hrmE_EmployeeCode'] = hrmEEmployeeCode;
+    data['punchflag'] = punchflag;
     return data;
   }
 }

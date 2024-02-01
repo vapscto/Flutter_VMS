@@ -9,16 +9,16 @@ class DepartwisedeviationModel {
     if (json['\$values'] != null) {
       values = <DepartwisedeviationModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new DepartwisedeviationModelValues.fromJson(v));
+        values!.add(DepartwisedeviationModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -62,17 +62,17 @@ class DepartwisedeviationModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ismdR_Id'] = this.ismdRId;
-    data['mI_Id'] = this.mIId;
-    data['hrmD_Id'] = this.hrmDId;
-    data['ismdR_Remarks'] = this.ismdRRemarks;
-    data['ismdR_ActiveFlag'] = this.ismdRActiveFlag;
-    data['ismdR_CreatedBy'] = this.ismdRCreatedBy;
-    data['ismdR_UptadedBy'] = this.ismdRUptadedBy;
-    data['ismdR_ReasonFlag'] = this.ismdRReasonFlag;
-    data['createdDate'] = this.createdDate;
-    data['updatedDate'] = this.updatedDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ismdR_Id'] = ismdRId;
+    data['mI_Id'] = mIId;
+    data['hrmD_Id'] = hrmDId;
+    data['ismdR_Remarks'] = ismdRRemarks;
+    data['ismdR_ActiveFlag'] = ismdRActiveFlag;
+    data['ismdR_CreatedBy'] = ismdRCreatedBy;
+    data['ismdR_UptadedBy'] = ismdRUptadedBy;
+    data['ismdR_ReasonFlag'] = ismdRReasonFlag;
+    data['createdDate'] = createdDate;
+    data['updatedDate'] = updatedDate;
     return data;
   }
 }

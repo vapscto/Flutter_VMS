@@ -9,16 +9,16 @@ class Getdrnotsentdetails {
     if (json['\$values'] != null) {
       values = <GetdrnotsentdetailsValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new GetdrnotsentdetailsValues.fromJson(v));
+        values!.add(GetdrnotsentdetailsValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -38,10 +38,10 @@ class GetdrnotsentdetailsValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['FromDate'] = this.fromDate;
-    data['Remarks'] = this.remarks;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['FromDate'] = fromDate;
+    data['Remarks'] = remarks;
     return data;
   }
 }

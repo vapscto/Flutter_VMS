@@ -9,16 +9,16 @@ class Hrplannerdetails {
     if (json['\$values'] != null) {
       values = <HrplannerdetailsValues>[];
       json['\$values'].forEach((v) {
-        values!.add(  HrplannerdetailsValues.fromJson(v));
+        values!.add(HrplannerdetailsValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -71,20 +71,20 @@ class HrplannerdetailsValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['HRPDSD_Id'] = this.hRPDSDId;
-    data['HRPLMG_Id'] = this.hRPLMGId;
-    data['HRPDSD_Date'] = this.hRPDSDDate;
-    data['HRPDSD_PlannerName'] = this.hRPDSDPlannerName;
-    data['HRPDSD_PlannerDetails'] = this.hRPDSDPlannerDetails;
-    data['HRPDSD_PlannerContent'] = this.hRPDSDPlannerContent;
-    data['HRPDSD_RepeatFlag'] = this.hRPDSDRepeatFlag;
-    data['HRPDSD_DueDate'] = this.hRPDSDDueDate;
-    data['HRPDSD_CreatedDate'] = this.hRPDSDCreatedDate;
-    data['HRPDSD_UpdatedDate'] = this.hRPDSDUpdatedDate;
-    data['HRPDSD_Email'] = this.hRPDSDEmail;
-    data['HRPLMG_ReminderFlag'] = this.hRPLMGReminderFlag;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['HRPDSD_Id'] = hRPDSDId;
+    data['HRPLMG_Id'] = hRPLMGId;
+    data['HRPDSD_Date'] = hRPDSDDate;
+    data['HRPDSD_PlannerName'] = hRPDSDPlannerName;
+    data['HRPDSD_PlannerDetails'] = hRPDSDPlannerDetails;
+    data['HRPDSD_PlannerContent'] = hRPDSDPlannerContent;
+    data['HRPDSD_RepeatFlag'] = hRPDSDRepeatFlag;
+    data['HRPDSD_DueDate'] = hRPDSDDueDate;
+    data['HRPDSD_CreatedDate'] = hRPDSDCreatedDate;
+    data['HRPDSD_UpdatedDate'] = hRPDSDUpdatedDate;
+    data['HRPDSD_Email'] = hRPDSDEmail;
+    data['HRPLMG_ReminderFlag'] = hRPLMGReminderFlag;
     return data;
   }
 }

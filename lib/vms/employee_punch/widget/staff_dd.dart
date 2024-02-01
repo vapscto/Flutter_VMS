@@ -10,7 +10,6 @@ import 'package:m_skool_flutter/vms/employee_punch/api/employee_get_staff_api.da
 import 'package:m_skool_flutter/vms/employee_punch/controller/employee_salary_controller.dart';
 import 'package:m_skool_flutter/vms/employee_punch/model/staff_list_model.dart';
 import 'package:m_skool_flutter/vms/employee_punch/screen/employee_punch_view.dart';
-import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_view_details.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
@@ -147,7 +146,8 @@ class _StaffDropDownState extends State<StaffDropDown> {
                                   padding: const EdgeInsets.only(
                                       top: 5.0, left: 8, right: 8),
                                   child: SizedBox(
-                                    width: MediaQuery.of(context).size.width / 1.65,
+                                    width: MediaQuery.of(context).size.width /
+                                        1.65,
                                     child: Text(
                                       "${widget.salaryController.staffs.elementAt(index).ename}",
                                       style: Theme.of(context)
@@ -375,10 +375,9 @@ class _StaffDropDownState extends State<StaffDropDown> {
     });
   }
 
-@override
+  @override
   void dispose() {
-    widget.salaryController.selectedStaff == null ;
+    widget.salaryController.selectedStaff == null;
     super.dispose();
   }
-
 }

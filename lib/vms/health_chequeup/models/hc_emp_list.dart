@@ -9,16 +9,16 @@ class GetHCEmpListModel {
     if (json['\$values'] != null) {
       values = <GetHCEmpListModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new GetHCEmpListModelValues.fromJson(v));
+        values!.add(GetHCEmpListModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -71,20 +71,20 @@ class GetHCEmpListModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['mI_Id'] = this.mIId;
-    data['userId'] = this.userId;
-    data['ismmclT_Id'] = this.ismmclTId;
-    data['hrmE_Id'] = this.hrmEId;
-    data['hwhchuP_Id'] = this.hwhchuPId;
-    data['hwhchupF_Id'] = this.hwhchupFId;
-    data['count'] = this.count;
-    data['levelNo'] = this.levelNo;
-    data['hrmE_EmployeeFirstName'] = this.hrmEEmployeeFirstName;
-    data['returnval'] = this.returnval;
-    data['activeFlag'] = this.activeFlag;
-    data['fromDate'] = this.fromDate;
-    data['toDate'] = this.toDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['mI_Id'] = mIId;
+    data['userId'] = userId;
+    data['ismmclT_Id'] = ismmclTId;
+    data['hrmE_Id'] = hrmEId;
+    data['hwhchuP_Id'] = hwhchuPId;
+    data['hwhchupF_Id'] = hwhchupFId;
+    data['count'] = count;
+    data['levelNo'] = levelNo;
+    data['hrmE_EmployeeFirstName'] = hrmEEmployeeFirstName;
+    data['returnval'] = returnval;
+    data['activeFlag'] = activeFlag;
+    data['fromDate'] = fromDate;
+    data['toDate'] = toDate;
     return data;
   }
 }

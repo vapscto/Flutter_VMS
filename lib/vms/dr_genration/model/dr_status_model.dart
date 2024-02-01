@@ -9,16 +9,16 @@ class DrstatusListModel {
     if (json['\$values'] != null) {
       values = <DrstatusListModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new DrstatusListModelValues.fromJson(v));
+        values!.add(DrstatusListModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -68,19 +68,19 @@ class DrstatusListModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ismmistS_Id'] = this.ismmistSId;
-    data['mI_Id'] = this.mIId;
-    data['hrmD_Id'] = this.hrmDId;
-    data['ismmistS_StatusName'] = this.ismmistSStatusName;
-    data['ismmistS_StatusFlag'] = this.ismmistSStatusFlag;
-    data['ismmistS_Order'] = this.ismmistSOrder;
-    data['ismmistS_Color'] = this.ismmistSColor;
-    data['ismmistS_ActiveFlag'] = this.ismmistSActiveFlag;
-    data['ismmistS_CreatedBy'] = this.ismmistSCreatedBy;
-    data['ismmistS_UpdatedBy'] = this.ismmistSUpdatedBy;
-    data['createdDate'] = this.createdDate;
-    data['updatedDate'] = this.updatedDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ismmistS_Id'] = ismmistSId;
+    data['mI_Id'] = mIId;
+    data['hrmD_Id'] = hrmDId;
+    data['ismmistS_StatusName'] = ismmistSStatusName;
+    data['ismmistS_StatusFlag'] = ismmistSStatusFlag;
+    data['ismmistS_Order'] = ismmistSOrder;
+    data['ismmistS_Color'] = ismmistSColor;
+    data['ismmistS_ActiveFlag'] = ismmistSActiveFlag;
+    data['ismmistS_CreatedBy'] = ismmistSCreatedBy;
+    data['ismmistS_UpdatedBy'] = ismmistSUpdatedBy;
+    data['createdDate'] = createdDate;
+    data['updatedDate'] = updatedDate;
     return data;
   }
 }
