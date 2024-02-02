@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -6,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/api/department_api.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/api/dr_aprove_api.dart';
@@ -202,6 +204,13 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
         : null;
   }
 
+  DepartmentModelListValues? selecteditem;
+  dsgnModelValues? selectDesignation;
+  EmployeeModelListValues? selectEmployee;
+  final departmentController = TextEditingController();
+  final designationController = TextEditingController();
+  final employeeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -241,6 +250,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                             desc: "Please wait we are loading data",
                           )
                         : Container(
+                            height: 60,
                             margin: const EdgeInsets.only(
                                 top: 40, left: 16, right: 16, bottom: 16),
                             decoration: BoxDecoration(
@@ -254,91 +264,102 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                 ),
                               ],
                             ),
-                            child: DropdownButtonFormField<
-                                DepartmentModelListValues>(
-                              value: controller.departmentList.first,
-                              decoration: InputDecoration(
-                                focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .merge(const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.3)),
-                                hintText: controller.departmentList.isNotEmpty
-                                    ? 'Select Department'
-                                    : 'No data available',
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.always,
-                                isDense: true,
-                                label: const CustomDropDownLabel(
-                                  icon: 'assets/images/prof1.png',
-                                  containerColor:
-                                      Color.fromRGBO(235, 214, 201, 1),
-                                  text: 'Department',
-                                  textColor: Color.fromRGBO(182, 72, 29, 1),
-                                ),
-                              ),
-                              icon: const Padding(
-                                padding: EdgeInsets.only(top: 3),
-                                child: Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  size: 30,
-                                ),
-                              ),
-                              iconSize: 30,
-                              items: List.generate(
-                                  controller.departmentList.length, (index) {
-                                return DropdownMenuItem(
-                                  value: controller.departmentList[index],
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 13, left: 5),
-                                    child: Text(
-                                      overflow: TextOverflow.clip,
-                                      "${controller.departmentList[index].hRMDCName!} Department",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .merge(const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 14.0,
-                                              letterSpacing: 0.3)),
+                            child: DropdownSearch<DepartmentModelListValues>(
+                              dropdownButtonProps: const IconButtonProps(
+                                  icon: Icon(
+                                Icons.keyboard_arrow_down,
+                                size: 30,
+                                color: Colors.black,
+                              )),
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                textStyle: const TextStyle(fontSize: 14),
+                                fit: FlexFit.loose,
+                                menuProps: MenuProps(
+                                    textStyle: const TextStyle(fontSize: 14),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10))),
+                                loadingBuilder: (context, searchEntry) {
+                                  return const CircularProgressIndicator();
+                                },
+                                searchFieldProps: TextFieldProps(
+                                    decoration: InputDecoration(
+                                      contentPadding: const EdgeInsets.all(6),
+                                      hintText: 'Select Department',
+                                      hintStyle: Get.textTheme.titleSmall!
+                                          .copyWith(color: Colors.grey),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                              color: Colors.grey)),
                                     ),
+                                    controller: departmentController,
+                                    style: Get.textTheme.titleSmall!
+                                        .copyWith(fontWeight: FontWeight.w400)),
+                                scrollbarProps: const ScrollbarProps(
+                                  thickness: 1,
+                                ),
+                              ),
+                              dropdownSearchTextStyle: Get.textTheme.bodySmall!
+                                  .copyWith(fontWeight: FontWeight.w400),
+                              dropdownSearchDecoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 10),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always,
+                                  hintText: 'Department',
+                                  hintStyle: Get.textTheme.titleSmall!
+                                      .copyWith(fontWeight: FontWeight.w400),
+                                  label: const CustomDropDownLabel(
+                                    icon: 'assets/images/prof1.png',
+                                    containerColor:
+                                        Color.fromRGBO(235, 214, 201, 1),
+                                    text: 'Department',
+                                    textColor: Color.fromRGBO(182, 72, 29, 1),
                                   ),
-                                );
-                              }),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide.none)),
+
+                              dropdownSearchTextAlign: TextAlign.start,
+                              items: controller.departmentList,
+
+                              itemAsString: (item) =>
+                                  "${item.hRMDCName!} Department",
+                              // dropdownBuilder: (context, selected) {
+                              //   return ListTile(
+                              //     title: Text(
+                              //       "${selected!.hRMDCName!} Department",
+                              //       style: Get.textTheme.titleSmall,
+                              //     ),
+                              //   );
+                              // },
                               onChanged: (s) async {
                                 controller.designationList.clear();
                                 departList.clear();
                                 hrmdc_Id = s!.hRMDCID;
+                                departmentController.text = s.hRMDCName!;
+                                selecteditem = s;
                                 departList.add({
                                   "HRMDC_ID": s.hRMDCID,
                                   "HRMDC_Name": s.hRMDCName,
                                   "selected": true
                                 });
+                                logger.e(departList);
                                 await feachDesignation(
                                     base: baseUrlFromInsCode("issuemanager",
                                         widget.mskoolController),
                                     mi_id: widget.loginSuccessModel.mIID!,
                                     userId: widget.loginSuccessModel.userId!,
                                     controller: controller,
-                                    ivrmrt:
-                                        widget.loginSuccessModel.roleId!,
+                                    ivrmrt: widget.loginSuccessModel.roleId!,
                                     list: departList);
+                                setState(() {});
                               },
-                            ),
-                          ),
+                              selectedItem: selecteditem,
+                            )),
               ),
               Obx(
                 () => controller.dsgloading.value
@@ -347,6 +368,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                       )
                     : controller.designationList.isNotEmpty
                         ? Container(
+                            height: 60,
                             margin: const EdgeInsets.only(
                                 top: 20, left: 16, right: 16, bottom: 16),
                             decoration: BoxDecoration(
@@ -360,94 +382,80 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                 ),
                               ],
                             ),
-                            child: DropdownButtonFormField<dsgnModelValues>(
-                              // value: controller.designationList.first,
+                            child: DropdownSearch<dsgnModelValues>(
                               validator: (value) {
                                 if (value == null) {
                                   return "";
                                 }
                                 return null;
                               },
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .merge(const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.3)),
-                                hintText: controller.designationList.isNotEmpty
-                                    ? 'Select Designation'
-                                    : 'No data available',
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.always,
-                                isDense: true,
-                                label: const CustomDropDownLabel(
-                                  icon: 'assets/images/prof2.png',
-                                  containerColor:
-                                      Color.fromRGBO(223, 251, 254, 1),
-                                  text: 'Designation',
-                                  textColor: Color.fromRGBO(40, 182, 200, 1),
-                                ),
-                              ),
-                              icon: const Padding(
-                                padding: EdgeInsets.only(top: 3),
-                                child: Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  size: 30,
-                                ),
-                              ),
-                              iconSize: 30,
-                              items: List.generate(
-                                  controller.designationList.length, (index) {
-                                return DropdownMenuItem(
-                                  value: controller.designationList[index],
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 13, left: 5),
-                                    child: RichText(
-                                      overflow: TextOverflow.clip,
-                                      text: TextSpan(children: [
-                                        TextSpan(
-                                            text:
-                                                "${controller.designationList[index].hRMDESDesignationName!} ",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall!
-                                                .merge(const TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 14.0,
-                                                    letterSpacing: 0.3))),
-                                        TextSpan(
-                                            text:
-                                                ": ${controller.designationList[index].mIName!} ",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall!
-                                                .merge(const TextStyle(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 12.0,
-                                                    letterSpacing: 0.3)))
-                                      ]),
+                              dropdownButtonProps: const IconButtonProps(
+                                  icon: Icon(
+                                Icons.keyboard_arrow_down,
+                                size: 30,
+                                color: Colors.black,
+                              )),
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                textStyle: const TextStyle(fontSize: 14),
+                                fit: FlexFit.loose,
+                                menuProps: MenuProps(
+                                    textStyle: const TextStyle(fontSize: 14),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10))),
+                                loadingBuilder: (context, searchEntry) {
+                                  return const CircularProgressIndicator();
+                                },
+                                searchFieldProps: TextFieldProps(
+                                    decoration: InputDecoration(
+                                      contentPadding: const EdgeInsets.all(6),
+                                      hintText: 'Select Designation',
+                                      hintStyle: Get.textTheme.titleSmall!
+                                          .copyWith(color: Colors.grey),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                              color: Colors.grey)),
                                     ),
+                                    controller: designationController,
+                                    style: Get.textTheme.titleSmall!
+                                        .copyWith(fontWeight: FontWeight.w400)),
+                                scrollbarProps: const ScrollbarProps(
+                                  thickness: 1,
+                                ),
+                              ),
+                              dropdownSearchTextStyle: Get.textTheme.bodySmall!
+                                  .copyWith(fontWeight: FontWeight.w400),
+                              dropdownSearchDecoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 10),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always,
+                                  hintText: 'Designation',
+                                  hintStyle: Get.textTheme.titleSmall!
+                                      .copyWith(fontWeight: FontWeight.w400),
+                                  label: const CustomDropDownLabel(
+                                    icon: 'assets/images/prof2.png',
+                                    containerColor:
+                                        Color.fromRGBO(223, 251, 254, 1),
+                                    text: 'Designation',
+                                    textColor: Color.fromRGBO(40, 182, 200, 1),
                                   ),
-                                );
-                              }),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide.none)),
+                              dropdownSearchTextAlign: TextAlign.start,
+                              items: controller.designationList,
+                              itemAsString: (item) =>
+                                  "${item.hRMDESDesignationName!}:${item.mIName}",
                               onChanged: (s) async {
                                 controller.employeeList.clear();
                                 emplist.clear();
                                 hrmdes_Id = s!.hRMDESId;
+                                designationController.text =
+                                    '${s.hRMDESDesignationName!}:${s.mIName}';
                                 emplist.add({
                                   "HRMDES_DesignationName":
                                       s.hRMDESDesignationName!,
@@ -465,9 +473,9 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                     controller: controller,
                                     list: emplist);
                               },
-                            ),
-                          )
-                        : SizedBox(),
+                              selectedItem: selectDesignation,
+                            ))
+                        : const SizedBox(),
               ),
               Obx(
                 () => controller.emloading.value
@@ -476,6 +484,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                       )
                     : controller.employeeList.isNotEmpty
                         ? Container(
+                            height: 60,
                             margin: const EdgeInsets.only(
                                 top: 20, left: 16, right: 16, bottom: 16),
                             decoration: BoxDecoration(
@@ -489,108 +498,80 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                 ),
                               ],
                             ),
-                            child: DropdownButtonFormField<
-                                EmployeeModelListValues>(
-                              // value: controller.employeeList.first,
+                            child: DropdownSearch<EmployeeModelListValues>(
                               validator: (value) {
                                 if (value == null) {
                                   return "";
                                 }
                                 return null;
                               },
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .merge(const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.3)),
-                                hintText: controller.employeeList.isNotEmpty
-                                    ? 'Select Employee'
-                                    : 'No data available',
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.always,
-                                isDense: true,
-                                label: const CustomDropDownLabel(
-                                  icon: 'assets/images/prof4.png',
-                                  containerColor:
-                                      Color.fromRGBO(212, 194, 247, 1),
-                                  text: 'Employee',
-                                  textColor: Color.fromRGBO(107, 51, 196, 1),
-                                ),
-                              ),
-                              icon: const Padding(
-                                padding: EdgeInsets.only(top: 3),
-                                child: Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  size: 30,
-                                ),
-                              ),
-                              iconSize: 30,
-                              items: List.generate(
-                                  controller.employeeList.length, (index) {
-                                return DropdownMenuItem(
-                                  value: controller.employeeList[index],
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 13, left: 5),
-                                    child: SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          1.5,
-                                      child: RichText(
-                                        overflow: TextOverflow.clip,
-                                        text: TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              text:
-                                                  "${controller.employeeList[index].userEmpName!}",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall!
-                                                  .merge(const TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 14.0,
-                                                    letterSpacing: 0.3,
-                                                    overflow: TextOverflow.clip,
-                                                  )),
-                                            ),
-                                            TextSpan(
-                                              text:
-                                                  ": ${controller.employeeList[index].hRMDDepartmentName}",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall!
-                                                  .merge(const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 14.0,
-                                                      letterSpacing: 0.3)),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                              dropdownButtonProps: const IconButtonProps(
+                                  icon: Icon(
+                                Icons.keyboard_arrow_down,
+                                size: 30,
+                                color: Colors.black,
+                              )),
+                              popupProps: PopupProps.menu(
+                                showSearchBox: true,
+                                textStyle: const TextStyle(fontSize: 14),
+                                fit: FlexFit.loose,
+                                menuProps: MenuProps(
+                                    textStyle: const TextStyle(fontSize: 14),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10))),
+                                loadingBuilder: (context, searchEntry) {
+                                  return const CircularProgressIndicator();
+                                },
+                                searchFieldProps: TextFieldProps(
+                                    decoration: InputDecoration(
+                                      contentPadding: const EdgeInsets.all(6),
+                                      hintText: 'Select Employee',
+                                      hintStyle: Get.textTheme.titleSmall!
+                                          .copyWith(color: Colors.grey),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: const BorderSide(
+                                              color: Colors.grey)),
                                     ),
+                                    controller: employeeController,
+                                    style: Get.textTheme.titleSmall!
+                                        .copyWith(fontWeight: FontWeight.w400)),
+                                scrollbarProps: const ScrollbarProps(
+                                  thickness: 1,
+                                ),
+                              ),
+                              dropdownSearchTextStyle: Get.textTheme.bodySmall!
+                                  .copyWith(fontWeight: FontWeight.w400),
+                              dropdownSearchDecoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 10),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always,
+                                  hintText: 'Employee',
+                                  hintStyle: Get.textTheme.titleSmall!
+                                      .copyWith(fontWeight: FontWeight.w400),
+                                  label: const CustomDropDownLabel(
+                                    icon: 'assets/images/prof4.png',
+                                    containerColor:
+                                        Color.fromRGBO(212, 194, 247, 1),
+                                    text: 'Employee',
+                                    textColor: Color.fromRGBO(107, 51, 196, 1),
                                   ),
-                                );
-                              }),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide.none)),
+                              dropdownSearchTextAlign: TextAlign.start,
+                              items: controller.employeeList,
+                              itemAsString: (item) =>
+                                  "${item.userEmpName!}:${item.hRMDDepartmentName}",
                               onChanged: (s) async {
                                 hrme_Id = s!.hRMEId;
                               },
-                            ),
-                          )
-                        : SizedBox(),
+                              selectedItem: selectEmployee,
+                            ))
+                        : const SizedBox(),
               ),
               Container(
                 margin:

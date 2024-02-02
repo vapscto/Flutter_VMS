@@ -255,7 +255,9 @@ class _ResetExpiredPasswordState extends State<ResetExpiredPassword> {
                                     onPressed: () {
                                       Navigator.pushReplacement(context,
                                           MaterialPageRoute(builder: (_) {
-                                        return const SplashScreen();
+                                        return const SplashScreen(
+                                          miIdNew: 0,
+                                        );
                                       }));
                                     },
                                   );

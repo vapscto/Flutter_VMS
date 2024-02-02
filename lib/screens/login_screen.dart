@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/apis/authenticate_user_api.dart';
+import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/screens/forgot_password_screen.dart';
@@ -350,11 +351,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           .authenticateNow(
                                               userName.text,
                                               password.text,
-                                              widget
-                                                  .mskoolController
-                                                  .universalInsCodeModel!
-                                                  .value
-                                                  .miId,
+                                              importantIds!.get(URLS.miId),
                                               loginBaseUrl,
                                               deviceid),
                                       builder: (_, snapshot) {

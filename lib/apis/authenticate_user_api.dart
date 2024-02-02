@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -102,9 +103,11 @@ class AuthenticateUserApi {
           "userName": userName,
         });
       }
-
+      Fluttertoast.showToast(msg: response.data['message']);
       logInBox!.put("isLoggedIn", false);
-      Get.offAll(() => const SplashScreen());
+      Get.offAll(() => const SplashScreen(
+            miIdNew: 0,
+          ));
       return Future.error({
         "errorTitle": response.data['message'],
         "type": "oth",

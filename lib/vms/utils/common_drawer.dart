@@ -138,7 +138,7 @@ class CommonDrawer extends StatelessWidget {
                         onTap: () {
                           Navigator.pop(context);
                           instituteChange(context, vmsTransationController,
-                              loginSuccessModel);
+                              loginSuccessModel, mskoolController);
                         },
                         title: const Text('Select Company'),
                       )

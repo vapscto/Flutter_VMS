@@ -23,7 +23,8 @@ import 'package:m_skool_flutter/screens/on_board.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  final int miIdNew;
+  const SplashScreen({super.key, required this.miIdNew});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -279,6 +280,7 @@ class _SplashScreenState extends State<SplashScreen> {
       String userName = logInBox!.get("userName");
       String password = logInBox!.get("password");
       int miId = importantIds!.get(URLS.miId);
+      logger.v(miId);
       String loginBaseUrl = "";
       for (int i = 0; i < codeModel.apiarray.values.length; i++) {
         final CategoriesApiItem apiItem =
@@ -287,9 +289,13 @@ class _SplashScreenState extends State<SplashScreen> {
           loginBaseUrl = apiItem.iivrscurLAPIURL;
         }
       }
-      final LoginSuccessModel loginSuccessModel = await AuthenticateUserApi
-          .instance
-          .authenticateNow(userName, password, miId, loginBaseUrl, deviceid);
+      final LoginSuccessModel loginSuccessModel =
+          await AuthenticateUserApi.instance.authenticateNow(
+              userName,
+              password,
+              (widget.miIdNew == 0) ? miId : widget.miIdNew,
+              loginBaseUrl,
+              deviceid);
       mskoolController.updateLoginSuccessModel(loginSuccessModel);
       getDeviceTokenForFCM(
           loginSuccessModel: loginSuccessModel,

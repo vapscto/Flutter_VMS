@@ -668,9 +668,6 @@ void openMappedPages(
     return;
   }
 
-  if (pageName == "Staff Notice Board") {
-    return;
-  }
   if (pageName == "Purchase Indent Approval") {
     Get.to(() => PurchaseIndentHome(
           loginSuccessModel: loginSuccessModel,
@@ -728,15 +725,6 @@ void openMappedPages(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
         title: pageName,
-      );
-    }));
-    return;
-  }
-  if (pageName == "Issue Manager") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return DailyReportGenration(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
       );
     }));
     return;

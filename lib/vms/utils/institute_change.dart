@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/apis/authenticate_user_api.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/screens/common_home_screen.dart';
 import 'package:m_skool_flutter/screens/splash_screen.dart';
 import 'package:m_skool_flutter/vms/controller/vms_common_controller.dart';
 
 instituteChange(
     BuildContext context,
     VmsTransationController vmsTransationController,
-    LoginSuccessModel loginSuccessModel) async {
+    LoginSuccessModel loginSuccessModel,
+    MskoolController mskoolController) async {
   Get.bottomSheet(
     Obx(() {
       return vmsTransationController.isInstitudeLoading.value
@@ -28,7 +33,7 @@ instituteChange(
                       color: Colors.white),
                   height: 242,
                   child: const Center(
-                    child: Text('Institute is not found'),
+                    child: Text('No Data'),
                   ),
                 )
               : Container(
@@ -73,11 +78,19 @@ instituteChange(
                                 return Padding(
                                   padding: const EdgeInsets.only(bottom: 5.0),
                                   child: InkWell(
-                                    onTap: () {
-                                      Get.offAll(() => const SplashScreen());
-                                      institutionalCode!.put(URLS.miId, v.mIId);
-                                      logger.i(v.mISubdomain);
+                                    onTap: () async {
+                                      importantIds!.put(URLS.miId, v.mIId);
+                                      logger.w(importantIds!.get(URLS.miId));
+                                      // institutionalCode!.put(
+                                      //     'institutionalCode', v.mISubdomain);
+
                                       Fluttertoast.showToast(msg: v.mIName!);
+                                      Get.offAll(() => SplashScreen(
+                                            miIdNew: v.mIId!,
+                                            // loginSuccessModel:
+                                            //     loginSuccessModel,
+                                            // mskoolController: mskoolController,
+                                          ));
                                     },
                                     child: Card(
                                       elevation: 2,
@@ -93,9 +106,9 @@ instituteChange(
                                           v.mIName!,
                                           style: Get.textTheme.titleSmall!
                                               .copyWith(
-                                                  color: (v.mIId ==
-                                                          institutionalCode!
-                                                              .get(URLS.miId))
+                                                  color: (importantIds!
+                                                              .get(URLS.miId) ==
+                                                          v.mIId)
                                                       ? Colors.red
                                                       : Colors.black),
                                         ),
