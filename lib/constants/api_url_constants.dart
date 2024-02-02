@@ -689,4 +689,5 @@ class URLS {
       'api/ISM_DailyReportGenerationFacade/searchpreviousdailyreport/';
 
   static String instituteList = 'api/LoginFacade/getMIdataMaster';
+  static String extensionLoad = 'api/ISM_ExtensionFacade/getdetails';
 }

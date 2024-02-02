@@ -25,6 +25,7 @@ import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.da
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/dailyrpt_home.dart';
 import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_home.dart';
+import 'package:m_skool_flutter/vms/extension/extension_home_screen.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/health_chequeup/screens/healtha_check_up.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_home_screen.dart';
@@ -761,6 +762,16 @@ void openMappedPages(
       return EmployeepunchHome(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
+      );
+    }));
+    return;
+  }
+  if (pageName == "Extension") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return ExtensionHomeScreen(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        title: pageName,
       );
     }));
     return;
