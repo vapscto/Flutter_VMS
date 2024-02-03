@@ -1,6 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
@@ -155,77 +156,78 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                             ),
                           ],
                         ),
-                        child: DropdownSearch<ExtensionEmployeeModelValues>(
-                          validator: (value) {
-                            if (value == null) {
-                              return "";
-                            }
-                            return null;
-                          },
-                          dropdownButtonProps: const IconButtonProps(
-                              icon: Icon(
-                            Icons.keyboard_arrow_down,
-                            size: 30,
-                            color: Colors.black,
-                          )),
-                          popupProps: PopupProps.menu(
-                            showSearchBox: true,
-                            textStyle: const TextStyle(fontSize: 14),
-                            fit: FlexFit.loose,
-                            menuProps: MenuProps(
-                                textStyle: const TextStyle(fontSize: 14),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10))),
-                            loadingBuilder: (context, searchEntry) {
-                              return const CircularProgressIndicator();
-                            },
-                            searchFieldProps: TextFieldProps(
-                                decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.all(6),
-                                  hintText: 'Select Employee',
-                                  hintStyle: Get.textTheme.titleSmall!
-                                      .copyWith(color: Colors.grey),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide:
-                                          const BorderSide(color: Colors.grey)),
+                        child: TypeAheadFormField<ExtensionEmployeeModelValues>(
+                          textFieldConfiguration: TextFieldConfiguration(
+                            style: Get.textTheme.titleSmall,
+                            controller: employeeController,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
                                 ),
-                                controller: employeeController,
-                                style: Get.textTheme.titleSmall!
-                                    .copyWith(fontWeight: FontWeight.w400)),
-                            scrollbarProps: const ScrollbarProps(
-                              thickness: 1,
-                            ),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                hintStyle: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .merge(const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.3)),
+                                hintText: controller.employeeList.isNotEmpty
+                                    ? 'Search Employee'
+                                    : 'No data available',
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                isDense: true,
+                                label: const CustomDropDownLabel(
+                                  icon: 'assets/images/prof4.png',
+                                  containerColor:
+                                      Color.fromRGBO(212, 194, 247, 1),
+                                  text: 'Employee',
+                                  textColor: Color.fromRGBO(107, 51, 196, 1),
+                                ),
+                                suffixIcon: const Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: Colors.black,
+                                  size: 30,
+                                )),
                           ),
-                          dropdownSearchTextStyle: Get.textTheme.bodySmall!
-                              .copyWith(fontWeight: FontWeight.w400),
-                          dropdownSearchDecoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 10),
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
-                              hintText: 'Employee',
-                              hintStyle: Get.textTheme.titleSmall!
-                                  .copyWith(fontWeight: FontWeight.w400),
-                              label: const CustomDropDownLabel(
-                                icon: 'assets/images/prof4.png',
-                                containerColor:
-                                    Color.fromRGBO(212, 194, 247, 1),
-                                text: 'Employee',
-                                textColor: Color.fromRGBO(107, 51, 196, 1),
-                              ),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none)),
-                          dropdownSearchTextAlign: TextAlign.start,
-                          items: controller.employeeList,
-                          itemAsString: (item) =>
-                              "${item.employeeName!}:${item.hRMDDepartmentName}",
-                          onChanged: (s) async {
-                            hrmeId = s!.hRMEId!;
+                          suggestionsCallback: (pattern) {
+                            return controller.employeeList.where((fruit) =>
+                                fruit.employeeName!
+                                    .toLowerCase()
+                                    .contains(pattern.toLowerCase()));
                           },
-                          selectedItem: selectedEmployee,
-                        ))
+                          itemBuilder: (context, suggestion) {
+                            return ListTile(
+                              onTap: () {
+                                employeeController.text =
+                                    '${suggestion.employeeName!}:${suggestion.hRMDDepartmentName}';
+                                hrmeId = suggestion.hRMEId!;
+                                logger.d(hrmeId);
+                              },
+                              title: Text(
+                                '${suggestion.employeeName!}:${suggestion.hRMDDepartmentName}',
+                                style: Get.textTheme.titleSmall,
+                              ),
+                            );
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            setState(() {
+                              selectedEmployee = suggestion;
+                            });
+                          },
+                          noItemsFoundBuilder: (context) {
+                            return const SizedBox();
+                          },
+                        ),
+                      )
                     : const SizedBox(),
           ),
           (groupValue == 'P')
