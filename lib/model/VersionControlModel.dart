@@ -1,4 +1,3 @@
-// ignore: file_names
 class VersionControlModel {
   VersionControlModel({
     String? message,

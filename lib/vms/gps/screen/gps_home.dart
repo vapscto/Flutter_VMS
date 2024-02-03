@@ -18,7 +18,6 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/drop_down_level.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 
 import '../../../main.dart';
 
@@ -49,6 +48,11 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
   }
 
   intial() async {
+    await feacthGpsClient(
+        base: baseUrlFromInsCode('frontoffice', widget.mskoolController),
+        miId: widget.loginSuccessModel.mIID!,
+        userId: widget.loginSuccessModel.userId!,
+        controller: getEmpDetailsController);
     getEmpDetailsController.getLocation().then(
       (value) {
         feacthGps(
@@ -57,14 +61,7 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
           controller: getEmpDetailsController,
         ).then(
           (value) {
-            if (value) {
-              feacthGpsClient(
-                  base: baseUrlFromInsCode(
-                      'frontoffice', widget.mskoolController),
-                  miId: widget.loginSuccessModel.mIID!,
-                  userId: widget.loginSuccessModel.userId!,
-                  controller: getEmpDetailsController);
-            }
+            if (value) {}
           },
         );
         if (!value) {

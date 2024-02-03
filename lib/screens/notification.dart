@@ -7,9 +7,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
-import 'package:m_skool_flutter/student/fees/screens/fee_analysis_screen.dart';
-import 'package:m_skool_flutter/student/fees/screens/fee_receipt_home.dart';
-import 'package:m_skool_flutter/student/fees/screens/online_payment_screen.dart';
+
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/student/interaction/screen/messaging_section.dart';
 import 'package:m_skool_flutter/vms/api/vms_notification_api.dart';
@@ -208,22 +206,13 @@ class NotificationScreen extends StatelessWidget {
 
     switch (headerName.toLowerCase()) {
       case "fee payment":
-        Get.to(
-          () => OnlinePaymentScreen(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            title: "${headerName.capitalize}",
-          ),
-        );
-        break;
-      case "fee analysis":
-        Get.to(
-          () => FeeAnalysisScreen(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            title: "${headerName.capitalize}",
-          ),
-        );
+        // Get.to(
+        //   () => OnlinePaymentScreen(
+        //     loginSuccessModel: loginSuccessModel,
+        //     mskoolController: mskoolController,
+        //     title: "${headerName.capitalize}",
+        //   ),
+        // );
         break;
 
       case "coe":
@@ -261,16 +250,6 @@ class NotificationScreen extends StatelessWidget {
               loginSuccessModel: loginSuccessModel,
               mskoolController: mskoolController,
             ));
-        break;
-
-      case "fee receipt":
-        Get.to(
-          () => FeeReceiptHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            title: "${headerName.capitalize}",
-          ),
-        );
         break;
       default:
         Fluttertoast.showToast(

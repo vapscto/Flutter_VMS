@@ -18,7 +18,7 @@ import 'package:m_skool_flutter/screens/attachment_viewer.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
 import 'package:m_skool_flutter/student/coe/screen/video_screen.dart';
-import 'package:m_skool_flutter/student/fees/screens/fee_receipt_home.dart';
+
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
@@ -557,17 +557,6 @@ void openMappedPages(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
         ));
-    return;
-  }
-
-  if (pageName == "Fee Receipt") {
-    Get.to(
-      () => FeeReceiptHome(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-        title: pageName,
-      ),
-    );
     return;
   }
 

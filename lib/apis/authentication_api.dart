@@ -4,7 +4,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../constants/api_url_constants.dart';
 import '../controller/global_utilities.dart';
 import '../main.dart';
-import '../model/LoginVerificationModel.dart';
 import '../model/success_response_model.dart';
 import '../model/success_with_message_model.dart';
 
@@ -91,25 +90,25 @@ class LoginServices {
     return logInData;
   }
 
-  static Future<LoginVerificationModel?> loginVerification() async {
-    var dio = Dio();
-    LoginVerificationModel logInData = LoginVerificationModel();
-    var url = URLS.base + URLS.userPath + URLS.loginVerification;
-    try {
-      final response = await dio.get(
-        url,
-        options: Options(
-          headers: getSession(),
-        ),
-      );
-      if (response.statusCode == 200) {
-        logInData = LoginVerificationModel.fromJson(response.data);
-      }
-    } catch (e) {
-      logger.e(e);
-    }
-    return logInData;
-  }
+  // static Future<LoginVerificationModel?> loginVerification() async {
+  //   var dio = Dio();
+  //   LoginVerificationModel logInData = LoginVerificationModel();
+  //   var url = URLS.base + URLS.userPath + URLS.loginVerification;
+  //   try {
+  //     final response = await dio.get(
+  //       url,
+  //       options: Options(
+  //         headers: getSession(),
+  //       ),
+  //     );
+  //     if (response.statusCode == 200) {
+  //       logInData = LoginVerificationModel.fromJson(response.data);
+  //     }
+  //   } catch (e) {
+  //     logger.e(e);
+  //   }
+  //   return logInData;
+  // }
 
   static Future<SuccessWithMessageModel?> logout() async {
     var dio = Dio();

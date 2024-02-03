@@ -3,10 +3,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
-import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/screens/login_screen.dart';
 import 'package:m_skool_flutter/screens/splash_screen.dart';
 
 class AuthenticateUserApi {

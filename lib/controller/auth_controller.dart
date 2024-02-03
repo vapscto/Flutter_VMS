@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import '../apis/authentication_api.dart';
 import '../apis/version_check_api.dart';
 import '../main.dart';
-import '../screens/authentication_screen.dart';
 import 'global_utilities.dart';
 
 class AuthenticationController extends GetxController {
@@ -87,25 +86,25 @@ class AuthenticationController extends GetxController {
     }
   }
 
-  Future<bool> loginVerification() async {
-    if (await checkConnectivity()) {
-      var value = await LoginServices.loginVerification();
-      if (value!.data!.responseCode == 108) {
-        logInBox!.put("isLoggedIn", false);
-        Get.offAll(() => const AuthenticationScreen());
-        Fluttertoast.showToast(msg: "Session Expired".tr);
-        return false;
-      } else if (value.data!.responseCode == 109) {
-        logInBox!.put("userData", value.data!.user!.toJson());
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      Fluttertoast.showToast(msg: "Not connected to internet".tr);
-      return false;
-    }
-  }
+  // Future<bool> loginVerification() async {
+  //   if (await checkConnectivity()) {
+  //     var value = await LoginServices.loginVerification();
+  //     if (value!.data!.responseCode == 108) {
+  //       logInBox!.put("isLoggedIn", false);
+  //       Get.offAll(() => const AuthenticationScreen());
+  //       Fluttertoast.showToast(msg: "Session Expired".tr);
+  //       return false;
+  //     } else if (value.data!.responseCode == 109) {
+  //       logInBox!.put("userData", value.data!.user!.toJson());
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   } else {
+  //     Fluttertoast.showToast(msg: "Not connected to internet".tr);
+  //     return false;
+  //   }
+  // }
 
   Future<bool> logout() async {
     if (await checkConnectivity()) {

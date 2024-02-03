@@ -23,6 +23,8 @@ Future<bool> feacthGpsClient({
     final Response response = await ins.post(apiUrl,
         options: Options(headers: getSession()),
         data: {"MI_Id": miId, "UserId": userId});
+    logger.i({"MI_Id": miId, "UserId": userId});
+    logger.e(apiUrl);
     GetGpsClientDetails clientDetailsList =
         GetGpsClientDetails.fromJson(response.data['clientlist']);
     controller.gpsClientList.addAll(clientDetailsList.values!);
