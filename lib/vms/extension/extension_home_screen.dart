@@ -10,6 +10,7 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/extension/api/employee_list_api.dart';
 import 'package:m_skool_flutter/vms/extension/controller/extension_controller.dart';
+import 'package:m_skool_flutter/vms/extension/extension_details.dart';
 import 'package:m_skool_flutter/vms/extension/model/extension_employee_model.dart';
 import 'package:m_skool_flutter/vms/extension/model/extension_month_model.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
@@ -509,7 +510,11 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Get.to(() => ExtensionDetails(
+                    controller: controller,
+                  ));
+            },
             child: Row(
               children: [
                 Text(

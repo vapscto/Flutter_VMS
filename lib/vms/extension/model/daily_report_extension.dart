@@ -1,30 +1,30 @@
 class ExtensionDailyModel {
   String? type;
-  List<Values>? values;
+  List<ExtensionDailyModelValues>? values;
 
   ExtensionDailyModel({this.type, this.values});
 
   ExtensionDailyModel.fromJson(Map<String, dynamic> json) {
-    type = json['$type'];
-    if (json['$values'] != null) {
-      values = <Values>[];
-      json['$values'].forEach((v) {
-        values!.add(new Values.fromJson(v));
+    type = json['\$type'];
+    if (json['\$values'] != null) {
+      values = <ExtensionDailyModelValues>[];
+      json['\$values'].forEach((v) {
+        values!.add(ExtensionDailyModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = type;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
     if (values != null) {
-      data['$values'] = values!.map((v) => v.toJson()).toList();
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Values {
+class ExtensionDailyModelValues {
   String? type;
   int? hrmEId;
   String? employeename;
@@ -38,7 +38,7 @@ class Values {
   String? ismodEReason;
   bool? ismodEActiveFlg;
 
-  Values(
+  ExtensionDailyModelValues(
       {this.type,
       this.hrmEId,
       this.employeename,
@@ -52,7 +52,7 @@ class Values {
       this.ismodEReason,
       this.ismodEActiveFlg});
 
-  Values.fromJson(Map<String, dynamic> json) {
+  ExtensionDailyModelValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
     hrmEId = json['hrmE_Id'];
     employeename = json['employeename'];

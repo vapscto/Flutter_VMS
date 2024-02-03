@@ -1,30 +1,30 @@
 class ExtensionPlannerModel {
   String? type;
-  List<Values>? values;
+  List<ExtensionPlannerModelValues>? values;
 
   ExtensionPlannerModel({this.type, this.values});
 
   ExtensionPlannerModel.fromJson(Map<String, dynamic> json) {
-    type = json['$type'];
-    if (json['$values'] != null) {
-      values = <Values>[];
-      json['$values'].forEach((v) {
-        values!.add(new Values.fromJson(v));
+    type = json['\$type'];
+    if (json['\$values'] != null) {
+      values = <ExtensionPlannerModelValues>[];
+      json['\$values'].forEach((v) {
+        values!.add(ExtensionPlannerModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    if (this.values != null) {
-      data['$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Values {
+class ExtensionPlannerModelValues {
   String? type;
   int? hrmEId;
   String? employeename;
@@ -36,7 +36,7 @@ class Values {
   String? ismplEReason;
   bool? ismplEActiveFlg;
 
-  Values(
+  ExtensionPlannerModelValues(
       {this.type,
       this.hrmEId,
       this.employeename,
@@ -48,7 +48,7 @@ class Values {
       this.ismplEReason,
       this.ismplEActiveFlg});
 
-  Values.fromJson(Map<String, dynamic> json) {
+  ExtensionPlannerModelValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
     hrmEId = json['hrmE_Id'];
     employeename = json['employeename'];
@@ -62,17 +62,17 @@ class Values {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['hrmE_Id'] = this.hrmEId;
-    data['employeename'] = this.employeename;
-    data['bymployeename'] = this.bymployeename;
-    data['hrmE_EmployeeCode'] = this.hrmEEmployeeCode;
-    data['ismplE_Id'] = this.ismplEId;
-    data['ismplE_FromDate'] = this.ismplEFromDate;
-    data['ismplE_ToDate'] = this.ismplEToDate;
-    data['ismplE_Reason'] = this.ismplEReason;
-    data['ismplE_ActiveFlg'] = this.ismplEActiveFlg;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['hrmE_Id'] = hrmEId;
+    data['employeename'] = employeename;
+    data['bymployeename'] = bymployeename;
+    data['hrmE_EmployeeCode'] = hrmEEmployeeCode;
+    data['ismplE_Id'] = ismplEId;
+    data['ismplE_FromDate'] = ismplEFromDate;
+    data['ismplE_ToDate'] = ismplEToDate;
+    data['ismplE_Reason'] = ismplEReason;
+    data['ismplE_ActiveFlg'] = ismplEActiveFlg;
     return data;
   }
 }
