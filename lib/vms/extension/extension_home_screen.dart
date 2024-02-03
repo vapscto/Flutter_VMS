@@ -174,17 +174,13 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                                 ),
                                 hintStyle: Theme.of(context)
                                     .textTheme
-                                    .labelSmall!
-                                    .merge(const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.3)),
+                                    .titleSmall!
+                                    .copyWith(color: Colors.grey, fontSize: 14),
                                 hintText: controller.employeeList.isNotEmpty
                                     ? 'Search Employee'
                                     : 'No data available',
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.always,
-                                isDense: true,
                                 label: const CustomDropDownLabel(
                                   icon: 'assets/images/prof4.png',
                                   containerColor:
