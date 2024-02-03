@@ -699,39 +699,42 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
               ),
             );
           }),
-          InkWell(
-            onTap: () {
-              logger.i("click");
-
-              Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return ExtensionDetails(
-                  controller: controller,
-                );
-              }));
-            },
-            child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6)),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "${widget.title} Details",
-                      style: Get.textTheme.titleMedium!
-                          .copyWith(color: Theme.of(context).primaryColor),
-                    ),
-                    Icon(
-                      Icons.arrow_forward,
-                      color: Theme.of(context).primaryColor,
-                      size: 30,
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
+          Obx(() {
+            return (controller.isEmployeeLoading.value)
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : InkWell(
+                        onTap: () {
+                          logger.i("click");
+                          moveToNextScreen();
+                        },
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "${widget.title} Details",
+                                  style: Get.textTheme.titleMedium!.copyWith(
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward,
+                                  color: Theme.of(context).primaryColor,
+                                  size: 30,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+          }),
         ],
       ),
     );
@@ -740,4 +743,22 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
   bool isLoading = false;
   RxBool notification = RxBool(true);
   RxBool email = RxBool(false);
+  void moveToNextScreen() async {
+    setState(() {
+      isLoading = true;
+    });
+    await Future.delayed(const Duration(seconds: 10));
+    // ignore: use_build_context_synchronously
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => ExtensionDetails(
+                controller: controller,
+              )),
+    );
+
+    setState(() {
+      isLoading = false;
+    });
+  }
 }
