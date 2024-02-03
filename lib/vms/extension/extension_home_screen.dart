@@ -667,7 +667,7 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                                 "HRME_Id": hrmeId,
                                 "ISMPLE_FromDate": fromDate!.toIso8601String(),
                                 "ISMPLE_ToDate": toDate!.toIso8601String(),
-                                "ismodE_Noofdays": day,
+                                // "ismodE_Noofdays": day,
                                 "ISMPLE_Reason": reasonController.text,
                                 "notifi_chk": notification.value,
                                 "email_chk": email.value,
