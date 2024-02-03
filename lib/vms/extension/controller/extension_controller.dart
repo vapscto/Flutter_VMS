@@ -10,6 +10,11 @@ class ExtensionController extends GetxController {
     isEmployeeLoading.value = l;
   }
 
+  RxBool isApprove = RxBool(false);
+  void approve(bool a) {
+    isApprove.value = a;
+  }
+
   RxList<ExtensionEmployeeModelValues> employeeList =
       <ExtensionEmployeeModelValues>[].obs;
   RxList<ExtensionMonthModelValues> monthsList =

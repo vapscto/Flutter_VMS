@@ -44,8 +44,13 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
   DateTime? toDate;
   final _startDate = TextEditingController();
   final _endDate = TextEditingController();
+  final reasonController = TextEditingController();
   ExtensionMonthModelValues? selectedMonth;
   _loadData() async {
+    controller.employeeList.clear();
+    controller.monthsList.clear();
+    controller.extensionDrList.clear();
+    controller.extensionPlannerList.clear();
     controller.employeeLoading(true);
     await ExtensionAPI.instance.extensionAPI(
         controller: controller,
@@ -54,6 +59,21 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
         miId: widget.loginSuccessModel.mIID!,
         roleId: widget.loginSuccessModel.roleId!);
     controller.employeeLoading(false);
+  }
+
+  saveData(Map<String, dynamic> data) async {
+    controller.approve(true);
+    await ApproveAPI.a.approveAPI(
+        controller: controller,
+        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
+        body: data);
+    controller.approve(false);
+    Get.back();
+  }
+
+  int day = 0;
+  int dayCount(DateTime from, DateTime to) {
+    return to.difference(from).inDays + 1;
   }
 
   @override
@@ -102,6 +122,12 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                           setState(() {
                             groupValue = value!;
                             logger.i(groupValue);
+                            _startDate.clear();
+                            _endDate.clear();
+                            _loadData();
+                            hrmeId = 0;
+                            reasonController.clear();
+                            employeeController.clear();
                           });
                         }),
                   ),
@@ -327,6 +353,8 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                                 if (toDate != null) {
                                   _endDate.text =
                                       "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                  day = dayCount(fromDate!, toDate!);
+                                  setState(() {});
                                 }
                               } else {
                                 Fluttertoast.showToast(
@@ -351,6 +379,8 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                                     if (toDate != null) {
                                       _endDate.text =
                                           "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                      day = dayCount(fromDate!, toDate!);
+                                      setState(() {});
                                     }
                                   } else {
                                     Fluttertoast.showToast(
@@ -419,7 +449,7 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
               : Obx(() => controller.monthsList.isEmpty
                   ? const SizedBox()
                   : Container(
-                      margin: const EdgeInsets.only(top: 30),
+                      margin: const EdgeInsets.only(top: 30, bottom: 10),
                       decoration: BoxDecoration(
                         color: Theme.of(context).scaffoldBackgroundColor,
                         borderRadius: BorderRadius.circular(16.0),
@@ -502,36 +532,212 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                         },
                       ),
                     )),
-          Padding(
-            padding: const EdgeInsets.only(top: 30.0, bottom: 10),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: MSkollBtn(title: "Approve", onPress: () {}),
+          (_endDate.text.isNotEmpty)
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Total Days:- $day",
+                      style: Get.textTheme.titleMedium!
+                          .copyWith(color: Theme.of(context).primaryColor),
+                    ),
+                  ),
+                )
+              : const SizedBox(),
+          Container(
+            margin: const EdgeInsets.only(top: 20),
+            child: CustomContainer(
+              child: TextFormField(
+                controller: reasonController,
+                maxLines: 3,
+                keyboardType: TextInputType.multiline,
+                style: Get.textTheme.titleSmall!.copyWith(fontSize: 15),
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(borderSide: BorderSide.none),
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  hintText: "Enter Reason",
+                  label: Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFDFFBFE),
+                      borderRadius: BorderRadius.circular(24.0),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 6.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          "assets/images/cap.png",
+                          height: 28.0,
+                        ),
+                        const SizedBox(
+                          width: 6.0,
+                        ),
+                        Text(
+                          " Reason",
+                          style: Theme.of(context).textTheme.labelMedium!.merge(
+                                const TextStyle(
+                                    backgroundColor: Color(0xFFDFFBFE),
+                                    fontSize: 20.0,
+                                    color: Color(0xFF28B6C8)),
+                              ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
+          Obx(() {
+            return Align(
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: ListTileTheme(
+                      horizontalTitleGap: 2,
+                      child: CheckboxListTile(
+                          controlAffinity: ListTileControlAffinity.leading,
+                          visualDensity:
+                              const VisualDensity(vertical: 0, horizontal: -4),
+                          checkboxShape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6)),
+                          checkColor: Theme.of(context).primaryColor,
+                          title: Text(
+                            "Notification",
+                            style: Get.textTheme.titleSmall,
+                          ),
+                          contentPadding: EdgeInsets.zero,
+                          value: notification.value,
+                          onChanged: (v) {
+                            notification.value = v!;
+                          }),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListTileTheme(
+                      horizontalTitleGap: 2,
+                      child: CheckboxListTile(
+                          controlAffinity: ListTileControlAffinity.leading,
+                          visualDensity:
+                              const VisualDensity(vertical: 0, horizontal: -4),
+                          checkboxShape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6)),
+                          checkColor: Theme.of(context).primaryColor,
+                          title: Text(
+                            "Email",
+                            style: Get.textTheme.titleSmall,
+                          ),
+                          contentPadding: EdgeInsets.zero,
+                          value: email.value,
+                          onChanged: (v) {
+                            email.value = v!;
+                          }),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+          Obx(() {
+            return Padding(
+              padding: const EdgeInsets.only(top: 30.0, bottom: 10),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: (controller.isApprove.value)
+                    ? const CircularProgressIndicator()
+                    : MSkollBtn(
+                        title: "Approve",
+                        onPress: () {
+                          if (groupValue == 'P') {
+                            if (hrmeId == 0) {
+                              Fluttertoast.showToast(msg: "Select Employee");
+                              return;
+                            } else if (_endDate.text.isEmpty) {
+                              Fluttertoast.showToast(msg: "Select Data");
+                              return;
+                            } else if (reasonController.text.isEmpty) {
+                              Fluttertoast.showToast(msg: "Enter Reason");
+                            } else {
+                              saveData({
+                                "ExtensionType": groupValue,
+                                "HRME_Id": hrmeId,
+                                "ISMPLE_FromDate": fromDate!.toIso8601String(),
+                                "ISMPLE_ToDate": toDate!.toIso8601String(),
+                                "ismodE_Noofdays": day,
+                                "ISMPLE_Reason": reasonController.text,
+                                "notifi_chk": notification.value,
+                                "email_chk": email.value,
+                              });
+                            }
+                          } else if (groupValue == 'D') {
+                            if (hrmeId == 0) {
+                              Fluttertoast.showToast(msg: "Select Employee");
+                              return;
+                            } else if (selectedMonth == null) {
+                              Fluttertoast.showToast(msg: "Select Month");
+                              return;
+                            } else if (reasonController.text.isEmpty) {
+                              Fluttertoast.showToast(msg: "Enter Reason");
+                            } else {
+                              saveData({
+                                "ExtensionType": groupValue,
+                                "HRME_Id": hrmeId,
+                                "IVRM_Month_Id": selectedMonth!.ivrMMonthId!,
+                                "ismodE_Noofdays":
+                                    selectedMonth!.ivrMMonthMaxDays,
+                                "ISMODE_Reason": reasonController.text,
+                                "notifi_chk": notification.value,
+                                "email_chk": email.value,
+                              });
+                            }
+                          }
+                        }),
+              ),
+            );
+          }),
           InkWell(
             onTap: () {
-              Get.to(() => ExtensionDetails(
-                    controller: controller,
-                  ));
+              logger.i("click");
+
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return ExtensionDetails(
+                  controller: controller,
+                );
+              }));
             },
-            child: Row(
-              children: [
-                Text(
-                  "${widget.title} Details",
-                  style: Get.textTheme.titleMedium!
-                      .copyWith(color: Theme.of(context).primaryColor),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6)),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "${widget.title} Details",
+                      style: Get.textTheme.titleMedium!
+                          .copyWith(color: Theme.of(context).primaryColor),
+                    ),
+                    Icon(
+                      Icons.arrow_forward,
+                      color: Theme.of(context).primaryColor,
+                      size: 30,
+                    )
+                  ],
                 ),
-                Icon(
-                  Icons.arrow_forward,
-                  color: Theme.of(context).primaryColor,
-                  size: 30,
-                )
-              ],
+              ),
             ),
           ),
         ],
       ),
     );
   }
+
+  bool isLoading = false;
+  RxBool notification = RxBool(true);
+  RxBool email = RxBool(false);
 }
