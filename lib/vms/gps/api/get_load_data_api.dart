@@ -25,17 +25,19 @@ Future<bool> feacthGpsClient({
         data: {"MI_Id": miId, "UserId": userId});
     logger.i({"MI_Id": miId, "UserId": userId});
     logger.e(apiUrl);
-    GetGpsClientDetails clientDetailsList =
-        GetGpsClientDetails.fromJson(response.data['clientlist']);
-    controller.gpsClientList.addAll(clientDetailsList.values!);
-    GetGpsEmployeeDetails employeeDetails =
-        GetGpsEmployeeDetails.fromJson(response.data['employee_name']);
-    controller.gpsEmpList.addAll(employeeDetails.values!);
-    GetGpsSalesDetails salesDetails =
-        GetGpsSalesDetails.fromJson(response.data['saleslist']);
-    controller.gpsSalesList.addAll(salesDetails.values!);
+    if (response.statusCode == 200) {
+      GetGpsClientDetails clientDetailsList =
+          GetGpsClientDetails.fromJson(response.data['clientlist']);
+      controller.gpsClientList.addAll(clientDetailsList.values!);
+      // GetGpsEmployeeDetails employeeDetails =
+      //     GetGpsEmployeeDetails.fromJson(response.data['employee_name']);
+      // controller.gpsEmpList.addAll(employeeDetails.values!);
+      GetGpsSalesDetails salesDetails =
+          GetGpsSalesDetails.fromJson(response.data['saleslist']);
+      controller.gpsSalesList.addAll(salesDetails.values!);
+      controller.updategpsLoading(false);
+    }
 
-    controller.updategpsLoading(false);
     return true;
   } on DioError catch (e) {
     logger.e(e.message);
