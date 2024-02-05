@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/widgets/update_tada_table.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/api/tada_approval_details.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/controller/tada_approval_controller.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_list_model.dart';
@@ -12,8 +11,6 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:open_filex/open_filex.dart';
-
-import '../../../rating_report/screen/report_data_screen.dart';
 
 class TADAApprovalDetailsScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;

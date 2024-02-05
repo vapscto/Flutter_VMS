@@ -1,9 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:http_parser/src/media_type.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -113,7 +111,7 @@ Future<bool> saveTask({
   }
   if (typeAssign == "Y") {
     if (periodicity == "Daily") {
-      print("001");
+      logger.i("001");
       dataMap = {
         "transnumbconfigurationsettingsss": trnsNumConfig,
         "UserId": userID,
@@ -152,7 +150,7 @@ Future<bool> saveTask({
         "ISMTCR_MainGroupTaskFlg": ismtcrMainGroupTask
       };
     } else {
-      print("002");
+      logger.i("002");
       dataMap = {
         "transnumbconfigurationsettingsss": trnsNumConfig,
         "UserId": userID,

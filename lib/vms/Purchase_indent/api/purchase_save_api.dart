@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -22,8 +21,7 @@ class PurchaseSave {
   }) async {
     try {
       var dio = Dio();
-      var url =
-          base + URLS.purchaseSaveApi;
+      var url = base + URLS.purchaseSaveApi;
       // controller.saveLoading(true);
       var response = await dio.post(
         url,
@@ -47,9 +45,9 @@ class PurchaseSave {
         "UserId": userId,
         "approvecnt": approvecent,
       });
-      
+
       if (response.statusCode == 200) {
-        logger.i("=====${response}");
+        logger.i("=====$response");
         // controller.saveLoading(false);
         // Fluttertoast.showToast(msg: "Update Successfully");
       }

@@ -9,16 +9,16 @@ class ParticularIndentDetailsModel {
     if (json['\$values'] != null) {
       values = <ParticularIndentDetailsModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new ParticularIndentDetailsModelValues.fromJson(v));
+        values!.add(ParticularIndentDetailsModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -95,28 +95,28 @@ class ParticularIndentDetailsModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['mI_Id'] = this.mIId;
-    data['userid'] = this.userid;
-    data['roleid'] = this.roleid;
-    data['asmaY_Id'] = this.asmaYId;
-    data['hrmE_Id'] = this.hrmEId;
-    data['pcindentaP_Id'] = this.pcindentaPId;
-    data['pcindentapdT_Id'] = this.pcindentapdTId;
-    data['pcreqtN_Id'] = this.pcreqtNId;
-    data['pcmparT_Id'] = this.pcmparTId;
-    data['pcmparT_ParticularName'] = this.pcmparTParticularName;
-    data['pcindentapdT_ActiveFlg'] = this.pcindentapdTActiveFlg;
-    data['pcindenT_IndentNo'] = this.pcindenTIndentNo;
-    data['pcindenT_Id'] = this.pcindenTId;
-    data['pcindentdeT_Id'] = this.pcindentdeTId;
-    data['pcindentdeT_Amount'] = this.pcindentdeTAmount;
-    data['pcindentdeT_ApprovedAmt'] = this.pcindentdeTApprovedAmt;
-    data['pcindentdeT_Remarks'] = this.pcindentdeTRemarks;
-    data['pcindentdeT_ActiveFlg'] = this.pcindentdeTActiveFlg;
-    data['returnval'] = this.returnval;
-    data['pcexptR_Id'] = this.pcexptRId;
-    data['pcexptR_ActiveFlg'] = this.pcexptRActiveFlg;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['mI_Id'] = mIId;
+    data['userid'] = userid;
+    data['roleid'] = roleid;
+    data['asmaY_Id'] = asmaYId;
+    data['hrmE_Id'] = hrmEId;
+    data['pcindentaP_Id'] = pcindentaPId;
+    data['pcindentapdT_Id'] = pcindentapdTId;
+    data['pcreqtN_Id'] = pcreqtNId;
+    data['pcmparT_Id'] = pcmparTId;
+    data['pcmparT_ParticularName'] = pcmparTParticularName;
+    data['pcindentapdT_ActiveFlg'] = pcindentapdTActiveFlg;
+    data['pcindenT_IndentNo'] = pcindenTIndentNo;
+    data['pcindenT_Id'] = pcindenTId;
+    data['pcindentdeT_Id'] = pcindentdeTId;
+    data['pcindentdeT_Amount'] = pcindentdeTAmount;
+    data['pcindentdeT_ApprovedAmt'] = pcindentdeTApprovedAmt;
+    data['pcindentdeT_Remarks'] = pcindentdeTRemarks;
+    data['pcindentdeT_ActiveFlg'] = pcindentdeTActiveFlg;
+    data['returnval'] = returnval;
+    data['pcexptR_Id'] = pcexptRId;
+    data['pcexptR_ActiveFlg'] = pcexptRActiveFlg;
     return data;
   }
 }

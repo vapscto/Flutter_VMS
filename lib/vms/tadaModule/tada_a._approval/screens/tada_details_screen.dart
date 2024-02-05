@@ -40,6 +40,7 @@ class _TADADetailsScreenState extends State<TADADetailsScreen> {
   String fromTime = '';
   String toTime = '';
   Map<String, dynamic> headArray = {};
+  // ignore: prefer_typing_uninitialized_variables
   var day;
   _getData() async {
     widget.tadaController.updateIsLoading(true);

@@ -36,6 +36,7 @@ class PurchaseDetails extends StatefulWidget {
     required this.values,
   });
   @override
+  // ignore: library_private_types_in_public_api
   _PurchaseDetailsState createState() => _PurchaseDetailsState();
 }
 
@@ -45,7 +46,9 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
   RxString selectedValue = "".obs;
 
   String invmpiRemarks = '';
+  // ignore: prefer_typing_uninitialized_variables
   var invmpiAmount;
+  // ignore: prefer_typing_uninitialized_variables
   var invmpiId;
 
   TextEditingController? approvalAmountCountroller;
@@ -95,6 +98,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
     Get.back();
   }
 
+  // ignore: prefer_typing_uninitialized_variables
   var date;
   @override
   void initState() {

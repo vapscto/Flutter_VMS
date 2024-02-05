@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -47,6 +46,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
   String fromTime = '';
   String toTime = '';
   List<Map<String, dynamic>> headArray = [];
+  // ignore: prefer_typing_uninitialized_variables
   var days;
   num amount = 0;
   void addAmount(double a) {
@@ -57,7 +57,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
     amount -= a;
   }
 
-  _getData() async {
+  getData() async {
     widget.tadaController.updateIsLoading(true);
     TADADetailsAPI.instance.tadaDetails(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
@@ -348,7 +348,7 @@ class _UpdateTADATableState extends State<UpdateTADATable> {
   }
 
   double calculatePercentage(double amount, double percentage) {
-    if (percentage != null && percentage > 0) {
+    if (percentage > 0) {
       double a = percentage / 100;
       double result = amount * a;
       return result;

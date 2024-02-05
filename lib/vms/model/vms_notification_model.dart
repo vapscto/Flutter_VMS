@@ -38,7 +38,7 @@ class NotificationListModelValues {
   int? iSMNOCreatedBy;
   int? iSMNOUpdatedBy;
   String? updatedDate;
-  Null? iSMNOResponse;
+  String? iSMNOResponse;
   String? iSMNOModeFlg;
   String? iSMNORedirectURL;
   String? createdby;
@@ -80,7 +80,7 @@ class NotificationListModelValues {
     iSMNOCreatedBy = json['ISMNO_CreatedBy'];
     iSMNOUpdatedBy = json['ISMNO_UpdatedBy'];
     updatedDate = json['UpdatedDate'];
-    iSMNOResponse = json['ISMNO_Response'];
+    iSMNOResponse = json['ISMNO_Response'] ?? '';
     iSMNOModeFlg = json['ISMNO_ModeFlg'];
     iSMNORedirectURL = json['ISMNO_RedirectURL'];
     createdby = json['createdby'];

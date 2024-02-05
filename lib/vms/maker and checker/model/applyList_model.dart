@@ -9,16 +9,16 @@ class ApplyListModel {
     if (json['\$values'] != null) {
       values = <ApplyListModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new ApplyListModelValues.fromJson(v));
+        values!.add(ApplyListModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -71,20 +71,20 @@ class ApplyListModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['VTADAA_Id'] = this.vTADAAId;
-    data['EmpName'] = this.empName;
-    data['VTADAA_AppliedDate'] = this.vTADAAAppliedDate;
-    data['VTADAA_FromDate'] = this.vTADAAFromDate;
-    data['VTADAA_ToDate'] = this.vTADAAToDate;
-    data['VTADAA_ToAddress'] = this.vTADAAToAddress;
-    data['VTADAA_Remarks'] = this.vTADAARemarks;
-    data['VTADAA_TotalAppliedAmount'] = this.vTADAATotalAppliedAmount;
-    data['VTADAA_DepartureTime'] = this.vTADAADepartureTime;
-    data['VTADAA_ArrivalTime'] = this.vTADAAArrivalTime;
-    data['IVRMMCT_Name'] = this.iVRMMCTName;
-    data['IVRMMS_Name'] = this.iVRMMSName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['VTADAA_Id'] = vTADAAId;
+    data['EmpName'] = empName;
+    data['VTADAA_AppliedDate'] = vTADAAAppliedDate;
+    data['VTADAA_FromDate'] = vTADAAFromDate;
+    data['VTADAA_ToDate'] = vTADAAToDate;
+    data['VTADAA_ToAddress'] = vTADAAToAddress;
+    data['VTADAA_Remarks'] = vTADAARemarks;
+    data['VTADAA_TotalAppliedAmount'] = vTADAATotalAppliedAmount;
+    data['VTADAA_DepartureTime'] = vTADAADepartureTime;
+    data['VTADAA_ArrivalTime'] = vTADAAArrivalTime;
+    data['IVRMMCT_Name'] = iVRMMCTName;
+    data['IVRMMS_Name'] = iVRMMSName;
     return data;
   }
 }

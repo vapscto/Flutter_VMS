@@ -84,7 +84,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
       });
       int statusCode = await feachDesignation(
           base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
-          mi_id: widget.loginSuccessModel.mIID!,
+          miId: widget.loginSuccessModel.mIID!,
           userId: widget.loginSuccessModel.userId!,
           ivrmrt: widget.loginSuccessModel.roleId!,
           controller: controller,
@@ -206,7 +206,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
   }
 
   DepartmentModelListValues? selecteditem;
-  dsgnModelValues? selectDesignation;
+  DsgnModelValues? selectDesignation;
   EmployeeModelListValues? selectEmployee;
   final departmentController = TextEditingController();
   final designationController = TextEditingController();
@@ -352,7 +352,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                 await feachDesignation(
                                     base: baseUrlFromInsCode("issuemanager",
                                         widget.mskoolController),
-                                    mi_id: widget.loginSuccessModel.mIID!,
+                                    miId: widget.loginSuccessModel.mIID!,
                                     userId: widget.loginSuccessModel.userId!,
                                     controller: controller,
                                     ivrmrt: widget.loginSuccessModel.roleId!,
@@ -383,7 +383,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                 ),
                               ],
                             ),
-                            child: DropdownSearch<dsgnModelValues>(
+                            child: DropdownSearch<DsgnModelValues>(
                               validator: (value) {
                                 if (value == null) {
                                   return "";
@@ -756,13 +756,13 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                     if (_formKey.currentState!.validate()) {
                       int goto = await getdrLists(
                         roleId: widget.loginSuccessModel.roleId!,
-                        mi_id: widget.loginSuccessModel.mIID!,
+                        miId: widget.loginSuccessModel.mIID!,
                         userId: widget.loginSuccessModel.userId!,
                         base: baseUrlFromInsCode(
                             'issuemanager', widget.mskoolController),
-                        hrmdc_Id: hrmdc_Id!,
-                        hrmdes_Id: hrmdes_Id!,
-                        hrme_Id: hrme_Id!,
+                        hrmdcId: hrmdc_Id!,
+                        hrmdesId: hrmdes_Id!,
+                        hrmeId: hrme_Id!,
                         date: todayDate.text.toString(),
                         controller: drController,
                       );

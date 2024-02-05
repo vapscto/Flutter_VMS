@@ -9,16 +9,16 @@ class RequestIndentDetailsModel {
     if (json['\$values'] != null) {
       values = <RequestIndentDetailsModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new RequestIndentDetailsModelValues.fromJson(v));
+        values!.add(RequestIndentDetailsModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -98,29 +98,29 @@ class RequestIndentDetailsModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['pcindenT_Id'] = this.pcindenTId;
-    data['mI_Id'] = this.mIId;
-    data['hrmE_Id'] = this.hrmEId;
-    data['userid'] = this.userid;
-    data['asmaY_Id'] = this.asmaYId;
-    data['roleid'] = this.roleid;
-    data['pcreqtN_Id'] = this.pcreqtNId;
-    data['pcreqtndeT_Id'] = this.pcreqtndeTId;
-    data['pcindentaP_Id'] = this.pcindentaPId;
-    data['pcmparT_Id'] = this.pcmparTId;
-    data['pcindentdeT_Id'] = this.pcindentdeTId;
-    data['pcreqtN_Date'] = this.pcreqtNDate;
-    data['pcreqtN_Purpose'] = this.pcreqtNPurpose;
-    data['departmentname'] = this.departmentname;
-    data['pcreqtN_RequisitionNo'] = this.pcreqtNRequisitionNo;
-    data['employeename'] = this.employeename;
-    data['pcreqtN_TotAmount'] = this.pcreqtNTotAmount;
-    data['returnval'] = this.returnval;
-    data['pcindenT_ActiveFlg'] = this.pcindenTActiveFlg;
-    data['pcreqtndeT_ActiveFlg'] = this.pcreqtndeTActiveFlg;
-    data['pcindentdeT_ActiveFlg'] = this.pcindentdeTActiveFlg;
-    data['createdate'] = this.createdate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['pcindenT_Id'] = pcindenTId;
+    data['mI_Id'] = mIId;
+    data['hrmE_Id'] = hrmEId;
+    data['userid'] = userid;
+    data['asmaY_Id'] = asmaYId;
+    data['roleid'] = roleid;
+    data['pcreqtN_Id'] = pcreqtNId;
+    data['pcreqtndeT_Id'] = pcreqtndeTId;
+    data['pcindentaP_Id'] = pcindentaPId;
+    data['pcmparT_Id'] = pcmparTId;
+    data['pcindentdeT_Id'] = pcindentdeTId;
+    data['pcreqtN_Date'] = pcreqtNDate;
+    data['pcreqtN_Purpose'] = pcreqtNPurpose;
+    data['departmentname'] = departmentname;
+    data['pcreqtN_RequisitionNo'] = pcreqtNRequisitionNo;
+    data['employeename'] = employeename;
+    data['pcreqtN_TotAmount'] = pcreqtNTotAmount;
+    data['returnval'] = returnval;
+    data['pcindenT_ActiveFlg'] = pcindenTActiveFlg;
+    data['pcreqtndeT_ActiveFlg'] = pcreqtndeTActiveFlg;
+    data['pcindentdeT_ActiveFlg'] = pcindentdeTActiveFlg;
+    data['createdate'] = createdate;
     return data;
   }
 }

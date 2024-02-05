@@ -2673,7 +2673,7 @@ class _TaskCreationHomeNewState extends State<TaskCreationHomeNew> {
                                                                           .symmetric(
                                                                       vertical:
                                                                           2),
-                                                              child: Container(
+                                                              child: SizedBox(
                                                                 width: 180,
                                                                 height: 30,
                                                                 child: Row(

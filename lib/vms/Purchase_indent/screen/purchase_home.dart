@@ -18,6 +18,7 @@ class PurchaseIndentHome extends StatefulWidget {
       required this.loginSuccessModel,
       required this.mskoolController});
   @override
+  // ignore: library_private_types_in_public_api
   _PurchaseIndentHomeState createState() => _PurchaseIndentHomeState();
 }
 
@@ -179,44 +180,44 @@ class _PurchaseIndentHomeState extends State<PurchaseIndentHome> {
                                   DataCell(Align(
                                     alignment: Alignment.center,
                                     child: Text(controller.purchaseIndentList
-                                        .elementAt(index)
-                                        .mIName
-                                        ?? ''),
+                                            .elementAt(index)
+                                            .mIName ??
+                                        ''),
                                   )),
                                   DataCell(Align(
                                     alignment: Alignment.center,
                                     child: Text(controller.purchaseIndentList
-                                        .elementAt(index)
-                                        .iNVMPIPINo
-                                        ?? ''),
+                                            .elementAt(index)
+                                            .iNVMPIPINo ??
+                                        ''),
                                   )),
                                   DataCell(Align(
                                     alignment: Alignment.center,
                                     child: Text(controller.purchaseIndentList
-                                        .elementAt(index)
-                                        .iNVMPIPIDate
-                                        ?? ''),
+                                            .elementAt(index)
+                                            .iNVMPIPIDate ??
+                                        ''),
                                   )),
                                   DataCell(Align(
                                     alignment: Alignment.center,
                                     child: Text(controller.purchaseIndentList
-                                        .elementAt(index)
-                                        .iNVMPIReferenceNo
-                                          ?? ''),
+                                            .elementAt(index)
+                                            .iNVMPIReferenceNo ??
+                                        ''),
                                   )),
                                   DataCell(Align(
                                     alignment: Alignment.center,
                                     child: Text(controller.purchaseIndentList
-                                        .elementAt(index)
-                                        .indentCreadBy
-                                        ?? ''),
+                                            .elementAt(index)
+                                            .indentCreadBy ??
+                                        ''),
                                   )),
                                   DataCell(Align(
                                     alignment: Alignment.center,
                                     child: Text(controller.purchaseIndentList
-                                        .elementAt(index)
-                                        .createdDeptName
-                                         ?? ''),
+                                            .elementAt(index)
+                                            .createdDeptName ??
+                                        ''),
                                   )),
                                   DataCell(Align(
                                     alignment: Alignment.center,

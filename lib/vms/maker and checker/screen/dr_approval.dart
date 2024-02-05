@@ -760,12 +760,12 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 20),
                       child: TextFormField(
-                        validator: (value) {
-                          // if (value != null) {
-                          //   return "";
-                          // }
-                          // return null;
-                        },
+                        // validator: (value) {
+                        //   // if (value != null) {
+                        //   //   return "";
+                        //   // }
+                        //   // return null;
+                        // },
                         controller: descTextEditingController,
                         maxLines: 6,
                         style: Theme.of(context)

@@ -9,7 +9,7 @@ class StaffPrevilegeListModel {
     if (json['\$values'] != null) {
       values = <StaffPrevilegeListModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new StaffPrevilegeListModelValues.fromJson(v));
+        values!.add(StaffPrevilegeListModelValues.fromJson(v));
       });
     }
   }

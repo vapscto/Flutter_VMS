@@ -77,7 +77,7 @@ class GetListLeaveModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['$type'] = type;
     data['HRME_EmployeeFirstName'] = hRMEEmployeeFirstName;
     data['HRELAP_Id'] = hRELAPId;

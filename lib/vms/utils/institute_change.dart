@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/apis/authenticate_user_api.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
-import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/screens/common_home_screen.dart';
 import 'package:m_skool_flutter/screens/splash_screen.dart';
 import 'package:m_skool_flutter/vms/controller/vms_common_controller.dart';
 

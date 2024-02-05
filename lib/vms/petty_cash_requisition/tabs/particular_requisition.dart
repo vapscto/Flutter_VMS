@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/petty_cash_requisition/api/employee_list_pc_req_api.dart';
 import 'package:m_skool_flutter/vms/petty_cash_requisition/api/onload_pc_requisition_api.dart';
@@ -163,7 +164,7 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
       }
     }
 
-    print(reqDetailsDTOList.toString());
+    logger.i(reqDetailsDTOList.toString());
   }
 
   ////*** SAVE VALIDATION ***////
@@ -763,7 +764,7 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                                                             selected;
                                                         selectedValues
                                                             .add(selected);
-                                                        print(selected
+                                                        logger.i(selected
                                                             .pcmparTParticularName!);
                                                       }
                                                     }

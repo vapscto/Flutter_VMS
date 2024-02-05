@@ -22,7 +22,8 @@ class PcIndentApprovalHome extends StatefulWidget {
   State<PcIndentApprovalHome> createState() => _PcIndentApprovalHomeState();
 }
 
-class _PcIndentApprovalHomeState extends State<PcIndentApprovalHome> with SingleTickerProviderStateMixin {
+class _PcIndentApprovalHomeState extends State<PcIndentApprovalHome>
+    with SingleTickerProviderStateMixin {
   // final PettyCashApprovalController Controller =
   //     Get.put<PettyCashApprovalController>(PettyCashApprovalController());
 
@@ -45,7 +46,7 @@ class _PcIndentApprovalHomeState extends State<PcIndentApprovalHome> with Single
   Widget build(BuildContext context) {
     return Scaffold(
       // floatingActionButton: const HomeFab(),
-      appBar: CustomAppBar(title: "Cash Indent Approval").getAppBar(),
+      appBar: const CustomAppBar(title: "Cash Indent Approval").getAppBar(),
       body: Column(
         children: [
           Container(
@@ -54,14 +55,17 @@ class _PcIndentApprovalHomeState extends State<PcIndentApprovalHome> with Single
               tabController: tabController!,
               tabs: const [
                 CustomTab(
-                    name: "Indent Approval", asset: "assets/svg/fee_analysis.svg"),
-                CustomTab(name: "Indent Details", asset: "assets/svg/fee_analysis.svg"),
+                    name: "Indent Approval",
+                    asset: "assets/svg/fee_analysis.svg"),
+                CustomTab(
+                    name: "Indent Details",
+                    asset: "assets/svg/fee_analysis.svg"),
               ],
             ),
           ),
           Expanded(
             child: TabBarView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               controller: tabController,
               children: [
                 IndentApproval(
@@ -72,7 +76,6 @@ class _PcIndentApprovalHomeState extends State<PcIndentApprovalHome> with Single
                   loginSuccessModel: widget.loginSuccessModel,
                   mskoolController: widget.mskoolController,
                 ),
-                
               ],
             ),
           ),

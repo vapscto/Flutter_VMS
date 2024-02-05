@@ -48,6 +48,7 @@ Future<void> monthRatingReport(
       controller.monthList.addAll(monthListResponse.values!);
     }
   } on Exception catch (e) {
+    logger.i(e.toString());
     logger.printError();
   }
 }

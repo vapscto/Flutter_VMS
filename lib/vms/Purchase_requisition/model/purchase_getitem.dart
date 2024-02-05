@@ -15,7 +15,7 @@ class PurchaseGetItemModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['\$type'] = type;
     if (values != null) {
       data['\$values'] = values!.map((v) => v.toJson()).toList();
@@ -104,7 +104,7 @@ class PurchaseGetItemModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['returnval'] = returnval;
     data['already_cnt'] = alreadyCnt;
     data['mI_Id'] = mIId;
@@ -132,17 +132,15 @@ class PurchaseGetItemModelValues {
     return data;
   }
 }
-class PurchaseItemAdd{
+
+class PurchaseItemAdd {
   int? id;
   int? invmIId;
   int? invmuomId;
   bool? activeFlag;
- PurchaseItemAdd(
-  {
-    required this.id,
-    required this.invmIId,
-    required this.invmuomId,
-    required this.activeFlag
-  }
- ); 
+  PurchaseItemAdd(
+      {required this.id,
+      required this.invmIId,
+      required this.invmuomId,
+      required this.activeFlag});
 }

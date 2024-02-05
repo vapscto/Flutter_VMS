@@ -12,7 +12,7 @@ class AppliedTableWidget extends StatefulWidget {
   final MskoolController mskoolController;
   final LoginSuccessModel loginSuccessModel;
   final TadaApplyDataController tadaApplyDataController;
-  AppliedTableWidget({
+  const AppliedTableWidget({
     super.key,
     required this.tadaApplyDataController,
     required this.mskoolController,

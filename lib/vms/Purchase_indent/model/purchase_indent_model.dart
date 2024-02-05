@@ -15,10 +15,10 @@ class PurchaseIndentModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -74,22 +74,22 @@ class PurchaseIndentModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    data['MI_Id'] = this.mIId;
-    data['MI_Name'] = this.mIName;
-    data['INVMPI_Id'] = this.iNVMPIId;
-    data['INVMPI_PINo'] = this.iNVMPIPINo;
-    data['INVMPI_PIDate'] = this.iNVMPIPIDate;
-    data['INVMPI_Remarks'] = this.iNVMPIRemarks;
-    data['INVMPI_ReferenceNo'] = this.iNVMPIReferenceNo;
-    data['INVMPI_ApproxTotAmount'] = this.iNVMPIApproxTotAmount;
-    data['INVMPIAPP_RejectFlg'] = this.iNVMPIRejectFlg;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    data['MI_Id'] = mIId;
+    data['MI_Name'] = mIName;
+    data['INVMPI_Id'] = iNVMPIId;
+    data['INVMPI_PINo'] = iNVMPIPINo;
+    data['INVMPI_PIDate'] = iNVMPIPIDate;
+    data['INVMPI_Remarks'] = iNVMPIRemarks;
+    data['INVMPI_ReferenceNo'] = iNVMPIReferenceNo;
+    data['INVMPI_ApproxTotAmount'] = iNVMPIApproxTotAmount;
+    data['INVMPIAPP_RejectFlg'] = iNVMPIRejectFlg;
     //INVMPI_RejectFlg
-    data['User_Id'] = this.userId;
-    data['SanctionLevelNo'] = this.sanctionLevelNo;
-    data['IndentCreadBy'] = this.indentCreadBy;
-    data['CreatedDeptName'] = this.createdDeptName;
+    data['User_Id'] = userId;
+    data['SanctionLevelNo'] = sanctionLevelNo;
+    data['IndentCreadBy'] = indentCreadBy;
+    data['CreatedDeptName'] = createdDeptName;
     return data;
   }
 }

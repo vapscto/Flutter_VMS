@@ -51,6 +51,7 @@ Future<void> getReportData(
       controller.ratingReportData.addAll(ratingReportDataListResponse.values!);
     }
   } on Exception catch (e) {
+    logger.e(e.toString());
     logger.printError();
   }
 }

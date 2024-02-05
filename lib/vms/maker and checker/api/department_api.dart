@@ -1,34 +1,32 @@
 import 'package:dio/dio.dart';
- 
+
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
- 
+
 import 'package:m_skool_flutter/vms/maker%20and%20checker/controller/mc_home_screen.dart';
- 
+
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/designation.dart';
- 
 
 Future<int> feachDesignation(
     {required String base,
-      required int userId,
-    required int mi_id,
+    required int userId,
+    required int miId,
     required MakerCheckerController controller,
     required int ivrmrt,
     required List<Map<String, dynamic>> list}) async {
   final Dio ins = getGlobalDio();
-  String apiUrl =base+URLS.DeptList;
-  
- 
+  String apiUrl = base + URLS.DeptList;
+
   logger.d(apiUrl);
   logger.d({
-      "IVRMRT_Id": ivrmrt,
-      "UserId": userId,
-      "MI_Id": mi_id,
-      "DRApprovalTypeFlag": "DRApproval",
-      "departmentlist": list
-    });
+    "IVRMRT_Id": ivrmrt,
+    "UserId": userId,
+    "MI_Id": miId,
+    "DRApprovalTypeFlag": "DRApproval",
+    "departmentlist": list
+  });
   try {
     controller.dsgloading(true);
 
@@ -36,7 +34,7 @@ Future<int> feachDesignation(
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
       "IVRMRT_Id": ivrmrt,
       "UserId": userId,
-      "MI_Id": mi_id,
+      "MI_Id": miId,
       "DRApprovalTypeFlag": "DRApproval",
       "departmentlist": list
     });
@@ -44,7 +42,7 @@ Future<int> feachDesignation(
     if (response.data['designation'] != null) {
       controller.dsgloading(false);
 
-      dsgnModel dsgnList = dsgnModel.fromJson(response.data['designation']);
+      DsgnModel dsgnList = DsgnModel.fromJson(response.data['designation']);
 
       controller.designationList.addAll(dsgnList.values!);
 

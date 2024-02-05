@@ -271,7 +271,6 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
   final _endDate = TextEditingController();
   final _startTime = TextEditingController();
   final _endTime = TextEditingController();
-  final _key = GlobalKey<FormState>();
   //Food
   final foodTotalSlotController = TextEditingController();
   final foodRemarksController = TextEditingController();
@@ -365,7 +364,7 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
     DateTime endDate = dateFormat.parse(endDateStr);
     Duration duration = endDate.difference(startDate);
     double totalHours = duration.inSeconds / 3600.0;
-    print('Total hours between the two dates: $totalHours hours');
+    logger.i('Total hours between the two dates: $totalHours hours');
     var fSlot = totalHours / 8;
     var aSlot = totalHours / 24;
     foodSlot = double.parse(fSlot.toStringAsFixed(0));

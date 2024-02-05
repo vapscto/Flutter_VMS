@@ -9,16 +9,16 @@ class ParticularsPcRequestModel {
     if (json['\$values'] != null) {
       values = <ParticularsPcRequestModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new ParticularsPcRequestModelValues.fromJson(v));
+        values!.add(ParticularsPcRequestModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -61,16 +61,16 @@ class ParticularsPcRequestModelValues {
   get isNotEmpty => null;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['pcmparT_Id'] = this.pcmparTId;
-    data['mI_Id'] = this.mIId;
-    data['pcmparT_ParticularName'] = this.pcmparTParticularName;
-    data['pcmparT_ParticularDesc'] = this.pcmparTParticularDesc;
-    data['pcmparT_ActiveFlg'] = this.pcmparTActiveFlg;
-    data['pcmparT_CreatedDate'] = this.pcmparTCreatedDate;
-    data['pcmparT_UpdatedDate'] = this.pcmparTUpdatedDate;
-    data['pcmparT_CreatedBy'] = this.pcmparTCreatedBy;
-    data['pcmparT_UpdatedBy'] = this.pcmparTUpdatedBy;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['pcmparT_Id'] = pcmparTId;
+    data['mI_Id'] = mIId;
+    data['pcmparT_ParticularName'] = pcmparTParticularName;
+    data['pcmparT_ParticularDesc'] = pcmparTParticularDesc;
+    data['pcmparT_ActiveFlg'] = pcmparTActiveFlg;
+    data['pcmparT_CreatedDate'] = pcmparTCreatedDate;
+    data['pcmparT_UpdatedDate'] = pcmparTUpdatedDate;
+    data['pcmparT_CreatedBy'] = pcmparTCreatedBy;
+    data['pcmparT_UpdatedBy'] = pcmparTUpdatedBy;
     return data;
   }
 }

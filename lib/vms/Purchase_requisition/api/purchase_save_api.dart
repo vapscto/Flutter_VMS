@@ -32,7 +32,7 @@ class PurchaseSaveAPI {
         data: body,
       );
       if (response.statusCode == 200) {
-        logger.d("show ${response}");
+        logger.d("show $response");
         Fluttertoast.showToast(msg: "Purchase Requisition Saved Successfully");
         purchaseRequisitionController.saveLoading(false);
         controller.updateTabLoading(false);

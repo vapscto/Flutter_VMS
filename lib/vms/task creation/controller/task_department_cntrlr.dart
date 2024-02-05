@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/created_task_list_model.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/employee_list_model.dart';
@@ -16,9 +14,9 @@ class TaskDepartController extends GetxController {
   RxString typesTask = "B".obs;
   RxBool disableSubmitButton = RxBool(true);
 
-  var totalDaysController;
+  // var totalDaysController;
 
-  var daysController;
+  // var daysController;
   void updateDisbleSubmitButton(bool val) {
     disableSubmitButton.value = val;
   }
@@ -49,9 +47,9 @@ class TaskDepartController extends GetxController {
 
   searchEmp(String emp) {
     var result = getTaskEmployeeList.where((p0) => p0.employeeName == emp);
-    result.forEach((element) {
+    for (var element in result) {
       getTaskEmployeeList.add(element);
-    });
+    }
   }
 
   void updateTaskAssign(String val) {

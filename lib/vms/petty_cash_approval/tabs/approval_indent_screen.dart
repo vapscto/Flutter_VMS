@@ -1,11 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/api/particular_indent_details_api.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/api/pc_indent_details_api.dart';
@@ -20,7 +19,7 @@ import 'package:m_skool_flutter/widget/drop_down_level.dart';
 class PcIndentApprovalScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  PcIndentApprovalScreen({
+  const PcIndentApprovalScreen({
     super.key,
     required this.loginSuccessModel,
     required this.mskoolController,
@@ -750,7 +749,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                                                 .checkList[i] =
                                                             true;
 
-                                                        print(selectCheckBx
+                                                        logger.i(selectCheckBx
                                                             .toString());
                                                       }
                                                     } else {
@@ -770,7 +769,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                                         _pcapprovalController
                                                             .eTapprovalAmount[i]
                                                             .text = '';
-                                                        print(selectCheckBx
+                                                        logger.i(selectCheckBx
                                                             .toString());
                                                       }
                                                     }
@@ -855,8 +854,9 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                                               selectCheckBx!
                                                                   .remove(
                                                                       index);
-                                                              print(selectCheckBx
-                                                                  .toString());
+                                                              logger.i(
+                                                                  selectCheckBx
+                                                                      .toString());
 
                                                               // totalApprovedAmount = 0.0;
 
@@ -879,8 +879,9 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                                                   index);
                                                               selectCheckBx!
                                                                   .add(index);
-                                                              print(selectCheckBx
-                                                                  .toString());
+                                                              logger.i(
+                                                                  selectCheckBx
+                                                                      .toString());
                                                               if (_pcapprovalController
                                                                       .eTapprovalAmount
                                                                       .length ==
@@ -901,8 +902,9 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
 
                                                             selectCheckBx!
                                                                 .remove(index);
-                                                            print(selectCheckBx
-                                                                .toString());
+                                                            logger.i(
+                                                                selectCheckBx
+                                                                    .toString());
                                                             if (_pcapprovalController
                                                                     .eTapprovalAmount
                                                                     .length !=
@@ -1218,7 +1220,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(24.0),
-                                                color: Color.fromARGB(
+                                                color: const Color.fromARGB(
                                                     255, 241, 253, 240),
                                               ),
                                               child: Row(

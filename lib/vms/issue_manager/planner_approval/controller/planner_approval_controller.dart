@@ -53,6 +53,7 @@ class PlannerApprovalController extends GetxController {
       });
     }
 
+    // ignore: unnecessary_null_comparison
     if (drNotApprove != null && drNotApprove.isNotEmpty) {
       for (var drapp in plannerList) {
         DateTime dt = DateTime.parse(drapp.iSMTPLStartDate!);
@@ -79,6 +80,7 @@ class PlannerApprovalController extends GetxController {
         }
       }
     }
+    // ignore: unnecessary_null_comparison
     if (drNotApprove != null && drNotApprove.isNotEmpty) {
       for (var index in drNotApprove) {
         var tempData = [];

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/model/approved_particular_indent_model.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/model/indent_details_model.dart';
@@ -8,11 +7,8 @@ import 'package:m_skool_flutter/vms/petty_cash_approval/model/onload_approved_mo
 import 'package:m_skool_flutter/vms/petty_cash_approval/model/particular_indent_details_model.dart';
 
 class PettyCashApprovalController extends GetxController {
-
-
   /// **  ONLOAD APPROVED INDENT DETAILS CONTROLLER  **  ///
-   
-  
+
   RxBool isErrorOccuredWhileLoadingOnloadorganization = RxBool(false);
   RxBool isLoadingOnloadorganization = RxBool(false);
 
@@ -41,7 +37,7 @@ class PettyCashApprovalController extends GetxController {
     isLoadingIndentApprovedDetails.value = val;
   }
 
-    /// **  APPROVED PARTICULAR INDENT DETAILS CONTROLLER  **  ///
+  /// **  APPROVED PARTICULAR INDENT DETAILS CONTROLLER  **  ///
 
   RxBool isErrorOccuredWhileLoadingApprovedParticularIndent = RxBool(false);
   RxBool isLoadingApprovedParticularIndent = RxBool(false);
@@ -87,9 +83,10 @@ class PettyCashApprovalController extends GetxController {
   RxBool isErrorOccuredWhileLoadingParticularIndentDetails = RxBool(false);
   RxBool isLoadingParticularIndentDetails = RxBool(false);
 
-  RxList<ParticularIndentDetailsModelValues>  particularIndentDetails = RxList();
- RxList<bool> checkList = <bool>[].obs;
- RxList<TextEditingController> eTapprovalAmount=<TextEditingController>[].obs;
+  RxList<ParticularIndentDetailsModelValues> particularIndentDetails = RxList();
+  RxList<bool> checkList = <bool>[].obs;
+  RxList<TextEditingController> eTapprovalAmount =
+      <TextEditingController>[].obs;
 
   updateErrorLoadingParticularIndentDetails(bool val) {
     isErrorOccuredWhileLoadingParticularIndentDetails.value = val;
@@ -99,12 +96,7 @@ class PettyCashApprovalController extends GetxController {
     isLoadingParticularIndentDetails.value = val;
   }
 
-
   ////****  SELECT  DATE  ****////
 
-
   Rx<DateTime> selectDate = Rx(DateTime.now());
-  
-   
-  
 }

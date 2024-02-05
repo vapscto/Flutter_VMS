@@ -16,7 +16,7 @@ Future<void> getPcApprovalOnload(
   // final String api = base + URLS.pcApprovalOnload;
   final api = base + URLS.onLoadPcApproval;
   logger.d(base);
-  
+
   logger.d(
       {"roleid": roleId, "Userid": userId, "MI_Id": miId, "ASMAY_Id": asmaYId});
 
@@ -31,7 +31,7 @@ Future<void> getPcApprovalOnload(
           "MI_Id": miId,
           "ASMAY_Id": asmaYId
         });
-    print(response.data['getuserinstitution']);
+    logger.i(response.data['getuserinstitution']);
     logger.d(response.data['getuserinstitution']);
     if (response.data['getuserinstitution'] == null) {
       controller.updateErrorLoadingOnloadorganization(true);

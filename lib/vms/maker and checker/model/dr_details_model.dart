@@ -9,16 +9,16 @@ class DrDetailModel {
     if (json['\$values'] != null) {
       values = <DrDetailModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new DrDetailModelValues.fromJson(v));
+        values!.add(DrDetailModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -98,29 +98,29 @@ class DrDetailModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    data['ISMDRPT_Id'] = this.iSMDRPTId;
-    data['ISMTCR_Id'] = this.iSMTCRId;
-    data['ISMTCR_TaskNo'] = this.iSMTCRTaskNo;
-    data['ISMTCR_Title'] = this.iSMTCRTitle;
-    data['ISMDRPT_Status'] = this.iSMDRPTStatus;
-    data['ISMDRPT_TimeTakenInHrs'] = this.iSMDRPTTimeTakenInHrs;
-    data['ISMTPLTA_EffortInHrs'] = this.iSMTPLTAEffortInHrs;
-    data['ISMDRPT_Date'] = this.iSMDRPTDate;
-    data['COUNTCHECKLIST'] = this.cOUNTCHECKLIST;
-    data['EMPLOYEENAME'] = this.eMPLOYEENAME;
-    data['EMPLOYEECODE'] = this.eMPLOYEECODE;
-    data['DEPTNAME'] = this.dEPTNAME;
-    data['DESGNAME'] = this.dESGNAME;
-    data['HRME_Id'] = this.hRMEId;
-    data['ISMDRPT_Remarks'] = this.iSMDRPTRemarks;
-    data['ISMTPLTA_Id'] = this.iSMTPLTAId;
-    data['ISMTCR_Id_rejected'] = this.iSMTCRIdRejected;
-    data['ISMMTCAT_TaskCategoryName'] = this.iSMMTCATTaskCategoryName;
-    data['TASK_CREATED_BY'] = this.tASKCREATEDBY;
-    data['periodicitydailyflag'] = this.periodicitydailyflag;
-    data['ISMTAPL_Periodicity'] = this.iSMTAPLPeriodicity;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    data['ISMDRPT_Id'] = iSMDRPTId;
+    data['ISMTCR_Id'] = iSMTCRId;
+    data['ISMTCR_TaskNo'] = iSMTCRTaskNo;
+    data['ISMTCR_Title'] = iSMTCRTitle;
+    data['ISMDRPT_Status'] = iSMDRPTStatus;
+    data['ISMDRPT_TimeTakenInHrs'] = iSMDRPTTimeTakenInHrs;
+    data['ISMTPLTA_EffortInHrs'] = iSMTPLTAEffortInHrs;
+    data['ISMDRPT_Date'] = iSMDRPTDate;
+    data['COUNTCHECKLIST'] = cOUNTCHECKLIST;
+    data['EMPLOYEENAME'] = eMPLOYEENAME;
+    data['EMPLOYEECODE'] = eMPLOYEECODE;
+    data['DEPTNAME'] = dEPTNAME;
+    data['DESGNAME'] = dESGNAME;
+    data['HRME_Id'] = hRMEId;
+    data['ISMDRPT_Remarks'] = iSMDRPTRemarks;
+    data['ISMTPLTA_Id'] = iSMTPLTAId;
+    data['ISMTCR_Id_rejected'] = iSMTCRIdRejected;
+    data['ISMMTCAT_TaskCategoryName'] = iSMMTCATTaskCategoryName;
+    data['TASK_CREATED_BY'] = tASKCREATEDBY;
+    data['periodicitydailyflag'] = periodicitydailyflag;
+    data['ISMTAPL_Periodicity'] = iSMTAPLPeriodicity;
     return data;
   }
 }

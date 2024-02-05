@@ -15,10 +15,10 @@ class PcApprovalFromtoDateModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -101,30 +101,30 @@ class PcApprovalFromtoDateModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['mI_Id'] = this.mIId;
-    data['userid'] = this.userid;
-    data['roleid'] = this.roleid;
-    data['asmaY_Id'] = this.asmaYId;
-    data['hrmE_Id'] = this.hrmEId;
-    data['pcindentaP_Id'] = this.pcindentaPId;
-    data['createdate'] = this.createdate;
-    data['pcindentapdT_Id'] = this.pcindentapdTId;
-    data['pcreqtN_Id'] = this.pcreqtNId;
-    data['pcmparT_Id'] = this.pcmparTId;
-    data['pcindentapdT_ActiveFlg'] = this.pcindentapdTActiveFlg;
-    data['pcindenT_IndentNo'] = this.pcindenTIndentNo;
-    data['departmentname'] = this.departmentname;
-    data['employeename'] = this.employeename;
-    data['pcindenT_Date'] = this.pcindenTDate;
-    data['pcindenT_RequestedAmount'] = this.pcindenTRequestedAmount;
-    data['pcindenT_ApprovedAmt'] = this.pcindenTApprovedAmt;
-    data['pcindenT_Id'] = this.pcindenTId;
-    data['pcindentdeT_Id'] = this.pcindentdeTId;
-    data['pcindentdeT_ActiveFlg'] = this.pcindentdeTActiveFlg;
-    data['returnval'] = this.returnval;
-    data['pcexptR_Id'] = this.pcexptRId;
-    data['pcexptR_ActiveFlg'] = this.pcexptRActiveFlg;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['mI_Id'] = mIId;
+    data['userid'] = userid;
+    data['roleid'] = roleid;
+    data['asmaY_Id'] = asmaYId;
+    data['hrmE_Id'] = hrmEId;
+    data['pcindentaP_Id'] = pcindentaPId;
+    data['createdate'] = createdate;
+    data['pcindentapdT_Id'] = pcindentapdTId;
+    data['pcreqtN_Id'] = pcreqtNId;
+    data['pcmparT_Id'] = pcmparTId;
+    data['pcindentapdT_ActiveFlg'] = pcindentapdTActiveFlg;
+    data['pcindenT_IndentNo'] = pcindenTIndentNo;
+    data['departmentname'] = departmentname;
+    data['employeename'] = employeename;
+    data['pcindenT_Date'] = pcindenTDate;
+    data['pcindenT_RequestedAmount'] = pcindenTRequestedAmount;
+    data['pcindenT_ApprovedAmt'] = pcindenTApprovedAmt;
+    data['pcindenT_Id'] = pcindenTId;
+    data['pcindentdeT_Id'] = pcindentdeTId;
+    data['pcindentdeT_ActiveFlg'] = pcindentdeTActiveFlg;
+    data['returnval'] = returnval;
+    data['pcexptR_Id'] = pcexptRId;
+    data['pcexptR_ActiveFlg'] = pcexptRActiveFlg;
     return data;
   }
 }

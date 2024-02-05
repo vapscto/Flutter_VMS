@@ -7,14 +7,13 @@ import 'package:m_skool_flutter/vms/security/api/api.dart';
 import 'package:m_skool_flutter/vms/security/api/upload_details.dart';
 import 'package:m_skool_flutter/vms/security/controller/security_controller.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
-import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class ShomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  ShomeScreen(
+  const ShomeScreen(
       {required this.loginSuccessModel,
       required this.mskoolController,
       super.key});
@@ -36,7 +35,7 @@ class _ShomeScreenState extends State<ShomeScreen> {
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         ivrmrtId: widget.loginSuccessModel.roleId!,
         userId: widget.loginSuccessModel.userId!,
-        mi_id: widget.loginSuccessModel.mIID!,
+        miId: widget.loginSuccessModel.mIID!,
         controller: controller,
         loginSuccessModel: widget.loginSuccessModel);
   }
@@ -299,7 +298,7 @@ class _ShomeScreenState extends State<ShomeScreen> {
                                                             ),
                                                           ),
                                                           Obx(
-                                                            () => Container(
+                                                            () => SizedBox(
                                                               height: 200,
                                                               child: ListView
                                                                   .builder(

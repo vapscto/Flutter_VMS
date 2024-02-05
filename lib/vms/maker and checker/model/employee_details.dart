@@ -9,16 +9,16 @@ class GetEmployeeDetail {
     if (json['\$values'] != null) {
       values = <GetEmployeeDetailValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new GetEmployeeDetailValues.fromJson(v));
+        values!.add(GetEmployeeDetailValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -62,17 +62,17 @@ class GetEmployeeDetailValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    data['HRME_Id'] = this.hRMEId;
-    data['HRME_EmployeeCode'] = this.hRMEEmployeeCode;
-    data['EmpName'] = this.empName;
-    data['HRMD_DepartmentName'] = this.hRMDDepartmentName;
-    data['HRMDES_DesignationName'] = this.hRMDESDesignationName;
-    data['FOEP_PunchDate'] = this.fOEPPunchDate;
-    data['StartTime'] = this.startTime;
-    data['EndTime'] = this.endTime;
-    data['WorkingHours'] = this.workingHours;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    data['HRME_Id'] = hRMEId;
+    data['HRME_EmployeeCode'] = hRMEEmployeeCode;
+    data['EmpName'] = empName;
+    data['HRMD_DepartmentName'] = hRMDDepartmentName;
+    data['HRMDES_DesignationName'] = hRMDESDesignationName;
+    data['FOEP_PunchDate'] = fOEPPunchDate;
+    data['StartTime'] = startTime;
+    data['EndTime'] = endTime;
+    data['WorkingHours'] = workingHours;
     return data;
   }
 }

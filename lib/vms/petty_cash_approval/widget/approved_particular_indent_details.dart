@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
@@ -14,7 +11,7 @@ class ApprovedParticularIndentDetails extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final PettyCashApprovalController controller;
-  ApprovedParticularIndentDetails(
+  const ApprovedParticularIndentDetails(
       {super.key,
       required this.loginSuccessModel,
       required this.mskoolController,
@@ -42,11 +39,11 @@ class _ApprovedParticularIndentDetailsState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "INDENT APPROVED DETAILS").getAppBar(),
+      appBar: const CustomAppBar(title: "INDENT APPROVED DETAILS").getAppBar(),
       body: widget.controller.approvedparticular.isNotEmpty
           ? Obx(
               () => Container(
-                margin: EdgeInsets.only(top: 16.0),
+                margin: const EdgeInsets.only(top: 16.0),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: SingleChildScrollView(
@@ -123,12 +120,12 @@ class _ApprovedParticularIndentDetailsState
                 ),
               ),
             )
-          : AnimatedProgressWidget(
-                        animationPath: 'assets/json/nodata.json',
-                        title: 'No Details found',
-                        desc: "Particular Indent has no data to show",
-                        animatorHeight: 250,
-                      ),
+          : const AnimatedProgressWidget(
+              animationPath: 'assets/json/nodata.json',
+              title: 'No Details found',
+              desc: "Particular Indent has no data to show",
+              animatorHeight: 250,
+            ),
     );
   }
 }

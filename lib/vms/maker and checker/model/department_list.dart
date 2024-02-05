@@ -9,16 +9,16 @@ class DepartmentModelList {
     if (json['\$values'] != null) {
       values = <DepartmentModelListValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new DepartmentModelListValues.fromJson(v));
+        values!.add(DepartmentModelListValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -38,10 +38,10 @@ class DepartmentModelListValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    data['HRMDC_Name'] = this.hRMDCName;
-    data['HRMDC_ID'] = this.hRMDCID;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    data['HRMDC_Name'] = hRMDCName;
+    data['HRMDC_ID'] = hRMDCID;
     return data;
   }
 }

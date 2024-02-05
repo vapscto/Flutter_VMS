@@ -9,16 +9,16 @@ class ModalViewPcReqModel {
     if (json['\$values'] != null) {
       values = <ModalViewPcReqModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new ModalViewPcReqModelValues.fromJson(v));
+        values!.add(ModalViewPcReqModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -59,16 +59,16 @@ class ModalViewPcReqModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['FirstApproval_remark'] = this.firstApprovalRemark;
-    data['First_ApprovalAmount'] = this.firstApprovalAmount;
-    data['first_approval_date'] = this.firstApprovalDate;
-    data['SecondApproval_remark'] = this.secondApprovalRemark;
-    data['Second_ApprovalAmount'] = this.secondApprovalAmount;
-    data['second_approval_date'] = this.secondApprovalDate;
-    data['First_Approvalperson'] = this.firstApprovalperson;
-    data['Second_Approvalperson'] = this.secondApprovalperson;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['FirstApproval_remark'] = firstApprovalRemark;
+    data['First_ApprovalAmount'] = firstApprovalAmount;
+    data['first_approval_date'] = firstApprovalDate;
+    data['SecondApproval_remark'] = secondApprovalRemark;
+    data['Second_ApprovalAmount'] = secondApprovalAmount;
+    data['second_approval_date'] = secondApprovalDate;
+    data['First_Approvalperson'] = firstApprovalperson;
+    data['Second_Approvalperson'] = secondApprovalperson;
     return data;
   }
 }

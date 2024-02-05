@@ -9,16 +9,16 @@ class OnChangeInsIndentApprovalModel {
     if (json['\$values'] != null) {
       values = <OnChangeInsIndentApprovalModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new OnChangeInsIndentApprovalModelValues.fromJson(v));
+        values!.add(OnChangeInsIndentApprovalModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -77,22 +77,22 @@ class OnChangeInsIndentApprovalModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['pcindentaP_Id'] = this.pcindentaPId;
-    data['mI_Id'] = this.mIId;
-    data['hrmE_Id'] = this.hrmEId;
-    data['pcindenT_Id'] = this.pcindenTId;
-    data['pcindentapT_IndentNo'] = this.pcindentapTIndentNo;
-    data['pcindentapT_Date'] = this.pcindentapTDate;
-    data['pcindentapT_RequestedAmount'] = this.pcindentapTRequestedAmount;
-    data['pcindentapT_SanctionedAmt'] = this.pcindentapTSanctionedAmt;
-    data['pcindentapT_ActiveFlg'] = this.pcindentapTActiveFlg;
-    data['pcindentapT_CreatedDate'] = this.pcindentapTCreatedDate;
-    data['pcindentapT_UpdatedDate'] = this.pcindentapTUpdatedDate;
-    data['pcindentapT_CreatedBy'] = this.pcindentapTCreatedBy;
-    data['pcindentapT_UpdatedBy'] = this.pcindentapTUpdatedBy;
-    data['pcindentapT_AmountSpent'] = this.pcindentapTAmountSpent;
-    data['pcindentapT_BalanceAmount'] = this.pcindentapTBalanceAmount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['pcindentaP_Id'] = pcindentaPId;
+    data['mI_Id'] = mIId;
+    data['hrmE_Id'] = hrmEId;
+    data['pcindenT_Id'] = pcindenTId;
+    data['pcindentapT_IndentNo'] = pcindentapTIndentNo;
+    data['pcindentapT_Date'] = pcindentapTDate;
+    data['pcindentapT_RequestedAmount'] = pcindentapTRequestedAmount;
+    data['pcindentapT_SanctionedAmt'] = pcindentapTSanctionedAmt;
+    data['pcindentapT_ActiveFlg'] = pcindentapTActiveFlg;
+    data['pcindentapT_CreatedDate'] = pcindentapTCreatedDate;
+    data['pcindentapT_UpdatedDate'] = pcindentapTUpdatedDate;
+    data['pcindentapT_CreatedBy'] = pcindentapTCreatedBy;
+    data['pcindentapT_UpdatedBy'] = pcindentapTUpdatedBy;
+    data['pcindentapT_AmountSpent'] = pcindentapTAmountSpent;
+    data['pcindentapT_BalanceAmount'] = pcindentapTBalanceAmount;
     return data;
   }
 }

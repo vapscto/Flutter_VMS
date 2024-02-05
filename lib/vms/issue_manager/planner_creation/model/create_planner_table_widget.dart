@@ -5,7 +5,7 @@ class CreatePlannerTable {
   String taskType;
   String clint;
   String category;
-  String Periodicity;
+  String periodicity;
   String assignedDate;
   String assignedBy;
   String date;
@@ -19,7 +19,7 @@ class CreatePlannerTable {
       this.taskType,
       this.clint,
       this.category,
-      this.Periodicity,
+      this.periodicity,
       this.assignedDate,
       this.assignedBy,
       this.date,

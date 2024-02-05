@@ -1,5 +1,5 @@
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
-import 'package:m_skool_flutter/vms/gps/controller/get_gps_controller.dart';
+// import 'package:m_skool_flutter/vms/gps/controller/get_gps_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -15,12 +15,12 @@ Future<bool> save({
   required String latlng,
   required String remark,
   required bool pFlag,
-  required  DrDetailsCtrlr controller,
+  required DrDetailsCtrlr controller,
 }) async {
   final Dio ins = getGlobalDio();
   String apiUrl = base + URLS.savePunchApi;
   logger.d(apiUrl);
- controller. updateTabLoading(true);
+  controller.updateTabLoading(true);
   try {
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
@@ -33,7 +33,7 @@ Future<bool> save({
       "VMSATGPSL_Remarks": remark,
       "punchflag": pFlag
     });
-    logger.d( {
+    logger.d({
       "MI_Id": miId,
       "UserId": userId,
       "ISMMCLT_Id": clientId,
@@ -43,13 +43,16 @@ Future<bool> save({
       "VMSATGPSL_Remarks": remark,
       "punchflag": pFlag
     });
- controller. updateTabLoading(false);
+    if (response.statusCode == 200) {
+      controller.updateTabLoading(false);
+    }
 
     return true;
   } on DioError catch (e) {
     logger.e(e.message);
     return false;
   } on Exception catch (e) {
+    logger.v(e.toString());
     return false;
   }
 }

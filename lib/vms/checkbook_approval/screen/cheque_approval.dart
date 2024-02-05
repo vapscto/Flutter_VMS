@@ -779,6 +779,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                         return "Amount is greater than";
                                                       }
                                                     }
+                                                    return null;
                                                   },
                                                   readOnly: _controller
                                                                       .radioSelect[
@@ -926,7 +927,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                         "issuemanager",
                                                         widget
                                                             .mskoolController),
-                                                    mi_id: mid!,
+                                                    miId: mid!,
                                                     otp: otps,
                                                     userId: widget
                                                         .loginSuccessModel
@@ -941,7 +942,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                     context: context,
                                                     builder: (context) {
                                                       return AlertDialog(
-                                                        content: Container(
+                                                        content: SizedBox(
                                                             height: MediaQuery.of(
                                                                         context)
                                                                     .size

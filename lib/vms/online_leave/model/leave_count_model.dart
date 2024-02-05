@@ -9,16 +9,16 @@ class LeaveCountModel {
     if (json['\$values'] != null) {
       values = <LeaveCountModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new LeaveCountModelValues.fromJson(v));
+        values!.add(LeaveCountModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -74,21 +74,21 @@ class LeaveCountModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['hrelS_Id'] = this.hrelSId;
-    data['hrmL_LeaveName'] = this.hrmLLeaveName;
-    data['hrmL_LeaveCode'] = this.hrmLLeaveCode;
-    data['hrelS_TotalLeaves'] = this.hrelSTotalLeaves;
-    data['hrelS_CreditedLeaves'] = this.hrelSCreditedLeaves;
-    data['hrelS_TransLeaves'] = this.hrelSTransLeaves;
-    data['hrelS_CBLeaves'] = this.hrelSCBLeaves;
-    data['hrmL_Id'] = this.hrmLId;
-    data['hrmE_Id'] = this.hrmEId;
-    data['hrmL_WhenToApplyFlg'] = this.hrmLWhenToApplyFlg;
-    data['hrmL_NoOfDays'] = this.hrmLNoOfDays;
-    data['hrmL_MaxLeavesApplyPerMonth'] = this.hrmLMaxLeavesApplyPerMonth;
-    data['appliedCount'] = this.appliedCount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['hrelS_Id'] = hrelSId;
+    data['hrmL_LeaveName'] = hrmLLeaveName;
+    data['hrmL_LeaveCode'] = hrmLLeaveCode;
+    data['hrelS_TotalLeaves'] = hrelSTotalLeaves;
+    data['hrelS_CreditedLeaves'] = hrelSCreditedLeaves;
+    data['hrelS_TransLeaves'] = hrelSTransLeaves;
+    data['hrelS_CBLeaves'] = hrelSCBLeaves;
+    data['hrmL_Id'] = hrmLId;
+    data['hrmE_Id'] = hrmEId;
+    data['hrmL_WhenToApplyFlg'] = hrmLWhenToApplyFlg;
+    data['hrmL_NoOfDays'] = hrmLNoOfDays;
+    data['hrmL_MaxLeavesApplyPerMonth'] = hrmLMaxLeavesApplyPerMonth;
+    data['appliedCount'] = appliedCount;
     return data;
   }
 }

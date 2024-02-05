@@ -1,44 +1,44 @@
- class dsgnModel {
+class DsgnModel {
   String? type;
-  List<dsgnModelValues>? values;
+  List<DsgnModelValues>? values;
 
-  dsgnModel({this.type, this.values});
+  DsgnModel({this.type, this.values});
 
-  dsgnModel.fromJson(Map<String, dynamic> json) {
+  DsgnModel.fromJson(Map<String, dynamic> json) {
     type = json['\$type'];
     if (json['\$values'] != null) {
-      values = <dsgnModelValues>[];
+      values = <DsgnModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(  dsgnModelValues.fromJson(v));
+        values!.add(DsgnModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class dsgnModelValues {
+class DsgnModelValues {
   String? type;
   int? hRMDESId;
   int? mIId;
   String? hRMDESDesignationName;
   String? mIName;
 
-  dsgnModelValues(
+  DsgnModelValues(
       {this.type,
       this.hRMDESId,
       this.mIId,
       this.hRMDESDesignationName,
       this.mIName});
 
-  dsgnModelValues.fromJson(Map<String, dynamic> json) {
+  DsgnModelValues.fromJson(Map<String, dynamic> json) {
     type = json['\$type'];
     hRMDESId = json['HRMDES_Id'];
     mIId = json['MI_Id'];
@@ -47,12 +47,12 @@ class dsgnModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    data['HRMDES_Id'] = this.hRMDESId;
-    data['MI_Id'] = this.mIId;
-    data['HRMDES_DesignationName'] = this.hRMDESDesignationName;
-    data['MI_Name'] = this.mIName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    data['HRMDES_Id'] = hRMDESId;
+    data['MI_Id'] = mIId;
+    data['HRMDES_DesignationName'] = hRMDESDesignationName;
+    data['MI_Name'] = mIName;
     return data;
   }
 }

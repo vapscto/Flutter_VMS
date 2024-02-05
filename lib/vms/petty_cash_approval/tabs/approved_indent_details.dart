@@ -18,7 +18,7 @@ class PcApprovedHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
 
-  PcApprovedHome({
+  const PcApprovedHome({
     super.key,
     required this.loginSuccessModel,
     required this.mskoolController,
@@ -184,7 +184,7 @@ class _PcApprovedHomeState extends State<PcApprovedHome> {
                 )
               : _pcapprovalController.pcApprovedList.isNotEmpty
                   ? Container(
-                      margin: EdgeInsets.only(top: 16.0),
+                      margin: const EdgeInsets.only(top: 16.0),
                       height: Get.height * 0.85,
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -213,7 +213,7 @@ class _PcApprovedHomeState extends State<PcApprovedHome> {
                                       headingRowColor:
                                           MaterialStateProperty.all(
                                               Theme.of(context).primaryColor),
-                                      columns: [
+                                      columns: const [
                                         DataColumn(
                                             label: Text("S No.",
                                                 style: TextStyle(
@@ -318,7 +318,7 @@ class _PcApprovedHomeState extends State<PcApprovedHome> {
                                                   }));
                                                 }
                                               },
-                                              child: Icon(Icons
+                                              child: const Icon(Icons
                                                   .remove_red_eye_rounded))),
                                         ]);
                                       })),
@@ -333,7 +333,7 @@ class _PcApprovedHomeState extends State<PcApprovedHome> {
                       child: Visibility(
                         visible: !_pcapprovalController
                             .isLoadingOnloadorganization.value,
-                        child: AnimatedProgressWidget(
+                        child: const AnimatedProgressWidget(
                           animationPath: 'assets/json/nodata.json',
                           title: 'Select Organization',
                           desc: "Select the Organization to show the Data",

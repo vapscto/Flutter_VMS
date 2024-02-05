@@ -9,16 +9,16 @@ class DepartmentPcRequestModel {
     if (json['\$values'] != null) {
       values = <DepartmentPcRequestModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new DepartmentPcRequestModelValues.fromJson(v));
+        values!.add(DepartmentPcRequestModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -62,17 +62,17 @@ class DepartmentPcRequestModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['hrmD_Id'] = this.hrmDId;
-    data['mI_Id'] = this.mIId;
-    data['hrmD_DepartmentName'] = this.hrmDDepartmentName;
-    data['hrmD_Order'] = this.hrmDOrder;
-    data['hrmD_ActiveFlag'] = this.hrmDActiveFlag;
-    data['hrmdC_ID'] = this.hrmdCID;
-    data['createdDate'] = this.createdDate;
-    data['updatedDate'] = this.updatedDate;
-    data['hrmD_UpdatedBy'] = this.hrmDUpdatedBy;
-    data['hrmD_CreatedBy'] = this.hrmDCreatedBy;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['hrmD_Id'] = hrmDId;
+    data['mI_Id'] = mIId;
+    data['hrmD_DepartmentName'] = hrmDDepartmentName;
+    data['hrmD_Order'] = hrmDOrder;
+    data['hrmD_ActiveFlag'] = hrmDActiveFlag;
+    data['hrmdC_ID'] = hrmdCID;
+    data['createdDate'] = createdDate;
+    data['updatedDate'] = updatedDate;
+    data['hrmD_UpdatedBy'] = hrmDUpdatedBy;
+    data['hrmD_CreatedBy'] = hrmDCreatedBy;
     return data;
   }
 }

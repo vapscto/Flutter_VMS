@@ -9,16 +9,16 @@ class GetPiModel {
     if (json['\$values'] != null) {
       values = <GetPiModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new GetPiModelValues.fromJson(v));
+        values!.add(GetPiModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -58,7 +58,7 @@ class GetPiModelValues {
       this.iNVTPIId,
       this.iNVMPRId});
 
- GetPiModelValues.fromJson(Map<String, dynamic> json) {
+  GetPiModelValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
     iNVMPIId = json['INVMPI_Id'];
     iNVMIId = json['INVMI_Id'];
@@ -77,22 +77,22 @@ class GetPiModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['INVMPI_Id'] = this.iNVMPIId;
-    data['INVMI_Id'] = this.iNVMIId;
-    data['INVMI_ItemName'] = this.iNVMIItemName;
-    data['INVMUOM_Id'] = this.iNVMUOMId;
-    data['INVMUOM_UOMName'] = this.iNVMUOMUOMName;
-    data['INVTPI_PRQty'] = this.iNVTPIPRQty;
-    data['INVTPI_ApproxAmount'] = this.iNVTPIApproxAmount;
-    data['INVTPI_PIQty'] = this.iNVTPIPIQty;
-    data['INVTPI_Remarks'] = this.iNVTPIRemarks;
-    data['INVTPI_PIUnitRate'] = this.iNVTPIPIUnitRate;
-    data['INVMPIAPP_RejectFlg'] = this.iNVMPIAPPRejectFlg;
-    data['INVTPIAPP_ApprovedQty'] = this.iNVTPIAPPApprovedQty;
-    data['INVTPI_Id'] = this.iNVTPIId;
-    data['INVMPR_Id'] = this.iNVMPRId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['INVMPI_Id'] = iNVMPIId;
+    data['INVMI_Id'] = iNVMIId;
+    data['INVMI_ItemName'] = iNVMIItemName;
+    data['INVMUOM_Id'] = iNVMUOMId;
+    data['INVMUOM_UOMName'] = iNVMUOMUOMName;
+    data['INVTPI_PRQty'] = iNVTPIPRQty;
+    data['INVTPI_ApproxAmount'] = iNVTPIApproxAmount;
+    data['INVTPI_PIQty'] = iNVTPIPIQty;
+    data['INVTPI_Remarks'] = iNVTPIRemarks;
+    data['INVTPI_PIUnitRate'] = iNVTPIPIUnitRate;
+    data['INVMPIAPP_RejectFlg'] = iNVMPIAPPRejectFlg;
+    data['INVTPIAPP_ApprovedQty'] = iNVTPIAPPApprovedQty;
+    data['INVTPI_Id'] = iNVTPIId;
+    data['INVMPR_Id'] = iNVMPRId;
     return data;
   }
 }

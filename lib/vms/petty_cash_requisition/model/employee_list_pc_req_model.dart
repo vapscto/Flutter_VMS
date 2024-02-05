@@ -9,16 +9,16 @@ class EmployeeListPcReqModel {
     if (json['\$values'] != null) {
       values = <EmployeeListPcReqModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new EmployeeListPcReqModelValues.fromJson(v));
+        values!.add(EmployeeListPcReqModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -71,20 +71,20 @@ class EmployeeListPcReqModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['mI_Id'] = this.mIId;
-    data['userid'] = this.userid;
-    data['roleid'] = this.roleid;
-    data['hrmD_Id'] = this.hrmDId;
-    data['pcreqtN_Id'] = this.pcreqtNId;
-    data['hrmE_Id'] = this.hrmEId;
-    data['pcreqtndeT_Id'] = this.pcreqtndeTId;
-    data['pcmparT_Id'] = this.pcmparTId;
-    data['empname'] = this.empname;
-    data['returnval'] = this.returnval;
-    data['pcreqtndeT_ActiveFlg'] = this.pcreqtndeTActiveFlg;
-    data['pcreqtN_ActiveFlg'] = this.pcreqtNActiveFlg;
-    data['asmaY_Id'] = this.asmaYId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['mI_Id'] = mIId;
+    data['userid'] = userid;
+    data['roleid'] = roleid;
+    data['hrmD_Id'] = hrmDId;
+    data['pcreqtN_Id'] = pcreqtNId;
+    data['hrmE_Id'] = hrmEId;
+    data['pcreqtndeT_Id'] = pcreqtndeTId;
+    data['pcmparT_Id'] = pcmparTId;
+    data['empname'] = empname;
+    data['returnval'] = returnval;
+    data['pcreqtndeT_ActiveFlg'] = pcreqtndeTActiveFlg;
+    data['pcreqtN_ActiveFlg'] = pcreqtNActiveFlg;
+    data['asmaY_Id'] = asmaYId;
     return data;
   }
 }

@@ -236,8 +236,10 @@ class AtachmentFileList {
 
 class AtachmentFile {
   int? id;
+  // ignore: non_constant_identifier_names
   String? FileName;
   XFile? file;
+  // ignore: non_constant_identifier_names
   AtachmentFile({required this.id, required this.FileName, this.file});
 }
 

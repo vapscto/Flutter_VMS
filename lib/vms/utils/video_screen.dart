@@ -16,6 +16,7 @@ class _VideoScreenState extends State<VideoScreen> {
 
   @override
   void initState() {
+    // ignore: deprecated_member_use
     controller = VideoPlayerController.network(widget.videoUrl)
       ..initialize().then((_) {
         setState(() {});

@@ -9,16 +9,16 @@ class PCApprovalOnChangeModel {
     if (json['\$values'] != null) {
       values = <PCApprovalOnChangeModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new PCApprovalOnChangeModelValues.fromJson(v));
+        values!.add(PCApprovalOnChangeModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -101,30 +101,30 @@ class PCApprovalOnChangeModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['mI_Id'] = this.mIId;
-    data['userid'] = this.userid;
-    data['roleid'] = this.roleid;
-    data['asmaY_Id'] = this.asmaYId;
-    data['hrmE_Id'] = this.hrmEId;
-    data['pcindentaP_Id'] = this.pcindentaPId;
-    data['pcindentapT_IndentNo'] = this.pcindentapTIndentNo;
-    data['pcindentapT_Date'] = this.pcindentapTDate;
-    data['createdate'] = this.createdate;
-    data['pcindentapT_Desc'] = this.pcindentapTDesc;
-    data['pcindentapT_SanctionedAmt'] = this.pcindentapTSanctionedAmt;
-    data['pcindentapdT_Id'] = this.pcindentapdTId;
-    data['pcreqtN_Id'] = this.pcreqtNId;
-    data['pcmparT_Id'] = this.pcmparTId;
-    data['pcindentapdT_ActiveFlg'] = this.pcindentapdTActiveFlg;
-    data['departmentname'] = this.departmentname;
-    data['employeename'] = this.employeename;
-    data['pcindenT_Id'] = this.pcindenTId;
-    data['pcindentdeT_Id'] = this.pcindentdeTId;
-    data['pcindentdeT_ActiveFlg'] = this.pcindentdeTActiveFlg;
-    data['returnval'] = this.returnval;
-    data['pcexptR_Id'] = this.pcexptRId;
-    data['pcexptR_ActiveFlg'] = this.pcexptRActiveFlg;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['mI_Id'] = mIId;
+    data['userid'] = userid;
+    data['roleid'] = roleid;
+    data['asmaY_Id'] = asmaYId;
+    data['hrmE_Id'] = hrmEId;
+    data['pcindentaP_Id'] = pcindentaPId;
+    data['pcindentapT_IndentNo'] = pcindentapTIndentNo;
+    data['pcindentapT_Date'] = pcindentapTDate;
+    data['createdate'] = createdate;
+    data['pcindentapT_Desc'] = pcindentapTDesc;
+    data['pcindentapT_SanctionedAmt'] = pcindentapTSanctionedAmt;
+    data['pcindentapdT_Id'] = pcindentapdTId;
+    data['pcreqtN_Id'] = pcreqtNId;
+    data['pcmparT_Id'] = pcmparTId;
+    data['pcindentapdT_ActiveFlg'] = pcindentapdTActiveFlg;
+    data['departmentname'] = departmentname;
+    data['employeename'] = employeename;
+    data['pcindenT_Id'] = pcindenTId;
+    data['pcindentdeT_Id'] = pcindentdeTId;
+    data['pcindentdeT_ActiveFlg'] = pcindentdeTActiveFlg;
+    data['returnval'] = returnval;
+    data['pcexptR_Id'] = pcexptRId;
+    data['pcexptR_ActiveFlg'] = pcexptRActiveFlg;
     return data;
   }
 }

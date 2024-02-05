@@ -4,7 +4,6 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/online_leave/controller/ol_controller.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_comment_mode.dart';
-import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
 
 class LeaveApprovalStatusAPI {
   LeaveApprovalStatusAPI.init();

@@ -41,7 +41,7 @@ class LeadDetailsScreen extends StatelessWidget {
                   DataColumn(label: Text("Status")),
                   DataColumn(label: Text("Remarks")),
                 ],
-                rows: [],
+                rows: const [],
               ),
             ),
           ),

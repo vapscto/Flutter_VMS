@@ -10,19 +10,19 @@ class IndentViewDataDetails extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final PettyIndentApprovalController controller;
-  
-  const IndentViewDataDetails({super.key,
-  required this.loginSuccessModel,
-  required this.mskoolController,
-  required this.controller});
+
+  const IndentViewDataDetails(
+      {super.key,
+      required this.loginSuccessModel,
+      required this.mskoolController,
+      required this.controller});
 
   @override
   State<IndentViewDataDetails> createState() => _IndentViewDataDetailsState();
 }
 
 class _IndentViewDataDetailsState extends State<IndentViewDataDetails> {
-
-@override
+  @override
   void initState() {
     super.initState();
   }
@@ -37,11 +37,11 @@ class _IndentViewDataDetailsState extends State<IndentViewDataDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "INDENT DETAILS").getAppBar(),
+      appBar: const CustomAppBar(title: "INDENT DETAILS").getAppBar(),
       body: widget.controller.viewDataList.isNotEmpty
           ? Obx(
               () => Container(
-                margin: EdgeInsets.only(top: 16.0),
+                margin: const EdgeInsets.only(top: 16.0),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: SingleChildScrollView(
@@ -118,12 +118,12 @@ class _IndentViewDataDetailsState extends State<IndentViewDataDetails> {
                 ),
               ),
             )
-          : AnimatedProgressWidget(
-                        animationPath: 'assets/json/nodata.json',
-                        title: 'No Details found',
-                        desc: "Particular Indent has no data to show",
-                        animatorHeight: 250,
-                      ),
+          : const AnimatedProgressWidget(
+              animationPath: 'assets/json/nodata.json',
+              title: 'No Details found',
+              desc: "Particular Indent has no data to show",
+              animatorHeight: 250,
+            ),
     );
   }
 }

@@ -9,13 +9,13 @@ class PurchaseItemDetailsModel {
     if (json['\$values'] != null) {
       values = <PurchaseItemDetailsModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new PurchaseItemDetailsModelValues.fromJson(v));
+        values!.add(PurchaseItemDetailsModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['\$type'] = type;
     if (values != null) {
       data['\$values'] = values!.map((v) => v.toJson()).toList();
@@ -107,7 +107,7 @@ class PurchaseItemDetailsModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['returnval'] = returnval;
     data['already_cnt'] = alreadyCnt;
     data['mI_Id'] = mIId;

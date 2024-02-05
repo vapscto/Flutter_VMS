@@ -74,6 +74,7 @@ Future<void> getYearListRatingReport(
       }
     }
   } on Exception catch (e) {
+    logger.e(e.toString());
     logger.printError();
   }
 }

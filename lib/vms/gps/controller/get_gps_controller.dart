@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:location/location.dart';
-import 'package:m_skool_flutter/vms/gps/api/gps_api.dart';
+// import 'package:m_skool_flutter/vms/gps/api/gps_api.dart';
 import 'package:m_skool_flutter/vms/gps/model/clients_model.dart';
-import 'package:m_skool_flutter/vms/gps/model/gps_emp.dart';
+// import 'package:m_skool_flutter/vms/gps/model/gps_emp.dart';
 import 'package:m_skool_flutter/vms/gps/model/sales_list_model.dart';
 import 'package:permission_handler/permission_handler.dart';
 

@@ -1,7 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_comment_mode.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_count_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';

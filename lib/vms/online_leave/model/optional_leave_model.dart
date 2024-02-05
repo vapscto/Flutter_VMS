@@ -9,16 +9,16 @@ class OpetionLeaveModel {
     if (json['\$values'] != null) {
       values = <OpetionLeaveModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new OpetionLeaveModelValues.fromJson(v));
+        values!.add(OpetionLeaveModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -38,10 +38,10 @@ class OpetionLeaveModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    data['FOMHWDD_FromDate'] = this.fOMHWDDFromDate;
-    data['FOMHWDD_Name'] = this.fOMHWDDName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    data['FOMHWDD_FromDate'] = fOMHWDDFromDate;
+    data['FOMHWDD_Name'] = fOMHWDDName;
     return data;
   }
 }

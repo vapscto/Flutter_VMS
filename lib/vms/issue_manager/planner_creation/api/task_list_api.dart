@@ -127,7 +127,9 @@ class TaskListAPI {
                     val.periodicity!.toLowerCase() == 'once') &&
                 (val.iSMTPLTAPreviousTask == 0 ||
                     val.iSMTPLTAPreviousTask == null ||
+                    // ignore: unrelated_type_equality_checks
                     val.iSMTPLTAPreviousTask == '' ||
+                    // ignore: unrelated_type_equality_checks
                     val.iSMTPLTAPreviousTask == '0')) {
               plannerCreationController.addDataToList(val, startDate, endDate);
             } else if (val.periodicity!.toLowerCase() == 'weekly' &&

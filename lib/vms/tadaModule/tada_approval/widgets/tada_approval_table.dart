@@ -60,7 +60,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
   // }
 
   var approveCent = 0;
-  _getData() async {
+  getData() async {
     widget.tadaController.updateIsLoading(true);
     await TADAApprovalDetailsAPI.instance.tadaDetails(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),

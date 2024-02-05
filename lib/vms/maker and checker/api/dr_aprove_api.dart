@@ -15,11 +15,11 @@ import 'package:m_skool_flutter/vms/maker%20and%20checker/model/employee_details
 Future<int> getdrLists({
   required int roleId,
   required int userId,
-  required int mi_id,
+  required int miId,
   required String base,
-  required int hrmdc_Id,
-  required int hrmdes_Id,
-  required int hrme_Id,
+  required int hrmdcId,
+  required int hrmdesId,
+  required int hrmeId,
   required String date,
   required DrDetailsCtrlr controller,
 }) async {
@@ -28,9 +28,9 @@ Future<int> getdrLists({
 
   logger.d(apiUrl);
   logger.d({
-    "hrmdc_Id": hrmdc_Id,
-    "hrmdes_Id": hrmdes_Id,
-    "hrme_Id": hrme_Id,
+    "hrmdc_Id": hrmdcId,
+    "hrmdes_Id": hrmdesId,
+    "hrme_Id": hrmeId,
     "date": date,
   });
   try {
@@ -40,44 +40,44 @@ Future<int> getdrLists({
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
       "IVRMRT_Id": roleId,
       "UserId": userId,
-      "MI_Id": mi_id,
+      "MI_Id": miId,
       "DRApprovalTypeFlag": "DRApproval",
       "Fromdate": date,
       "Todate": date,
       "reporttype": "undefined",
       "deptlist": [
-        {"HRMDC_ID": hrmdc_Id}
+        {"HRMDC_ID": hrmdcId}
       ],
       "desglist": [
-        {"HRMDES_Id": hrmdes_Id}
+        {"HRMDES_Id": hrmdesId}
       ],
       "emplist": [
-        {"HRME_Id": hrme_Id}
+        {"HRME_Id": hrmeId}
       ]
     });
     logger.d({
       "IVRMRT_Id": roleId,
       "UserId": userId,
-      "MI_Id": mi_id,
+      "MI_Id": miId,
       "DRApprovalTypeFlag": "DRApproval",
       "Fromdate": date,
       "Todate": date,
       "reporttype": "undefined",
       "deptlist": [
-        {"HRMDC_ID": hrmdc_Id}
+        {"HRMDC_ID": hrmdcId}
       ],
       "desglist": [
-        {"HRMDES_Id": hrmdes_Id}
+        {"HRMDES_Id": hrmdesId}
       ],
       "emplist": [
-        {"HRME_Id": hrme_Id}
+        {"HRME_Id": hrmeId}
       ]
     });
     if (response.data['getsaveddetails'] == null) {
       controller.drErrorLaodig(true);
     }
-    print(response.data['getsaveddetails']);
-    print(response.statusCode);
+    logger.i(response.data['getsaveddetails']);
+    logger.v(response.statusCode);
     controller.drIsLoading(false);
     DrDetailModel drList =
         DrDetailModel.fromJson(response.data['getsaveddetails']);

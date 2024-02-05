@@ -24,8 +24,10 @@ Future<DateTime?> showDatePickerLeave({
   TextInputType? keyboardType,
   Offset? anchorPoint,
 }) async {
+  // ignore: unnecessary_null_comparison
   assert(context != null);
   assert(initialDate != null);
+  // ignore: unnecessary_null_comparison
   assert(firstDate != null);
   assert(lastDate != null);
   initialDate = DateUtils.dateOnly(initialDate!);
@@ -47,8 +49,11 @@ Future<DateTime?> showDatePickerLeave({
     selectableDayPredicate == null || selectableDayPredicate(initialDate),
     'Provided initialDate $initialDate must satisfy provided selectableDayPredicate.',
   );
+  // ignore: unnecessary_null_comparison
   assert(initialEntryMode != null);
+  // ignore: unnecessary_null_comparison
   assert(useRootNavigator != null);
+  // ignore: unnecessary_null_comparison
   assert(initialDatePickerMode != null);
   assert(debugCheckHasMaterialLocalizations(context));
 

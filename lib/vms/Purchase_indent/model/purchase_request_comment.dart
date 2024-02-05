@@ -15,10 +15,10 @@ class PurchaseRequestModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -131,40 +131,40 @@ class PurchaseRequestModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['returnval'] = this.returnval;
-    data['already_cnt'] = this.alreadyCnt;
-    data['userId'] = this.userId;
-    data['invtpiapP_Id'] = this.invtpiapPId;
-    data['invmpiapP_Id'] = this.invmpiapPId;
-    data['approvecnt'] = this.approvecnt;
-    data['hrpaoN_SanctionLevelNo'] = this.hrpaoNSanctionLevelNo;
-    data['mI_Id'] = this.mIId;
-    data['asmaY_Id'] = this.asmaYId;
-    data['invmI_Id'] = this.invmIId;
-    data['invmuoM_Id'] = this.invmuoMId;
-    data['invstO_PurchaseRate'] = this.invstOPurchaseRate;
-    data['invmpI_Id'] = this.invmpIId;
-    data['invmpI_PIDate'] = this.invmpIPIDate;
-    data['invmpI_ApproxTotAmount'] = this.invmpIApproxTotAmount;
-    data['invmpI_POCreatedFlg'] = this.invmpIPOCreatedFlg;
-    data['invmpI_ActiveFlg'] = this.invmpIActiveFlg;
-    data['employeename'] = this.employeename;
-    data['invmpR_PRNo'] = this.invmpRPRNo;
-    data['invmpR_PRDate'] = this.invmpRPRDate;
-    data['invmpR_Remarks'] = this.invmpRRemarks;
-    data['invmpR_PICreatedFlg'] = this.invmpRPICreatedFlg;
-    data['invmpR_ApproxTotAmount'] = this.invmpRApproxTotAmount;
-    data['invtpI_Id'] = this.invtpIId;
-    data['invtpI_PRQty'] = this.invtpIPRQty;
-    data['invtpI_PIUnitRate'] = this.invtpIPIUnitRate;
-    data['invtpI_ApproxAmount'] = this.invtpIApproxAmount;
-    data['invtpI_PIQty'] = this.invtpIPIQty;
-    data['invtpI_ActiveFlg'] = this.invtpIActiveFlg;
-    data['invtpI_CreatedDate'] = this.invtpICreatedDate;
-    data['invtpI_CreatedBy'] = this.invtpICreatedBy;
-    data['prflag'] = this.prflag;
-    data['invmpiapP_PIDate'] = this.invmpiapPPIDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['returnval'] = returnval;
+    data['already_cnt'] = alreadyCnt;
+    data['userId'] = userId;
+    data['invtpiapP_Id'] = invtpiapPId;
+    data['invmpiapP_Id'] = invmpiapPId;
+    data['approvecnt'] = approvecnt;
+    data['hrpaoN_SanctionLevelNo'] = hrpaoNSanctionLevelNo;
+    data['mI_Id'] = mIId;
+    data['asmaY_Id'] = asmaYId;
+    data['invmI_Id'] = invmIId;
+    data['invmuoM_Id'] = invmuoMId;
+    data['invstO_PurchaseRate'] = invstOPurchaseRate;
+    data['invmpI_Id'] = invmpIId;
+    data['invmpI_PIDate'] = invmpIPIDate;
+    data['invmpI_ApproxTotAmount'] = invmpIApproxTotAmount;
+    data['invmpI_POCreatedFlg'] = invmpIPOCreatedFlg;
+    data['invmpI_ActiveFlg'] = invmpIActiveFlg;
+    data['employeename'] = employeename;
+    data['invmpR_PRNo'] = invmpRPRNo;
+    data['invmpR_PRDate'] = invmpRPRDate;
+    data['invmpR_Remarks'] = invmpRRemarks;
+    data['invmpR_PICreatedFlg'] = invmpRPICreatedFlg;
+    data['invmpR_ApproxTotAmount'] = invmpRApproxTotAmount;
+    data['invtpI_Id'] = invtpIId;
+    data['invtpI_PRQty'] = invtpIPRQty;
+    data['invtpI_PIUnitRate'] = invtpIPIUnitRate;
+    data['invtpI_ApproxAmount'] = invtpIApproxAmount;
+    data['invtpI_PIQty'] = invtpIPIQty;
+    data['invtpI_ActiveFlg'] = invtpIActiveFlg;
+    data['invtpI_CreatedDate'] = invtpICreatedDate;
+    data['invtpI_CreatedBy'] = invtpICreatedBy;
+    data['prflag'] = prflag;
+    data['invmpiapP_PIDate'] = invmpiapPPIDate;
     return data;
   }
 }

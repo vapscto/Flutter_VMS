@@ -9,16 +9,16 @@ class ViewDataPcReqModel {
     if (json['\$values'] != null) {
       values = <ViewDataPcReqModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new ViewDataPcReqModelValues.fromJson(v));
+        values!.add(ViewDataPcReqModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -77,22 +77,22 @@ class ViewDataPcReqModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['mI_Id'] = this.mIId;
-    data['userid'] = this.userid;
-    data['roleid'] = this.roleid;
-    data['hrmD_Id'] = this.hrmDId;
-    data['pcreqtN_Id'] = this.pcreqtNId;
-    data['hrmE_Id'] = this.hrmEId;
-    data['pcreqtndeT_Id'] = this.pcreqtndeTId;
-    data['pcmparT_Id'] = this.pcmparTId;
-    data['returnval'] = this.returnval;
-    data['pcmparT_ParticularName'] = this.pcmparTParticularName;
-    data['pcreqtndeT_Amount'] = this.pcreqtndeTAmount;
-    data['pcreqtndeT_Remarks'] = this.pcreqtndeTRemarks;
-    data['pcreqtndeT_ActiveFlg'] = this.pcreqtndeTActiveFlg;
-    data['pcreqtN_ActiveFlg'] = this.pcreqtNActiveFlg;
-    data['asmaY_Id'] = this.asmaYId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['mI_Id'] = mIId;
+    data['userid'] = userid;
+    data['roleid'] = roleid;
+    data['hrmD_Id'] = hrmDId;
+    data['pcreqtN_Id'] = pcreqtNId;
+    data['hrmE_Id'] = hrmEId;
+    data['pcreqtndeT_Id'] = pcreqtndeTId;
+    data['pcmparT_Id'] = pcmparTId;
+    data['returnval'] = returnval;
+    data['pcmparT_ParticularName'] = pcmparTParticularName;
+    data['pcreqtndeT_Amount'] = pcreqtndeTAmount;
+    data['pcreqtndeT_Remarks'] = pcreqtndeTRemarks;
+    data['pcreqtndeT_ActiveFlg'] = pcreqtndeTActiveFlg;
+    data['pcreqtN_ActiveFlg'] = pcreqtNActiveFlg;
+    data['asmaY_Id'] = asmaYId;
     return data;
   }
 }

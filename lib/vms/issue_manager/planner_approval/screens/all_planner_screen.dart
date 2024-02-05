@@ -15,8 +15,6 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
-import '../../../../main.dart';
-
 class AllPlanners extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
@@ -175,6 +173,7 @@ class _AllPlannersState extends State<AllPlanners> {
 
   String startDate = '';
   String endDate = '';
+  // ignore: prefer_typing_uninitialized_variables
   var totalHour;
   _getTotalHour() {
     DateFormat dateFormat = DateFormat("dd-MM-yyyy");
@@ -257,7 +256,7 @@ class _AllPlannersState extends State<AllPlanners> {
   }
 
   int visibleRowCount = 10;
-  _getPlannerData() async {
+  getPlannerData() async {
     widget.plannerApprovalController.plannerLoading(true);
     await PlannerListAPI.instance.plannerListAPI(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
