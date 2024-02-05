@@ -46,6 +46,7 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
   final _startDate = TextEditingController();
   final _endDate = TextEditingController();
   final reasonController = TextEditingController();
+  final dayController = TextEditingController();
   ExtensionMonthModelValues? selectedMonth;
   _loadData() async {
     controller.employeeList.clear();
@@ -147,7 +148,7 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                         margin: const EdgeInsets.only(top: 20),
                         decoration: BoxDecoration(
                           color: Theme.of(context).scaffoldBackgroundColor,
-                          borderRadius: BorderRadius.circular(16.0),
+                          borderRadius: BorderRadius.circular(8.0),
                           boxShadow: const [
                             BoxShadow(
                               offset: Offset(0, 1),
@@ -446,89 +447,162 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                 )
               : Obx(() => controller.monthsList.isEmpty
                   ? const SizedBox()
-                  : Container(
-                      margin: const EdgeInsets.only(top: 30, bottom: 10),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        borderRadius: BorderRadius.circular(16.0),
-                        boxShadow: const [
-                          BoxShadow(
-                            offset: Offset(0, 1),
-                            blurRadius: 8,
-                            color: Colors.black12,
+                  : Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(top: 30, bottom: 10),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            borderRadius: BorderRadius.circular(8.0),
+                            boxShadow: const [
+                              BoxShadow(
+                                offset: Offset(0, 1),
+                                blurRadius: 8,
+                                color: Colors.black12,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: DropdownButtonFormField<ExtensionMonthModelValues>(
-                        validator: (value) {
-                          if (value == null) {
-                            return "";
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
-                            ),
-                          ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
-                            ),
-                          ),
-                          hintStyle: Theme.of(context)
-                              .textTheme
-                              .labelSmall!
-                              .merge(const TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14.0,
-                                  letterSpacing: 0.3)),
-                          hintText: controller.monthsList.isNotEmpty
-                              ? 'Select Month'
-                              : 'No data available',
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          isDense: true,
-                          label: const CustomDropDownLabel(
-                            icon: 'assets/images/hat.png',
-                            containerColor: Color.fromRGBO(223, 251, 254, 1),
-                            text: 'Month',
-                            textColor: Color.fromRGBO(40, 182, 200, 1),
-                          ),
-                        ),
-                        icon: const Padding(
-                          padding: EdgeInsets.only(top: 3),
-                          child: Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                            size: 30,
-                          ),
-                        ),
-                        iconSize: 30,
-                        items: List.generate(controller.monthsList.length,
-                            (index) {
-                          return DropdownMenuItem(
-                            value: controller.monthsList[index],
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 13, left: 5),
-                              child: Text(
-                                overflow: TextOverflow.clip,
-                                controller.monthsList[index].ivrMMonthName!,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .merge(const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 13.0,
-                                        letterSpacing: 0.3)),
+                          child: DropdownButtonFormField<
+                              ExtensionMonthModelValues>(
+                            validator: (value) {
+                              if (value == null) {
+                                return "";
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                ),
+                              ),
+                              enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                ),
+                              ),
+                              hintStyle: Theme.of(context)
+                                  .textTheme
+                                  .labelSmall!
+                                  .merge(const TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.3)),
+                              hintText: controller.monthsList.isNotEmpty
+                                  ? 'Select Month'
+                                  : 'No data available',
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              isDense: true,
+                              label: const CustomDropDownLabel(
+                                icon: 'assets/images/hat.png',
+                                containerColor:
+                                    Color.fromRGBO(223, 251, 254, 1),
+                                text: 'Month',
+                                textColor: Color.fromRGBO(40, 182, 200, 1),
                               ),
                             ),
-                          );
-                        }),
-                        onChanged: (s) async {
-                          selectedMonth = s;
-                        },
-                      ),
+                            icon: const Padding(
+                              padding: EdgeInsets.only(top: 3),
+                              child: Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                size: 30,
+                              ),
+                            ),
+                            iconSize: 30,
+                            items: List.generate(controller.monthsList.length,
+                                (index) {
+                              return DropdownMenuItem(
+                                value: controller.monthsList[index],
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 13, left: 5),
+                                  child: Text(
+                                    overflow: TextOverflow.clip,
+                                    controller.monthsList[index].ivrMMonthName!,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(const TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 13.0,
+                                            letterSpacing: 0.3)),
+                                  ),
+                                ),
+                              );
+                            }),
+                            onChanged: (s) async {
+                              selectedMonth = s;
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20.0, bottom: 10),
+                          child: CustomContainer(
+                            child: SizedBox(
+                              height: 60,
+                              child: TextField(
+                                style: Theme.of(context).textTheme.titleSmall,
+                                keyboardType: TextInputType.number,
+                                controller: dayController,
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.only(
+                                      top: 10.0, left: 12),
+                                  border: const OutlineInputBorder(),
+                                  label: Container(
+                                    margin: const EdgeInsets.only(bottom: 5),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12.0, vertical: 8.0),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(24.0),
+                                        color: const Color(0xFFE5F3FF)),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SvgPicture.asset(
+                                          "assets/svg/class_.svg",
+                                          color: const Color(0xFF3E78AA),
+                                          height: 18,
+                                        ),
+                                        const SizedBox(
+                                          width: 6.0,
+                                        ),
+                                        Text(
+                                          "No. of Days",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!
+                                              .merge(
+                                                const TextStyle(
+                                                  fontSize: 18.0,
+                                                  color: Color(0xFF3E78AA),
+                                                ),
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  hintText: 'No. of Days',
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always,
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     )),
           (_endDate.text.isNotEmpty)
               ? Padding(
@@ -665,7 +739,6 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                                 "HRME_Id": hrmeId,
                                 "ISMPLE_FromDate": fromDate!.toIso8601String(),
                                 "ISMPLE_ToDate": toDate!.toIso8601String(),
-                                // "ismodE_Noofdays": day,
                                 "ISMPLE_Reason": reasonController.text,
                                 "notifi_chk": notification.value,
                                 "email_chk": email.value,
@@ -678,15 +751,19 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                             } else if (selectedMonth == null) {
                               Fluttertoast.showToast(msg: "Select Month");
                               return;
+                            } else if (dayController.text.isEmpty) {
+                              Fluttertoast.showToast(msg: "Enter Days");
+                              return;
                             } else if (reasonController.text.isEmpty) {
                               Fluttertoast.showToast(msg: "Enter Reason");
+                              return;
                             } else {
                               saveData({
                                 "ExtensionType": groupValue,
                                 "HRME_Id": hrmeId,
                                 "IVRM_Month_Id": selectedMonth!.ivrMMonthId!,
                                 "ismodE_Noofdays":
-                                    selectedMonth!.ivrMMonthMaxDays,
+                                    int.parse(dayController.text),
                                 "ISMODE_Reason": reasonController.text,
                                 "notifi_chk": notification.value,
                                 "email_chk": email.value,
