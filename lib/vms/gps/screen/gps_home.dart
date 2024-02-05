@@ -48,11 +48,6 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
   }
 
   intial() async {
-    await feacthGpsClient(
-        base: baseUrlFromInsCode('frontoffice', widget.mskoolController),
-        miId: widget.loginSuccessModel.mIID!,
-        userId: widget.loginSuccessModel.userId!,
-        controller: getEmpDetailsController);
     getEmpDetailsController.getLocation().then(
       (value) {
         feacthGps(
@@ -60,8 +55,15 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
           logitude: getEmpDetailsController.longitude.value,
           controller: getEmpDetailsController,
         ).then(
-          (value) {
-            if (value) {}
+          (value) async {
+            if (value) {
+              await feacthGpsClient(
+                  base: baseUrlFromInsCode(
+                      'frontoffice', widget.mskoolController),
+                  miId: widget.loginSuccessModel.mIID!,
+                  userId: widget.loginSuccessModel.userId!,
+                  controller: getEmpDetailsController);
+            }
           },
         );
         if (!value) {

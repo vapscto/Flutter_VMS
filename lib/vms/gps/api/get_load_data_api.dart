@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/vms/gps/constants/client_name_const.dart';
 import 'package:m_skool_flutter/vms/gps/controller/get_gps_controller.dart';
 import 'package:m_skool_flutter/vms/gps/model/clients_model.dart';
 import 'package:m_skool_flutter/vms/gps/model/gps_emp.dart';
@@ -26,9 +29,12 @@ Future<bool> feacthGpsClient({
     logger.i({"MI_Id": miId, "UserId": userId});
     logger.e(apiUrl);
     if (response.statusCode == 200) {
-      GetGpsClientDetails clientDetailsList =
-          GetGpsClientDetails.fromJson(response.data['clientlist']);
-      controller.gpsClientList.addAll(clientDetailsList.values!);
+      Map<String, dynamic> jsonData = jsonDecode(jsonString);
+      GetGpsClientDetails getGpsClientDetails =
+          GetGpsClientDetails.fromJson(jsonData['clientlist']);
+      // GetGpsClientDetails clientDetailsList =
+      //     GetGpsClientDetails.fromJson(response.data['clientlist']);
+      controller.gpsClientList.addAll(getGpsClientDetails.values!);
       // GetGpsEmployeeDetails employeeDetails =
       //     GetGpsEmployeeDetails.fromJson(response.data['employee_name']);
       // controller.gpsEmpList.addAll(employeeDetails.values!);

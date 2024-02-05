@@ -153,8 +153,8 @@ class NotificationScreen extends StatelessWidget {
                           const SizedBox(
                             height: 6.0,
                           ),
-                          Text(snapshot.data!.elementAt(index).iSMNOModeFlg ??
-                              "N/a"),
+                          // Text(snapshot.data!.elementAt(index).iSMNOModeFlg ??
+                          //     "N/a"),
                           Row(
                             children: [
                               Text(

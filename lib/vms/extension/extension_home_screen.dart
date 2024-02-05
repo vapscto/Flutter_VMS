@@ -735,6 +735,7 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                               Fluttertoast.showToast(msg: "Enter Reason");
                             } else {
                               saveData({
+                                "UserId": widget.loginSuccessModel.userId,
                                 "ExtensionType": groupValue,
                                 "HRME_Id": hrmeId,
                                 "ISMPLE_FromDate": fromDate!.toIso8601String(),
@@ -759,6 +760,7 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                               return;
                             } else {
                               saveData({
+                                "UserId": widget.loginSuccessModel.userId,
                                 "ExtensionType": groupValue,
                                 "HRME_Id": hrmeId,
                                 "IVRM_Month_Id": selectedMonth!.ivrMMonthId!,

@@ -79,7 +79,7 @@ class DrExtensionTab extends StatelessWidget {
                             DataCell(Text(
                                 getDateFrom(DateTime.parse(val.ismodEDate!)))),
                             DataCell(SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.2,
+                                width: MediaQuery.of(context).size.width * 0.4,
                                 child: Text('${val.ismodEReason}'))),
                             DataCell(SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.2,
@@ -96,6 +96,6 @@ class DrExtensionTab extends StatelessWidget {
   }
 
   String getDateFrom(DateTime? dt) {
-    return "${dt!.day.toString().padLeft(2, "0")}-${dt.month.toString().padLeft(2, "0")}${dt.year}";
+    return "${dt!.day.toString().padLeft(2, "0")}-${dt.month.toString().padLeft(2, "0")}-${dt.year}";
   }
 }
