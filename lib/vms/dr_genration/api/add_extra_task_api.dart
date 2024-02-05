@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -48,6 +47,7 @@ class AddExtraTaskAPI {
         }
       }
     } on Exception catch (e) {
+      logger.i(e.toString());
       logger.printError();
     }
   }
@@ -95,6 +95,7 @@ class PreviousDrReport {
           double decimalTimeTot = dd.efforts!;
           totalDrHrs += decimalTimeTot;
 
+          // ignore: unrelated_type_equality_checks
           if (dd.iSMDRPTApprovedTime != null && dd.iSMDRPTApprovedTime != "") {
             double decimalTimeTotApproved = dd.iSMDRPTApprovedTime!;
             totalApprovedHrs += decimalTimeTotApproved;

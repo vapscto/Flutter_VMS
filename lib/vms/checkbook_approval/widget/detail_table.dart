@@ -11,13 +11,15 @@ class GetTaDa extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final GetDetailedToDo controller;
-  final int mi_id;
+  // final int mi_id;
 
-  GetTaDa(
-      {required this.loginSuccessModel,
-      required this.mskoolController,
-      required this.controller,
-      required this.mi_id});
+  const GetTaDa({
+    super.key,
+    required this.loginSuccessModel,
+    required this.mskoolController,
+    required this.controller,
+    // required this.mi_id
+  });
 
   @override
   State<GetTaDa> createState() => _GetTaDaState();
@@ -77,7 +79,6 @@ class _GetTaDaState extends State<GetTaDa> {
 
   @override
   Widget build(BuildContext context) {
-    final ScrollController scrollController = ScrollController();
     return Form(
       key: _formKey,
       child: Obx(
@@ -131,7 +132,7 @@ class _GetTaDaState extends State<GetTaDa> {
                                 child: SizedBox(
                                   child: Checkbox(
                                     activeColor:
-                                        Color.fromRGBO(0, 4, 250, 0.898),
+                                        const Color.fromRGBO(0, 4, 250, 0.898),
                                     shape: ContinuousRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(10)),
@@ -329,9 +330,9 @@ class _GetTaDaState extends State<GetTaDa> {
                                                   .vPAYVOUStatusFlg!
                                                   .toString() ==
                                               "Rejected"
-                                          ? SizedBox()
+                                          ? const SizedBox()
                                           : Checkbox(
-                                              activeColor: Color.fromRGBO(
+                                              activeColor: const Color.fromRGBO(
                                                   0, 4, 250, 0.898),
                                               shape: ContinuousRectangleBorder(
                                                   borderRadius:
@@ -396,9 +397,9 @@ class _GetTaDaState extends State<GetTaDa> {
                                       height: 30,
                                       width: 40,
                                       child: Radio(
-                                        focusColor:
-                                            Color.fromARGB(255, 182, 180, 180)
-                                                .withOpacity(.1),
+                                        focusColor: const Color.fromARGB(
+                                                255, 182, 180, 180)
+                                            .withOpacity(.1),
                                         activeColor:
                                             Theme.of(context).primaryColor,
                                         value: 0,
@@ -419,8 +420,11 @@ class _GetTaDaState extends State<GetTaDa> {
                                 Align(
                                   alignment: Alignment.center,
                                   child: SizedBox(
-                                    child: Text(
-                                        "${widget.controller.getTaDaModelList.elementAt(index).hRMBDBranchName.toString()}"),
+                                    child: Text(widget
+                                        .controller.getTaDaModelList
+                                        .elementAt(index)
+                                        .hRMBDBranchName
+                                        .toString()),
                                   ),
                                 ),
                               ),
@@ -536,7 +540,7 @@ class _GetTaDaState extends State<GetTaDa> {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 8.0),
                                     child: TextFormField(
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                           border: InputBorder.none),
                                       validator: (value) {
                                         if (selectCheckBox.contains(widget
@@ -553,6 +557,7 @@ class _GetTaDaState extends State<GetTaDa> {
                                             return "Amount is greater than";
                                           }
                                         }
+                                        return null;
                                       },
                                       readOnly: widget.controller
                                                       .radioSelect[index] ==
@@ -581,11 +586,9 @@ class _GetTaDaState extends State<GetTaDa> {
                                   width: 150,
                                   height: 150,
                                   child: TextField(
-                                    
-                                     maxLines: 3,
-                                    decoration: InputDecoration(
-                                        border:  InputBorder.none),
-                                 
+                                    maxLines: 3,
+                                    decoration: const InputDecoration(
+                                        border: InputBorder.none),
                                     controller: widget
                                         .controller.tEControllerListOfNarration
                                         .elementAt(index),
@@ -607,10 +610,8 @@ class _GetTaDaState extends State<GetTaDa> {
                                 SizedBox(
                                   width: 150,
                                   child: TextField(
-                                 
-                                   // maxLines: 3,
-                                    
-                                  
+                                    // maxLines: 3,
+
                                     controller: widget.controller
                                         .tEControllerListOfApprovalRemark
                                         .elementAt(index),
@@ -665,10 +666,10 @@ class _GetTaDaState extends State<GetTaDa> {
                             strokeWidth: 2,
                           ),
                         )
-                      : Text("Submit"),
+                      : const Text("Submit"),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 28.0,
               ),
             ],

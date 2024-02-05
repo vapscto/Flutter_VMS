@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 
@@ -20,7 +19,7 @@ class OTpScreen extends StatefulWidget {
   final MskoolController mskoolController;
   final ChequeController chequeController;
   final int? cmpnymiId;
-  OTpScreen(
+  const OTpScreen(
       {required this.loginSuccessModel,
       required this.mskoolController,
       required this.chequeController,
@@ -41,7 +40,6 @@ class _OTpScreenState extends State<OTpScreen> {
   // int seconds = 59;
   @override
   void initState() {
-    
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
       if (otpSentStatusController.remainingTime.value == 0) {
         otpSentStatusController.updateDisableResendBtn(false);
@@ -80,7 +78,7 @@ class _OTpScreenState extends State<OTpScreen> {
           ),
           const Text(
             "We’ve send the verification code on  email.",
-            style: const TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 16),
           ),
           const SizedBox(
             height: 12.0,
@@ -110,9 +108,9 @@ class _OTpScreenState extends State<OTpScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-               Obx(() {
+              Obx(() {
                 return Text(
-                    timeFormat(otpSentStatusController.remainingTime.value),
+                  timeFormat(otpSentStatusController.remainingTime.value),
                   style: Theme.of(context).textTheme.titleSmall!.merge(
                         const TextStyle(
                             // decoration: TextDecoration.underline,
@@ -160,11 +158,10 @@ class _OTpScreenState extends State<OTpScreen> {
       ),
     ));
   }
-  String timeFormat(int v){
-    otpSentStatusController.minutes.value = v ~/ 60;
-  otpSentStatusController. remainingSeconds.value = v % 60;
-      return '${otpSentStatusController.minutes.value}:${otpSentStatusController.remainingSeconds.toString().padLeft(2, '0')}';
 
+  String timeFormat(int v) {
+    otpSentStatusController.minutes.value = v ~/ 60;
+    otpSentStatusController.remainingSeconds.value = v % 60;
+    return '${otpSentStatusController.minutes.value}:${otpSentStatusController.remainingSeconds.toString().padLeft(2, '0')}';
   }
-  
 }
