@@ -38,8 +38,12 @@ Future<bool> feacthGpsClient({
       // GetGpsEmployeeDetails employeeDetails =
       //     GetGpsEmployeeDetails.fromJson(response.data['employee_name']);
       // controller.gpsEmpList.addAll(employeeDetails.values!);
+      //
+      Map<String, dynamic> jsonData1 = jsonDecode(leadString);
       GetGpsSalesDetails salesDetails =
-          GetGpsSalesDetails.fromJson(response.data['saleslist']);
+          GetGpsSalesDetails.fromJson(jsonData1['saleslist']);
+      // GetGpsSalesDetails salesDetails =
+      //     GetGpsSalesDetails.fromJson(response.data['saleslist']);
       controller.gpsSalesList.addAll(salesDetails.values!);
       controller.updategpsLoading(false);
     }

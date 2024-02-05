@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/extension/controller/extension_controller.dart';
 
-class DrExtensionTab extends StatelessWidget {
+class DrExtensionTab extends StatefulWidget {
   final ExtensionController controller;
   const DrExtensionTab({super.key, required this.controller});
 
   @override
+  State<DrExtensionTab> createState() => _DrExtensionTabState();
+}
+
+class _DrExtensionTabState extends State<DrExtensionTab> {
+  @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return (controller.extensionDrList.isEmpty)
+      return (widget.controller.extensionDrList.isEmpty)
           ? const Center(
               child: CircularProgressIndicator(),
             )
@@ -63,10 +68,11 @@ class DrExtensionTab extends StatelessWidget {
                         ),
                       ],
                       rows: [
-                        ...List.generate(controller.extensionDrList.length,
-                            (index) {
+                        ...List.generate(
+                            widget.controller.extensionDrList.length, (index) {
                           var i = index + 1;
-                          var val = controller.extensionDrList.elementAt(index);
+                          var val = widget.controller.extensionDrList
+                              .elementAt(index);
 
                           return DataRow(cells: [
                             DataCell(Text(i.toString())),

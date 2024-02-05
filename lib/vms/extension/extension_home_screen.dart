@@ -784,8 +784,18 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                 : isLoading
                     ? const Center(child: CircularProgressIndicator())
                     : InkWell(
-                        onTap: () {
+                        onTap: () async {
                           logger.i("click");
+                          controller.extensionDrList.clear();
+                          controller.extensionPlannerList.clear();
+                          controller.employeeLoading(true);
+                          await ExtensionAPI.instance.extensionAPI(
+                              controller: controller,
+                              base: baseUrlFromInsCode(
+                                  'issuemanager', widget.mskoolController),
+                              userId: widget.loginSuccessModel.userId!,
+                              miId: widget.loginSuccessModel.mIID!,
+                              roleId: widget.loginSuccessModel.roleId!);
                           moveToNextScreen();
                         },
                         child: Card(

@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/extension/controller/extension_controller.dart';
 
-class PlannerExtensionTab extends StatelessWidget {
+class PlannerExtensionTab extends StatefulWidget {
   final ExtensionController controller;
   const PlannerExtensionTab({super.key, required this.controller});
 
   @override
+  State<PlannerExtensionTab> createState() => _PlannerExtensionTabState();
+}
+
+class _PlannerExtensionTabState extends State<PlannerExtensionTab> {
+  @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return (controller.extensionPlannerList.isEmpty)
+      return (widget.controller.extensionPlannerList.isEmpty)
           ? const Center(
               child: CircularProgressIndicator(),
             )
@@ -62,11 +67,12 @@ class PlannerExtensionTab extends StatelessWidget {
                         ),
                       ],
                       rows: [
-                        ...List.generate(controller.extensionPlannerList.length,
+                        ...List.generate(
+                            widget.controller.extensionPlannerList.length,
                             (index) {
                           var i = index + 1;
-                          var val =
-                              controller.extensionPlannerList.elementAt(index);
+                          var val = widget.controller.extensionPlannerList
+                              .elementAt(index);
 
                           return DataRow(cells: [
                             DataCell(Text(i.toString())),
