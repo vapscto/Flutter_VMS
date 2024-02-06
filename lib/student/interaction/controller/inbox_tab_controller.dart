@@ -58,10 +58,7 @@ class InboxController extends GetxController {
           final rf = readFlags.firstWhere(
               (value) => value.ismintId == inboxMessage[i].ismintId);
           final readFlag = rf;
-          int? readFlagValue;
-          if (readFlag.ismintId != null) {
-            readFlagValue = readFlag.istintReadFlg;
-          }
+          if (readFlag.ismintId != null) {}
           if (inboxList.isEmpty) {
             inboxList.add(inboxMessage.elementAt(i));
           } else if (inboxList.isNotEmpty) {

@@ -6,8 +6,6 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
-
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/student/interaction/screen/messaging_section.dart';
 import 'package:m_skool_flutter/vms/api/vms_notification_api.dart';
@@ -245,12 +243,7 @@ class NotificationScreen extends StatelessWidget {
             mskoolController: mskoolController,
             animateToInbox: true));
         break;
-      case "certificate":
-        Get.to(() => CertificateHomeScreen(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController,
-            ));
-        break;
+
       default:
         Fluttertoast.showToast(
             msg: "There is no page to open this notification");

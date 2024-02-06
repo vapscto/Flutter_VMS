@@ -16,9 +16,6 @@ import 'package:m_skool_flutter/model/categories_api_item.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/attachment_viewer.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
-import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
-import 'package:m_skool_flutter/student/coe/screen/video_screen.dart';
-
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
@@ -39,6 +36,7 @@ import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/screen/leave_list_home.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/screens/tada_approval_home.dart';
+import 'package:m_skool_flutter/vms/utils/video_screen.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
@@ -546,14 +544,6 @@ void openMappedPages(
 
   if (pageName == "Interaction") {
     Get.to(() => InteractionHomeScreen(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-        ));
-    return;
-  }
-
-  if (pageName == "Certificate") {
-    Get.to(() => CertificateHomeScreen(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
         ));
