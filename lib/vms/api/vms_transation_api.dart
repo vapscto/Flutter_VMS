@@ -18,8 +18,8 @@ class VmsTransationAPI {
   }) async {
     var dio = Dio();
     var url = base + URLS.logintransation;
-    var url2 =
-        'https://vmsstaging.vapssmartecampus.com:40002/${URLS.logintransation}';
+    // var url2 =
+    //     'https://vmsstaging.vapssmartecampus.com:40002/${URLS.logintransation}';
     try {
       var response = await dio.post(url,
           options: Options(headers: getSession()),

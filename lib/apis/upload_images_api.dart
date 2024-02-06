@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:m_skool_flutter/model/upload_files_model.dart';
 
 import '../constants/api_url_constants.dart';
 import '../controller/global_utilities.dart';
-import '../model/UploadFilesModel.dart';
 
 Future<String> uploadFiles({
   required String docFilePath,

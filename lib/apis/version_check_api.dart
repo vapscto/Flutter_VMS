@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/model/version_control_model.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../constants/api_url_constants.dart';
 import '../controller/global_utilities.dart';
 import '../main.dart';
-import '../model/VersionControlModel.dart';
 import '../widget/app_update_alert_popup.dart';
 
 Future<VersionControlModel?> versionPermissionApi() async {

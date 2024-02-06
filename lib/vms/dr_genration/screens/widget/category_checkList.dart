@@ -4,16 +4,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/api/get_task_check_list.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';
-import 'package:m_skool_flutter/vms/dr_genration/model/planner_file_upload_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/upload_dr_image.dart';
 import 'package:m_skool_flutter/vms/rating_report/screen/report_data_screen.dart';
-import 'package:m_skool_flutter/vms/task%20creation/api/sava_task.dart';
-import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:open_filex/open_filex.dart';
 
