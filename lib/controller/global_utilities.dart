@@ -19,6 +19,7 @@ import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
+import 'package:m_skool_flutter/vms/certificate_approval/certificate_approval.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/dailyrpt_home.dart';
 import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_home.dart';
@@ -755,6 +756,16 @@ void openMappedPages(
     }));
     return;
   }
+//   if (pageName == "Certificate Approval") {
+//     Navigator.push(context, MaterialPageRoute(builder: (_) {
+//       return CertificateApproval(
+//         loginSuccessModel: loginSuccessModel,
+//         mskoolController: mskoolController,
+//         title: pageName,
+//       );
+//     }));
+//     return;
+//   }
 }
 
 bool isWebsite(String url) {
