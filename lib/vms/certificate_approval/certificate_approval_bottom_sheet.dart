@@ -157,7 +157,6 @@ class _CertificateApprovalSheetState extends State<CertificateApprovalSheet> {
                 Text(
                   'Employee Certificates',
                   style: Get.textTheme.titleMedium,
-                  textAlign: TextAlign.left,
                 ),
                 const SizedBox(height: 10),
                 SingleChildScrollView(

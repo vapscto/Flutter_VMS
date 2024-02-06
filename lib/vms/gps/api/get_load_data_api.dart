@@ -20,30 +20,30 @@ Future<bool> feacthGpsClient({
   logger.d(apiUrl);
   controller.updategpsLoading(true);
   try {
-    final Response response = await ins.post(apiUrl,
-        options: Options(headers: getSession()),
-        data: {"MI_Id": miId, "UserId": userId});
-    logger.i({"MI_Id": miId, "UserId": userId});
-    logger.e(apiUrl);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> jsonData = jsonDecode(jsonString);
-      GetGpsClientDetails getGpsClientDetails =
-          GetGpsClientDetails.fromJson(jsonData['clientlist']);
-      // GetGpsClientDetails clientDetailsList =
-      //     GetGpsClientDetails.fromJson(response.data['clientlist']);
-      controller.gpsClientList.addAll(getGpsClientDetails.values!);
-      // GetGpsEmployeeDetails employeeDetails =
-      //     GetGpsEmployeeDetails.fromJson(response.data['employee_name']);
-      // controller.gpsEmpList.addAll(employeeDetails.values!);
-      //
-      Map<String, dynamic> jsonData1 = jsonDecode(leadString);
-      GetGpsSalesDetails salesDetails =
-          GetGpsSalesDetails.fromJson(jsonData1['saleslist']);
-      // GetGpsSalesDetails salesDetails =
-      //     GetGpsSalesDetails.fromJson(response.data['saleslist']);
-      controller.gpsSalesList.addAll(salesDetails.values!);
-      controller.updategpsLoading(false);
-    }
+    // final Response response = await ins.post(apiUrl,
+    //     options: Options(headers: getSession()),
+    //     data: {"MI_Id": miId, "UserId": userId});
+    // logger.i({"MI_Id": miId, "UserId": userId});
+    // logger.e(apiUrl);
+    // if (response.statusCode == 200) {
+    Map<String, dynamic> jsonData = jsonDecode(jsonString);
+    GetGpsClientDetails getGpsClientDetails =
+        GetGpsClientDetails.fromJson(jsonData['clientlist']);
+    // GetGpsClientDetails clientDetailsList =
+    //     GetGpsClientDetails.fromJson(response.data['clientlist']);
+    controller.gpsClientList.addAll(getGpsClientDetails.values!);
+    // GetGpsEmployeeDetails employeeDetails =
+    //     GetGpsEmployeeDetails.fromJson(response.data['employee_name']);
+    // controller.gpsEmpList.addAll(employeeDetails.values!);
+    //
+    Map<String, dynamic> jsonData1 = jsonDecode(leadString);
+    GetGpsSalesDetails salesDetails =
+        GetGpsSalesDetails.fromJson(jsonData1['saleslist']);
+    // GetGpsSalesDetails salesDetails =
+    //     GetGpsSalesDetails.fromJson(response.data['saleslist']);
+    controller.gpsSalesList.addAll(salesDetails.values!);
+    controller.updategpsLoading(false);
+    // }
 
     return true;
   } on DioError catch (e) {
