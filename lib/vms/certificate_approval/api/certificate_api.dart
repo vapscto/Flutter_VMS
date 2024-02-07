@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/controller/certificate_controller.dart';
+import 'package:m_skool_flutter/vms/certificate_approval/model/certi_emp_list.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_approval_model.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_doc_model.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_employee_list.dart';
@@ -69,6 +70,7 @@ class CertificateLoadAPI {
         controller.certificatDocList.addAll(certificateDocumentModel.values!);
         controller.employeeRemarks.value =
             response.data['ismcertreqapP_Remarks'];
+        controller.maxLevel.value = response.data['maxmumlevel'];
         if (response.data['aprovedlist'] != null) {
           PreviousApprovedModel previousApprovedModel =
               PreviousApprovedModel.fromJson(response.data['aprovedlist']);
@@ -80,6 +82,10 @@ class CertificateLoadAPI {
         CertificateEmployeeModel certificateEmployeeModel =
             CertificateEmployeeModel.fromJson(response.data['getloaddetails']);
         controller.loadEmployee(certificateEmployeeModel.values!);
+        CerEmployListModel cerEmployListModel =
+            CerEmployListModel.fromJson(response.data['employees']);
+        controller.employeeList.addAll(cerEmployListModel.values!);
+
         controller.approvedloading(true);
       }
     } on DioError catch (e) {

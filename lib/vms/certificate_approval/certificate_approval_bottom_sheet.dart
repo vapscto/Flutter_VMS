@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/api/certificate_api.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/controller/certificate_controller.dart';
+import 'package:m_skool_flutter/vms/certificate_approval/model/certi_emp_list.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/drop_down_level.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:m_skool_flutter/widget/reject_btn.dart';
 
@@ -33,10 +38,18 @@ class CertificateApprovalSheet extends StatefulWidget {
 class _CertificateApprovalSheetState extends State<CertificateApprovalSheet> {
   List<int> newImage = [];
   final remarkController = TextEditingController();
+  final employeeController = TextEditingController();
+  int hrmeId = 0;
+  final _startDate = TextEditingController();
+  final _endDate = TextEditingController();
+  DateTime? fromDate;
+  DateTime? toDate;
+  CerEmployListModelValues? selectedEmployee;
   _loadData() async {
     widget.controller.certificatDocList.clear();
     widget.controller.previousApprovedList.clear();
     widget.controller.viewList.clear();
+    widget.controller.employeeList.clear();
     widget.controller.approvedloading(true);
     await CertificateLoadAPI.instance.documentLoad(
         base: baseUrlFromInsCode('recruitement', widget.mskoolController),
@@ -282,6 +295,414 @@ class _CertificateApprovalSheetState extends State<CertificateApprovalSheet> {
                                 ],
                               )
                             : const SizedBox(),
+                        // const SizedBox(height: 10),
+                        // ignore: unrelated_type_equality_checks
+                        ((widget.controller.maxLevel - 1) !=
+                                widget.controller.viewList.first
+                                    .hrpaoNSanctionLevelNo)
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(color: Colors.grey)),
+                                  padding: const EdgeInsets.all(4),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "Certificate Receive Date",
+                                        style: Get.textTheme.titleMedium!
+                                            .copyWith(color: Colors.red),
+                                      ),
+                                      const SizedBox(height: 25),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: CustomContainer(
+                                              child: TextField(
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall,
+                                                readOnly: true,
+                                                controller: _startDate,
+                                                onTap: () async {
+                                                  fromDate =
+                                                      await showDatePicker(
+                                                    context: context,
+                                                    helpText:
+                                                        "Select From Data",
+                                                    firstDate: DateTime(2000),
+                                                    initialDate: DateTime.now(),
+                                                    lastDate: DateTime(3050),
+                                                  );
+                                                  if (fromDate != null) {
+                                                    setState(() {
+                                                      _startDate.text =
+                                                          "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
+                                                    });
+                                                  }
+                                                },
+                                                decoration: InputDecoration(
+                                                  suffixIcon: IconButton(
+                                                    onPressed: () async {
+                                                      fromDate =
+                                                          await showDatePicker(
+                                                        helpText:
+                                                            "Select From Data",
+                                                        context: context,
+                                                        firstDate:
+                                                            DateTime(2000),
+                                                        initialDate:
+                                                            DateTime.now(),
+                                                        lastDate:
+                                                            DateTime(3050),
+                                                      );
+                                                      if (fromDate != null) {
+                                                        setState(() {
+                                                          _startDate.text =
+                                                              "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
+                                                        });
+                                                      }
+                                                    },
+                                                    icon: SvgPicture.asset(
+                                                      "assets/svg/calendar_icon.svg",
+                                                      color: const Color(
+                                                          0xFF3E78AA),
+                                                      height: 18,
+                                                    ),
+                                                  ),
+                                                  contentPadding:
+                                                      const EdgeInsets.only(
+                                                          top: 40.0, left: 12),
+                                                  border:
+                                                      const OutlineInputBorder(),
+                                                  label: Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            bottom: 5),
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 12.0,
+                                                        vertical: 8.0),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(24.0),
+                                                        color: const Color(
+                                                            0xFFE5F3FF)),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        SvgPicture.asset(
+                                                          "assets/svg/calendar_icon.svg",
+                                                          color: const Color(
+                                                              0xFF3E78AA),
+                                                          height: 18,
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 6.0,
+                                                        ),
+                                                        Text(
+                                                          " Start Date ",
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .labelMedium!
+                                                                  .merge(
+                                                                    const TextStyle(
+                                                                      fontSize:
+                                                                          18.0,
+                                                                      color: Color(
+                                                                          0xFF3E78AA),
+                                                                    ),
+                                                                  ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  hintText: 'Select Date',
+                                                  floatingLabelBehavior:
+                                                      FloatingLabelBehavior
+                                                          .always,
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Colors.transparent,
+                                                    ),
+                                                  ),
+                                                  focusedBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Colors.transparent,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 12.0,
+                                          ),
+                                          Expanded(
+                                            child: CustomContainer(
+                                              child: TextField(
+                                                readOnly: true,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall,
+                                                controller: _endDate,
+                                                onTap: () async {
+                                                  if (fromDate != null) {
+                                                    toDate =
+                                                        await showDatePicker(
+                                                      context: context,
+                                                      helpText:
+                                                          "Select To Date",
+                                                      firstDate: fromDate!,
+                                                      initialDate: fromDate!,
+                                                      lastDate: DateTime(3050),
+                                                    );
+                                                    if (toDate != null) {
+                                                      _endDate.text =
+                                                          "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                                    }
+                                                  } else {
+                                                    Fluttertoast.showToast(
+                                                        msg:
+                                                            "Please Select Start Date");
+                                                  }
+                                                },
+                                                decoration: InputDecoration(
+                                                  isDense: true,
+                                                  contentPadding:
+                                                      const EdgeInsets.only(
+                                                          top: 40.0, left: 12),
+                                                  suffixIcon: IconButton(
+                                                    onPressed: () async {
+                                                      if (fromDate != null) {
+                                                        toDate =
+                                                            await showDatePicker(
+                                                          context: context,
+                                                          helpText:
+                                                              "Select To Date",
+                                                          firstDate: fromDate!,
+                                                          initialDate:
+                                                              fromDate!,
+                                                          lastDate:
+                                                              DateTime(3050),
+                                                          fieldHintText:
+                                                              'Date:Month:Year',
+                                                        );
+                                                        if (toDate != null) {
+                                                          _endDate.text =
+                                                              "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                                        }
+                                                      } else {
+                                                        Fluttertoast.showToast(
+                                                            msg:
+                                                                "Please Select Start Date");
+                                                      }
+                                                    },
+                                                    icon: SvgPicture.asset(
+                                                      "assets/svg/calendar_icon.svg",
+                                                      color: const Color(
+                                                          0xFF3E78AA),
+                                                      height: 18,
+                                                    ),
+                                                  ),
+                                                  border:
+                                                      const OutlineInputBorder(),
+                                                  label: Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            bottom: 5),
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 12.0,
+                                                        vertical: 8.0),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(24.0),
+                                                        color: const Color(
+                                                            0xFFE5F3FF)),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        SvgPicture.asset(
+                                                          "assets/svg/calendar_icon.svg",
+                                                          color: const Color(
+                                                              0xFF3E78AA),
+                                                          height: 18,
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 6.0,
+                                                        ),
+                                                        Text(
+                                                          " End Date ",
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .labelMedium!
+                                                                  .merge(
+                                                                    const TextStyle(
+                                                                        fontSize:
+                                                                            18.0,
+                                                                        color: Color(
+                                                                            0xFF3E78AA)),
+                                                                  ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  hintText: 'Select Date',
+                                                  floatingLabelBehavior:
+                                                      FloatingLabelBehavior
+                                                          .always,
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Colors.transparent,
+                                                    ),
+                                                  ),
+                                                  focusedBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Colors.transparent,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      (widget.controller.employeeList.isEmpty)
+                                          ? const SizedBox()
+                                          : Container(
+                                              height: 60,
+                                              margin: const EdgeInsets.only(
+                                                  top: 20),
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .scaffoldBackgroundColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                    offset: Offset(0, 1),
+                                                    blurRadius: 8,
+                                                    color: Colors.black12,
+                                                  ),
+                                                ],
+                                              ),
+                                              child: TypeAheadFormField<
+                                                  CerEmployListModelValues>(
+                                                textFieldConfiguration:
+                                                    TextFieldConfiguration(
+                                                  style:
+                                                      Get.textTheme.titleSmall,
+                                                  controller:
+                                                      employeeController,
+                                                  decoration: InputDecoration(
+                                                      border: InputBorder.none,
+                                                      focusedBorder:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Colors
+                                                              .transparent,
+                                                        ),
+                                                      ),
+                                                      enabledBorder:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Colors
+                                                              .transparent,
+                                                        ),
+                                                      ),
+                                                      hintStyle:
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .titleSmall!
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .grey,
+                                                                  fontSize: 14),
+                                                      hintText: widget
+                                                              .controller
+                                                              .employeeList
+                                                              .isNotEmpty
+                                                          ? 'Search Employee'
+                                                          : 'No data available',
+                                                      floatingLabelBehavior:
+                                                          FloatingLabelBehavior
+                                                              .always,
+                                                      label:
+                                                          const CustomDropDownLabel(
+                                                        icon:
+                                                            'assets/images/prof4.png',
+                                                        containerColor:
+                                                            Color.fromRGBO(212,
+                                                                194, 247, 1),
+                                                        text: 'Hand OverTo',
+                                                        textColor:
+                                                            Color.fromRGBO(107,
+                                                                51, 196, 1),
+                                                      ),
+                                                      suffixIcon: const Icon(
+                                                        Icons
+                                                            .keyboard_arrow_down,
+                                                        color: Colors.black,
+                                                        size: 30,
+                                                      )),
+                                                ),
+                                                suggestionsCallback: (pattern) {
+                                                  return widget
+                                                      .controller.employeeList
+                                                      .where((fruit) => fruit
+                                                          .hrmEEmployeeFirstName!
+                                                          .toLowerCase()
+                                                          .contains(pattern
+                                                              .toLowerCase()));
+                                                },
+                                                itemBuilder:
+                                                    (context, suggestion) {
+                                                  return ListTile(
+                                                    onTap: () {
+                                                      employeeController.text =
+                                                          suggestion
+                                                              .hrmEEmployeeFirstName!;
+                                                      hrmeId =
+                                                          suggestion.hrmEId!;
+                                                      logger.d(hrmeId);
+                                                    },
+                                                    title: Text(
+                                                      suggestion
+                                                          .hrmEEmployeeFirstName!,
+                                                      style: Get
+                                                          .textTheme.titleSmall,
+                                                    ),
+                                                  );
+                                                },
+                                                onSuggestionSelected:
+                                                    (suggestion) {},
+                                                noItemsFoundBuilder: (context) {
+                                                  return const SizedBox();
+                                                },
+                                              ),
+                                            )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
                         const SizedBox(height: 10),
                         Text(
                           'Employee Certificates',
@@ -312,7 +733,7 @@ class _CertificateApprovalSheetState extends State<CertificateApprovalSheet> {
                                       columns: const [
                                         DataColumn(label: Text("SL.NO.")),
                                         DataColumn(
-                                            label: Text("Document  Name")),
+                                            label: Text("Document Name")),
                                         DataColumn(label: Text("View")),
                                       ],
                                       rows: List.generate(

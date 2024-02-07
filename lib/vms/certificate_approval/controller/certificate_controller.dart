@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/vms/certificate_approval/model/certi_emp_list.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_approval_model.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_doc_model.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_employee_list.dart';
@@ -30,6 +31,7 @@ class CertificateController extends GetxController {
   RxList<CertificateDocumentModelValues> certificatDocList =
       <CertificateDocumentModelValues>[].obs;
   RxString employeeRemarks = ''.obs;
+  RxInt maxLevel = 0.obs;
   RxList<PreviousApprovedModelValues> previousApprovedList =
       <PreviousApprovedModelValues>[].obs;
   RxList<PreviousApprovedViewModelValues> viewList =
@@ -44,4 +46,7 @@ class CertificateController extends GetxController {
       employeeData.add(l.elementAt(i));
     }
   }
+
+  RxList<CerEmployListModelValues> employeeList =
+      <CerEmployListModelValues>[].obs;
 }
