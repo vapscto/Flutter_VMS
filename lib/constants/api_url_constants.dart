@@ -696,4 +696,6 @@ class URLS {
       'api/ISM_Certificate_Process_Facade/loaddata/';
   static String certificateFileView =
       'api/ISM_Certificate_Process_Facade/viewuploadflies';
+  static String certificateApprove =
+      'api/ISM_Certificate_Process_Facade/approvedrecord';
 }

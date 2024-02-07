@@ -217,6 +217,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                         "You Did Not Closed The Completed Task. Kindly Go to Web and Close Your Completed Task",
                         // ignore: use_build_context_synchronously
                         style: Theme.of(context).textTheme.titleSmall!.merge(
+                            // ignore: use_build_context_synchronously
                             TextStyle(color: Theme.of(context).primaryColor)),
                       ),
                       const SizedBox(height: 16),
@@ -227,6 +228,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                           child: Text(
                             "OK",
                             style: Get.textTheme.titleMedium!.copyWith(
+                                // ignore: use_build_context_synchronously
                                 color: Theme.of(context).primaryColor),
                           ))
                     ],
@@ -779,6 +781,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                     if (value!.isEmpty) {
                                       return '';
                                     }
+                                    return null;
                                   },
                                   controller: reasonController,
                                   maxLines: 2,

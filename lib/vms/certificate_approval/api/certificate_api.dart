@@ -1,11 +1,16 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/controller/certificate_controller.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_approval_model.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_doc_model.dart';
+import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_employee_list.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_list_model.dart';
+import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_view_model.dart';
+import 'package:m_skool_flutter/vms/certificate_approval/model/previous_approved_model.dart';
 
 class CertificateLoadAPI {
   CertificateLoadAPI.init();
@@ -16,7 +21,7 @@ class CertificateLoadAPI {
     required int userId,
   }) async {
     var dio = Dio();
-    var api = base + URLS.certificateList; //certificateFileView
+    var api = base + URLS.certificateList;
     try {
       controller.loading(true);
       var response = await dio.post(api,
@@ -46,7 +51,7 @@ class CertificateLoadAPI {
     required String hrmeId,
   }) async {
     var dio = Dio();
-    var api = base + URLS.certificateFileView; //certificateFileView
+    var api = base + URLS.certificateFileView;
     try {
       controller.approvedloading(true);
       var response = await dio.post(api,
@@ -56,13 +61,52 @@ class CertificateLoadAPI {
             "ISMCERTREQ_Id": iSMCERTREQId,
             "HRME_Id": hrmeId
           });
+      logger.i(
+          {"UserId": userId, "ISMCERTREQ_Id": iSMCERTREQId, "HRME_Id": hrmeId});
       if (response.statusCode == 200) {
         CertificateDocumentModel certificateDocumentModel =
             CertificateDocumentModel.fromJson(response.data['document']);
         controller.certificatDocList.addAll(certificateDocumentModel.values!);
         controller.employeeRemarks.value =
             response.data['ismcertreqapP_Remarks'];
+        if (response.data['aprovedlist'] != null) {
+          PreviousApprovedModel previousApprovedModel =
+              PreviousApprovedModel.fromJson(response.data['aprovedlist']);
+          controller.previousApprovedList.addAll(previousApprovedModel.values!);
+        }
+        PreviousApprovedViewModel viewModel =
+            PreviousApprovedViewModel.fromJson(response.data['viewlist']);
+        controller.viewList.addAll(viewModel.values!);
+        CertificateEmployeeModel certificateEmployeeModel =
+            CertificateEmployeeModel.fromJson(response.data['getloaddetails']);
+        controller.loadEmployee(certificateEmployeeModel.values!);
         controller.approvedloading(true);
+      }
+    } on DioError catch (e) {
+      logger.e(e.message);
+    } on Exception catch (e) {
+      logger.e(e.toString());
+    }
+  }
+
+  approveCertificate({
+    required String base,
+    required CertificateController controller,
+    required Map<String, dynamic> body,
+  }) async {
+    logger.i(body);
+    var dio = Dio();
+    var api = base + URLS.certificateApprove;
+    try {
+      controller.aprove(true);
+      var response = await dio.post(api,
+          options: Options(headers: getSession()), data: body);
+
+      if (response.statusCode == 200) {
+        if (response.data['returnval'] == true) {
+          Fluttertoast.showToast(msg: "Status Updated SuccessFully");
+        }
+        controller.aprove(true);
       }
     } on DioError catch (e) {
       logger.e(e.message);

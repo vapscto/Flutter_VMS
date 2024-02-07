@@ -100,7 +100,7 @@ class _CertificateApprovalListState extends State<CertificateApprovalList> {
                                 DateTime.parse(value.iSMCERTREQRequestDate!)))),
                             DataCell(Text(dateFormat(DateTime.parse(
                                 value.iSMCERTREQAPPApprovedDate!)))),
-                            DataCell(Text(value.iSMCERTREQAPPRemarks!)),
+                            DataCell(Text(value.iSMCERTREQAPPAppRejFlag!)),
                             DataCell((value.iSMCERTREQFilePath!.isNotEmpty)
                                 ? IconButton(
                                     onPressed: () {

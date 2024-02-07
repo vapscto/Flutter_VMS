@@ -302,7 +302,7 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                                               clientController.text =
                                                   suggestion.ismmclTClientName!;
                                               clientId = suggestion.ismmclTId!;
-                                              logger.d(clientId);
+                                              logger.d('clientId:- $clientId');
                                             },
                                             title: Text(
                                               suggestion.ismmclTClientName!,
