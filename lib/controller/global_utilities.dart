@@ -756,16 +756,16 @@ void openMappedPages(
     }));
     return;
   }
-//   if (pageName == "Certificate Approval") {
-//     Navigator.push(context, MaterialPageRoute(builder: (_) {
-//       return CertificateApproval(
-//         loginSuccessModel: loginSuccessModel,
-//         mskoolController: mskoolController,
-//         title: pageName,
-//       );
-//     }));
-//     return;
-//   }
+  if (pageName == "Certificate Approval") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return CertificateApproval(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        title: pageName,
+      );
+    }));
+    return;
+  }
 }
 
 bool isWebsite(String url) {

@@ -44,29 +44,10 @@ class EmployeeDepartmentApi {
       }
       final GroupTypeDropdownModel department =
           GroupTypeDropdownModel.fromJson(response.data['filldepartment']);
-
-      // final YearListDorpdownModel yearList =
-      //     YearListDorpdownModel.fromJson(response.data['leaveyeardropdown']);
-      // final MonthDorpdownModel month =
-      //     MonthDorpdownModel.fromJson(response.data['monthdropdown']);
-
       salaryController.updateDepartment(department.values!);
-      if (department.values!.isNotEmpty) {
-       // salaryController.addToSelectedDepartment(department.values!.first);
-      }
+      if (department.values!.isNotEmpty) {}
       salaryController.updateIsErrorOccuredWhileLoadongDepartment(false);
       salaryController.updateIsLoadingDepartment(false);
-
-      // salaryController.yearlist.clear();
-      // salaryController.monthList.clear();
-      // if (month.values!.isNotEmpty) {
-      //   salaryController.selectedMonth = month.values!.first;
-      //   salaryController.monthList.addAll(month.values!);
-      // }
-      // if (yearList.values!.isNotEmpty) {
-      //   salaryController.selectedYear = yearList.values!.first;
-      //   salaryController.yearlist.addAll(yearList.values!);
-      // }
     } on Exception catch (e) {
       logger.e(e.toString());
       salaryController.updateIsErrorOccuredWhileLoadongDepartment(true);

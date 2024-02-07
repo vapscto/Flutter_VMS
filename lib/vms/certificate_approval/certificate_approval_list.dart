@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_approval_model.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
 class CertificateApprovalList extends StatefulWidget {
-  const CertificateApprovalList({super.key});
+  final List<CertificateApprovalListModelValues> data;
+  const CertificateApprovalList({super.key, required this.data});
 
   @override
   State<CertificateApprovalList> createState() =>
@@ -14,10 +17,21 @@ class CertificateApprovalList extends StatefulWidget {
 class _CertificateApprovalListState extends State<CertificateApprovalList> {
   final controller = TextEditingController();
   List<int> dataList = [];
+  List<CertificateApprovalListModelValues> filterList = [];
+  filterFun(String query) {
+    filterList = widget.data.where((list) {
+      return list.hRMEEmployeeFirstName!
+          .trim()
+          .toLowerCase()
+          .contains(query.toLowerCase());
+    }).toList();
+    setState(() {});
+  }
 
   @override
   void initState() {
     dataList.add(1);
+    filterList = widget.data;
     super.initState();
   }
 
@@ -32,6 +46,13 @@ class _CertificateApprovalListState extends State<CertificateApprovalList> {
           TextFormField(
             style: Get.textTheme.titleSmall,
             controller: controller,
+            onChanged: (value) {
+              setState(() {
+                setState(() {
+                  filterFun(controller.text);
+                });
+              });
+            },
             decoration: InputDecoration(
                 contentPadding: const EdgeInsets.all(8),
                 hintText: 'Search Employee name',
@@ -42,57 +63,75 @@ class _CertificateApprovalListState extends State<CertificateApprovalList> {
                     borderSide: const BorderSide(color: Colors.grey))),
           ),
           const SizedBox(height: 10),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: DataTable(
-                  dataRowHeight: 45,
-                  headingRowHeight: 45,
-                  columnSpacing: 20,
-                  headingTextStyle: const TextStyle(color: Colors.white),
-                  border: TableBorder.all(
-                    color: Colors.black,
-                    width: 0.6,
+          (filterList.isEmpty)
+              ? const AnimatedProgressWidget(
+                  animationPath: 'assets/json/nodata.json',
+                  title: 'Data is not available',
+                  desc: "",
+                  animatorHeight: 250,
+                )
+              : SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                  ),
-                  headingRowColor: MaterialStateColor.resolveWith(
-                      (states) => Theme.of(context).primaryColor),
-                  columns: createColumn(),
-                  rows: List.generate(dataList.length, (index) {
-                    var v = index + 1;
-                    return DataRow(cells: [
-                      DataCell(Text(v.toString())),
-                      DataCell(SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          child: Text(v.toString()))),
-                      DataCell(Text(v.toString())),
-                      DataCell(Text(v.toString())),
-                      DataCell(Text(v.toString())),
-                      DataCell(IconButton(
-                        onPressed: () {
-                          createPreview(context, '');
-                        },
-                        icon: Icon(
-                          Icons.visibility,
-                          color: Theme.of(context).primaryColor,
+                    child: DataTable(
+                        dataRowHeight: 45,
+                        headingRowHeight: 45,
+                        columnSpacing: 20,
+                        headingTextStyle: const TextStyle(color: Colors.white),
+                        border: TableBorder.all(
+                          color: Colors.black,
+                          width: 0.6,
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                      )),
-                      // DataCell(IconButton(
-                      //   onPressed: () {},
-                      //   icon: Icon(
-                      //     Icons.arrow_downward,
-                      //     color: Theme.of(context).primaryColor,
-                      //   ),
-                      // )
-                      // ),
-                    ]);
-                  })),
-            ),
-          ),
+                        headingRowColor: MaterialStateColor.resolveWith(
+                            (states) => Theme.of(context).primaryColor),
+                        columns: createColumn(),
+                        rows: List.generate(filterList.length, (index) {
+                          var v = index + 1;
+                          var value = filterList.elementAt(index);
+                          return DataRow(cells: [
+                            DataCell(Text(v.toString())),
+                            DataCell(SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                child:
+                                    Text(value.hRMEEmployeeFirstName!.trim()))),
+                            DataCell(Text(dateFormat(
+                                DateTime.parse(value.iSMCERTREQRequestDate!)))),
+                            DataCell(Text(dateFormat(DateTime.parse(
+                                value.iSMCERTREQAPPApprovedDate!)))),
+                            DataCell(Text(value.iSMCERTREQAPPRemarks!)),
+                            DataCell((value.iSMCERTREQFilePath!.isNotEmpty)
+                                ? IconButton(
+                                    onPressed: () {
+                                      createPreview(
+                                          context, value.iSMCERTREQFilePath!);
+                                    },
+                                    icon: Icon(
+                                      Icons.visibility,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  )
+                                : const SizedBox()),
+                            // DataCell(IconButton(
+                            //   onPressed: () {},
+                            //   icon: Icon(
+                            //     Icons.arrow_downward,
+                            //     color: Theme.of(context).primaryColor,
+                            //   ),
+                            // )
+                            // ),
+                          ]);
+                        })),
+                  ),
+                ),
         ],
       ),
     );
+  }
+
+  String dateFormat(DateTime dt) {
+    return '${dt.day}-${dt.month}-${dt.year}';
   }
 
   List<DataColumn> createColumn() {
