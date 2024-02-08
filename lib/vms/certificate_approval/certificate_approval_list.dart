@@ -16,7 +16,6 @@ class CertificateApprovalList extends StatefulWidget {
 
 class _CertificateApprovalListState extends State<CertificateApprovalList> {
   final controller = TextEditingController();
-  List<int> dataList = [];
   List<CertificateApprovalListModelValues> filterList = [];
   filterFun(String query) {
     filterList = widget.data.where((list) {
@@ -30,7 +29,6 @@ class _CertificateApprovalListState extends State<CertificateApprovalList> {
 
   @override
   void initState() {
-    dataList.add(1);
     filterList = widget.data;
     super.initState();
   }

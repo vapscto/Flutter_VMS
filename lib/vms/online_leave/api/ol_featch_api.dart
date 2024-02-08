@@ -18,7 +18,6 @@ Future<void> getOptionalLeave(
     final Response response = await ins.post(apiUrl,
         options: Options(headers: getSession()),
         data: {"MI_Id": miId, "UserId": userId, "asmay_id": asmayId});
-    logger.d(apiUrl);
     OpetionLeaveModel olList =
         OpetionLeaveModel.fromJson(response.data['optionalleavedata']);
     controller.getOptionalLeave(olList.values!);

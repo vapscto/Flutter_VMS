@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -391,31 +392,31 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                     }
                                     _getleaveCount(
                                         '${date.year}-${date.month}-${date.day}');
-
+                                    olLoad();
                                     getEndDate(date);
                                     endDate.clear();
                                     reportingDate.clear();
                                     totalDay.value = '0';
                                     startDT = date;
                                     startDate.text =
-                                        "${date.day}-${date.month}-${date.year}";
+                                        "${numberList[date.day]}-${numberList[date.month]}-${date.year}";
                                     if (widget.values.hrelSCBLeaves == 0.50) {
                                       endDate.text =
                                           "${date.day}-${date.month}-${date.year}";
                                       totalDay.value = '0.5';
                                     }
                                     if (widget.values.hrmLLeaveCode == "OL") {
-                                      for (int i = 0;
-                                          i <
-                                              controllerOL
-                                                  .optionalLeaveList.length;
-                                          i++) {
-                                        newDate = controllerOL
-                                            .optionalLeaveList[i]
-                                            .fOMHWDDFromDate!;
-                                      }
+                                      // for (int i = 0;
+                                      //     i <
+                                      //         controllerOL
+                                      //             .optionalLeaveList.length;
+                                      //     i++) {
+                                      newDate = controllerOL.optionalLeaveList
+                                          .first.fOMHWDDFromDate!;
+                                      // }
+
                                       if (newDate.contains(
-                                          "${date.year}-${date.month}-${date.day}T00:00:00")) {
+                                          "${date.year}-${numberList[date.month]}-${numberList[date.day]}T00:00:00")) {
                                       } else {
                                         Get.back();
                                         // ignore: use_build_context_synchronously
