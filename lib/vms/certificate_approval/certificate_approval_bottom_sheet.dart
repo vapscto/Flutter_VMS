@@ -134,170 +134,183 @@ class _CertificateApprovalSheetState extends State<CertificateApprovalSheet> {
                   children: [
                     Column(
                       children: [
-                        Text(
-                          'Employee Details',
-                          style: Get.textTheme.titleMedium,
-                        ),
-                        const SizedBox(height: 10),
                         (widget.controller.employeeData.isNotEmpty)
-                            ? Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                            ? Column(
                                 children: [
-                                  Container(
-                                    height: 100,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: const Border(
-                                            left:
-                                                BorderSide(color: Colors.grey),
-                                            right:
-                                                BorderSide(color: Colors.grey),
-                                            top: BorderSide(color: Colors.grey),
-                                            bottom: BorderSide(
-                                                color: Colors.grey))),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: Image.network(
-                                        widget.controller.employeeData.last
-                                            .hRMEPhoto!,
-                                        fit: BoxFit.fill,
-                                        errorBuilder: (context, error,
-                                                stackTrace) =>
-                                            Image.network(
-                                                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
-                                      ),
-                                    ),
+                                  Text(
+                                    'Employee Details',
+                                    style: Get.textTheme.titleMedium,
                                   ),
-                                  const SizedBox(width: 5),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                  text: 'Employee Name:',
-                                                  style: Get
-                                                      .textTheme.titleSmall!
-                                                      .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.w600)),
-                                              TextSpan(
-                                                  text:
-                                                      ' ${widget.controller.employeeData.last.employeename}',
-                                                  style: Get
-                                                      .textTheme.titleSmall!
-                                                      .copyWith(
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .primaryColor)),
-                                            ],
+                                  const SizedBox(height: 10),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            border: const Border(
+                                                left: BorderSide(
+                                                    color: Colors.grey),
+                                                right: BorderSide(
+                                                    color: Colors.grey),
+                                                top: BorderSide(
+                                                    color: Colors.grey),
+                                                bottom: BorderSide(
+                                                    color: Colors.grey))),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          child: Image.network(
+                                            widget.controller.employeeData.last
+                                                .hRMEPhoto!,
+                                            fit: BoxFit.fill,
+                                            errorBuilder: (context, error,
+                                                    stackTrace) =>
+                                                Image.network(
+                                                    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
                                           ),
                                         ),
-                                        Text.rich(
-                                          TextSpan(
-                                            children: [
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text.rich(
                                               TextSpan(
-                                                  text: 'Date of joining:',
-                                                  style: Get
-                                                      .textTheme.titleSmall!
-                                                      .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.w600)),
+                                                children: [
+                                                  TextSpan(
+                                                      text: 'Employee Name:',
+                                                      style: Get
+                                                          .textTheme.titleSmall!
+                                                          .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600)),
+                                                  TextSpan(
+                                                      text:
+                                                          ' ${widget.controller.employeeData.last.employeename}',
+                                                      style: Get
+                                                          .textTheme.titleSmall!
+                                                          .copyWith(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor)),
+                                                ],
+                                              ),
+                                            ),
+                                            Text.rich(
                                               TextSpan(
-                                                  text: dateFormat(
-                                                      DateTime.parse(widget
-                                                          .controller
-                                                          .employeeData
-                                                          .last
-                                                          .hRMEDOJ!)),
-                                                  style: Get
-                                                      .textTheme.titleSmall!
-                                                      .copyWith(
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .primaryColor)),
-                                            ],
-                                          ),
+                                                children: [
+                                                  TextSpan(
+                                                      text: 'Date of joining:',
+                                                      style: Get
+                                                          .textTheme.titleSmall!
+                                                          .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600)),
+                                                  TextSpan(
+                                                      text: dateFormat(
+                                                          DateTime.parse(widget
+                                                              .controller
+                                                              .employeeData
+                                                              .last
+                                                              .hRMEDOJ!)),
+                                                      style: Get
+                                                          .textTheme.titleSmall!
+                                                          .copyWith(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor)),
+                                                ],
+                                              ),
+                                            ),
+                                            Text.rich(
+                                              TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                      text: 'Department:',
+                                                      style: Get
+                                                          .textTheme.titleSmall!
+                                                          .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600)),
+                                                  TextSpan(
+                                                      text:
+                                                          ' ${widget.controller.employeeData.last.hRMDDepartmentName}',
+                                                      style: Get
+                                                          .textTheme.titleSmall!
+                                                          .copyWith(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor)),
+                                                ],
+                                              ),
+                                            ),
+                                            Text.rich(
+                                              TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                      text: 'Designation:',
+                                                      style: Get
+                                                          .textTheme.titleSmall!
+                                                          .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600)),
+                                                  TextSpan(
+                                                      text:
+                                                          ' ${widget.controller.employeeData.last.hRMDESDesignationName}',
+                                                      style: Get
+                                                          .textTheme.titleSmall!
+                                                          .copyWith(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor)),
+                                                ],
+                                              ),
+                                            ),
+                                            Text.rich(
+                                              TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                      text: 'Company Name:',
+                                                      style: Get
+                                                          .textTheme.titleSmall!
+                                                          .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600)),
+                                                  TextSpan(
+                                                      text:
+                                                          ' ${widget.controller.employeeData.last.mIName}',
+                                                      style: Get
+                                                          .textTheme.titleSmall!
+                                                          .copyWith(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor)),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                  text: 'Department:',
-                                                  style: Get
-                                                      .textTheme.titleSmall!
-                                                      .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.w600)),
-                                              TextSpan(
-                                                  text:
-                                                      ' ${widget.controller.employeeData.last.hRMDDepartmentName}',
-                                                  style: Get
-                                                      .textTheme.titleSmall!
-                                                      .copyWith(
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .primaryColor)),
-                                            ],
-                                          ),
-                                        ),
-                                        Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                  text: 'Designation:',
-                                                  style: Get
-                                                      .textTheme.titleSmall!
-                                                      .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.w600)),
-                                              TextSpan(
-                                                  text:
-                                                      ' ${widget.controller.employeeData.last.hRMDESDesignationName}',
-                                                  style: Get
-                                                      .textTheme.titleSmall!
-                                                      .copyWith(
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .primaryColor)),
-                                            ],
-                                          ),
-                                        ),
-                                        Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                  text: 'Company Name:',
-                                                  style: Get
-                                                      .textTheme.titleSmall!
-                                                      .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.w600)),
-                                              TextSpan(
-                                                  text:
-                                                      ' ${widget.controller.employeeData.last.mIName}',
-                                                  style: Get
-                                                      .textTheme.titleSmall!
-                                                      .copyWith(
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .primaryColor)),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
+                                      )
+                                    ],
+                                  ),
                                 ],
                               )
                             : const SizedBox(),
                         // const SizedBox(height: 10),
                         // ignore: unrelated_type_equality_checks
-                        ((widget.controller.maxLevel - 1) !=
+                        ((widget.controller.maxLevel - 1) ==
                                 widget.controller.viewList.first
                                     .hrpaoNSanctionLevelNo)
                             ? Padding(
@@ -875,32 +888,79 @@ class _CertificateApprovalSheetState extends State<CertificateApprovalSheet> {
                                   ? MSkollBtn(
                                       title: 'Approve',
                                       onPress: () {
-                                        if (remarkController.text.isEmpty) {
-                                          Fluttertoast.showToast(
-                                              msg: "Add Remarks");
-                                          return;
+                                        // ignore: unrelated_type_equality_checks
+                                        if ((widget.controller.maxLevel - 1) ==
+                                            widget.controller.viewList.first
+                                                .hrpaoNSanctionLevelNo) {
+                                          if (_endDate.text.isEmpty) {
+                                            Fluttertoast.showToast(
+                                                msg: "Enter To date");
+                                            return;
+                                          } else if (hrmeId == 0) {
+                                            Fluttertoast.showToast(
+                                                msg: "Select Hand OverTo");
+                                            return;
+                                          } else if (remarkController
+                                              .text.isEmpty) {
+                                            Fluttertoast.showToast(
+                                                msg: "Add Remarks");
+                                            return;
+                                          } else {
+                                            _saveData({
+                                              "UserId": widget
+                                                  .loginSuccessModel.userId,
+                                              "MI_Id":
+                                                  widget.loginSuccessModel.mIID,
+                                              "Fromdate":
+                                                  fromDate!.toIso8601String(),
+                                              "HRME_Id": hrmeId,
+                                              "ISMCERTREQAPP_AppRejFlag":
+                                                  "Approved",
+                                              "ISMCERTREQAPP_Remarks":
+                                                  remarkController.text,
+                                              "ISMCERTREQ_FilePath":
+                                                  "undefined",
+                                              "ISMCERTREQ_Id":
+                                                  widget.iSMCERTREQId,
+                                              "Todate":
+                                                  toDate!.toIso8601String(),
+                                              "maxmumlevel": widget
+                                                  .controller
+                                                  .viewList
+                                                  .first
+                                                  .hrpaoNSanctionLevelNo
+                                            });
+                                            return;
+                                          }
                                         } else {
-                                          _saveData({
-                                            "UserId":
-                                                widget.loginSuccessModel.userId,
-                                            "MI_Id":
-                                                widget.loginSuccessModel.mIID,
-                                            "Fromdate": dt.toIso8601String(),
-                                            "HRME_Id": widget.hrmeId,
-                                            "ISMCERTREQAPP_AppRejFlag":
-                                                "Approved",
-                                            "ISMCERTREQAPP_Remarks":
-                                                remarkController.text,
-                                            "ISMCERTREQ_FilePath": "undefined",
-                                            "ISMCERTREQ_Id":
-                                                widget.iSMCERTREQId,
-                                            "Todate": dt.toIso8601String(),
-                                            "maxmumlevel": widget
-                                                .controller
-                                                .viewList
-                                                .first
-                                                .hrpaoNSanctionLevelNo
-                                          });
+                                          if (remarkController.text.isEmpty) {
+                                            Fluttertoast.showToast(
+                                                msg: "Add Remarks");
+                                            return;
+                                          } else {
+                                            _saveData({
+                                              "UserId": widget
+                                                  .loginSuccessModel.userId,
+                                              "MI_Id":
+                                                  widget.loginSuccessModel.mIID,
+                                              "Fromdate": dt.toIso8601String(),
+                                              "HRME_Id": 0,
+                                              "ISMCERTREQAPP_AppRejFlag":
+                                                  "Approved",
+                                              "ISMCERTREQAPP_Remarks":
+                                                  remarkController.text,
+                                              "ISMCERTREQ_FilePath":
+                                                  "undefined",
+                                              "ISMCERTREQ_Id":
+                                                  widget.iSMCERTREQId,
+                                              "Todate": dt.toIso8601String(),
+                                              "maxmumlevel": widget
+                                                  .controller
+                                                  .viewList
+                                                  .first
+                                                  .hrpaoNSanctionLevelNo
+                                            });
+                                          }
                                         }
                                       })
                                   : const SizedBox(
@@ -923,7 +983,7 @@ class _CertificateApprovalSheetState extends State<CertificateApprovalSheet> {
                                             "MI_Id":
                                                 widget.loginSuccessModel.mIID,
                                             "Fromdate": dt.toIso8601String(),
-                                            "HRME_Id": widget.hrmeId,
+                                            "HRME_Id": 0,
                                             "ISMCERTREQAPP_AppRejFlag":
                                                 "Rejected",
                                             "ISMCERTREQAPP_Remarks":
