@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/api/certificate_api.dart';
+import 'package:m_skool_flutter/vms/certificate_approval/appvoval_page.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/certificate_approval_bottom_sheet.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/certificate_approval_list.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/controller/certificate_controller.dart';
@@ -220,36 +221,46 @@ class _CertificateApprovalState extends State<CertificateApproval> {
                                         alignment: Alignment.topRight,
                                         child: InkWell(
                                           onTap: () {
-                                            showModalBottomSheet(
-                                                useSafeArea: true,
-                                                isScrollControlled: true,
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20)),
-                                                context: context,
-                                                builder: (_) {
-                                                  return Padding(
-                                                    padding: EdgeInsets.only(
-                                                        bottom: MediaQuery.of(
-                                                                context)
-                                                            .viewInsets
-                                                            .bottom),
-                                                    child:
-                                                        CertificateApprovalSheet(
-                                                      controller: controller,
-                                                      mskoolController: widget
-                                                          .mskoolController,
-                                                      loginSuccessModel: widget
-                                                          .loginSuccessModel,
-                                                      iSMCERTREQId:
-                                                          data.iSMCERTREQId!,
-                                                      hrmeId: data.hRMEId!,
-                                                    ),
-                                                  );
-                                                });
+                                            Get.to(() => ApprovalPage(
+                                                  controller: controller,
+                                                  mskoolController:
+                                                      widget.mskoolController,
+                                                  loginSuccessModel:
+                                                      widget.loginSuccessModel,
+                                                  iSMCERTREQId:
+                                                      data.iSMCERTREQId!,
+                                                  hrmeId: data.hRMEId!,
+                                                ));
+                                            // showModalBottomSheet(
+                                            //     useSafeArea: true,
+                                            //     isScrollControlled: true,
+                                            //     backgroundColor:
+                                            //         Colors.transparent,
+                                            //     shape: RoundedRectangleBorder(
+                                            //         borderRadius:
+                                            //             BorderRadius.circular(
+                                            //                 20)),
+                                            //     context: context,
+                                            //     builder: (_) {
+                                            //       return Padding(
+                                            //         padding: EdgeInsets.only(
+                                            //             bottom: MediaQuery.of(
+                                            //                     context)
+                                            //                 .viewInsets
+                                            //                 .bottom),
+                                            //         child:
+                                            //             CertificateApprovalSheet(
+                                            //           controller: controller,
+                                            //           mskoolController: widget
+                                            //               .mskoolController,
+                                            //           loginSuccessModel: widget
+                                            //               .loginSuccessModel,
+                                            //           iSMCERTREQId:
+                                            //               data.iSMCERTREQId!,
+                                            //           hrmeId: data.hRMEId!,
+                                            //         ),
+                                            //       );
+                                            //     });
                                           },
                                           child: Chip(
                                               backgroundColor: noticeColor

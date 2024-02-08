@@ -93,6 +93,12 @@ class _CertificateApprovalSheetState extends State<CertificateApprovalSheet> {
   void initState() {
     newImage.add(1);
     _loadData();
+    fromDate = dt.add(const Duration(days: 1));
+    toDate = dt.add(const Duration(days: 7));
+    var t = dt.add(const Duration(days: 1));
+    var t1 = dt.add(const Duration(days: 7));
+    _startDate.text = '${t.day}-${t.month}-${t.year}';
+    _endDate.text = '${t1.day}-${t1.month}-${t1.year}';
     super.initState();
   }
 

@@ -5,8 +5,11 @@ import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_doc_m
 import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_employee_list.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_list_model.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_view_model.dart';
+import 'package:m_skool_flutter/vms/certificate_approval/model/final_approval_model.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/model/previous_approved_model.dart';
 import 'package:m_skool_flutter/vms/rating_report/screen/report_data_screen.dart';
+
+import '../../tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
 
 class CertificateController extends GetxController {
   RxBool isLoading = RxBool(false);
@@ -49,4 +52,8 @@ class CertificateController extends GetxController {
 
   RxList<CerEmployListModelValues> employeeList =
       <CerEmployListModelValues>[].obs;
+
+  RxList<CertificateFinalApprovalModelValues> finalApprovalList =
+      <CertificateFinalApprovalModelValues>[].obs;
+  RxList<AtachmentFile> addListBrowser = <AtachmentFile>[].obs;
 }

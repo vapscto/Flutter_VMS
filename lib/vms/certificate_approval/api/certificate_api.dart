@@ -11,6 +11,7 @@ import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_doc_m
 import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_employee_list.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_list_model.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_view_model.dart';
+import 'package:m_skool_flutter/vms/certificate_approval/model/final_approval_model.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/model/previous_approved_model.dart';
 
 class CertificateLoadAPI {
@@ -71,6 +72,7 @@ class CertificateLoadAPI {
         controller.employeeRemarks.value =
             response.data['ismcertreqapP_Remarks'];
         controller.maxLevel.value = response.data['maxmumlevel'];
+        logger.v('Max Approval :-${controller.maxLevel.value}');
         if (response.data['aprovedlist'] != null) {
           PreviousApprovedModel previousApprovedModel =
               PreviousApprovedModel.fromJson(response.data['aprovedlist']);
@@ -78,14 +80,23 @@ class CertificateLoadAPI {
         }
         PreviousApprovedViewModel viewModel =
             PreviousApprovedViewModel.fromJson(response.data['viewlist']);
+        controller.viewList.clear();
         controller.viewList.addAll(viewModel.values!);
+        logger.w('Level ${controller.viewList.first.hrpaoNSanctionLevelNo}');
         CertificateEmployeeModel certificateEmployeeModel =
             CertificateEmployeeModel.fromJson(response.data['getloaddetails']);
         controller.loadEmployee(certificateEmployeeModel.values!);
         CerEmployListModel cerEmployListModel =
             CerEmployListModel.fromJson(response.data['employees']);
         controller.employeeList.addAll(cerEmployListModel.values!);
-
+        if (response.data['display_data'] != null) {
+          CertificateFinalApprovalModel certificateFinalApprovalModel =
+              CertificateFinalApprovalModel.fromJson(
+                  response.data['display_data']);
+          controller.finalApprovalList.clear();
+          controller.finalApprovalList
+              .addAll(certificateFinalApprovalModel.values!);
+        }
         controller.approvedloading(true);
       }
     } on DioError catch (e) {
