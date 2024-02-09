@@ -265,6 +265,26 @@ class _DriverIndentApprovalState extends State<DriverIndentApproval> {
                                               ],
                                             ),
                                           ),
+                                          Text.rich(
+                                            TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                    text: 'Remarks: ',
+                                                    style: Get
+                                                        .textTheme.titleSmall!
+                                                        .copyWith(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600)),
+                                                TextSpan(
+                                                    text:
+                                                        '${value.iSMDITRemark}',
+                                                    style: Get
+                                                        .textTheme.titleSmall!
+                                                        .copyWith()),
+                                              ],
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),

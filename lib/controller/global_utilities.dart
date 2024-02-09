@@ -22,6 +22,7 @@ import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.da
 import 'package:m_skool_flutter/vms/certificate_approval/certificate_approval.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/dailyrpt_home.dart';
+import 'package:m_skool_flutter/vms/driver_indent/driver_indent_home.dart';
 import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/vms/extension/extension_home_screen.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
@@ -762,6 +763,15 @@ void openMappedPages(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
         title: pageName,
+      );
+    }));
+    return;
+  }
+  if (pageName == "Driver Ind. Approval") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return DriverIndentApproval(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
       );
     }));
     return;

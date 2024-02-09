@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -33,6 +34,49 @@ class DriverIndentAPI {
         controller.indentApprovedListData
             .addAll(driverIndentApprovedModel.values!);
         controller.loadingData(false);
+      }
+    } on DioError catch (e) {
+      logger.e(e.message);
+    } on Exception catch (e) {
+      logger.e(e.toString());
+    }
+  }
+
+  approveIndentAPI({
+    required String base,
+    required Map<String, dynamic> body,
+  }) async {
+    logger.i(body);
+    var dio = Dio();
+    var api = base + URLS.driverIndentApprove;
+    logger.i(api);
+    try {
+      var response = await dio.post(api,
+          options: Options(headers: getSession()), data: body);
+      if (response.statusCode == 200) {
+        Fluttertoast.showToast(msg: "Approved");
+      }
+    } on DioError catch (e) {
+      logger.e(e.message);
+    } on Exception catch (e) {
+      logger.e(e.toString());
+    }
+  }
+
+  rejectIndentAPI({
+    required String base,
+    required Map<String, dynamic> body,
+  }) async {
+    logger.i(body);
+
+    var dio = Dio();
+    var api = base + URLS.driverIndentReject;
+    logger.i(api);
+    try {
+      var response = await dio.post(api,
+          options: Options(headers: getSession()), data: body);
+      if (response.statusCode == 200) {
+        Fluttertoast.showToast(msg: "Rejected");
       }
     } on DioError catch (e) {
       logger.e(e.message);

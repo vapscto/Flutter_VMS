@@ -45,6 +45,36 @@ class _IndentApprovePopupState extends State<IndentApprovePopup> {
     widget.controller.loadingData(false);
   }
 
+  bool isSaveLoading = false;
+  bool isRejectLoading = false;
+  _saveData(Map<String, dynamic> data) async {
+    setState(() {
+      isSaveLoading = true;
+    });
+    await DriverIndentAPI.i.approveIndentAPI(
+        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
+        body: data);
+    setState(() {
+      isSaveLoading = false;
+    });
+    load();
+    Get.back();
+  }
+
+  _rejectData(Map<String, dynamic> data) async {
+    setState(() {
+      isRejectLoading = true;
+    });
+    await DriverIndentAPI.i.approveIndentAPI(
+        base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
+        body: data);
+    setState(() {
+      isRejectLoading = false;
+    });
+    load();
+    Get.back();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -118,8 +148,40 @@ class _IndentApprovePopupState extends State<IndentApprovePopup> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MSkollBtn(title: 'Approve', onPress: () {}),
-                  RejectBtn(title: "Reject", onPress: () {})
+                  (isSaveLoading == true)
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(),
+                        )
+                      : MSkollBtn(
+                          title: 'Approve',
+                          onPress: () {
+                            _saveData({
+                              "MI_Id": widget.loginSuccessModel.mIID,
+                              "User_Id": widget.loginSuccessModel.userId,
+                              "ISMDIT_Remark": controller.text,
+                              "get_indent_status": [],
+                              "roleId": widget.loginSuccessModel.roleId
+                            });
+                          }),
+                  (isRejectLoading == true)
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(),
+                        )
+                      : RejectBtn(
+                          title: "Reject",
+                          onPress: () {
+                            _rejectData({
+                              "MI_Id": widget.loginSuccessModel.mIID,
+                              "User_Id": widget.loginSuccessModel.userId,
+                              "ISMDIT_Remark": controller.text,
+                              "get_indent_status": [],
+                              "roleId": widget.loginSuccessModel.roleId
+                            });
+                          })
                 ],
               ),
             )
