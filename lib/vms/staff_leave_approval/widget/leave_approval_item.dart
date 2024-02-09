@@ -634,7 +634,7 @@ class _AppliedLeaveAprovalItemState extends State<AppliedLeaveAprovalItem> {
                                                                   ),
                                                                   MSkollBtn(
                                                                       title:
-                                                                          "Ok UnderStood",
+                                                                          "Ok",
                                                                       onPress:
                                                                           () {
                                                                         Navigator.pop(
@@ -905,7 +905,7 @@ class _AppliedLeaveAprovalItemState extends State<AppliedLeaveAprovalItem> {
                             height: 6.0,
                           ),
                           MSkollBtn(
-                              title: "Ok UnderStood",
+                              title: "Ok",
                               onPress: () {
                                 Navigator.pop(context);
                                 remark = '';

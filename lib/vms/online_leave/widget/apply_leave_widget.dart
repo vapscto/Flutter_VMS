@@ -1277,7 +1277,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                         height: 12.0,
                                       ),
                                       MSkollBtn(
-                                        title: "Ok Understood",
+                                        title: "Ok",
                                         onPress: () {
                                           Navigator.pop(context);
                                           Navigator.pop(context);
