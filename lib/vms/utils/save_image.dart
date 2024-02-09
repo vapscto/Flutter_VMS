@@ -1,13 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:http_parser/src/media_type.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
- 
+
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 
 import 'package:mime/mime.dart';
 
- 
 Future<String?> securUpload(
     {required String image, required int miId, required String base}) async {
   var url = "https://bdcampus.azurewebsites.net/${URLS.uploadHomeWorkEnd}";

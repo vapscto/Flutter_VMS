@@ -4,7 +4,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/task%20creation/controller/task_department_cntrlr.dart';
- 
+
 import 'package:m_skool_flutter/vms/task%20creation/model/priority_model.dart';
 
 Future<bool> onChangeModuleListApi(
@@ -13,7 +13,7 @@ Future<bool> onChangeModuleListApi(
     required int userId,
     required int ivrmrtId,
     required int miId,
-    required int HRME_Id,
+    required int hRMEId,
     required int hrmdId,
     required String roleType,
     required int ismmprId,
@@ -31,22 +31,22 @@ Future<bool> onChangeModuleListApi(
       "UserId": userId,
       "MI_Id": miId,
       "HRMD_Id": hrmdId,
-      "roletype":  roleType,
+      "roletype": roleType,
       "ISMMPR_Id": ismmprId,
       "ISMMCLT_Id": ismmcltId
     });
-    
-     GetPriorityModel priorityModelList =
+
+    GetPriorityModel priorityModelList =
         GetPriorityModel.fromJson(response.data['get_priority']);
     controller.getPriorityModelList.addAll(priorityModelList.values!);
-     
+
     return true;
   } on DioError catch (e) {
-     logger.e(e.message);
+    logger.e(e.message);
     return false;
   } on Exception catch (e) {
     logger.e(e.toString());
- 
+
     return false;
   }
 }

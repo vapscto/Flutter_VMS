@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/vms/checkbook_approval/api/approveChequeBook.dart';
-import 'package:m_skool_flutter/vms/checkbook_approval/api/fetchCompaniesList.dart';
+import 'package:m_skool_flutter/vms/checkbook_approval/api/approve_cheque_book.dart';
+import 'package:m_skool_flutter/vms/checkbook_approval/api/fetch_companies_list.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/api/otp_fetch.dart';
-import 'package:m_skool_flutter/vms/checkbook_approval/api/updateCheck.dart';
+import 'package:m_skool_flutter/vms/checkbook_approval/api/update_check.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/controller/cheque_controller.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/controller/detailed_todo_controller.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/model/company_model.dart';
@@ -83,7 +83,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
     int status = await approveApi(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         userId: widget.loginSuccessModel.userId!,
-        mi_id: widget.loginSuccessModel.mIID!,
+        miId: widget.loginSuccessModel.mIID!,
         detailsList: detailsList,
         otp: 1010);
     if (status == 200) {
@@ -244,7 +244,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                               mid = s!.mIId;
                               await updateCheque(
                                   userId: widget.loginSuccessModel.userId!,
-                                  mi_id: s.mIId!,
+                                  miId: s.mIId!,
                                   base: baseUrlFromInsCode(
                                       "issuemanager", widget.mskoolController),
                                   controller: _controller);

@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/student/interaction/model/staff_detail_model.dar
 import 'package:m_skool_flutter/vms/interaction/widget/attachment_file_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
+// ignore: must_be_immutable
 class ComposeTabScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;

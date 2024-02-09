@@ -11,7 +11,7 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/save_service_notification.dart';
 import 'package:m_skool_flutter/student/interaction/screen/show_image_screen.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 class ChatBox extends StatelessWidget {
   final String name;
@@ -136,9 +136,9 @@ class ChatBox extends StatelessWidget {
                                               });
                                         } else {
                                           Dio dio = Dio();
-                                          PermissionStatus permissionStatus =
-                                              await Permission.storage
-                                                  .request();
+                                          // PermissionStatus permissionStatus =
+                                          //     await Permission.storage
+                                          //         .request();
                                           Directory? directory =
                                               await getApplicationDocumentsDirectory();
                                           String savePath =
@@ -227,10 +227,10 @@ class ChatBox extends StatelessWidget {
                                                   });
                                             } else {
                                               Dio dio = Dio();
-                                              PermissionStatus
-                                                  permissionStatus =
-                                                  await Permission.storage
-                                                      .request();
+                                              // PermissionStatus
+                                              //     permissionStatus =
+                                              //     await Permission.storage
+                                              //         .request();
                                               Directory? directory =
                                                   await getApplicationDocumentsDirectory();
                                               String savePath =
@@ -315,10 +315,10 @@ class ChatBox extends StatelessWidget {
                                                       });
                                                 } else {
                                                   Dio dio = Dio();
-                                                  PermissionStatus
-                                                      permissionStatus =
-                                                      await Permission.storage
-                                                          .request();
+                                                  // PermissionStatus
+                                                  //     permissionStatus =
+                                                  //     await Permission.storage
+                                                  //         .request();
                                                   Directory? directory =
                                                       await getApplicationDocumentsDirectory();
                                                   String savePath =
@@ -410,11 +410,11 @@ class ChatBox extends StatelessWidget {
                                                               });
                                                     } else {
                                                       Dio dio = Dio();
-                                                      PermissionStatus
-                                                          permissionStatus =
-                                                          await Permission
-                                                              .storage
-                                                              .request();
+                                                      // PermissionStatus
+                                                      //     permissionStatus =
+                                                      //     await Permission
+                                                      //         .storage
+                                                      //         .request();
                                                       Directory? directory =
                                                           await getApplicationDocumentsDirectory();
                                                       String savePath =

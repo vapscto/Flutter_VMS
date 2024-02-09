@@ -7,7 +7,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/api/get_planner_details_api.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
-import 'package:m_skool_flutter/vms/utils/saveBtn.dart';
+import 'package:m_skool_flutter/vms/utils/save_btn.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class DrnotsentScreen extends StatefulWidget {

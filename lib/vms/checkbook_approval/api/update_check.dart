@@ -9,7 +9,7 @@ import 'package:m_skool_flutter/vms/checkbook_approval/model/getTaDaModel.dart';
 
 Future<int> updateCheque({
   required int userId,
-  required int mi_id,
+  required int miId,
   required String base,
   required GetDetailedToDo controller,
 }) async {
@@ -17,13 +17,13 @@ Future<int> updateCheque({
   final String apiUrl = base + URLS.updateCheck;
 
   logger.d("show data$apiUrl");
-  logger.d({"UserId": userId, "MI_Id": mi_id});
+  logger.d({"UserId": userId, "MI_Id": miId});
   try {
     controller.updateisLoading(true);
 
     final Response response = await ins.post(apiUrl,
         options: Options(headers: getSession()),
-        data: {"UserId": userId, "MI_Id": mi_id});
+        data: {"UserId": userId, "MI_Id": miId});
 
     logger.d("show${response.data['getadvancetada']}");
     if (response.data['getadvancetada'] == null) {

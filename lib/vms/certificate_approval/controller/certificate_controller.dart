@@ -7,7 +7,7 @@ import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_list_
 import 'package:m_skool_flutter/vms/certificate_approval/model/certificate_view_model.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/model/final_approval_model.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/model/previous_approved_model.dart';
-import 'package:m_skool_flutter/vms/rating_report/screen/report_data_screen.dart';
+// import 'package:m_skool_flutter/vms/rating_report/screen/report_data_screen.dart';
 
 import '../../tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
 

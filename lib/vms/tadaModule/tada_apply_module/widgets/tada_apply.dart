@@ -2735,9 +2735,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
 
                           if (isFoodSelected == true) {
                             foodamountId =
-                                (foodamountId == null || foodamountId == "")
-                                    ? 0
-                                    : foodamountId;
+                                // ignore: unrelated_type_equality_checks
+                                (foodamountId == "") ? 0 : foodamountId;
                             allowanceData.add({
                               "Type": "Food",
                               "Amount": foodAmt,
@@ -2750,9 +2749,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
 
                           if (isAccommodationSelected == true) {
                             accamountId =
-                                (accamountId == null || accamountId == "")
-                                    ? 0
-                                    : accamountId;
+                                // ignore: unrelated_type_equality_checks
+                                (accamountId == "") ? 0 : accamountId;
                             allowanceData.add({
                               "Type": "Accommodation",
                               "Amount": accommodationAmount,
@@ -2765,9 +2763,8 @@ class _TadaApplyWidgetState extends State<TadaApplyWidget> {
                           }
                           if (isOthersSelected == true) {
                             othersamountId =
-                                (othersamountId == null || othersamountId == "")
-                                    ? 0
-                                    : othersamountId;
+                                // ignore: unrelated_type_equality_checks
+                                (othersamountId == "") ? 0 : othersamountId;
                             allowanceData.add({
                               "Type": "Other",
                               "Amount": otherAmountController.text,

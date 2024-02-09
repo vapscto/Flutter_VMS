@@ -2045,9 +2045,8 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
 
                                                 if (isFoodSelected == true) {
                                                   foodamountId =
-                                                      (foodamountId == null ||
-                                                              foodamountId ==
-                                                                  "")
+                                                      // ignore: unrelated_type_equality_checks
+                                                      (foodamountId == "")
                                                           ? 0
                                                           : foodamountId;
                                                   allowanceData.add({
@@ -2068,8 +2067,8 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                 if (isAccommodationSelected ==
                                                     true) {
                                                   accamountId =
-                                                      (accamountId == null ||
-                                                              accamountId == "")
+                                                      // ignore: unrelated_type_equality_checks
+                                                      (accamountId == "")
                                                           ? 0
                                                           : accamountId;
                                                   allowanceData.add({
@@ -2089,9 +2088,8 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
                                                 }
                                                 if (isOthersSelected == true) {
                                                   othersamountId =
-                                                      (othersamountId == null ||
-                                                              othersamountId ==
-                                                                  "")
+                                                      // ignore: unrelated_type_equality_checks
+                                                      (othersamountId == "")
                                                           ? 0
                                                           : othersamountId;
                                                   allowanceData.add({
@@ -2284,7 +2282,7 @@ class _TadaAdvanceApplyScreenState extends State<TadaAdvanceApplyScreen> {
   var tosavedDate = '';
   var toSavedTime = '';
 
-  _getPopUp() {
+  getPopUp() {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       iconPadding: const EdgeInsets.symmetric(horizontal: 16),

@@ -33,7 +33,7 @@ class CustomTextField extends StatelessWidget {
             textAlignVertical: TextAlignVertical.center,
             controller: controller,
             style:
-                Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 18),
+                Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 18),
             decoration: InputDecoration(
               suffixIcon: suffix,
               hintText: hintText,
