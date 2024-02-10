@@ -1,4 +1,3 @@
-// ignore: file_names
 class CloseTaskCoutnModel {
   String? type;
   List<CloseTaskCoutnModelValues>? values;

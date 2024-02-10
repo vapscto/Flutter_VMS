@@ -5,7 +5,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/controller/detailed_todo_controller.dart';
-import 'package:m_skool_flutter/vms/checkbook_approval/model/getTaDaModel.dart';
+import 'package:m_skool_flutter/vms/checkbook_approval/model/get_tada_model.dart';
 
 Future<int> updateCheque({
   required int userId,

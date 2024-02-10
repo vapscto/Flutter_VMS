@@ -13,6 +13,7 @@ import 'package:m_skool_flutter/vms/rating_report/screen/report_data_screen.dart
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:open_filex/open_filex.dart';
 
+// ignore: must_be_immutable
 class CategoryCheckList extends StatefulWidget {
   final CategoryCheckListModel value;
   final PlannerDetails plannerDetailsController;

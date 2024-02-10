@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/vms/dr_genration/model/DeptWise_Devitaion_Model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/Dept_wise_devitaion_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/add_extra_task_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/advance_tada_applied.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';
-import 'package:m_skool_flutter/vms/dr_genration/model/countTask_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/count_task_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_uploaded_file_model.dart';
@@ -240,8 +240,10 @@ class PlannerDetails extends GetxController {
 
 class AtachmenDrtFile {
   int? id;
+  // ignore: non_constant_identifier_names
   String? FileName;
   File? file;
+  // ignore: non_constant_identifier_names
   AtachmenDrtFile({required this.id, required this.FileName, this.file});
 }
 

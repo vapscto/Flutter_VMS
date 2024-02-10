@@ -46,7 +46,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
 
   bool deviation = false;
   DateTime todayDt = DateTime.now();
-  var currentDate;
+  var currentDate = '';
   DateTime newDt = DateTime.now();
   @override
   void initState() {
@@ -240,11 +240,12 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   }
 
   List<Map<String, dynamic>> uploadImageList = [];
+  int totalHours = 0;
   saveDaetails() async {
     uploadImageList.clear();
     if (fliteresList.isNotEmpty) {
       // Calculate the total hours and minutes
-      int totalHours = 0;
+      totalHours = 0;
       int totalMinutes = 0;
 
       for (int i = 0; i < _plannerDetailsController.hoursEt.length; i++) {
@@ -1174,7 +1175,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                     .uploadImages
                                                     .add(PlannerFileUpload(
                                                         '', '', -1, -1, ''));
-                                                var startDate;
+                                                var startDate = '';
                                                 if (fliteresList
                                                         .elementAt(index)
                                                         .iSMTPLStartDate !=
@@ -1186,7 +1187,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                   startDate =
                                                       "${dt.day}-${dt.month}-${dt.year}";
                                                 }
-                                                var endDt;
+                                                var endDt = '';
                                                 if (fliteresList
                                                         .elementAt(index)
                                                         .iSMTPLEndDate !=
@@ -1199,10 +1200,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                   endDt =
                                                       "${newDt.day}-${newDt.month}-${newDt.year}";
                                                 }
-                                                DateTime endNewDate =
-                                                    DateTime.parse(fliteresList
-                                                        .elementAt(index)
-                                                        .iSMTPLEndDate!);
+                                                // DateTime endNewDate =
+                                                //     DateTime.parse(fliteresList
+                                                //         .elementAt(index)
+                                                //         .iSMTPLEndDate!);
                                                 DateTime currentDt =
                                                     DateTime.now();
                                                 DateTime? previousDt;

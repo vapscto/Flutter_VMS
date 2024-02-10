@@ -227,36 +227,6 @@ class _CertificateApprovalState extends State<CertificateApproval> {
                                                       data.iSMCERTREQId!,
                                                   hrmeId: data.hRMEId!,
                                                 ));
-                                            // showModalBottomSheet(
-                                            //     useSafeArea: true,
-                                            //     isScrollControlled: true,
-                                            //     backgroundColor:
-                                            //         Colors.transparent,
-                                            //     shape: RoundedRectangleBorder(
-                                            //         borderRadius:
-                                            //             BorderRadius.circular(
-                                            //                 20)),
-                                            //     context: context,
-                                            //     builder: (_) {
-                                            //       return Padding(
-                                            //         padding: EdgeInsets.only(
-                                            //             bottom: MediaQuery.of(
-                                            //                     context)
-                                            //                 .viewInsets
-                                            //                 .bottom),
-                                            //         child:
-                                            //             CertificateApprovalSheet(
-                                            //           controller: controller,
-                                            //           mskoolController: widget
-                                            //               .mskoolController,
-                                            //           loginSuccessModel: widget
-                                            //               .loginSuccessModel,
-                                            //           iSMCERTREQId:
-                                            //               data.iSMCERTREQId!,
-                                            //           hrmeId: data.hRMEId!,
-                                            //         ),
-                                            //       );
-                                            //     });
                                           },
                                           child: Chip(
                                               backgroundColor: noticeColor

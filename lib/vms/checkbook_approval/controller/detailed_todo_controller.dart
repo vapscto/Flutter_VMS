@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/vms/checkbook_approval/model/getTaDaModel.dart';
+import 'package:m_skool_flutter/vms/checkbook_approval/model/get_tada_model.dart';
 
 class GetDetailedToDo extends GetxController {
-
   RxList<GetTaDaModelValues> getTaDaModelList = RxList();
   RxBool isLoading = RxBool(false);
   RxBool isErrorOccuredLoading = RxBool(false);
