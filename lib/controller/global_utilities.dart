@@ -27,6 +27,7 @@ import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_home.dart
 import 'package:m_skool_flutter/vms/extension/extension_home_screen.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/health_chequeup/screens/healtha_check_up.dart';
+import 'package:m_skool_flutter/vms/intervoewer_feedback/screens/interview_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/online_leave/screen/apply_leave_home.dart';
@@ -763,6 +764,15 @@ void openMappedPages(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
         title: pageName,
+      );
+    }));
+    return;
+  }
+  if (pageName == "Interview Feedback") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return InterviewerHomeScreen(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
       );
     }));
     return;

@@ -393,4 +393,10 @@ class URLS {
   static String driverIndent = 'api/DriverIndent/getApprovalStatus/';
   static String driverIndentApprove = 'api/DriverIndent/get_status/';
   static String driverIndentReject = 'api/DriverIndent/reject_status/';
+  //Interview feed back
+  static String interviewList =
+      'api/CandidateInterviewListVMSFacade/onloadgetdetails';
+  static String saveFeedback =
+      'api/AddCandidateInterviewVMSFacade/savefeedback/';
+  static String editData = 'api/CandidateInterviewListVMSFacade/getRecordById/';
 }
