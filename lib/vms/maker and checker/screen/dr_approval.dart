@@ -82,7 +82,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
       base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
       date: widget.date,
       userId: widget.loginSuccessModel.userId!,
-      mi_id: widget.loginSuccessModel.mIID!,
+      miId: widget.loginSuccessModel.mIID!,
       academicYear: widget.loginSuccessModel.asmaYId!,
       roleflag: widget.loginSuccessModel.roleforlogin!,
       roleId: widget.loginSuccessModel.roleId!,

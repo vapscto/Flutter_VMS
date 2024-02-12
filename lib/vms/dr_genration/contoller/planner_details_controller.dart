@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/vms/dr_genration/model/Dept_wise_devitaion_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/dept_wise_devitaion_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/add_extra_task_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/advance_tada_applied.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';

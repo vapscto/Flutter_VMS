@@ -15,7 +15,7 @@ import 'package:m_skool_flutter/vms/dr_genration/screens/add_extra_task.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/search_previous_task.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/category_checkList.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/dr_not_approved_popup.dart';
-import 'package:m_skool_flutter/vms/dr_genration/screens/widget/drnotApprovedScreen.dart';
+import 'package:m_skool_flutter/vms/dr_genration/screens/widget/dr_not_approved_screen.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/drnotsent_screen.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/tada_not_approved.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/tada_not_approved_widget.dart';

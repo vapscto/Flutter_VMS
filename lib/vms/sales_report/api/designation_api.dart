@@ -15,11 +15,11 @@ class DesignationAPI {
       required SalesController salesController}) async {
     var dio = Dio();
     var url = base + URLS.designation;
-    var url2 =
-        "https://vmsstaging.vapssmartecampus.com:40019/${URLS.designation}";
+    // var url2 =
+    //     "https://vmsstaging.vapssmartecampus.com:40019/${URLS.designation}";
     try {
       salesController.designationLoading(true);
-      var response = await dio.post(url2,
+      var response = await dio.post(url,
           options: Options(headers: getSession()),
           data: {"MI_Id": miId, "hrmD_IdList": hrndIdList});
       if (response.statusCode == 200) {

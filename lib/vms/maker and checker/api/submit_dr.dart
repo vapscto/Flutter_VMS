@@ -9,7 +9,7 @@ Future<bool> submitDrs({
   required String base,
   required String date,
   required int userId,
-  required int mi_id,
+  required int miId,
   required int academicYear,
   required String roleflag,
   required int roleId,
@@ -18,7 +18,7 @@ Future<bool> submitDrs({
 }) async {
   final Dio ins = getGlobalDio();
   final String apiUrl = base + URLS.submit;
-  logger.d("submit ${apiUrl}");
+  logger.d("submit $apiUrl");
   // logger.d({
   //     "DRApprovalTypeFlag": "DRApproval",
   //     "Fromdate": date,
@@ -31,7 +31,7 @@ Future<bool> submitDrs({
   try {
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
-      "MI_Id": mi_id,
+      "MI_Id": miId,
       "UserId": userId,
       "ASMAY_Id": academicYear,
       "Role_flag": roleflag,
@@ -43,7 +43,7 @@ Future<bool> submitDrs({
     });
 
     logger.d({
-      "MI_Id": mi_id,
+      "MI_Id": miId,
       "UserId": userId,
       "ASMAY_Id": academicYear,
       "Role_flag": roleflag,

@@ -42,10 +42,10 @@ import 'package:m_skool_flutter/vms/tadaModule/tada_approval/screens/tada_approv
 import 'package:m_skool_flutter/vms/utils/video_screen.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
-import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_HOME.dart';
-import 'package:m_skool_flutter/vms/petty_cash_requisition/screen/pc_requisition_HOME.dart';
+import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_home.dart';
+import 'package:m_skool_flutter/vms/petty_cash_requisition/screen/pc_requisition_home.dart';
 import 'package:m_skool_flutter/vms/sales_report/screens/sales_report_home_screen.dart';
-import 'package:m_skool_flutter/vms/security/screen/Shome_Screen.dart';
+import 'package:m_skool_flutter/vms/security/screen/shome_Screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_advance_apply/screens/tada_advance_aplay_home.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/screens/tada_apply_home_screen.dart';
 import 'package:m_skool_flutter/vms/task%20creation/screens/task_creation_h/task_creation_home.dart';

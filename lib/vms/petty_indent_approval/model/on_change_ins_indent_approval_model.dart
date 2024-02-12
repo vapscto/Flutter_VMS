@@ -1,3 +1,4 @@
+
 class OnChangeInsIndentApprovalModel {
   String? type;
   List<OnChangeInsIndentApprovalModelValues>? values;

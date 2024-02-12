@@ -6,7 +6,7 @@ class ApprovalProxyListPopUp extends StatelessWidget {
   final LeaveApprovalModelValues value;
   ApprovalProxyListPopUp({super.key, required this.value});
 
-  List<Map<String, dynamic>> newList = [];
+  final List<Map<String, dynamic>> newList = [];
 
   @override
   Widget build(BuildContext context) {

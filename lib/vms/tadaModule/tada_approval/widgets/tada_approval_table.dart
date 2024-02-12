@@ -6,7 +6,7 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/api/tada_approval_details.dart';
-import 'package:m_skool_flutter/vms/tadaModule/tada_approval/api/tada_approval_save_API.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_approval/api/tada_approval_save_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/api/tada_list_api.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/controller/tada_approval_controller.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/model/tada_approval_list_model.dart';
@@ -51,7 +51,7 @@ class _ApproveTADATableDataState extends State<ApproveTADATableData> {
   List<Map<String, dynamic>> headArray = [];
   List<Map<String, dynamic>> balanceHeadArray = [];
   List<Map<String, dynamic>> balanceHeadrejectArray = [];
-  var days;
+  // var days;
   num sanctionAmount = 0;
   RxList<String> slesRadioBtn = <String>[].obs;
 

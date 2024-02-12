@@ -14,7 +14,7 @@ class DrnotsentScreen extends StatefulWidget {
   final MskoolController mskoolController;
   final LoginSuccessModel loginSuccessModel;
   final PlannerDetails plannerDetailsController;
-  DrnotsentScreen(
+  const DrnotsentScreen(
       {super.key,
       required this.mskoolController,
       required this.loginSuccessModel,

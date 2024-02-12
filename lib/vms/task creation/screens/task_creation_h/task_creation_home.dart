@@ -22,7 +22,7 @@ import 'package:m_skool_flutter/vms/task%20creation/controller/task_client_modul
 import 'package:m_skool_flutter/vms/task%20creation/controller/task_department_cntrlr.dart';
 import 'package:m_skool_flutter/vms/task%20creation/controller/task_projects_cntroller.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/employee_list_model.dart';
-import 'package:m_skool_flutter/vms/task%20creation/model/get_Tsk_Client.dart';
+import 'package:m_skool_flutter/vms/task%20creation/model/get_tsk_client.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_project_category.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_tsk_module.dart';
@@ -660,8 +660,8 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                   userId: widget.loginSuccessModel.userId!,
                                   ivrmrtId: widget.loginSuccessModel.roleId!,
                                   miId: widget.loginSuccessModel.mIID!,
-                                  HRME_Id: logInBox!.get("EmpId"),
-                                  HRMD_Id: s.hrmDId!);
+                                  hRMEId: logInBox!.get("EmpId"),
+                                  hRMDId: s.hrmDId!);
                             },
                           ),
                         )),
@@ -791,11 +791,11 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                       ivrmrtId:
                                           widget.loginSuccessModel.roleId!,
                                       miId: widget.loginSuccessModel.mIID!,
-                                      HRME_Id: logInBox!.get("EmpId"),
-                                      HRMD_Id: logInBox!.get("HRMDID"),
+                                      hRMEId: logInBox!.get("EmpId"),
+                                      hRMDId: logInBox!.get("HRMDID"),
                                       roleflag: widget
                                           .loginSuccessModel.roleforlogin!,
-                                      ISMMPR_Id: s.ismmpRId!);
+                                      iSMMPRId: s.ismmpRId!);
                                 },
                               ),
                             )),

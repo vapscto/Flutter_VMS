@@ -54,9 +54,9 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
   DrDetailsCtrlr drController = Get.put(DrDetailsCtrlr());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  int? hrmdc_Id;
-  int? hrmdes_Id;
-  int? hrme_Id;
+  int? hrmdcId;
+  int? hrmdesId;
+  int? hrmeId;
   String? getDate;
   @override
   void initState() {
@@ -75,7 +75,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
         mi_id: widget.loginSuccessModel.mIID!,
         controller: controller);
     if (statuscode == 200) {
-      hrmdc_Id = controller.departmentList.first.hRMDCID;
+      hrmdcId = controller.departmentList.first.hRMDCID;
       departList.clear();
       departList.add({
         "HRMDC_ID": controller.departmentList.first.hRMDCID,
@@ -340,7 +340,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                               onChanged: (s) async {
                                 controller.designationList.clear();
                                 departList.clear();
-                                hrmdc_Id = s!.hRMDCID;
+                                hrmdcId = s!.hRMDCID;
                                 departmentController.text = s.hRMDCName!;
                                 selecteditem = s;
                                 departList.add({
@@ -454,7 +454,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                               onChanged: (s) async {
                                 controller.employeeList.clear();
                                 emplist.clear();
-                                hrmdes_Id = s!.hRMDESId;
+                                hrmdesId = s!.hRMDESId;
                                 designationController.text =
                                     '${s.hRMDESDesignationName!}:${s.mIName}';
                                 emplist.add({
@@ -550,8 +550,8 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                   onTap: () {
                                     employeeController.text =
                                         '${suggestion.userEmpName!}:${suggestion.hRMDDepartmentName}';
-                                    hrme_Id = suggestion.hRMEId!;
-                                    logger.d(hrme_Id);
+                                    hrmeId = suggestion.hRMEId!;
+                                    logger.d(hrmeId);
                                   },
                                   title: Text(
                                     '${suggestion.userEmpName!}:${suggestion.hRMDDepartmentName}',
@@ -760,9 +760,9 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                         userId: widget.loginSuccessModel.userId!,
                         base: baseUrlFromInsCode(
                             'issuemanager', widget.mskoolController),
-                        hrmdcId: hrmdc_Id!,
-                        hrmdesId: hrmdes_Id!,
-                        hrmeId: hrme_Id!,
+                        hrmdcId: hrmdcId!,
+                        hrmdesId: hrmdesId!,
+                        hrmeId: hrmeId!,
                         date: todayDate.text.toString(),
                         controller: drController,
                       );
