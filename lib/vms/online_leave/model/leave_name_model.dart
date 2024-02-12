@@ -39,6 +39,8 @@ class LeaveNamesModelValues {
   dynamic hrmLNoOfDays;
   dynamic hrmLMaxLeavesApplyPerMonth;
   dynamic appliedCount;
+  bool? probationary;
+  String? hrmeDoc;
 
   LeaveNamesModelValues(
       {this.type,
@@ -54,7 +56,9 @@ class LeaveNamesModelValues {
       this.hrmLWhenToApplyFlg,
       this.hrmLNoOfDays,
       this.hrmLMaxLeavesApplyPerMonth,
-      this.appliedCount});
+      this.appliedCount,
+      this.probationary,
+      this.hrmeDoc});
 
   LeaveNamesModelValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
@@ -71,6 +75,8 @@ class LeaveNamesModelValues {
     hrmLNoOfDays = json['hrmL_NoOfDays'];
     hrmLMaxLeavesApplyPerMonth = json['hrmL_MaxLeavesApplyPerMonth'];
     appliedCount = json['appliedCount'];
+    probationary = json['HRML_ProbationaryNAFlg'];
+    hrmeDoc = json['HRME_doc'];
   }
 
   Map<String, dynamic> toJson() {
@@ -89,6 +95,8 @@ class LeaveNamesModelValues {
     data['hrmL_NoOfDays'] = hrmLNoOfDays;
     data['hrmL_MaxLeavesApplyPerMonth'] = hrmLMaxLeavesApplyPerMonth;
     data['appliedCount'] = appliedCount;
+    data['HRML_ProbationaryNAFlg'] = probationary;
+    data['HRME_doc'] = hrmeDoc;
     return data;
   }
 }

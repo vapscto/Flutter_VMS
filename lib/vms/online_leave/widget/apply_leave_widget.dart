@@ -111,8 +111,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
 
   getleaveDate() {
     max = widget.values.hrmLMaxLeavesApplyPerMonth;
-    min = widget.values.hrmLNoOfDays.round();
-    logger.e('number days $min');
+    min = widget.values.hrmLNoOfDays.toInt();
     transationLeave = widget.values.hrelSTransLeaves.round();
     if (widget.values.hrmLWhenToApplyFlg == "Both") {
       firstDt = currentDate.subtract(Duration(days: min));
@@ -161,18 +160,16 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
     logger.e(max);
     firstDt2 = date;
     initialDt2 = date;
-
+    logger.w(widget.values.hrelSCBLeaves.toInt());
     if (date.day == currentDate.day - 1) {
       lastDt2 = date;
-    } else if (int.parse(widget.values.hrelSCBLeaves.round().toString()) >
-        max) {
+    } else if (widget.values.hrelSCBLeaves.toInt() >= max) {
       lastDt2 = date.add(Duration(days: max - 1));
-      logger.i(lastDt2);
     } else if (widget.values.hrelSCBLeaves == 0.5) {
       lastDt2 = date;
     } else {
-      lastDt2 = date.add(Duration(days: widget.values.hrelSCBLeaves!.round()));
-      logger.i(lastDt2);
+      lastDt2 =
+          date; //.add(Duration(days: widget.values.hrelSCBLeaves!.toInt()))
     }
     if (widget.values.hrmLLeaveCode == "PL") {
       lastDt2 = date.add(Duration(days: max - 1));
@@ -662,7 +659,6 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                     }
                                     if (count1 >
                                         widget.values.hrelSTotalLeaves!) {
-                                      logger.i(true);
                                       // ignore: use_build_context_synchronously
                                       showDialog(
                                           barrierDismissible: false,

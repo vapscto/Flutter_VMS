@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/api/authorization.dart';
 import 'package:m_skool_flutter/vms/online_leave/controller/ol_controller.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
+import 'package:m_skool_flutter/vms/online_leave/model/task_deviation.dart';
 import 'package:m_skool_flutter/vms/online_leave/screen/apply_leave.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
@@ -15,11 +16,13 @@ class Leaves extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final List<LeaveNamesModelValues> leaves;
+  final List<TaskDeviationModelValues> deviation;
   const Leaves(
       {super.key,
       required this.loginSuccessModel,
       required this.mskoolController,
-      required this.leaves});
+      required this.leaves,
+      required this.deviation});
 
   @override
   State<Leaves> createState() => _LeavesState();
@@ -81,6 +84,31 @@ class _LeavesState extends State<Leaves> {
                     "NotMapped") {
                   showPopup(
                       "You Can Not Apply This Leave Because Authorized Person Is Not Mapped For Approval, So Contact Administrator / HR");
+                } else if (widget.leaves.elementAt(index).hrmLLeaveCode ==
+                    'COMPOFF') {
+                  showPopup("Comp off will be auto adjested to lop");
+                  return;
+                } else if ((widget.leaves.elementAt(index).hrmLLeaveCode ==
+                        "PL") &&
+                    widget.deviation.first.deviationPercentage! > 20) {
+                  showPopup(
+                      "You cannot apply for ${widget.leaves.elementAt(index).hrmLLeaveName} since your deviation is greater than 20 %.");
+                  return;
+                } else if ((widget.leaves.elementAt(index).hrmLLeaveCode ==
+                        "CL") &&
+                    widget.deviation.first.deviationPercentage! > 30) {
+                  showPopup(
+                      "You cannot apply for ${widget.leaves.elementAt(index).hrmLLeaveName} since your deviation is greater than 30 %.");
+                  return;
+                } else if (widget.leaves.elementAt(index).probationary ==
+                        true &&
+                    (widget.leaves.elementAt(index).hrmeDoc == null ||
+                        DateTime.parse(widget.leaves.elementAt(index).hrmeDoc!)
+                            .isAfter(DateTime.now()))) {
+                  showPopup(
+                      "As you are in the probationary period, you are not eligible to apply for ${widget.leaves.elementAt(index).hrmLLeaveName}");
+
+                  return;
                 } else {
                   // ignore: use_build_context_synchronously
                   Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -115,13 +143,19 @@ class _LeavesState extends State<Leaves> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           content: Text(message),
+          contentTextStyle: Get.textTheme.titleMedium,
           actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("OK"),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("OK"),
+              ),
             ),
           ],
         );

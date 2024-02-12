@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/vms/online_leave/model/leave_count_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/optional_leave_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/staff_list_model.dart';
+import 'package:m_skool_flutter/vms/online_leave/model/task_deviation.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/total_leave_model.dart';
 
 class OpetionLeaveController extends GetxController {
@@ -63,6 +64,9 @@ class OpetionLeaveController extends GetxController {
       leaveNameList.add(leaveName.elementAt(i));
     }
   }
+
+  RxList<TaskDeviationModelValues> deviationList =
+      <TaskDeviationModelValues>[].obs;
 
   /// **  Staff LIST Previlege CONTROLLER  **  ///
 

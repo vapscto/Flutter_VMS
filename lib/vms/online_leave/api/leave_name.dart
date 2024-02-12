@@ -4,6 +4,7 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/online_leave/controller/ol_controller.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
+import 'package:m_skool_flutter/vms/online_leave/model/task_deviation.dart';
 
 class LeaveNameApi {
   LeaveNameApi.init();
@@ -18,10 +19,10 @@ class LeaveNameApi {
     String api = base + URLS.getLeaveName;
     final Dio ins = getGlobalDio();
     logger.i(api);
-      logger.i({
-        "MI_Id": miId,
-        "UserId": userId,
-      });
+    logger.i({
+      "MI_Id": miId,
+      "UserId": userId,
+    });
     try {
       opetionLeaveController.leaveloading(true);
       final Response response =
@@ -29,7 +30,6 @@ class LeaveNameApi {
         "MI_Id": miId,
         "UserId": userId,
       });
-      
 
       if (response.statusCode == 200) {
         if (response.data['leave_name'] == null) {
@@ -41,8 +41,12 @@ class LeaveNameApi {
         }
         final LeaveNamesModel leaveNames =
             LeaveNamesModel.fromJson(response.data['leave_name']);
+        final TaskDeviationModel leaveDeviation =
+            TaskDeviationModel.fromJson(response.data['deviationdetails']);
         opetionLeaveController.leaveloading(false);
         opetionLeaveController.leaveName(leaveNames.values!);
+        opetionLeaveController.deviationList.clear();
+        opetionLeaveController.deviationList.addAll(leaveDeviation.values!);
       }
     } on DioError catch (e) {
       logger.e(e.message);

@@ -74,6 +74,7 @@ class _ApplyLeaveHomeScreenState extends State<ApplyLeaveHomeScreen> {
                           leaves: opetionLeaveController.leaveNameList,
                           loginSuccessModel: widget.loginSuccessModel,
                           mskoolController: widget.mskoolController,
+                          deviation: opetionLeaveController.deviationList,
                         ),
               FutureBuilder<List<AppliedLeaveModelValues>>(
                   future: GetAppliedLeave.instance.getAppliedLeave(
