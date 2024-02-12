@@ -11,7 +11,7 @@ import 'package:m_skool_flutter/vms/Purchase_requisition/api/purchase_dropdownli
 import 'package:m_skool_flutter/vms/Purchase_requisition/api/purchase_getitem_api.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/api/purchase_save_api.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/controller/purchase_controller.dart';
-import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_Model.dart';
+import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_model.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_getitem.dart';
 import 'package:m_skool_flutter/vms/api/vms_transation_api.dart';
 import 'package:m_skool_flutter/vms/controller/vms_common_controller.dart';

@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/controller/purchase_controller.dart';
-import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_Model.dart';
+import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_model.dart';
 // import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_getitem.dart';
 
 getPurchaseRequisitionApi({

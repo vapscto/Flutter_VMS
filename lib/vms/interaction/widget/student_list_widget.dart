@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/vms/interaction/model/interaction_staff_list_mode.dart';
 
+// ignore: must_be_immutable
 class StudentListWidget extends StatefulWidget {
   final InteractionStaffListModelValues data;
   final Function(int, String) function;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/item_details_model.dart';
-import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_Model.dart';
+import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_model.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_getitem.dart';
 
 class PurchaseRequisitionController extends GetxController {
@@ -63,17 +63,17 @@ class PurchaseRequisitionController extends GetxController {
   void updateIsErrorOccuredRequestGetItem(bool error) {
     isErrorOccuredRequestGetItem.value = error;
   }
+
   RxList<String> statusList = <String>[].obs;
   RxList<TextEditingController> statusET = <TextEditingController>[].obs;
-  RxInt  selecInt =RxInt(0);
-  RxString selecString =RxString("");
+  RxInt selecInt = RxInt(0);
+  RxString selecString = RxString("");
   ////////////////////////////////
-  
-    RxBool isErrorOccuredWhileLoadingIndentItem = RxBool(false);
+
+  RxBool isErrorOccuredWhileLoadingIndentItem = RxBool(false);
   RxBool isLoadingIndentItem = RxBool(false);
 
-  final RxList<PurchaseItemDetailsModelValues> itemDetailsPurchase =
-      RxList();
+  final RxList<PurchaseItemDetailsModelValues> itemDetailsPurchase = RxList();
 
   updateErrorLoadingIndentItem(bool val) {
     isErrorOccuredWhileLoadingIndentItem.value = val;
@@ -82,5 +82,4 @@ class PurchaseRequisitionController extends GetxController {
   updateisLoadingIndentItem(bool val) {
     isLoadingIndentItem.value = val;
   }
- 
 }

@@ -89,7 +89,7 @@ Future<int> getdrLists({
     controller.empDetails.addAll(getEmployeeDetail.values!);
     for (int i = 0; i < drList.values!.length; i++) {
       controller.statusET.add(TextEditingController(text: "Select"));
-      String str = drList.values![i].iSMDRPTTimeTakenInHrs!.toString();
+      // String str = drList.values![i].iSMDRPTTimeTakenInHrs!.toString();
 
       controller.etMinutesList.add(TextEditingController(
           text:

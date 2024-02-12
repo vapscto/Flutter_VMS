@@ -8,7 +8,7 @@ import 'package:m_skool_flutter/vms/dr_genration/model/add_extra_task_model.dart
 import 'package:m_skool_flutter/vms/dr_genration/model/advance_tada_applied.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/count_task_model.dart';
-import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_taskList_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_task_list_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_status_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_uploaded_file_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/drnotapprovedmessage_model.dart';
