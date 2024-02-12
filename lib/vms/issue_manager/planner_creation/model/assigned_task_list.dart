@@ -60,7 +60,7 @@ class AssignedTaskListValues {
   String? iSMTPLTAApprovalFlg;
   String? iSMTPLTAStartDate;
   String? iSMTPLTAEndDate;
-  Null? yrplan;
+  String? yrplan;
   int? priorityswitch;
   String? firstDate1;
   String? firstDate2;
@@ -158,7 +158,7 @@ class AssignedTaskListValues {
     iSMTPLTAApprovalFlg = json['ISMTPLTA_ApprovalFlg'];
     iSMTPLTAStartDate = json['ISMTPLTA_StartDate'];
     iSMTPLTAEndDate = json['ISMTPLTA_EndDate'];
-    yrplan = json['yrplan'];
+    yrplan = json['yrplan'] ?? '';
     priorityswitch = json['priorityswitch'];
     firstDate1 = json['FirstDate1'];
     firstDate2 = json['FirstDate2'];

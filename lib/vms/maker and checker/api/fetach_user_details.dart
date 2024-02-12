@@ -4,8 +4,8 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/controller/mc_home_screen.dart';
-import 'package:m_skool_flutter/vms/maker%20and%20checker/model/adavnceList_mode.dart';
-import 'package:m_skool_flutter/vms/maker%20and%20checker/model/applyList_model.dart';
+import 'package:m_skool_flutter/vms/maker%20and%20checker/model/adavnce_list_mode.dart';
+import 'package:m_skool_flutter/vms/maker%20and%20checker/model/apply_list_model.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/department_list.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/leave_model.dart';
 
@@ -13,7 +13,7 @@ Future<int> feacthUserApi({
   required String base,
   required int ivrmrtId,
   required int userId,
-  required int mi_id,
+  required int miId,
   required MakerCheckerController controller,
 }) async {
   final Dio ins = getGlobalDio();
@@ -26,18 +26,16 @@ Future<int> feacthUserApi({
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
       "IVRMRT_Id": ivrmrtId,
       "UserId": userId,
-      "MI_Id": mi_id,
+      "MI_Id": miId,
       "DRApprovalTypeFlag": "DRApproval"
-    }); 
-  logger.i(apiUrl);
-  logger.w(
-    {
+    });
+    logger.i(apiUrl);
+    logger.w({
       "IVRMRT_Id": ivrmrtId,
       "UserId": userId,
-      "MI_Id": mi_id,
+      "MI_Id": miId,
       "DRApprovalTypeFlag": "DRApproval"
-    }
-  );
+    });
     if (response.data['get_leaveDetails'] == null ||
         response.data['compoffdetails'] == null) {
       controller.checkLeaveandCompoff(true);
@@ -50,19 +48,22 @@ Future<int> feacthUserApi({
       DepartmentModelList deptList =
           DepartmentModelList.fromJson(response.data['departmentList']);
       controller.departmentList.addAll(deptList.values!);
-      if(response.data['adavanceList'] !=null){
-      AdavanceListModel adavanceListModel = AdavanceListModel.fromJson(response.data['adavanceList']);
-      controller.adavanceListModel.addAll(adavanceListModel.values!);
+      if (response.data['adavanceList'] != null) {
+        AdavanceListModel adavanceListModel =
+            AdavanceListModel.fromJson(response.data['adavanceList']);
+        controller.adavanceListModel.addAll(adavanceListModel.values!);
       }
-      if(response.data['applyList'] !=null){
-       ApplyListModel applyListModel = ApplyListModel.fromJson(response.data['applyList']);
-      controller.applyListModel.addAll(applyListModel.values!);
+      if (response.data['applyList'] != null) {
+        ApplyListModel applyListModel =
+            ApplyListModel.fromJson(response.data['applyList']);
+        controller.applyListModel.addAll(applyListModel.values!);
       }
-      if(response.data['get_leaveDetails'] !=null){
-      GetListLeaveModel   getListLeaveModel = GetListLeaveModel.fromJson(response.data['get_leaveDetails']);
-      controller.leaveApproveList.addAll(getListLeaveModel.values!);
+      if (response.data['get_leaveDetails'] != null) {
+        GetListLeaveModel getListLeaveModel =
+            GetListLeaveModel.fromJson(response.data['get_leaveDetails']);
+        controller.leaveApproveList.addAll(getListLeaveModel.values!);
       }
-           
+
       return response.statusCode!;
     }
 

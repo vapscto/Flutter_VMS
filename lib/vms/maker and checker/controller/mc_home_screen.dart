@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/vms/maker%20and%20checker/model/adavnceList_mode.dart';
-import 'package:m_skool_flutter/vms/maker%20and%20checker/model/applyList_model.dart';
+import 'package:m_skool_flutter/vms/maker%20and%20checker/model/adavnce_list_mode.dart';
+import 'package:m_skool_flutter/vms/maker%20and%20checker/model/apply_list_model.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/department_list.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/designation.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/employee_model_list.dart';

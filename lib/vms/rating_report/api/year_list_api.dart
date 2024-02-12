@@ -61,6 +61,7 @@ Future<void> getYearListRatingReport(
         });
 
     // logger.d(response.data['month_array']);
+    if (responseMonth.statusCode == 200) {}
     if (response.data['month_array'] == null) {
       controller.updateErrorLoadingMonth(true);
     } else if (response.data['month_array'] != null) {

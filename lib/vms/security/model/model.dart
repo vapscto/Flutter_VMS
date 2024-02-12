@@ -1,15 +1,15 @@
-class qRcodeActivityDetails {
+class QRcodeActivityDetails {
   String? type;
-  List<qRcodeActivityDetailsValues>? values;
+  List<QRcodeActivityDetailsValues>? values;
 
-  qRcodeActivityDetails({this.type, this.values});
+  QRcodeActivityDetails({this.type, this.values});
 
-  qRcodeActivityDetails.fromJson(Map<String, dynamic> json) {
+  QRcodeActivityDetails.fromJson(Map<String, dynamic> json) {
     type = json['\$type'];
     if (json['\$values'] != null) {
-      values = <qRcodeActivityDetailsValues>[];
+      values = <QRcodeActivityDetailsValues>[];
       json['\$values'].forEach((v) {
-        values!.add(qRcodeActivityDetailsValues.fromJson(v));
+        values!.add(QRcodeActivityDetailsValues.fromJson(v));
       });
     }
   }
@@ -24,7 +24,7 @@ class qRcodeActivityDetails {
   }
 }
 
-class qRcodeActivityDetailsValues {
+class QRcodeActivityDetailsValues {
   String? type;
   int? id;
   String? hRMBBuildingName;
@@ -39,7 +39,7 @@ class qRcodeActivityDetailsValues {
   String? userName;
   String? hRMARACTSTMAPDate;
 
-  qRcodeActivityDetailsValues(
+  QRcodeActivityDetailsValues(
       {this.type,
       this.id,
       this.hRMBBuildingName,
@@ -54,7 +54,7 @@ class qRcodeActivityDetailsValues {
       this.userName,
       this.hRMARACTSTMAPDate});
 
-  qRcodeActivityDetailsValues.fromJson(Map<String, dynamic> json) {
+  QRcodeActivityDetailsValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
     id = json['Id'];
     hRMBBuildingName = json['HRMB_BuildingName'];

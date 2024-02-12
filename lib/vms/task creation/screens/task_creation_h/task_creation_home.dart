@@ -87,6 +87,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
 
   final TextEditingController selectDate = TextEditingController();
 
+  // ignore: prefer_typing_uninitialized_variables
   var moduleId;
   List<int> employeesID = [];
   RxList<TaskEmployeeListModelValues> taskEmployeeList =
@@ -163,6 +164,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
     double count = double.parse(hoursEt.text) + double.parse(countHr);
     logger.i(count);
     String? periodicityType;
+    // ignore: prefer_typing_uninitialized_variables
     var taskDay;
     if (_taskDepartController.typesTask.value == "T") {
       periodicityType = dropdownValue.value;

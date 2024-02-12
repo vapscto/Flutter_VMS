@@ -35,8 +35,8 @@ Future<int> feacthSecurityApi({
       "ASMAY_Id": loginSuccessModel.asmaYId,
     });
 
-    qRcodeActivityDetails qrDetails =
-        qRcodeActivityDetails.fromJson(response.data['qRcodeActivityDetails']);
+    QRcodeActivityDetails qrDetails =
+        QRcodeActivityDetails.fromJson(response.data['qRcodeActivityDetails']);
     logger.w(response.data['qRcodeActivityDetails']);
     controller.securtyWorkList.addAll(qrDetails.values!);
     controller.updateLoading(false);

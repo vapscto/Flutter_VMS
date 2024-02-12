@@ -6,7 +6,7 @@ class ProxyListPopUp extends StatelessWidget {
   final AppliedLeaveModelValues value;
   ProxyListPopUp({super.key, required this.value});
 
-  List<Map<String, dynamic>> newList = [];
+  final List<Map<String, dynamic>> newList = [];
 
   @override
   Widget build(BuildContext context) {

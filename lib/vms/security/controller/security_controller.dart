@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/security/model/model.dart';
 import 'package:m_skool_flutter/vms/utils/save_image.dart';
 
@@ -19,8 +20,8 @@ class SecurtyWorkController extends GetxController {
     isError.value = val;
   }
 
-  RxList<qRcodeActivityDetailsValues> securtyWorkList =
-      <qRcodeActivityDetailsValues>[].obs;
+  RxList<QRcodeActivityDetailsValues> securtyWorkList =
+      <QRcodeActivityDetailsValues>[].obs;
   RxList<bool> checkBox = <bool>[].obs;
   RxList<String> securityUploadImage = <String>[].obs;
 
@@ -35,9 +36,13 @@ class SecurtyWorkController extends GetxController {
           await securUpload(image: pickedFile.path, miId: miId, base: base)
               .then(
         (value) {
-          updateIamgePath(value!);
+          if (value != null) {
+            updateIamgePath(value);
+          }
+          return null;
         },
       );
+      logger.i(imageUrl);
       securityUploadImage.add(pickedFile.name);
       return true;
     }

@@ -35,7 +35,7 @@ class NewTableModel {
   String? iSMTPLTAApprovalFlg;
   String? iSMTPLTAStartDate;
   String? iSMTPLTAEndDate;
-  Null? yrplan;
+  String? yrplan;
   int? priorityswitch;
   String? firstDate1;
   String? firstDate2;

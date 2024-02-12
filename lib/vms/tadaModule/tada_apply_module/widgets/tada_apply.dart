@@ -31,6 +31,7 @@ import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:open_filex/open_filex.dart';
 
+// ignore: must_be_immutable
 class TadaApplyWidget extends StatefulWidget {
   final MskoolController mskoolController;
   final LoginSuccessModel loginSuccessModel;
