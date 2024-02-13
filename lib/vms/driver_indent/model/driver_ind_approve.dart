@@ -34,7 +34,7 @@ class DriverloadModelValues {
   String? iSMDITBillNo;
   double? iSMDITQty;
   double? iSMDITAmount;
-  String? iSMDITRemark;
+  dynamic iSMDITRemark;
   int? iSMDITPreparedByUserId;
   double? iSMDITOpeningKM;
   double? iSMDITClosingKM;
