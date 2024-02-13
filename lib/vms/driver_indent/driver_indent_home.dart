@@ -65,7 +65,7 @@ class _DriverIndentApprovalState extends State<DriverIndentApproval> {
                   )
                 : ListView.separated(
                     physics: const AlwaysScrollableScrollPhysics(),
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 30),
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 50),
                     itemBuilder: (context, index) {
                       bgColor += 1;
                       if (bgColor % 6 == 0) {
@@ -261,6 +261,8 @@ class _DriverIndentApprovalState extends State<DriverIndentApproval> {
                                           widget.loginSuccessModel,
                                       mskoolController: widget.mskoolController,
                                       controller: controller,
+                                      values: controller.indentApprovalList
+                                          .elementAt(index),
                                     ));
                                   },
                                   child: Chip(

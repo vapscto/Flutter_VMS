@@ -649,11 +649,13 @@ class _ApprovalPageState extends State<ApprovalPage> {
                             padding: const EdgeInsets.all(4),
                             child: Column(
                               children: [
-                                Text(
-                                  'Certificate Collection Between ${dateFormat(DateTime.parse(widget.controller.finalApprovalList.first.iSMCERTDISDETReceivingFromDate!))} and ${dateFormat(DateTime.parse(widget.controller.finalApprovalList.first.iSMCERTDISDETReceivingToDate!))}',
-                                  style: Get.textTheme.titleSmall!
-                                      .copyWith(color: Colors.red),
-                                ),
+                                (widget.controller.finalApprovalList.isNotEmpty)
+                                    ? Text(
+                                        'Certificate Collection Between ${dateFormat(DateTime.parse(widget.controller.finalApprovalList.first.iSMCERTDISDETReceivingFromDate!))} and ${dateFormat(DateTime.parse(widget.controller.finalApprovalList.first.iSMCERTDISDETReceivingToDate!))}',
+                                        style: Get.textTheme.titleSmall!
+                                            .copyWith(color: Colors.red),
+                                      )
+                                    : const SizedBox(),
                                 Text.rich(TextSpan(children: [
                                   TextSpan(
                                       text: 'Collect Certificate From :',
@@ -661,8 +663,10 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                           fontWeight: FontWeight.w600,
                                           color: Colors.red)),
                                   TextSpan(
-                                      text:
-                                          ' ${widget.controller.finalApprovalList.first.authorisedEmployee}',
+                                      text: (widget.controller.finalApprovalList
+                                              .isNotEmpty)
+                                          ? ' ${widget.controller.finalApprovalList.first.authorisedEmployee}'
+                                          : '',
                                       style:
                                           Get.textTheme.titleSmall!.copyWith()),
                                 ])),
