@@ -50,6 +50,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
   final _collectEndDate = TextEditingController();
   DateTime? fromDate;
   DateTime? toDate;
+  DateTime? collectDate;
   CerEmployListModelValues? selectedEmployee;
   _loadData() async {
     widget.controller.certificatDocList.clear();
@@ -102,8 +103,8 @@ class _ApprovalPageState extends State<ApprovalPage> {
     // toDate = dt.add(const Duration(days: 7));
     var t = dt.add(const Duration(days: 1));
     var t1 = dt.add(const Duration(days: 7));
-    _startDate.text = '${t.day}-${t.month}-${t.year}';
-    _endDate.text = '${t1.day}-${t1.month}-${t1.year}';
+    _startDate.text = '${t.year}-${t.month}-${t.day}';
+    _endDate.text = '${t1.year}-${t1.month}-${t1.day}';
     super.initState();
     if (widget.controller.finalApprovalList.isNotEmpty) {
       DateTime dt = DateTime.parse(widget
@@ -316,7 +317,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                             if (fromDate != null) {
                                               setState(() {
                                                 _startDate.text =
-                                                    "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
+                                                    dateFormat(fromDate!);
                                               });
                                             }
                                           },
@@ -333,7 +334,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                                 if (fromDate != null) {
                                                   setState(() {
                                                     _startDate.text =
-                                                        "${numberList[fromDate!.day]}:${numberList[fromDate!.month]}:${fromDate!.year}";
+                                                        dateFormat(fromDate!);
                                                   });
                                                 }
                                               },
@@ -429,7 +430,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                               );
                                               if (toDate != null) {
                                                 _endDate.text =
-                                                    "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                                    dateFormat(toDate!);
                                               }
                                             } else {
                                               Fluttertoast.showToast(
@@ -456,7 +457,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                                   );
                                                   if (toDate != null) {
                                                     _endDate.text =
-                                                        "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
+                                                        dateFormat(toDate!);
                                                   }
                                                 } else {
                                                   Fluttertoast.showToast(
@@ -678,34 +679,34 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                     readOnly: true,
                                     controller: _collectEndDate,
                                     onTap: () async {
-                                      fromDate = await showDatePicker(
+                                      collectDate = await showDatePicker(
                                         context: context,
                                         helpText: "Select Collected  Data",
                                         firstDate: DateTime(2000),
                                         initialDate: DateTime.now(),
                                         lastDate: DateTime(3050),
                                       );
-                                      if (fromDate != null) {
+                                      if (collectDate != null) {
                                         setState(() {
                                           _collectEndDate.text =
-                                              "${numberList[fromDate!.day]}-${numberList[fromDate!.month]}-${fromDate!.year}";
+                                              dateFormat(collectDate!);
                                         });
                                       }
                                     },
                                     decoration: InputDecoration(
                                       suffixIcon: IconButton(
                                         onPressed: () async {
-                                          fromDate = await showDatePicker(
+                                          collectDate = await showDatePicker(
                                             helpText: "Select Collected  Data",
                                             context: context,
                                             firstDate: DateTime(2000),
                                             initialDate: DateTime.now(),
                                             lastDate: DateTime(3050),
                                           );
-                                          if (fromDate != null) {
+                                          if (collectDate != null) {
                                             setState(() {
                                               _collectEndDate.text =
-                                                  "${numberList[fromDate!.day]}-${numberList[fromDate!.month]}-${fromDate!.year}";
+                                                  dateFormat(collectDate!);
                                             });
                                           }
                                         },
@@ -1193,7 +1194,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
   }
 
   String dateFormat(DateTime dt) {
-    return '${dt.day}-${dt.month}-${dt.year}';
+    return '${dt.year}-${dt.month}-${dt.day}';
   }
 
   bool loading = false;

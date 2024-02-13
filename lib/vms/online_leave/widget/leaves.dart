@@ -84,30 +84,29 @@ class _LeavesState extends State<Leaves> {
                     "NotMapped") {
                   showPopup(
                       "You Can Not Apply This Leave Because Authorized Person Is Not Mapped For Approval, So Contact Administrator / HR");
+                } else if (widget.leaves.elementAt(index).probationary ==
+                        true &&
+                    (widget.leaves.elementAt(index).hrmeDoc == null)) {
+                  showPopup(
+                      "As you are in the probationary period, you are not eligible to apply for ${widget.leaves.elementAt(index).hrmLLeaveName}");
+                  return;
                 } else if (widget.leaves.elementAt(index).hrmLLeaveCode ==
                     'COMPOFF') {
                   showPopup("Comp off will be auto adjested to lop");
                   return;
                 } else if ((widget.leaves.elementAt(index).hrmLLeaveCode ==
                         "PL") &&
-                    widget.deviation.first.deviationPercentage! > 20) {
+                    widget.deviation.isNotEmpty &&
+                    widget.deviation.last.deviationPercentage! > 20) {
                   showPopup(
                       "You cannot apply for ${widget.leaves.elementAt(index).hrmLLeaveName} since your deviation is greater than 20 %.");
                   return;
                 } else if ((widget.leaves.elementAt(index).hrmLLeaveCode ==
                         "CL") &&
-                    widget.deviation.first.deviationPercentage! > 30) {
+                    widget.deviation.isNotEmpty &&
+                    widget.deviation.last.deviationPercentage! > 30) {
                   showPopup(
                       "You cannot apply for ${widget.leaves.elementAt(index).hrmLLeaveName} since your deviation is greater than 30 %.");
-                  return;
-                } else if (widget.leaves.elementAt(index).probationary ==
-                        true &&
-                    (widget.leaves.elementAt(index).hrmeDoc == null ||
-                        DateTime.parse(widget.leaves.elementAt(index).hrmeDoc!)
-                            .isAfter(DateTime.now()))) {
-                  showPopup(
-                      "As you are in the probationary period, you are not eligible to apply for ${widget.leaves.elementAt(index).hrmLLeaveName}");
-
                   return;
                 } else {
                   // ignore: use_build_context_synchronously

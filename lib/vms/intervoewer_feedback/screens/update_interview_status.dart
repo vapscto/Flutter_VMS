@@ -332,15 +332,17 @@ class _UpdatedInterviewStatusState extends State<UpdatedInterviewStatus> {
                                 _saveData({
                                   "HRCISC_Id": data!.hrcisCId,
                                   "HRCD_Id": data!.hrcDId,
-                                  "MI_Id": data!.mIId,
+                                  "MI_Id": widget.loginSuccessModel.mIID,
                                   "HRCISC_InterviewRounds":
                                       data!.hrcisCInterviewRounds,
                                   "HRCISC_InterviewDateTime":
                                       data!.hrcisCInterviewDateTime,
-                                  "HRCISC_InterviewVenue": 'HO',
+                                  "HRCISC_InterviewVenue":
+                                      data!.hrcisCInterviewVenue!,
                                   "HRCISC_ActiveFlg": data!.hrcisCActiveFlg,
                                   "HRCISC_CreatedBy": data!.hrcisCCreatedBy,
-                                  "HRCISC_UpdatedBy": data!.hrcisCUpdatedBy,
+                                  "HRCISC_UpdatedBy":
+                                      widget.loginSuccessModel.userId,
                                   "HRCISC_Interviewer": data!.hrcisCInterviewer,
                                   "HRCISC_Status": selectedData,
                                   "HRCD_FullName": data!.hrcDFullName,
