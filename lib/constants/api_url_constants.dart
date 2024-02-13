@@ -399,4 +399,6 @@ class URLS {
   static String saveFeedback =
       'api/AddCandidateInterviewVMSFacade/savefeedback/';
   static String editData = 'api/CandidateInterviewListVMSFacade/getRecordById/';
+
+  static String getLeads="api/TADA_Advance_TourFacade/getload";
 }
