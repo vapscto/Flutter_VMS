@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/tada_tour_plan/api/get_lead_details.dart';
 import 'package:m_skool_flutter/vms/tada_tour_plan/controller/lead_controller.dart';
 import 'package:m_skool_flutter/vms/tada_tour_plan/model/lead_details.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/drop_down_level.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
@@ -51,7 +52,19 @@ class _LeadSelectState extends State<LeadSelect> {
       body: Obx(
         ()=> SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: Column(children: [
+          child: leadController.loading.isTrue?
+       const  AnimatedProgressWidget(
+                  animationPath: 'assets/json/default.json',
+                  title: 'Loading...',
+                  desc: "we are loading data",
+                )
+        : leadController.getLeadList.isEmpty ?
+        const  AnimatedProgressWidget(
+                  animationPath: 'assets/json/nodata.json',
+                  title: 'No data',
+                  desc: "there is no data",
+                ):
+           Column(children: [
             const SizedBox(
               height: 10,
             ),

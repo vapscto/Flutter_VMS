@@ -13,7 +13,7 @@ Future<bool> feacthLeadClient({
   required LeadController controller
 }) async {
   final Dio ins = getGlobalDio();
-  String apiUrl =  "https://vmsstaging.vapssmartecampus.com:40015/" + URLS.getLeads;
+ String apiUrl =  "https://vmsstaging.vapssmartecampus.com:40015/" + URLS.getLeads;
   logger.d(apiUrl);
   controller.updateLoading(true);
   try {
@@ -23,12 +23,10 @@ Future<bool> feacthLeadClient({
         {"MI_Id": 17, "UserId": 60795}
        // {"MI_Id": miId, "UserId": userId}
         );
-        logger.d(response.data['getloadarray']);
-        LeadCilent leadClientList = LeadCilent.fromJson(response.data['getloadarray']);
-        controller.getLeadList.addAll(leadClientList.values!);
-       logger.e(apiUrl);
-       controller.updateLoading(false);
-     return true;
+         LeadCilent leadClientList = LeadCilent.fromJson(response.data['getloadarray']);
+         controller.getLeadList.addAll(leadClientList.values!);
+         controller.updateLoading(false);
+         return true;
   } on DioError catch (e) {
     logger.e(e.message);
     return false;
