@@ -109,12 +109,7 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                           children: [
                             (widget.plannerApprovalController.newplannerList
                                     .isEmpty)
-                                ? const AnimatedProgressWidget(
-                                    animationPath: 'assets/json/nodata.json',
-                                    title: 'No Data Available',
-                                    desc: "No Planner List to Approve",
-                                    animatorHeight: 300,
-                                  )
+                                ? const SizedBox()
                                 : Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 10),

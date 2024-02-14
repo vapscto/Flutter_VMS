@@ -93,6 +93,7 @@ dependencies:
   location: ^4.3.0
   dropdown_search: ^4.0.0
   flutter_typeahead: ^4.6.1
+  http_parser: ^4.0.2
   syncfusion_flutter_pdfviewer:
   
 dev_dependencies:
