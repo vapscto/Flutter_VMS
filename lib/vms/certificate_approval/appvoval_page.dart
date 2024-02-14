@@ -74,6 +74,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
     setState(() {});
   }
 
+  RxBool isRejected = RxBool(false);
   _saveData(
     Map<String, dynamic> data,
   ) async {
@@ -92,6 +93,31 @@ class _ApprovalPageState extends State<ApprovalPage> {
         userId: widget.loginSuccessModel.userId!);
     widget.controller.loading(false);
     Get.back();
+  }
+
+  _tejectData(
+    Map<String, dynamic> data,
+  ) async {
+    setState(() {
+      isRejected.value = true;
+    });
+    await CertificateLoadAPI.instance.approveCertificate(
+        base: baseUrlFromInsCode('recruitement', widget.mskoolController),
+        controller: widget.controller,
+        body: data);
+    widget.controller.aprove(false);
+    widget.controller.certificatelist.clear();
+    widget.controller.certificateApprovalList.clear();
+    widget.controller.loading(true);
+    await CertificateLoadAPI.instance.certificateLoad(
+        base: baseUrlFromInsCode('recruitement', widget.mskoolController),
+        controller: widget.controller,
+        userId: widget.loginSuccessModel.userId!);
+    widget.controller.loading(false);
+    Get.back();
+    setState(() {
+      isRejected.value = false;
+    });
   }
 
   DateTime dt = DateTime.now();
@@ -788,9 +814,16 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            uploadAttachment.first.name,
-                                            style: Get.textTheme.titleSmall,
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.7,
+                                            child: Text(
+                                              uploadAttachment.first.name,
+                                              maxLines: 2,
+                                              style: Get.textTheme.titleSmall,
+                                            ),
                                           ),
                                           (loading == false)
                                               ? IconButton(
@@ -1019,6 +1052,45 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                       });
                                       return;
                                     }
+                                  } else if ((widget
+                                          .controller.maxLevel.value) ==
+                                      widget.controller.viewList.first
+                                          .hrpaoNSanctionLevelNo) {
+                                    if (remarkController.text.isEmpty) {
+                                      Fluttertoast.showToast(
+                                          msg: "Add Remarks");
+                                      return;
+                                    } else if (uploadAttachment.isEmpty) {
+                                      Fluttertoast.showToast(
+                                          msg: "Upload Document");
+                                      return;
+                                    } else if (_collectEndDate.text.isEmpty) {
+                                      Fluttertoast.showToast(
+                                          msg: "Enter Collect Date");
+                                      return;
+                                    } else {
+                                      _saveData({
+                                        "UserId":
+                                            widget.loginSuccessModel.userId,
+                                        "MI_Id": widget.loginSuccessModel.mIID,
+                                        "Fromdate": _collectEndDate.text,
+                                        "HRME_Id": hrmeId,
+                                        "ISMCERTREQAPP_AppRejFlag": "Approved",
+                                        "ISMCERTREQAPP_Remarks":
+                                            remarkController.text,
+                                        "ISMCERTREQ_FilePath":
+                                            (uploadAttachment.isEmpty)
+                                                ? "undefined"
+                                                : uploadAttachment.first.path,
+                                        "ISMCERTREQ_Id": widget.iSMCERTREQId,
+                                        "Todate": _collectEndDate.text,
+                                        "maxmumlevel": widget
+                                            .controller
+                                            .viewList
+                                            .first
+                                            .hrpaoNSanctionLevelNo
+                                      });
+                                    }
                                   } else {
                                     if (remarkController.text.isEmpty) {
                                       Fluttertoast.showToast(
@@ -1029,10 +1101,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                         "UserId":
                                             widget.loginSuccessModel.userId,
                                         "MI_Id": widget.loginSuccessModel.mIID,
-                                        "Fromdate":
-                                            (_collectEndDate.text.isEmpty)
-                                                ? dt.toIso8601String()
-                                                : _collectEndDate.text,
+                                        "Fromdate": dt.toIso8601String(),
                                         "HRME_Id": hrmeId,
                                         "ISMCERTREQAPP_AppRejFlag": "Approved",
                                         "ISMCERTREQAPP_Remarks":
@@ -1042,9 +1111,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                                 ? "undefined"
                                                 : uploadAttachment.first.path,
                                         "ISMCERTREQ_Id": widget.iSMCERTREQId,
-                                        "Todate": (_collectEndDate.text.isEmpty)
-                                            ? dt.toIso8601String()
-                                            : _collectEndDate.text,
+                                        "Todate": dt.toIso8601String(),
                                         "maxmumlevel": widget
                                             .controller
                                             .viewList
@@ -1059,7 +1126,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                 width: 30,
                                 child: CircularProgressIndicator(),
                               ),
-                        (widget.controller.isApprove.value == false)
+                        (isRejected.value == false)
                             ? RejectBtn(
                                 title: 'Reject',
                                 onPress: () {
@@ -1067,7 +1134,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                     Fluttertoast.showToast(msg: "Add Remarks");
                                     return;
                                   } else {
-                                    _saveData({
+                                    _tejectData({
                                       "UserId": widget.loginSuccessModel.userId,
                                       "MI_Id": widget.loginSuccessModel.mIID,
                                       "Fromdate": dt.toIso8601String(),
