@@ -42,7 +42,7 @@ class _LeadSelectState extends State<LeadSelect> {
         controller: leadController,
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!);
-        dropdownValue.value = leadController.getLeadList.first.iSMSLELeadName!;
+    dropdownValue.value = leadController.getLeadList.first.iSMSLELeadName!;
   }
 
   @override
@@ -50,182 +50,191 @@ class _LeadSelectState extends State<LeadSelect> {
     return Scaffold(
       appBar: const CustomAppBar(title: "Tour Lead Select").getAppBar(),
       body: Obx(
-        ()=> SingleChildScrollView(
+        () => SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: leadController.loading.isTrue?
-       const  AnimatedProgressWidget(
+          child: leadController.loading.isTrue
+              ? const AnimatedProgressWidget(
                   animationPath: 'assets/json/default.json',
                   title: 'Loading...',
                   desc: "we are loading data",
                 )
-        : leadController.getLeadList.isEmpty ?
-        const  AnimatedProgressWidget(
-                  animationPath: 'assets/json/nodata.json',
-                  title: 'No data',
-                  desc: "there is no data",
-                ):
-           Column(children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-              child: Container(
-                height: 60,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  borderRadius: BorderRadius.circular(16.0),
-                  boxShadow: const [
-                    BoxShadow(
-                      offset: Offset(0, 1),
-                      blurRadius: 8,
-                      color: Colors.black12,
-                    ),
-                  ],
-                ),
-                child: TypeAheadFormField<LeadCilentValues>(
-                  textFieldConfiguration: TextFieldConfiguration(
-                    style: Get.textTheme.titleSmall!
-                        .merge(const TextStyle(fontSize: 18)),
-                    controller: controller.value,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .merge(const TextStyle(
-                              fontSize: 16,
-                            )),
-                        hintText: leadController.getLeadList.isNotEmpty
-                            ? 'Search Client'
-                            : 'No data available',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        label: const CustomDropDownLabel(
-                          icon: 'assets/images/prof4.png',
-                          containerColor: Color.fromRGBO(231, 223, 254, 1),
-                          text: 'Client',
-                          textColor: Color.fromRGBO(96, 40, 200, 1),
-                        ),
-                        suffixIcon: const Icon(
-                          Icons.keyboard_arrow_down,
-                          color: Colors.black,
-                          size: 30,
-                        )),
-                  ),
-                   suggestionsCallback: (pattern) {
-                        return leadController.getLeadList.where((lead) =>
-                          lead.iSMSLELeadName!.toLowerCase().contains(pattern.toLowerCase())
-                        );
-                      },
-
-                  itemBuilder: (context, suggestion) {
-                    return ListTile(
-                      onTap: () {
-                        controller.value.text = suggestion.iSMSLELeadName!;
-                        FocusScope.of(context).unfocus();
-                      },
-                      title: Text(
-                        suggestion.iSMSLELeadName!,
-                        style: Get.textTheme.titleSmall!
-                            .merge(const TextStyle(fontSize: 20)),
+              : leadController.getLeadList.isEmpty
+                  ? const AnimatedProgressWidget(
+                      animationPath: 'assets/json/nodata.json',
+                      title: 'No data',
+                      desc: "there is no data",
+                    )
+                  : Column(children: [
+                      const SizedBox(
+                        height: 10,
                       ),
-                    );
-                  },
-                  onSuggestionSelected: (suggestion) {
-                    dropdownValue.value = suggestion.iSMSLELeadName!;
-                  },
-                  noItemsFoundBuilder: (context) {
-                    return const SizedBox();
-                  },
-                ),
-              ),
-            ),
-            Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-                child: Container(
-                  height: 180,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(16.0),
-                    boxShadow: const [
-                      BoxShadow(
-                        offset: Offset(0, 1),
-                        blurRadius: 8,
-                        color: Colors.black12,
-                      ),
-                    ],
-                  ),
-                  child: Scrollbar(
-                    controller: ScrollController(),
-                    isAlwaysShown: true,
-                    radius: const Radius.circular(20),
-                    trackVisibility: true,
-                    thickness: 5.0,
-                    child: TextField(
-                      maxLines: 13,
-                      controller: remarkController.value,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 20),
+                        child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            borderRadius: BorderRadius.circular(16.0),
+                            boxShadow: const [
+                              BoxShadow(
+                                offset: Offset(0, 1),
+                                blurRadius: 8,
+                                color: Colors.black12,
+                              ),
+                            ],
                           ),
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
+                          child: TypeAheadFormField<LeadCilentValues>(
+                            textFieldConfiguration: TextFieldConfiguration(
+                              style: Get.textTheme.titleSmall!
+                                  .merge(const TextStyle(fontSize: 18)),
+                              controller: controller.value,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                  hintStyle: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .merge(const TextStyle(
+                                        fontSize: 16,
+                                      )),
+                                  hintText:
+                                      leadController.getLeadList.isNotEmpty
+                                          ? 'Search Client'
+                                          : 'No data available',
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always,
+                                  label: const CustomDropDownLabel(
+                                    icon: 'assets/images/prof4.png',
+                                    containerColor:
+                                        Color.fromRGBO(231, 223, 254, 1),
+                                    text: 'Client',
+                                    textColor: Color.fromRGBO(96, 40, 200, 1),
+                                  ),
+                                  suffixIcon: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: Colors.black,
+                                    size: 30,
+                                  )),
+                            ),
+                            suggestionsCallback: (pattern) {
+                              return leadController.getLeadList.where((lead) =>
+                                  lead.iSMSLELeadName!
+                                      .toLowerCase()
+                                      .contains(pattern.toLowerCase()));
+                            },
+                            itemBuilder: (context, suggestion) {
+                              return ListTile(
+                                onTap: () {
+                                  controller.value.text =
+                                      suggestion.iSMSLELeadName!;
+                                  FocusScope.of(context).unfocus();
+                                },
+                                title: Text(
+                                  suggestion.iSMSLELeadName!,
+                                  style: Get.textTheme.titleSmall!
+                                      .merge(const TextStyle(fontSize: 20)),
+                                ),
+                              );
+                            },
+                            onSuggestionSelected: (suggestion) {
+                              dropdownValue.value = suggestion.iSMSLELeadName!;
+                            },
+                            noItemsFoundBuilder: (context) {
+                              return const SizedBox();
+                            },
                           ),
-                        ),
-                        hintText: "Enter Remark",
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .merge(const TextStyle(
-                              fontSize: 16,
-                            )),
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        label: const CustomDropDownLabel(
-                          icon: 'assets/images/examnew.png',
-                          containerColor: Color.fromRGBO(216, 229, 247, 1),
-                          text: 'Remark',
-                          textColor: Color.fromRGBO(7, 117, 219, 1),
                         ),
                       ),
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall!
-                          .merge(const TextStyle(
-                            fontSize: 18,
+                      Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 16, horizontal: 20),
+                          child: Container(
+                            height: 180,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              borderRadius: BorderRadius.circular(16.0),
+                              boxShadow: const [
+                                BoxShadow(
+                                  offset: Offset(0, 1),
+                                  blurRadius: 8,
+                                  color: Colors.black12,
+                                ),
+                              ],
+                            ),
+                            child: Scrollbar(
+                              controller: ScrollController(),
+                              // ignore: deprecated_member_use
+                              isAlwaysShown: true,
+                              radius: const Radius.circular(20),
+                              trackVisibility: true,
+                              thickness: 5.0,
+                              child: TextField(
+                                maxLines: 13,
+                                controller: remarkController.value,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                  hintText: "Enter Remark",
+                                  hintStyle: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .merge(const TextStyle(
+                                        fontSize: 16,
+                                      )),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always,
+                                  label: const CustomDropDownLabel(
+                                    icon: 'assets/images/examnew.png',
+                                    containerColor:
+                                        Color.fromRGBO(216, 229, 247, 1),
+                                    text: 'Remark',
+                                    textColor: Color.fromRGBO(7, 117, 219, 1),
+                                  ),
+                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .merge(const TextStyle(
+                                      fontSize: 18,
+                                    )),
+                              ),
+                            ),
                           )),
-                    ),
-                  ),
-                )),
-            const SizedBox(
-              height: 40,
-            ),
-            MSkollBtn(
-              title: "Save",
-              onPress: () {},
-            )
-          ]),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      MSkollBtn(
+                        title: "Save",
+                        onPress: () {},
+                      )
+                    ]),
         ),
       ),
     );
   }
+
   @override
   void dispose() {
     leadController.getLeadList.clear();
     super.dispose();
   }
 }
-

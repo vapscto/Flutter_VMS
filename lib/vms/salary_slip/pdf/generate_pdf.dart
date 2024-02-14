@@ -20,7 +20,8 @@ class GenerateSalarySlip {
     double netSalary = 0.0;
     double earning = 0.0;
     double deduction = 0.0;
-    var gross;
+    // ignore: unused_local_variable
+    num gross = 0;
     DateTime dt = DateTime.parse(controller
         .salarySlipDetail.first.currentemployeeDetails!.hrmEDoj!
         .toIso8601String());
@@ -58,7 +59,7 @@ class GenerateSalarySlip {
         .elementAt(controller
             .salarySlipDetail.first.employeeSalaryslipDetails!.values!
             .indexWhere((element) => element!.hrmedName == "Gross"))!
-        .amount;
+        .amount!;
 
     controller.salarySlipDetail.first.employeeSalaryslipDetails!.values!
         .removeWhere((element) => element!.hrmedName == "Gross");

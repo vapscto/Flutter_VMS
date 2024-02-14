@@ -30,6 +30,7 @@ import 'package:m_skool_flutter/vms/health_chequeup/screens/healtha_check_up.dar
 import 'package:m_skool_flutter/vms/intervoewer_feedback/screens/interview_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
+import 'package:m_skool_flutter/vms/noc_approval/screens/noc_approval_home.dart';
 import 'package:m_skool_flutter/vms/online_leave/screen/apply_leave_home.dart';
 import 'package:m_skool_flutter/vms/petty_indent_approval/screen/pc_indent_approval_home.dart';
 import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart';
@@ -780,6 +781,15 @@ void openMappedPages(
   if (pageName == "Driver Ind. Approval") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return DriverIndentApproval(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+    return;
+  }
+  if (pageName == "NOC Approval") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return NocApproval(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
       );

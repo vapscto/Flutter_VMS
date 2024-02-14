@@ -399,6 +399,9 @@ class URLS {
   static String saveFeedback =
       'api/AddCandidateInterviewVMSFacade/savefeedback/';
   static String editData = 'api/CandidateInterviewListVMSFacade/getRecordById/';
-
-  static String getLeads="api/TADA_Advance_TourFacade/getload";
+  static String getLeads = "api/TADA_Advance_TourFacade/getload";
+  // NOC Approval
+  static String nocLoad = 'api/HR_NOC_Process_Facade/loaddata';
+  static String nocDetails = 'api/HR_NOC_Process_Facade/viewuploadflies';
+  static String nocApproval = 'api/HR_NOC_Process_Facade/approvedrecord';
 }

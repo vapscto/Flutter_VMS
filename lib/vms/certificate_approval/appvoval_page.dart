@@ -95,7 +95,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
     Get.back();
   }
 
-  _tejectData(
+  _rejectData(
     Map<String, dynamic> data,
   ) async {
     setState(() {
@@ -1134,7 +1134,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
                                     Fluttertoast.showToast(msg: "Add Remarks");
                                     return;
                                   } else {
-                                    _tejectData({
+                                    _rejectData({
                                       "UserId": widget.loginSuccessModel.userId,
                                       "MI_Id": widget.loginSuccessModel.mIID,
                                       "Fromdate": dt.toIso8601String(),
@@ -1183,6 +1183,7 @@ class _ApprovalPageState extends State<ApprovalPage> {
     );
 
     if (result != null) {
+      uploadAttachment.clear();
       File file = File(result.files.single.path!);
       setState(() {
         loading = true;

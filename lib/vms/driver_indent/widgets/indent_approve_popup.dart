@@ -84,6 +84,7 @@ class _IndentApprovePopupState extends State<IndentApprovePopup> {
 
   @override
   void initState() {
+    // if(widget.values.)
     listData.add({
       "ISMDIT_Date": widget.values.iSMDITDate,
       "TRMV_Id": widget.values.tRMVId,
@@ -185,13 +186,24 @@ class _IndentApprovePopupState extends State<IndentApprovePopup> {
                       : MSkollBtn(
                           title: 'Approve',
                           onPress: () {
-                            _saveData({
-                              "MI_Id": widget.loginSuccessModel.mIID,
-                              "User_Id": widget.loginSuccessModel.userId,
-                              "ISMDIT_Remark": controller.text,
-                              "get_indent_status": listData,
-                              "roleId": widget.loginSuccessModel.roleId
-                            });
+                            if (widget.loginSuccessModel.roleforlogin ==
+                                "ADMIN") {
+                              _saveData({
+                                "MI_Id": widget.loginSuccessModel.mIID,
+                                "User_Id": widget.loginSuccessModel.userId,
+                                "ISMDIT_Remark": controller.text,
+                                "get_indent_status": listData,
+                                "roleId": widget.loginSuccessModel.roleId
+                              });
+                            } else {
+                              _saveData({
+                                "MI_Id": widget.loginSuccessModel.mIID,
+                                "User_Id": widget.loginSuccessModel.userId,
+                                "ISMDIT_Remark": controller.text,
+                                "get_indent_status": listData,
+                                "roleId": widget.loginSuccessModel.roleId
+                              });
+                            }
                           }),
                   (isRejectLoading == true)
                       ? const SizedBox(
@@ -202,13 +214,24 @@ class _IndentApprovePopupState extends State<IndentApprovePopup> {
                       : RejectBtn(
                           title: "Reject",
                           onPress: () {
-                            _rejectData({
-                              "MI_Id": widget.loginSuccessModel.mIID,
-                              "User_Id": widget.loginSuccessModel.userId,
-                              "ISMDIT_Remark": controller.text,
-                              "get_indent_status": listData,
-                              "roleId": widget.loginSuccessModel.roleId
-                            });
+                            if (widget.loginSuccessModel.roleforlogin ==
+                                "ADMIN") {
+                              _rejectData({
+                                "MI_Id": widget.loginSuccessModel.mIID,
+                                "User_Id": widget.loginSuccessModel.userId,
+                                "ISMDIT_Remark": controller.text,
+                                "get_indent_status": listData,
+                                "roleId": widget.loginSuccessModel.roleId
+                              });
+                            } else {
+                              _rejectData({
+                                "MI_Id": widget.loginSuccessModel.mIID,
+                                "User_Id": widget.loginSuccessModel.userId,
+                                "ISMDIT_Remark": controller.text,
+                                "get_indent_status": listData,
+                                "roleId": widget.loginSuccessModel.roleId
+                              });
+                            }
                           })
                 ],
               ),

@@ -312,10 +312,13 @@ class _DriverIndentApprovalState extends State<DriverIndentApproval> {
       floatingActionButton: Align(
         alignment: Alignment.bottomCenter,
         child: (pageLoading == true)
-            ? const SizedBox(
-                height: 20,
-                width: 20,
-                child: CircularProgressIndicator(),
+            ? const Padding(
+                padding: EdgeInsets.only(bottom: 10.0),
+                child: SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(),
+                ),
               )
             : MSkollBtn(
                 title: 'Driver Indent Approval Details',
@@ -337,14 +340,16 @@ class _DriverIndentApprovalState extends State<DriverIndentApproval> {
       pageLoading = true;
     });
     await Future.delayed(const Duration(seconds: 10));
-    // ignore: use_build_context_synchronously
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => DriverIndentList(
-                controller: controller,
-              )),
-    );
+    Get.to(() => DriverIndentList(
+          controller: controller,
+        ));
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //       builder: (context) => DriverIndentList(
+    //             controller: controller,
+    //           )),
+    // );
 
     setState(() {
       pageLoading = false;
