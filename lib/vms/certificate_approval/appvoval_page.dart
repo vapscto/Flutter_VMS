@@ -1240,10 +1240,10 @@ class _ApprovalPageState extends State<ApprovalPage> {
                       return DataRow(cells: [
                         DataCell(Text(v.toString())),
                         DataCell(Text(value.hrmEEmployeeFirstName.toString())),
-                        DataCell(Text(dateFormat(
-                            DateTime.parse(value.ismcertreqapPApprovedDate!)))),
-                        DataCell(Text(value.ismcertreqapPAppRejFlag!)),
-                        DataCell(Text(value.ismcertreqapPRemarks!))
+                        DataCell(Text(dateFormat(DateTime.parse(
+                            value.ismcertreqapPApprovedDate ?? '')))),
+                        DataCell(Text(value.ismcertreqapPAppRejFlag ?? '')),
+                        DataCell(Text(value.ismcertreqapPRemarks ?? ''))
                       ]);
                     })),
               ),
