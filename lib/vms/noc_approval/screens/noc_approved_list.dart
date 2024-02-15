@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
@@ -8,6 +9,7 @@ import 'package:m_skool_flutter/vms/noc_approval/controller/noc_approved_control
 import 'package:m_skool_flutter/vms/noc_approval/model/noc_details_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class NocApprovedListScreen extends StatefulWidget {
   final NocApprovedController controller;
@@ -24,6 +26,7 @@ class NocApprovedListScreen extends StatefulWidget {
 }
 
 class _NocApprovedListScreenState extends State<NocApprovedListScreen> {
+  int bgColor = -1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -343,6 +346,66 @@ class _NocApprovedListScreenState extends State<NocApprovedListScreen> {
                                                               ),
                                                             ),
                                                           ],
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 10),
+                                                        Column(
+                                                          children: List.generate(
+                                                              widget
+                                                                  .controller
+                                                                  .checkListModel
+                                                                  .length,
+                                                              (index) {
+                                                            bgColor += 1;
+                                                            if (bgColor % 6 ==
+                                                                0) {
+                                                              bgColor = 0;
+                                                            }
+                                                            return Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      bottom:
+                                                                          8.0),
+                                                              child:
+                                                                  CustomContainer(
+                                                                      color: lighterColor
+                                                                          .elementAt(
+                                                                              bgColor),
+                                                                      child:
+                                                                          Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.all(8.0),
+                                                                        child:
+                                                                            Column(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            Text(
+                                                                              widget.controller.checkListModel.elementAt(index).iSMRESGMCLCheckListName!,
+                                                                              style: Get.textTheme.titleMedium,
+                                                                            ),
+                                                                            Text.rich(
+                                                                              TextSpan(
+                                                                                children: [
+                                                                                  TextSpan(text: 'Damage Amount: ', style: Get.textTheme.titleSmall!.copyWith(fontWeight: FontWeight.w600)),
+                                                                                  TextSpan(text: '0', style: Get.textTheme.titleSmall!.copyWith(color: Theme.of(context).primaryColor)),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                            Text.rich(
+                                                                              TextSpan(
+                                                                                children: [
+                                                                                  TextSpan(text: 'Remarks:', style: Get.textTheme.titleSmall!.copyWith(fontWeight: FontWeight.w600)),
+                                                                                  TextSpan(text: ' ', style: Get.textTheme.titleSmall!.copyWith(color: Theme.of(context).primaryColor)),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )),
+                                                            );
+                                                          }),
                                                         ),
                                                         const SizedBox(
                                                             height: 10),

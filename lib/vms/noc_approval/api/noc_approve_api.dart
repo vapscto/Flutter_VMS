@@ -4,6 +4,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/noc_approval/controller/noc_approved_controller.dart';
+import 'package:m_skool_flutter/vms/noc_approval/model/noc_approval_check_model.dart';
 import 'package:m_skool_flutter/vms/noc_approval/model/noc_approved_model.dart';
 import 'package:m_skool_flutter/vms/noc_approval/model/noc_details_model.dart';
 
@@ -62,7 +63,10 @@ class NocApproveAPI {
         NocDetailsModel nocApprovedModel =
             NocDetailsModel.fromJson(response.data['getloaddetails']);
         controller.maxLevel.value = response.data['maxmumlevel'];
-        // controller.nocEmpDetails.addAll(nocApprovedModel.values!);
+        NocApprovalChekListModel nocApprovalChekListModel =
+            NocApprovalChekListModel.fromJson(response.data['checklist']);
+        controller.checkListModel.clear();
+        controller.checkListModel.addAll(nocApprovalChekListModel.values!);
         return nocApprovedModel;
       }
     } on DioError catch (e) {
