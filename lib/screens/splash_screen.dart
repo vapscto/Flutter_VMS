@@ -20,6 +20,7 @@ import 'package:m_skool_flutter/screens/common_home_screen.dart';
 import 'package:m_skool_flutter/screens/institutional_login.dart';
 import 'package:m_skool_flutter/screens/login_screen.dart';
 import 'package:m_skool_flutter/screens/on_board.dart';
+import 'package:m_skool_flutter/vms/gps/controller/get_gps_controller.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -32,6 +33,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final MskoolController mskoolController = Get.put(MskoolController());
+  final GetEmpDetailsController controller = Get.put(GetEmpDetailsController());
   late FirebaseMessaging messaging;
   late FirebaseMessaging firebaseMessage;
   Future getDeviceToken() async {
@@ -50,6 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
     messaging = FirebaseMessaging.instance;
     initializeFCMNotification();
     getDeviceToken();
+    controller.getLocation();
     super.initState();
   }
 

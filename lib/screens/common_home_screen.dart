@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -10,6 +11,9 @@ import 'package:m_skool_flutter/tabs/dashboard.dart';
 import 'package:m_skool_flutter/vms/api/institute_api.dart';
 import 'package:m_skool_flutter/vms/coe/coe_home.dart';
 import 'package:m_skool_flutter/vms/controller/vms_common_controller.dart';
+import 'package:m_skool_flutter/vms/gps/api/get_load_data_api.dart';
+import 'package:m_skool_flutter/vms/gps/api/gps_api.dart';
+import 'package:m_skool_flutter/vms/gps/controller/get_gps_controller.dart';
 import 'package:m_skool_flutter/vms/profile/api/profile_api.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/vms/profile/screens/profile_screen.dart';
@@ -41,6 +45,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
       Get.put(PunchFilterController());
   final VmsTransationController vmsTransationController =
       Get.put(VmsTransationController());
+  final GetEmpDetailsController controller = Get.put(GetEmpDetailsController());
   _getPunch() async {
     punchFilterController.punchLoading(true);
     await PunchApi.instance.pcReports(
@@ -66,6 +71,32 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
     profileController.profileLoading(false);
   }
 
+  _getLocation() async {
+    controller.getLocation().then(
+      (value) {
+        feacthGps(
+          latitude: controller.latitude.value,
+          logitude: controller.longitude.value,
+          controller: controller,
+        ).then(
+          (value) async {
+            if (value) {
+              await feacthGpsClient(
+                  base: baseUrlFromInsCode(
+                      'frontoffice', widget.mskoolController),
+                  miId: widget.loginSuccessModel.mIID!,
+                  userId: widget.loginSuccessModel.userId!,
+                  controller: controller);
+            }
+          },
+        );
+        if (!value) {
+          Fluttertoast.showToast(msg: "Please provide a location permission");
+        }
+      },
+    );
+  }
+
   _getInstitute() async {
     vmsTransationController.instituteLoading(true);
     await await InstituteListAPI.instance.instituteList(
@@ -83,6 +114,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
     _getPunch();
     _getProfile();
     _getInstitute();
+    _getLocation();
     homePage.addAll(
       [
         HomePageModel(

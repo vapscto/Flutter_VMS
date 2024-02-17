@@ -1,18 +1,64 @@
+// import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 
-class PeriodicityWidget extends StatelessWidget {
+class PeriodicityWidget extends StatefulWidget {
   final ProfileController controller;
   const PeriodicityWidget({super.key, required this.controller});
 
   @override
+  State<PeriodicityWidget> createState() => _PeriodicityWidgetState();
+}
+
+class _PeriodicityWidgetState extends State<PeriodicityWidget> {
+  // final ScrollController _controller = ScrollController();
+
+  // bool _isAutoScrolling = false;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   startAutoScroll();
+  // }
+
+  // @override
+  // void dispose() {
+  //   _controller.dispose();
+  //   super.dispose();
+  // }
+
+  // void startAutoScroll() {
+  //   if (_isAutoScrolling) return;
+  //   _isAutoScrolling = true;
+  //   Timer.periodic(const Duration(seconds: 20), (timer) {
+  //     if (_controller.hasClients) {
+  //       _controller.animateTo(
+  //         _controller.position.maxScrollExtent,
+  //         duration: const Duration(seconds: 20),
+  //         curve: Curves.easeInOut,
+  //       );
+  //     } else {
+  //       _controller.animateTo(
+  //         _controller.position.minScrollExtent,
+  //         duration: const Duration(seconds: 20),
+  //         curve: Curves.easeInOut,
+  //       );
+  //     }
+  //   });
+  //   setState(() {});
+  // }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      // controller: _controller,
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: List.generate(controller.periodicityList.length, (index) {
-          var v = controller.periodicityList.elementAt(index);
+        children:
+            List.generate(widget.controller.periodicityList.length, (index) {
+          var v = widget.controller.periodicityList.elementAt(index);
           return Padding(
             padding: const EdgeInsets.only(right: 10),
             child: InkWell(

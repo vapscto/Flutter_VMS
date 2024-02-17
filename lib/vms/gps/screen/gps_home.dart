@@ -43,7 +43,7 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
   int salesId = 0;
   @override
   void initState() {
-    intial();
+    // intial();
     super.initState();
   }
 
@@ -432,6 +432,7 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
                                     animationPath: 'assets/json/nodata.json',
                                     title: 'No Data',
                                     desc: "No data is available",
+                                    animatorHeight: 250,
                                   )),
                     Obx(() => Visibility(
                           visible:
