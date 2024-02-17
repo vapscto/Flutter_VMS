@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/vms/utils/birthday_slider.dart';
+import 'package:m_skool_flutter/vms/utils/periodicity_widget.dart';
 
 class DashboardTab extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -28,6 +29,16 @@ class DashboardTab extends StatelessWidget {
               return profileController.birthdayList.isNotEmpty
                   ? BirthDaySlider(profileController: profileController)
                   : const SizedBox();
+            }),
+            Obx(() {
+              return (profileController.periodicityList.isEmpty)
+                  ? const SizedBox()
+                  : Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: PeriodicityWidget(
+                        controller: profileController,
+                      ),
+                    );
             }),
             loginSuccessModel.staffmobileappprivileges == null ||
                     loginSuccessModel.staffmobileappprivileges!.values!.isEmpty
