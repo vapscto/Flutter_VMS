@@ -403,4 +403,8 @@ class URLS {
   static String getLeads="api/TADA_Advance_TourFacade/getload";
 
   static String saveLeads="api/TADA_Advance_TourFacade/savedata";
+   // NOC Approval
+  static String nocLoad = 'api/HR_NOC_Process_Facade/loaddata';
+  static String nocDetails = 'api/HR_NOC_Process_Facade/viewuploadflies';
+  static String nocApproval = 'api/HR_NOC_Process_Facade/approvedrecord';
 }

@@ -31,7 +31,7 @@ class DriverloadModelValues {
   int? tRMVId;
   String? tRMVVehicleName;
   String? tRMVVehicleNo;
-  String? iSMDITBillNo;
+  dynamic iSMDITBillNo;
   double? iSMDITQty;
   double? iSMDITAmount;
   dynamic iSMDITRemark;

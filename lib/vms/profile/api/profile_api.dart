@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/coe/model/holiday_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/vms/profile/model/birthday_list_model.dart';
+import 'package:m_skool_flutter/vms/profile/model/periodicity_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/profile_model.dart';
 
 class ProfileAPI {
@@ -23,8 +24,8 @@ class ProfileAPI {
       var response = await dio.post(api,
           options: Options(headers: getSession()),
           data: {"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
-      logger.i({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
-      logger.i(api);
+      logger.v({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
+      logger.w(api);
       if (response.statusCode == 200) {
         ProfileDataModel profileDataModel =
             ProfileDataModel.fromJson(response.data['emp_deatils']);
@@ -38,6 +39,13 @@ class ProfileAPI {
           HolidayListModel holidayListModel =
               HolidayListModel.fromJson(response.data['upcomingholiday']);
           profileController.getHoliday(holidayListModel.values!);
+        }
+        if (response.data['prioritylist'] != null) {
+          PeriodicityListModel periodicityListModel =
+              PeriodicityListModel.fromJson(response.data['prioritylist']);
+          profileController.periodicityList.clear();
+          profileController.periodicityList
+              .addAll(periodicityListModel.values!);
         }
       }
     } on DioError catch (e) {

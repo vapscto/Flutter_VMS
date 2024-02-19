@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/student/homework/model/upload_hw_cw_model.dart';
 import 'package:m_skool_flutter/vms/health_chequeup/controlers/health_controler.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/controller/dr_details_ctrlr.dart';
 import 'package:mime/mime.dart';
+// ignore: implementation_imports
 import 'package:http_parser/src/media_type.dart';
 
 Future<bool> saveHealthCheckUp(

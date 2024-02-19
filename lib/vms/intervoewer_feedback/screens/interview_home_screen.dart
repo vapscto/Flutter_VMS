@@ -134,15 +134,19 @@ class _InterviewerHomeScreenState extends State<InterviewerHomeScreen> {
                                 alignment: Alignment.topRight,
                                 child: InkWell(
                                   onTap: () {
-                                    Get.to(() => UpdatedInterviewStatus(
-                                          controller: controller,
-                                          mskoolController:
-                                              widget.mskoolController,
-                                          loginSuccessModel:
-                                              widget.loginSuccessModel,
-                                          values:
-                                              controller.interviewList[index],
-                                        ));
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                UpdatedInterviewStatus(
+                                                  controller: controller,
+                                                  mskoolController:
+                                                      widget.mskoolController,
+                                                  loginSuccessModel:
+                                                      widget.loginSuccessModel,
+                                                  values: controller
+                                                      .interviewList[index],
+                                                )));
                                   },
                                   child: Chip(
                                       backgroundColor: noticeColor[bgColor],

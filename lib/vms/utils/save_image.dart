@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
+// ignore: implementation_imports
 import 'package:http_parser/src/media_type.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 

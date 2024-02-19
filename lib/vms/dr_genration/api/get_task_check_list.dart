@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/vms/dr_genration/model/category_check_list_model
 import 'package:m_skool_flutter/vms/dr_genration/model/others_day_planned.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/upload_dr_image.dart';
 import 'package:mime/mime.dart';
+// ignore: implementation_imports
 import 'package:http_parser/src/media_type.dart';
 
 Future<CategoryCheckListModel?> getCategoryChecklistDetails(

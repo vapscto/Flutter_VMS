@@ -483,6 +483,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   String fileName = '';
   String filePath = '';
   int newselectedIndex = -1;
+  List<int> selectedCheckBox = [];
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -1529,6 +1530,60 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                     FontWeight
                                                                         .w400,
                                                                 fontSize: 14)),
+                                                      ),
+                                                      ListTileTheme(
+                                                        contentPadding:
+                                                            EdgeInsets.zero,
+                                                        horizontalTitleGap: 2,
+                                                        minVerticalPadding: -4,
+                                                        child: CheckboxListTile(
+                                                            dense: true,
+                                                            contentPadding: EdgeInsets
+                                                                .zero,
+                                                            controlAffinity:
+                                                                ListTileControlAffinity
+                                                                    .leading,
+                                                            visualDensity:
+                                                                const VisualDensity(
+                                                                    vertical: 0,
+                                                                    horizontal:
+                                                                        -4),
+                                                            checkboxShape:
+                                                                RoundedRectangleBorder(
+                                                                    borderRadius: BorderRadius
+                                                                        .circular(
+                                                                            6)),
+                                                            checkColor: Theme
+                                                                    .of(context)
+                                                                .primaryColor,
+                                                            title: Text(
+                                                              "Consider For Comp Off?",
+                                                              style: Get
+                                                                  .textTheme
+                                                                  .titleSmall!
+                                                                  .copyWith(
+                                                                      color: Theme.of(
+                                                                              context)
+                                                                          .primaryColor),
+                                                            ),
+                                                            value:
+                                                                selectedCheckBox
+                                                                    .contains(
+                                                                        index),
+                                                            onChanged: (value) {
+                                                              setState(() {
+                                                                if (value ==
+                                                                    true) {
+                                                                  selectedCheckBox
+                                                                      .add(
+                                                                          index);
+                                                                } else {
+                                                                  selectedCheckBox
+                                                                      .remove(
+                                                                          index);
+                                                                }
+                                                              });
+                                                            }),
                                                       )
                                                     ],
                                                   )),

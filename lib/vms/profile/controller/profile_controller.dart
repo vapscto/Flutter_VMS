@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/coe/model/holiday_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/birthday_list_model.dart';
+import 'package:m_skool_flutter/vms/profile/model/periodicity_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/profile_model.dart';
 
 class ProfileController extends GetxController {
@@ -44,4 +45,7 @@ class ProfileController extends GetxController {
     }
     holidayList.addAll(holiday);
   }
+
+  RxList<PeriodicityListModelValues> periodicityList =
+      <PeriodicityListModelValues>[].obs;
 }

@@ -9,16 +9,16 @@ class LeadCilent {
     if (json['\$values'] != null) {
       values = <LeadCilentValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new LeadCilentValues.fromJson(v));
+        values!.add(LeadCilentValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -71,20 +71,20 @@ class LeadCilentValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['IVRMMS_Id'] = this.iVRMMSId;
-    data['ISMSLE_Id'] = this.iSMSLEId;
-    data['ISMSLE_LeadName'] = this.iSMSLELeadName;
-    data['ISMSLE_StudentStrength'] = this.iSMSLEStudentStrength;
-    data['ISMSLE_StaffStrength'] = this.iSMSLEStaffStrength;
-    data['ISMSMPR_ProductName'] = this.iSMSMPRProductName;
-    data['ISMSMPR_Id'] = this.iSMSMPRId;
-    data['SourceName'] = this.sourceName;
-    data['IVRMMS_Name'] = this.iVRMMSName;
-    data['IMRC_CategoryId'] = this.iMRCCategoryId;
-    data['IMRC_CategoryName'] = this.iMRCCategoryName;
-    data['IER_ID'] = this.iERID;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['IVRMMS_Id'] = iVRMMSId;
+    data['ISMSLE_Id'] = iSMSLEId;
+    data['ISMSLE_LeadName'] = iSMSLELeadName;
+    data['ISMSLE_StudentStrength'] = iSMSLEStudentStrength;
+    data['ISMSLE_StaffStrength'] = iSMSLEStaffStrength;
+    data['ISMSMPR_ProductName'] = iSMSMPRProductName;
+    data['ISMSMPR_Id'] = iSMSMPRId;
+    data['SourceName'] = sourceName;
+    data['IVRMMS_Name'] = iVRMMSName;
+    data['IMRC_CategoryId'] = iMRCCategoryId;
+    data['IMRC_CategoryName'] = iMRCCategoryName;
+    data['IER_ID'] = iERID;
     return data;
   }
 }

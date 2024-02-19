@@ -246,22 +246,22 @@ class _TaskCreationHomeNewState extends State<TaskCreationHomeNew> {
             ivrmrtId: widget.loginSuccessModel.roleId!,
             academicYear: widget.loginSuccessModel.asmaYId!,
             hrme: logInBox!.get("EmpId"),
-            HRMD_Id: hrmdIds,
-            HRMPR_Id: priorityId, // priority id
-            ISMCIM_IEList: "0",
-            ISMMCLT_Id: clinetId, //clientsID
-            ISMMPR_Id: projectId, // projectId
-            ISMMTCAT_Id: categoryId, // categoryId
-            ISMTCR_BugOREnhancementFlg: _taskDepartController.typesTask.value,
-            ISMTCR_CreationDate: DateTime.now().toString(),
-            ISMTCR_Desc: _descritpionETController.text,
-            ISMTCR_Id: "0",
-            ISMTCR_Status: "Open",
-            ISMTCR_Title: _titleETController.text,
-            IVRMM_Id: moduleId, //module id
-            TaskDay: taskDay,
-            TimeRequiredFlg: "HOURS",
-            Yearlydate: "Thu Jan 01 1970",
+            hRMDId: hrmdIds,
+            hRMPRId: priorityId, // priority id
+            iSMCIMIEList: "0",
+            iSMMCLTId: clinetId, //clientsID
+            iSMMPRId: projectId, // projectId
+            iSMMTCATId: categoryId, // categoryId
+            iSMTCRBugOREnhancementFlg: _taskDepartController.typesTask.value,
+            iSMTCRCreationDate: DateTime.now().toString(),
+            iSMTCRDesc: _descritpionETController.text,
+            iSMTCRId: "0",
+            iSMTCRStatus: "Open",
+            iSMTCRTitle: _titleETController.text,
+            iVRMMId: moduleId, //module id
+            taskDay: taskDay,
+            timeRequiredFlg: "HOURS",
+            yearlyDate: "Thu Jan 01 1970",
             assignto: _taskDepartController.taskAssingn.value,
             uploadDocs: _taskDepartController.addListBrowser,
             effortinhrs: count,

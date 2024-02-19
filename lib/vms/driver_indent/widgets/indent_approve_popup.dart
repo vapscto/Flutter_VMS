@@ -3,9 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/driver_indent/api/driver_ind_api.dart';
 import 'package:m_skool_flutter/vms/driver_indent/controller/driver_intent_controller.dart';
+import 'package:m_skool_flutter/vms/driver_indent/model/driver_ind_approve.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:m_skool_flutter/widget/reject_btn.dart';
@@ -14,11 +16,13 @@ class IndentApprovePopup extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final DriverIndentController controller;
+  final DriverloadModelValues values;
   const IndentApprovePopup(
       {super.key,
       required this.loginSuccessModel,
       required this.mskoolController,
-      required this.controller});
+      required this.controller,
+      required this.values});
 
   @override
   State<IndentApprovePopup> createState() => _IndentApprovePopupState();
@@ -26,9 +30,12 @@ class IndentApprovePopup extends StatefulWidget {
 
 class _IndentApprovePopupState extends State<IndentApprovePopup> {
   final controller = TextEditingController();
+  List<Map<String, dynamic>> listData = [];
+
   @override
   void dispose() {
     controller.clear();
+    listData.clear();
     super.dispose();
   }
 
@@ -65,7 +72,7 @@ class _IndentApprovePopupState extends State<IndentApprovePopup> {
     setState(() {
       isRejectLoading = true;
     });
-    await DriverIndentAPI.i.approveIndentAPI(
+    await DriverIndentAPI.i.rejectIndentAPI(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         body: data);
     setState(() {
@@ -73,6 +80,28 @@ class _IndentApprovePopupState extends State<IndentApprovePopup> {
     });
     load();
     Get.back();
+  }
+
+  @override
+  void initState() {
+    // if(widget.values.)
+    listData.add({
+      "ISMDIT_Date": widget.values.iSMDITDate,
+      "TRMV_Id": widget.values.tRMVId,
+      "ISMDIT_BillNo": widget.values.iSMDITBillNo,
+      "ISMDIT_Qty": widget.values.iSMDITQty,
+      "ISMDIT_Amount": widget.values.iSMDITAmount,
+      "ISMDIT_OpeningKM": widget.values.iSMDITOpeningKM,
+      "ISMDIT_ClosingKM": widget.values.iSMDITClosingKM,
+      "ISMDIT_PreparedByUserId": widget.values.iSMDITPreparedByUserId,
+      "TRMV_VehicleNo": widget.values.tRMVVehicleNo,
+      "ISMDIT_Id": widget.values.iSMDITId,
+      "TRMV_VehicleName": widget.values.tRMVVehicleName,
+      "HRME_EmployeeFirstName": widget.values.hRMEEmployeeFirstName,
+      "ISMDIT_Remark": widget.values.iSMDITRemark
+    });
+    super.initState();
+    logger.w(listData);
   }
 
   @override
@@ -157,13 +186,24 @@ class _IndentApprovePopupState extends State<IndentApprovePopup> {
                       : MSkollBtn(
                           title: 'Approve',
                           onPress: () {
-                            _saveData({
-                              "MI_Id": widget.loginSuccessModel.mIID,
-                              "User_Id": widget.loginSuccessModel.userId,
-                              "ISMDIT_Remark": controller.text,
-                              "get_indent_status": [],
-                              "roleId": widget.loginSuccessModel.roleId
-                            });
+                            if (widget.loginSuccessModel.roleforlogin ==
+                                "ADMIN") {
+                              _saveData({
+                                "MI_Id": widget.loginSuccessModel.mIID,
+                                "User_Id": widget.loginSuccessModel.userId,
+                                "ISMDIT_Remark": controller.text,
+                                "get_indent_status": listData,
+                                "roleId": widget.loginSuccessModel.roleId
+                              });
+                            } else {
+                              _saveData({
+                                "MI_Id": widget.loginSuccessModel.mIID,
+                                "User_Id": widget.loginSuccessModel.userId,
+                                "ISMDIT_Remark": controller.text,
+                                "get_indent_status": listData,
+                                "roleId": widget.loginSuccessModel.roleId
+                              });
+                            }
                           }),
                   (isRejectLoading == true)
                       ? const SizedBox(
@@ -174,13 +214,24 @@ class _IndentApprovePopupState extends State<IndentApprovePopup> {
                       : RejectBtn(
                           title: "Reject",
                           onPress: () {
-                            _rejectData({
-                              "MI_Id": widget.loginSuccessModel.mIID,
-                              "User_Id": widget.loginSuccessModel.userId,
-                              "ISMDIT_Remark": controller.text,
-                              "get_indent_status": [],
-                              "roleId": widget.loginSuccessModel.roleId
-                            });
+                            if (widget.loginSuccessModel.roleforlogin ==
+                                "ADMIN") {
+                              _rejectData({
+                                "MI_Id": widget.loginSuccessModel.mIID,
+                                "User_Id": widget.loginSuccessModel.userId,
+                                "ISMDIT_Remark": controller.text,
+                                "get_indent_status": listData,
+                                "roleId": widget.loginSuccessModel.roleId
+                              });
+                            } else {
+                              _rejectData({
+                                "MI_Id": widget.loginSuccessModel.mIID,
+                                "User_Id": widget.loginSuccessModel.userId,
+                                "ISMDIT_Remark": controller.text,
+                                "get_indent_status": listData,
+                                "roleId": widget.loginSuccessModel.roleId
+                              });
+                            }
                           })
                 ],
               ),
