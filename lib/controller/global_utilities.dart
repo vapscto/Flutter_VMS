@@ -39,6 +39,7 @@ import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/screen/leave_list_home.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/screens/tada_approval_home.dart';
+import 'package:m_skool_flutter/vms/tada_tour_plan/screen/lead_select_screen.dart';
 import 'package:m_skool_flutter/vms/utils/video_screen.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';

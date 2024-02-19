@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/gps/controller/get_gps_controller.dart';
 import 'package:m_skool_flutter/vms/tada_tour_plan/api/get_lead_details.dart';
+import 'package:m_skool_flutter/vms/tada_tour_plan/api/saveLead.dart';
 import 'package:m_skool_flutter/vms/tada_tour_plan/controller/lead_controller.dart';
 import 'package:m_skool_flutter/vms/tada_tour_plan/model/lead_details.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
@@ -29,7 +32,13 @@ class _LeadSelectState extends State<LeadSelect> {
   Rx<TextEditingController> controller = TextEditingController(text: "").obs;
   Rx<TextEditingController> remarkController =
       TextEditingController(text: "").obs;
+  Rx<TextEditingController> executedController =
+      TextEditingController(text: "").obs;    
+  Rx<int>  selectIred = Rx(0);
   final leadController = Get.put(LeadController());
+   GetEmpDetailsController getEmpDetailsController =
+      Get.put(GetEmpDetailsController());
+    RxBool gpsLoction = RxBool(false); 
   @override
   void initState() {
     initApp();
@@ -37,11 +46,21 @@ class _LeadSelectState extends State<LeadSelect> {
   }
 
   initApp() async {
+          //    gpsLoction.value = true;
+          
     await feacthLeadClient(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         controller: leadController,
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!);
+
+   await  getEmpDetailsController.getLocation().then(
+          (value) {
+            if(value){
+              gpsLoction.value = value;
+            }
+          },
+        );
         dropdownValue.value = leadController.getLeadList.first.iSMSLELeadName!;
   }
 
@@ -153,6 +172,62 @@ class _LeadSelectState extends State<LeadSelect> {
             Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                 child: Container(
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.circular(16.0),
+                    boxShadow: const [
+                      BoxShadow(
+                        offset: Offset(0, 1),
+                        blurRadius: 8,
+                        color: Colors.black12,
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    maxLines: 1,
+                     textInputAction: TextInputAction.go,
+                    controller: executedController.value,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                        ),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                        ),
+                      ),
+                      hintText: "DemoExecuted",
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .merge(const TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey
+                          )),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      label: const CustomDropDownLabel(
+                        icon: 'assets/images/examnew.png',
+                        containerColor: Color.fromRGBO(216, 229, 247, 1),
+                        text: 'Demo Status',
+                        textColor: Color.fromRGBO(7, 117, 219, 1),
+                      ),
+                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .merge(const TextStyle(
+                          fontSize: 18,
+                        )),
+                  ),
+                  
+                )),
+            Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                child: Container(
                   height: 180,
                   decoration: BoxDecoration(
                     color: Theme.of(context).scaffoldBackgroundColor,
@@ -172,6 +247,7 @@ class _LeadSelectState extends State<LeadSelect> {
                     trackVisibility: true,
                     thickness: 5.0,
                     child: TextField(
+                       textInputAction: TextInputAction.go,
                       maxLines: 13,
                       controller: remarkController.value,
                       decoration: InputDecoration(
@@ -192,6 +268,7 @@ class _LeadSelectState extends State<LeadSelect> {
                             .titleSmall!
                             .merge(const TextStyle(
                               fontSize: 16,
+                               color: Colors.grey
                             )),
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         label: const CustomDropDownLabel(
@@ -209,13 +286,36 @@ class _LeadSelectState extends State<LeadSelect> {
                           )),
                     ),
                   ),
+                  
                 )),
+                
             const SizedBox(
               height: 40,
             ),
-            MSkollBtn(
-              title: "Save",
-              onPress: () {},
+            Visibility(
+              visible: gpsLoction.value,
+              child: MSkollBtn(
+                title: "Save",
+                onPress: () async{
+                await  saveLeadClient(
+                    base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+                    demostatus: executedController.value.text,
+                    ierId:  selectIred.value,
+                    ierRemark: remarkController.value.text,
+                    latLong: "${getEmpDetailsController.latitude}+${getEmpDetailsController.longitude}",
+                    miId: widget.loginSuccessModel.mIID!,
+                    userId: widget.loginSuccessModel.userId!
+                  ).then(
+                    (value) {
+                      if(value!="Save"){
+                        Fluttertoast.showToast(msg: "Data Saved Successfully");
+                      }else{
+                         Fluttertoast.showToast(msg: "Data not Saved");
+                      }
+                    },
+                  );
+                },
+              ),
             )
           ]),
         ),

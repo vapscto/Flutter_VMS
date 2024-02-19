@@ -401,4 +401,6 @@ class URLS {
   static String editData = 'api/CandidateInterviewListVMSFacade/getRecordById/';
 
   static String getLeads="api/TADA_Advance_TourFacade/getload";
+
+  static String saveLeads="api/TADA_Advance_TourFacade/savedata";
 }

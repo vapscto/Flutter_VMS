@@ -19,7 +19,7 @@ Future<bool> feacthGps({
       apiUrl,
       options: Options(headers: getSession()),
     );
-
+    logger.w(response.data['results']);
     for (int i = 0; i < response.data['results'].length; i++) {
       GetGpsLocation result =
           GetGpsLocation.fromJson(response.data['results'][i]);
