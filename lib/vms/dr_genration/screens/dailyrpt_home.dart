@@ -237,6 +237,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
               ))
           : null;
     }
+    for (int i = 0; i < _plannerDetailsController.getTaskDrList.length; i++) {
+      compOffCheckBox.add(false);
+    }
   }
 
   List<Map<String, dynamic>> uploadImageList = [];
@@ -323,15 +326,18 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
             "ISMTPLTA_EndDate": value.iSMTPLTAEndDate,
             "ISMTPLTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
             "deviationflag": deviation,
-            "ISMDR_Id": int.parse(_plannerDetailsController
-                .deveationIdEtField[index].text), //value.iSMDRId,
+            "ISMDR_Id":
+                (_plannerDetailsController.deveationIdEtField.isNotEmpty)
+                    ? _plannerDetailsController.deveationIdEtField[index].text
+                    : value.iSMDRId,
             "ISMDRPT_TimeTakenInHrsmin": "Hours",
             "periodicityendflag": value.periodicityendflag,
             "ISMTAPL_Periodicity": value.iSMTAPLPeriodicity,
             "ISMTPLTA_Id": value.iSMTPLTAId,
             "attachmentArray": null,
             "categorychecklist": uploadImageList,
-            "Temp_TaskReponseList": null
+            "Temp_TaskReponseList": null,
+            "ISMDRPT_CompoffApplicableflag": compOffCheckBox[index]
           });
         }
         if (halfDay.value == false) {
@@ -483,7 +489,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   String fileName = '';
   String filePath = '';
   int newselectedIndex = -1;
-  List<int> selectedCheckBox = [];
+  List<bool> compOffCheckBox = [];
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -1567,20 +1573,19 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                           .primaryColor),
                                                             ),
                                                             value:
-                                                                selectedCheckBox
-                                                                    .contains(
-                                                                        index),
+                                                                compOffCheckBox[
+                                                                    index],
                                                             onChanged: (value) {
                                                               setState(() {
                                                                 if (value ==
                                                                     true) {
-                                                                  selectedCheckBox
-                                                                      .add(
-                                                                          index);
+                                                                  compOffCheckBox[
+                                                                          index] =
+                                                                      true;
                                                                 } else {
-                                                                  selectedCheckBox
-                                                                      .remove(
-                                                                          index);
+                                                                  compOffCheckBox[
+                                                                          index] =
+                                                                      false;
                                                                 }
                                                               });
                                                             }),

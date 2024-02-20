@@ -78,50 +78,54 @@ class CommonDrawer extends StatelessWidget {
                         ],
                       )
                     : const SizedBox(),
-                ListTile(
-                  title: const Text("Change Password"),
-                  leading: Container(
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: const CircleAvatar(
-                      // radius: 18,
-                      backgroundImage: AssetImage(
-                        "assets/images/ChangePassword.png",
+                (loginSuccessModel.roleforlogin == "ADMIN")
+                    ? const SizedBox()
+                    : ListTile(
+                        title: const Text("Change Password"),
+                        leading: Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: const CircleAvatar(
+                            // radius: 18,
+                            backgroundImage: AssetImage(
+                              "assets/images/ChangePassword.png",
+                            ),
+                            backgroundColor: Colors.white,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.pop(context);
+                          Get.to(() => ResetPassword(
+                                mskoolController: mskoolController,
+                                loginSuccessModel: loginSuccessModel,
+                              ));
+                        },
                       ),
-                      backgroundColor: Colors.white,
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Get.to(() => ResetPassword(
-                          mskoolController: mskoolController,
-                          loginSuccessModel: loginSuccessModel,
-                        ));
-                  },
-                ),
-                ListTile(
-                  title: const Text("Forgot Password"),
-                  leading: Container(
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: const CircleAvatar(
-                      // radius: 18,
-                      backgroundImage: AssetImage(
-                        "assets/images/ForgotPassword.png",
+                (loginSuccessModel.roleforlogin == "ADMIN")
+                    ? const SizedBox()
+                    : ListTile(
+                        title: const Text("Forgot Password"),
+                        leading: Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: const CircleAvatar(
+                            // radius: 18,
+                            backgroundImage: AssetImage(
+                              "assets/images/ForgotPassword.png",
+                            ),
+                            backgroundColor: Colors.white,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.pop(context);
+                          Get.to(() => ForgotPasswordScreen(
+                                mskoolController: mskoolController,
+                                forExpire: false,
+                              ));
+                        },
                       ),
-                      backgroundColor: Colors.white,
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Get.to(() => ForgotPasswordScreen(
-                          mskoolController: mskoolController,
-                          forExpire: false,
-                        ));
-                  },
-                ),
                 (loginSuccessModel.roleforlogin == "ADMIN")
                     ? ListTile(
                         leading: Container(

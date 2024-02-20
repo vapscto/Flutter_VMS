@@ -27,7 +27,11 @@ class DashboardTab extends StatelessWidget {
           children: [
             Obx(() {
               return profileController.birthdayList.isNotEmpty
-                  ? BirthDaySlider(profileController: profileController)
+                  ? Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child:
+                          BirthDaySlider(profileController: profileController),
+                    )
                   : const SizedBox();
             }),
             Obx(() {
