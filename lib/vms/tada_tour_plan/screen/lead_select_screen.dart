@@ -34,7 +34,7 @@ class _LeadSelectState extends State<LeadSelect> {
       TextEditingController(text: "").obs;
   Rx<TextEditingController> executedController =
       TextEditingController(text: "").obs;    
-  Rx<int>  selectIred = Rx(0);
+  Rx<int>  selectrleId = Rx(0);
   final leadController = Get.put(LeadController());
    GetEmpDetailsController getEmpDetailsController =
       Get.put(GetEmpDetailsController());
@@ -46,9 +46,7 @@ class _LeadSelectState extends State<LeadSelect> {
   }
 
   initApp() async {
-          //    gpsLoction.value = true;
-          
-    await feacthLeadClient(
+      await feacthLeadClient(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         controller: leadController,
         miId: widget.loginSuccessModel.mIID!,
@@ -151,6 +149,7 @@ class _LeadSelectState extends State<LeadSelect> {
                     return ListTile(
                       onTap: () {
                         controller.value.text = suggestion.iSMSLELeadName!;
+                        selectrleId.value = suggestion.iercleId!;
                         FocusScope.of(context).unfocus();
                       },
                       title: Text(
@@ -300,9 +299,10 @@ class _LeadSelectState extends State<LeadSelect> {
                 await  saveLeadClient(
                     base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
                     demostatus: executedController.value.text,
-                    ierId:  selectIred.value,
+                    ierId:  selectrleId.value,
                     ierRemark: remarkController.value.text,
-                    latLong: "${getEmpDetailsController.latitude}+${getEmpDetailsController.longitude}",
+                    lat: "${getEmpDetailsController.latitude.value}",
+                    longitude: "${getEmpDetailsController.longitude}",
                     miId: widget.loginSuccessModel.mIID!,
                     userId: widget.loginSuccessModel.userId!
                   ).then(

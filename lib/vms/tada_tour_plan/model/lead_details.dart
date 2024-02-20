@@ -38,6 +38,7 @@ class LeadCilentValues {
   int? iMRCCategoryId;
   String? iMRCCategoryName;
   int? iERID;
+  int? iercleId;
 
   LeadCilentValues(
       {this.type,
@@ -52,7 +53,8 @@ class LeadCilentValues {
       this.iVRMMSName,
       this.iMRCCategoryId,
       this.iMRCCategoryName,
-      this.iERID});
+      this.iERID,
+      this.iercleId});
 
   LeadCilentValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
@@ -68,6 +70,7 @@ class LeadCilentValues {
     iMRCCategoryId = json['IMRC_CategoryId'];
     iMRCCategoryName = json['IMRC_CategoryName'];
     iERID = json['IER_ID'];
+    iercleId =json['IERCLE_Id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -85,6 +88,7 @@ class LeadCilentValues {
     data['IMRC_CategoryId'] = iMRCCategoryId;
     data['IMRC_CategoryName'] = iMRCCategoryName;
     data['IER_ID'] = iERID;
+    data['IERCLE_Id']=iercleId;
     return data;
   }
 }

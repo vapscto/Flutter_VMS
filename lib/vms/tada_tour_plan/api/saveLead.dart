@@ -9,27 +9,30 @@ Future<String?> saveLeadClient(
     required int miId,
     required int ierId,
     required String ierRemark,
-    required String latLong,
+    required String lat,
+    required String longitude,
     required String demostatus}) async {
   final Dio ins = getGlobalDio();
   String apiUrl =
-      "https://vmsstaging.vapssmartecampus.com:40015/" + URLS.saveLeads;
+       base + URLS.saveLeads;
   logger.d(apiUrl);
 
   logger.w({
-    "IER_ID": ierId,
-    "UserId": 60795,
+    "IER_ID": ierId, // IERCLE_Id
+    "UserId": userId,
     "IER_Remarks": ierRemark,
-    "VMSATGPSL_LATLONGValue": latLong,
+    "ILRR_Lat": lat,
+    "ILRR_Long": longitude,
     "ISMSLEDM_DemoExecuted": demostatus
   });
   try {
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
-      "IER_ID": ierId,
-      "UserId": 60795,
+      "IER_ID": ierId, // IERCLE_Id
+      "UserId": userId,
       "IER_Remarks": ierRemark,
-      "VMSATGPSL_LATLONGValue": latLong,
+      "ILRR_Lat": lat,
+      "ILRR_Long": longitude,
       "ISMSLEDM_DemoExecuted": demostatus
     }
             //    {
