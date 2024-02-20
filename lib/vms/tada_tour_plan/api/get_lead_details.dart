@@ -18,8 +18,8 @@ Future<bool> feacthLeadClient(
   try {
     final Response response = await ins.post(apiUrl,
         options: Options(headers: getSession()),
-        data: {"MI_Id": 17, "UserId": 60795}
-        // {"MI_Id": miId, "UserId": userId}
+       // data: {"MI_Id": 17, "UserId": 60795}
+       data:  {"MI_Id": miId, "UserId": userId}
         );
     LeadCilent leadClientList =
         LeadCilent.fromJson(response.data['getloadarray']);

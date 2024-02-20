@@ -635,7 +635,7 @@ void openMappedPages(
 
   if (pageName == "Rating Report") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return RatingReportHome(
+      return LeadSelect(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
       );

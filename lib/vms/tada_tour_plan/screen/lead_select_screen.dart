@@ -46,9 +46,7 @@ class _LeadSelectState extends State<LeadSelect> {
   }
 
   initApp() async {
-          //    gpsLoction.value = true;
-          
-    await feacthLeadClient(
+      await feacthLeadClient(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         controller: leadController,
         miId: widget.loginSuccessModel.mIID!,
