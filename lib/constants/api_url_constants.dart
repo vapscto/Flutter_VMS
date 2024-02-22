@@ -9,9 +9,9 @@ class URLS {
   static String otpVerification = "verify/otp";
   static String loginVerification = "islogin";
   static String signUp = "create";
-  static String logout = "logout";
-  static String getProfile = "profile";
-  static String updateProfile = "profile/update";
+  // static String logout = "logout";
+  // static String getProfile = "profile";
+  // static String updateProfile = "profile/update";
   static String fileUpload = "upload/file";
   static String versionControl = "api/EmployeePtalFacade/Mobileversion_control";
   static String getApiUrl = "api/LoginFacade/getinstitutionapiNew/";
@@ -30,11 +30,11 @@ class URLS {
   static String login = "api/LoginFacade";
 
   // profile
-  static String profile = "api/StudentDashboardFacade/Getdetails";
+  // static String profile = "api/StudentDashboardFacade/Getdetails";
 
   //feedback
-  static String saveFeedBack = "api/StudentFeedbackFormFacade/savefeedback/";
-  static String getFeedBack = "api/StudentFeedbackFormFacade/getloaddata/";
+  // static String saveFeedBack = "api/StudentFeedbackFormFacade/savefeedback/";
+  // static String getFeedBack = "api/StudentFeedbackFormFacade/getloaddata/";
 
   //Information
   static String uploadHomeWorkBase = "https://bdcampus.azurewebsites.net/";
@@ -145,55 +145,37 @@ class URLS {
 
   /* Global Endpoints */
   static String pushNotification = "api/AdmissionCtrl/PushNotificationonload/";
-
   static String attendanceShortage =
       "api/AdmissionCtrl/shortageOfAttendanceAlert";
-
   //LeaveApprovalManager
   static String getLeaves = "api/LeaveApprovalFacade/getApprovalStatus/";
   static String approveLeave = "api/LeaveApprovalFacade/get_status/";
-
   static String playStoreLink =
       "https://play.google.com/store/apps/details?id=com.app.vmss";
-
   static String expiredPwd = "api/changepwdFacade/";
   static String appStorelink =
       "https://apps.apple.com/us/app/vaps-management-system/id6470649988";
 
-  //** FEE COLLECTION API **//
   static String onclickpurchaseapi = "api/IndentApprovalFacade/getpidetails/";
-
   static String purchaseindentapi = "api/IndentApprovalFacade/getloaddata/";
   // Maker and checker
   static String designationsListapi =
       "api/ISM_DailyReport_ApprovalFacade/GetDetails/";
-
   static String drDetailsApprove =
       "api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
-
-  // ignore: non_constant_identifier_names
-  static String employee_model_list =
+  static String employeeModelList =
       "api/ISM_DailyReport_ApprovalFacade/DesgSelectionDetails/";
-
   static String getDrs = "api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
-
-  // ignore: non_constant_identifier_names
-  static String DeptList =
+  static String deptList =
       "api/ISM_DailyReport_ApprovalFacade/DeptSelectionDetails/";
-
-  // ignore: non_constant_identifier_names
-  static String Security = "api/ISMDashboardFacade/getdetails";
-
+  static String security = "api/ISMDashboardFacade/getdetails";
   static String submit =
       "api/ISM_DailyReport_ApprovalFacade/SaveApprovalDetails/";
-
   static String updateCheck = "api/CheckBookEntryApprovalFacade/ApprovalData/";
-
   static String getcmpn = "api/CheckBookEntryApprovalFacade/getalldata/";
-
   static String submitCheck = "api/CheckBookEntryApprovalFacade/Getdata/";
 
-  //** TADA Advance Apply APIS* *//
+  //** TADA Advance Apply APIS **//
   static String stateList = 'api/TADA_Advance_ApplyFacade/getalldata/';
   static String cityList = 'api/TADA_Advance_ApplyFacade/getstate/';
   static String allowense = 'api/TADA_Advance_ApplyFacade/TadaAllwence/';
@@ -218,85 +200,58 @@ class URLS {
   static String tadaApplyEdit = 'api/TADA_ApplyFacade/edit/';
   static String saveImage = 'api/TADA_ApplyFacade/Updatefile/';
 
-  ///***  PETTY CASH APPROVAL  ***///
+  //**  PETTY CASH APPROVAL  **//
 
   static String onChangeInstitution =
       "api/PC_Indent_ApprovalFacade/OnChangeInstitution";
-
   static String onLoadPcApproval = "api/PC_Indent_ApprovalFacade/onloaddata";
-
   static String particularapprovedIndentPC =
       "api/PC_Indent_ApprovalFacade/Viewdata";
-
   static String particularIndentDetails =
       "api/PC_Indent_ApprovalFacade/getindentdetails";
-
   static String onChangeDatePC = "api/PC_Indent_ApprovalFacade/onchangedate";
-
   static String saveRecordPC = "api/PC_Indent_ApprovalFacade/saverecord";
 
-  ///***  PETTY INDENT APPROVAL  ***///
+  //**  PETTY INDENT APPROVAL  **//
 
   static String onLoadIndentApproval = "api/PC_IndentFacade/onloaddata";
-
   static String onChangeIndentapprovalIns =
       "api/PC_IndentFacade/OnChangeInstitution";
-
   static String onChangeIndentDatePC = "api/PC_IndentFacade/onchangedate";
-
   static String particularReqDetails =
       "api/PC_IndentFacade/getrequisitiondetails";
-
   static String indentDetailsApproved = "api/PC_IndentFacade/onloaddata";
-
   static String indentViewData = "api/PC_IndentFacade/Viewdata";
-
   static String saveRecordIndentPC = "api/PC_IndentFacade/saverecord";
 
-  ///*** PETTY CASH REQUISITION ***/
-
+  //** PETTY CASH REQUISITION **//
   static String departmentonLoadPCRequest =
       "api/PC_RequisitionFacade/onloaddata";
-
   static String employeeListPCRequest = "api/PC_RequisitionFacade/onchangedept";
-
   static String reqDetailsSaveRecord = "api/PC_RequisitionFacade/saverecord";
-
   static String viewDataPcReq = "api/PC_RequisitionFacade/Viewdata";
-
   //--- RATING REPORT API ENDPOINT ---//
-
   static String yearListRatingReport =
       "api/Rating_TransactionFacade/get_Consolidated_details";
-
   static String monthRatingReport =
       "api/Rating_TransactionFacade/get_Consolidated_details";
-
   static String dataReport = "api/Rating_TransactionFacade/getemployeereport/";
-
-  ///***   ***///
-
   static String taskGetDetails = "api/ISM_TaskCreationFacade/getdetails/";
-
   static String taskGetProjects = "api/ISM_TaskCreationFacade/get_category/";
-
   static String getTskClinet = "api/ISM_TaskCreationFacade/getmodule/";
   // Planner Creation
   static String planStatusList = 'api/ISM_PlannerCreationFacade/getdetails/';
   static String assignTaskList =
       'api/ISM_PlannerCreationFacade/geteffortdetails';
-
   static String purchaserequisitionapi =
       'api/INV_PurchaseRequisitionFacade/GetOnchangeData/';
   static String purchaseRequisitionSave =
       'api/INV_PurchaseRequisitionFacade/savedetails/';
-
   static String savePlanner = 'api/ISM_PlannerCreationFacade/savePlanner/';
   static String onchangeMoudleChange = "api/ISM_TaskCreationFacade/getIEuser/";
 
   // VMS common
   static String logintransation = 'api/LoginFacade/getRoleData';
-
   static String saveTaskCreation = "api/ISM_TaskCreationFacade/savedata/";
 
   // Sales Report
@@ -312,13 +267,9 @@ class URLS {
       "api/AddVisitorsFacade/getAssignDetails/";
   static String gridoptionapi =
       "api/AddVisitorsFacade/getVisitorAssignDetails/";
-
   static String saveapi = "api/AddVisitorsFacade/saveAssignedData/";
-
   static String gpsFeacth = "api/GPSLocationFacade/getalldetails/";
-
   static String savePunchApi = "api/GPSLocationFacade/savedata/";
-
   static String drDetailsGenration =
       "api/ISM_DailyReportGenerationFacade/loaddata/";
   static String plannerList = 'api/ISM_PlannerApprovalFacade/getdetails/';
@@ -327,19 +278,13 @@ class URLS {
   static String plannerSave =
       "api/ISM_PlannerApprovalFacade/updateplannerStatus";
   static String profileData = 'api/ISMDashboardFacade/getdetails/';
-
   static String visitorapprovalapi =
       'api/V_AppointmentApprovalStatusFacade/getDetails/';
-
   static String leaveCountList =
       "api/OnlineLeaveApplicationFacade/getonlineLeave";
-
   static String hcClassList = "api/HW_HeathCheckUpFacade/OnLoadHWHealthCheckUp";
-
   static String saveHC = "api/HW_HeathCheckUpFacade/SaveHWHealthChekUp";
-
   static String getdocxApi = 'api/HW_HeathCheckUpFacade/ViewHealthCheckUpFiles';
-
   static String getTaskCheckList =
       "api/ISM_DailyReportGenerationFacade/GetCategoryChecklistDetails";
   //Interaction VMS
@@ -356,21 +301,15 @@ class URLS {
       'api/ISM_DailyReportGenerationFacade/generatedailyreport';
   static String drNotSave =
       'api/ISM_DailyReportGenerationFacade/SaveDRNotSentRemarks';
-
-  // ignore: non_constant_identifier_names
-  static String OtpCheck = "api/CheckBookEntryFacade/geterifyEmail/";
-
+  static String otpCheck = "api/CheckBookEntryFacade/geterifyEmail/";
   static String seacurityTaskSave =
       "api/StaffAreaActivityRecordFacade/Activitysavedetails/";
 
   ///////////  PURCHASE API //////////////
 
   static String purchaseLoadData = "api/IndentApprovalFacade/getloaddata/";
-
   static String purchaseSaveApi = "api/IndentApprovalFacade/savedetails/";
-
   static String indentItem = "api/INV_PurchaseRequisitionFacade/getitemDetail/";
-
   static String othersDayCount =
       'api/ISM_DailyReportGenerationFacade/Otherdaycount/';
   static String punchList = 'api/ISMDashboardFacade/getdetails/';
@@ -378,7 +317,6 @@ class URLS {
       'api/ISM_DailyReportGenerationFacade/addextratask/';
   static String previousTaskList =
       'api/ISM_DailyReportGenerationFacade/searchpreviousdailyreport/';
-
   static String instituteList = 'api/LoginFacade/getMIdataMaster';
   static String extensionLoad = 'api/ISM_ExtensionFacade/getdetails';
   static String extensionSave = 'api/ISM_ExtensionFacade/savedata';
@@ -399,11 +337,9 @@ class URLS {
   static String saveFeedback =
       'api/AddCandidateInterviewVMSFacade/savefeedback/';
   static String editData = 'api/CandidateInterviewListVMSFacade/getRecordById/';
-
-  static String getLeads="api/TADA_Advance_TourFacade/getload";
-
-  static String saveLeads="api/TADA_Advance_TourFacade/savedata";
-   // NOC Approval
+  static String getLeads = "api/TADA_Advance_TourFacade/getload";
+  static String saveLeads = "api/TADA_Advance_TourFacade/savedata";
+  // NOC Approval
   static String nocLoad = 'api/HR_NOC_Process_Facade/loaddata';
   static String nocDetails = 'api/HR_NOC_Process_Facade/viewuploadflies';
   static String nocApproval = 'api/HR_NOC_Process_Facade/approvedrecord';

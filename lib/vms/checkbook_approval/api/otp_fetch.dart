@@ -13,7 +13,7 @@ Future<bool> otpCheck({
   required ChequeController controller,
 }) async {
   final Dio ins = getGlobalDio();
-  String apiUrl = base + URLS.OtpCheck;
+  String apiUrl = base + URLS.otpCheck;
 
   logger.w(apiUrl);
   logger.i({"MI_Id": miId, "UserId": userId, "EMAILOTP": otp});

@@ -17,7 +17,7 @@ Future<int> feachDesignation(
     required int ivrmrt,
     required List<Map<String, dynamic>> list}) async {
   final Dio ins = getGlobalDio();
-  String apiUrl = base + URLS.DeptList;
+  String apiUrl = base + URLS.deptList;
 
   logger.d(apiUrl);
   logger.d({

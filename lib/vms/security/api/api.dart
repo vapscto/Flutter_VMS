@@ -16,7 +16,7 @@ Future<int> feacthSecurityApi({
   required SecurtyWorkController controller,
 }) async {
   final Dio ins = getGlobalDio();
-  final String apiUrl = base + URLS.Security;
+  final String apiUrl = base + URLS.security;
   logger.d("damn $apiUrl");
   logger.d({
     "UserId": loginSuccessModel.userId,

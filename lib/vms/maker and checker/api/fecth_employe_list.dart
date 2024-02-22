@@ -17,7 +17,7 @@ Future<int> feachEmpolyee(
     required MakerCheckerController controller,
     required List<Map<String, dynamic>> list}) async {
   final Dio ins = getGlobalDio();
-  String apiUrl = "$base${URLS.employee_model_list}";
+  String apiUrl = "$base${URLS.employeeModelList}";
 
   logger.d(apiUrl);
 
