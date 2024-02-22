@@ -13,8 +13,7 @@ Future<String?> saveLeadClient(
     required String longitude,
     required String demostatus}) async {
   final Dio ins = getGlobalDio();
-  String apiUrl =
-       base + URLS.saveLeads;
+  String apiUrl = base + URLS.saveLeads;
   logger.d(apiUrl);
 
   logger.w({
