@@ -113,16 +113,6 @@ Map<String, String> getSession() {
   return header;
 }
 
-DateTime getDateTimeFromSeconds(
-  int seconds,
-) {
-  return DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
-}
-
-toCapitalized(String value) {
-  return value.capitalize;
-}
-
 String baseUrlFromInsCode(String pageName, MskoolController mskoolController) {
   for (int i = 0;
       i < mskoolController.universalInsCodeModel!.value.apiarray.values.length;
@@ -135,151 +125,6 @@ String baseUrlFromInsCode(String pageName, MskoolController mskoolController) {
     }
   }
   return "";
-}
-
-String getDashBoardIconByName(String title) {
-  String returnValue = "assets/images/";
-  switch (title) {
-    case "Attendance":
-      returnValue += "Attendance.png";
-      break;
-    case "Fee Details":
-      returnValue += "FeeReceipt.png";
-      break;
-    case "Fee Payment":
-      returnValue += "OnlinePayment.png";
-      break;
-    case "Fee Analysis":
-      returnValue += "FeeAnalysis.png";
-      break;
-    case "Classwork":
-      returnValue += "Classwork.png";
-      break;
-    case "Homework":
-      returnValue += "Homework.png";
-      break;
-    case "COE":
-      returnValue += "Coe.png";
-      break;
-    case "Notice Board":
-      returnValue += "Noticeboard.png";
-      break;
-    case "Library":
-      returnValue += "Library.png";
-      break;
-    case "Syllabus":
-      returnValue += "Attendance.png";
-      break;
-    case "Exam":
-      returnValue += "exam.png";
-      break;
-    case "Interaction":
-      returnValue += "Interaction.png";
-      break;
-    case "Certificate":
-      returnValue += "Certificate.png";
-      break;
-    case "Time Table":
-      returnValue += "Timetable.png";
-      break;
-    case "Fee Receipt":
-      returnValue += "FeeReceipt.png";
-      break;
-    default:
-      returnValue += "Timetable.png";
-  }
-  return returnValue;
-}
-
-String getStaffDashboardIcon(String pageName) {
-  String icon = "assets/images/";
-
-  if (pageName.toLowerCase().contains("entry") &&
-      !pageName.toLowerCase().contains("mark")) {
-    return icon += "staff_stu_attendance.png";
-  }
-
-  if (pageName.toLowerCase().contains("attendance") ||
-      pageName.toLowerCase().contains('petty')) {
-    return icon += "staff_attendance.png";
-  }
-
-  if (pageName.toLowerCase().contains("time")) {
-    return icon += "staff_tt.png";
-  }
-
-  if (pageName.toLowerCase().contains("mark")) {
-    return icon += "staff_me.png";
-  }
-
-  if (pageName.toLowerCase().contains("punch")) {
-    return icon += "staff_pr.png";
-  }
-
-  if (pageName.toLowerCase().contains("salary details")) {
-    return icon += "staff_dt.png";
-  }
-
-  if (pageName.toLowerCase().contains("homework")) {
-    return icon += "staff_hw.png";
-  }
-  if (pageName.toLowerCase().contains("classwork")) {
-    return icon += "staff_classwork.png";
-  }
-  if (pageName.toLowerCase().contains("notice")) {
-    return icon += "staff_nb.png";
-  }
-
-  if (pageName.toLowerCase().contains("birth")) {
-    return icon += "staff_bday.png";
-  }
-  if (pageName.toLowerCase().contains("interaction")) {
-    return icon += "staff_interaction.png";
-  }
-  if (pageName.toLowerCase().contains("leave")) {
-    return icon += "staff_olp.png";
-  }
-  if (pageName.toLowerCase().contains("coe")) {
-    return icon += "staff_coe.png";
-  }
-
-  if (pageName.toLowerCase().contains("slip")) {
-    return icon += "FeeReceipt.png";
-  }
-
-  return icon += "Timetable.png";
-}
-
-String getManagerDashboardIconByName(String pageName) {
-  String icon = "assets/images/";
-
-  if (pageName.toLowerCase().contains("student")) {
-    return icon += "student_details.png";
-  }
-  if (pageName.toLowerCase().contains("interaction")) {
-    return icon += "staff_interaction.png";
-  }
-  if (pageName.toLowerCase().contains("leave")) {
-    return icon += "staff_olp.png";
-  }
-  if (pageName.toLowerCase().contains("coe")) {
-    return icon += "staff_coe.png";
-  }
-
-  if (pageName.toLowerCase().contains("slip")) {
-    return icon += "FeeReceipt.png";
-  }
-  if (pageName.toLowerCase().contains("employee")) {
-    return icon += "employee_details.png";
-  }
-  if (pageName.toLowerCase().contains("fee")) {
-    return icon += "manager_fee.png";
-  }
-  if (pageName.toLowerCase().contains("notice")) {
-    return icon += "staff_nb.png";
-  }
-
-  return icon += "Timetable.png";
 }
 
 String getDashboardIcon(String pageName) {
@@ -299,15 +144,13 @@ String getDashboardIcon(String pageName) {
     return "${icon}FeeReceipt.png";
   }
 
-  if (pageName.toLowerCase().contains("classwork") ||
-      pageName.toLowerCase().contains('task')) {
+  if (pageName.toLowerCase().contains('task')) {
     return "${icon}Classwork.png";
   }
   if (pageName.toLowerCase().contains('sales')) {
     return "${icon}OnlinePayment.png";
   }
-  if (pageName.toLowerCase().contains("homework") ||
-      pageName.toLowerCase().contains('planner') ||
+  if (pageName.toLowerCase().contains('planner') ||
       pageName.toLowerCase().contains('dr')) {
     return "${icon}Homework.png";
   }
@@ -320,7 +163,8 @@ String getDashboardIcon(String pageName) {
       pageName.toLowerCase().contains('tada')) {
     return "${icon}exam.png";
   }
-  if (pageName.toLowerCase().contains("certificate")) {
+  if (pageName.toLowerCase().contains("certificate") ||
+      pageName.toLowerCase().contains("noc")) {
     return "${icon}Certificate.png";
   }
   if (pageName.toLowerCase().contains("entry") &&
@@ -392,8 +236,7 @@ String getDashboardIcon(String pageName) {
       pageName.toLowerCase().contains('purchase')) {
     return icon += "employee_details.png";
   }
-  if (pageName.toLowerCase().contains("fee") ||
-      pageName.toLowerCase().contains('cheaque')) {
+  if (pageName.toLowerCase().contains('cheaque')) {
     return icon += "manager_fee.png";
   }
   if (pageName.toLowerCase().contains("notice") ||
@@ -413,10 +256,7 @@ Future<void> initializeFCMNotification() async {
     sound: true,
   );
   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-    // print('User granted permission');
-  } else {
-    // print('User declined or has not accepted permission');
-  }
+  } else {}
 }
 
 pushNotificationNavigator({

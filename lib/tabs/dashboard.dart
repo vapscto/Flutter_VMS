@@ -22,6 +22,7 @@ class DashboardTab extends StatelessWidget {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(12.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Obx(() {
             return profileController.birthdayList.isNotEmpty

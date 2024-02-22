@@ -389,7 +389,7 @@ class _NocApprovedListScreenState extends State<NocApprovedListScreen> {
                                                                               TextSpan(
                                                                                 children: [
                                                                                   TextSpan(text: 'Damage Amount: ', style: Get.textTheme.titleSmall!.copyWith(fontWeight: FontWeight.w600)),
-                                                                                  TextSpan(text: '0', style: Get.textTheme.titleSmall!.copyWith(color: Theme.of(context).primaryColor)),
+                                                                                  TextSpan(text: ' ', style: Get.textTheme.titleSmall!.copyWith(color: Theme.of(context).primaryColor)),
                                                                                 ],
                                                                               ),
                                                                             ),
