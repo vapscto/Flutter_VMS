@@ -2,11 +2,20 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/screens/task_list_screen.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 
 class PeriodicityWidget extends StatefulWidget {
   final ProfileController controller;
-  const PeriodicityWidget({super.key, required this.controller});
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  const PeriodicityWidget(
+      {super.key,
+      required this.controller,
+      required this.loginSuccessModel,
+      required this.mskoolController});
 
   @override
   State<PeriodicityWidget> createState() => _PeriodicityWidgetState();
@@ -62,7 +71,19 @@ class _PeriodicityWidgetState extends State<PeriodicityWidget> {
           return Padding(
             padding: const EdgeInsets.only(right: 10),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => TaskListScreen(
+                              status: v.hRMPName!,
+                              companyName: v.mIName!,
+                              hRMPRId: v.hRMPRId!,
+                              controller: widget.controller,
+                              loginSuccessModel: widget.loginSuccessModel,
+                              mskoolController: widget.mskoolController,
+                            )));
+              },
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 12),

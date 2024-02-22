@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/coe/model/holiday_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/birthday_list_model.dart';
+import 'package:m_skool_flutter/vms/profile/model/issues_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/periodicity_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/profile_model.dart';
 
@@ -48,4 +49,11 @@ class ProfileController extends GetxController {
 
   RxList<PeriodicityListModelValues> periodicityList =
       <PeriodicityListModelValues>[].obs;
+  RxBool taskLoading = RxBool(false);
+  void taskDataLoading(bool l) {
+    taskLoading.value = l;
+  }
+
+  RxList<TaskIssuesListModelValues> issuesList =
+      <TaskIssuesListModelValues>[].obs;
 }

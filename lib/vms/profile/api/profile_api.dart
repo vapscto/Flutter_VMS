@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/coe/model/holiday_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/vms/profile/model/birthday_list_model.dart';
+import 'package:m_skool_flutter/vms/profile/model/issues_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/periodicity_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/profile_model.dart';
 
@@ -47,6 +48,32 @@ class ProfileAPI {
           profileController.periodicityList
               .addAll(periodicityListModel.values!);
         }
+      }
+    } on DioError catch (e) {
+      logger.e(e.message);
+    } on Exception catch (e) {
+      logger.e(e.toString());
+    }
+  }
+
+  issuesList(
+      {required String base,
+      required ProfileController profileController,
+      required Map<String, dynamic> body}) async {
+    var dio = Dio();
+    var api = base + URLS.taskList;
+    try {
+      profileController.taskDataLoading(true);
+      var response = await dio.post(api,
+          options: Options(headers: getSession()), data: body);
+      logger.v(body);
+      logger.w(api);
+      if (response.statusCode == 200) {
+        TaskIssuesListModel taskIssuesListModel =
+            TaskIssuesListModel.fromJson(response.data['issueslist']);
+        profileController.issuesList.clear();
+        profileController.issuesList(taskIssuesListModel.values!);
+        profileController.taskDataLoading(false);
       }
     } on DioError catch (e) {
       logger.e(e.message);

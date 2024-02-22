@@ -343,4 +343,7 @@ class URLS {
   static String nocLoad = 'api/HR_NOC_Process_Facade/loaddata';
   static String nocDetails = 'api/HR_NOC_Process_Facade/viewuploadflies';
   static String nocApproval = 'api/HR_NOC_Process_Facade/approvedrecord';
+
+  //
+  static String taskList = 'api/ISMDashboardFacade/pendingissues/';
 }
