@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/vms/utils/birthday_slider.dart';
 import 'package:m_skool_flutter/vms/utils/periodicity_widget.dart';
+import 'package:m_skool_flutter/vms/utils/present_chart.dart';
 
 class DashboardTab extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -55,6 +56,16 @@ class DashboardTab extends StatelessWidget {
                       ],
                     ),
                   );
+          }),
+          Obx(() {
+            return (profileController.present.value > 0)
+                ? Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: PresentChart(
+                      controller: profileController,
+                    ),
+                  )
+                : const SizedBox();
           }),
           loginSuccessModel.staffmobileappprivileges == null ||
                   loginSuccessModel.staffmobileappprivileges!.values!.isEmpty

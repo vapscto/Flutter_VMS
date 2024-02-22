@@ -47,6 +47,10 @@ class ProfileAPI {
           profileController.periodicityList.clear();
           profileController.periodicityList
               .addAll(periodicityListModel.values!);
+          logger.w("Total Present :- ${response.data['totdayspresent']}");
+          profileController.present.value = response.data['totdayspresent'];
+          profileController.holiday.value = response.data['totholiday'];
+          profileController.absent.value = response.data[''];
         }
       }
     } on DioError catch (e) {
@@ -73,6 +77,7 @@ class ProfileAPI {
             TaskIssuesListModel.fromJson(response.data['issueslist']);
         profileController.issuesList.clear();
         profileController.issuesList(taskIssuesListModel.values!);
+
         profileController.taskDataLoading(false);
       }
     } on DioError catch (e) {

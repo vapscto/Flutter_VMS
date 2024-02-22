@@ -111,9 +111,9 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
   @override
   void initState() {
     version(widget.loginSuccessModel, widget.mskoolController);
-    _getPunch();
     _getProfile();
     _getInstitute();
+    _getPunch();
     _getLocation();
     homePage.addAll(
       [

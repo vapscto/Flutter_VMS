@@ -56,4 +56,7 @@ class ProfileController extends GetxController {
 
   RxList<TaskIssuesListModelValues> issuesList =
       <TaskIssuesListModelValues>[].obs;
+  RxInt present = 0.obs;
+  RxInt absent = 0.obs;
+  RxInt holiday = 0.obs;
 }

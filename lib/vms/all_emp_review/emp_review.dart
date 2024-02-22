@@ -15,7 +15,7 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
       appBar: const CustomAppBar(title: 'Employee Ratings').getAppBar(),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-        children: [],
+        children: const [],
       ),
     );
   }
