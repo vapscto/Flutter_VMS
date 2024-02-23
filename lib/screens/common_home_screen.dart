@@ -68,6 +68,8 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!,
         roleId: widget.loginSuccessModel.roleId!);
+    numberController.text =
+        profileController.profileDataValue.first.hRMEMobileNo.toString();
     profileController.profileLoading(false);
   }
 

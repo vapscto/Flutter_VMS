@@ -25,8 +25,8 @@ class CheckBoxContainer extends StatelessWidget {
         visualDensity: const VisualDensity(horizontal: -4.0),
         title: Text(
           sectionName,
-          style: Theme.of(context).textTheme.labelSmall!.merge(const TextStyle(
-              fontWeight: FontWeight.w400, fontSize: 14.0, letterSpacing: 0.3)),
+          style: Theme.of(context).textTheme.titleSmall!.merge(const TextStyle(
+              fontWeight: FontWeight.w400, fontSize: 15.0, letterSpacing: 0.3)),
         ),
         value: isChecked.value,
         onChanged: (value) {

@@ -346,4 +346,7 @@ class URLS {
 
   //
   static String taskList = 'api/ISMDashboardFacade/pendingissues/';
+  // All Emp rating
+  static String allEmpRating =
+      'api/Rating_TransactionFacade/get_Consolidated_details';
 }

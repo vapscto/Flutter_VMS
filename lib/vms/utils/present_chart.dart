@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -10,6 +12,13 @@ class PresentChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int data = 0;
+    DateTime feb1 = DateTime(DateTime.now().year, DateTime.now().month, 1);
+    DateTime feb23 = DateTime.now();
+    int differenceInDays = feb23.difference(feb1).inDays + 1;
+    data = differenceInDays -
+        (controller.present.value + controller.holiday.value);
+    controller.absent.value = data;
     final List<AttandanceData> chartData = [];
     chartData.add(AttandanceData(
         name: 'Presemt', count: controller.present.value, color: Colors.green));
@@ -103,4 +112,71 @@ class AttandanceData {
 
   @override
   int get hashCode => name.hashCode ^ count.hashCode ^ color.hashCode;
+}
+
+class RatingData extends StatelessWidget {
+  final ProfileController controller;
+  const RatingData({super.key, required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.45,
+      height: MediaQuery.of(context).size.height * 0.27,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.grey)),
+      padding: const EdgeInsets.all(4),
+      child: Column(children: [
+        RatingBar.builder(
+          ignoreGestures: true,
+          initialRating: double.parse(controller
+              .ratingDataModelValues.first.overallRating!
+              .round()
+              .toString()),
+          minRating: 1,
+          direction: Axis.horizontal,
+          allowHalfRating: false,
+          itemCount: 5,
+          itemPadding: const EdgeInsets.only(right: 2),
+          itemSize: 20,
+          itemBuilder: (context, _) => const Icon(
+            Icons.star,
+            color: Colors.amber,
+          ),
+          onRatingUpdate: (rating) {},
+        ),
+        const SizedBox(height: 5),
+        Padding(
+          padding: const EdgeInsets.only(left: 6.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "${controller.ratingDataModelValues.first.overallRating} Average Based on Review",
+                textAlign: TextAlign.center,
+                style: Get.textTheme.titleSmall!
+                    .copyWith(color: Theme.of(context).primaryColor),
+              ),
+              // Text(
+              //   "${doubleToTime(controller.hour)} Hr",
+              //   style: Get.textTheme.titleSmall!.copyWith(color: Colors.red),
+              // ),
+              // Text(
+              //   "Late-In / Early-Out Time",
+              //   textAlign: TextAlign.center,
+              //   style: Get.textTheme.titleSmall!.copyWith(color: Colors.red),
+              // ),
+            ],
+          ),
+        )
+      ]),
+    );
+  }
+
+  String doubleToTime(double value) {
+    int hours = value.floor();
+    int minutes = ((value - hours) * 60).round();
+    return '$hours:$minutes';
+  }
 }

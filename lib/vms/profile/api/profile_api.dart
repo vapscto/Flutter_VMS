@@ -6,8 +6,10 @@ import 'package:m_skool_flutter/vms/coe/model/holiday_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/vms/profile/model/birthday_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/issues_list_model.dart';
+import 'package:m_skool_flutter/vms/profile/model/late_in_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/periodicity_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/profile_model.dart';
+import 'package:m_skool_flutter/vms/profile/model/rating_data_model.dart';
 
 class ProfileAPI {
   ProfileAPI.init();
@@ -47,11 +49,19 @@ class ProfileAPI {
           profileController.periodicityList.clear();
           profileController.periodicityList
               .addAll(periodicityListModel.values!);
-          logger.w("Total Present :- ${response.data['totdayspresent']}");
-          profileController.present.value = response.data['totdayspresent'];
-          profileController.holiday.value = response.data['totholiday'];
-          profileController.absent.value = response.data[''];
         }
+        logger.v(response.data['lateindata']);
+        if (response.data['lateindata'] != null) {
+          LateInModel lateInModel =
+              LateInModel.fromJson(response.data['lateindata']);
+          profileController.newData(lateInModel.values!);
+        }
+        profileController.present.value = response.data['totdayspresent'];
+        profileController.holiday.value = response.data['totholiday'];
+        RatingDataModel ratingDataModel =
+            RatingDataModel.fromJson(response.data['ratingDetails']);
+        profileController.ratingDataModelValues.clear();
+        profileController.ratingDataModelValues.addAll(ratingDataModel.values!);
       }
     } on DioError catch (e) {
       logger.e(e.message);

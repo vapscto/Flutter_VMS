@@ -18,7 +18,6 @@ import 'package:m_skool_flutter/vms/online_leave/controller/ol_controller.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/leave_name_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/model/staff_list_model.dart';
 import 'package:m_skool_flutter/vms/online_leave/widget/leave_attachment.dart';
-import 'package:m_skool_flutter/vms/profile/api/profile_api.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/vms/task%20creation/api/sava_task.dart';
 import 'package:m_skool_flutter/vms/utils/show_date_picker.dart';
@@ -52,24 +51,10 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
 
   StaffPrevilegeListModelValues? selectedEmployee;
 
-  _getProfileData() async {
-    profileController.profileLoading(true);
-    await ProfileAPI.instance.profileData(
-        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
-        profileController: profileController,
-        miId: widget.loginSuccessModel.mIID!,
-        userId: widget.loginSuccessModel.userId!,
-        roleId: widget.loginSuccessModel.roleId!);
-    phone.text =
-        profileController.profileDataValue.first.hRMEMobileNo.toString();
-    profileController.profileLoading(false);
-  }
-
   DateTime newDt = DateTime.now();
   @override
   void initState() {
     olLoad();
-    _getProfileData();
     getleaveDate();
     inti();
     super.initState();
@@ -298,7 +283,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                     ),
                     CustomContainer(
                       child: TextField(
-                        controller: phone,
+                        controller: numberController,
                         style: Theme.of(context).textTheme.titleSmall,
                         maxLength: 10,
                         //maxLines: 4,
@@ -1156,12 +1141,13 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
               return;
             }
 
-            if (RegExp("/^[6-9]{1,1}[0-9]{9,9}?\$/").hasMatch(phone.text)) {
+            if (RegExp("/^[6-9]{1,1}[0-9]{9,9}?\$/")
+                .hasMatch(numberController.text)) {
               Fluttertoast.showToast(
                   msg: "Please provide a valid phone number");
               return;
             }
-            if (!RegExp(r'^[6789]\d{9}$').hasMatch(phone.text)) {
+            if (!RegExp(r'^[6789]\d{9}$').hasMatch(numberController.text)) {
               Fluttertoast.showToast(
                   msg: "Please provide a valid phone number");
               return;
@@ -1205,7 +1191,8 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                   asmayId: widget.loginSuccessModel.asmaYId!,
                                   applicationDate:
                                       DateTime.now().toLocal().toString(),
-                                  contactNoOnLeave: int.parse(phone.text),
+                                  contactNoOnLeave:
+                                      int.parse(numberController.text),
                                   leaveReason: reason.text,
                                   reportingDate:
                                       reportingDT.toLocal().toString(),

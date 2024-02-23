@@ -2,8 +2,10 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/coe/model/holiday_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/birthday_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/issues_list_model.dart';
+import 'package:m_skool_flutter/vms/profile/model/late_in_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/periodicity_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/profile_model.dart';
+import 'package:m_skool_flutter/vms/profile/model/rating_data_model.dart';
 
 class ProfileController extends GetxController {
   RxBool isErrorLoading = RxBool(false);
@@ -59,4 +61,22 @@ class ProfileController extends GetxController {
   RxInt present = 0.obs;
   RxInt absent = 0.obs;
   RxInt holiday = 0.obs;
+  RxDouble rating = 0.0.obs;
+  RxList<RatingDataModelValues> ratingDataModelValues =
+      <RatingDataModelValues>[].obs;
+
+  RxList<LateInModelValues> lateInData = <LateInModelValues>[].obs;
+  double hour = 0;
+  double data = 0;
+  void newData(List<LateInModelValues> lateIn) {
+    data = 0;
+    hour = 0;
+    if (lateInData.isNotEmpty) {
+      lateInData.clear();
+    }
+    for (int i = 0; i < lateInData.length; i++) {
+      data = double.parse(lateInData.elementAt(i).lateby!.replaceAll(":", "."));
+      hour += data;
+    }
+  }
 }

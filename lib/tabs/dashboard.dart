@@ -58,14 +58,31 @@ class DashboardTab extends StatelessWidget {
                   );
           }),
           Obx(() {
-            return (profileController.present.value > 0)
-                ? Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: PresentChart(
-                      controller: profileController,
-                    ),
-                  )
-                : const SizedBox();
+            return (profileController.isProfileLoading.value)
+                ? const SizedBox()
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      (profileController.present.value > 0)
+                          ? Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: PresentChart(
+                                controller: profileController,
+                              ),
+                            )
+                          : const SizedBox(),
+                      (profileController
+                                  .ratingDataModelValues.first.overallRating! >
+                              0)
+                          ? Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: RatingData(
+                                controller: profileController,
+                              ),
+                            )
+                          : const SizedBox(),
+                    ],
+                  );
           }),
           loginSuccessModel.staffmobileappprivileges == null ||
                   loginSuccessModel.staffmobileappprivileges!.values!.isEmpty
