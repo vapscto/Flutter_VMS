@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-// import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/advance_tada_applied.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
@@ -179,32 +178,38 @@ class TADAAdvancenotApproveScreen extends StatelessWidget {
                                       DataCell(Align(
                                           alignment: Alignment.center,
                                           child: Text(
-                                              data.elementAt(index).empName!))),
+                                              data.elementAt(index).empName ??
+                                                  ''))),
                                       DataCell(Align(
                                           alignment: Alignment.center,
                                           child: Text(data
-                                              .elementAt(index)
-                                              .vTADAAAAppliedDate!))),
+                                                  .elementAt(index)
+                                                  .vTADAAAAppliedDate ??
+                                              ''))),
                                       DataCell(Align(
                                           alignment: Alignment.center,
                                           child: Text(data
-                                              .elementAt(index)
-                                              .vTADAAAFromDate!))),
+                                                  .elementAt(index)
+                                                  .vTADAAAFromDate ??
+                                              ''))),
                                       DataCell(Align(
                                           alignment: Alignment.center,
                                           child: Text(data
-                                              .elementAt(index)
-                                              .vTADAAADepartureTime!))),
+                                                  .elementAt(index)
+                                                  .vTADAAADepartureTime ??
+                                              ''))),
                                       DataCell(Align(
                                           alignment: Alignment.center,
                                           child: Text(data
-                                              .elementAt(index)
-                                              .vTADAAAToDate!))),
+                                                  .elementAt(index)
+                                                  .vTADAAAToDate ??
+                                              ''))),
                                       DataCell(Align(
                                           alignment: Alignment.center,
                                           child: Text(data
-                                              .elementAt(index)
-                                              .vTADAAAArrivalTime!))),
+                                                  .elementAt(index)
+                                                  .vTADAAAArrivalTime ??
+                                              ''))),
                                       DataCell(Align(
                                           alignment: Alignment.center,
                                           child: Text(data
@@ -214,18 +219,21 @@ class TADAAdvancenotApproveScreen extends StatelessWidget {
                                       DataCell(Align(
                                           alignment: Alignment.center,
                                           child: Text(data
-                                              .elementAt(index)
-                                              .iVRMMSName!))),
+                                                  .elementAt(index)
+                                                  .iVRMMSName ??
+                                              ''))),
                                       DataCell(Align(
                                           alignment: Alignment.center,
                                           child: Text(data
-                                              .elementAt(index)
-                                              .iVRMMCTName!))),
+                                                  .elementAt(index)
+                                                  .iVRMMCTName ??
+                                              ''))),
                                       DataCell(Align(
                                           alignment: Alignment.center,
                                           child: Text(data
-                                              .elementAt(index)
-                                              .vTADAAAToAddress!))),
+                                                  .elementAt(index)
+                                                  .vTADAAAToAddress ??
+                                              ""))),
                                       DataCell(Align(
                                           alignment: Alignment.center,
                                           child: Text(data

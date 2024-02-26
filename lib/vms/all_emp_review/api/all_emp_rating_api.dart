@@ -43,4 +43,28 @@ class AllEmpRatingAPI {
       logger.w(e.toString());
     }
   }
+
+  ratingList(
+      {required String base,
+      required Map<String, dynamic> body,
+      required EmpRatingController controller}) async {
+    var api = base + URLS.ratingList;
+    try {
+      controller.rating(true);
+      var response = await dio.post(api,
+          data: body, options: Options(headers: getSession()));
+      if (response.statusCode == 200) {
+        RatingEmpModel ratingEmpModel =
+            RatingEmpModel.fromJson(response.data['get_userEmplist']);
+        controller.employeeList.clear();
+        controller.employeeList.addAll(ratingEmpModel.values!);
+
+        controller.rating(false);
+      }
+    } on DioError catch (e) {
+      logger.e(e.message);
+    } on Exception catch (e) {
+      logger.w(e.toString());
+    }
+  }
 }

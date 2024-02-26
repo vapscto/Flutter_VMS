@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/api/all_emp_rating_api.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/controller/all_emp_rating_controller.dart';
+import 'package:m_skool_flutter/vms/all_emp_review/emp_review_details.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/model/all_rating_emp_model.dart';
+import 'package:m_skool_flutter/vms/all_emp_review/model/rating_year_model.dart';
 import 'package:m_skool_flutter/vms/utils/check_box_container.dart';
 import 'package:m_skool_flutter/vms/widgets/level_widget.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class AllEmpReviewHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -51,7 +56,7 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
 
   final ScrollController _controller = ScrollController();
   final ScrollController _controller1 = ScrollController();
-  final ScrollController _controller2 = ScrollController();
+  // final ScrollController _controller2 = ScrollController();
   final RxBool selectAllEmployee = RxBool(false);
   final RxBool selectAllMonth = RxBool(false);
   final RxBool selectAllYear = RxBool(false);
@@ -64,6 +69,18 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
     filterEmpList = controller.employeeList;
   }
 
+  RatingYearModelValues? selectedYear;
+  List<String> radioList = ["All", "Month Year Wise"];
+  String selectedData = 'All';
+  String selectedvalue = '';
+  @override
+  void dispose() {
+    controller.selectedEmployeeList.clear();
+    controller.selectedMonthList.clear();
+    selectedYear = null;
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,13 +88,41 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 8, 16, 8),
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              if (selectedData == 'All') {
+                if (controller.selectedEmployeeList.isEmpty) {
+                  Fluttertoast.showToast(msg: "Select Employee");
+                } else {
+                  Get.to(() => EmpRatingDetails(
+                        controller: controller,
+                        loginSuccessModel: widget.loginSuccessModel,
+                        mskoolController: widget.mskoolController,
+                        data: selectedvalue,
+                      ));
+                }
+              } else if (selectedData == 'Month Year Wise') {
+                if (selectedYear == null) {
+                  Fluttertoast.showToast(msg: "Select Year");
+                } else if (controller.selectedMonthList.isEmpty) {
+                  Fluttertoast.showToast(msg: "Select Month");
+                } else if (controller.selectedEmployeeList.isEmpty) {
+                  Fluttertoast.showToast(msg: "Select Employee");
+                } else {
+                  Get.to(() => EmpRatingDetails(
+                        controller: controller,
+                        loginSuccessModel: widget.loginSuccessModel,
+                        mskoolController: widget.mskoolController,
+                        data: selectedvalue,
+                      ));
+                }
+              }
+            },
             child: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20), color: Colors.white),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                 child: Text(
                   "Search",
                   style: Get.textTheme.titleMedium!
@@ -107,7 +152,139 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 16, horizontal: 16),
                       children: [
-                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children:
+                                    List.generate(radioList.length, (index) {
+                                  return Row(
+                                    children: [
+                                      Radio(
+                                        fillColor: MaterialStatePropertyAll(
+                                            Theme.of(context).primaryColor),
+                                        value: radioList[index],
+                                        groupValue: selectedData,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            selectedData = value!;
+                                            if (selectedData == 'All') {
+                                              selectedvalue = 'all';
+                                            } else {
+                                              selectedvalue = 'monthyearwise';
+                                            }
+                                            logger.w(selectedvalue);
+                                          });
+                                        },
+                                        visualDensity: const VisualDensity(
+                                            vertical: 0, horizontal: 0),
+                                      ),
+                                      Text(
+                                        radioList[index],
+                                        style: Get.textTheme.titleSmall,
+                                      )
+                                    ],
+                                  );
+                                }),
+                              )),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: CustomContainer(
+                            child:
+                                DropdownButtonFormField<RatingYearModelValues>(
+                              // value: controller.yearList.first,
+                              decoration: InputDecoration(
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                contentPadding: const EdgeInsets.all(16.0),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                hintText: 'Select Year',
+                                hintStyle: Get.textTheme.titleSmall!
+                                    .copyWith(color: Colors.grey),
+                                label: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xFFDFFBFE),
+                                      borderRadius:
+                                          BorderRadius.circular(24.0)),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/cap.png",
+                                        height: 28.0,
+                                      ),
+                                      const SizedBox(
+                                        width: 12.0,
+                                      ),
+                                      Text(
+                                        "Academic Year",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
+                                            .merge(const TextStyle(
+                                                fontSize: 20,
+                                                color: Color(0xFF28B6C8))),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              icon: const Padding(
+                                padding: EdgeInsets.only(top: 8.0),
+                                child: Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  size: 30,
+                                ),
+                              ),
+                              iconSize: 30,
+                              items: List.generate(
+                                controller.yearList.length,
+                                (index) =>
+                                    DropdownMenuItem<RatingYearModelValues>(
+                                  value: controller.yearList.elementAt(index),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 12.0, left: 8, right: 8),
+                                    child: Text(
+                                      controller.yearList
+                                          .elementAt(index)
+                                          .hrmlYLeaveYear!,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall!
+                                          .merge(const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 16.0,
+                                              letterSpacing: 0.3)),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              onChanged: (s) async {
+                                setState(() {
+                                  selectedYear = s;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
                         Stack(
                           clipBehavior: Clip.none,
                           children: [
@@ -118,7 +295,7 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
                               decoration: BoxDecoration(
                                 color:
                                     Theme.of(context).scaffoldBackgroundColor,
-                                borderRadius: BorderRadius.circular(16.0),
+                                borderRadius: BorderRadius.circular(8.0),
                                 boxShadow: const [
                                   BoxShadow(
                                     offset: Offset(0, 1),
@@ -291,7 +468,7 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
                               decoration: BoxDecoration(
                                 color:
                                     Theme.of(context).scaffoldBackgroundColor,
-                                borderRadius: BorderRadius.circular(16.0),
+                                borderRadius: BorderRadius.circular(8.0),
                                 boxShadow: const [
                                   BoxShadow(
                                     offset: Offset(0, 1),
@@ -423,147 +600,147 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
                           ],
                         ),
                         const SizedBox(height: 30),
-                        Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            Container(
-                              height: 160,
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 10),
-                              decoration: BoxDecoration(
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                borderRadius: BorderRadius.circular(16.0),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    offset: Offset(0, 1),
-                                    blurRadius: 4,
-                                    color: Colors.black12,
-                                  ),
-                                ],
-                              ),
-                              child: RawScrollbar(
-                                thumbColor: const Color(0xFF1E38FC),
-                                trackColor:
-                                    const Color.fromRGBO(223, 239, 253, 1),
-                                trackRadius: const Radius.circular(10),
-                                trackVisibility: true,
-                                radius: const Radius.circular(10),
-                                thickness: 14,
-                                thumbVisibility: true,
-                                controller: _controller2,
-                                child: SingleChildScrollView(
-                                  controller: _controller2,
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 30,
-                                        child: Obx(() {
-                                          bool allSelected = controller
-                                                  .selectedYearList.length ==
-                                              controller.yearList.length;
+                        // Stack(
+                        //   clipBehavior: Clip.none,
+                        //   children: [
+                        //     Container(
+                        //       height: 160,
+                        //       padding:
+                        //           const EdgeInsets.only(top: 10, bottom: 10),
+                        //       decoration: BoxDecoration(
+                        //         color:
+                        //             Theme.of(context).scaffoldBackgroundColor,
+                        //         borderRadius: BorderRadius.circular(16.0),
+                        //         boxShadow: const [
+                        //           BoxShadow(
+                        //             offset: Offset(0, 1),
+                        //             blurRadius: 4,
+                        //             color: Colors.black12,
+                        //           ),
+                        //         ],
+                        //       ),
+                        //       child: RawScrollbar(
+                        //         thumbColor: const Color(0xFF1E38FC),
+                        //         trackColor:
+                        //             const Color.fromRGBO(223, 239, 253, 1),
+                        //         trackRadius: const Radius.circular(10),
+                        //         trackVisibility: true,
+                        //         radius: const Radius.circular(10),
+                        //         thickness: 14,
+                        //         thumbVisibility: true,
+                        //         controller: _controller2,
+                        //         child: SingleChildScrollView(
+                        //           controller: _controller2,
+                        //           child: Column(
+                        //             children: [
+                        //               SizedBox(
+                        //                 height: 30,
+                        //                 child: Obx(() {
+                        //                   bool allSelected = controller
+                        //                           .selectedYearList.length ==
+                        //                       controller.yearList.length;
 
-                                          return CheckboxListTile(
-                                            controlAffinity:
-                                                ListTileControlAffinity.leading,
-                                            checkboxShape:
-                                                RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                            ),
-                                            dense: true,
-                                            activeColor:
-                                                Theme.of(context).primaryColor,
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 8),
-                                            visualDensity: const VisualDensity(
-                                                horizontal: -4.0),
-                                            title: Text(
-                                              "Select All",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .labelSmall!
-                                                  .merge(const TextStyle(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 14.0,
-                                                    letterSpacing: 0.3,
-                                                  )),
-                                            ),
-                                            value: allSelected,
-                                            onChanged: (bool? value) {
-                                              controller.selectedYearList
-                                                  .clear();
-                                              if (value!) {
-                                                controller.selectedYearList
-                                                    .addAll(
-                                                        controller.yearList);
-                                              }
-                                            },
-                                          );
-                                        }),
-                                      ),
-                                      const SizedBox(
-                                        height: 6.0,
-                                      ),
-                                      ListView.builder(
-                                        itemCount: controller.yearList.length,
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemBuilder: (context, index) {
-                                          return SizedBox(
-                                              height: 35,
-                                              child: Obx(() {
-                                                return CheckBoxContainer(
-                                                  sectionName:
-                                                      "${controller.yearList.elementAt(index).hrmlYLeaveYear}",
-                                                  func: (b) {
-                                                    if (b) {
-                                                      controller
-                                                          .addToSelectedYear(
-                                                              controller
-                                                                  .yearList
-                                                                  .elementAt(
-                                                                      index));
-                                                    } else {
-                                                      selectAllYear.value =
-                                                          false;
-                                                      controller
-                                                          .removeFromSelectedYear(
-                                                              controller
-                                                                  .yearList
-                                                                  .elementAt(
-                                                                      index));
-                                                    }
-                                                  },
-                                                  isChecked: RxBool(
-                                                    controller.selectedYearList
-                                                        .contains(
-                                                      controller.yearList
-                                                          .elementAt(index),
-                                                    ),
-                                                  ),
-                                                );
-                                              }));
-                                        },
-                                      ),
-                                      const SizedBox(
-                                        height: 16.0,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const ContainerTitle(
-                              iT: Color(0xFFFF6F67),
-                              bg: Color.fromARGB(255, 255, 236, 235),
-                              image: 'assets/images/subjectfielicon.png',
-                              title: 'Select Year',
-                            ),
-                          ],
-                        ),
+                        //                   return CheckboxListTile(
+                        //                     controlAffinity:
+                        //                         ListTileControlAffinity.leading,
+                        //                     checkboxShape:
+                        //                         RoundedRectangleBorder(
+                        //                       borderRadius:
+                        //                           BorderRadius.circular(6),
+                        //                     ),
+                        //                     dense: true,
+                        //                     activeColor:
+                        //                         Theme.of(context).primaryColor,
+                        //                     contentPadding:
+                        //                         const EdgeInsets.symmetric(
+                        //                             horizontal: 8),
+                        //                     visualDensity: const VisualDensity(
+                        //                         horizontal: -4.0),
+                        //                     title: Text(
+                        //                       "Select All",
+                        //                       style: Theme.of(context)
+                        //                           .textTheme
+                        //                           .labelSmall!
+                        //                           .merge(const TextStyle(
+                        //                             fontWeight: FontWeight.w400,
+                        //                             fontSize: 14.0,
+                        //                             letterSpacing: 0.3,
+                        //                           )),
+                        //                     ),
+                        //                     value: allSelected,
+                        //                     onChanged: (bool? value) {
+                        //                       controller.selectedYearList
+                        //                           .clear();
+                        //                       if (value!) {
+                        //                         controller.selectedYearList
+                        //                             .addAll(
+                        //                                 controller.yearList);
+                        //                       }
+                        //                     },
+                        //                   );
+                        //                 }),
+                        //               ),
+                        //               const SizedBox(
+                        //                 height: 6.0,
+                        //               ),
+                        //               ListView.builder(
+                        //                 itemCount: controller.yearList.length,
+                        //                 shrinkWrap: true,
+                        //                 physics:
+                        //                     const NeverScrollableScrollPhysics(),
+                        //                 itemBuilder: (context, index) {
+                        //                   return SizedBox(
+                        //                       height: 35,
+                        //                       child: Obx(() {
+                        //                         return CheckBoxContainer(
+                        //                           sectionName:
+                        //                               "${controller.yearList.elementAt(index).hrmlYLeaveYear}",
+                        //                           func: (b) {
+                        //                             if (b) {
+                        //                               controller
+                        //                                   .addToSelectedYear(
+                        //                                       controller
+                        //                                           .yearList
+                        //                                           .elementAt(
+                        //                                               index));
+                        //                             } else {
+                        //                               selectAllYear.value =
+                        //                                   false;
+                        //                               controller
+                        //                                   .removeFromSelectedYear(
+                        //                                       controller
+                        //                                           .yearList
+                        //                                           .elementAt(
+                        //                                               index));
+                        //                             }
+                        //                           },
+                        //                           isChecked: RxBool(
+                        //                             controller.selectedYearList
+                        //                                 .contains(
+                        //                               controller.yearList
+                        //                                   .elementAt(index),
+                        //                             ),
+                        //                           ),
+                        //                         );
+                        //                       }));
+                        //                 },
+                        //               ),
+                        //               const SizedBox(
+                        //                 height: 16.0,
+                        //               )
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     const ContainerTitle(
+                        //       iT: Color(0xFFFF6F67),
+                        //       bg: Color.fromARGB(255, 255, 236, 235),
+                        //       image: 'assets/images/subjectfielicon.png',
+                        //       title: 'Select Year',
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   );

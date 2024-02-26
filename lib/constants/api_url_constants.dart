@@ -349,4 +349,6 @@ class URLS {
   // All Emp rating
   static String allEmpRating =
       'api/Rating_TransactionFacade/get_Consolidated_details';
+  static String ratingList =
+      'api/Rating_TransactionFacade/getconsolidatedreport';
 }

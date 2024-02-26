@@ -5,18 +5,13 @@ import 'package:m_skool_flutter/vms/all_emp_review/model/rating_year_model.dart'
 
 class EmpRatingController extends GetxController {
   RxBool isEmpLoading = RxBool(false);
-  RxBool isAcademicyearLoading = RxBool(false);
-  RxBool ismonthLoading = RxBool(false);
+  RxBool isRatingLoading = RxBool(false);
   void empLoad(bool l) {
     isEmpLoading.value = l;
   }
 
-  void academicLoad(bool l) {
-    isAcademicyearLoading.value = l;
-  }
-
-  void monthLoad(bool l) {
-    ismonthLoading.value = l;
+  void rating(bool l) {
+    isRatingLoading.value = l;
   }
 
   RxList<RatingEmpModelValues> employeeList = <RatingEmpModelValues>[].obs;
