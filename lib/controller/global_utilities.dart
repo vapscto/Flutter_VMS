@@ -630,15 +630,15 @@ void openMappedPages(
     }));
     return;
   }
-  // if (pageName == "Driver Ind. Approval") {
-  //   Navigator.push(context, MaterialPageRoute(builder: (_) {
-  //     return AllEmpReviewHome(
-  //       loginSuccessModel: loginSuccessModel,
-  //       mskoolController: mskoolController,
-  //     );
-  //   }));
-  //   return;
-  // }
+  if (pageName == "Employee Ratings") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return AllEmpReviewHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+    return;
+  }
   if (pageName == "NOC Approval") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return NocApproval(

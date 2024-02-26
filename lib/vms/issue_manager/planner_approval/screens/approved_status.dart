@@ -28,6 +28,14 @@ class _PlannerApprovedStatusWidgetState
   String fromDate = '';
   String toDate = '';
   String status = '';
+  String convertDecimalToTime(double decimalHours) {
+    int hours = decimalHours.toInt();
+    double decimalMinutes = (decimalHours - hours) * 60;
+    int minutes = decimalMinutes.toInt();
+
+    return '$hours. $minutes Hr';
+  }
+
   getplannerStatusModel() async {
     if (widget.plannerApprovalController.plannerStatusModel.isNotEmpty) {
       for (int index = 0;
@@ -67,7 +75,11 @@ class _PlannerApprovedStatusWidgetState
                 .iSMTPLPlannerName!,
             fromDate,
             toDate,
-            '${widget.plannerApprovalController.plannerStatusModel.elementAt(index).iSMTPLTotalHrs} Hr',
+            convertDecimalToTime(widget
+                .plannerApprovalController.plannerStatusModel
+                .elementAt(index)
+                .iSMTPLTotalHrs!),
+            // '${widget.plannerApprovalController.plannerStatusModel.elementAt(index).iSMTPLTotalHrs} Hr',
             status,
             widget.plannerApprovalController.plannerStatusModel
                     .elementAt(index)

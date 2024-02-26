@@ -43,7 +43,7 @@ class _AppliedLeaveAprovalItemState extends State<AppliedLeaveAprovalItem> {
   List<String> leaveDates = [];
 
   List<Map<String, dynamic>> newList = [];
-
+  DateTime dt = DateTime.now();
   @override
   Widget build(BuildContext context) {
     newList.add({
@@ -51,8 +51,8 @@ class _AppliedLeaveAprovalItemState extends State<AppliedLeaveAprovalItem> {
       "HRELAP_ApplicationID": widget.value.hRELAPApplicationID,
       "HRELAP_LeaveReason": widget.value.hRELAPLeaveReason,
       "HRELAPA_Remarks": widget.value.hRELAPARemarks,
-      "HRELAP_FromDateapprv": widget.value.hRELAPFromDate,
-      "HRELAP_ToDateapprv": widget.value.hRELAPToDate,
+      "HRELAP_FromDateapprv": dt.toIso8601String(),
+      "HRELAP_ToDateapprv": dt.toIso8601String(),
       "HRELAP_FromDate": widget.value.hRELAPFromDate,
       "HRELAP_ToDate": widget.value.hRELAPToDate,
       "HRELAP_TotalDays": widget.value.hRELAPTotalDays,
@@ -413,28 +413,32 @@ class _AppliedLeaveAprovalItemState extends State<AppliedLeaveAprovalItem> {
                                         CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "Leave Approval for ${widget.value.hRMEEmployeeFirstName ?? "N/a"}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall!
-                                                .merge(
-                                                  const TextStyle(
-                                                    fontWeight: FontWeight.w600,
+                                      SizedBox(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Leave Approval for ${widget.value.hRMEEmployeeFirstName ?? "N/a"}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .merge(
+                                                    const TextStyle(
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
                                                   ),
-                                                ),
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Icon(Icons.close),
-                                          ),
-                                        ],
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Icon(Icons.close),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                       const SizedBox(
                                         height: 16.0,

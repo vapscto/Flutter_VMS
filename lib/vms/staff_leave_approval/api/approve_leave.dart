@@ -34,13 +34,18 @@ class ApproveLeaveApi {
         "get_leave_status": getLeaveStatus
       });
       logger.i(api);
-
-      logger.d(response.statusCode);
+      logger.w({
+        "HRELAPA_Remarks": remark,
+        "status": status,
+        "MI_Id": miId,
+        "LoginId": loginId,
+        "get_leave_status": getLeaveStatus
+      });
 
       if (response.statusCode == 200) {
-        logger.d(response.data);
+        logger.w(response.data);
 
-        Fluttertoast.showToast(msg: "What you want is done...");
+        Fluttertoast.showToast(msg: "Approved");
         return Future.value(true);
       }
 
@@ -86,7 +91,7 @@ class ApproveLeaveApi {
       if (response.statusCode == 200) {
         logger.d(response.data);
 
-        Fluttertoast.showToast(msg: "What you want is done...");
+        Fluttertoast.showToast(msg: "Rejected");
         return Future.value(true);
       }
 

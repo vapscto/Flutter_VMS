@@ -41,12 +41,70 @@ class PunchFilterController extends GetxController {
   }
 
   RxList<PunchReportModelValues> reports = RxList();
+  int makeMinutes(String time1) {
+    List<String> timeParts = time1.split(':');
+    int hour1 = int.parse(timeParts[0]);
+    int minute1 = int.parse(timeParts[1]);
+
+    int totMin = 0;
+
+    if (hour1 > 0) {
+      totMin = hour1 * 60;
+    }
+
+    totMin += minute1;
+    return totMin;
+  }
 
   void updatePunchReports(List<PunchReportModelValues> va) {
+    // int summinutes = 0;
+    // dynamic lateindates = "";
     if (reports.isNotEmpty) {
       reports.clear();
     }
     reports.addAll(va);
+    // for (int i = 0; i < va.length; i++) {
+    //   if (va[i].lateby != "00:00") {
+    //     summinutes += makeMinutes(va[i].lateby!);
+    //     if (lateindates == null) {
+    //       lateindates = DateTime.parse(va[i].punchdate!).day;
+    //     } else {
+    //       lateindates += ", " + DateTime.parse(va[i].punchdate!).day.toString();
+    //     }
+    //     if (summinutes > hrmE_Relaxtime) {
+    //       if (lateindateafter == null) {
+    //         lateindateafter =
+    //             DateTime.parse(lateInEarlyOutDetails[i]['punchdate']).day;
+    //       } else {
+    //         lateindateafter += ", " +
+    //             DateTime.parse(lateInEarlyOutDetails[i]['punchdate'])
+    //                 .day
+    //                 .toString();
+    //       }
+    //       latecomingcount++;
+    //       emptotlop += 0.5;
+    //     }
+    //   }
+    //   if (va[i].earlyby != "00:00") {
+    //     summinutes += makeMinutes(va[i].earlyby!);
+    //     if (earlyoutdates == null) {
+    //       earlyoutdates = DateTime.parse(va[i].punchdate!).day;
+    //     } else {
+    //       earlyoutdates +=
+    //           ", " + DateTime.parse(va[i].punchdate!).day.toString();
+    //     }
+    //     if (summinutes > hrmE_Relaxtime) {
+    //       if (earlyoutdateafter == null) {
+    //         earlyoutdateafter = DateTime.parse(va[i].punchdate!).day;
+    //       } else {
+    //         earlyoutdateafter +=
+    //             ", " + DateTime.parse(va[i].punchdate!).day.toString();
+    //       }
+    //       earlyoutcount++;
+    //       emptotlop += 0.5;
+    //     }
+    //   }
+    // }
   }
 
   RxBool isPunchLoading = RxBool(false);
@@ -54,6 +112,7 @@ class PunchFilterController extends GetxController {
     isPunchLoading.value = loading;
   }
 
+  Map<String, dynamic> newCol = {};
   RxList<CurrentPunchDetailsModelValues> currentPunchList =
       <CurrentPunchDetailsModelValues>[].obs;
   void getPunch(List<CurrentPunchDetailsModelValues> currentPunch) {

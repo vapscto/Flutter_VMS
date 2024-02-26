@@ -517,7 +517,7 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
                                               child: Obx(() {
                                                 return CheckBoxContainer(
                                                   sectionName:
-                                                      "${controller.yearList.elementAt(index).asmaYYear}",
+                                                      "${controller.yearList.elementAt(index).hrmlYLeaveYear}",
                                                   func: (b) {
                                                     if (b) {
                                                       controller
