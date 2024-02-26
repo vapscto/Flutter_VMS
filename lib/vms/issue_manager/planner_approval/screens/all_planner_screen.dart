@@ -279,9 +279,11 @@ class _AllPlannersState extends State<AllPlanners> {
                 ? const SizedBox(
                     height: 10,
                     width: 10,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 6,
-                      color: Colors.white,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 6,
+                        color: Colors.white,
+                      ),
                     ),
                   )
                 : BtnSave(
