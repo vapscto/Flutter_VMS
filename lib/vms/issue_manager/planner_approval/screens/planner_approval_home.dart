@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/vms/issue_manager/planner_approval/api/planner_list_api.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/controller/planner_approval_controller.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/all_planner_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/widgets/dr_not_submit.dart';
@@ -32,26 +30,6 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
   void initState() {
     // getPlannerData();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    widget.plannerApprovalController.leavePopUp.clear();
-    widget.plannerApprovalController.plannerListModel.clear();
-    super.dispose();
-  }
-
-  PlannerApprovalController plannerApprovalController =
-      Get.put(PlannerApprovalController());
-  getPlannerData() async {
-    plannerApprovalController.plannerLoading(true);
-    await PlannerListAPI.instance.plannerListAPI(
-        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
-        plannerApprovalController: plannerApprovalController,
-        userId: widget.loginSuccessModel.userId!,
-        miId: widget.loginSuccessModel.mIID!,
-        roleId: widget.loginSuccessModel.roleId!);
-    plannerApprovalController.plannerLoading(false);
   }
 
   @override
