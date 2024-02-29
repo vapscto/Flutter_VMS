@@ -46,22 +46,23 @@ class _AppliedLeaveAprovalItemState extends State<AppliedLeaveAprovalItem> {
   DateTime dt = DateTime.now();
   @override
   Widget build(BuildContext context) {
+    final RxBool select = RxBool(widget.selectAll);
+    final RxBool showCheckBox = RxBool(widget.selectAll);
+    final TextEditingController remark = TextEditingController();
     newList.add({
       "HRME_Id": widget.value.hRMEId,
-      "HRELAP_ApplicationID": widget.value.hRELAPApplicationID,
+      "HRELAP_ApplicationID": widget.value.hRELAPId,
       "HRELAP_LeaveReason": widget.value.hRELAPLeaveReason,
-      "HRELAPA_Remarks": widget.value.hRELAPARemarks,
-      "HRELAP_FromDateapprv": dt.toIso8601String(),
-      "HRELAP_ToDateapprv": dt.toIso8601String(),
+      "HRELAPA_Remarks": remark.text,
+      "HRELAP_FromDateapprv": widget.value.hRELAPFromDate,
+      "HRELAP_ToDateapprv": widget.value.hRELAPToDate,
       "HRELAP_FromDate": widget.value.hRELAPFromDate,
       "HRELAP_ToDate": widget.value.hRELAPToDate,
       "HRELAP_TotalDays": widget.value.hRELAPTotalDays,
       "HRELAP_TotalDaysapprv": widget.value.hRELAPTotalDays,
       "HRML_Id": widget.value.hRMLId
     });
-    final RxBool select = RxBool(widget.selectAll);
-    final RxBool showCheckBox = RxBool(widget.selectAll);
-    final TextEditingController remark = TextEditingController();
+
     String fromDate = '';
     String toDate = '';
     if (widget.value.hRELAPFromDate != null) {

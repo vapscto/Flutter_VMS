@@ -696,3 +696,26 @@ void createPreview(BuildContext context, String url) {
     }));
   }
 }
+
+Icon getFileIcon(String fileType) {
+  IconData iconData = Icons.insert_drive_file;
+  if (fileType.endsWith(".pdf")) {
+    iconData = Icons.picture_as_pdf;
+  } else if (fileType.endsWith('.doc') || fileType.endsWith('.docx')) {
+    iconData = Icons.description;
+  } else if (fileType.endsWith('.xls') || fileType.endsWith('.xlsx')) {
+    iconData = Icons.table_chart;
+  } else if (fileType.endsWith('.ppt') || fileType.endsWith('.pptx')) {
+    iconData = Icons.slideshow;
+  } else if (fileType.endsWith('.png') ||
+      fileType.endsWith('.jpg') ||
+      fileType.endsWith('.jpeg')) {
+    iconData = Icons.image;
+  }
+
+  return Icon(
+    iconData,
+    size: 40,
+    color: Colors.indigo,
+  );
+}

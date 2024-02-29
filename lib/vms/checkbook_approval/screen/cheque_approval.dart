@@ -915,8 +915,9 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                       child: MSkollBtn(
                                         title: "Send Otp",
                                         onPress: () async {
-                                          Random randomOtp = Random.secure();
-                                          int otps = randomOtp.nextInt(999999);
+                                          // Random randomOtp = Random.secure();
+                                          int otps = generateOTP(
+                                              6); //randomOtp.nextInt(999999);
                                           if (otps
                                                   .toString()
                                                   .characters
@@ -970,7 +971,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                             );
                                           } else {
                                             Fluttertoast.showToast(
-                                                msg: "Failed send otp");
+                                                msg: "Pin is not Generate");
                                           }
                                         },
                                       ),
@@ -1012,5 +1013,15 @@ class _ChequeApprovalState extends State<ChequeApproval> {
     _controller.checkList.clear();
     selectCheckBox.clear();
     super.dispose();
+  }
+
+  int generateOTP(int length) {
+    if (length < 6) {
+      throw Exception("OTP length must be at least 6 digits");
+    }
+    Random random = Random.secure();
+    int min = pow(10, length - 1).toInt();
+    int max = pow(10, length).toInt() - 1;
+    return min + random.nextInt(max - min);
   }
 }

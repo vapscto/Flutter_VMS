@@ -100,8 +100,7 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
                                       .elementAt(i);
                                   newList.add({
                                     "HRME_Id": value.hRMEId,
-                                    "HRELAP_ApplicationID":
-                                        value.hRELAPApplicationID,
+                                    "HRELAP_ApplicationID": value.hRELAPId,
                                     "HRELAP_LeaveReason":
                                         value.hRELAPLeaveReason,
                                     "HRELAPA_Remarks": value.hRELAPARemarks,

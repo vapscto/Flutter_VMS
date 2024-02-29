@@ -70,7 +70,7 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
   }
 
   RatingYearModelValues? selectedYear;
-  List<String> radioList = ["All", "Month Year Wise"];
+  List<String> radioList = ["All", "Month Wise"];
   String selectedData = 'All';
   String selectedvalue = '';
   @override
@@ -100,7 +100,7 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
                         data: selectedvalue,
                       ));
                 }
-              } else if (selectedData == 'Month Year Wise') {
+              } else if (selectedData == 'Month Wise') {
                 if (selectedYear == null) {
                   Fluttertoast.showToast(msg: "Select Year");
                 } else if (controller.selectedMonthList.isEmpty) {
