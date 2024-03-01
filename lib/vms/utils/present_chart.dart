@@ -21,7 +21,7 @@ class PresentChart extends StatelessWidget {
     controller.absent.value = data;
     final List<AttandanceData> chartData = [];
     chartData.add(AttandanceData(
-        name: 'Presemt', count: controller.present.value, color: Colors.green));
+        name: 'Present', count: controller.present.value, color: Colors.green));
     chartData.add(AttandanceData(
         name: 'Absent', count: controller.absent.value, color: Colors.red));
     chartData.add(AttandanceData(
