@@ -38,10 +38,10 @@ class _BirthDaySliderState extends State<BirthDaySlider> {
                   Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 15.0),
+                        padding: const EdgeInsets.only(left: 11.0),
                         child: SizedBox(
-                          height: 94,
-                          width: 94,
+                          height: 97,
+                          width: 97,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(300),
                             child: Image.network(
