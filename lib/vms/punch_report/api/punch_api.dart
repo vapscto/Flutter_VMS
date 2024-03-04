@@ -50,11 +50,6 @@ class PunchApi {
       logger.e(e.toString());
       controller.message.value =
           "While Creating your view, we encountered an error.. Try again later";
-      // return Future.error({
-      //   "errorTitle": "An Internal Error Occured",
-      //   "errorMsg":
-      //       "",
-      // });
     }
   }
 }
