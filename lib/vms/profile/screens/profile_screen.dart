@@ -21,24 +21,6 @@ class MyProfileScreen extends StatefulWidget {
 }
 
 class _MyProfileScreenState extends State<MyProfileScreen> {
-  // ProfileController profileController = Get.put(ProfileController());
-  // _getProfileData() async {
-  //   profileController.profileLoading(true);
-  //   await ProfileAPI.instance.profileData(
-  //       base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
-  //       profileController: profileController,
-  //       miId: widget.loginSuccessModel.mIID!,
-  //       userId: widget.loginSuccessModel.userId!,
-  //       roleId: widget.loginSuccessModel.roleId!);
-  //   profileController.profileLoading(false);
-  // }
-
-  @override
-  void initState() {
-    // _getProfileData();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,8 +64,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                     bottomRight: Radius.circular(16.0)),
                                 boxShadow: CustomThemeData.getShadow(),
                               ),
-                              //height: 150,
-
                               child: Column(
                                 children: [
                                   SizedBox(
@@ -204,7 +184,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             SizedBox(
                               height: Get.height * 0.34,
                               width: double.infinity,
-                              //color: Colors.grey.shade100,
                               child: Stack(
                                 children: [
                                   Image.network(
