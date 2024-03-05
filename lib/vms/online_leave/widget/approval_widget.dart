@@ -84,7 +84,15 @@ class _ApprovalWidgetState extends State<ApprovalWidget> {
                                     color: Theme.of(context).primaryColor),
                               ),
                               TextSpan(
-                                text: fTopdate,
+                                text: dateFormatNew(DateTime.parse((controller
+                                            .leaveCommentList
+                                            .last
+                                            .hRELAPAFromDate ==
+                                        null)
+                                    ? controller
+                                        .leaveCommentList.last.hRELAPFromDate!
+                                    : controller.leaveCommentList.last
+                                        .hRELAPAFromDate!)),
                                 style: Get.textTheme.titleSmall,
                               ),
                             ],
@@ -101,7 +109,15 @@ class _ApprovalWidgetState extends State<ApprovalWidget> {
                                     color: Theme.of(context).primaryColor),
                               ),
                               TextSpan(
-                                text: toTopDate,
+                                text: dateFormatNew(DateTime.parse((controller
+                                            .leaveCommentList
+                                            .last
+                                            .hRELAPAToDate ==
+                                        null)
+                                    ? controller
+                                        .leaveCommentList.last.hRELAPToDate!
+                                    : controller
+                                        .leaveCommentList.last.hRELAPAToDate!)),
                                 style: Get.textTheme.titleSmall,
                               ),
                             ],

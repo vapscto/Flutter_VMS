@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:get_ip_address/get_ip_address.dart';
 import 'package:m_skool_flutter/apis/version_control_api.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/categories_api_item.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
@@ -726,4 +727,12 @@ String formatTime(double hours) {
   int minutesPart = totalMinutes % 60;
   String formattedTime = '$hoursPart:${minutesPart.toString().padLeft(2, '0')}';
   return formattedTime;
+}
+
+String dateFormat(DateTime dt) {
+  return '${dt.year}-${dt.month}-${dt.day}';
+}
+
+String dateFormatNew(DateTime dt) {
+  return '${numberList[dt.day]}-${months[dt.month - 1]}-${dt.year}';
 }
