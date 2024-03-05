@@ -4,5 +4,7 @@ class PlannerFileUpload {
   int index;
   int id;
   String imageType;
-  PlannerFileUpload(this.name, this.path, this.index, this.id, this.imageType);
+  int iSMTCRId;
+  PlannerFileUpload(
+      this.name, this.path, this.index, this.id, this.imageType, this.iSMTCRId);
 }

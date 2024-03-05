@@ -59,7 +59,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
     super.initState();
   }
 
-  int uploadImageIndex = 0;
+  int uploadImageIndex = -1;
   List<Map<String, dynamic>> dailyReportGenaration = [];
   List<Map<String, dynamic>> todayDailyReportGenaration = [];
   List<Map<String, dynamic>> dailyReportStatus = [];
@@ -285,11 +285,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
 
         if (_plannerDetailsController.uploadImages.isNotEmpty) {
           for (var j in _plannerDetailsController.uploadImages) {
-            if (index == j.index) {
-              logger.i(j.name);
+            if (fliteresList[index].iSMTCRId == j.iSMTCRId) {
               fileName = j.name;
               filePath = j.path;
-              uploadImageIndex = j.index;
               uploadImageList.add({
                 "ISMMTCATCL_Id": j.id,
                 "checklistname": j.imageType,
@@ -1181,7 +1179,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                 _plannerDetailsController
                                                     .uploadImages
                                                     .add(PlannerFileUpload(
-                                                        '', '', -1, -1, ''));
+                                                        '', '', -1, -1, '', 0));
                                                 var startDate = '';
                                                 if (fliteresList
                                                         .elementAt(index)
@@ -1287,6 +1285,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                                       loginSuccessModel: widget.loginSuccessModel,
                                                                                       index: newselectedIndex,
                                                                                       newBool: _plannerDetailsController.checkBoxList[index],
+                                                                                      iSMTCRId: fliteresList.elementAt(index).iSMTCRId!,
                                                                                     ),
                                                                                     barrierDismissible: false)
                                                                                 .then((value) {
@@ -1294,6 +1293,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                                 _plannerDetailsController.checkBoxList[index] = false;
                                                                               } else {
                                                                                 _plannerDetailsController.checkBoxList[index] = true;
+                                                                                uploadImageIndex = value;
                                                                               }
                                                                               setState(() {});
                                                                             });

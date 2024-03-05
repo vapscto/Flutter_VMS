@@ -719,3 +719,11 @@ Icon getFileIcon(String fileType) {
     color: Colors.indigo,
   );
 }
+
+String formatTime(double hours) {
+  int totalMinutes = (hours * 60).round();
+  int hoursPart = totalMinutes ~/ 60;
+  int minutesPart = totalMinutes % 60;
+  String formattedTime = '$hoursPart:${minutesPart.toString().padLeft(2, '0')}';
+  return formattedTime;
+}

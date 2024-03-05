@@ -32,6 +32,16 @@ class PlannerApprovalController extends GetxController {
       <DrNotApprovedModelValues>[].obs;
   void getPlanner(List<PlannerListModelValues> plannerList,
       List<DrNotApprovedModelValues> drNotApprove) {
+    if (plannerListModel.isNotEmpty) {
+      plannerListModel.clear();
+    }
+    if (newplannerList.isNotEmpty) {
+      newplannerList.clear();
+    }
+    if (notApproveDates.isNotEmpty) {
+      notApproveDates.clear();
+    }
+
     for (var drapp in plannerList) {
       DateTime dt = DateTime.parse(drapp.iSMTPLStartDate!);
       var fromDate = '${numberList[dt.day]}-${numberList[dt.month]}-${dt.year}';

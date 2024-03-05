@@ -181,7 +181,7 @@ class _AllPlannersState extends State<AllPlanners> {
     DateTime endDate = dateFormat.parse(widget.toDate);
     Duration difference = endDate.difference(startDate);
     int totalDays = difference.inDays + 1;
-    totalHour = totalDays * 8;
+    totalHour = formatTime(totalDays * 8);
   }
 
   @override
@@ -436,7 +436,8 @@ class _AllPlannersState extends State<AllPlanners> {
                                     style: Get.textTheme.titleSmall!.copyWith(
                                         color: Theme.of(context).primaryColor)),
                                 TextSpan(
-                                    text: '${widget.plannedEffort} Hr',
+                                    text:
+                                        '${formatTime(widget.plannedEffort)} Hr',
                                     style:
                                         Get.textTheme.titleSmall!.copyWith()),
                               ])),
@@ -448,7 +449,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                     style: Get.textTheme.titleSmall!.copyWith(
                                         color: Theme.of(context).primaryColor)),
                                 TextSpan(
-                                    text: '$currentWeekEffort Hr',
+                                    text: '${formatTime(currentWeekEffort)} Hr',
                                     style:
                                         Get.textTheme.titleSmall!.copyWith()),
                               ])),
@@ -460,8 +461,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                     style: Get.textTheme.titleSmall!.copyWith(
                                         color: Theme.of(context).primaryColor)),
                                 TextSpan(
-                                    text:
-                                        '${deviatedEffort.toStringAsFixed(1)} Hr',
+                                    text: '${formatTime(deviatedEffort)} Hr',
                                     style:
                                         Get.textTheme.titleSmall!.copyWith()),
                               ])),
@@ -473,8 +473,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                     style: Get.textTheme.titleSmall!.copyWith(
                                         color: Theme.of(context).primaryColor)),
                                 TextSpan(
-                                    text:
-                                        '${approveEffort.toStringAsFixed(1)} Hr ',
+                                    text: '${formatTime(approveEffort)} Hr ',
                                     style:
                                         Get.textTheme.titleSmall!.copyWith()),
                               ])),
@@ -486,8 +485,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                     style: Get.textTheme.titleSmall!.copyWith(
                                         color: Theme.of(context).primaryColor)),
                                 TextSpan(
-                                    text:
-                                        '${rejectEffort.toStringAsFixed(1)} Hr ',
+                                    text: '${formatTime(rejectEffort)} Hr ',
                                     style:
                                         Get.textTheme.titleSmall!.copyWith()),
                               ])),
@@ -797,8 +795,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                               maxLines: 2,
                                               style: Get.textTheme.titleSmall!
                                                   .copyWith(
-                                                      color: Theme.of(context)
-                                                          .primaryColor),
+                                                      color: Colors.indigo),
                                             ),
                                             RichText(
                                                 text: TextSpan(children: [
@@ -814,7 +811,8 @@ class _AllPlannersState extends State<AllPlanners> {
                                                   text: val.hRMPName,
                                                   style: Get
                                                       .textTheme.titleSmall!
-                                                      .copyWith()),
+                                                      .copyWith(
+                                                          color: Colors.red)),
                                             ])),
                                             RichText(
                                                 text: TextSpan(children: [
@@ -847,12 +845,13 @@ class _AllPlannersState extends State<AllPlanners> {
                                                       .iSMMTCATTaskCategoryName,
                                                   style: Get
                                                       .textTheme.titleSmall!
-                                                      .copyWith()),
+                                                      .copyWith(
+                                                          color: Colors.green)),
                                             ])),
                                             RichText(
                                                 text: TextSpan(children: [
                                               TextSpan(
-                                                  text: 'Periodicity: ',
+                                                  text: 'Created By: ',
                                                   style: Get
                                                       .textTheme.titleSmall!
                                                       .copyWith(
@@ -860,7 +859,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                                                   context)
                                                               .primaryColor)),
                                               TextSpan(
-                                                  text: val.periodicity,
+                                                  text: val.createdby,
                                                   style: Get
                                                       .textTheme.titleSmall!
                                                       .copyWith()),
@@ -999,7 +998,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                               ),
                                             )
                                           : Text(
-                                              '${val.iSMTPLTAEffortInHrs} ${(val.iSMMTCATDurationFlg == 'HOURS') ? 'Hr' : "Min"}')),
+                                              '${formatTime(val.iSMTPLTAEffortInHrs!)}  Hr')),
                                       DataCell(Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8),

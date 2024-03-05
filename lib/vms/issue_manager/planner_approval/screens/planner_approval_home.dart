@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/controller/planner_approval_controller.dart';
@@ -208,9 +209,56 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                                                     .elementAt(
                                                         index)['endDate'])),
                                                 DataCell(Text(
-                                                    '${widget.plannerApprovalController.newplannerList.elementAt(index)['totalEffort']} Hr')),
+                                                    '${formatTime(widget.plannerApprovalController.newplannerList.elementAt(index)['totalEffort'])} Hr')),
                                                 // DataCell(InkWell(
-                                                //   onTap: () {},
+                                                //   onTap: () {
+                                                //     Get.to(() => AllPlanners(
+                                                //           loginSuccessModel: widget
+                                                //               .loginSuccessModel,
+                                                //           mskoolController: widget
+                                                //               .mskoolController,
+                                                //           plannerApprovalController:
+                                                //               widget
+                                                //                   .plannerApprovalController,
+                                                //           ismtplId: widget
+                                                //               .plannerApprovalController
+                                                //               .plannerListModel
+                                                //               .elementAt(
+                                                //                   index)['ismtplId'],
+                                                //           createdBy: widget
+                                                //               .plannerApprovalController
+                                                //               .plannerListModel
+                                                //               .elementAt(
+                                                //                   index)['name'],
+                                                //           fromDate: widget
+                                                //               .plannerApprovalController
+                                                //               .plannerListModel
+                                                //               .elementAt(
+                                                //                   index)['startDate'],
+                                                //           toDate: widget
+                                                //               .plannerApprovalController
+                                                //               .plannerListModel
+                                                //               .elementAt(
+                                                //                   index)['endDate'],
+                                                //           plannedEffort: widget
+                                                //                   .plannerApprovalController
+                                                //                   .plannerListModel
+                                                //                   .elementAt(
+                                                //                       index)[
+                                                //               'totalEffort'],
+                                                //           hrmId: widget
+                                                //                   .plannerApprovalController
+                                                //                   .plannerListModel
+                                                //                   .elementAt(
+                                                //                       index)['hrmeId'] ??
+                                                //               0,
+                                                //           hrmdId: widget
+                                                //               .plannerApprovalController
+                                                //               .plannerListModel
+                                                //               .elementAt(
+                                                //                   index)['hrmdId'],
+                                                //         ));
+                                                //   },
                                                 //   child: Row(
                                                 //     crossAxisAlignment:
                                                 //         CrossAxisAlignment
@@ -323,7 +371,7 @@ class _PlannerApprovalHomeScreenState extends State<PlannerApprovalHomeScreen> {
                                                     .elementAt(
                                                         index)['endDate'])),
                                                 DataCell(Text(
-                                                    '${widget.plannerApprovalController.plannerListModel.elementAt(index)['totalEffort']} Hr')),
+                                                    '${formatTime(widget.plannerApprovalController.plannerListModel.elementAt(index)['totalEffort'])} Hr')),
                                                 DataCell(InkWell(
                                                   onTap: () {
                                                     Get.to(() => AllPlanners(

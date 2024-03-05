@@ -20,13 +20,15 @@ class CategoryCheckList extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final int index;
   bool? newBool;
+  final int iSMTCRId;
   CategoryCheckList(
       {required this.value,
       super.key,
       required this.plannerDetailsController,
       required this.loginSuccessModel,
       required this.index,
-      this.newBool});
+      this.newBool,
+      required this.iSMTCRId});
 
   @override
   State<CategoryCheckList> createState() => _CategoryCheckListState();
@@ -383,11 +385,8 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                                     file: element.file!)
                                 .then((value) {
                               if (value.name.isNotEmpty) {
-                                // if (!uploadAttachment.any(
-                                //     (element) => element.name == value.name)) {
                                 uploadAttachment.add(UploadDrImage(
                                     name: value.name, path: value.path));
-                                // }
                               }
                             });
                           }
@@ -415,6 +414,10 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                                 .uploadImages[widget.index].id = id;
                             widget.plannerDetailsController
                                 .uploadImages[widget.index].imageType = drName;
+                            widget
+                                .plannerDetailsController
+                                .uploadImages[widget.index]
+                                .iSMTCRId = widget.iSMTCRId;
                           }
 
                           if (uploadAttachment.isNotEmpty) {
