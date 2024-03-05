@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/screens/multiple_attachment_viewer.dart';
 import 'package:m_skool_flutter/vms/dr_genration/api/get_planner_details_api.dart';
 import 'package:m_skool_flutter/vms/dr_genration/api/get_task_check_list.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
@@ -245,8 +246,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   List<Map<String, dynamic>> uploadImageList = [];
   int totalHours = 0;
   saveDaetails() async {
-    uploadImageList.clear();
     if (fliteresList.isNotEmpty) {
+      todayDailyReportGenaration.clear();
       // Calculate the total hours and minutes
       totalHours = 0;
       int totalMinutes = 0;
@@ -281,26 +282,26 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         } else {
           deviationId = 2;
         }
-        //
-
-        if (_plannerDetailsController.uploadImages.isNotEmpty) {
-          for (var j in _plannerDetailsController.uploadImages) {
-            if (fliteresList[index].iSMTCRId == j.iSMTCRId) {
-              fileName = j.name;
-              filePath = j.path;
-              uploadImageList.add({
-                "ISMMTCATCL_Id": j.id,
-                "checklistname": j.imageType,
-                "comments": "",
-                "filename": j.name,
-                "filepath": j.path,
-                "refno": '',
-              });
-            }
-          }
-        }
+        // for (int i = 0; i < value.plannerFileUpload!.length; i++) {
+        //   var a = value.plannerFileUpload!.elementAt(i);
+        //   logger.w('=====${value.iSMTCRId == a.iSMTCRId}');
+        //   if (value.iSMTCRId == a.iSMTCRId) {
+        //     _plannerDetailsController.imageUploadedList.add({
+        //       "ISMMTCATCL_Id": a.id,
+        //       "checklistname": a.imageType,
+        //       "comments": '',
+        //       "filename": a.name,
+        //       "filepath": a.path,
+        //       "refno": '',
+        //     });
+        //     logger.v(_plannerDetailsController.imageUploadedList);
+        //   } else {
+        //     _plannerDetailsController.imageUploadedList = [];
+        //   }
+        // }
 
         if (_plannerDetailsController.checkBoxList.elementAt(index) == true) {
+          logger.v("Index === $uploadImageIndex");
           String countHr =
               (double.parse(_plannerDetailsController.minutesEt[index].text) *
                       0.0166667)
@@ -333,7 +334,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
             "ISMTAPL_Periodicity": value.iSMTAPLPeriodicity,
             "ISMTPLTA_Id": value.iSMTPLTAId,
             "attachmentArray": null,
-            "categorychecklist": uploadImageList,
+            "categorychecklist": (uploadImageIndex == -1)
+                ? []
+                : _plannerDetailsController.imageUploadedList,
             "Temp_TaskReponseList": null,
             "ISMDRPT_CompoffApplicableflag": compOffCheckBox[index]
           });
@@ -486,7 +489,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
 
   String fileName = '';
   String filePath = '';
-  int newselectedIndex = -1;
   List<bool> compOffCheckBox = [];
   @override
   Widget build(BuildContext context) {
@@ -1176,10 +1178,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                               rows: List.generate(
                                                   fliteresList.length, (index) {
                                                 int i = index + 1;
-                                                _plannerDetailsController
-                                                    .uploadImages
-                                                    .add(PlannerFileUpload(
-                                                        '', '', -1, -1, '', 0));
+                                                // fliteresList
+                                                //     .elementAt(index)
+                                                //     .plannerFileUpload!
+                                                //     .add(PlannerFileUpload('',
+                                                //         '', -1, -1, '', 0, ''));
                                                 var startDate = '';
                                                 if (fliteresList
                                                         .elementAt(index)
@@ -1261,9 +1264,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       index],
                                                               onChanged:
                                                                   (value) {
-                                                                newselectedIndex =
-                                                                    index;
-
+                                                                setState(() {
+                                                                  uploadImageIndex =
+                                                                      -1;
+                                                                });
                                                                 value == true
                                                                     ? getCategoryChecklistDetails(
                                                                             base:
@@ -1283,9 +1287,10 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                                       value: value,
                                                                                       plannerDetailsController: _plannerDetailsController,
                                                                                       loginSuccessModel: widget.loginSuccessModel,
-                                                                                      index: newselectedIndex,
+                                                                                      index: index,
                                                                                       newBool: _plannerDetailsController.checkBoxList[index],
                                                                                       iSMTCRId: fliteresList.elementAt(index).iSMTCRId!,
+                                                                                      newData: fliteresList.elementAt(index),
                                                                                     ),
                                                                                     barrierDismissible: false)
                                                                                 .then((value) {
@@ -1384,23 +1389,21 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                       const SizedBox(height: 5),
                                                       (selectCheckbox
                                                               .isNotEmpty)
-                                                          ? (_plannerDetailsController
-                                                                  .uploadImages[
-                                                                      index]
-                                                                  .path
-                                                                  .isNotEmpty)
+                                                          ? (uploadImageIndex ==
+                                                                  i - 1)
                                                               ? InkWell(
                                                                   onTap: () {
-                                                                    // Get.to(() =>
-                                                                    //     MultipleAttachmentViewer(
-                                                                    //       value:
-                                                                    //           _plannerDetailsController.uploadImages,
-                                                                    //     ));
-                                                                    createPreview(
-                                                                        context,
-                                                                        _plannerDetailsController
-                                                                            .uploadImages[index]
-                                                                            .path);
+                                                                    Get.to(() =>
+                                                                        MultipleAttachmentViewer(
+                                                                          value: fliteresList
+                                                                              .elementAt(index)
+                                                                              .plannerFileUpload!,
+                                                                        ));
+                                                                    // createPreview(
+                                                                    //     context,
+                                                                    //     _plannerDetailsController
+                                                                    //         .uploadImages[index]
+                                                                    //         .path);
                                                                   },
                                                                   child: const Icon(
                                                                       Icons

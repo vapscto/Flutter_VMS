@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/planner_file_upload_model.dart';
+import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
 class MultipleAttachmentViewer extends StatefulWidget {
   final List<PlannerFileUpload> value;
@@ -16,7 +17,7 @@ class _MultipleAttachmentViewerState extends State<MultipleAttachmentViewer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: const CustomAppBar(title: "Attaachments").getAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: GridView.builder(
@@ -40,13 +41,8 @@ class _MultipleAttachmentViewerState extends State<MultipleAttachmentViewer> {
                       height: 150,
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
-                          color: Color.fromARGB(255, 187, 196, 247)),
-                      child: const Center(
-                        child: Icon(
-                          Icons.file_copy,
-                          color: Colors.pink,
-                        ),
-                      ),
+                          color: Color.fromARGB(255, 163, 157, 253)),
+                      child: getFileIcon(widget.value[index].path),
                     ))
                 : const SizedBox();
           },

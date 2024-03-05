@@ -1,3 +1,5 @@
+import 'package:m_skool_flutter/vms/dr_genration/model/planner_file_upload_model.dart';
+
 class GetTaskDrListModel {
   String? type;
   List<GetTaskDrListModelValues>? values;
@@ -36,13 +38,11 @@ class GetTaskDrListModelValues {
   String? iSMTCRDesc;
   String? iSMTCRStatus;
   bool? iSMTCRReOpenFlg;
-  // Null? iSMTCRReOpenDate;
   String? iSMTCRTaskNo;
   int? iSMMCLTId;
   String? iSMMCLTClientName;
   int? iSMTPLPlannedBy;
   String? iSMTPLPlannerName;
-  // Null? iSMTPLRemarks;
   String? iSMTPLStartDate;
   String? iSMTPLEndDate;
   double? iSMTPLTotalHrs;
@@ -53,8 +53,6 @@ class GetTaskDrListModelValues {
   String? iSMTPLTAEndDate;
   String? assignedby;
   String? createdemp;
-  // Null? transferedbyemp;
-  //Null? iSMTCRTRTOTransferredDate;
   String? taskcategoryname;
   int? iSMMTCATId;
   String? iSMTAPLPeriodicity;
@@ -81,6 +79,7 @@ class GetTaskDrListModelValues {
   int? createdFlag;
   int? iSMMPRId;
   String? projectName;
+  List<PlannerFileUpload>? plannerFileUpload;
 
   GetTaskDrListModelValues(
       {this.type,
@@ -94,13 +93,11 @@ class GetTaskDrListModelValues {
       this.iSMTCRDesc,
       this.iSMTCRStatus,
       this.iSMTCRReOpenFlg,
-      //  this.iSMTCRReOpenDate,
       this.iSMTCRTaskNo,
       this.iSMMCLTId,
       this.iSMMCLTClientName,
       this.iSMTPLPlannedBy,
       this.iSMTPLPlannerName,
-      // this.iSMTPLRemarks,
       this.iSMTPLStartDate,
       this.iSMTPLEndDate,
       this.iSMTPLTotalHrs,
@@ -111,8 +108,6 @@ class GetTaskDrListModelValues {
       this.iSMTPLTAEndDate,
       this.assignedby,
       this.createdemp,
-      //   this.transferedbyemp,
-      //   this.iSMTCRTRTOTransferredDate,
       this.taskcategoryname,
       this.iSMMTCATId,
       this.iSMTAPLPeriodicity,
@@ -138,7 +133,8 @@ class GetTaskDrListModelValues {
       this.hRMEId,
       this.createdFlag,
       this.iSMMPRId,
-      this.projectName});
+      this.projectName,
+      this.plannerFileUpload});
 
   GetTaskDrListModelValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
@@ -152,13 +148,11 @@ class GetTaskDrListModelValues {
     iSMTCRDesc = json['ISMTCR_Desc'];
     iSMTCRStatus = json['ISMTCR_Status'];
     iSMTCRReOpenFlg = json['ISMTCR_ReOpenFlg'];
-    // iSMTCRReOpenDate = json['ISMTCR_ReOpenDate'];
     iSMTCRTaskNo = json['ISMTCR_TaskNo'];
     iSMMCLTId = json['ISMMCLT_Id'];
     iSMMCLTClientName = json['ISMMCLT_ClientName'];
     iSMTPLPlannedBy = json['ISMTPL_PlannedBy'];
     iSMTPLPlannerName = json['ISMTPL_PlannerName'];
-    // iSMTPLRemarks = json['ISMTPL_Remarks'];
     iSMTPLStartDate = json['ISMTPL_StartDate'];
     iSMTPLEndDate = json['ISMTPL_EndDate'];
     iSMTPLTotalHrs = json['ISMTPL_TotalHrs'];
@@ -169,8 +163,6 @@ class GetTaskDrListModelValues {
     iSMTPLTAEndDate = json['ISMTPLTA_EndDate'];
     assignedby = json['assignedby'];
     createdemp = json['createdemp'];
-    //  transferedbyemp = json['transferedbyemp'];
-    // iSMTCRTRTOTransferredDate = json['ISMTCRTRTO_TransferredDate'];
     taskcategoryname = json['taskcategoryname'];
     iSMMTCATId = json['ISMMTCAT_Id'];
     iSMTAPLPeriodicity = json['ISMTAPL_Periodicity'];
@@ -197,6 +189,7 @@ class GetTaskDrListModelValues {
     createdFlag = json['CreatedFlag'];
     iSMMPRId = json['ISMMPR_Id'];
     projectName = json['ProjectName'];
+    plannerFileUpload = json['plannerFileUpload'] ?? [];
   }
 
   Map<String, dynamic> toJson() {
@@ -212,13 +205,11 @@ class GetTaskDrListModelValues {
     data['ISMTCR_Desc'] = iSMTCRDesc;
     data['ISMTCR_Status'] = iSMTCRStatus;
     data['ISMTCR_ReOpenFlg'] = iSMTCRReOpenFlg;
-    //  data['ISMTCR_ReOpenDate'] = this.iSMTCRReOpenDate;
     data['ISMTCR_TaskNo'] = iSMTCRTaskNo;
     data['ISMMCLT_Id'] = iSMMCLTId;
     data['ISMMCLT_ClientName'] = iSMMCLTClientName;
     data['ISMTPL_PlannedBy'] = iSMTPLPlannedBy;
     data['ISMTPL_PlannerName'] = iSMTPLPlannerName;
-    //  data['ISMTPL_Remarks'] = this.iSMTPLRemarks;
     data['ISMTPL_StartDate'] = iSMTPLStartDate;
     data['ISMTPL_EndDate'] = iSMTPLEndDate;
     data['ISMTPL_TotalHrs'] = iSMTPLTotalHrs;
@@ -229,8 +220,6 @@ class GetTaskDrListModelValues {
     data['ISMTPLTA_EndDate'] = iSMTPLTAEndDate;
     data['assignedby'] = assignedby;
     data['createdemp'] = createdemp;
-    //  data['transferedbyemp'] = this.transferedbyemp;
-    //  data['ISMTCRTRTO_TransferredDate'] = this.iSMTCRTRTOTransferredDate;
     data['taskcategoryname'] = taskcategoryname;
     data['ISMMTCAT_Id'] = iSMMTCATId;
     data['ISMTAPL_Periodicity'] = iSMTAPLPeriodicity;
@@ -257,6 +246,7 @@ class GetTaskDrListModelValues {
     data['CreatedFlag'] = createdFlag;
     data['ISMMPR_Id'] = iSMMPRId;
     data['ProjectName'] = projectName;
+    data['plannerFileUpload'] = plannerFileUpload;
     return data;
   }
 }
