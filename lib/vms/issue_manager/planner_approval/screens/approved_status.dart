@@ -133,6 +133,7 @@ class _PlannerApprovedStatusWidgetState
                             columnSpacing:
                                 MediaQuery.of(context).size.width * 0.04,
                             dividerThickness: 1,
+                            dataRowHeight: 70,
                             headingTextStyle: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700),
@@ -170,16 +171,22 @@ class _PlannerApprovedStatusWidgetState
                                       textAlign: TextAlign.center,
                                     ),
                                   )),
-                                  DataCell(Text(statusList[index].planner,
-                                      style: Get.textTheme.titleSmall!.copyWith(
-                                          color:
-                                              Theme.of(context).primaryColor))),
+                                  DataCell(SizedBox(
+                                    width: 150,
+                                    child: Text(statusList[index].planner,
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Get.textTheme.titleSmall!
+                                            .copyWith(
+                                                color: Theme.of(context)
+                                                    .primaryColor)),
+                                  )),
                                   DataCell(Text(statusList[index].startDate)),
                                   DataCell(Text(statusList[index].endDate)),
                                   DataCell(Text(statusList[index].totalEffort)),
                                   DataCell(SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.6,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.72,
                                     child: SingleChildScrollView(
                                       child: Column(
                                         crossAxisAlignment:
@@ -210,12 +217,14 @@ class _PlannerApprovedStatusWidgetState
                                                           .approvedby !=
                                                       null)
                                                   ? Text(
-                                                      ' By- ${statusList[index].assignedBy}',
+                                                      ' By- ${statusList[index].assignedBy.trim()}',
                                                       maxLines: 1,
                                                       overflow:
                                                           TextOverflow.clip,
                                                       style: Get
-                                                          .textTheme.titleSmall)
+                                                          .textTheme.titleSmall!
+                                                          .copyWith(
+                                                              fontSize: 13))
                                                   : const SizedBox(),
                                             ],
                                           ),

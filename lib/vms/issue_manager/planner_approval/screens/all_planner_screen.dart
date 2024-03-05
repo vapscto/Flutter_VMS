@@ -604,63 +604,58 @@ class _AllPlannersState extends State<AllPlanners> {
                                           }),
                                     )),
                                 const DataColumn(
-                                    numeric: true,
-                                    label: Text(
-                                      "Issue/Task Details",
-                                      textAlign: TextAlign.center,
-                                    )),
+                                    label: Center(
+                                  child: Text(
+                                    "Issue/Task Details",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )),
                                 DataColumn(
-                                    numeric: true,
                                     label: Container(
-                                      width: 140,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border:
-                                              Border.all(color: Colors.black)),
-                                      child: Center(
-                                        child: DropdownButton<dynamic>(
-                                          underline: Container(),
-                                          elevation: 0,
-                                          iconSize: 0,
-                                          icon: Icon(
-                                            Icons.keyboard_arrow_down,
-                                            size: 30,
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                          ),
-                                          dropdownColor: Colors.white,
-                                          value: headerGroupValue,
-                                          items: dropdownMenuItems,
-                                          style: Get.textTheme.titleSmall,
-                                          onChanged: (dynamic newValue) {
-                                            setState(() {
-                                              headerGroupValue = newValue;
-                                              if (headerGroupValue ==
-                                                  'Approve All') {
-                                                dataRowGroupValue = 'Approve';
-                                              } else if (headerGroupValue ==
-                                                  'Reject All') {
-                                                dataRowGroupValue = 'Reject';
-                                              }
-                                            });
-                                          },
-                                        ),
+                                  width: 140,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(color: Colors.black)),
+                                  child: Center(
+                                    child: DropdownButton<dynamic>(
+                                      underline: Container(),
+                                      elevation: 0,
+                                      iconSize: 0,
+                                      icon: Icon(
+                                        Icons.keyboard_arrow_down,
+                                        size: 30,
+                                        color: Theme.of(context).primaryColor,
                                       ),
-                                    )),
+                                      dropdownColor: Colors.white,
+                                      value: headerGroupValue,
+                                      items: dropdownMenuItems,
+                                      style: Get.textTheme.titleSmall,
+                                      onChanged: (dynamic newValue) {
+                                        setState(() {
+                                          headerGroupValue = newValue;
+                                          if (headerGroupValue ==
+                                              'Approve All') {
+                                            dataRowGroupValue = 'Approve';
+                                          } else if (headerGroupValue ==
+                                              'Reject All') {
+                                            dataRowGroupValue = 'Reject';
+                                          }
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                )),
                                 const DataColumn(
-                                    numeric: true,
                                     label: Text(
-                                      "Effort",
-                                      textAlign: TextAlign.center,
-                                    )),
+                                  "Effort",
+                                  textAlign: TextAlign.center,
+                                )),
                                 const DataColumn(
-                                    numeric: true,
                                     label: Text(
-                                      "Remarks",
-                                    )),
+                                  "Remarks",
+                                )),
                               ],
                               rows: List.generate(
                                   widget.plannerApprovalController
