@@ -574,8 +574,9 @@ class _ListLeaveHomeScreenState extends State<ListLeaveHomeScreen> {
                           MSkollBtn(
                               title: "Ok",
                               onPress: () {
-                                Navigator.pop(context);
-                                Navigator.pop(context);
+                                Get.back();
+                                Get.back();
+                                Get.back();
                                 // Navigator.pop(context);
                               })
                         ],

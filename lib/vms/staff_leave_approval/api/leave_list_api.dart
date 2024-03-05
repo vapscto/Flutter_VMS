@@ -25,15 +25,10 @@ class GetAppliedLeavesApi {
         "MI_Id": miId,
         "LoginId": loginId,
       });
-      logger.i({
-        "MI_Id": miId,
-        "LoginId": loginId,
-      });
       if (response.statusCode == 200) {
         if (response.data['get_leavestatus'] != null) {
           LeaveApprovalModel appliedLeaves =
               LeaveApprovalModel.fromJson(response.data['get_leavestatus']);
-          logger.i(response.data['get_leavestatus']);
           leaveApproveController.getLeaves(appliedLeaves.values!);
         }
 
