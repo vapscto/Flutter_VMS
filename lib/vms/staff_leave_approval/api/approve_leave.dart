@@ -15,13 +15,6 @@ class ApproveLeaveApi {
     required int loginId,
     required List<Map<String, dynamic>> getLeaveStatus,
   }) async {
-    logger.i({
-      "HRELAPA_Remarks": remark,
-      "status": status,
-      "MI_Id": miId,
-      "LoginId": loginId,
-      "get_leave_status": getLeaveStatus
-    });
     final String api = base + URLS.approveLeave;
     final Dio ins = getGlobalDio();
     try {
@@ -33,7 +26,7 @@ class ApproveLeaveApi {
         "LoginId": loginId,
         "get_leave_status": getLeaveStatus
       });
-      logger.i(api);
+      logger.w(api);
       logger.w({
         "HRELAPA_Remarks": remark,
         "status": status,
@@ -41,9 +34,8 @@ class ApproveLeaveApi {
         "LoginId": loginId,
         "get_leave_status": getLeaveStatus
       });
-
+      logger.w(response.data);
       if (response.statusCode == 200) {
-        logger.w(response.data);
 
         Fluttertoast.showToast(msg: "Approved");
         return Future.value(true);
@@ -78,15 +70,14 @@ class ApproveLeaveApi {
         "status": status,
         "get_leave_status": getLeaveStatus
       });
-      logger.i({
+      logger.w({
         "MI_Id": miId,
         "LoginId": loginId,
         "status": status,
         "get_leave_status": getLeaveStatus
       });
-      logger.i(api);
-
-      logger.d(response.statusCode);
+      logger.w(api);
+      logger.w(response.data);
 
       if (response.statusCode == 200) {
         logger.d(response.data);

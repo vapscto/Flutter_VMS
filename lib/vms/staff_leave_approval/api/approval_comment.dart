@@ -29,13 +29,6 @@ class LeaveApprovalCummentAPI {
             "MI_Id": miId,
             "LoginId": userId
           });
-      logger.e(api);
-      logger.e({
-        "HRELAP_Id": hrelapId,
-        "HRME_Id": hrmeId,
-        "MI_Id": miId,
-        "LoginId": userId
-      });
 
       if (response.statusCode == 200) {
         if (response.data['commentlist'] == null) {

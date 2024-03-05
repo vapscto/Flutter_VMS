@@ -49,6 +49,7 @@ class _AppliedLeaveAprovalItemState extends State<AppliedLeaveAprovalItem> {
     final RxBool select = RxBool(widget.selectAll);
     final RxBool showCheckBox = RxBool(widget.selectAll);
     final TextEditingController remark = TextEditingController();
+    newList.clear();
     newList.add({
       "HRME_Id": widget.value.hRMEId,
       "HRELAP_ApplicationID": widget.value.hRELAPId,
@@ -912,6 +913,7 @@ class _AppliedLeaveAprovalItemState extends State<AppliedLeaveAprovalItem> {
                           MSkollBtn(
                               title: "Ok",
                               onPress: () {
+                                Get.back();
                                 Navigator.pop(context);
                                 remark = '';
                                 // Navigator.pop(context);
