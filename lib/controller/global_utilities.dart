@@ -729,6 +729,23 @@ String formatTime(double hours) {
   return formattedTime;
 }
 
+String returnHour(double hours) {
+  int totalMinutes = (hours * 60).round();
+  int hoursPart = totalMinutes ~/ 60;
+  int minutesPart = totalMinutes % 60;
+  String formattedTime = '$hoursPart:$minutesPart';
+  return formattedTime;
+}
+
+String formatTimeWithHour(double hours) {
+  int totalMinutes = (hours * 60).round();
+  int hoursPart = totalMinutes ~/ 60;
+  int minutesPart = totalMinutes % 60;
+  String formattedTime =
+      '$hoursPart Hrs:${minutesPart.toString().padLeft(2, '0')} Mins';
+  return formattedTime;
+}
+
 String dateFormat(DateTime dt) {
   return '${dt.year}-${dt.month}-${dt.day}';
 }

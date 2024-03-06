@@ -92,11 +92,11 @@ Future<int> getdrLists({
       // String str = drList.values![i].iSMDRPTTimeTakenInHrs!.toString();
 
       controller.etMinutesList.add(TextEditingController(
-          text:
-              "${drList.values![i].iSMDRPTTimeTakenInHrs!.toString().split('.')[1]} "));
+          text: returnHour(drList.values![i].iSMDRPTTimeTakenInHrs!)
+              .split(':')[1]));
       controller.etHoursList.add(TextEditingController(
-          text:
-              "${drList.values![i].iSMDRPTTimeTakenInHrs!.toInt().toString().padLeft(2, '0')} "));
+          text: returnHour(drList.values![i].iSMDRPTTimeTakenInHrs!)
+              .split(':')[0]));
       controller.etRemakeList.add(TextEditingController(text: "Approved"));
     }
 
