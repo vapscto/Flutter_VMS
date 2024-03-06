@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 
 import 'package:m_skool_flutter/vms/maker%20and%20checker/controller/dr_details_ctrlr.dart';
+import 'package:m_skool_flutter/vms/maker%20and%20checker/model/dr_check_list_model.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/dr_details_model.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/employee_details.dart';
 
@@ -89,7 +90,6 @@ Future<int> getdrLists({
     controller.empDetails.addAll(getEmployeeDetail.values!);
     for (int i = 0; i < drList.values!.length; i++) {
       controller.statusET.add(TextEditingController(text: "Select"));
-      // String str = drList.values![i].iSMDRPTTimeTakenInHrs!.toString();
 
       controller.etMinutesList.add(TextEditingController(
           text: returnHour(drList.values![i].iSMDRPTTimeTakenInHrs!)
@@ -99,6 +99,42 @@ Future<int> getdrLists({
               .split(':')[0]));
       controller.etRemakeList.add(TextEditingController(text: "Approved"));
     }
+
+    return response.statusCode!;
+  } on DioError catch (e) {
+    logger.e(e.message);
+    return 0;
+  } on Exception catch (e) {
+    logger.e(e.toString());
+
+    return 0;
+  }
+}
+
+Future<int?> makerCheckerAttachment({
+  required Map<String, dynamic> body,
+  required String base,
+  required DrDetailsCtrlr controller,
+}) async {
+  final Dio ins = getGlobalDio();
+  String apiUrl = base + URLS.getDrCheckList;
+
+  logger.d(apiUrl);
+  logger.d({body});
+  try {
+    controller.imageLoading(true);
+
+    final Response response = await ins.post(apiUrl,
+        options: Options(headers: getSession()), data: body);
+
+    if (response.data['getchecklistarray'] == null) {
+      controller.imageLoading(true);
+    }
+    DrCheckListModel drCheckListModel =
+        DrCheckListModel.fromJson(response.data['getchecklistarray']);
+    controller.checkList.clear();
+    controller.checkList.addAll(drCheckListModel.values!);
+    controller.imageLoading(false);
 
     return response.statusCode!;
   } on DioError catch (e) {

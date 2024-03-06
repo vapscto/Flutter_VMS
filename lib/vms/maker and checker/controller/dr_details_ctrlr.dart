@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/vms/maker%20and%20checker/model/dr_check_list_model.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/dr_details_model.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/employee_details.dart';
 
@@ -37,4 +38,10 @@ class DrDetailsCtrlr extends GetxController {
   RxList<TextEditingController> etHoursList = <TextEditingController>[].obs;
   RxList<TextEditingController> etMinutesList = <TextEditingController>[].obs;
   RxList<TextEditingController> etRemakeList = <TextEditingController>[].obs;
+  RxBool imageisLoading = RxBool(false);
+  void imageLoading(bool l) {
+    imageisLoading.value = l;
+  }
+
+  RxList<DrCheckListModelValues> checkList = <DrCheckListModelValues>[].obs;
 }
