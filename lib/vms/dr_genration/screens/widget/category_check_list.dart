@@ -47,11 +47,18 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
     super.initState();
   }
 
+  List<TextEditingController> commentController = [];
+
   addItemListBrowse(int val, String name) {
     widget.plannerDetailsController.addListBrowser.add(AtachmenDrtFile(
       id: val,
       FileName: name,
     ));
+    for (int i = 0;
+        i < widget.plannerDetailsController.addListBrowser.length;
+        i++) {
+      commentController.add(TextEditingController(text: ''));
+    }
     setState(() {});
   }
 
@@ -250,6 +257,17 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                                       label: Align(
                                         alignment: Alignment.center,
                                         child: Text(
+                                          'Comment',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
                                           'Add',
                                           style: TextStyle(
                                             fontSize: 14,
@@ -317,6 +335,35 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                                             },
                                             child: const Icon(Icons.visibility),
                                           ))),
+                                      DataCell(Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: SizedBox(
+                                          width: 200,
+                                          child: TextFormField(
+                                            controller:
+                                                commentController[index],
+                                            style: Get.textTheme.titleSmall,
+                                            scrollPhysics:
+                                                const AlwaysScrollableScrollPhysics(),
+                                            decoration: InputDecoration(
+                                                contentPadding:
+                                                    const EdgeInsets.all(4),
+                                                hintText: 'Comment',
+                                                hintStyle: Get
+                                                    .textTheme.titleSmall!
+                                                    .copyWith(
+                                                        color: Colors.grey),
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            color:
+                                                                Colors.grey))),
+                                          ),
+                                        ),
+                                      )),
                                       DataCell(Align(
                                           alignment: Alignment.center,
                                           child: index ==
@@ -398,75 +445,19 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                               }
                             });
                           }
-                          // for (var element in widget
-                          //     .plannerDetailsController.addListBrowser) {
-                          //   await uploadDrImage(
-                          //           miId: widget.loginSuccessModel.mIID!,
-                          //           file: element.file!)
-                          //       .then((value) {
-                          //     if (value.name.isNotEmpty) {
-                          //       uploadAttachment.add(UploadDrImage(
-                          //           name: value.name, path: value.path));
-                          //     }
-                          //   });
-                          // }
                           newUploadData.clear();
                           for (int j = 0; j < uploadAttachment.length; j++) {
-                            // newUploadData.add(PlannerFileUpload(
-                            //     uploadAttachment[j].name,
-                            //     uploadAttachment[j].path,
-                            //     widget.index,
-                            //     id,
-                            //     drName,
-                            //     widget.iSMTCRId,''));
                             widget.newData.plannerFileUpload!.add(
                                 PlannerFileUpload(
                                     uploadAttachment[j].name,
                                     uploadAttachment[j].path,
-                                    widget.index,
+                                    '',
                                     id,
                                     drName,
-                                    widget.newData.iSMTCRId!,
-                                    ''));
+                                    commentController[j].text,
+                                    widget.iSMTCRId));
+                          }
 
-                            // widget
-                            //     .plannerDetailsController
-                            //     .uploadImages[widget.index]
-                            //     .index = widget.index;
-                            // widget
-                            //     .plannerDetailsController
-                            //     .uploadImages[widget.index]
-                            //     .name = uploadAttachment[j].name;
-                            // widget
-                            //     .plannerDetailsController
-                            //     .uploadImages[widget.index]
-                            //     .path = uploadAttachment[j].path;
-                            // widget.plannerDetailsController
-                            //     .uploadImages[widget.index].id = id;
-                            // widget.plannerDetailsController
-                            //     .uploadImages[widget.index].imageType = drName;
-                            // widget
-                            //     .plannerDetailsController
-                            //     .uploadImages[widget.index]
-                            //     .iSMTCRId = widget.iSMTCRId;
-                          }
-                          widget.plannerDetailsController.imageUploadedList
-                              .clear();
-                          for (int index = 0;
-                              index < widget.newData.plannerFileUpload!.length;
-                              index++) {
-                            var a = widget.newData.plannerFileUpload!
-                                .elementAt(index);
-                            widget.plannerDetailsController.imageUploadedList
-                                .add({
-                              "ISMMTCATCL_Id": a.id,
-                              "checklistname": a.imageType,
-                              "comments": '',
-                              "filename": a.name,
-                              "filepath": a.path,
-                              "refno": '',
-                            });
-                          }
                           if (uploadAttachment.isNotEmpty) {
                             setState(() {
                               isLoading = true;

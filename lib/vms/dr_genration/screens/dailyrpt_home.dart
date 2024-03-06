@@ -11,7 +11,6 @@ import 'package:m_skool_flutter/vms/dr_genration/api/get_planner_details_api.dar
 import 'package:m_skool_flutter/vms/dr_genration/api/get_task_check_list.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_task_list_model.dart';
-import 'package:m_skool_flutter/vms/dr_genration/model/planner_file_upload_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/add_extra_task.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/search_previous_task.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/widget/category_check_list.dart';
@@ -52,7 +51,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
   @override
   void initState() {
     currentDate = "${newDt.year}-${newDt.month}-${newDt.day} 00:00:00.000";
-    logger.e(currentDate);
     init();
     fliteresList = _plannerDetailsController.getTaskDrList;
     _plannerDetailsController.plannernameDateController.value.text =
@@ -262,15 +260,14 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
               int.parse(_plannerDetailsController.minutesEt[i].text);
         }
       }
-
       int excessHours = totalMinutes ~/ 60;
       totalHours += excessHours;
       totalMinutes %= 60;
-
       int currentDayOfWeek = 0;
       var totalworkinghrsflag = 0.0;
       int deviationId = 0;
       var totalhrs = 0.0;
+      int uploadImageId = 0;
       for (int index = 0;
           index < _plannerDetailsController.checkBoxList.length;
           index++) {
@@ -282,23 +279,20 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
         } else {
           deviationId = 2;
         }
-        // for (int i = 0; i < value.plannerFileUpload!.length; i++) {
-        //   var a = value.plannerFileUpload!.elementAt(i);
-        //   logger.w('=====${value.iSMTCRId == a.iSMTCRId}');
-        //   if (value.iSMTCRId == a.iSMTCRId) {
-        //     _plannerDetailsController.imageUploadedList.add({
-        //       "ISMMTCATCL_Id": a.id,
-        //       "checklistname": a.imageType,
-        //       "comments": '',
-        //       "filename": a.name,
-        //       "filepath": a.path,
-        //       "refno": '',
-        //     });
-        //     logger.v(_plannerDetailsController.imageUploadedList);
-        //   } else {
-        //     _plannerDetailsController.imageUploadedList = [];
-        //   }
-        // }
+        // _plannerDetailsController.imageUploadedList.clear();
+        for (int i = 0; i < value.plannerFileUpload!.length; i++) {
+          var a = value.plannerFileUpload!.elementAt(i);
+          uploadImageId = a.iSMTCRId!;
+          logger.i(uploadImageId);
+          _plannerDetailsController.imageUploadedList.add({
+            "ISMMTCATCL_Id": a.iSMMTCATCLId,
+            "checklistname": a.checklistname,
+            "comments": a.comments,
+            "filename": a.filename,
+            "filepath": a.filepath,
+            "refno": a.refno,
+          });
+        }
 
         if (_plannerDetailsController.checkBoxList.elementAt(index) == true) {
           logger.v("Index === $uploadImageIndex");
@@ -334,9 +328,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
             "ISMTAPL_Periodicity": value.iSMTAPLPeriodicity,
             "ISMTPLTA_Id": value.iSMTPLTAId,
             "attachmentArray": null,
-            "categorychecklist": (uploadImageIndex == -1)
-                ? []
-                : _plannerDetailsController.imageUploadedList,
+            "categorychecklist": (value.iSMTCRId == uploadImageId)
+                ? _plannerDetailsController.imageUploadedList
+                : [],
             "Temp_TaskReponseList": null,
             "ISMDRPT_CompoffApplicableflag": compOffCheckBox[index]
           });
@@ -1264,10 +1258,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       index],
                                                               onChanged:
                                                                   (value) {
-                                                                setState(() {
-                                                                  uploadImageIndex =
-                                                                      -1;
-                                                                });
                                                                 value == true
                                                                     ? getCategoryChecklistDetails(
                                                                             base:
