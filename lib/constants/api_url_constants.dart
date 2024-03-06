@@ -166,6 +166,8 @@ class URLS {
   static String employeeModelList =
       "api/ISM_DailyReport_ApprovalFacade/DesgSelectionDetails/";
   static String getDrs = "api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
+  static String getDrCheckList =
+      "api/ISM_DailyReport_ApprovalFacade/ViewCheckListSavedDetails/";
   static String deptList =
       "api/ISM_DailyReport_ApprovalFacade/DeptSelectionDetails/";
   static String security = "api/ISMDashboardFacade/getdetails";
