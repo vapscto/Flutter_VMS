@@ -522,53 +522,60 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                 child: Align(
                                                   child: InkWell(
                                                     onTap: () {},
-                                                    child: _controller
-                                                                .getTaDaModelList
-                                                                .elementAt(
-                                                                    index)
-                                                                .vPAYVOUStatusFlg!
-                                                                .toString() ==
-                                                            "Rejected"
-                                                        ? const SizedBox()
-                                                        : Checkbox(
-                                                            activeColor:
-                                                                const Color
-                                                                        .fromRGBO(
-                                                                    0,
-                                                                    4,
-                                                                    250,
-                                                                    0.898),
-                                                            shape: ContinuousRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10)),
-                                                            onChanged: (value) {
-                                                              setState(() {
-                                                                _controller.checkList[
-                                                                        index] =
-                                                                    value!;
+                                                    child: Checkbox(
+                                                      activeColor:
+                                                          const Color.fromRGBO(
+                                                              0, 4, 250, 0.898),
+                                                      shape:
+                                                          ContinuousRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                          _controller.checkList[
+                                                              index] = value!;
 
-                                                                if (selectCheckBox
-                                                                    .contains(
-                                                                        index)) {
-                                                                  selectCheckBox
-                                                                      .remove(
-                                                                          index);
-                                                                  // print("slected: " + selectCheckBox.toString());
-                                                                } else {
-                                                                  selectCheckBox
-                                                                      .add(
-                                                                          index);
-                                                                  // print("slected: " + selectCheckBox.toString());
-                                                                }
-                                                              });
-                                                            },
-                                                            value: _controller
-                                                                .checkList
-                                                                .elementAt(
-                                                                    index),
-                                                          ),
+                                                          if (selectCheckBox
+                                                              .contains(
+                                                                  index)) {
+                                                            selectCheckBox
+                                                                .remove(index);
+                                                            if (_controller
+                                                                        .checkList[
+                                                                    index] ==
+                                                                false) {
+                                                              _controller.radioSelect[index] =
+                                                                  0;
+                                                              _controller
+                                                                      .getTaDaModelList
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .vPAYVOUStatusFlg =
+                                                                  "Rejected";
+                                                            }
+                                                            } else {
+                                                            selectCheckBox
+                                                                .add(index);
+
+                                                            if (_controller
+                                                                    .checkList[
+                                                                index]) {
+                                                              _controller
+                                                                      .getTaDaModelList
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .vPAYVOUStatusFlg =
+                                                                  "Approved";
+                                                            }
+                                                         }
+                                                        });
+                                                      },
+                                                      value: _controller
+                                                          .checkList
+                                                          .elementAt(index),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
