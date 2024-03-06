@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/api/approve_cheque_book.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/api/fetch_companies_list.dart';
@@ -79,20 +80,20 @@ class _ChequeApprovalState extends State<ChequeApproval> {
             .sanctionLevelNo!,
       });
     }
-    // print(detailsList);
-    int status = await approveApi(
-        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
-        userId: widget.loginSuccessModel.userId!,
-        miId: widget.loginSuccessModel.mIID!,
-        detailsList: detailsList,
-        otp: 1010);
-    if (status == 200) {
-      Fluttertoast.showToast(msg: " Successfully  submitted ");
-    }
-    loadingCntrl.updateTabLoading(false);
-    setState(() {
-      _controller.getTaDaModelList.clear();
-    });
+     logger.w(detailsList);
+    // int status = await approveApi(
+    //     base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+    //     userId: widget.loginSuccessModel.userId!,
+    //     miId: widget.loginSuccessModel.mIID!,
+    //     detailsList: detailsList,
+    //     otp: 1010);
+    // if (status == 200) {
+    //   Fluttertoast.showToast(msg: " Successfully  submitted ");
+    // }
+    // loadingCntrl.updateTabLoading(false);
+    // setState(() {
+    //   _controller.getTaDaModelList.clear();
+    // });
   }
 
   @override
@@ -542,24 +543,23 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                                   index)) {
                                                             selectCheckBox
                                                                 .remove(index);
-                                                            if (_controller
-                                                                        .checkList[
-                                                                    index] ==
-                                                                false) {
-                                                              _controller.radioSelect[index] =
-                                                                  0;
-                                                              _controller
-                                                                      .getTaDaModelList
-                                                                      .elementAt(
-                                                                          index)
-                                                                      .vPAYVOUStatusFlg =
-                                                                  "Rejected";
-                                                            }
+                                                            // if (_controller
+                                                            //             .checkList[
+                                                            //         index] ==
+                                                            //     false) {
+                                                            //   _controller.radioSelect[index] =
+                                                            //       0;
+                                                            //   _controller
+                                                            //           .getTaDaModelList
+                                                            //           .elementAt(
+                                                            //               index)
+                                                            //           .vPAYVOUStatusFlg =
+                                                            //       "Rejected";
+                                                            // }
                                                             } else {
                                                             selectCheckBox
                                                                 .add(index);
-
-                                                            if (_controller
+                                                               if (_controller
                                                                     .checkList[
                                                                 index]) {
                                                               _controller
@@ -589,7 +589,11 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                   child: SizedBox(
                                                     height: 30,
                                                     width: 40,
-                                                    child: Radio(
+                                                    child: _controller.checkList[
+                                                              index] ?
+                                                              Radio(
+                                                    fillColor:MaterialStateProperty.all(Theme.of(context)
+                                                              .primaryColor),
                                                       activeColor:
                                                           Theme.of(context)
                                                               .primaryColor,
@@ -604,7 +608,10 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                         _controller.radioSelect[
                                                             index] = value!;
                                                       },
-                                                    ),
+                                                    ):Radio(
+                                                      activeColor: Colors.grey,
+                                                      fillColor:MaterialStateProperty.all(Colors.grey),
+                                                      value: null, groupValue: 0, onChanged: null),
                                                   ),
                                                 ),
                                               ),
@@ -616,7 +623,11 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                   child: SizedBox(
                                                     height: 30,
                                                     width: 40,
-                                                    child: Radio(
+                                                    child:
+                                                    _controller.checkList[
+                                                              index] ? Radio(
+                                                       fillColor:MaterialStateProperty.all(Theme.of(context)
+                                                              .primaryColor),         
                                                       focusColor:
                                                           const Color.fromARGB(
                                                                   255,
@@ -635,7 +646,10 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                         _controller.radioSelect[
                                                             index] = value!;
                                                       },
-                                                    ),
+                                                    ):Radio(
+                                                      activeColor: Colors.grey,
+                                                      fillColor:MaterialStateProperty.all(Colors.grey),
+                                                      value: null, groupValue: 0, onChanged: null)
                                                   ),
                                                 ),
                                               ),
