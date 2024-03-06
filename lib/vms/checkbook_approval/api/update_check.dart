@@ -32,6 +32,7 @@ Future<int> updateCheque({
     } else if (response.data['getadvancetada'] != null) {
       controller.updateisErrorOccuredLoading(false);
       controller.updateisLoading(false);
+      logger.w(response.data['getadvancetada']);
       GetTaDaModel loadTaDaResponse =
           GetTaDaModel.fromJson(response.data['getadvancetada']);
       controller.getTaDaModelList.addAll(loadTaDaResponse.values!);
