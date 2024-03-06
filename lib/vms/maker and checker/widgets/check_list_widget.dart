@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/model/dr_check_list_model.dart';
-import 'package:open_filex/open_filex.dart';
 
 class CheckListWidget extends StatelessWidget {
   final List<DrCheckListModelValues> checkList;

@@ -81,7 +81,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
             .sanctionLevelNo!,
       });
     }
-     logger.w(detailsList);
+    logger.w(detailsList);
     int status = await approveApi(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         userId: widget.loginSuccessModel.userId!,
@@ -90,7 +90,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
         otp: 1010);
     if (status == 200) {
       Fluttertoast.showToast(msg: " Successfully  submitted ");
-       _chequeController.updateBtn.value =false;
+      _chequeController.updateBtn.value = false;
       Get.back();
     }
     loadingCntrl.updateTabLoading(false);
@@ -98,23 +98,29 @@ class _ChequeApprovalState extends State<ChequeApproval> {
       _controller.getTaDaModelList.clear();
     });
   }
-  void showLoading(){
+
+  void showLoading() {
     showDialog(
       barrierDismissible: false,
-      context: context, builder:(context) {
-      return   AlertDialog(
-      content: Container(
-       height: 130,
-        child: Column(
-          children:   [
-             Text("Please wait...",
-            style: Theme.of(context).textTheme.titleMedium,),
-           ],
-        ),
-      ),
-     );
-    },  );
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: SizedBox(
+            height: 130,
+            child: Column(
+              children: [
+                Text(
+                  "Please wait...",
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -609,29 +615,42 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                   child: SizedBox(
                                                     height: 30,
                                                     width: 40,
-                                                    child: _controller.checkList[
-                                                              index] ?
-                                                              Radio(
-                                                    fillColor:MaterialStateProperty.all(Theme.of(context)
-                                                              .primaryColor),
-                                                      activeColor:
-                                                          Theme.of(context)
-                                                              .primaryColor,
-                                                      visualDensity:
-                                                          const VisualDensity(
-                                                              horizontal: -4.0),
-                                                      value: 1,
-                                                      groupValue: _controller
-                                                          .radioSelect
-                                                          .elementAt(index),
-                                                      onChanged: (value) {
-                                                        _controller.radioSelect[
-                                                            index] = value!;
-                                                      },
-                                                    ):Radio(
-                                                      activeColor: Colors.grey,
-                                                      fillColor:MaterialStateProperty.all(Colors.grey),
-                                                      value: null, groupValue: 0, onChanged: null),
+                                                    child: _controller
+                                                            .checkList[index]
+                                                        ? Radio(
+                                                            fillColor: MaterialStateProperty
+                                                                .all(Theme.of(
+                                                                        context)
+                                                                    .primaryColor),
+                                                            activeColor: Theme
+                                                                    .of(context)
+                                                                .primaryColor,
+                                                            visualDensity:
+                                                                const VisualDensity(
+                                                                    horizontal:
+                                                                        -4.0),
+                                                            value: 1,
+                                                            groupValue:
+                                                                _controller
+                                                                    .radioSelect
+                                                                    .elementAt(
+                                                                        index),
+                                                            onChanged: (value) {
+                                                              _controller
+                                                                      .radioSelect[
+                                                                  index] = value!;
+                                                            },
+                                                          )
+                                                        : Radio(
+                                                            activeColor:
+                                                                Colors.grey,
+                                                            fillColor:
+                                                                MaterialStateProperty
+                                                                    .all(Colors
+                                                                        .grey),
+                                                            value: null,
+                                                            groupValue: 0,
+                                                            onChanged: null),
                                                   ),
                                                 ),
                                               ),
@@ -641,36 +660,49 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                 alignment: Alignment.center,
                                                 child: Align(
                                                   child: SizedBox(
-                                                    height: 30,
-                                                    width: 40,
-                                                    child:
-                                                    _controller.checkList[
-                                                              index] ? Radio(
-                                                       fillColor:MaterialStateProperty.all(Theme.of(context)
-                                                              .primaryColor),         
-                                                      focusColor:
-                                                          const Color.fromARGB(
-                                                                  255,
-                                                                  182,
-                                                                  180,
-                                                                  180)
-                                                              .withOpacity(.1),
-                                                      activeColor:
-                                                          Theme.of(context)
-                                                              .primaryColor,
-                                                      value: 0,
-                                                      groupValue: _controller
-                                                          .radioSelect
-                                                          .elementAt(index),
-                                                      onChanged: (value) {
-                                                        _controller.radioSelect[
-                                                            index] = value!;
-                                                      },
-                                                    ):Radio(
-                                                      activeColor: Colors.grey,
-                                                      fillColor:MaterialStateProperty.all(Colors.grey),
-                                                      value: null, groupValue: 0, onChanged: null)
-                                                  ),
+                                                      height: 30,
+                                                      width: 40,
+                                                      child: _controller
+                                                              .checkList[index]
+                                                          ? Radio(
+                                                              fillColor: MaterialStateProperty
+                                                                  .all(Theme.of(
+                                                                          context)
+                                                                      .primaryColor),
+                                                              focusColor: const Color
+                                                                          .fromARGB(
+                                                                      255,
+                                                                      182,
+                                                                      180,
+                                                                      180)
+                                                                  .withOpacity(
+                                                                      .1),
+                                                              activeColor: Theme
+                                                                      .of(context)
+                                                                  .primaryColor,
+                                                              value: 0,
+                                                              groupValue:
+                                                                  _controller
+                                                                      .radioSelect
+                                                                      .elementAt(
+                                                                          index),
+                                                              onChanged:
+                                                                  (value) {
+                                                                _controller.radioSelect[
+                                                                        index] =
+                                                                    value!;
+                                                              },
+                                                            )
+                                                          : Radio(
+                                                              activeColor:
+                                                                  Colors.grey,
+                                                              fillColor:
+                                                                  MaterialStateProperty
+                                                                      .all(Colors
+                                                                          .grey),
+                                                              value: null,
+                                                              groupValue: 0,
+                                                              onChanged: null)),
                                                 ),
                                               ),
                                             ),
@@ -817,10 +849,11 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                               .elementAt(index)
                                                               .vPAYVOUAppliedAmount
                                                               .toString())) {
-                                                         Fluttertoast.showToast(msg: "Amount is greater than");
+                                                        Fluttertoast.showToast(
+                                                            msg:
+                                                                "Amount is greater than");
                                                       }
                                                     }
-                                                    
                                                   },
                                                   readOnly: _controller
                                                                       .radioSelect[
