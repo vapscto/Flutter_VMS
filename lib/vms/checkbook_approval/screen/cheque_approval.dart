@@ -407,7 +407,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                           label: Align(
                                             alignment: Alignment.center,
                                             child: Text(
-                                              'Payment Refernce',
+                                              'Payment reference',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                           ),
