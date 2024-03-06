@@ -166,514 +166,510 @@ class _GpasHomeScreenState extends State<GpasHomeScreen> {
           )
         ],
       ),
-      body: Obx(() => getEmpDetailsController.mapLoading.value
-          ? SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: const AnimatedProgressWidget(
-                animationPath: 'assets/json/gpsJson.json',
-                title: 'Finding location',
-                desc: "Please wait we are finding location",
-              ),
-            )
-          : Form(
-              key: _fromKey,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Icon(
-                            Icons.location_on_sharp,
-                            size: 30,
-                            color: Color.fromARGB(255, 6, 180, 12),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.2,
-                            child: Text(
-                                getEmpDetailsController.getGpsLocation.value,
-                                maxLines: 6,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .merge(const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16.0,
-                                        color: Color.fromARGB(255, 21, 50, 214),
-                                        letterSpacing: 0.3))),
-                          ),
-                        ],
-                      ),
+      body: Obx(() =>
+          // getEmpDetailsController.mapLoading.value
+          //     ? SizedBox(
+          //         width: MediaQuery.of(context).size.width,
+          //         child: const AnimatedProgressWidget(
+          //           animationPath: 'assets/json/gpsJson.json',
+          //           title: 'Finding location',
+          //           desc: "Please wait we are finding location",
+          //         ),
+          //       )
+          //     :
+          Form(
+            key: _fromKey,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.location_on_sharp,
+                          size: 30,
+                          color: Color.fromARGB(255, 6, 180, 12),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 1.2,
+                          child: Text(
+                              getEmpDetailsController.getGpsLocation.value,
+                              maxLines: 6,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelSmall!
+                                  .merge(const TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16.0,
+                                      color: Color.fromARGB(255, 21, 50, 214),
+                                      letterSpacing: 0.3))),
+                        ),
+                      ],
                     ),
-                    Obx(() => getEmpDetailsController.gpsErrorLoading.value
-                        ? const Center(
-                            child: ErrWidget(
-                              err: {
-                                "errorTitle": "Unexpected Error Occured",
-                                "errorMsg":
-                                    "While loading company we encountered an error"
-                              },
-                            ),
-                          )
-                        : getEmpDetailsController.gpsLoading.isTrue
-                            ? const AnimatedProgressWidget(
-                                animationPath: 'assets/json/default.json',
-                                title: 'Loading data',
-                                desc: "Please wait we are loading data",
-                              )
-                            : getEmpDetailsController.gpsClientList.isNotEmpty
-                                ? Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 16, horizontal: 20),
-                                    child: Container(
-                                      height: 60,
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .scaffoldBackgroundColor,
-                                        borderRadius:
-                                            BorderRadius.circular(16.0),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            offset: Offset(0, 1),
-                                            blurRadius: 8,
-                                            color: Colors.black12,
-                                          ),
-                                        ],
-                                      ),
-                                      child: TypeAheadFormField<
-                                          GetGpsClientDetailsValues>(
-                                        textFieldConfiguration:
-                                            TextFieldConfiguration(
-                                          style: Get.textTheme.titleSmall,
-                                          controller: clientController,
-                                          decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              focusedBorder:
-                                                  const OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: Colors.transparent,
-                                                ),
-                                              ),
-                                              enabledBorder:
-                                                  const OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: Colors.transparent,
-                                                ),
-                                              ),
-                                              hintStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall!
-                                                  .copyWith(
-                                                      color: Colors.grey,
-                                                      fontSize: 14),
-                                              hintText: getEmpDetailsController
-                                                      .gpsClientList.isNotEmpty
-                                                  ? 'Search Client'
-                                                  : 'No data available',
-                                              floatingLabelBehavior:
-                                                  FloatingLabelBehavior.always,
-                                              label: const CustomDropDownLabel(
-                                                icon: 'assets/images/prof4.png',
-                                                containerColor: Color.fromRGBO(
-                                                    231, 223, 254, 1),
-                                                text: 'Client',
-                                                textColor: Color.fromRGBO(
-                                                    96, 40, 200, 1),
-                                              ),
-                                              suffixIcon: const Icon(
-                                                Icons.keyboard_arrow_down,
-                                                color: Colors.black,
-                                                size: 30,
-                                              )),
-                                        ),
-                                        suggestionsCallback: (v) {
-                                          return getEmpDetailsController
-                                              .gpsClientList
-                                              .where((d) => d.ismmclTClientName!
-                                                  .toLowerCase()
-                                                  .contains(v.toLowerCase()));
-                                        },
-                                        itemBuilder: (context, suggestion) {
-                                          return ListTile(
-                                            onTap: () {
-                                              clientController.text =
-                                                  suggestion.ismmclTClientName!;
-                                              clientId = suggestion.ismmclTId!;
-                                              logger.d('clientId:- $clientId');
-                                            },
-                                            title: Text(
-                                              suggestion.ismmclTClientName!,
-                                              style: Get.textTheme.titleSmall,
-                                            ),
-                                          );
-                                        },
-                                        onSuggestionSelected: (suggestion) {
-                                          setState(() {
-                                            selecteditem = suggestion;
-                                          });
-                                        },
-                                        noItemsFoundBuilder: (context) {
-                                          return const SizedBox();
-                                        },
-                                      ),
+                  ),
+                  Obx(() =>
+                      // getEmpDetailsController.gpsErrorLoading.value
+                      //     ? const Center(
+                      //         child: ErrWidget(
+                      //           err: {
+                      //             "errorTitle": "Unexpected Error Occured",
+                      //             "errorMsg":
+                      //                 "While loading company we encountered an error"
+                      //           },
+                      //         ),
+                      //       )
+                      //     : getEmpDetailsController.gpsLoading.isTrue
+                      //         ? const AnimatedProgressWidget(
+                      //             animationPath: 'assets/json/default.json',
+                      //             title: 'Loading data',
+                      //             desc: "Please wait we are loading data",
+                      //           )
+                      //         :
+                      getEmpDetailsController.gpsClientList.isNotEmpty
+                          ? Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 16, horizontal: 20),
+                              child: Container(
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      offset: Offset(0, 1),
+                                      blurRadius: 8,
+                                      color: Colors.black12,
                                     ),
-                                  )
-
-                                // Container(
-                                //     margin: const EdgeInsets.only(
-                                //         top: 40,
-                                //         left: 16,
-                                //         right: 16,
-                                //         bottom: 16),
-                                //     decoration: BoxDecoration(
-                                //       color: Theme.of(context)
-                                //           .scaffoldBackgroundColor,
-                                //       borderRadius: BorderRadius.circular(16.0),
-                                //       boxShadow: const [
-                                //         BoxShadow(
-                                //           offset: Offset(0, 1),
-                                //           blurRadius: 8,
-                                //           color: Colors.black12,
-                                //         ),
-                                //       ],
-                                //     ),
-                                //     child: DropdownButtonFormField<
-                                //         GetGpsClientDetailsValues>(
-                                //       validator: (value) {
-                                //         if (value == null) {
-                                //           return "";
-                                //         }
-                                //         return null;
-                                //       },
-                                //       decoration: InputDecoration(
-                                //         border: InputBorder.none,
-                                //         focusedBorder: const OutlineInputBorder(
-                                //           borderSide: BorderSide(
-                                //             color: Colors.transparent,
-                                //           ),
-                                //         ),
-                                //         enabledBorder: const OutlineInputBorder(
-                                //           borderSide: BorderSide(
-                                //             color: Colors.transparent,
-                                //           ),
-                                //         ),
-                                //         hintStyle: Theme.of(context)
-                                //             .textTheme
-                                //             .labelSmall!
-                                //             .merge(const TextStyle(
-                                //                 fontWeight: FontWeight.w400,
-                                //                 fontSize: 14.0,
-                                //                 letterSpacing: 0.3)),
-                                //         hintText: getEmpDetailsController
-                                //                 .gpsClientList.isNotEmpty
-                                //             ? 'Select Client'
-                                //             : 'No data available',
-                                //         floatingLabelBehavior:
-                                //             FloatingLabelBehavior.always,
-                                //         isDense: true,
-                                //         label: const CustomDropDownLabel(
-                                //           icon: 'assets/images/prof4.png',
-                                //           containerColor:
-                                //               Color.fromRGBO(231, 223, 254, 1),
-                                //           text: 'Client',
-                                //           textColor:
-                                //               Color.fromRGBO(96, 40, 200, 1),
-                                //         ),
-                                //       ),
-                                //       icon: const Padding(
-                                //         padding: EdgeInsets.only(top: 3),
-                                //         child: Icon(
-                                //           Icons.keyboard_arrow_down_rounded,
-                                //           size: 30,
-                                //         ),
-                                //       ),
-                                //       iconSize: 30,
-                                //       items: List.generate(
-                                //           getEmpDetailsController
-                                //               .gpsClientList.length, (index) {
-                                //         return DropdownMenuItem(
-                                //           value: getEmpDetailsController
-                                //               .gpsClientList[index],
-                                //           child: Padding(
-                                //             padding: const EdgeInsets.only(
-                                //                 top: 13, left: 5),
-                                //             child: SizedBox(
-                                //               width: MediaQuery.of(context)
-                                //                       .size
-                                //                       .width /
-                                //                   1.5,
-                                //               child: Text(
-                                //                 getEmpDetailsController
-                                //                     .gpsClientList[index]
-                                //                     .ismmclTClientName!,
-                                //                 maxLines: 3,
-                                //                 style: Theme.of(context)
-                                //                     .textTheme
-                                //                     .titleSmall!
-                                //                     .merge(const TextStyle(
-                                //                         fontWeight:
-                                //                             FontWeight.w300,
-                                //                         fontSize: 14.0,
-                                //                         letterSpacing: 0.3)),
-                                //               ),
-                                //             ),
-                                //           ),
-                                //         );
-                                //       }),
-                                //       onChanged: (s) async {
-                                //         clientId = s!.ismmclTId!;
-                                //       },
-                                //     ),
-                                //   )
-                                : const AnimatedProgressWidget(
-                                    animationPath: 'assets/json/nodata.json',
-                                    title: 'No Data',
-                                    desc: "No data is available",
-                                    animatorHeight: 250,
-                                  )),
-                    Obx(() => Visibility(
-                          visible:
-                              getEmpDetailsController.gpsClientList.isNotEmpty,
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: 20, left: 16, right: 16, bottom: 16),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                              borderRadius: BorderRadius.circular(16.0),
-                              boxShadow: const [
-                                BoxShadow(
-                                  offset: Offset(0, 1),
-                                  blurRadius: 8,
-                                  color: Colors.black12,
+                                  ],
                                 ),
-                              ],
-                            ),
-                            child: TypeAheadFormField<GetGpsSalesDetailsValues>(
-                              textFieldConfiguration: TextFieldConfiguration(
-                                style: Get.textTheme.titleSmall,
-                                controller: salesLeadController,
-                                decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    focusedBorder: const OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                    enabledBorder: const OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                    hintStyle: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .copyWith(
-                                            color: Colors.grey, fontSize: 14),
-                                    hintText: getEmpDetailsController
-                                            .gpsSalesList.isNotEmpty
-                                        ? 'Search Lead'
-                                        : 'No data available',
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.always,
-                                    label: const CustomDropDownLabel(
-                                      icon: 'assets/images/prof2.png',
-                                      containerColor:
-                                          Color.fromRGBO(223, 251, 254, 1),
-                                      text: 'Lead',
-                                      textColor:
-                                          Color.fromRGBO(40, 195, 200, 1),
-                                    ),
-                                    suffixIcon: const Icon(
-                                      Icons.keyboard_arrow_down,
-                                      color: Colors.black,
-                                      size: 30,
-                                    )),
-                              ),
-                              suggestionsCallback: (v) {
-                                return getEmpDetailsController.gpsSalesList
-                                    .where((d) => d.ismslELeadName!
-                                        .toLowerCase()
-                                        .contains(v.toLowerCase()));
-                              },
-                              itemBuilder: (context, suggestion) {
-                                return ListTile(
-                                  onTap: () {
-                                    salesLeadController.text =
-                                        suggestion.ismslELeadName!;
-                                    salesId = suggestion.ismslEId!;
-                                    logger.d(salesId);
-                                  },
-                                  title: Text(
-                                    suggestion.ismslELeadName!,
+                                child: TypeAheadFormField<
+                                    GetGpsClientDetailsValues>(
+                                  textFieldConfiguration:
+                                      TextFieldConfiguration(
                                     style: Get.textTheme.titleSmall,
+                                    controller: clientController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        focusedBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                          ),
+                                        ),
+                                        enabledBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                          ),
+                                        ),
+                                        hintStyle: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .copyWith(
+                                                color: Colors.grey,
+                                                fontSize: 14),
+                                        hintText: getEmpDetailsController
+                                                .gpsClientList.isNotEmpty
+                                            ? 'Search Client'
+                                            : 'No data available',
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.always,
+                                        label: const CustomDropDownLabel(
+                                          icon: 'assets/images/prof4.png',
+                                          containerColor:
+                                              Color.fromRGBO(231, 223, 254, 1),
+                                          text: 'Client',
+                                          textColor:
+                                              Color.fromRGBO(96, 40, 200, 1),
+                                        ),
+                                        suffixIcon: const Icon(
+                                          Icons.keyboard_arrow_down,
+                                          color: Colors.black,
+                                          size: 30,
+                                        )),
                                   ),
-                                );
-                              },
-                              onSuggestionSelected: (suggestion) {
-                                setState(() {
-                                  selectedLead = suggestion;
-                                });
-                              },
-                              noItemsFoundBuilder: (context) {
-                                return const SizedBox();
-                              },
-                            ),
-                          ),
+                                  suggestionsCallback: (v) {
+                                    return getEmpDetailsController.gpsClientList
+                                        .where((d) => d.ismmclTClientName!
+                                            .toLowerCase()
+                                            .contains(v.toLowerCase()));
+                                  },
+                                  itemBuilder: (context, suggestion) {
+                                    return ListTile(
+                                      onTap: () {
+                                        clientController.text =
+                                            suggestion.ismmclTClientName!;
+                                        clientId = suggestion.ismmclTId!;
+                                        logger.d('clientId:- $clientId');
+                                      },
+                                      title: Text(
+                                        suggestion.ismmclTClientName!,
+                                        style: Get.textTheme.titleSmall,
+                                      ),
+                                    );
+                                  },
+                                  onSuggestionSelected: (suggestion) {
+                                    setState(() {
+                                      selecteditem = suggestion;
+                                    });
+                                  },
+                                  noItemsFoundBuilder: (context) {
+                                    return const SizedBox();
+                                  },
+                                ),
+                              ),
+                            )
 
-                          // DropdownButtonFormField<
-                          //     GetGpsSalesDetailsValues>(
-                          //   validator: (value) {
-                          //     if (value == null) {
-                          //       return "";
-                          //     }
-                          //     return null;
-                          //   },
-                          //   decoration: InputDecoration(
-                          //     border: InputBorder.none,
-                          //     focusedBorder: const OutlineInputBorder(
-                          //       borderSide: BorderSide(
-                          //         color: Colors.transparent,
-                          //       ),
+                          // Container(
+                          //     margin: const EdgeInsets.only(
+                          //         top: 40,
+                          //         left: 16,
+                          //         right: 16,
+                          //         bottom: 16),
+                          //     decoration: BoxDecoration(
+                          //       color: Theme.of(context)
+                          //           .scaffoldBackgroundColor,
+                          //       borderRadius: BorderRadius.circular(16.0),
+                          //       boxShadow: const [
+                          //         BoxShadow(
+                          //           offset: Offset(0, 1),
+                          //           blurRadius: 8,
+                          //           color: Colors.black12,
+                          //         ),
+                          //       ],
                           //     ),
-                          //     enabledBorder: const OutlineInputBorder(
-                          //       borderSide: BorderSide(
-                          //         color: Colors.transparent,
-                          //       ),
-                          //     ),
-                          //     hintStyle: Theme.of(context)
-                          //         .textTheme
-                          //         .labelSmall!
-                          //         .merge(const TextStyle(
-                          //             fontWeight: FontWeight.w400,
-                          //             fontSize: 14.0,
-                          //             letterSpacing: 0.3)),
-                          //     hintText: getEmpDetailsController
-                          //             .gpsSalesList.isNotEmpty
-                          //         ? 'Select Lead'
-                          //         : 'No data available',
-                          //     floatingLabelBehavior:
-                          //         FloatingLabelBehavior.always,
-                          //     isDense: true,
-                          //     label: const CustomDropDownLabel(
-                          //       icon: 'assets/images/prof2.png',
-                          //       containerColor:
-                          //           Color.fromRGBO(223, 251, 254, 1),
-                          //       text: 'Lead',
-                          //       textColor: Color.fromRGBO(40, 195, 200, 1),
-                          //     ),
-                          //   ),
-                          //   icon: const Padding(
-                          //     padding: EdgeInsets.only(top: 3),
-                          //     child: Icon(
-                          //       Icons.keyboard_arrow_down_rounded,
-                          //       size: 30,
-                          //     ),
-                          //   ),
-                          //   iconSize: 30,
-                          //   items: List.generate(
-                          //       getEmpDetailsController.gpsSalesList.length,
-                          //       (index) {
-                          //     return DropdownMenuItem(
-                          //       value: getEmpDetailsController
-                          //           .gpsSalesList[index],
-                          //       child: Padding(
-                          //         padding:
-                          //             const EdgeInsets.only(top: 13, left: 5),
-                          //         child: SizedBox(
-                          //           width: MediaQuery.of(context).size.width /
-                          //               1.5,
-                          //           child: Text(
-                          //             maxLines: 3,
-                          //             getEmpDetailsController
-                          //                 .gpsSalesList[index]
-                          //                 .ismslELeadName!,
-                          //             style: Theme.of(context)
-                          //                 .textTheme
-                          //                 .titleSmall!
-                          //                 .merge(const TextStyle(
-                          //                     fontWeight: FontWeight.w400,
-                          //                     fontSize: 14.0,
-                          //                     letterSpacing: 0.3)),
+                          //     child: DropdownButtonFormField<
+                          //         GetGpsClientDetailsValues>(
+                          //       validator: (value) {
+                          //         if (value == null) {
+                          //           return "";
+                          //         }
+                          //         return null;
+                          //       },
+                          //       decoration: InputDecoration(
+                          //         border: InputBorder.none,
+                          //         focusedBorder: const OutlineInputBorder(
+                          //           borderSide: BorderSide(
+                          //             color: Colors.transparent,
                           //           ),
                           //         ),
+                          //         enabledBorder: const OutlineInputBorder(
+                          //           borderSide: BorderSide(
+                          //             color: Colors.transparent,
+                          //           ),
+                          //         ),
+                          //         hintStyle: Theme.of(context)
+                          //             .textTheme
+                          //             .labelSmall!
+                          //             .merge(const TextStyle(
+                          //                 fontWeight: FontWeight.w400,
+                          //                 fontSize: 14.0,
+                          //                 letterSpacing: 0.3)),
+                          //         hintText: getEmpDetailsController
+                          //                 .gpsClientList.isNotEmpty
+                          //             ? 'Select Client'
+                          //             : 'No data available',
+                          //         floatingLabelBehavior:
+                          //             FloatingLabelBehavior.always,
+                          //         isDense: true,
+                          //         label: const CustomDropDownLabel(
+                          //           icon: 'assets/images/prof4.png',
+                          //           containerColor:
+                          //               Color.fromRGBO(231, 223, 254, 1),
+                          //           text: 'Client',
+                          //           textColor:
+                          //               Color.fromRGBO(96, 40, 200, 1),
+                          //         ),
                           //       ),
-                          //     );
-                          //   }),
-                          //   onChanged: (s) async {
-                          //     salesId = s!.ismslEId!;
-                          //   },
-                          // ),
-                          // ),
-                        )),
-                    Obx(() => Visibility(
-                          visible:
-                              getEmpDetailsController.gpsClientList.isNotEmpty,
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 10,
-                                ),
-                                child: Checkbox(
-                                  value: punchFlag.value,
-                                  activeColor:
-                                      const Color.fromARGB(255, 33, 54, 243),
-                                  shape: ContinuousRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  onChanged: (value) {
-                                    punchFlag.value = value!;
-                                  },
-                                ),
-                              ),
-                              const Text(
-                                "Punch flag",
-                                style: TextStyle(fontSize: 16),
-                              )
-                            ],
-                          ),
-                        )),
-                    Obx(() => Visibility(
+                          //       icon: const Padding(
+                          //         padding: EdgeInsets.only(top: 3),
+                          //         child: Icon(
+                          //           Icons.keyboard_arrow_down_rounded,
+                          //           size: 30,
+                          //         ),
+                          //       ),
+                          //       iconSize: 30,
+                          //       items: List.generate(
+                          //           getEmpDetailsController
+                          //               .gpsClientList.length, (index) {
+                          //         return DropdownMenuItem(
+                          //           value: getEmpDetailsController
+                          //               .gpsClientList[index],
+                          //           child: Padding(
+                          //             padding: const EdgeInsets.only(
+                          //                 top: 13, left: 5),
+                          //             child: SizedBox(
+                          //               width: MediaQuery.of(context)
+                          //                       .size
+                          //                       .width /
+                          //                   1.5,
+                          //               child: Text(
+                          //                 getEmpDetailsController
+                          //                     .gpsClientList[index]
+                          //                     .ismmclTClientName!,
+                          //                 maxLines: 3,
+                          //                 style: Theme.of(context)
+                          //                     .textTheme
+                          //                     .titleSmall!
+                          //                     .merge(const TextStyle(
+                          //                         fontWeight:
+                          //                             FontWeight.w300,
+                          //                         fontSize: 14.0,
+                          //                         letterSpacing: 0.3)),
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         );
+                          //       }),
+                          //       onChanged: (s) async {
+                          //         clientId = s!.ismmclTId!;
+                          //       },
+                          //     ),
+                          //   )
+                          : const AnimatedProgressWidget(
+                              animationPath: 'assets/json/nodata.json',
+                              title: 'No Data',
+                              desc: "No data is available",
+                              animatorHeight: 250,
+                            )),
+                  Obx(() => Visibility(
                         visible:
                             getEmpDetailsController.gpsClientList.isNotEmpty,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 20),
-                          child: TextFormField(
-                            validator: (value) {
-                              if (value == null) {
-                                return "";
-                              }
-                              return null;
-                            },
-                            maxLines: 6,
-                            controller: remarksEtingController,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .merge(const TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14.0,
-                                    letterSpacing: 0.3)),
-                            decoration: InputDecoration(
-                                hintText: "Remark",
-                                helperStyle: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .merge(const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.3)),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10))),
+                        child: Container(
+                          margin: const EdgeInsets.only(
+                              top: 20, left: 16, right: 16, bottom: 16),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            borderRadius: BorderRadius.circular(16.0),
+                            boxShadow: const [
+                              BoxShadow(
+                                offset: Offset(0, 1),
+                                blurRadius: 8,
+                                color: Colors.black12,
+                              ),
+                            ],
                           ),
-                        ))),
-                  ],
-                ),
+                          child: TypeAheadFormField<GetGpsSalesDetailsValues>(
+                            textFieldConfiguration: TextFieldConfiguration(
+                              style: Get.textTheme.titleSmall,
+                              controller: salesLeadController,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                  hintStyle: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .copyWith(
+                                          color: Colors.grey, fontSize: 14),
+                                  hintText: getEmpDetailsController
+                                          .gpsSalesList.isNotEmpty
+                                      ? 'Search Lead'
+                                      : 'No data available',
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always,
+                                  label: const CustomDropDownLabel(
+                                    icon: 'assets/images/prof2.png',
+                                    containerColor:
+                                        Color.fromRGBO(223, 251, 254, 1),
+                                    text: 'Lead',
+                                    textColor: Color.fromRGBO(40, 195, 200, 1),
+                                  ),
+                                  suffixIcon: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: Colors.black,
+                                    size: 30,
+                                  )),
+                            ),
+                            suggestionsCallback: (v) {
+                              return getEmpDetailsController.gpsSalesList.where(
+                                  (d) => d.ismslELeadName!
+                                      .toLowerCase()
+                                      .contains(v.toLowerCase()));
+                            },
+                            itemBuilder: (context, suggestion) {
+                              return ListTile(
+                                onTap: () {
+                                  salesLeadController.text =
+                                      suggestion.ismslELeadName!;
+                                  salesId = suggestion.ismslEId!;
+                                  logger.d(salesId);
+                                },
+                                title: Text(
+                                  suggestion.ismslELeadName!,
+                                  style: Get.textTheme.titleSmall,
+                                ),
+                              );
+                            },
+                            onSuggestionSelected: (suggestion) {
+                              setState(() {
+                                selectedLead = suggestion;
+                              });
+                            },
+                            noItemsFoundBuilder: (context) {
+                              return const SizedBox();
+                            },
+                          ),
+                        ),
+
+                        // DropdownButtonFormField<
+                        //     GetGpsSalesDetailsValues>(
+                        //   validator: (value) {
+                        //     if (value == null) {
+                        //       return "";
+                        //     }
+                        //     return null;
+                        //   },
+                        //   decoration: InputDecoration(
+                        //     border: InputBorder.none,
+                        //     focusedBorder: const OutlineInputBorder(
+                        //       borderSide: BorderSide(
+                        //         color: Colors.transparent,
+                        //       ),
+                        //     ),
+                        //     enabledBorder: const OutlineInputBorder(
+                        //       borderSide: BorderSide(
+                        //         color: Colors.transparent,
+                        //       ),
+                        //     ),
+                        //     hintStyle: Theme.of(context)
+                        //         .textTheme
+                        //         .labelSmall!
+                        //         .merge(const TextStyle(
+                        //             fontWeight: FontWeight.w400,
+                        //             fontSize: 14.0,
+                        //             letterSpacing: 0.3)),
+                        //     hintText: getEmpDetailsController
+                        //             .gpsSalesList.isNotEmpty
+                        //         ? 'Select Lead'
+                        //         : 'No data available',
+                        //     floatingLabelBehavior:
+                        //         FloatingLabelBehavior.always,
+                        //     isDense: true,
+                        //     label: const CustomDropDownLabel(
+                        //       icon: 'assets/images/prof2.png',
+                        //       containerColor:
+                        //           Color.fromRGBO(223, 251, 254, 1),
+                        //       text: 'Lead',
+                        //       textColor: Color.fromRGBO(40, 195, 200, 1),
+                        //     ),
+                        //   ),
+                        //   icon: const Padding(
+                        //     padding: EdgeInsets.only(top: 3),
+                        //     child: Icon(
+                        //       Icons.keyboard_arrow_down_rounded,
+                        //       size: 30,
+                        //     ),
+                        //   ),
+                        //   iconSize: 30,
+                        //   items: List.generate(
+                        //       getEmpDetailsController.gpsSalesList.length,
+                        //       (index) {
+                        //     return DropdownMenuItem(
+                        //       value: getEmpDetailsController
+                        //           .gpsSalesList[index],
+                        //       child: Padding(
+                        //         padding:
+                        //             const EdgeInsets.only(top: 13, left: 5),
+                        //         child: SizedBox(
+                        //           width: MediaQuery.of(context).size.width /
+                        //               1.5,
+                        //           child: Text(
+                        //             maxLines: 3,
+                        //             getEmpDetailsController
+                        //                 .gpsSalesList[index]
+                        //                 .ismslELeadName!,
+                        //             style: Theme.of(context)
+                        //                 .textTheme
+                        //                 .titleSmall!
+                        //                 .merge(const TextStyle(
+                        //                     fontWeight: FontWeight.w400,
+                        //                     fontSize: 14.0,
+                        //                     letterSpacing: 0.3)),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     );
+                        //   }),
+                        //   onChanged: (s) async {
+                        //     salesId = s!.ismslEId!;
+                        //   },
+                        // ),
+                        // ),
+                      )),
+                  Obx(() => Visibility(
+                        visible:
+                            getEmpDetailsController.gpsClientList.isNotEmpty,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 10,
+                              ),
+                              child: Checkbox(
+                                value: punchFlag.value,
+                                activeColor:
+                                    const Color.fromARGB(255, 33, 54, 243),
+                                shape: ContinuousRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                onChanged: (value) {
+                                  punchFlag.value = value!;
+                                },
+                              ),
+                            ),
+                            const Text(
+                              "Punch flag",
+                              style: TextStyle(fontSize: 16),
+                            )
+                          ],
+                        ),
+                      )),
+                  Obx(() => Visibility(
+                      visible: getEmpDetailsController.gpsClientList.isNotEmpty,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 20),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null) {
+                              return "";
+                            }
+                            return null;
+                          },
+                          maxLines: 6,
+                          controller: remarksEtingController,
+                          style: Theme.of(context).textTheme.titleSmall!.merge(
+                              const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                  letterSpacing: 0.3)),
+                          decoration: InputDecoration(
+                              hintText: "Remark",
+                              helperStyle: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .merge(const TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.3)),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                        ),
+                      ))),
+                ],
               ),
-            )),
+            ),
+          )),
     );
   }
 }
