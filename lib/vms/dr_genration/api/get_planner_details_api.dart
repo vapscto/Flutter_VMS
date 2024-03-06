@@ -205,7 +205,7 @@ Future<bool?> saveDr({
   required int roleId,
 }) async {
   var dio = Dio();
-  var api = 'base' + URLS.drSaveAPI;
+  var api = base + URLS.drSaveAPI;
   logger.e({
     "UserId": userId,
     "MI_Id": miID,

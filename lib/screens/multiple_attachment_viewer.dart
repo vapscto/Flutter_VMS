@@ -31,10 +31,10 @@ class _MultipleAttachmentViewerState extends State<MultipleAttachmentViewer> {
             childAspectRatio: 0.75,
           ),
           itemBuilder: (context, index) {
-            return (widget.value[index].path.isNotEmpty)
+            return (widget.value[index].filepath!.isNotEmpty)
                 ? InkWell(
                     onTap: () {
-                      createPreview(context, widget.value[index].path);
+                      createPreview(context, widget.value[index].filepath!);
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width / 2.5,
@@ -42,7 +42,7 @@ class _MultipleAttachmentViewerState extends State<MultipleAttachmentViewer> {
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           color: Color.fromARGB(255, 163, 157, 253)),
-                      child: getFileIcon(widget.value[index].path),
+                      child: getFileIcon(widget.value[index].filepath!),
                     ))
                 : const SizedBox();
           },
