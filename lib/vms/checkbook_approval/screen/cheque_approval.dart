@@ -553,10 +553,21 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                                       .circular(
                                                                           10)),
                                                       onChanged: (value) {
-                                                        setState(() {
-                                                          _controller.checkList[
+                                                           _controller.checkList[
                                                               index] = value!;
-
+                                                              if(_controller.checkList[index]){
+                                                                _controller
+                                                                      .getTaDaModelList
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .vPAYVOUStatusFlg =
+                                                                  "Approved";
+                                                             logger.w(_controller
+                                                                      .getTaDaModelList
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .vPAYVOUStatusFlg);
+                                                              }
                                                           if (selectCheckBox
                                                               .contains(
                                                                   index)) {
@@ -576,20 +587,10 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                             //       "Rejected";
                                                             // }
                                                             } else {
+                                                              
                                                             selectCheckBox
                                                                 .add(index);
-                                                               if (_controller
-                                                                    .checkList[
-                                                                index]) {
-                                                              _controller
-                                                                      .getTaDaModelList
-                                                                      .elementAt(
-                                                                          index)
-                                                                      .vPAYVOUStatusFlg =
-                                                                  "Approved";
-                                                            }
-                                                         }
-                                                        });
+                                                          }
                                                       },
                                                       value: _controller
                                                           .checkList
@@ -1023,9 +1024,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                           ],
                         ),
                       )
-
-                    //
-                    : const Center(
+                : const Center(
                         child: AnimatedProgressWidget(
                           animationPath: 'assets/json/nodata.json',
                           title: 'No Details found',
