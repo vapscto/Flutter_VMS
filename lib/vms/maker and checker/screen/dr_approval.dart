@@ -473,7 +473,10 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                                               height: 5,
                                             ),
                                             Text(
-                                              "${controller.drdList.elementAt(index).iSMTPLTAEffortInHrs!.toInt().toString().padLeft(2, '0')} Hrs : 00 Mins",
+                                              formatTimeWithHour(controller
+                                                  .drdList
+                                                  .elementAt(index)
+                                                  .iSMTPLTAEffortInHrs!),
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .titleSmall!
@@ -507,7 +510,10 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                                                         .iSMDRPTTimeTakenInHrs !=
                                                     null)
                                                 ? Text(
-                                                    "${controller.drdList.elementAt(index).iSMDRPTTimeTakenInHrs!.toInt().toString().padLeft(2, '0')} Hrs : 00 Mins",
+                                                    formatTimeWithHour(controller
+                                                        .drdList
+                                                        .elementAt(index)
+                                                        .iSMDRPTTimeTakenInHrs!),
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .titleSmall!

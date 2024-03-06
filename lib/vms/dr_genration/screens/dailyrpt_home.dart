@@ -1858,125 +1858,194 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                   DataCell(SizedBox(
                                                     width: 180,
                                                     child: GestureDetector(
-                                                      onTapUp: (details) {
-                                                        final offset = details
-                                                            .globalPosition;
-                                                        showMenu(
-                                                            context: context,
-                                                            position:
-                                                                RelativeRect
-                                                                    .fromLTRB(
-                                                              offset.dx,
-                                                              offset.dy,
-                                                              MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width -
-                                                                  offset.dx,
-                                                              MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .height -
-                                                                  offset.dy,
-                                                            ),
-                                                            items:
-                                                                List.generate(
-                                                              _plannerDetailsController
-                                                                  .statusDrList
-                                                                  .length,
-                                                              (i) {
-                                                                return PopupMenuItem(
-                                                                  onTap: () {
-                                                                    _plannerDetailsController
-                                                                            .statusEtField[
-                                                                                index]
-                                                                            .text =
-                                                                        _plannerDetailsController
-                                                                            .statusDrList[i]
-                                                                            .ismmistSStatusName!;
-                                                                    setState(
-                                                                        () {});
-                                                                  },
-                                                                  child: Text(
-                                                                    _plannerDetailsController
-                                                                        .statusDrList[
-                                                                            i]
-                                                                        .ismmistSStatusName!,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .merge(
-                                                                            const TextStyle(
-                                                                          fontSize:
-                                                                              16,
-                                                                        )),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ));
-                                                      },
-                                                      onTapDown:
-                                                          (details) async {
-                                                        final offset = details
-                                                            .globalPosition;
+                                                      // onTapUp: (details) {
+                                                      //   final offset = details
+                                                      //       .globalPosition;
+                                                      //   showMenu(
+                                                      //       context: context,
+                                                      //       position:
+                                                      //           RelativeRect
+                                                      //               .fromLTRB(
+                                                      //         offset.dx,
+                                                      //         offset.dy,
+                                                      //         MediaQuery.of(
+                                                      //                     context)
+                                                      //                 .size
+                                                      //                 .width -
+                                                      //             offset.dx,
+                                                      //         MediaQuery.of(
+                                                      //                     context)
+                                                      //                 .size
+                                                      //                 .height -
+                                                      //             offset.dy,
+                                                      //       ),
+                                                      //       items:
+                                                      //           List.generate(
+                                                      //         _plannerDetailsController
+                                                      //             .statusDrList
+                                                      //             .length,
+                                                      //         (i) {
+                                                      //           return PopupMenuItem(
+                                                      //             onTap: () {
+                                                      //               _plannerDetailsController
+                                                      //                       .statusEtField[
+                                                      //                           index]
+                                                      //                       .text =
+                                                      //                   _plannerDetailsController
+                                                      //                       .statusDrList[i]
+                                                      //                       .ismmistSStatusName!;
+                                                      //               setState(
+                                                      //                   () {});
+                                                      //             },
+                                                      //             child: Text(
+                                                      //               _plannerDetailsController
+                                                      //                   .statusDrList[
+                                                      //                       i]
+                                                      //                   .ismmistSStatusName!,
+                                                      //               style: Theme.of(
+                                                      //                       context)
+                                                      //                   .textTheme
+                                                      //                   .titleSmall!
+                                                      //                   .merge(
+                                                      //                       const TextStyle(
+                                                      //                     fontSize:
+                                                      //                         16,
+                                                      //                   )),
+                                                      //             ),
+                                                      //           );
+                                                      //         },
+                                                      //       ));
+                                                      // },
+                                                      // onTapDown:
+                                                      //     (details) async {
+                                                      //   final offset = details
+                                                      //       .globalPosition;
 
-                                                        showMenu(
-                                                            context: context,
-                                                            position:
-                                                                RelativeRect
-                                                                    .fromLTRB(
-                                                              offset.dx,
-                                                              offset.dy,
-                                                              MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width -
-                                                                  offset.dx,
-                                                              MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .height -
-                                                                  offset.dy,
-                                                            ),
-                                                            items:
-                                                                List.generate(
-                                                              _plannerDetailsController
-                                                                  .statusDrList
-                                                                  .length,
-                                                              (i) {
-                                                                return PopupMenuItem(
-                                                                  onTap: () {
-                                                                    _plannerDetailsController
-                                                                            .statusEtField[
-                                                                                index]
-                                                                            .text =
-                                                                        _plannerDetailsController
-                                                                            .statusDrList[i]
-                                                                            .ismmistSStatusName!;
-                                                                    setState(
-                                                                        () {});
-                                                                  },
-                                                                  child: Text(
-                                                                    _plannerDetailsController
-                                                                        .statusDrList[
-                                                                            i]
-                                                                        .ismmistSStatusName!,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .merge(
-                                                                            const TextStyle(
-                                                                          fontSize:
-                                                                              16,
-                                                                        )),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ));
-                                                      },
+                                                      //   showMenu(
+                                                      //       context: context,
+                                                      //       position:
+                                                      //           RelativeRect
+                                                      //               .fromLTRB(
+                                                      //         offset.dx,
+                                                      //         offset.dy,
+                                                      //         MediaQuery.of(
+                                                      //                     context)
+                                                      //                 .size
+                                                      //                 .width -
+                                                      //             offset.dx,
+                                                      //         MediaQuery.of(
+                                                      //                     context)
+                                                      //                 .size
+                                                      //                 .height -
+                                                      //             offset.dy,
+                                                      //       ),
+                                                      //       items:
+                                                      //           List.generate(
+                                                      //         _plannerDetailsController
+                                                      //             .statusDrList
+                                                      //             .length,
+                                                      //         (i) {
+                                                      //           return PopupMenuItem(
+                                                      //             onTap: () {
+                                                      //               _plannerDetailsController
+                                                      //                       .statusEtField[
+                                                      //                           index]
+                                                      //                       .text =
+                                                      //                   _plannerDetailsController
+                                                      //                       .statusDrList[i]
+                                                      //                       .ismmistSStatusName!;
+                                                      //               setState(
+                                                      //                   () {});
+                                                      //             },
+                                                      //             child: Text(
+                                                      //               _plannerDetailsController
+                                                      //                   .statusDrList[
+                                                      //                       i]
+                                                      //                   .ismmistSStatusName!,
+                                                      //               style: Theme.of(
+                                                      //                       context)
+                                                      //                   .textTheme
+                                                      //                   .titleSmall!
+                                                      //                   .merge(
+                                                      //                       const TextStyle(
+                                                      //                     fontSize:
+                                                      //                         16,
+                                                      //                   )),
+                                                      //             ),
+                                                      //           );
+                                                      //         },
+                                                      //       ));
+                                                      // },
                                                       child: TextFormField(
+                                                        onTap: () {
+                                                          final RenderBox
+                                                              overlay =
+                                                              Overlay.of(context)
+                                                                      .context
+                                                                      .findRenderObject()
+                                                                  as RenderBox;
+                                                          final RenderBox
+                                                              textField =
+                                                              context.findRenderObject()
+                                                                  as RenderBox;
+
+                                                          showMenu(
+                                                              context: context,
+                                                              position:
+                                                                  RelativeRect
+                                                                      .fromRect(
+                                                                Rect.fromPoints(
+                                                                  textField.localToGlobal(
+                                                                      Offset
+                                                                          .zero,
+                                                                      ancestor:
+                                                                          overlay),
+                                                                  textField.localToGlobal(
+                                                                      textField
+                                                                          .size
+                                                                          .bottomRight(Offset
+                                                                              .zero),
+                                                                      ancestor:
+                                                                          overlay),
+                                                                ),
+                                                                Offset.zero &
+                                                                    overlay
+                                                                        .size,
+                                                              ),
+                                                              items:
+                                                                  List.generate(
+                                                                _plannerDetailsController
+                                                                    .statusDrList
+                                                                    .length,
+                                                                (i) {
+                                                                  return PopupMenuItem(
+                                                                    onTap: () {
+                                                                      _plannerDetailsController
+                                                                          .statusEtField[
+                                                                              index]
+                                                                          .text = _plannerDetailsController.statusDrList[i].ismmistSStatusName!;
+                                                                      setState(
+                                                                          () {});
+                                                                    },
+                                                                    child: Text(
+                                                                      _plannerDetailsController
+                                                                          .statusDrList[
+                                                                              i]
+                                                                          .ismmistSStatusName!,
+                                                                      style: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .titleSmall!
+                                                                          .merge(
+                                                                              const TextStyle(
+                                                                            fontSize:
+                                                                                16,
+                                                                          )),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ));
+                                                        },
                                                         validator: (value) {
                                                           if (value!.isEmpty) {
                                                             if (selectCheckbox
@@ -2100,6 +2169,82 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             : null;
                                                       },
                                                       child: TextFormField(
+                                                        onTap: () {
+                                                          final RenderBox
+                                                              overlay =
+                                                              Overlay.of(context)
+                                                                      .context
+                                                                      .findRenderObject()
+                                                                  as RenderBox;
+                                                          final RenderBox
+                                                              textField =
+                                                              context.findRenderObject()
+                                                                  as RenderBox;
+                                                          (currentDt.isAfter(DateTime.parse(fliteresList
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .iSMTPLEndDate!)
+                                                                  .add(const Duration(
+                                                                      days:
+                                                                          1))))
+                                                              ? showMenu(
+                                                                  context:
+                                                                      context,
+                                                                  position:
+                                                                      RelativeRect
+                                                                          .fromRect(
+                                                                    Rect.fromPoints(
+                                                                      textField.localToGlobal(
+                                                                          Offset
+                                                                              .zero,
+                                                                          ancestor:
+                                                                              overlay),
+                                                                      textField.localToGlobal(
+                                                                          textField.size.bottomRight(Offset
+                                                                              .zero),
+                                                                          ancestor:
+                                                                              overlay),
+                                                                    ),
+                                                                    Offset.zero &
+                                                                        overlay
+                                                                            .size,
+                                                                  ),
+                                                                  items: List
+                                                                      .generate(
+                                                                    _plannerDetailsController
+                                                                        .depWiseDevitnList
+                                                                        .length,
+                                                                    (i) {
+                                                                      return PopupMenuItem(
+                                                                        onTap:
+                                                                            () {
+                                                                          _plannerDetailsController
+                                                                              .deveationEtField[index]
+                                                                              .text = _plannerDetailsController.depWiseDevitnList[i].ismdRRemarks!;
+                                                                          _plannerDetailsController.deveationIdEtField[index].text = _plannerDetailsController
+                                                                              .depWiseDevitnList[i]
+                                                                              .ismdRId!
+                                                                              .toString();
+                                                                          setState(
+                                                                              () {});
+                                                                        },
+                                                                        child:
+                                                                            Text(
+                                                                          _plannerDetailsController
+                                                                              .depWiseDevitnList[i]
+                                                                              .ismdRRemarks!,
+                                                                          style: Theme.of(context)
+                                                                              .textTheme
+                                                                              .titleSmall!
+                                                                              .merge(const TextStyle(
+                                                                                fontSize: 16,
+                                                                              )),
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  ))
+                                                              : null;
+                                                        },
                                                         validator: (value) {
                                                           if (value!.isEmpty) {
                                                             if (selectCheckbox
