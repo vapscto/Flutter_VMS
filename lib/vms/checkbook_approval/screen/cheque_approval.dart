@@ -58,6 +58,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
   }
 
   submitData() async {
+    showLoading();
     detailsList.clear();
     loadingCntrl.updateTabLoading(true);
     for (int i = 0; i < selectCheckBox.length; i++) {
@@ -81,21 +82,39 @@ class _ChequeApprovalState extends State<ChequeApproval> {
       });
     }
      logger.w(detailsList);
-    // int status = await approveApi(
-    //     base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
-    //     userId: widget.loginSuccessModel.userId!,
-    //     miId: widget.loginSuccessModel.mIID!,
-    //     detailsList: detailsList,
-    //     otp: 1010);
-    // if (status == 200) {
-    //   Fluttertoast.showToast(msg: " Successfully  submitted ");
-    // }
-    // loadingCntrl.updateTabLoading(false);
-    // setState(() {
-    //   _controller.getTaDaModelList.clear();
-    // });
+    int status = await approveApi(
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+        userId: widget.loginSuccessModel.userId!,
+        miId: widget.loginSuccessModel.mIID!,
+        detailsList: detailsList,
+        otp: 1010);
+    if (status == 200) {
+      Fluttertoast.showToast(msg: " Successfully  submitted ");
+       _chequeController.updateBtn.value =false;
+      Get.back();
+    }
+    loadingCntrl.updateTabLoading(false);
+    setState(() {
+      _controller.getTaDaModelList.clear();
+    });
   }
-
+  void showLoading(){
+    showDialog(
+      barrierDismissible: false,
+      context: context, builder:(context) {
+      return   AlertDialog(
+      content: Container(
+       height: 130,
+        child: Column(
+          children:   [
+             Text("Please wait...",
+            style: Theme.of(context).textTheme.titleMedium,),
+           ],
+        ),
+      ),
+     );
+    },  );
+  }
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -783,7 +802,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                       const InputDecoration(
                                                           border:
                                                               InputBorder.none),
-                                                  validator: (value) {
+                                                  onChanged: (value) {
                                                     if (selectCheckBox.contains(
                                                         _controller
                                                             .getTaDaModelList
@@ -791,16 +810,16 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                                 .getTaDaModelList
                                                                 .elementAt(
                                                                     index)))) {
-                                                      if (double.parse(value!) >
+                                                      if (double.parse(value) >
                                                           double.parse(_controller
                                                               .getTaDaModelList
                                                               .elementAt(index)
                                                               .vPAYVOUAppliedAmount
                                                               .toString())) {
-                                                        return "Amount is greater than";
+                                                         Fluttertoast.showToast(msg: "Amount is greater than");
                                                       }
                                                     }
-                                                    return null;
+                                                    
                                                   },
                                                   readOnly: _controller
                                                                       .radioSelect[
