@@ -152,7 +152,7 @@ class _AllPlannersState extends State<AllPlanners> {
           value.iSMTCRTaskNo!,
           value.iSMTCRTitle!,
           value.hRMPName!,
-          value.iSMMCLTClientName!,
+          value.iSMMCLTClientName??'',
           value.iSMMTCATTaskCategoryName!,
           value.periodicity ?? '',
           '${dt.day}-${dt.month}-${dt.year} To ${dt2.day}-${dt2.month}-${dt2.year}',
