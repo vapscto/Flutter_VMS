@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/vms/intervoewer_feedback/api/interview_feedback_api.dart';
-import 'package:m_skool_flutter/vms/intervoewer_feedback/controller/interview_feedback_controller.dart';
-import 'package:m_skool_flutter/vms/intervoewer_feedback/model/interview_grid_list_model.dart';
-import 'package:m_skool_flutter/vms/intervoewer_feedback/model/update_data_model.dart';
+import 'package:m_skool_flutter/vms/interviewer_feedback/api/interview_feedback_api.dart';
+import 'package:m_skool_flutter/vms/interviewer_feedback/controller/interview_feedback_controller.dart';
+import 'package:m_skool_flutter/vms/interviewer_feedback/model/interview_grid_list_model.dart';
+import 'package:m_skool_flutter/vms/interviewer_feedback/model/update_data_model.dart';
 import 'package:m_skool_flutter/vms/rating_report/screen/report_data_screen.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
@@ -339,16 +339,15 @@ class _UpdatedInterviewStatusState extends State<UpdatedInterviewStatus> {
                                       data!.hrcisCInterviewDateTime,
                                   "HRCISC_InterviewVenue":
                                       data!.hrcisCInterviewVenue!,
-                                  "HRCISC_ActiveFlg": data!.hrcisCActiveFlg,
-                                  "HRCISC_CreatedBy": data!.hrcisCCreatedBy,
+                                  "HRCISC_CreatedBy":
+                                      widget.loginSuccessModel.userId,
                                   "HRCISC_UpdatedBy":
                                       widget.loginSuccessModel.userId,
-                                  "HRCISC_Interviewer": data!.hrcisCInterviewer,
                                   "HRCISC_Status": selectedData,
+                                  "HRCISC_NotifyEmail": true,
+                                  "HRCISC_NotifySMS": true,
                                   "HRCD_FullName": data!.hrcDFullName,
-                                  "HRCD_Photo": data!.hrcDPhoto ?? '',
                                   "HRCD_Resume": data!.hrcDResume ?? '',
-                                  "Entry_Date": data!.entryDate,
                                   "HRCIS_InterviewFeedBack":
                                       remarkController.text,
                                   "HRCIS_CandidateStatus": selectedRadio

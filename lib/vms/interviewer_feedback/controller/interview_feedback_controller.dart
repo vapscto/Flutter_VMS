@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/vms/intervoewer_feedback/model/interview_grid_list_model.dart';
-import 'package:m_skool_flutter/vms/intervoewer_feedback/model/update_data_model.dart';
+import 'package:m_skool_flutter/vms/interviewer_feedback/model/interview_grid_list_model.dart';
+import 'package:m_skool_flutter/vms/interviewer_feedback/model/update_data_model.dart';
 
 class InterviewFeedbackController extends GetxController {
   RxBool isListLoading = RxBool(false);

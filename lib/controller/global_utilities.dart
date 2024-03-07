@@ -29,7 +29,7 @@ import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_home.dart
 import 'package:m_skool_flutter/vms/extension/extension_home_screen.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/health_chequeup/screens/healtha_check_up.dart';
-import 'package:m_skool_flutter/vms/intervoewer_feedback/screens/interview_home_screen.dart';
+import 'package:m_skool_flutter/vms/interviewer_feedback/screens/interview_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
 import 'package:m_skool_flutter/vms/noc_approval/screens/noc_approval_home.dart';
