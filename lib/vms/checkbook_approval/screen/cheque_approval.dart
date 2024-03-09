@@ -274,6 +274,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                   base: baseUrlFromInsCode(
                                       "issuemanager", widget.mskoolController),
                                   controller: _controller);
+                                   _chequeController.updateBtns(false);
                             },
                           ),
                         ),
@@ -982,8 +983,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                 Obx(
                                   () => Visibility(
                                     visible:
-                                        _chequeController.updateBtn.isFalse &&
-                                            selectCheckBox.isNotEmpty,
+                                        _chequeController.updateBtn.isFalse,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: MSkollBtn(
