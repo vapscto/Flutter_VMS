@@ -169,8 +169,8 @@ class DMS {
 }
 
 class Mercator {
-  double? x;
-  double? y;
+  dynamic x;
+  dynamic y;
 
   Mercator({this.x, this.y});
 

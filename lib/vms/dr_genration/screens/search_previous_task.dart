@@ -365,8 +365,22 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
                                     ),
                                   ],
                                 )),
-                                DataCell(Text(val.iSMTCRDesc ?? '')),
-                                DataCell(Text(val.iSMDRPTRemarks ?? '')),
+                                DataCell(SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.45,
+                                    child: Text(
+                                      val.iSMTCRDesc ?? '',
+                                      maxLines: 8,
+                                      overflow: TextOverflow.fade,
+                                    ))),
+                                DataCell(SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
+                                    child: Text(
+                                      val.iSMDRPTRemarks ?? '',
+                                      maxLines: 8,
+                                      overflow: TextOverflow.fade,
+                                    ))),
                                 DataCell(Text('$hours.$minutes Hr')),
                                 DataCell(Text(
                                   val.iSMDRPTApprovedFlg ?? '',

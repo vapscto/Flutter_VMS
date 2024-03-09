@@ -4,9 +4,9 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/vms/intervoewer_feedback/api/interview_feedback_api.dart';
-import 'package:m_skool_flutter/vms/intervoewer_feedback/controller/interview_feedback_controller.dart';
-import 'package:m_skool_flutter/vms/intervoewer_feedback/screens/update_interview_status.dart';
+import 'package:m_skool_flutter/vms/interviewer_feedback/api/interview_feedback_api.dart';
+import 'package:m_skool_flutter/vms/interviewer_feedback/controller/interview_feedback_controller.dart';
+import 'package:m_skool_flutter/vms/interviewer_feedback/screens/update_interview_status.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
