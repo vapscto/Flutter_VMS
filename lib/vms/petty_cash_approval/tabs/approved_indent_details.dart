@@ -31,10 +31,6 @@ class PcApprovedHome extends StatefulWidget {
 class _PcApprovedHomeState extends State<PcApprovedHome> {
   final PettyCashApprovalController _pcapprovalController =
       Get.put(PettyCashApprovalController());
-
-  // ParticularApprovedIndentModelValues? approvedparticular;
-
-  // final ManagerInventoryController inventoryController =
   @override
   void initState() {
     loadData();
@@ -49,13 +45,6 @@ class _PcApprovedHomeState extends State<PcApprovedHome> {
         userId: widget.loginSuccessModel.userId!,
         asmaYId: widget.loginSuccessModel.asmaYId!,
         controller: _pcapprovalController);
-    // getPcApprovalOnChange(
-    //     miId: widget.loginSuccessModel.mIID!,
-    //     base: baseUrlFromInsCode("", widget.mskoolController),
-    //     roleId: widget.loginSuccessModel.roleId!,
-    //     userId: widget.loginSuccessModel.userId!,
-    //     asmaYId: widget.loginSuccessModel.asmaYId!,
-    //     controller: _pcapprovalController);
   }
 
   @override
@@ -96,7 +85,6 @@ class _PcApprovedHomeState extends State<PcApprovedHome> {
                       ),
                       child:
                           DropdownButtonFormField<PCApprovalOnloadModelValues>(
-                        // value: _pcapprovalController.organizationList.first,
                         decoration: InputDecoration(
                           focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
@@ -160,11 +148,6 @@ class _PcApprovedHomeState extends State<PcApprovedHome> {
                         }),
                         onChanged: (selected) {
                           _pcapprovalController.pcApprovedList.clear();
-
-                          // setState(() {
-                          //   approvedparticular = selected ;
-                          // });
-
                           getPcApprovalOnChange(
                               miId: selected!.mIId!,
                               base: baseUrlFromInsCode(
@@ -196,132 +179,135 @@ class _PcApprovedHomeState extends State<PcApprovedHome> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 180),
-                                  child: DataTable(
-                                      dataTextStyle: const TextStyle(
-                                          fontSize: 15,
-                                          color: Color.fromRGBO(5, 5, 5, 0.945),
-                                          fontWeight: FontWeight.w500),
-                                      dataRowHeight: 60,
-                                      headingRowHeight: 55,
-                                      horizontalMargin: 10,
-                                      columnSpacing: 40,
-                                      dividerThickness: 1,
-                                      border: TableBorder.all(
-                                          borderRadius: const BorderRadius.only(
-                                              bottomRight: Radius.circular(10),
-                                              bottomLeft: Radius.circular(10))),
-                                      headingRowColor:
-                                          MaterialStateProperty.all(
-                                              Theme.of(context).primaryColor),
-                                      columns: const [
-                                        DataColumn(
-                                            label: Text("S No.",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.w800))),
-                                        DataColumn(
-                                            label: Text("Indent No.",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.w800))),
-                                        DataColumn(
-                                            label: Text("Department",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.w800))),
-                                        DataColumn(
-                                            label: Text("Approved By",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.w800))),
-                                        DataColumn(
-                                            label: Text("Date",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.w800))),
-                                        DataColumn(
-                                            label: Text("Action",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.w800))),
-                                      ],
-                                      rows: List.generate(
-                                          _pcapprovalController
-                                              .pcApprovedList.length, (index) {
-                                        var i = index + 1;
-                                        return DataRow(cells: [
-                                          DataCell(Align(
-                                              alignment: Alignment.center,
-                                              child: Text('$i'))),
-                                          DataCell(Text(
-                                              "${_pcapprovalController.pcApprovedList.elementAt(index).pcindentapTIndentNo}")),
-                                          DataCell(Text(
-                                              "${_pcapprovalController.pcApprovedList.elementAt(index).departmentname}")),
-                                          DataCell(Text(
-                                              "${_pcapprovalController.pcApprovedList.elementAt(index).employeename}")),
-                                          DataCell(Text(getDateNeed(
-                                              DateTime.parse(
-                                                  _pcapprovalController
-                                                      .pcApprovedList
-                                                      .elementAt(index)
-                                                      .createdate!)))),
-                                          DataCell(TextButton(
-                                              onPressed: () async {
-                                                var status = await getPcapprovedIndentParticular(
-                                                    miId: widget
-                                                        .loginSuccessModel
-                                                        .mIID!,
-                                                    base: baseUrlFromInsCode(
-                                                        "issuemanager",
-                                                        widget
-                                                            .mskoolController),
-                                                    roleId: widget
-                                                        .loginSuccessModel
-                                                        .roleId!,
-                                                    userId: widget
-                                                        .loginSuccessModel
-                                                        .userId!,
-                                                    asmaYId: widget
-                                                        .loginSuccessModel
-                                                        .asmaYId!,
-                                                    pcIndentApproved:
-                                                        _pcapprovalController
-                                                            .pcApprovedList
-                                                            .elementAt(index)
-                                                            .pcindentaPId!,
-                                                    pcIndentId:
-                                                        _pcapprovalController
-                                                            .pcApprovedList
-                                                            .elementAt(index)
-                                                            .pcindenTId!,
-                                                    controller:
-                                                        _pcapprovalController);
-                                                if (status == 200) {
-                                                  // ignore: use_build_context_synchronously
-                                                  Navigator.push(context,
-                                                      MaterialPageRoute(
-                                                          builder: (_) {
-                                                    return ApprovedParticularIndentDetails(
-                                                      loginSuccessModel: widget
-                                                          .loginSuccessModel,
-                                                      mskoolController: widget
-                                                          .mskoolController,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: DataTable(
+                                        dataTextStyle: const TextStyle(
+                                            fontSize: 15,
+                                            color:
+                                                Color.fromRGBO(5, 5, 5, 0.945),
+                                            fontWeight: FontWeight.w400),
+                                        dataRowHeight: 60,
+                                        headingRowHeight: 55,
+                                        horizontalMargin: 10,
+                                        columnSpacing: 40,
+                                        dividerThickness: 1,
+                                        border: TableBorder.all(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        headingRowColor:
+                                            MaterialStateProperty.all(
+                                                Theme.of(context).primaryColor),
+                                        columns: const [
+                                          DataColumn(
+                                              label: Text("S No.",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w800))),
+                                          DataColumn(
+                                              label: Text("Indent No.",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w800))),
+                                          DataColumn(
+                                              label: Text("Department",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w800))),
+                                          DataColumn(
+                                              label: Text("Approved By",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w800))),
+                                          DataColumn(
+                                              label: Text("Date",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w800))),
+                                          DataColumn(
+                                              label: Text("Action",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w800))),
+                                        ],
+                                        rows: List.generate(
+                                            _pcapprovalController.pcApprovedList
+                                                .length, (index) {
+                                          var i = index + 1;
+                                          return DataRow(cells: [
+                                            DataCell(Align(
+                                                alignment: Alignment.center,
+                                                child: Text('$i'))),
+                                            DataCell(Text(
+                                                "${_pcapprovalController.pcApprovedList.elementAt(index).pcindentapTIndentNo}")),
+                                            DataCell(Text(
+                                                "${_pcapprovalController.pcApprovedList.elementAt(index).departmentname}")),
+                                            DataCell(Text(
+                                                "${_pcapprovalController.pcApprovedList.elementAt(index).employeename}")),
+                                            DataCell(Text(getDateNeed(
+                                                DateTime.parse(
+                                                    _pcapprovalController
+                                                        .pcApprovedList
+                                                        .elementAt(index)
+                                                        .createdate!)))),
+                                            DataCell(TextButton(
+                                                onPressed: () async {
+                                                  var status = await getPcapprovedIndentParticular(
+                                                      miId: widget
+                                                          .loginSuccessModel
+                                                          .mIID!,
+                                                      base: baseUrlFromInsCode(
+                                                          "issuemanager",
+                                                          widget
+                                                              .mskoolController),
+                                                      roleId: widget
+                                                          .loginSuccessModel
+                                                          .roleId!,
+                                                      userId: widget
+                                                          .loginSuccessModel
+                                                          .userId!,
+                                                      asmaYId: widget
+                                                          .loginSuccessModel
+                                                          .asmaYId!,
+                                                      pcIndentApproved:
+                                                          _pcapprovalController
+                                                              .pcApprovedList
+                                                              .elementAt(index)
+                                                              .pcindentaPId!,
+                                                      pcIndentId:
+                                                          _pcapprovalController
+                                                              .pcApprovedList
+                                                              .elementAt(index)
+                                                              .pcindenTId!,
                                                       controller:
-                                                          _pcapprovalController,
-                                                    );
-                                                  }));
-                                                }
-                                              },
-                                              child: const Icon(Icons
-                                                  .remove_red_eye_rounded))),
-                                        ]);
-                                      })),
+                                                          _pcapprovalController);
+                                                  if (status == 200) {
+                                                    // ignore: use_build_context_synchronously
+                                                    Navigator.push(context,
+                                                        MaterialPageRoute(
+                                                            builder: (_) {
+                                                      return ApprovedParticularIndentDetails(
+                                                        loginSuccessModel: widget
+                                                            .loginSuccessModel,
+                                                        mskoolController: widget
+                                                            .mskoolController,
+                                                        controller:
+                                                            _pcapprovalController,
+                                                      );
+                                                    }));
+                                                  }
+                                                },
+                                                child: const Icon(Icons
+                                                    .remove_red_eye_rounded))),
+                                          ]);
+                                        })),
+                                  ),
                                 )
                               ],
                             ),

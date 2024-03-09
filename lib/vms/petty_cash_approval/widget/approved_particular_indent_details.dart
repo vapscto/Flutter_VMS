@@ -52,67 +52,70 @@ class _ApprovedParticularIndentDetailsState
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          DataTable(
-                              dataTextStyle: const TextStyle(
-                                  fontSize: 15,
-                                  color: Color.fromRGBO(5, 5, 5, 0.945),
-                                  fontWeight: FontWeight.w500),
-                              dataRowHeight: 40,
-                              headingRowHeight: 55,
-                              horizontalMargin: 10,
-                              columnSpacing: 40,
-                              dividerThickness: 1,
-                              border: TableBorder.all(
-                                  borderRadius: const BorderRadius.only(
-                                      bottomRight: Radius.circular(10),
-                                      bottomLeft: Radius.circular(10))),
-                              headingRowColor: MaterialStateProperty.all(
-                                  Theme.of(context).primaryColor),
-                              columns: const [
-                                DataColumn(
-                                    label: Text("S No.",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w800))),
-                                DataColumn(
-                                    label: Text("Particular",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w800))),
-                                DataColumn(
-                                    label: Text("Requested Amount",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w800))),
-                                DataColumn(
-                                    label: Text("Approved Amount",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w800))),
-                                DataColumn(
-                                    label: Text("Remarks",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w800))),
-                              ],
-                              rows: List.generate(
-                                  widget.controller.approvedparticular.length,
-                                  (index) {
-                                var i = index + 1;
-                                return DataRow(cells: [
-                                  DataCell(Align(
-                                      alignment: Alignment.center,
-                                      child: Text('$i'))),
-                                  DataCell(Text(
-                                      "${widget.controller.approvedparticular.elementAt(index).pcmparTParticularName}")),
-                                  DataCell(Text(
-                                      "${widget.controller.approvedparticular.elementAt(index).pcindentapdTRequestedAmount}")),
-                                  DataCell(Text(
-                                      "${widget.controller.approvedparticular.elementAt(index).pcindentapTSanctionedAmt}")),
-                                  DataCell(Text(
-                                      "${widget.controller.approvedparticular.elementAt(index).pcindentapdTRemarks}")),
-                                ]);
-                              })),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: DataTable(
+                                dataTextStyle: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromRGBO(5, 5, 5, 0.945),
+                                    fontWeight: FontWeight.w400),
+                                dataRowHeight: 40,
+                                headingRowHeight: 55,
+                                horizontalMargin: 10,
+                                columnSpacing: 40,
+                                dividerThickness: 1,
+                                border: TableBorder.all(
+                                    borderRadius: const BorderRadius.only(
+                                        bottomRight: Radius.circular(10),
+                                        bottomLeft: Radius.circular(10))),
+                                headingRowColor: MaterialStateProperty.all(
+                                    Theme.of(context).primaryColor),
+                                columns: const [
+                                  DataColumn(
+                                      label: Text("S No.",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w800))),
+                                  DataColumn(
+                                      label: Text("Particular",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w800))),
+                                  DataColumn(
+                                      label: Text("Requested Amount",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w800))),
+                                  DataColumn(
+                                      label: Text("Approved Amount",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w800))),
+                                  DataColumn(
+                                      label: Text("Remarks",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w800))),
+                                ],
+                                rows: List.generate(
+                                    widget.controller.approvedparticular.length,
+                                    (index) {
+                                  var i = index + 1;
+                                  return DataRow(cells: [
+                                    DataCell(Align(
+                                        alignment: Alignment.center,
+                                        child: Text('$i'))),
+                                    DataCell(Text(
+                                        "${widget.controller.approvedparticular.elementAt(index).pcmparTParticularName}")),
+                                    DataCell(Text(
+                                        "${widget.controller.approvedparticular.elementAt(index).pcindentapdTRequestedAmount}")),
+                                    DataCell(Text(
+                                        "${widget.controller.approvedparticular.elementAt(index).pcindentapTSanctionedAmt}")),
+                                    DataCell(Text(
+                                        "${widget.controller.approvedparticular.elementAt(index).pcindentapdTRemarks}")),
+                                  ]);
+                                })),
+                          ),
                         ],
                       ),
                     ),
