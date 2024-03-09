@@ -702,9 +702,25 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                               Align(
                                                 alignment: Alignment.center,
                                                 child: SizedBox(
-                                                  child: Text(
-                                                      "${_controller.getTaDaModelList.elementAt(index).hRMBDBankName} \n ${_controller.getTaDaModelList.elementAt(index).hRMBDBankAddress} "),
-                                                ),
+                                                  child:  Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Text("${_controller.getTaDaModelList.elementAt(index).hRMBDBankName}",
+                                                      style: Theme.of(context).textTheme.titleSmall!.merge(
+                                                        const TextStyle(
+                                                         fontWeight: FontWeight.w400,
+                                                        )),),
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text("AC No:${_controller.getTaDaModelList.elementAt(index).hRMBDBankAccountNo}",
+                                                      style: Theme.of(context).textTheme.titleSmall!.merge(
+                                                        const TextStyle(
+                                                         fontWeight: FontWeight.w400,
+                                                        )),)
+                                                    ],
+                                                  ),
+                                                )
                                               ),
                                             ),
                                             //b10
@@ -725,7 +741,10 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                               Align(
                                                 alignment: Alignment.center,
                                                 child: SizedBox(
-                                                  child: Text(_controller
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                  Text(_controller
                                                               .getTaDaModelList
                                                               .elementAt(index)
                                                               .vPAYVOUChequeNo ==
@@ -735,7 +754,17 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                           .getTaDaModelList
                                                           .elementAt(index)
                                                           .vPAYVOUChequeNo
-                                                          .toString()),
+                                                          .toString()),                                                     
+                                                          const SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          Text(
+                                                             _controller.getTaDaModelList.elementAt(index).vPAYVOUPaymentReference != null
+                                                             ? _controller.getTaDaModelList.elementAt(index).vPAYVOUPaymentReference! : ""
+                                                          )
+                                                    ],
+                                                  )
+
                                                 ),
                                               ),
                                             ),
