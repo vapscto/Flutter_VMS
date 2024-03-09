@@ -36,10 +36,10 @@ class ChequeApproval extends StatefulWidget {
 class _ChequeApprovalState extends State<ChequeApproval> {
   final ChequeController _chequeController = Get.put(ChequeController());
   final GetDetailedToDo _controller = Get.put(GetDetailedToDo());
-  List<int> selectCheckBox = <int>[].obs;
+  RxList<int> selectCheckBox = <int>[].obs;
   DrDetailsCtrlr loadingCntrl = Get.put(DrDetailsCtrlr());
 
-  bool allSelect = false;
+  RxBool allSelect =  RxBool(false);
   List<Map<String, dynamic>> detailsList = [];
   bool isLoding = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -267,6 +267,8 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                               _controller.tEControllerListOfApprovalRemark
                                   .clear();
                               _controller.checkList.clear();
+                               selectCheckBox.clear();
+                              allSelect.value = false;
                               mid = s!.mIId;
                               await updateCheque(
                                   userId: widget.loginSuccessModel.userId!,
@@ -274,7 +276,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                   base: baseUrlFromInsCode(
                                       "issuemanager", widget.mskoolController),
                                   controller: _controller);
-                                   _chequeController.updateBtns(false);
+                              _chequeController.updateBtns(false);
                             },
                           ),
                         ),
@@ -356,10 +358,10 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                               BorderRadius
                                                                   .circular(
                                                                       10)),
-                                                  value: allSelect,
+                                                  value: allSelect.value,
                                                   onChanged: (value) {
-                                                    allSelect = value!;
-                                                    if (allSelect) {
+                                                    allSelect.value = value!;
+                                                    if (allSelect.value) {
                                                       for (var i = 0;
                                                           i <
                                                               _controller
@@ -382,6 +384,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                         _controller
                                                                 .checkList[i] =
                                                             false;
+
                                                       }
                                                     }
                                                   },
@@ -569,34 +572,21 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                                           index)
                                                                       .vPAYVOUStatusFlg =
                                                                   "Approved";
-                                                             logger.w(_controller
-                                                                      .getTaDaModelList
-                                                                      .elementAt(
-                                                                          index)
-                                                                      .vPAYVOUStatusFlg);
                                                               }
                                                           if (selectCheckBox
                                                               .contains(
                                                                   index)) {
                                                             selectCheckBox
                                                                 .remove(index);
-                                                            // if (_controller
-                                                            //             .checkList[
-                                                            //         index] ==
-                                                            //     false) {
-                                                            //   _controller.radioSelect[index] =
-                                                            //       0;
-                                                            //   _controller
-                                                            //           .getTaDaModelList
-                                                            //           .elementAt(
-                                                            //               index)
-                                                            //           .vPAYVOUStatusFlg =
-                                                            //       "Rejected";
-                                                            // }
+                                                            if(_controller.checkList.length != selectCheckBox.length){
+                                                              allSelect.value = false;
+                                                            }
                                                             } else {
-                                                              
                                                             selectCheckBox
                                                                 .add(index);
+                                                             if(_controller.checkList.length == selectCheckBox.length){
+                                                              allSelect.value = true;
+                                                             }
                                                           }
                                                       },
                                                       value: _controller
@@ -1057,7 +1047,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                           ],
                         ),
                       )
-                : const Center(
+                    : const Center(
                         child: AnimatedProgressWidget(
                           animationPath: 'assets/json/nodata.json',
                           title: 'No Details found',
