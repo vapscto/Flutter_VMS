@@ -114,31 +114,9 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
     totalAmountController.text = totalApprovedAmount.toString();
   }
 
-  // TextEditingController? totalRequestedAmount;
-  // double totalAmount = 0.0;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   totalRequestedAmount = TextEditingController(
-  //     text: selectedIndent?.pcindenTRequestedAmount.toString() ?? "",
-  //   );
-  // }
-
-  // List<double> numsList = [];
-  // TextEditingController totalAmountController = TextEditingController();
-
-  // void updateTotalAmount(int index) {
-  //  totalAmount += double.parse(
-  //         _pcapprovalController.eTapprovalAmount[index].text.toString());
-
-  //   totalAmountController.text = totalAmount.toString();
-  // }
-
   @override
   void dispose() {
     Get.delete<PettyCashApprovalController>();
-    // totalAmountController.dispose();
-
     super.dispose();
   }
 
@@ -186,7 +164,6 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
             .pcmparTId
       });
     }
-    // print("prathap${featchList.toString()}");
   }
 
   @override
@@ -202,7 +179,6 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
               height: 22.0,
             ),
             Row(
-              //crossAxisAlignment: CrossAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
@@ -211,7 +187,6 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                       readOnly: true,
                       controller: fromDate,
                       style: Theme.of(context).textTheme.titleSmall,
-                      //controller: date,
                       decoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.only(top: 48.0, left: 12),
@@ -401,8 +376,6 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                 toDate.text = getDate(
                                     _pcapprovalController.toSelectedDate.value);
 
-                                // setState(() {
-
                                 _pcapprovalController.pcIndentDetails.clear();
 
                                 await getPcIndentApproval(
@@ -417,8 +390,6 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                     toDate: getDateNeed(_pcapprovalController
                                         .toSelectedDate.value),
                                     controller: _pcapprovalController);
-
-                                // });
                               }
                             },
                             child: Padding(
@@ -459,7 +430,6 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                         ),
                         child: DropdownButtonFormField<
                             PcApprovalFromtoDateModelValues>(
-                          // value: _pcapprovalController.organizationList.first,
                           decoration: InputDecoration(
                             focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
@@ -525,23 +495,10 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                           onChanged: (selected) {
                             _pcapprovalController.particularIndentDetails
                                 .clear();
-
                             setState(() {
                               selectedIndent = selected;
-                              // totalAmount = 0.0;
                               totalAmountController.text = "";
-
-                              //     numsList.clear();
-                              //     print('${numsList}');
                             });
-                            // _pcapprovalController.eTapprovalAmount.clear();
-
-                            // indentId = selected!.pcindentaPId!;
-                            // indentRemarks = selected.pcindentdeTRemarks!;
-                            // requestedAmount = selected. ;
-                            // sanctionedAmoub = selected. ;
-                            // partId = ;
-
                             getParticularIndentDetails(
                                 miId: widget.loginSuccessModel.mIID!,
                                 base: baseUrlFromInsCode(
@@ -554,13 +511,6 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                           },
                         ),
                       ),
-
-                      // AnimatedProgressWidget(
-                      //         animationPath: 'assets/json/nodata.json',
-                      //         title: 'Select',
-                      //         desc: "Select the From and To Date to show the Data",
-                      //         animatorHeight: 250,
-                      //       ),
 
                       /////*****   DATA TABLE FOR INDENT    *****/////
 
@@ -586,93 +536,99 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                 ),
                                 SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
-                                  child: DataTable(
-                                    dataTextStyle: const TextStyle(
-                                        fontSize: 15,
-                                        color: Color.fromRGBO(5, 5, 5, 0.945),
-                                        fontWeight: FontWeight.w500),
-                                    dataRowHeight: 60,
-                                    headingRowHeight: 55,
-                                    horizontalMargin: 10,
-                                    columnSpacing: 40,
-                                    dividerThickness: 1,
-                                    border: TableBorder.all(
-                                        borderRadius: const BorderRadius.only(
-                                            bottomRight: Radius.circular(10),
-                                            bottomLeft: Radius.circular(10))),
-                                    headingRowColor: MaterialStateProperty.all(
-                                        Theme.of(context).primaryColor),
-                                    columns: const [
-                                      DataColumn(
-                                          label: Text("S No.",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight:
-                                                      FontWeight.w800))),
-                                      DataColumn(
-                                          label: Text("Indent No.",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight:
-                                                      FontWeight.w800))),
-                                      DataColumn(
-                                          label: Text("Department",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight:
-                                                      FontWeight.w800))),
-                                      DataColumn(
-                                          label: Text("Indent Approved By",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight:
-                                                      FontWeight.w800))),
-                                      DataColumn(
-                                          label: Text("Date",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight:
-                                                      FontWeight.w800))),
-                                      DataColumn(
-                                          label: Text("Indent Requested Amount",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight:
-                                                      FontWeight.w800))),
-                                      DataColumn(
-                                          label: Text("Indent Approved Amount",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight:
-                                                      FontWeight.w800))),
-                                    ],
-                                    rows: [
-                                      DataRow(
-                                        cells: [
-                                          const DataCell(Align(
-                                            alignment: Alignment.center,
-                                            child: Text('1'),
-                                          )),
-                                          DataCell(Text(
-                                              "${selectedIndent?.pcindenTIndentNo}")),
-                                          DataCell(Text(
-                                              "${selectedIndent?.departmentname}")),
-                                          DataCell(Text(
-                                              "${selectedIndent?.employeename}")),
-                                          DataCell(Text(selectedIndent
-                                                      ?.createdate !=
-                                                  null
-                                              ? getDateNeed(DateTime.parse(
-                                                  selectedIndent!.createdate!))
-                                              : "No Date Available")),
-                                          DataCell(Text(
-                                              "${selectedIndent?.pcindenTRequestedAmount}")),
-                                          DataCell(Text(
-                                              "${selectedIndent?.pcindenTApprovedAmt}")),
-                                        ],
-                                      ),
-                                      // Add more rows as needed
-                                    ],
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: DataTable(
+                                      dataTextStyle: const TextStyle(
+                                          fontSize: 15,
+                                          color: Color.fromRGBO(5, 5, 5, 0.945),
+                                          fontWeight: FontWeight.w400),
+                                      dataRowHeight: 60,
+                                      headingRowHeight: 55,
+                                      horizontalMargin: 10,
+                                      columnSpacing: 40,
+                                      dividerThickness: 1,
+                                      border: TableBorder.all(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      headingRowColor:
+                                          MaterialStateProperty.all(
+                                              Theme.of(context).primaryColor),
+                                      columns: const [
+                                        DataColumn(
+                                            label: Text("S No.",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w800))),
+                                        DataColumn(
+                                            label: Text("Indent No.",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w800))),
+                                        DataColumn(
+                                            label: Text("Department",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w800))),
+                                        DataColumn(
+                                            label: Text("Indent Approved By",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w800))),
+                                        DataColumn(
+                                            label: Text("Date",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w800))),
+                                        DataColumn(
+                                            label: Text(
+                                                "Indent Requested Amount",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w800))),
+                                        DataColumn(
+                                            label: Text(
+                                                "Indent Approved Amount",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w800))),
+                                      ],
+                                      rows: [
+                                        DataRow(
+                                          cells: [
+                                            const DataCell(Align(
+                                              alignment: Alignment.center,
+                                              child: Text('1'),
+                                            )),
+                                            DataCell(Text(
+                                                "${selectedIndent?.pcindenTIndentNo}")),
+                                            DataCell(Text(
+                                                "${selectedIndent?.departmentname}")),
+                                            DataCell(Text(
+                                                "${selectedIndent?.employeename}")),
+                                            DataCell(Text(selectedIndent
+                                                        ?.createdate !=
+                                                    null
+                                                ? getDateNeed(DateTime.parse(
+                                                    selectedIndent!
+                                                        .createdate!))
+                                                : "No Date Available")),
+                                            DataCell(Text(
+                                                "${selectedIndent?.pcindenTRequestedAmount}")),
+                                            DataCell(Text(
+                                                "${selectedIndent?.pcindenTApprovedAmt}")),
+                                          ],
+                                        ),
+                                        // Add more rows as needed
+                                      ],
+                                    ),
                                   ),
                                 ),
 
@@ -700,172 +656,222 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                       ),
                                       SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
-                                        child: DataTable(
-                                            dataTextStyle: const TextStyle(
-                                                fontSize: 15,
-                                                color: Color.fromRGBO(
-                                                    5, 5, 5, 0.945),
-                                                fontWeight: FontWeight.w500),
-                                            dataRowHeight: 60,
-                                            headingRowHeight: 55,
-                                            horizontalMargin: 10,
-                                            columnSpacing: 40,
-                                            dividerThickness: 1,
-                                            border: TableBorder.all(
-                                                borderRadius:
-                                                    const BorderRadius.only(
-                                                        bottomRight:
-                                                            Radius.circular(10),
-                                                        bottomLeft:
-                                                            Radius.circular(
-                                                                10))),
-                                            headingRowColor:
-                                                MaterialStateProperty.all(
-                                                    Theme.of(context)
-                                                        .primaryColor),
-                                            columns: [
-                                              DataColumn(
-                                                  label: Checkbox(
-                                                shape:
-                                                    ContinuousRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10)),
-                                                activeColor: Colors.indigo,
-                                                value: selectAll,
-                                                onChanged: (value) {
-                                                  selectAll = value!;
-                                                  setState(() {
-                                                    if (selectAll) {
-                                                      selectCheckBx!.clear();
-                                                      for (int i = 0;
-                                                          i <
-                                                              _pcapprovalController
-                                                                  .eTapprovalAmount
-                                                                  .length;
-                                                          i++) {
-                                                        selectCheckBx!.add(i);
-                                                        _pcapprovalController
-                                                                .checkList[i] =
-                                                            true;
-
-                                                        logger.i(selectCheckBx
-                                                            .toString());
-                                                      }
-                                                    } else {
-                                                      for (int i = 0;
-                                                          i <
-                                                              _pcapprovalController
-                                                                  .eTapprovalAmount
-                                                                  .length;
-                                                          i++) {
-                                                        selectCheckBx!
-                                                            .remove(i);
-
-                                                        _pcapprovalController
-                                                                .checkList[i] =
-                                                            false;
-
-                                                        _pcapprovalController
-                                                            .eTapprovalAmount[i]
-                                                            .text = '';
-                                                        logger.i(selectCheckBx
-                                                            .toString());
-                                                      }
-                                                    }
-                                                  });
-                                                },
-                                              )),
-                                              const DataColumn(
-                                                  label: Text("S No.",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight: FontWeight
-                                                              .w800))),
-                                              const DataColumn(
-                                                  label: Text("Indent No.",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight: FontWeight
-                                                              .w800))),
-                                              const DataColumn(
-                                                  label: Text("Particulars",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight: FontWeight
-                                                              .w800))),
-                                              const DataColumn(
-                                                  label: Text(
-                                                      "Indent Requested Amount",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight: FontWeight
-                                                              .w800))),
-                                              const DataColumn(
-                                                  label: Text("Indent Amount",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight: FontWeight
-                                                              .w800))),
-                                              const DataColumn(
-                                                  label: Text("Approved Amount",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight: FontWeight
-                                                              .w800))),
-                                              const DataColumn(
-                                                  label: Text("Remarks",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight: FontWeight
-                                                              .w800))),
-                                            ],
-                                            rows: List.generate(
-                                                _pcapprovalController
-                                                    .particularIndentDetails
-                                                    .length, (index) {
-                                              var i = index + 1;
-                                              return DataRow(
-                                                cells: [
-                                                  DataCell(Align(
-                                                    alignment: Alignment.center,
-                                                    child: Checkbox(
-                                                      activeColor:
-                                                          Colors.indigo,
-                                                      shape:
-                                                          ContinuousRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10)),
-                                                      value:
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: DataTable(
+                                              dataTextStyle: const TextStyle(
+                                                  fontSize: 15,
+                                                  color: Color.fromRGBO(
+                                                      5, 5, 5, 0.945),
+                                                  fontWeight: FontWeight.w400),
+                                              dataRowHeight: 60,
+                                              headingRowHeight: 55,
+                                              horizontalMargin: 10,
+                                              columnSpacing: 40,
+                                              dividerThickness: 1,
+                                              border: TableBorder.all(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              headingRowColor:
+                                                  MaterialStateProperty.all(
+                                                      Theme.of(context)
+                                                          .primaryColor),
+                                              columns: [
+                                                DataColumn(
+                                                    label: Checkbox(
+                                                  shape:
+                                                      ContinuousRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10)),
+                                                  activeColor: Colors.indigo,
+                                                  value: selectAll,
+                                                  onChanged: (value) {
+                                                    selectAll = value!;
+                                                    setState(() {
+                                                      if (selectAll) {
+                                                        selectCheckBx!.clear();
+                                                        for (int i = 0;
+                                                            i <
+                                                                _pcapprovalController
+                                                                    .eTapprovalAmount
+                                                                    .length;
+                                                            i++) {
+                                                          selectCheckBx!.add(i);
                                                           _pcapprovalController
-                                                              .checkList
-                                                              .elementAt(index),
-                                                      onChanged: (value) {
-                                                        _pcapprovalController
-                                                                .checkList[
-                                                            index] = value!;
-                                                        setState(() {
-                                                          if (value) {
-                                                            if (selectCheckBx!
-                                                                .contains(
-                                                                    index)) {
-                                                              selectCheckBx!
-                                                                  .remove(
-                                                                      index);
-                                                              logger.i(
-                                                                  selectCheckBx
-                                                                      .toString());
+                                                                  .checkList[
+                                                              i] = true;
 
-                                                              // totalApprovedAmount = 0.0;
+                                                          logger.i(selectCheckBx
+                                                              .toString());
+                                                        }
+                                                      } else {
+                                                        for (int i = 0;
+                                                            i <
+                                                                _pcapprovalController
+                                                                    .eTapprovalAmount
+                                                                    .length;
+                                                            i++) {
+                                                          selectCheckBx!
+                                                              .remove(i);
 
+                                                          _pcapprovalController
+                                                                  .checkList[
+                                                              i] = false;
+
+                                                          _pcapprovalController
+                                                              .eTapprovalAmount[
+                                                                  i]
+                                                              .text = '';
+                                                          logger.i(selectCheckBx
+                                                              .toString());
+                                                        }
+                                                      }
+                                                    });
+                                                  },
+                                                )),
+                                                const DataColumn(
+                                                    label: Text("S No.",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w800))),
+                                                const DataColumn(
+                                                    label: Text("Indent No.",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w800))),
+                                                const DataColumn(
+                                                    label: Text("Particulars",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w800))),
+                                                const DataColumn(
+                                                    label: Text(
+                                                        "Indent Requested Amount",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w800))),
+                                                const DataColumn(
+                                                    label: Text("Indent Amount",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w800))),
+                                                const DataColumn(
+                                                    label: Text(
+                                                        "Approved Amount",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w800))),
+                                                const DataColumn(
+                                                    label: Text("Remarks",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w800))),
+                                              ],
+                                              rows: List.generate(
+                                                  _pcapprovalController
+                                                      .particularIndentDetails
+                                                      .length, (index) {
+                                                var i = index + 1;
+                                                return DataRow(
+                                                  cells: [
+                                                    DataCell(Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Checkbox(
+                                                        activeColor:
+                                                            Colors.indigo,
+                                                        shape: ContinuousRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10)),
+                                                        value:
+                                                            _pcapprovalController
+                                                                .checkList
+                                                                .elementAt(
+                                                                    index),
+                                                        onChanged: (value) {
+                                                          _pcapprovalController
+                                                                  .checkList[
+                                                              index] = value!;
+                                                          setState(() {
+                                                            if (value) {
+                                                              if (selectCheckBx!
+                                                                  .contains(
+                                                                      index)) {
+                                                                selectCheckBx!
+                                                                    .remove(
+                                                                        index);
+                                                                logger.i(
+                                                                    selectCheckBx
+                                                                        .toString());
+
+                                                                // totalApprovedAmount = 0.0;
+
+                                                                _pcapprovalController
+                                                                    .eTapprovalAmount
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .text = '';
+
+                                                                if (_pcapprovalController
+                                                                        .eTapprovalAmount
+                                                                        .length !=
+                                                                    selectCheckBx!
+                                                                        .length) {
+                                                                  selectAll =
+                                                                      false;
+                                                                }
+                                                              } else {
+                                                                updateTotalApprovedAmount(
+                                                                    index);
+                                                                selectCheckBx!
+                                                                    .add(index);
+                                                                logger.i(
+                                                                    selectCheckBx
+                                                                        .toString());
+                                                                if (_pcapprovalController
+                                                                        .eTapprovalAmount
+                                                                        .length ==
+                                                                    selectCheckBx!
+                                                                        .length) {
+                                                                  selectAll =
+                                                                      true;
+                                                                }
+                                                              }
+                                                            } else {
                                                               _pcapprovalController
                                                                   .eTapprovalAmount
                                                                   .elementAt(
                                                                       index)
                                                                   .text = '';
 
+                                                              // totalApprovedAmount = 0.0;
+
+                                                              selectCheckBx!
+                                                                  .remove(
+                                                                      index);
+                                                              logger.i(
+                                                                  selectCheckBx
+                                                                      .toString());
                                                               if (_pcapprovalController
                                                                       .eTapprovalAmount
                                                                       .length !=
@@ -874,154 +880,122 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                                                 selectAll =
                                                                     false;
                                                               }
-                                                            } else {
-                                                              updateTotalApprovedAmount(
-                                                                  index);
-                                                              selectCheckBx!
-                                                                  .add(index);
-                                                              logger.i(
-                                                                  selectCheckBx
-                                                                      .toString());
-                                                              if (_pcapprovalController
-                                                                      .eTapprovalAmount
-                                                                      .length ==
-                                                                  selectCheckBx!
-                                                                      .length) {
-                                                                selectAll =
-                                                                    true;
-                                                              }
                                                             }
-                                                          } else {
-                                                            _pcapprovalController
-                                                                .eTapprovalAmount
-                                                                .elementAt(
-                                                                    index)
-                                                                .text = '';
-
-                                                            // totalApprovedAmount = 0.0;
-
-                                                            selectCheckBx!
-                                                                .remove(index);
-                                                            logger.i(
-                                                                selectCheckBx
-                                                                    .toString());
-                                                            if (_pcapprovalController
-                                                                    .eTapprovalAmount
-                                                                    .length !=
-                                                                selectCheckBx!
-                                                                    .length) {
-                                                              selectAll = false;
-                                                            }
-                                                          }
-                                                        });
-                                                      },
-                                                    ),
-                                                  )),
-                                                  DataCell(Align(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: Text('$i'))),
-                                                  DataCell(Align(
-                                                    alignment: Alignment.center,
-                                                    child: Text(
-                                                        "${_pcapprovalController.particularIndentDetails.elementAt(index).pcindenTIndentNo}"),
-                                                  )),
-                                                  DataCell(Align(
-                                                    alignment: Alignment.center,
-                                                    child: Text(
-                                                        "${_pcapprovalController.particularIndentDetails.elementAt(index).pcmparTParticularName}"),
-                                                  )),
-                                                  DataCell(Align(
-                                                    alignment: Alignment.center,
-                                                    child: Text(
-                                                        "${_pcapprovalController.particularIndentDetails.elementAt(index).pcindentdeTAmount}"),
-                                                  )),
-                                                  DataCell(Align(
-                                                    alignment: Alignment.center,
-                                                    child: Text(
-                                                        "${_pcapprovalController.particularIndentDetails.elementAt(index).pcindentdeTApprovedAmt}"),
-                                                  )),
-                                                  DataCell(
-                                                    Align(
+                                                          });
+                                                        },
+                                                      ),
+                                                    )),
+                                                    DataCell(Align(
                                                         alignment:
                                                             Alignment.center,
-                                                        // child: TapRegion(
-                                                        // onTapOutside:(event) {
-                                                        //   if(_pcapprovalController.eTapprovalAmount.last ==true){
-                                                        //      updateTotalAmount(index);
-                                                        //   }
+                                                        child: Text('$i'))),
+                                                    DataCell(Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text(
+                                                          "${_pcapprovalController.particularIndentDetails.elementAt(index).pcindenTIndentNo}"),
+                                                    )),
+                                                    DataCell(Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text(
+                                                          "${_pcapprovalController.particularIndentDetails.elementAt(index).pcmparTParticularName}"),
+                                                    )),
+                                                    DataCell(Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text(
+                                                          "${_pcapprovalController.particularIndentDetails.elementAt(index).pcindentdeTAmount}"),
+                                                    )),
+                                                    DataCell(Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text(
+                                                          "${_pcapprovalController.particularIndentDetails.elementAt(index).pcindentdeTApprovedAmt}"),
+                                                    )),
+                                                    DataCell(
+                                                      Align(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          // child: TapRegion(
+                                                          // onTapOutside:(event) {
+                                                          //   if(_pcapprovalController.eTapprovalAmount.last ==true){
+                                                          //      updateTotalAmount(index);
+                                                          //   }
 
-                                                        // } ,
-                                                        child: GestureDetector(
-                                                          onTap: () {
-                                                            if (!_pcapprovalController
-                                                                .checkList
-                                                                .elementAt(
-                                                                    index)) {
-                                                              Fluttertoast
-                                                                  .showToast(
-                                                                      msg:
-                                                                          "Select Checkbox");
-                                                            } else {
-                                                              // Handle tap event when the condition is met
-                                                            }
-                                                          },
-                                                          child: AbsorbPointer(
-                                                            absorbing:
-                                                                !_pcapprovalController
-                                                                    .checkList
-                                                                    .elementAt(
-                                                                        index),
-                                                            child:
-                                                                TextFormField(
-                                                              controller:
-                                                                  _pcapprovalController
-                                                                      .eTapprovalAmount
-                                                                      .elementAt(
-                                                                          index),
-                                                              keyboardType:
-                                                                  TextInputType
-                                                                      .number,
-                                                              enabled: _pcapprovalController
+                                                          // } ,
+                                                          child:
+                                                              GestureDetector(
+                                                            onTap: () {
+                                                              if (!_pcapprovalController
                                                                   .checkList
                                                                   .elementAt(
-                                                                      index), // Enable the TextField when the condition is met
-                                                              validator:
-                                                                  (value) {
-                                                                if (value ==
-                                                                        null ||
-                                                                    value
-                                                                        .isEmpty) {
-                                                                  return 'Enter Amount';
-                                                                }
-                                                                return null;
-                                                              },
-                                                              onChanged:
-                                                                  (text) {
-                                                                if (!_pcapprovalController
+                                                                      index)) {
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                        msg:
+                                                                            "Select Checkbox");
+                                                              } else {
+                                                                // Handle tap event when the condition is met
+                                                              }
+                                                            },
+                                                            child:
+                                                                AbsorbPointer(
+                                                              absorbing:
+                                                                  !_pcapprovalController
+                                                                      .checkList
+                                                                      .elementAt(
+                                                                          index),
+                                                              child:
+                                                                  TextFormField(
+                                                                controller: _pcapprovalController
+                                                                    .eTapprovalAmount
+                                                                    .elementAt(
+                                                                        index),
+                                                                keyboardType:
+                                                                    TextInputType
+                                                                        .number,
+                                                                enabled: _pcapprovalController
                                                                     .checkList
                                                                     .elementAt(
-                                                                        index)) {
-                                                                  _pcapprovalController
-                                                                      .eTapprovalAmount
+                                                                        index), // Enable the TextField when the condition is met
+                                                                validator:
+                                                                    (value) {
+                                                                  if (value ==
+                                                                          null ||
+                                                                      value
+                                                                          .isEmpty) {
+                                                                    return 'Enter Amount';
+                                                                  }
+                                                                  return null;
+                                                                },
+                                                                onChanged:
+                                                                    (text) {
+                                                                  if (!_pcapprovalController
+                                                                      .checkList
                                                                       .elementAt(
-                                                                          index)
-                                                                      .text = '';
-                                                                }
-                                                              },
+                                                                          index)) {
+                                                                    _pcapprovalController
+                                                                        .eTapprovalAmount
+                                                                        .elementAt(
+                                                                            index)
+                                                                        .text = '';
+                                                                  }
+                                                                },
+                                                              ),
                                                             ),
-                                                          ),
-                                                        )),
-                                                  )
-                                                  // )
-                                                  ,
-                                                  DataCell(
-                                                    Text(
-                                                        "${_pcapprovalController.particularIndentDetails.elementAt(index).pcindentdeTRemarks}"),
-                                                  ),
-                                                ],
-                                              );
-                                            })),
+                                                          )),
+                                                    )
+                                                    // )
+                                                    ,
+                                                    DataCell(
+                                                      Text(
+                                                          "${_pcapprovalController.particularIndentDetails.elementAt(index).pcindentdeTRemarks}"),
+                                                    ),
+                                                  ],
+                                                );
+                                              })),
+                                        ),
                                       ),
                                       const SizedBox(height: 35),
                                       CustomContainer(
@@ -1086,7 +1060,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width /
-                                                1.6,
+                                                1.7,
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   const BorderRadius.all(
@@ -1143,7 +1117,7 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                                       const SizedBox(
                                                           width: 6.0),
                                                       Text(
-                                                        " Total Approved Amount ",
+                                                        "Approved Amount",
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .labelMedium!
