@@ -1110,6 +1110,8 @@ class _IndentApprovalState extends State<IndentApproval> {
                                                                   .elementAt(
                                                                       index),
                                                           child: TextFormField(
+                                                            style: Get.textTheme
+                                                                .titleSmall,
                                                             controller:
                                                                 indentApprovalController
                                                                     .eTapprovalAmount
