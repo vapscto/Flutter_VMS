@@ -407,8 +407,6 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                         }
                                       }
 
-                                      // for (var i
-                                      //     in controllerOL.optionalLeaveList) {
                                       if (dummy == 0) {
                                         Get.back();
                                         // ignore: use_build_context_synchronously
@@ -471,7 +469,6 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                           },
                                         );
                                         return;
-                                        // }
                                       }
                                     }
                                   },
