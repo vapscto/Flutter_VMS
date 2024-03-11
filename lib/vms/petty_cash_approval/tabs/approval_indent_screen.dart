@@ -1037,11 +1037,17 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
                                             child: Container(
                                               padding: const EdgeInsets.all(20),
                                               decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                    255, 241, 253, 240),
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
+                                                  color: const Color.fromARGB(
+                                                      255, 241, 253, 240),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                        offset: Offset(1, 2.1),
+                                                        blurRadius: 0,
+                                                        spreadRadius: 0,
+                                                        color: Colors.black12)
+                                                  ]),
                                               child: const Text(
                                                 "Calculate",
                                                 style: TextStyle(

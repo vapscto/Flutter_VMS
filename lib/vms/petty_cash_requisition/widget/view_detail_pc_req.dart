@@ -60,127 +60,130 @@ class _RequestedParticularDetailsPCState
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          DataTable(
-                              dataTextStyle: const TextStyle(
-                                  fontSize: 15,
-                                  color: Color.fromRGBO(5, 5, 5, 0.945),
-                                  fontWeight: FontWeight.w500),
-                              dataRowHeight: 40,
-                              headingRowHeight: 55,
-                              horizontalMargin: 10,
-                              columnSpacing: 40,
-                              dividerThickness: 1,
-                              border: TableBorder.all(
-                                  borderRadius: const BorderRadius.only(
-                                      bottomRight: Radius.circular(10),
-                                      bottomLeft: Radius.circular(10))),
-                              headingRowColor: MaterialStateProperty.all(
-                                  Theme.of(context).primaryColor),
-                              columns: const [
-                                DataColumn(
-                                    label: Text("S No.",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w800))),
-                                DataColumn(
-                                    label: Text("Particular",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w800))),
-                                DataColumn(
-                                    label: Text("Amount",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w800))),
-                                DataColumn(
-                                    label: Text("Remarks",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w800))),
-                                DataColumn(
-                                    label: Text("Action",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w800))),
-                              ],
-                              rows: List.generate(
-                                  widget.controller.getViewDataParticular
-                                      .length, (index) {
-                                var i = index + 1;
-                                return DataRow(cells: [
-                                  DataCell(Align(
-                                      alignment: Alignment.center,
-                                      child: Text('$i'))),
-                                  DataCell(Text(
-                                      "${widget.controller.getViewDataParticular.elementAt(index).pcmparTParticularName}")),
-                                  DataCell(Text(
-                                      "${widget.controller.getViewDataParticular.elementAt(index).pcreqtndeTAmount}")),
-                                  DataCell(Text(
-                                      "${widget.controller.getViewDataParticular.elementAt(index).pcreqtndeTRemarks}")),
-                                  DataCell(Row(
-                                    children: [
-                                      TextButton(
-                                        onPressed: () async {
-                                          await modalViewDetails(
-                                            miId:
-                                                widget.loginSuccessModel.mIID!,
-                                            base: baseUrlFromInsCode(
-                                                "issuemanager",
-                                                widget.mskoolController),
-                                            roleId: widget
-                                                .loginSuccessModel.roleId!,
-                                            userId: widget
-                                                .loginSuccessModel.userId!,
-                                            asmaYId: widget
-                                                .loginSuccessModel.asmaYId!,
-                                            roleFlag: widget.loginSuccessModel
-                                                .roleforlogin!,
-                                            pcReqTNid: widget
-                                                .controller
-                                                .getViewDataParticular[index]
-                                                .pcreqtNId!,
-                                            controller: modalViewController,
-                                          );
-
-                                          // if (status == 200) {
-
-                                          if (modalViewController
-                                              .getModalView.isEmpty) {
-                                            Fluttertoast.showToast(
-                                              msg:
-                                                  "First Level is Not Approved",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.BOTTOM,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor: Colors.red,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0,
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: DataTable(
+                                dataTextStyle: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromRGBO(5, 5, 5, 0.945),
+                                    fontWeight: FontWeight.w400),
+                                dataRowHeight: 40,
+                                headingRowHeight: 55,
+                                horizontalMargin: 10,
+                                columnSpacing: 40,
+                                dividerThickness: 1,
+                                border: TableBorder.all(
+                                    borderRadius: BorderRadius.circular(10)),
+                                headingRowColor: MaterialStateProperty.all(
+                                    Theme.of(context).primaryColor),
+                                columns: const [
+                                  DataColumn(
+                                      label: Text("S No.",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w800))),
+                                  DataColumn(
+                                      label: Text("Particular",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w800))),
+                                  DataColumn(
+                                      label: Text("Amount",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w800))),
+                                  DataColumn(
+                                      label: Text("Remarks",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w800))),
+                                  DataColumn(
+                                      label: Text("Action",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w800))),
+                                ],
+                                rows: List.generate(
+                                    widget.controller.getViewDataParticular
+                                        .length, (index) {
+                                  var i = index + 1;
+                                  return DataRow(cells: [
+                                    DataCell(Align(
+                                        alignment: Alignment.center,
+                                        child: Text('$i'))),
+                                    DataCell(Text(
+                                        "${widget.controller.getViewDataParticular.elementAt(index).pcmparTParticularName}")),
+                                    DataCell(Text(
+                                        "${widget.controller.getViewDataParticular.elementAt(index).pcreqtndeTAmount}")),
+                                    DataCell(Text(
+                                        "${widget.controller.getViewDataParticular.elementAt(index).pcreqtndeTRemarks}")),
+                                    DataCell(Row(
+                                      children: [
+                                        TextButton(
+                                          onPressed: () async {
+                                            await modalViewDetails(
+                                              miId: widget
+                                                  .loginSuccessModel.mIID!,
+                                              base: baseUrlFromInsCode(
+                                                  "issuemanager",
+                                                  widget.mskoolController),
+                                              roleId: widget
+                                                  .loginSuccessModel.roleId!,
+                                              userId: widget
+                                                  .loginSuccessModel.userId!,
+                                              asmaYId: widget
+                                                  .loginSuccessModel.asmaYId!,
+                                              roleFlag: widget.loginSuccessModel
+                                                  .roleforlogin!,
+                                              pcReqTNid: widget
+                                                  .controller
+                                                  .getViewDataParticular[index]
+                                                  .pcreqtNId!,
+                                              controller: modalViewController,
                                             );
-                                          } else if (modalViewController
-                                                  .getModalView[0]
-                                                  .firstApprovalperson !=
-                                              null) {
-                                            // ignore: use_build_context_synchronously
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder: (_) {
-                                              return PersonApprovedDetailsScreen(
-                                                loginSuccessModel:
-                                                    widget.loginSuccessModel,
-                                                mskoolController:
-                                                    widget.mskoolController,
-                                                controller: modalViewController,
+
+                                            // if (status == 200) {
+
+                                            if (modalViewController
+                                                .getModalView.isEmpty) {
+                                              Fluttertoast.showToast(
+                                                msg:
+                                                    "First Level is Not Approved",
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.BOTTOM,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor: Colors.red,
+                                                textColor: Colors.white,
+                                                fontSize: 16.0,
                                               );
-                                            }));
-                                          }
-                                          // }
-                                        },
-                                        child: const Icon(
-                                            Icons.remove_red_eye_rounded),
-                                      ),
-                                    ],
-                                  )),
-                                ]);
-                              })),
+                                            } else if (modalViewController
+                                                    .getModalView[0]
+                                                    .firstApprovalperson !=
+                                                null) {
+                                              // ignore: use_build_context_synchronously
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                      builder: (_) {
+                                                return PersonApprovedDetailsScreen(
+                                                  loginSuccessModel:
+                                                      widget.loginSuccessModel,
+                                                  mskoolController:
+                                                      widget.mskoolController,
+                                                  controller:
+                                                      modalViewController,
+                                                );
+                                              }));
+                                            }
+                                            // }
+                                          },
+                                          child: const Icon(
+                                              Icons.remove_red_eye_rounded),
+                                        ),
+                                      ],
+                                    )),
+                                  ]);
+                                })),
+                          ),
                         ],
                       ),
                     ),
