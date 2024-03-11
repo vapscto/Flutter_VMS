@@ -75,7 +75,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
         miId: widget.loginSuccessModel.mIID!,
         controller: controller);
     if (statuscode == 200) {
-      hrmdcId = controller.departmentList.first.hRMDCID!;
+      // hrmdcId = controller.departmentList.first.hRMDCID!;
       departList.clear();
       departList.add({
         "HRMDC_ID": controller.departmentList.first.hRMDCID,
