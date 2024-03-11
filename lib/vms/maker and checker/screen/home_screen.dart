@@ -1,4 +1,4 @@
-import 'package:dropdown_search/dropdown_search.dart';
+// import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -54,9 +54,9 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
   DrDetailsCtrlr drController = Get.put(DrDetailsCtrlr());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  int? hrmdcId;
-  int? hrmdesId;
-  int? hrmeId;
+  int hrmdcId = 0;
+  int hrmdesId = 0;
+  int hrmeId = 0;
   String? getDate;
   @override
   void initState() {
@@ -75,7 +75,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
         miId: widget.loginSuccessModel.mIID!,
         controller: controller);
     if (statuscode == 200) {
-      hrmdcId = controller.departmentList.first.hRMDCID;
+      hrmdcId = controller.departmentList.first.hRMDCID!;
       departList.clear();
       departList.add({
         "HRMDC_ID": controller.departmentList.first.hRMDCID,
@@ -265,102 +265,224 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                 ),
                               ],
                             ),
-                            child: DropdownSearch<DepartmentModelListValues>(
-                              dropdownButtonProps: const IconButtonProps(
-                                  icon: Icon(
-                                Icons.keyboard_arrow_down,
-                                size: 30,
-                                color: Colors.black,
-                              )),
-                              popupProps: PopupProps.menu(
-                                showSearchBox: true,
-                                textStyle: const TextStyle(fontSize: 14),
-                                fit: FlexFit.loose,
-                                menuProps: MenuProps(
-                                    textStyle: const TextStyle(fontSize: 14),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10))),
-                                loadingBuilder: (context, searchEntry) {
-                                  return const CircularProgressIndicator();
-                                },
-                                searchFieldProps: TextFieldProps(
-                                    decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.all(6),
-                                      hintText: 'Select Department',
-                                      hintStyle: Get.textTheme.titleSmall!
-                                          .copyWith(color: Colors.grey),
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                              color: Colors.grey)),
-                                    ),
-                                    controller: departmentController,
-                                    style: Get.textTheme.titleSmall!
-                                        .copyWith(fontWeight: FontWeight.w400)),
-                                scrollbarProps: const ScrollbarProps(
-                                  thickness: 1,
-                                ),
-                              ),
-                              dropdownSearchTextStyle: Get.textTheme.bodySmall!
-                                  .copyWith(fontWeight: FontWeight.w400),
-                              dropdownSearchDecoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 10),
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.always,
-                                  hintText: 'Department',
-                                  hintStyle: Get.textTheme.titleSmall!
-                                      .copyWith(fontWeight: FontWeight.w400),
-                                  label: const CustomDropDownLabel(
-                                    icon: 'assets/images/prof1.png',
-                                    containerColor:
-                                        Color.fromRGBO(235, 214, 201, 1),
-                                    text: 'Department',
-                                    textColor: Color.fromRGBO(182, 72, 29, 1),
-                                  ),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide.none)),
-
-                              dropdownSearchTextAlign: TextAlign.start,
-                              items: controller.departmentList,
-
-                              itemAsString: (item) =>
-                                  "${item.hRMDCName!} Department",
-                              // dropdownBuilder: (context, selected) {
-                              //   return ListTile(
-                              //     title: Text(
-                              //       "${selected!.hRMDCName!} Department",
-                              //       style: Get.textTheme.titleSmall,
-                              //     ),
-                              //   );
-                              // },
-                              onChanged: (s) async {
-                                controller.designationList.clear();
-                                departList.clear();
-                                hrmdcId = s!.hRMDCID;
-                                departmentController.text = s.hRMDCName!;
-                                selecteditem = s;
-                                departList.add({
-                                  "HRMDC_ID": s.hRMDCID,
-                                  "HRMDC_Name": s.hRMDCName,
-                                  "selected": true
-                                });
-                                logger.e(departList);
-                                await feachDesignation(
-                                    base: baseUrlFromInsCode("issuemanager",
-                                        widget.mskoolController),
-                                    miId: widget.loginSuccessModel.mIID!,
-                                    userId: widget.loginSuccessModel.userId!,
-                                    controller: controller,
-                                    ivrmrt: widget.loginSuccessModel.roleId!,
-                                    list: departList);
-                                setState(() {});
+                            child:
+                                TypeAheadFormField<DepartmentModelListValues>(
+                              validator: (value) {
+                                if (value == null) {
+                                  return "";
+                                }
+                                return null;
                               },
-                              selectedItem: selecteditem,
-                            )),
+                              getImmediateSuggestions: true,
+                              textFieldConfiguration: TextFieldConfiguration(
+                                style: Get.textTheme.titleSmall,
+                                controller: departmentController,
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                            color: Colors.grey, fontSize: 14),
+                                    hintText:
+                                        controller.departmentList.isNotEmpty
+                                            ? 'Search Department'
+                                            : 'No data available',
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.always,
+                                    label: const CustomDropDownLabel(
+                                      icon: 'assets/images/prof1.png',
+                                      containerColor:
+                                          Color.fromRGBO(235, 214, 201, 1),
+                                      text: 'Department',
+                                      textColor: Color.fromRGBO(182, 72, 29, 1),
+                                    ),
+                                    suffixIcon: (departmentController
+                                            .text.isEmpty)
+                                        ? const Icon(
+                                            Icons.keyboard_arrow_down,
+                                            color: Colors.black,
+                                            size: 30,
+                                          )
+                                        : IconButton(
+                                            onPressed: () {
+                                              departmentController.clear();
+                                              employeeController.clear();
+                                              designationController.clear();
+                                              controller.designationList
+                                                  .clear();
+                                              hrmdcId = 0;
+                                              hrmdesId = 0;
+                                              hrmeId = 0;
+                                              controller.employeeList.clear();
+                                              setState(() {});
+                                            },
+                                            icon: const Icon(
+                                                Icons.clear_outlined))),
+                              ),
+                              suggestionsCallback: (v) {
+                                return controller.departmentList.where((d) => d
+                                    .hRMDCName!
+                                    .toLowerCase()
+                                    .contains(v.toLowerCase()));
+                              },
+                              itemBuilder: (context, suggestion) {
+                                return ListTile(
+                                  onTap: () async {
+                                    departmentController.text =
+                                        '${suggestion.hRMDCName!} Department';
+                                    controller.designationList.clear();
+                                    // departList.clear();
+                                    hrmdcId = suggestion.hRMDCID!;
+                                    departmentController.text =
+                                        suggestion.hRMDCName!;
+
+                                    departList.add({
+                                      "HRMDC_ID": suggestion.hRMDCID,
+                                      "HRMDC_Name": suggestion.hRMDCName,
+                                      "selected": true
+                                    });
+                                    logger.e(departList);
+                                    await feachDesignation(
+                                        base: baseUrlFromInsCode("issuemanager",
+                                            widget.mskoolController),
+                                        miId: widget.loginSuccessModel.mIID!,
+                                        userId:
+                                            widget.loginSuccessModel.userId!,
+                                        controller: controller,
+                                        ivrmrt:
+                                            widget.loginSuccessModel.roleId!,
+                                        list: departList);
+                                    setState(() {});
+                                  },
+                                  title: Text(
+                                    '${suggestion.hRMDCName!} Department',
+                                    style: Get.textTheme.titleSmall,
+                                  ),
+                                );
+                              },
+                              onSuggestionSelected: (suggestion) {
+                                setState(() {
+                                  selecteditem = suggestion;
+                                });
+                              },
+                              noItemsFoundBuilder: (context) {
+                                return const SizedBox();
+                              },
+                            ),
+                            // DropdownSearch<DepartmentModelListValues>(
+                            //   dropdownButtonProps: const IconButtonProps(
+                            //       icon: Icon(
+                            //     Icons.keyboard_arrow_down,
+                            //     size: 30,
+                            //     color: Colors.black,
+                            //   )),
+                            //   popupProps: PopupProps.menu(
+                            //     showSearchBox: true,
+                            //     textStyle:
+                            //         Theme.of(context).textTheme.titleSmall,
+                            //     fit: FlexFit.loose,
+                            //     menuProps: MenuProps(
+                            //         textStyle:
+                            //             Theme.of(context).textTheme.titleSmall,
+                            //         shape: RoundedRectangleBorder(
+                            //             borderRadius:
+                            //                 BorderRadius.circular(10))),
+                            //     loadingBuilder: (context, searchEntry) {
+                            //       return const CircularProgressIndicator();
+                            //     },
+                            //     searchFieldProps: TextFieldProps(
+                            //         decoration: InputDecoration(
+                            //           contentPadding: const EdgeInsets.all(6),
+                            //           hintText: 'Select Department',
+                            //           hintStyle: Get.textTheme.titleSmall!
+                            //               .copyWith(color: Colors.grey),
+                            //           border: OutlineInputBorder(
+                            //               borderRadius:
+                            //                   BorderRadius.circular(10),
+                            //               borderSide: const BorderSide(
+                            //                   color: Colors.grey)),
+                            //         ),
+                            //         controller: departmentController,
+                            //         style: Theme.of(context)
+                            //             .textTheme
+                            //             .titleSmall!
+                            //             .copyWith(fontWeight: FontWeight.w400)),
+                            //     scrollbarProps: const ScrollbarProps(
+                            //       thickness: 1,
+                            //     ),
+                            //   ),
+                            //   dropdownSearchTextStyle: Theme.of(context)
+                            //       .textTheme
+                            //       .titleSmall!
+                            //       .copyWith(fontWeight: FontWeight.w400),
+                            //   dropdownSearchDecoration: InputDecoration(
+                            //       contentPadding: const EdgeInsets.symmetric(
+                            //           vertical: 10, horizontal: 10),
+                            //       floatingLabelBehavior:
+                            //           FloatingLabelBehavior.always,
+                            //       hintText: 'Department',
+                            //       hintStyle: Get.textTheme.titleSmall!
+                            //           .copyWith(fontWeight: FontWeight.w400),
+                            //       label: const CustomDropDownLabel(
+                            //         icon: 'assets/images/prof1.png',
+                            //         containerColor:
+                            //             Color.fromRGBO(235, 214, 201, 1),
+                            //         text: 'Department',
+                            //         textColor: Color.fromRGBO(182, 72, 29, 1),
+                            //       ),
+                            //       border: OutlineInputBorder(
+                            //           borderRadius: BorderRadius.circular(10),
+                            //           borderSide: BorderSide.none)),
+
+                            //   dropdownSearchTextAlign: TextAlign.start,
+                            //   items: controller.departmentList,
+
+                            //   itemAsString: (item) =>
+                            //       "${item.hRMDCName!} Department",
+                            //   // dropdownBuilder: (context, selected) {
+                            //   //   return ListTile(
+                            //   //     title: Text(
+                            //   //       "${selected!.hRMDCName!} Department",
+                            //   //       style: Get.textTheme.titleSmall,
+                            //   //     ),
+                            //   //   );
+                            //   // },
+                            //   onChanged: (s) async {
+                            //     controller.designationList.clear();
+                            //     departList.clear();
+                            //     hrmdcId = s!.hRMDCID;
+                            //     departmentController.text = s.hRMDCName!;
+                            //     selecteditem = s;
+                            //     departList.add({
+                            //       "HRMDC_ID": s.hRMDCID,
+                            //       "HRMDC_Name": s.hRMDCName,
+                            //       "selected": true
+                            //     });
+                            //     logger.e(departList);
+                            //     await feachDesignation(
+                            //         base: baseUrlFromInsCode("issuemanager",
+                            //             widget.mskoolController),
+                            //         miId: widget.loginSuccessModel.mIID!,
+                            //         userId: widget.loginSuccessModel.userId!,
+                            //         controller: controller,
+                            //         ivrmrt: widget.loginSuccessModel.roleId!,
+                            //         list: departList);
+                            //     setState(() {});
+                            //   },
+                            //   selectedItem: selecteditem,
+                            // )
+                          ),
               ),
               Obx(
                 () => controller.dsgloading.value
@@ -383,99 +505,116 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                 ),
                               ],
                             ),
-                            child: DropdownSearch<DsgnModelValues>(
+                            child: TypeAheadFormField<DsgnModelValues>(
                               validator: (value) {
                                 if (value == null) {
                                   return "";
                                 }
                                 return null;
                               },
-                              dropdownButtonProps: const IconButtonProps(
-                                  icon: Icon(
-                                Icons.keyboard_arrow_down,
-                                size: 30,
-                                color: Colors.black,
-                              )),
-                              popupProps: PopupProps.menu(
-                                showSearchBox: true,
-                                textStyle: const TextStyle(fontSize: 14),
-                                fit: FlexFit.loose,
-                                menuProps: MenuProps(
-                                    textStyle: const TextStyle(fontSize: 14),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10))),
-                                loadingBuilder: (context, searchEntry) {
-                                  return const CircularProgressIndicator();
-                                },
-                                searchFieldProps: TextFieldProps(
-                                    decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.all(6),
-                                      hintText: 'Select Designation',
-                                      hintStyle: Get.textTheme.titleSmall!
-                                          .copyWith(color: Colors.grey),
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                              color: Colors.grey)),
+                              getImmediateSuggestions: true,
+                              textFieldConfiguration: TextFieldConfiguration(
+                                style: Get.textTheme.titleSmall,
+                                controller: designationController,
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                      ),
                                     ),
-                                    controller: designationController,
-                                    style: Get.textTheme.titleSmall!
-                                        .copyWith(fontWeight: FontWeight.w400)),
-                                scrollbarProps: const ScrollbarProps(
-                                  thickness: 1,
-                                ),
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                            color: Colors.grey, fontSize: 14),
+                                    hintText:
+                                        controller.designationList.isNotEmpty
+                                            ? 'Search Designation'
+                                            : 'No data available',
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.always,
+                                    label: const CustomDropDownLabel(
+                                      icon: 'assets/images/prof2.png',
+                                      containerColor:
+                                          Color.fromRGBO(223, 251, 254, 1),
+                                      text: 'Designation',
+                                      textColor:
+                                          Color.fromRGBO(40, 182, 200, 1),
+                                    ),
+                                    suffixIcon: (designationController
+                                            .text.isEmpty)
+                                        ? const Icon(
+                                            Icons.keyboard_arrow_down,
+                                            color: Colors.black,
+                                            size: 30,
+                                          )
+                                        : IconButton(
+                                            onPressed: () {
+                                              hrmdesId = 0;
+                                              hrmeId = 0;
+                                              designationController.clear();
+                                              controller.employeeList.clear();
+                                              employeeController.clear();
+                                              setState(() {});
+                                            },
+                                            icon: const Icon(
+                                                Icons.clear_outlined))),
                               ),
-                              dropdownSearchTextStyle: Get.textTheme.bodySmall!
-                                  .copyWith(fontWeight: FontWeight.w400),
-                              dropdownSearchDecoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 10),
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.always,
-                                  hintText: 'Designation',
-                                  hintStyle: Get.textTheme.titleSmall!
-                                      .copyWith(fontWeight: FontWeight.w400),
-                                  label: const CustomDropDownLabel(
-                                    icon: 'assets/images/prof2.png',
-                                    containerColor:
-                                        Color.fromRGBO(223, 251, 254, 1),
-                                    text: 'Designation',
-                                    textColor: Color.fromRGBO(40, 182, 200, 1),
-                                  ),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide.none)),
-                              dropdownSearchTextAlign: TextAlign.start,
-                              items: controller.designationList,
-                              itemAsString: (item) =>
-                                  "${item.hRMDESDesignationName!}:${item.mIName}",
-                              onChanged: (s) async {
-                                controller.employeeList.clear();
-                                emplist.clear();
-                                hrmdesId = s!.hRMDESId;
-                                designationController.text =
-                                    '${s.hRMDESDesignationName!}:${s.mIName}';
-                                emplist.add({
-                                  "HRMDES_DesignationName":
-                                      s.hRMDESDesignationName!,
-                                  "HRMDES_Id": s.hRMDESId,
-                                  "MI_Id": s.mIId,
-                                  "MI_Name": s.mIName,
-                                  "selected": true
-                                });
-                                await feachEmpolyee(
-                                    base: baseUrlFromInsCode("issuemanager",
-                                        widget.mskoolController),
-                                    userId: widget.loginSuccessModel.userId!,
-                                    miId: widget.loginSuccessModel.mIID!,
-                                    ivrmrtId: widget.loginSuccessModel.roleId!,
-                                    controller: controller,
-                                    list: emplist);
+                              suggestionsCallback: (v) {
+                                return controller.designationList.where((d) => d
+                                    .hRMDESDesignationName!
+                                    .toLowerCase()
+                                    .contains(v.toLowerCase()));
                               },
-                              selectedItem: selectDesignation,
-                            ))
+                              itemBuilder: (context, suggestion) {
+                                return ListTile(
+                                  onTap: () async {
+                                    emplist.clear();
+                                    hrmdesId = suggestion.hRMDESId!;
+                                    designationController.text =
+                                        '${suggestion.hRMDESDesignationName!}:${suggestion.mIName}';
+                                    emplist.add({
+                                      "HRMDES_DesignationName":
+                                          suggestion.hRMDESDesignationName!,
+                                      "HRMDES_Id": suggestion.hRMDESId,
+                                      "MI_Id": suggestion.mIId,
+                                      "MI_Name": suggestion.mIName,
+                                      "selected": true
+                                    });
+                                    await feachEmpolyee(
+                                        base: baseUrlFromInsCode("issuemanager",
+                                            widget.mskoolController),
+                                        userId:
+                                            widget.loginSuccessModel.userId!,
+                                        miId: widget.loginSuccessModel.mIID!,
+                                        ivrmrtId:
+                                            widget.loginSuccessModel.roleId!,
+                                        controller: controller,
+                                        list: emplist);
+                                    setState(() {});
+                                  },
+                                  title: Text(
+                                    '${suggestion.hRMDESDesignationName!} :${suggestion.mIName}',
+                                    style: Get.textTheme.titleSmall,
+                                  ),
+                                );
+                              },
+                              onSuggestionSelected: (suggestion) {
+                                setState(() {
+                                  selectDesignation = suggestion;
+                                });
+                              },
+                              noItemsFoundBuilder: (context) {
+                                return const SizedBox();
+                              },
+                            ),
+                          )
                         : const SizedBox(),
               ),
               Obx(
@@ -500,6 +639,12 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                               ],
                             ),
                             child: TypeAheadFormField<EmployeeModelListValues>(
+                              validator: (value) {
+                                if (value == null) {
+                                  return "";
+                                }
+                                return null;
+                              },
                               textFieldConfiguration: TextFieldConfiguration(
                                 style: Get.textTheme.titleSmall,
                                 controller: employeeController,
@@ -533,11 +678,22 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                       textColor:
                                           Color.fromRGBO(107, 51, 196, 1),
                                     ),
-                                    suffixIcon: const Icon(
-                                      Icons.keyboard_arrow_down,
-                                      color: Colors.black,
-                                      size: 30,
-                                    )),
+                                    suffixIcon:
+                                        (employeeController.text.isEmpty)
+                                            ? const Icon(
+                                                Icons.keyboard_arrow_down,
+                                                color: Colors.black,
+                                                size: 30,
+                                              )
+                                            : IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    employeeController.clear();
+                                                    hrmeId = 0;
+                                                  });
+                                                },
+                                                icon: const Icon(
+                                                    Icons.clear_outlined))),
                               ),
                               suggestionsCallback: (v) {
                                 return controller.employeeList.where((d) => d
@@ -552,6 +708,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                         '${suggestion.userEmpName!}:${suggestion.hRMDDepartmentName}';
                                     hrmeId = suggestion.hRMEId!;
                                     logger.d(hrmeId);
+                                    setState(() {});
                                   },
                                   title: Text(
                                     '${suggestion.userEmpName!}:${suggestion.hRMDDepartmentName}',
@@ -568,79 +725,6 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                 return const SizedBox();
                               },
                             ),
-                            // DropdownSearch<EmployeeModelListValues>(
-                            //   validator: (value) {
-                            //     if (value == null) {
-                            //       return "";
-                            //     }
-                            //     return null;
-                            //   },
-                            //   dropdownButtonProps: const IconButtonProps(
-                            //       icon: Icon(
-                            //     Icons.keyboard_arrow_down,
-                            //     size: 30,
-                            //     color: Colors.black,
-                            //   )),
-                            //   popupProps: PopupProps.menu(
-                            //     showSearchBox: true,
-                            //     textStyle: const TextStyle(fontSize: 14),
-                            //     fit: FlexFit.loose,
-                            //     menuProps: MenuProps(
-                            //         textStyle: const TextStyle(fontSize: 14),
-                            //         shape: RoundedRectangleBorder(
-                            //             borderRadius:
-                            //                 BorderRadius.circular(10))),
-                            //     loadingBuilder: (context, searchEntry) {
-                            //       return const CircularProgressIndicator();
-                            //     },
-                            //     searchFieldProps: TextFieldProps(
-                            //         decoration: InputDecoration(
-                            //           contentPadding: const EdgeInsets.all(6),
-                            //           hintText: 'Select Employee',
-                            //           hintStyle: Get.textTheme.titleSmall!
-                            //               .copyWith(color: Colors.grey),
-                            //           border: OutlineInputBorder(
-                            //               borderRadius:
-                            //                   BorderRadius.circular(10),
-                            //               borderSide: const BorderSide(
-                            //                   color: Colors.grey)),
-                            //         ),
-                            //         controller: employeeController,
-                            //         style: Get.textTheme.titleSmall!
-                            //             .copyWith(fontWeight: FontWeight.w400)),
-                            //     scrollbarProps: const ScrollbarProps(
-                            //       thickness: 1,
-                            //     ),
-                            //   ),
-                            //   dropdownSearchTextStyle: Get.textTheme.bodySmall!
-                            //       .copyWith(fontWeight: FontWeight.w400),
-                            //   dropdownSearchDecoration: InputDecoration(
-                            //       contentPadding: const EdgeInsets.symmetric(
-                            //           vertical: 10, horizontal: 10),
-                            //       floatingLabelBehavior:
-                            //           FloatingLabelBehavior.always,
-                            //       hintText: 'Employee',
-                            //       hintStyle: Get.textTheme.titleSmall!
-                            //           .copyWith(fontWeight: FontWeight.w400),
-                            //       label: const CustomDropDownLabel(
-                            //         icon: 'assets/images/prof4.png',
-                            //         containerColor:
-                            //             Color.fromRGBO(212, 194, 247, 1),
-                            //         text: 'Employee',
-                            //         textColor: Color.fromRGBO(107, 51, 196, 1),
-                            //       ),
-                            //       border: OutlineInputBorder(
-                            //           borderRadius: BorderRadius.circular(10),
-                            //           borderSide: BorderSide.none)),
-                            //   dropdownSearchTextAlign: TextAlign.start,
-                            //   items: controller.employeeList,
-                            //   itemAsString: (item) =>
-                            //       "${item.userEmpName!}:${item.hRMDDepartmentName}",
-                            //   onChanged: (s) async {
-                            //     hrme_Id = s!.hRMEId;
-                            //   },
-                            //   selectedItem: selectEmployee,
-                            // )
                           )
                         : const SizedBox(),
               ),
@@ -754,24 +838,35 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                     drController.sList.clear();
 
                     if (_formKey.currentState!.validate()) {
-                      int goto = await getdrLists(
-                        roleId: widget.loginSuccessModel.roleId!,
-                        miId: widget.loginSuccessModel.mIID!,
-                        userId: widget.loginSuccessModel.userId!,
-                        base: baseUrlFromInsCode(
-                            'issuemanager', widget.mskoolController),
-                        hrmdcId: hrmdcId!,
-                        hrmdesId: hrmdesId!,
-                        hrmeId: hrmeId!,
-                        date: todayDate.text.toString(),
-                        controller: drController,
-                      );
-                      if (goto == 200) {
-                        Get.to(() => DRApprovalScreen(
-                              loginSuccessModel: widget.loginSuccessModel,
-                              mskoolController: widget.mskoolController,
-                              date: getDateNeed(selecteddate),
-                            ));
+                      if (hrmdcId == 0) {
+                        Fluttertoast.showToast(msg: "Select Department");
+                        return;
+                      } else if (hrmdesId == 0) {
+                        Fluttertoast.showToast(msg: "Select Designation");
+                        return;
+                      } else if (hrmeId == 0) {
+                        Fluttertoast.showToast(msg: "Select Employee");
+                        return;
+                      } else {
+                        int goto = await getdrLists(
+                          roleId: widget.loginSuccessModel.roleId!,
+                          miId: widget.loginSuccessModel.mIID!,
+                          userId: widget.loginSuccessModel.userId!,
+                          base: baseUrlFromInsCode(
+                              'issuemanager', widget.mskoolController),
+                          hrmdcId: hrmdcId,
+                          hrmdesId: hrmdesId,
+                          hrmeId: hrmeId,
+                          date: todayDate.text.toString(),
+                          controller: drController,
+                        );
+                        if (goto == 200) {
+                          Get.to(() => DRApprovalScreen(
+                                loginSuccessModel: widget.loginSuccessModel,
+                                mskoolController: widget.mskoolController,
+                                date: getDateNeed(selecteddate),
+                              ));
+                        }
                       }
                     } else {
                       Fluttertoast.showToast(msg: "Please select field");

@@ -8,7 +8,7 @@ import 'package:m_skool_flutter/config/themes/theme_data.dart';
 
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/controller/opt_sent_controller.dart';
-import 'package:m_skool_flutter/main.dart';
+
 import 'package:m_skool_flutter/model/login_success_model.dart';
 
 import 'package:m_skool_flutter/vms/checkbook_approval/controller/cheque_controller.dart';
@@ -40,7 +40,8 @@ class _OTpScreenState extends State<OTpScreen> {
   Timer? timer;
   // int seconds = 59;
   RxString timr = "".obs;
-  String? toastMsg =  "You are entering wrong otp, we didn't sent this otp, check and try again";
+  String? toastMsg =
+      "You are entering wrong otp, we didn't sent this otp, check and try again";
   @override
   void initState() {
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
@@ -50,7 +51,7 @@ class _OTpScreenState extends State<OTpScreen> {
         otpSentStatusController.remainingTime.value -= 1;
       }
     });
- 
+
     super.initState();
   }
 
@@ -113,7 +114,7 @@ class _OTpScreenState extends State<OTpScreen> {
             children: [
               Obx(() {
                 return Text(
-                timeFormat(otpSentStatusController.remainingTime.value),
+                  timeFormat(otpSentStatusController.remainingTime.value),
                   style: Theme.of(context).textTheme.titleSmall!.merge(
                         const TextStyle(
                             // decoration: TextDecoration.underline,
@@ -134,14 +135,16 @@ class _OTpScreenState extends State<OTpScreen> {
                     ),
                     minimumSize: Size(Get.width * 0.4, 50)),
                 onPressed: () async {
-                   if (entredOtp.text.isEmpty) {
+                  if (entredOtp.text.isEmpty) {
                     Fluttertoast.showToast(
                         msg: "Please provide otp to continue");
                     return;
                   }
-                  if('${otpSentStatusController.minutes.value}:${otpSentStatusController.remainingSeconds.toString().padLeft(2, '0')}' =="0:00"){
-                     widget.chequeController.otpResponseList.first.emailotp="0";
-                     toastMsg = "Otp Expired: ${entredOtp.text}";
+                  if ('${otpSentStatusController.minutes.value}:${otpSentStatusController.remainingSeconds.toString().padLeft(2, '0')}' ==
+                      "0:00") {
+                    widget.chequeController.otpResponseList.first.emailotp =
+                        "0";
+                    toastMsg = "Otp Expired: ${entredOtp.text}";
                   }
                   if (entredOtp.text ==
                       widget.chequeController.otpResponseList.first.emailotp) {
@@ -149,9 +152,7 @@ class _OTpScreenState extends State<OTpScreen> {
                     _chequeController.updateBtns(true);
                     Get.back();
                   } else {
-                    Fluttertoast.showToast(
-                        msg:toastMsg!
-                           );
+                    Fluttertoast.showToast(msg: toastMsg!);
                   }
                 },
                 child: Text(

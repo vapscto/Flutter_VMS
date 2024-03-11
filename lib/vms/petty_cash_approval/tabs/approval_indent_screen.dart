@@ -36,8 +36,6 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
 
   TextEditingController totalAmountController = TextEditingController();
 
-  // String descriptionController = "";
-
   TextEditingController descriptionController = TextEditingController();
 
   ////*** SAVE VALIDATION ***////
