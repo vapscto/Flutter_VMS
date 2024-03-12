@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -12,6 +14,7 @@ import 'package:m_skool_flutter/vms/profile/model/periodicity_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/profile_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/rating_data_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/up_coming_holiday_model.dart';
+import 'package:http/http.dart' as http;
 
 class ProfileAPI {
   ProfileAPI.init();
@@ -29,8 +32,8 @@ class ProfileAPI {
       var response = await dio.post(api,
           options: Options(headers: getSession()),
           data: {"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
-      logger.v({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
-      logger.w(api);
+      // logger.v({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
+      // logger.w(api);
       if (response.statusCode == 200) {
         ProfileDataModel profileDataModel =
             ProfileDataModel.fromJson(response.data['emp_deatils']);
@@ -93,36 +96,6 @@ class ProfileAPI {
     }
   }
 
-  lateInData(
-      {required String base,
-      required ProfileController profileController,
-      required int miId,
-      required int userId,
-      required int roleId}) async {
-    var dio = Dio();
-    var api = base + URLS.profileData;
-
-    try {
-      var response = await dio.post(api,
-          options: Options(headers: getSession()),
-          data: {"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
-
-      logger.v({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
-      logger.w(api);
-      if (response.statusCode == 200) {
-        if (response.data['lateindata'] != null) {
-          LateInModel lateInModel =
-              LateInModel.fromJson(response.data['lateindata']);
-          profileController.newData(lateInModel.values!);
-        }
-      }
-    } on DioError catch (e) {
-      logger.e(e.message);
-    } on Exception catch (e) {
-      logger.e(e.toString());
-    }
-  }
-
   issuesList(
       {required String base,
       required ProfileController profileController,
@@ -133,8 +106,8 @@ class ProfileAPI {
       profileController.taskDataLoading(true);
       var response = await dio.post(api,
           options: Options(headers: getSession()), data: body);
-      logger.v(body);
-      logger.w(api);
+      // logger.v(body);
+      // logger.w(api);
       if (response.statusCode == 200) {
         TaskIssuesListModel taskIssuesListModel =
             TaskIssuesListModel.fromJson(response.data['issueslist']);
@@ -148,5 +121,61 @@ class ProfileAPI {
     } on Exception catch (e) {
       logger.e(e.toString());
     }
+  }
+}
+
+Future<void> lateIn(
+    {required String base,
+    required int miId,
+    required int userId,
+    required ProfileController controller,
+    required int roleId}) async {
+  var headers = {'Content-Type': 'application/json'};
+  var request = http.Request(
+      'POST',
+      Uri.parse(
+          'https://vms.vapstech.com:44011/api/ISMDashboardFacade/getdetails/'));
+  try {
+    request.body = json.encode({"MI_Id": 17, "UserId": 61035, "IVRMRT_Id": 11});
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      String responseBody = await response.stream.bytesToString();
+      var jsonResponse = json.decode(responseBody);
+      logger.w(jsonResponse['lateindata']);
+      LateInModel lateInModel =
+          LateInModel.fromJson(jsonResponse['lateindata']);
+      controller.newData(lateInModel.values!);
+    } else {
+      logger.i(response.reasonPhrase);
+    }
+  } on DioError catch (e) {
+    logger.e(e.message);
+  } on Exception catch (e) {
+    logger.e(e.toString());
+  }
+}
+
+lateInNew(
+    {required String base,
+    required int miId,
+    required int userId,
+    required ProfileController controller,
+    required int roleId}) async {
+  var dio = Dio();
+  var api = base + URLS.profileData;
+  try {
+    var response = await dio.post(api,
+        data: {"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId},
+        options: Options(headers: getSession()));
+    if (response.statusCode == 200) {
+      LateInModel lateInModel =
+          LateInModel.fromJson(response.data['lateindata']);
+      controller.newData(lateInModel.values!);
+    } else {}
+  } on DioError catch (e) {
+    logger.e(e.message);
+  } on Exception catch (e) {
+    logger.e(e.toString());
   }
 }

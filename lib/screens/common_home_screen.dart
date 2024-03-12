@@ -73,15 +73,6 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
     profileController.profileLoading(false);
   }
 
-  _lateInData() async {
-    await ProfileAPI.instance.lateInData(
-        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
-        profileController: profileController,
-        miId: widget.loginSuccessModel.mIID!,
-        userId: widget.loginSuccessModel.userId!,
-        roleId: widget.loginSuccessModel.roleId!);
-  }
-
   _getLocation() async {
     controller.getLocation().then(
       (value) {
@@ -121,12 +112,11 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
 
   @override
   void initState() {
-    version(widget.loginSuccessModel, widget.mskoolController);
-    _getProfile();
-    _lateInData();
     _getInstitute();
     _getPunch();
     _getLocation();
+    _getProfile();
+    version(widget.loginSuccessModel, widget.mskoolController);
     homePage.addAll(
       [
         HomePageModel(
@@ -135,7 +125,6 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
           page: DashboardTab(
             loginSuccessModel: widget.loginSuccessModel,
             mskoolController: widget.mskoolController,
-            // controller: controller,
             profileController: profileController,
           ),
           selectedColor: const Color(0xFF9900F0),
@@ -157,8 +146,6 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
             page: CoeHomeScreen(
               loginSuccessModel: widget.loginSuccessModel,
               mskoolController: widget.mskoolController,
-              // title: 'COE',
-              // previousScreen: '1',
               profileController: profileController,
             ),
             selectedColor: const Color.fromRGBO(247, 80, 80, 1),

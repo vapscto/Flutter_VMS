@@ -21,6 +21,8 @@ import 'package:m_skool_flutter/screens/institutional_login.dart';
 import 'package:m_skool_flutter/screens/login_screen.dart';
 import 'package:m_skool_flutter/screens/on_board.dart';
 import 'package:m_skool_flutter/vms/gps/controller/get_gps_controller.dart';
+import 'package:m_skool_flutter/vms/profile/api/profile_api.dart';
+import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -53,6 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
     initializeFCMNotification();
     getDeviceToken();
     controller.getLocation();
+
     super.initState();
   }
 
@@ -300,6 +303,13 @@ class _SplashScreenState extends State<SplashScreen> {
               loginBaseUrl,
               deviceid);
       mskoolController.updateLoginSuccessModel(loginSuccessModel);
+      ProfileController profileController = Get.put(ProfileController());
+      lateIn(
+          base: baseUrlFromInsCode("issuemanager", mskoolController),
+          miId: loginSuccessModel.mIID!,
+          roleId: loginSuccessModel.roleId!,
+          controller: profileController,
+          userId: loginSuccessModel.userId!);
       getDeviceTokenForFCM(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController);

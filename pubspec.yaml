@@ -95,6 +95,7 @@ dependencies:
   flutter_typeahead: ^4.6.1
   http_parser: ^4.0.2
   flutter_rating_bar: ^4.0.1
+  http: ^0.13.6
   syncfusion_flutter_pdfviewer:
   
 dev_dependencies:
