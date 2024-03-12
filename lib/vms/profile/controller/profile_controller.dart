@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:m_skool_flutter/vms/coe/model/holiday_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/birthday_list_model.dart';
+import 'package:m_skool_flutter/vms/profile/model/dash_board_leave_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/issues_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/late_in_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/periodicity_model.dart';
@@ -65,18 +67,54 @@ class ProfileController extends GetxController {
   RxList<RatingDataModelValues> ratingDataModelValues =
       <RatingDataModelValues>[].obs;
 
-  RxList<LateInModelValues> lateInData = <LateInModelValues>[].obs;
-  double hour = 0;
-  double data = 0;
+  String lateInMinute = '';
   void newData(List<LateInModelValues> lateIn) {
-    data = 0;
-    hour = 0;
-    if (lateInData.isNotEmpty) {
-      lateInData.clear();
-    }
-    for (int i = 0; i < lateInData.length; i++) {
-      data = double.parse(lateInData.elementAt(i).lateby!.replaceAll(":", "."));
-      hour += data;
+    lateInMinute = '';
+    if (lateIn.isNotEmpty) {
+      DateTime todayDate = DateTime.now();
+      List<LateInModelValues> lateEarlyList = lateIn;
+      // for (int i = 0; i < lateEarlyList.length; i++) {
+      if (DateFormat('yyyy-MM-dd').format(DateTime.parse(
+                  lateEarlyList[lateIn.length - 1].punchdate!)) ==
+              DateFormat('yyyy-MM-dd').format(todayDate) &&
+          lateEarlyList[lateIn.length - 1].fOEPDInOutFlg == 'O') {
+        lateEarlyList.removeAt(lateIn.length - 1);
+      }
+      // }
+
+      int totHour = 0;
+      int totMin = 0;
+
+      // LATE IN
+      for (var late in lateEarlyList) {
+        int hourVal = int.parse(late.lateby!.split(':')[0]);
+        int minVal = int.parse(late.lateby!.split(':')[1]);
+        if (hourVal < 3) {
+          totHour += hourVal;
+          totMin += minVal;
+        }
+      }
+
+      // EARLY OUT
+      for (var late in lateEarlyList) {
+        int hourVal = int.parse(late.earlyby!.split(':')[0]);
+        int minVal = int.parse(late.earlyby!.split(':')[1]);
+        if (hourVal < 3) {
+          totHour += hourVal;
+          totMin += minVal;
+        }
+      }
+
+      if (totMin > 60) {
+        totHour += totMin ~/ 60;
+        totMin = totMin % 60;
+      }
+
+      lateInMinute =
+          '$totHour Hr $totMin Min'; // Assign to your lateinminute variable
     }
   }
+
+  RxList<DashBoardLeaveModelValues> leaveDataList =
+      <DashBoardLeaveModelValues>[].obs;
 }

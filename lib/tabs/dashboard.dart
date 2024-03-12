@@ -71,16 +71,14 @@ class DashboardTab extends StatelessWidget {
                               ),
                             )
                           : const SizedBox(),
-                      (profileController
-                                  .ratingDataModelValues.first.overallRating! >
-                              0)
+                      (profileController.leaveDataList.isNotEmpty)
                           ? Padding(
                               padding: const EdgeInsets.only(bottom: 10),
                               child: RatingData(
                                 controller: profileController,
                               ),
                             )
-                          : const SizedBox(),
+                          : const SizedBox()
                     ],
                   );
           }),

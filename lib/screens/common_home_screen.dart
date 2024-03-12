@@ -73,6 +73,15 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
     profileController.profileLoading(false);
   }
 
+  _lateInData() async {
+    await ProfileAPI.instance.lateInData(
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+        profileController: profileController,
+        miId: widget.loginSuccessModel.mIID!,
+        userId: widget.loginSuccessModel.userId!,
+        roleId: widget.loginSuccessModel.roleId!);
+  }
+
   _getLocation() async {
     controller.getLocation().then(
       (value) {
@@ -114,6 +123,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
   void initState() {
     version(widget.loginSuccessModel, widget.mskoolController);
     _getProfile();
+    _lateInData();
     _getInstitute();
     _getPunch();
     _getLocation();
