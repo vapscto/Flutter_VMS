@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -155,24 +156,35 @@ class RatingData extends StatelessWidget {
                           .copyWith(color: Theme.of(context).primaryColor),
                     )
                   : const SizedBox(),
-              Text(
-                controller.lateInMinute,
-                style: Get.textTheme.titleSmall!.copyWith(color: Colors.red),
-              ),
               (controller.lateInMinute != '')
-                  ? Text(
-                      "Late-In / Early-Out Time",
-                      textAlign: TextAlign.center,
-                      style:
-                          Get.textTheme.titleSmall!.copyWith(color: Colors.red),
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 3.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            controller.lateInMinute,
+                            style: Get.textTheme.titleSmall!
+                                .copyWith(color: Colors.red),
+                          ),
+                          Text(
+                            "Late-In / Early-Out Time",
+                            textAlign: TextAlign.center,
+                            style: Get.textTheme.titleSmall!
+                                .copyWith(color: Colors.red),
+                          ),
+                        ],
+                      ),
                     )
                   : const SizedBox(),
               (controller.leaveDataList.isNotEmpty)
-                  ? Text(
-                      "Total Leave:- ${controller.leaveDataList.first.hrelSTotalLeaves ?? 0}",
-                      textAlign: TextAlign.center,
-                      style: Get.textTheme.titleSmall!
-                          .copyWith(color: Colors.black),
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 3.0),
+                      child: Text(
+                        "Total Leave:- ${controller.leaveDataList.first.hrelSTotalLeaves ?? 0}",
+                        textAlign: TextAlign.center,
+                        style: Get.textTheme.titleSmall!
+                            .copyWith(color: Colors.black),
+                      ),
                     )
                   : const SizedBox(),
               (controller.leaveDataList.isNotEmpty)
@@ -183,6 +195,37 @@ class RatingData extends StatelessWidget {
                           .copyWith(color: Colors.black),
                     )
                   : const SizedBox(),
+              (controller.upcomIngHolidayList.isNotEmpty)
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 3.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            "UPComing Holiday",
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(
+                                    color: Theme.of(context).primaryColor),
+                          ),
+                          Text(
+                            "${controller.upcomIngHolidayList.first.fomhwdDName}",
+                            textAlign: TextAlign.center,
+                            style: Get.textTheme.titleSmall!
+                                .copyWith(color: Colors.orange, fontSize: 13),
+                          ),
+                          Text(
+                            dateFormatNew(DateTime.parse(controller
+                                .upcomIngHolidayList.first.fomhwdDFromDate!)),
+                            textAlign: TextAlign.center,
+                            style: Get.textTheme.titleSmall!
+                                .copyWith(color: Colors.red, fontSize: 12),
+                          )
+                        ],
+                      ),
+                    )
+                  : const SizedBox()
             ],
           ),
         )

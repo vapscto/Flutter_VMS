@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -13,6 +11,7 @@ import 'package:m_skool_flutter/vms/profile/model/late_in_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/periodicity_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/profile_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/rating_data_model.dart';
+import 'package:m_skool_flutter/vms/profile/model/up_coming_holiday_model.dart';
 
 class ProfileAPI {
   ProfileAPI.init();
@@ -30,16 +29,9 @@ class ProfileAPI {
       var response = await dio.post(api,
           options: Options(headers: getSession()),
           data: {"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
-      // logger.v({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
-      // logger.w(api);
-      // logger.e(response.data['lateindata']);
-      // logger.d(response.data);
+      logger.v({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
+      logger.w(api);
       if (response.statusCode == 200) {
-        // if (response.data['lateindata'] != null) {
-        //   LateInModel lateInModel =
-        //       LateInModel.fromJson(response.data['lateindata']);
-        //   profileController.newData(lateInModel.values!);
-        // }
         ProfileDataModel profileDataModel =
             ProfileDataModel.fromJson(response.data['emp_deatils']);
         profileController.getProfile(profileDataModel.values!);
@@ -86,6 +78,13 @@ class ProfileAPI {
             DashBoardLeaveModel.fromJson(response.data['leavedetails']);
         profileController.leaveDataList.clear();
         profileController.leaveDataList.addAll(dashBoardLeaveModel.values!);
+      }
+      if (response.data['upcomingholiday'] != null) {
+        UpComingHolidayModel upComingHolidayModel =
+            UpComingHolidayModel.fromJson(response.data['upcomingholiday']);
+        profileController.upcomIngHolidayList.clear();
+        profileController.upcomIngHolidayList
+            .addAll(upComingHolidayModel.values!);
       }
     } on DioError catch (e) {
       logger.e(e.message);

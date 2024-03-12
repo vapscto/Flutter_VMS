@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/vms/profile/model/late_in_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/periodicity_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/profile_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/rating_data_model.dart';
+import 'package:m_skool_flutter/vms/profile/model/up_coming_holiday_model.dart';
 
 class ProfileController extends GetxController {
   RxBool isErrorLoading = RxBool(false);
@@ -117,4 +118,6 @@ class ProfileController extends GetxController {
 
   RxList<DashBoardLeaveModelValues> leaveDataList =
       <DashBoardLeaveModelValues>[].obs;
+  RxList<UpComingHolidayModelValues> upcomIngHolidayList =
+      <UpComingHolidayModelValues>[].obs;
 }
