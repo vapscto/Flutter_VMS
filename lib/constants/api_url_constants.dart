@@ -66,7 +66,7 @@ class URLS {
 
   static String paymentCharges = "api/FeesCtrl/paymentGatewayrate/";
 
-  static String emailOtp = "api/LoginFacade/getOTPForEmail";
+  static String emailOtp = "api/Login/ForgotOTPForEmail";
 
   static String updateHwSeen =
       "api/StudentDashboardFacade/onclick_Homework_seen/";

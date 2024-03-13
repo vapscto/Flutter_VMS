@@ -57,15 +57,19 @@ class _OTPScreenState extends State<OTPScreen> {
       SendOtpToEmail.instance.sendOtpNow(
           miId: widget.mskoolController.universalInsCodeModel!.value.miId,
           email: widget.otpSendingInfo,
-          base: baseUrlFromInsCode("login", widget.mskoolController),
-          statusController: otpSentStatusController);
-    } else {
-      SendOtpToMobile.instance.sendOtp(
-          miId: widget.mskoolController.universalInsCodeModel!.value.miId,
-          mobileNo: int.parse(widget.otpSendingInfo.trim()),
-          base: baseUrlFromInsCode("login", widget.mskoolController),
-          statusController: otpSentStatusController);
+          base:
+              'https://vms.vapstech.com/', // baseUrlFromInsCode("login", widget.mskoolController),
+          statusController: otpSentStatusController,
+          userName: widget.userName);
     }
+    // else {
+    //   SendOtpToMobile.instance.sendOtp(
+    //       miId: widget.mskoolController.universalInsCodeModel!.value.miId,
+    //       mobileNo: int.parse(widget.otpSendingInfo.trim()),
+    //       base: 'https://vms.vapstech.com/',
+    //       //baseUrlFromInsCode("login", widget.mskoolController),
+    //       statusController: otpSentStatusController);
+    // }
     super.initState();
   }
 
@@ -212,12 +216,16 @@ class _OTPScreenState extends State<OTPScreen> {
                                                           .miId,
                                                       email:
                                                           widget.otpSendingInfo,
-                                                      base: baseUrlFromInsCode(
-                                                          "login",
-                                                          widget
-                                                              .mskoolController),
+                                                      base:
+                                                          'https://vms.vapstech.com/',
+                                                      // base: baseUrlFromInsCode(
+                                                      //     "login",
+                                                      //     widget
+                                                      //         .mskoolController),
                                                       statusController:
-                                                          otpSentStatusController);
+                                                          otpSentStatusController,
+                                                      userName:
+                                                          widget.userName);
                                             } else {
                                               await SendOtpToMobile.instance.sendOtp(
                                                   miId: widget
@@ -272,7 +280,6 @@ class _OTPScreenState extends State<OTPScreen> {
                                       .titleSmall!
                                       .merge(
                                         const TextStyle(
-                                            // decoration: TextDecoration.underline,
                                             color: Color(0xFFFF828A)),
                                       ),
                                 );

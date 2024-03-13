@@ -12,6 +12,7 @@ class SendOtpToEmail {
       {required int miId,
       required String email,
       required String base,
+      required String userName,
       required OtpSentStatusController statusController}) async {
     final String api = base + URLS.emailOtp;
     final Dio ins = getGlobalDio();
@@ -21,18 +22,19 @@ class SendOtpToEmail {
     try {
       final Response response =
           await ins.post(api, options: Options(headers: getSession()), data: {
-        "mi_id": miId,
-        "mobileno": email,
+        "Email": email,
+        "clickedlinkname": "forgotpwd",
+        "usertype": "",
+        "UserName": userName
       });
-
-      if (response.data['displaymessage'] == null) {
+      if (response.data['message'] == null) {
         return Future.error({
           "errorTitle": "Unable to send otp",
           "errorMsg":
               "Sorry! but we are unable to send otp to this email right now.",
         });
       }
-      statusController.updateOtp(response.data['displaymessage']);
+      statusController.updateOtp(response.data['message']);
       statusController.updateOptSent(true);
       logger.d(statusController.otp.value);
     } on Exception catch (e) {
