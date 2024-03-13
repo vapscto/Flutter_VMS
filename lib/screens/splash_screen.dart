@@ -304,7 +304,7 @@ class _SplashScreenState extends State<SplashScreen> {
               deviceid);
       mskoolController.updateLoginSuccessModel(loginSuccessModel);
       ProfileController profileController = Get.put(ProfileController());
-      lateIn(
+      await lateIn(
           base: baseUrlFromInsCode("issuemanager", mskoolController),
           miId: loginSuccessModel.mIID!,
           roleId: loginSuccessModel.roleId!,
