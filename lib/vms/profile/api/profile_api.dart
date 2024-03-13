@@ -131,14 +131,12 @@ Future<void> lateIn(
     required ProfileController controller,
     required int roleId}) async {
   var headers = {'Content-Type': 'application/json'};
-  
-  var request = http.Request(
-      'POST',
-      Uri.parse(
-           "$base${URLS.profileData}"));
-   logger.e("$base${URLS.profileData}");
+
+  var request = http.Request('POST', Uri.parse("$base${URLS.profileData}"));
+  logger.e("$base${URLS.profileData}");
   try {
-    request.body = json.encode({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
+    request.body =
+        json.encode({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -151,30 +149,6 @@ Future<void> lateIn(
     } else {
       logger.i(response.reasonPhrase);
     }
-  } on DioError catch (e) {
-    logger.e(e.message);
-  } on Exception catch (e) {
-    logger.e(e.toString());
-  }
-}
-
-lateInNew(
-    {required String base,
-    required int miId,
-    required int userId,
-    required ProfileController controller,
-    required int roleId}) async {
-  var dio = Dio();
-  var api = base + URLS.profileData;
-  try {
-    var response = await dio.post(api,
-        data: {"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId},
-        options: Options(headers: getSession()));
-    if (response.statusCode == 200) {
-      LateInModel lateInModel =
-          LateInModel.fromJson(response.data['lateindata']);
-      controller.newData(lateInModel.values!);
-    } else {}
   } on DioError catch (e) {
     logger.e(e.message);
   } on Exception catch (e) {

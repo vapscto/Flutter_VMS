@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/forgotpassword/api/send_otp_mobile.dart';
 import 'package:m_skool_flutter/forgotpassword/api/send_otp_to_email.dart';
 import 'package:m_skool_flutter/forgotpassword/controller/opt_sent_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/screens/change_expired_password.dart';
@@ -62,14 +61,6 @@ class _OTPScreenState extends State<OTPScreen> {
           statusController: otpSentStatusController,
           userName: widget.userName);
     }
-    // else {
-    //   SendOtpToMobile.instance.sendOtp(
-    //       miId: widget.mskoolController.universalInsCodeModel!.value.miId,
-    //       mobileNo: int.parse(widget.otpSendingInfo.trim()),
-    //       base: 'https://vms.vapstech.com/',
-    //       //baseUrlFromInsCode("login", widget.mskoolController),
-    //       statusController: otpSentStatusController);
-    // }
     super.initState();
   }
 
@@ -206,42 +197,22 @@ class _OTPScreenState extends State<OTPScreen> {
                                         : () async {
                                             otpSentStatusController
                                                 .updateDisableResendBtn(true);
-                                            if (widget.isEmailVerification) {
-                                              await SendOtpToEmail.instance
-                                                  .sendOtpNow(
-                                                      miId: widget
-                                                          .mskoolController
-                                                          .universalInsCodeModel!
-                                                          .value
-                                                          .miId,
-                                                      email:
-                                                          widget.otpSendingInfo,
-                                                      base:
-                                                          'https://vms.vapstech.com/',
-                                                      // base: baseUrlFromInsCode(
-                                                      //     "login",
-                                                      //     widget
-                                                      //         .mskoolController),
-                                                      statusController:
-                                                          otpSentStatusController,
-                                                      userName:
-                                                          widget.userName);
-                                            } else {
-                                              await SendOtpToMobile.instance.sendOtp(
-                                                  miId: widget
-                                                      .mskoolController
-                                                      .universalInsCodeModel!
-                                                      .value
-                                                      .miId,
-                                                  mobileNo: int.parse(widget
-                                                      .otpSendingInfo
-                                                      .trim()),
-                                                  base: baseUrlFromInsCode(
-                                                      "login",
-                                                      widget.mskoolController),
-                                                  statusController:
-                                                      otpSentStatusController);
-                                            }
+
+                                            await SendOtpToEmail.instance
+                                                .sendOtpNow(
+                                                    miId: widget
+                                                        .mskoolController
+                                                        .universalInsCodeModel!
+                                                        .value
+                                                        .miId,
+                                                    email:
+                                                        widget.otpSendingInfo,
+                                                    base:
+                                                        'https://vms.vapstech.com/',
+                                                    statusController:
+                                                        otpSentStatusController,
+                                                    userName: widget.userName);
+
                                             otpSentStatusController
                                                 .updateRemainingTime(59);
                                           },
