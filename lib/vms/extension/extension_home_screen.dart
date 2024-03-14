@@ -188,11 +188,22 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                                   text: 'Employee',
                                   textColor: Color.fromRGBO(107, 51, 196, 1),
                                 ),
-                                suffixIcon: const Icon(
-                                  Icons.keyboard_arrow_down,
-                                  color: Colors.black,
-                                  size: 30,
-                                )),
+                                suffixIcon: (employeeController.text.isEmpty)
+                                    ? const Icon(
+                                        Icons.keyboard_arrow_down,
+                                        color: Colors.black,
+                                        size: 30,
+                                      )
+                                    : IconButton(
+                                        onPressed: () {
+                                          employeeController.clear();
+                                          setState(() {});
+                                        },
+                                        icon: const Icon(
+                                          Icons.clear,
+                                          color: Colors.black,
+                                          size: 30,
+                                        ))),
                           ),
                           suggestionsCallback: (pattern) {
                             return controller.employeeList.where((fruit) =>
@@ -207,6 +218,7 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                                     '${suggestion.employeeName!}:${suggestion.hRMDDepartmentName}';
                                 hrmeId = suggestion.hRMEId!;
                                 logger.d(hrmeId);
+                                setState(() {});
                               },
                               title: Text(
                                 '${suggestion.employeeName!}:${suggestion.hRMDDepartmentName}',
@@ -299,7 +311,7 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                                       width: 6.0,
                                     ),
                                     Text(
-                                      " Start Date ",
+                                      " From Date ",
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelMedium!
@@ -313,7 +325,7 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                                   ],
                                 ),
                               ),
-                              hintText: 'Select Date',
+                              hintText: 'From Date',
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.always,
                               enabledBorder: const OutlineInputBorder(
@@ -356,7 +368,7 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                                 }
                               } else {
                                 Fluttertoast.showToast(
-                                    msg: "Please Select Start Date");
+                                    msg: "Please Select From Date");
                               }
                             },
                             decoration: InputDecoration(
@@ -411,7 +423,7 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                                       width: 6.0,
                                     ),
                                     Text(
-                                      " End Date ",
+                                      " To Date ",
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelMedium!
@@ -424,7 +436,7 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                                   ],
                                 ),
                               ),
-                              hintText: 'Select Date',
+                              hintText: 'To Date',
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.always,
                               enabledBorder: const OutlineInputBorder(
@@ -617,7 +629,7 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
                 )
               : const SizedBox(),
           Container(
-            margin: const EdgeInsets.only(top: 20),
+            margin: const EdgeInsets.only(top: 30),
             child: CustomContainer(
               child: TextFormField(
                 controller: reasonController,
@@ -775,52 +787,35 @@ class _ExtensionHomeScreenState extends State<ExtensionHomeScreen> {
               ),
             );
           }),
-          Obx(() {
-            return (controller.isEmployeeLoading.value)
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : isLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : InkWell(
-                        onTap: () async {
-                          logger.i("click");
-                          controller.extensionDrList.clear();
-                          controller.extensionPlannerList.clear();
-                          controller.employeeLoading(true);
-                          await ExtensionAPI.instance.extensionAPI(
-                              controller: controller,
-                              base: baseUrlFromInsCode(
-                                  'issuemanager', widget.mskoolController),
-                              userId: widget.loginSuccessModel.userId!,
-                              miId: widget.loginSuccessModel.mIID!,
-                              roleId: widget.loginSuccessModel.roleId!);
-                          moveToNextScreen();
-                        },
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "${widget.title} Details",
-                                  style: Get.textTheme.titleMedium!.copyWith(
-                                      color: Theme.of(context).primaryColor),
-                                ),
-                                Icon(
-                                  Icons.arrow_forward,
-                                  color: Theme.of(context).primaryColor,
-                                  size: 30,
-                                )
-                              ],
-                            ),
+          isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : InkWell(
+                  onTap: () {
+                    moveToNextScreen();
+                  },
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${widget.title} Details",
+                            style: Get.textTheme.titleMedium!.copyWith(
+                                color: Theme.of(context).primaryColor),
                           ),
-                        ),
-                      );
-          }),
+                          Icon(
+                            Icons.arrow_forward,
+                            color: Theme.of(context).primaryColor,
+                            size: 30,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
         ],
       ),
     );

@@ -34,7 +34,6 @@ class SendOtpToEmail {
               "Sorry! but we are unable to send otp to this email right now.",
         });
       }
-      statusController.updateOtp(response.data['message']);
       statusController.updateOptSent(true);
       logger.d(statusController.otp.value);
     } on Exception catch (e) {
@@ -45,5 +44,27 @@ class SendOtpToEmail {
             "We are unable to send otp to $email, because server is not working right now, try again later",
       });
     }
+  }
+
+  Future<String?> verifyOtpNow(
+      {required String otp,
+      required String base,
+      required OtpSentStatusController statusController}) async {
+    final String api = base + URLS.verifyOTP;
+    final Dio ins = getGlobalDio();
+    logger.d(api);
+    try {
+      final Response response =
+          await ins.post(api, options: Options(headers: getSession()), data: {
+        "EMAILOTP": otp,
+      });
+      logger.w({"EMAILOTP": otp});
+      statusController.updateOtp(response.data);
+      logger.d(statusController.otp.value);
+      return response.data;
+    } on Exception catch (e) {
+      logger.e(e.toString());
+    }
+    return null;
   }
 }

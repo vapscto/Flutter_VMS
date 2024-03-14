@@ -267,44 +267,56 @@ class _OTPScreenState extends State<OTPScreen> {
                                       borderRadius: BorderRadius.circular(24.0),
                                     ),
                                     minimumSize: Size(Get.width * 0.4, 50)),
-                                onPressed: () {
+                                onPressed: () async {
                                   if (entredOtp.text.isEmpty) {
                                     Fluttertoast.showToast(
                                         msg: "Please provide otp to continue");
                                     return;
                                   }
-
-                                  if (entredOtp.text !=
-                                      otpSentStatusController.otp.value) {
-                                    Fluttertoast.showToast(
-                                        msg:
-                                            "You are entering wrong otp, we didn't sent this otp, check and try again");
-                                    return;
-                                  }
-                                  Fluttertoast.showToast(
-                                      msg:
-                                          "Otp Verified Successfully, you can now change your password");
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) {
-                                        return widget.forExpiry
-                                            ? ResetExpiredPassword(
-                                                base: baseUrlFromInsCode(
-                                                    "login",
-                                                    widget.mskoolController),
-                                                userName: widget.userName,
-                                                mskoolController:
-                                                    widget.mskoolController,
-                                              )
-                                            : ChangePassword(
-                                                mskoolController:
-                                                    widget.mskoolController,
-                                                userName: widget.userName,
-                                              );
-                                      },
-                                    ),
-                                  );
+                                  await SendOtpToEmail.instance
+                                      .verifyOtpNow(
+                                          base: 'https://vms.vapstech.com/',
+                                          statusController:
+                                              otpSentStatusController,
+                                          otp: entredOtp.text)
+                                      .then((value) {
+                                    if (value!.toLowerCase() == 'success') {
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "Otp Verified Successfully, you can now change your password");
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) {
+                                            return widget.forExpiry
+                                                ? ResetExpiredPassword(
+                                                    base: baseUrlFromInsCode(
+                                                        "login",
+                                                        widget
+                                                            .mskoolController),
+                                                    userName: widget.userName,
+                                                    mskoolController:
+                                                        widget.mskoolController,
+                                                  )
+                                                : ChangePassword(
+                                                    mskoolController:
+                                                        widget.mskoolController,
+                                                    userName: widget.userName,
+                                                  );
+                                          },
+                                        ),
+                                      );
+                                    } else if (value.toLowerCase() == 'fail') {
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "You are entering wrong otp, we didn't sent this otp, check and try again");
+                                      return;
+                                    } else {
+                                      Fluttertoast.showToast(
+                                          msg: "OTP Expaired");
+                                      return;
+                                    }
+                                  });
                                 },
                                 child: Text(
                                   "Continue",

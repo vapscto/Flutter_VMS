@@ -45,6 +45,7 @@ class URLS {
   static String sendOtp = "api/LoginFacade/Mobileappotp";
   static String changePassword = "api/LoginFacade/forgotpassword";
   static String resetPassword = "api/changepwdFacade";
+  static String verifyOTP = 'api/Login/VerifyEmailOtp';
 
   //PaymentApi
 
