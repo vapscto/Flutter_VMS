@@ -2327,11 +2327,12 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20))),
                               onPressed: () {
-                                Get.to(AddExtraTaskScreen(
-                                  loginSuccessModel: widget.loginSuccessModel,
-                                  mskoolController: widget.mskoolController,
-                                  controller: _plannerDetailsController,
-                                ));
+                                Get.to(() => AddExtraTaskScreen(
+                                      loginSuccessModel:
+                                          widget.loginSuccessModel,
+                                      mskoolController: widget.mskoolController,
+                                      controller: _plannerDetailsController,
+                                    ));
                               },
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,

@@ -231,7 +231,9 @@ class _AllPlannersState extends State<AllPlanners> {
         "ISMTPLTA_Id": value.iSMTPLTAId,
         "ISMTPL_Id": widget.ismtplId,
         "extraflag": 0,
-        "PTSCount": value.pTSCount
+        "PTSCount": value.pTSCount,
+        "ISMTPL_StartDate": value.iSMTPLTAStartDate,
+        "ISMTPL_EndDate": value.iSMTPLTAEndDate,
       });
     }
     await PlannerApprovalSaveAPI.instance.plannerapproval(
@@ -665,9 +667,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                     i <
                                         widget.plannerApprovalController
                                             .plannerApprovalList.length;
-                                    i++) {
-                                  selectedItemValue.add(dataRowGroupValue);
-                                }
+                                    i++) {}
                                 addRemarks(TextEditingController(
                                     text: widget
                                             .plannerApprovalController
@@ -699,6 +699,13 @@ class _AllPlannersState extends State<AllPlanners> {
                                     '${eDt.day}-${eDt.month}-${eDt.year}';
                                 endDate = val.iSMTPLTAEndDate!;
                                 //
+
+                                if (headerGroupValue == 'Approve All') {
+                                  dataRowGroupValue = 'Approve';
+                                } else if (headerGroupValue == 'Reject All') {
+                                  dataRowGroupValue = 'Reject';
+                                }
+                                selectedItemValue.add(dataRowGroupValue);
                                 return DataRow(
                                     color: (widget.plannerApprovalController
                                                 .plannerApprovalList
@@ -812,7 +819,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                             RichText(
                                                 text: TextSpan(children: [
                                               TextSpan(
-                                                  text: 'Clint: ',
+                                                  text: 'Client: ',
                                                   style: Get
                                                       .textTheme.titleSmall!
                                                       .copyWith(
