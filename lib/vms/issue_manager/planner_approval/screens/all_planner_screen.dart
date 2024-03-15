@@ -51,7 +51,7 @@ class _AllPlannersState extends State<AllPlanners> {
   List<dynamic> headerDropDownList = ['Approve All', 'Reject All'];
   String headerGroupValue = 'Approve All';
   //
-  String dataRowGroupValue = 'Approve';
+
   //
   RxList<String> rowStatus = <String>[].obs;
   void getStatus(List<String> status) {
@@ -169,6 +169,9 @@ class _AllPlannersState extends State<AllPlanners> {
           value.iSMTCRASTOEndDate!));
     }
     widget.plannerApprovalController.approvalLoading(false);
+    if (headerGroupValue == 'Approve All') {
+      dataRowGroupValue = ddl.first;
+    }
   }
 
   String startDate = '';
@@ -194,11 +197,13 @@ class _AllPlannersState extends State<AllPlanners> {
         child: Text(item),
       );
     }).toList();
+
     super.initState();
   }
 
+  String dataRowGroupValue = '';
+  List<String> ddl = ['Approve', 'Reject'];
   List<DropdownMenuItem<String>> _dropDownItem() {
-    List<String> ddl = ['Approve', 'Reject'];
     return ddl
         .map((value) => DropdownMenuItem(
               value: value,
@@ -267,6 +272,11 @@ class _AllPlannersState extends State<AllPlanners> {
         miId: widget.loginSuccessModel.mIID!,
         roleId: widget.loginSuccessModel.roleId!);
     widget.plannerApprovalController.plannerLoading(false);
+    for (int i = 0;
+        i < widget.plannerApprovalController.plannerApprovalList.length;
+        i++) {
+      selectedItemValue.add('');
+    }
   }
 
   @override
@@ -701,10 +711,12 @@ class _AllPlannersState extends State<AllPlanners> {
                                 //
 
                                 if (headerGroupValue == 'Approve All') {
-                                  dataRowGroupValue = 'Approve';
+                                  ddl = ['Approve', 'Reject'];
+                                  dataRowGroupValue = ddl.first;
                                 } else if (headerGroupValue == 'Reject All') {
-                                  dataRowGroupValue = 'Reject';
+                                  ddl = ['Reject', 'Approve'];
                                 }
+
                                 selectedItemValue.add(dataRowGroupValue);
                                 return DataRow(
                                     color: (widget.plannerApprovalController
