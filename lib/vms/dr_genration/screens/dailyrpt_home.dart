@@ -237,7 +237,15 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
           : null;
     }
     for (int i = 0; i < _plannerDetailsController.getTaskDrList.length; i++) {
-      compOffCheckBox.add(false);
+      _plannerDetailsController.compOffCheckBox.add(false);
+    }
+    for (int i = 0; i < fliteresList.length; i++) {
+      if (fliteresList.elementAt(i).drFlag == 1) {
+        _plannerDetailsController.checkBoxList[i] = true;
+      } else {
+        _plannerDetailsController.checkBoxList[i] = false;
+      }
+      setState(() {});
     }
   }
 
@@ -332,7 +340,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                 ? _plannerDetailsController.imageUploadedList
                 : [],
             "Temp_TaskReponseList": null,
-            "ISMDRPT_CompoffApplicableflag": compOffCheckBox[index]
+            "ISMDRPT_CompoffApplicableflag":
+                _plannerDetailsController.compOffCheckBox[index]
           });
         }
         if (halfDay.value == false) {
@@ -483,7 +492,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
 
   String fileName = '';
   String filePath = '';
-  List<bool> compOffCheckBox = [];
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -1097,7 +1105,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                   color: Color.fromRGBO(
                                                       0, 0, 0, 0.95),
                                                   fontWeight: FontWeight.w500),
-                                              dataRowHeight: 160,
+                                              dataRowHeight: 170,
                                               headingRowHeight: 40,
                                               horizontalMargin: 10,
                                               columnSpacing: 30,
@@ -1220,6 +1228,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             hours) *
                                                         60)
                                                     .round();
+
                                                 return DataRow(cells: [
                                                   DataCell(Align(
                                                       alignment:
@@ -1247,15 +1256,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       21,
                                                                       46,
                                                                       189),
-                                                              value: (fliteresList
-                                                                          .elementAt(
-                                                                              index)
-                                                                          .drFlag ==
-                                                                      1)
-                                                                  ? true
-                                                                  : _plannerDetailsController
-                                                                          .checkBoxList[
-                                                                      index],
+                                                              value: _plannerDetailsController
+                                                                      .checkBoxList[
+                                                                  index],
                                                               onChanged:
                                                                   (value) {
                                                                 value == true
@@ -1530,32 +1533,41 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                         .w400,
                                                                 fontSize: 14)),
                                                       ),
-                                                      ListTileTheme(
-                                                        contentPadding:
-                                                            EdgeInsets.zero,
-                                                        horizontalTitleGap: 2,
-                                                        minVerticalPadding: -4,
-                                                        child: CheckboxListTile(
-                                                            dense: true,
-                                                            contentPadding: EdgeInsets
-                                                                .zero,
-                                                            controlAffinity:
-                                                                ListTileControlAffinity
-                                                                    .leading,
-                                                            visualDensity:
-                                                                const VisualDensity(
+                                                      SizedBox(
+                                                        height: 20,
+                                                        child: Row(
+                                                          children: [
+                                                            Checkbox(
+                                                                visualDensity: const VisualDensity(
                                                                     vertical: 0,
                                                                     horizontal:
                                                                         -4),
-                                                            checkboxShape:
-                                                                RoundedRectangleBorder(
-                                                                    borderRadius: BorderRadius
-                                                                        .circular(
+                                                                shape: RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
                                                                             6)),
-                                                            checkColor: Theme
-                                                                    .of(context)
-                                                                .primaryColor,
-                                                            title: Text(
+                                                                checkColor: Theme.of(
+                                                                        context)
+                                                                    .primaryColor,
+                                                                value: _plannerDetailsController
+                                                                        .compOffCheckBox[
+                                                                    index],
+                                                                onChanged:
+                                                                    (value) {
+                                                                  setState(() {
+                                                                    if (value ==
+                                                                        true) {
+                                                                      _plannerDetailsController
+                                                                              .compOffCheckBox[index] =
+                                                                          true;
+                                                                    } else {
+                                                                      _plannerDetailsController
+                                                                              .compOffCheckBox[index] =
+                                                                          false;
+                                                                    }
+                                                                  });
+                                                                }),
+                                                            Text(
                                                               "Consider For Comp Off?",
                                                               style: Get
                                                                   .textTheme
@@ -1565,24 +1577,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                               context)
                                                                           .primaryColor),
                                                             ),
-                                                            value:
-                                                                compOffCheckBox[
-                                                                    index],
-                                                            onChanged: (value) {
-                                                              setState(() {
-                                                                if (value ==
-                                                                    true) {
-                                                                  compOffCheckBox[
-                                                                          index] =
-                                                                      true;
-                                                                } else {
-                                                                  compOffCheckBox[
-                                                                          index] =
-                                                                      false;
-                                                                }
-                                                              });
-                                                            }),
-                                                      )
+                                                          ],
+                                                        ),
+                                                      ),
                                                     ],
                                                   )),
                                                   DataCell(Align(

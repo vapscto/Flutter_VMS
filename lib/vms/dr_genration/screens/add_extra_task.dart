@@ -95,6 +95,7 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
         iSMTPLTAEndDate: v.enddatenew,
         iSMDRPTRemarks: widget.controller.remarksController.elementAt(i).text,
       ));
+      widget.controller.compOffCheckBox.add(false);
       widget.controller.etResponse.add(TextEditingController(text: ''));
       widget.controller.hoursEt.add(TextEditingController(text: ''));
       widget.controller.minutesEt.add(TextEditingController(text: ''));
