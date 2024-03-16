@@ -392,7 +392,8 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
                                           : Colors.red),
                                 )),
                                 DataCell(Text((val.iSMDRPTApprovedTime != null)
-                                    ? '$appHours.$appMinutes Hr'
+                                    ? convertDoubleToHourMinute(
+                                        val.iSMDRPTApprovedTime!)
                                     : '')),
                               ]);
                             }),
@@ -409,5 +410,15 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
         ],
       ),
     );
+  }
+
+  String convertDoubleToHourMinute(double time) {
+    int hours = time.toInt();
+    int minutes = ((time - hours) * 60).round();
+
+    String hourStr = hours.toString().padLeft(2, '0');
+    String minStr = minutes.toString().padLeft(2, '0');
+
+    return '$hourStr.$minStr Hrs';
   }
 }

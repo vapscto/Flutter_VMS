@@ -1210,10 +1210,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                   endDt =
                                                       "${newDt.day}-${newDt.month}-${newDt.year}";
                                                 }
-                                                // DateTime endNewDate =
-                                                //     DateTime.parse(fliteresList
-                                                //         .elementAt(index)
-                                                //         .iSMTPLEndDate!);
                                                 DateTime currentDt =
                                                     DateTime.now();
                                                 DateTime? previousDt;
@@ -1434,13 +1430,26 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                           fliteresList
                                                               .elementAt(index)
                                                               .iSMTCRTaskNo!,
-                                                          style: Theme
-                                                                  .of(context)
+                                                          style: Theme.of(context)
                                                               .textTheme
                                                               .titleSmall!
-                                                              .merge(const TextStyle(
-                                                                  color: Color
-                                                                      .fromARGB(
+                                                              .merge(TextStyle(
+                                                                  color: (fliteresList
+                                                                              .elementAt(
+                                                                                  index)
+                                                                              .approvedflag !=
+                                                                          null)
+                                                                      ? (fliteresList.elementAt(index).approvedflag! ==
+                                                                              0)
+                                                                          ? const Color.fromARGB(
+                                                                              255,
+                                                                              52,
+                                                                              82,
+                                                                              252)
+                                                                          : Colors
+                                                                              .red
+                                                                      : const Color
+                                                                              .fromARGB(
                                                                           255,
                                                                           52,
                                                                           82,

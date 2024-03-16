@@ -211,7 +211,8 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
   final departmentController = TextEditingController();
   final designationController = TextEditingController();
   final employeeController = TextEditingController();
-
+  final SuggestionsBoxController _suggestionsBoxController =
+      SuggestionsBoxController();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -273,6 +274,8 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                 }
                                 return null;
                               },
+                              suggestionsBoxController:
+                                  _suggestionsBoxController,
                               getImmediateSuggestions: true,
                               textFieldConfiguration: TextFieldConfiguration(
                                 style: Get.textTheme.titleSmall,
@@ -363,6 +366,7 @@ class _MakerCheckerHomeState extends State<MakerCheckerHome> {
                                         ivrmrt:
                                             widget.loginSuccessModel.roleId!,
                                         list: departList);
+                                    _suggestionsBoxController.close();
                                     setState(() {});
                                   },
                                   title: Text(

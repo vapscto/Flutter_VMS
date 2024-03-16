@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/vms/dr_genration/api/add_extra_task_api.dart';
 import 'package:m_skool_flutter/vms/dr_genration/contoller/planner_details_controller.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/add_extra_task_model.dart';
 import 'package:m_skool_flutter/vms/dr_genration/model/dr_get_task_list_model.dart';
+import 'package:m_skool_flutter/vms/dr_genration/model/planner_file_upload_model.dart';
 import 'package:m_skool_flutter/vms/utils/save_btn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
@@ -94,6 +95,7 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
         iSMTPLTAStartDate: v.startdatenew,
         iSMTPLTAEndDate: v.enddatenew,
         iSMDRPTRemarks: widget.controller.remarksController.elementAt(i).text,
+        plannerFileUpload: [],
       ));
       widget.controller.compOffCheckBox.add(false);
       widget.controller.etResponse.add(TextEditingController(text: ''));
@@ -101,6 +103,7 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
       widget.controller.minutesEt.add(TextEditingController(text: ''));
       widget.controller.statusEtField.add(TextEditingController(text: ''));
       widget.controller.deveationEtField.add(TextEditingController(text: ''));
+      widget.controller.deveationIdEtField.add(TextEditingController(text: ''));
       widget.controller.checkBoxList.add(false);
       logger.w("after ${widget.controller.getTaskDrList.length}");
     }
