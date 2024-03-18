@@ -125,6 +125,8 @@ class AuthenticateUserApi {
     await importantIds!.put(URLS.amstId, loginSuccessModel.amsTId);
     await logInBox!.put("userName", userName);
     await logInBox!.put("password", password);
+    //user one time
+    await logInBox!.put("loginRespose",response.toString());
     return Future.value(loginSuccessModel);
   }
 }

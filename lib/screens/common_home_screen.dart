@@ -67,6 +67,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
         profileController: profileController,
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!,
+        contex: context,
         roleId: widget.loginSuccessModel.roleId!);
     numberController.text =
         profileController.profileDataValue.first.hRMEMobileNo.toString();
@@ -179,6 +180,10 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
       return false;
     }
     return true;
+  }
+  Future<bool> usrDtct() async{
+    return true;
+
   }
 
   @override

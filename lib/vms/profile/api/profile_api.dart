@@ -1,11 +1,15 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/screens/splash_screen.dart';
 import 'package:m_skool_flutter/vms/coe/model/holiday_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
+import 'package:m_skool_flutter/vms/profile/model/Employee_Details.dart';
 import 'package:m_skool_flutter/vms/profile/model/birthday_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/dash_board_leave_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/issues_list_model.dart';
@@ -15,6 +19,7 @@ import 'package:m_skool_flutter/vms/profile/model/profile_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/rating_data_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/up_coming_holiday_model.dart';
 import 'package:http/http.dart' as http;
+ 
 
 class ProfileAPI {
   ProfileAPI.init();
@@ -24,6 +29,7 @@ class ProfileAPI {
       required ProfileController profileController,
       required int miId,
       required int userId,
+      required BuildContext contex,
       required int roleId}) async {
     var dio = Dio();
     var api = base + URLS.profileData;
@@ -35,6 +41,20 @@ class ProfileAPI {
       // logger.v({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
       // logger.w(api);
       if (response.statusCode == 200) {
+        //user one time
+        EmployeeDetails empDtl =
+            EmployeeDetails.fromJson(response.data['employeedetails']);
+        profileController.userDeviceId.value = empDtl.values!.first.deviceID!;
+
+        if (profileController.userDeviceId.value.isNotEmpty &&
+            profileController.userDeviceId.value != deviceid) {
+          // ignore: use_build_context_synchronously
+         
+            await institutionalCode!.clear();
+          Get.offAll(() => const SplashScreen(miIdNew: 0));
+        }
+        //user one time
+        logger.e("User deviceId:${profileController.userDeviceId.value}");
         ProfileDataModel profileDataModel =
             ProfileDataModel.fromJson(response.data['emp_deatils']);
         profileController.getProfile(profileDataModel.values!);
