@@ -137,11 +137,6 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
                                 })),
                           ),
                         ),
-                        // const Expanded(
-                        //   child: SizedBox(
-
-                        //       ),
-                        // ),
                         const SizedBox(height: 10),
                         Row(
                           children: [
@@ -150,7 +145,6 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
                               onPress: () {
                                 Get.back();
                                 // Get.back();
-
                                 plannerApprovalController.leavePopUp.clear();
                               },
                             ),
@@ -166,8 +160,6 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
                                     title: "Leave Approval",
                                   );
                                 }));
-
-                                //     plannerApprovalController.leavePopUp.clear();
                               },
                             )
                           ],
@@ -238,7 +230,6 @@ class _PlannerApprovalTabScreenState extends State<PlannerApprovalTabScreen>
     //                       onPress: () {
     //                         Get.back();
     //                         Get.back();
-
     //                         plannerApprovalController.leavePopUp.clear();
     //                       },
     //                     ),

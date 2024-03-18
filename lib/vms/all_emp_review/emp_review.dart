@@ -458,147 +458,157 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
                           ],
                         ),
                         const SizedBox(height: 30),
-                        Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            Container(
-                              height: 160,
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 10),
-                              decoration: BoxDecoration(
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                borderRadius: BorderRadius.circular(8.0),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    offset: Offset(0, 1),
-                                    blurRadius: 4,
-                                    color: Colors.black12,
+                        (selectedData == 'Month Wise')
+                            ? const SizedBox()
+                            : Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  Container(
+                                    height: 160,
+                                    padding: const EdgeInsets.only(
+                                        top: 10, bottom: 10),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          offset: Offset(0, 1),
+                                          blurRadius: 4,
+                                          color: Colors.black12,
+                                        ),
+                                      ],
+                                    ),
+                                    child: RawScrollbar(
+                                      thumbColor: const Color(0xFF1E38FC),
+                                      trackColor: const Color.fromRGBO(
+                                          223, 239, 253, 1),
+                                      trackRadius: const Radius.circular(10),
+                                      trackVisibility: true,
+                                      radius: const Radius.circular(10),
+                                      thickness: 14,
+                                      thumbVisibility: true,
+                                      controller: _controller1,
+                                      child: SingleChildScrollView(
+                                        controller: _controller1,
+                                        child: Column(
+                                          children: [
+                                            SizedBox(
+                                              height: 30,
+                                              child: Obx(() {
+                                                bool allSelected = controller
+                                                        .selectedMonthList
+                                                        .length ==
+                                                    controller.monthList.length;
+
+                                                return CheckboxListTile(
+                                                  controlAffinity:
+                                                      ListTileControlAffinity
+                                                          .leading,
+                                                  checkboxShape:
+                                                      RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            6),
+                                                  ),
+                                                  dense: true,
+                                                  activeColor: Theme.of(context)
+                                                      .primaryColor,
+                                                  contentPadding:
+                                                      const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 8),
+                                                  visualDensity:
+                                                      const VisualDensity(
+                                                          horizontal: -4.0),
+                                                  title: Text(
+                                                    "Select All",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .labelSmall!
+                                                        .merge(const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.3,
+                                                        )),
+                                                  ),
+                                                  value: allSelected,
+                                                  onChanged: (bool? value) {
+                                                    controller.selectedMonthList
+                                                        .clear();
+                                                    if (value!) {
+                                                      controller
+                                                          .selectedMonthList
+                                                          .addAll(controller
+                                                              .monthList);
+                                                    }
+                                                  },
+                                                );
+                                              }),
+                                            ),
+                                            const SizedBox(
+                                              height: 6.0,
+                                            ),
+                                            ListView.builder(
+                                              itemCount:
+                                                  controller.monthList.length,
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemBuilder: (context, index) {
+                                                return SizedBox(
+                                                    height: 35,
+                                                    child: Obx(() {
+                                                      return CheckBoxContainer(
+                                                        sectionName:
+                                                            "${controller.monthList.elementAt(index).ivrMMonthName}",
+                                                        func: (b) {
+                                                          if (b) {
+                                                            controller.addToSelectedMonth(
+                                                                controller
+                                                                    .monthList
+                                                                    .elementAt(
+                                                                        index));
+                                                          } else {
+                                                            selectAllMonth
+                                                                .value = false;
+                                                            controller.removeFromSelectedMonth(
+                                                                controller
+                                                                    .monthList
+                                                                    .elementAt(
+                                                                        index));
+                                                          }
+                                                        },
+                                                        isChecked: RxBool(
+                                                          controller
+                                                              .selectedMonthList
+                                                              .contains(
+                                                            controller.monthList
+                                                                .elementAt(
+                                                                    index),
+                                                          ),
+                                                        ),
+                                                      );
+                                                    }));
+                                              },
+                                            ),
+                                            const SizedBox(
+                                              height: 16.0,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const ContainerTitle(
+                                    iT: Color(0xFFFF6F67),
+                                    bg: Color.fromARGB(255, 255, 236, 235),
+                                    image: 'assets/images/subjectfielicon.png',
+                                    title: 'Select Month',
                                   ),
                                 ],
                               ),
-                              child: RawScrollbar(
-                                thumbColor: const Color(0xFF1E38FC),
-                                trackColor:
-                                    const Color.fromRGBO(223, 239, 253, 1),
-                                trackRadius: const Radius.circular(10),
-                                trackVisibility: true,
-                                radius: const Radius.circular(10),
-                                thickness: 14,
-                                thumbVisibility: true,
-                                controller: _controller1,
-                                child: SingleChildScrollView(
-                                  controller: _controller1,
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 30,
-                                        child: Obx(() {
-                                          bool allSelected = controller
-                                                  .selectedMonthList.length ==
-                                              controller.monthList.length;
-
-                                          return CheckboxListTile(
-                                            controlAffinity:
-                                                ListTileControlAffinity.leading,
-                                            checkboxShape:
-                                                RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                            ),
-                                            dense: true,
-                                            activeColor:
-                                                Theme.of(context).primaryColor,
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 8),
-                                            visualDensity: const VisualDensity(
-                                                horizontal: -4.0),
-                                            title: Text(
-                                              "Select All",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .labelSmall!
-                                                  .merge(const TextStyle(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 14.0,
-                                                    letterSpacing: 0.3,
-                                                  )),
-                                            ),
-                                            value: allSelected,
-                                            onChanged: (bool? value) {
-                                              controller.selectedMonthList
-                                                  .clear();
-                                              if (value!) {
-                                                controller.selectedMonthList
-                                                    .addAll(
-                                                        controller.monthList);
-                                              }
-                                            },
-                                          );
-                                        }),
-                                      ),
-                                      const SizedBox(
-                                        height: 6.0,
-                                      ),
-                                      ListView.builder(
-                                        itemCount: controller.monthList.length,
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemBuilder: (context, index) {
-                                          return SizedBox(
-                                              height: 35,
-                                              child: Obx(() {
-                                                return CheckBoxContainer(
-                                                  sectionName:
-                                                      "${controller.monthList.elementAt(index).ivrMMonthName}",
-                                                  func: (b) {
-                                                    if (b) {
-                                                      controller
-                                                          .addToSelectedMonth(
-                                                              controller
-                                                                  .monthList
-                                                                  .elementAt(
-                                                                      index));
-                                                    } else {
-                                                      selectAllMonth.value =
-                                                          false;
-                                                      controller
-                                                          .removeFromSelectedMonth(
-                                                              controller
-                                                                  .monthList
-                                                                  .elementAt(
-                                                                      index));
-                                                    }
-                                                  },
-                                                  isChecked: RxBool(
-                                                    controller.selectedMonthList
-                                                        .contains(
-                                                      controller.monthList
-                                                          .elementAt(index),
-                                                    ),
-                                                  ),
-                                                );
-                                              }));
-                                        },
-                                      ),
-                                      const SizedBox(
-                                        height: 16.0,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const ContainerTitle(
-                              iT: Color(0xFFFF6F67),
-                              bg: Color.fromARGB(255, 255, 236, 235),
-                              image: 'assets/images/subjectfielicon.png',
-                              title: 'Select Month',
-                            ),
-                          ],
-                        ),
                         const SizedBox(height: 30),
                         // Stack(
                         //   clipBehavior: Clip.none,

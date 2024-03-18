@@ -34,15 +34,10 @@ class PlannerListAPI {
         if (response.data['get_leaveDetails'] != null) {
           LeaveApprovePopUp? leaveApprovePopUp =
               LeaveApprovePopUp.fromJson(response.data['get_leaveDetails']);
-
+          plannerApprovalController.leavePopUp.clear();
           plannerApprovalController.leavePopUp
               .addAll(leaveApprovePopUp.values!);
         }
-
-        // logger.d(response.data['get_leaveDetails']);
-
-        // plannerApprovalController.leavePopUp = response.data['get_leaveDetails'];
-
         PlannerListModel plannerListModel =
             PlannerListModel.fromJson(response.data['get_plannerlist']);
         DrNotApprovedModel drNotApprovedModel =
@@ -50,7 +45,6 @@ class PlannerListAPI {
         PlannerStatusModelList plannerStatusModel =
             PlannerStatusModelList.fromJson(
                 response.data['get_updatedplannerlist']);
-
         plannerApprovalController.getStatus(plannerStatusModel.values!);
         plannerApprovalController.getPlanner(
             plannerListModel.values!, drNotApprovedModel.values!);
@@ -66,6 +60,7 @@ class PlannerListAPI {
           CompletedTaskCountModel completedTaskCountModel =
               CompletedTaskCountModel.fromJson(
                   response.data['completedcreatedbyme']);
+          plannerApprovalController.completeTaskCount.clear();
           plannerApprovalController.completeTaskCount
               .addAll(completedTaskCountModel.values!);
         }
