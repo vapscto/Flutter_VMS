@@ -230,9 +230,9 @@ class _AllPlannersState extends State<AllPlanners> {
         "ISMTCR_Id": value.iSMTCRId,
         "ISMTPLAPTA_StartDate": value.iSMTPLTAStartDate,
         "ISMTPLAPTA_EndDate": value.iSMTPLTAEndDate,
-        "ISMTPLAPTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
+        "ISMTPLAPTA_EffortInHrs": effortController.elementAt(i).text,
         "ISMTPLAPTA_Status": selectedItemValue[i], //value.status,
-        "plannerStatus": (dataRowGroupValue == 'Approve') ? 1 : 0,
+        "plannerStatus": (selectedItemValue[i] == 'Approve') ? 1 : 0,
         "ISMTPLTA_Id": value.iSMTPLTAId,
         "ISMTPL_Id": widget.ismtplId,
         "extraflag": 0,
@@ -926,8 +926,9 @@ class _AllPlannersState extends State<AllPlanners> {
                                                       color: Colors.black)),
                                               child: Center(
                                                   child: DropdownButton(
-                                                value: selectedItemValue[index]
-                                                    .toString(),
+                                                value:
+                                                    selectedItemValue[index] =
+                                                        dataRowGroupValue,
                                                 items: _dropDownItem(),
                                                 onChanged: (value) {
                                                   selectedItemValue[index] =
