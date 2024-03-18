@@ -29,8 +29,11 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
   @override
   void initState() {
     //user one time
-    if(profileController.userDeviceId.value != deviceid){
+    if (profileController.userDeviceId.value.isNotEmpty &&
+        profileController.userDeviceId.value.characters.length > 3) {
+      if (profileController.userDeviceId.value != deviceid) {
         Fluttertoast.showToast(msg: "User Already Logged In Other Device");
+      }
     }
     super.initState();
   }
