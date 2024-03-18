@@ -144,7 +144,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 return snapshot.data!;
               }
               if (snapshot.hasError) {
-                dynamic err = snapshot.error;
+                // dynamic err = snapshot.error;
 /* 
                 if (err['type'] != null &&
                     err['type'] == "exp" &&
@@ -279,10 +279,11 @@ class _SplashScreenState extends State<SplashScreen> {
           mskoolController: mskoolController,
         ));
       }
-      String userName = logInBox!.get("userName");
-      String password = logInBox!.get("password");
+      // String userName = logInBox!.get("userName");
+      // String password = logInBox!.get("password");
       int miId = importantIds!.get(URLS.miId);
       logger.v(miId);
+      // ignore: unused_local_variable
       String loginBaseUrl = "";
       for (int i = 0; i < codeModel.apiarray.values.length; i++) {
         final CategoriesApiItem apiItem =
@@ -300,10 +301,11 @@ class _SplashScreenState extends State<SplashScreen> {
       //         deviceid);
       //user one time
       var response = await logInBox!.get("loginRespose");
-         final LoginSuccessModel loginSuccessModel =  LoginSuccessModel.fromJson(jsonDecode(response));
+      final LoginSuccessModel loginSuccessModel =
+          LoginSuccessModel.fromJson(jsonDecode(response));
 
       //logger.e(logins.userName);
-      // final LoginSuccessModel loginSuccessModel = 
+      // final LoginSuccessModel loginSuccessModel =
       // LoginSuccessModel.fromJson(response);
       // logger.e(loginSuccessModel.toJson());
       mskoolController.updateLoginSuccessModel(loginSuccessModel);

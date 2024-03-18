@@ -12,7 +12,6 @@ import 'package:m_skool_flutter/screens/login_screen.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
-import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class InstitutionalLogin extends StatefulWidget {
   final MskoolController mskoolController;

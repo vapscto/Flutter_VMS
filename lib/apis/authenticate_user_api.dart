@@ -31,19 +31,6 @@ class AuthenticateUserApi {
       "mobiledeviceid": mobiledeviceid,
     });
 
-    // if (Platform.isAndroid) {
-    //   AndroidDeviceInfo deviceInfo = await deviceInfoPlugin.androidInfo;
-    //   mobileUniqueID = deviceInfo.id;
-    //   //debugPrint(deviceInfo.toString());
-    // } else {
-    //   IosDeviceInfo deviceInfo = await deviceInfoPlugin.iosInfo;
-    //   deviceInfo.identifierForVendor!;
-    // }
-
-    // if (mobiledeviceid.isEmpty) {
-    //   mobiledeviceid = await getDeviceToken();
-    // }
-
     var response = await ins.post(loginApiUrl, data: {
       "MI_Id": miId,
       "username": userName,
@@ -126,7 +113,7 @@ class AuthenticateUserApi {
     await logInBox!.put("userName", userName);
     await logInBox!.put("password", password);
     //user one time
-    await logInBox!.put("loginRespose",response.toString());
+    await logInBox!.put("loginRespose", response.toString());
     return Future.value(loginSuccessModel);
   }
 }

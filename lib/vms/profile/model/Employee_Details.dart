@@ -15,10 +15,10 @@ class EmployeeDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -209,66 +209,66 @@ class EmployeeDetailsValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['userId'] = this.userId;
-    data['ismmaC_Id'] = this.ismmaCId;
-    data['mI_Id'] = this.mIId;
-    data['ivrmmS_Id'] = this.ivrmmSId;
-    data['yearid'] = this.yearid;
-    data['month'] = this.month;
-    data['hrmE_Photo'] = this.hrmEPhoto;
-    data['ivrmrT_Id'] = this.ivrmrTId;
-    data['asmaY_Id'] = this.asmaYId;
-    data['hrmD_Id'] = this.hrmDId;
-    data['hrmdeS_Id'] = this.hrmdeSId;
-    data['ismmpR_Id'] = this.ismmpRId;
-    data['hrmE_Id'] = this.hrmEId;
-    data['hrmE_EmployeeFirstName'] = this.hrmEEmployeeFirstName;
-    data['hrmE_EmployeeCode'] = this.hrmEEmployeeCode;
-    data['hrmE_EmployeeLastName'] = this.hrmEEmployeeLastName;
-    data['hrmD_DepartmentName'] = this.hrmDDepartmentName;
-    data['hrmdeS_DesignationName'] = this.hrmdeSDesignationName;
-    data['ivrmM_Id'] = this.ivrmMId;
-    data['ismmmD_Id'] = this.ismmmDId;
-    data['ismmclT_Id'] = this.ismmclTId;
-    data['ismtcR_Id'] = this.ismtcRId;
-    data['hrmpR_Id'] = this.hrmpRId;
-    data['ismtcR_ReOpenFlg'] = this.ismtcRReOpenFlg;
-    data['ismtcrastO_Id'] = this.ismtcrastOId;
-    data['ismtcrastO_AssignedDate'] = this.ismtcrastOAssignedDate;
-    data['ismtcrastO_AssignedBy'] = this.ismtcrastOAssignedBy;
-    data['ismtcrastO_EffortInHrs'] = this.ismtcrastOEffortInHrs;
-    data['ismtcrastO_ActiveFlg'] = this.ismtcrastOActiveFlg;
-    data['deviceID'] = this.deviceID;
-    data['ismtpltA_Id'] = this.ismtpltAId;
-    data['ismtpL_Id'] = this.ismtpLId;
-    data['ismtpltA_EffortInHrs'] = this.ismtpltAEffortInHrs;
-    data['ismtplaptA_Id'] = this.ismtplaptAId;
-    data['hrelS_TotalLeaves'] = this.hrelSTotalLeaves;
-    data['hrelS_CBLeaves'] = this.hrelSCBLeaves;
-    data['totalcount'] = this.totalcount;
-    data['projectCount'] = this.projectCount;
-    data['taskCount'] = this.taskCount;
-    data['openCount'] = this.openCount;
-    data['closedCount'] = this.closedCount;
-    data['completedCount'] = this.completedCount;
-    data['inprogressCount'] = this.inprogressCount;
-    data['hrmE_DOB'] = this.hrmEDOB;
-    data['foeP_Id'] = this.foePId;
-    data['totdayspresent'] = this.totdayspresent;
-    data['totholiday'] = this.totholiday;
-    data['fromdate'] = this.fromdate;
-    data['todate'] = this.todate;
-    data['hrmemnO_MobileNo'] = this.hrmemnOMobileNo;
-    data['checkdeptheadcode'] = this.checkdeptheadcode;
-    data['dR_NotApprovedTL'] = this.dRNotApprovedTL;
-    data['blockedcount'] = this.blockedcount;
-    data['qrflag'] = this.qrflag;
-    data['hrmB_Id'] = this.hrmBId;
-    data['hrmF_Id'] = this.hrmFId;
-    data['hrmaR_Id'] = this.hrmaRId;
-    data['currenT_DATE'] = this.currenTDATE;
-    data['hrmdC_Id'] = this.hrmdCId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['userId'] = userId;
+    data['ismmaC_Id'] = ismmaCId;
+    data['mI_Id'] = mIId;
+    data['ivrmmS_Id'] = ivrmmSId;
+    data['yearid'] = yearid;
+    data['month'] = month;
+    data['hrmE_Photo'] = hrmEPhoto;
+    data['ivrmrT_Id'] = ivrmrTId;
+    data['asmaY_Id'] = asmaYId;
+    data['hrmD_Id'] = hrmDId;
+    data['hrmdeS_Id'] = hrmdeSId;
+    data['ismmpR_Id'] = ismmpRId;
+    data['hrmE_Id'] = hrmEId;
+    data['hrmE_EmployeeFirstName'] = hrmEEmployeeFirstName;
+    data['hrmE_EmployeeCode'] = hrmEEmployeeCode;
+    data['hrmE_EmployeeLastName'] = hrmEEmployeeLastName;
+    data['hrmD_DepartmentName'] = hrmDDepartmentName;
+    data['hrmdeS_DesignationName'] = hrmdeSDesignationName;
+    data['ivrmM_Id'] = ivrmMId;
+    data['ismmmD_Id'] = ismmmDId;
+    data['ismmclT_Id'] = ismmclTId;
+    data['ismtcR_Id'] = ismtcRId;
+    data['hrmpR_Id'] = hrmpRId;
+    data['ismtcR_ReOpenFlg'] = ismtcRReOpenFlg;
+    data['ismtcrastO_Id'] = ismtcrastOId;
+    data['ismtcrastO_AssignedDate'] = ismtcrastOAssignedDate;
+    data['ismtcrastO_AssignedBy'] = ismtcrastOAssignedBy;
+    data['ismtcrastO_EffortInHrs'] = ismtcrastOEffortInHrs;
+    data['ismtcrastO_ActiveFlg'] = ismtcrastOActiveFlg;
+    data['deviceID'] = deviceID;
+    data['ismtpltA_Id'] = ismtpltAId;
+    data['ismtpL_Id'] = ismtpLId;
+    data['ismtpltA_EffortInHrs'] = ismtpltAEffortInHrs;
+    data['ismtplaptA_Id'] = ismtplaptAId;
+    data['hrelS_TotalLeaves'] = hrelSTotalLeaves;
+    data['hrelS_CBLeaves'] = hrelSCBLeaves;
+    data['totalcount'] = totalcount;
+    data['projectCount'] = projectCount;
+    data['taskCount'] = taskCount;
+    data['openCount'] = openCount;
+    data['closedCount'] = closedCount;
+    data['completedCount'] = completedCount;
+    data['inprogressCount'] = inprogressCount;
+    data['hrmE_DOB'] = hrmEDOB;
+    data['foeP_Id'] = foePId;
+    data['totdayspresent'] = totdayspresent;
+    data['totholiday'] = totholiday;
+    data['fromdate'] = fromdate;
+    data['todate'] = todate;
+    data['hrmemnO_MobileNo'] = hrmemnOMobileNo;
+    data['checkdeptheadcode'] = checkdeptheadcode;
+    data['dR_NotApprovedTL'] = dRNotApprovedTL;
+    data['blockedcount'] = blockedcount;
+    data['qrflag'] = qrflag;
+    data['hrmB_Id'] = hrmBId;
+    data['hrmF_Id'] = hrmFId;
+    data['hrmaR_Id'] = hrmaRId;
+    data['currenT_DATE'] = currenTDATE;
+    data['hrmdC_Id'] = hrmdCId;
     return data;
   }
 }
