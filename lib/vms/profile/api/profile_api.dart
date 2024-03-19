@@ -22,13 +22,14 @@ class ProfileAPI {
       required int roleId}) async {
     var dio = Dio();
     var api = base + URLS.profileData;
+          logger.d({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
+      logger.d(api);
     try {
       profileController.profileLoading(true);
       var response = await dio.post(api,
           options: Options(headers: getSession()),
           data: {"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
-      logger.v({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
-      logger.w(api);
+
       if (response.statusCode == 200) {
         ProfileDataModel profileDataModel =
             ProfileDataModel.fromJson(response.data['emp_deatils']);

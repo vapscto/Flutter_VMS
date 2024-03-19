@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/vms/Purchase_requisition/model/indent_approval.model.dart';
+import 'package:m_skool_flutter/vms/Purchase_requisition/model/indent_details_model.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/item_details_model.dart';
+import 'package:m_skool_flutter/vms/Purchase_requisition/model/ontapdetails_model.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_model.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_getitem.dart';
+import 'package:m_skool_flutter/vms/Purchase_requisition/model/purchase_requisition_grid.model.dart';
 
 class PurchaseRequisitionController extends GetxController {
   RxBool isFromDataRequestPurchase = RxBool(false);
@@ -36,6 +40,72 @@ class PurchaseRequisitionController extends GetxController {
       getrequestRequisitionList.add(list.elementAt(i));
     }
   }
+
+  RxList<PurchaseRequsitionGridModelValues> getrequestRequisitionGridList =
+      <PurchaseRequsitionGridModelValues>[].obs;
+
+
+    getgridList(List<PurchaseRequsitionGridModelValues> list) {
+    if (getrequestRequisitionGridList.isNotEmpty) {
+      getrequestRequisitionGridList.clear();
+    }
+    for (int i = 0; i < list.length; i++) {
+      getrequestRequisitionGridList.add(list.elementAt(i));
+    }
+  }
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+  RxList<GetPrDetailModelValues> getontapviewList =
+      <GetPrDetailModelValues>[].obs;
+
+
+    getontapList(List<GetPrDetailModelValues> list) {
+    if (getontapviewList.isNotEmpty) {
+      getontapviewList.clear();
+    }
+    for (int i = 0; i < list.length; i++) {
+      getontapviewList.add(list.elementAt(i));
+    }
+  }
+ 
+ 
+//////////////////////////////////////////////////////////////////////////////////////////
+
+   RxList<IndentDetailsModelValues> getpurchasetapList =
+      <IndentDetailsModelValues>[].obs;
+
+
+    getpurchaseontapList(List<IndentDetailsModelValues> list) {
+    if (getpurchasetapList.isNotEmpty) {
+      getpurchasetapList.clear();
+    }
+    for (int i = 0; i < list.length; i++) {
+      getpurchasetapList.add(list.elementAt(i));
+    }
+  }
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+   RxList<PurchaseApprovalModelValues> getpurchaseapprovaltapList =
+      <PurchaseApprovalModelValues>[].obs;
+
+
+    getpurchaseapprovalontapList(List<PurchaseApprovalModelValues> list) {
+    if (getpurchaseapprovaltapList.isNotEmpty) {
+      getpurchaseapprovaltapList.clear();
+    }
+    for (int i = 0; i < list.length; i++) {
+      getpurchaseapprovaltapList.add(list.elementAt(i));
+    }
+  }
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 
   RxBool isErrorOccuredRequestRequisition = RxBool(false);
 

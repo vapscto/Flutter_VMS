@@ -20,6 +20,7 @@ import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
+import 'package:m_skool_flutter/vms/Purchase_requisition/screen/requsition_grid.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/emp_review.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/certificate_approval.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
@@ -38,7 +39,6 @@ import 'package:m_skool_flutter/vms/petty_indent_approval/screen/pc_indent_appro
 import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/vms/rating_report/screen/rating_report_home.dart';
 import 'package:m_skool_flutter/vms/salary_details/screen/salary_home_screen.dart';
-import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/screen/leave_list_home.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/screens/tada_approval_home.dart';
@@ -407,7 +407,7 @@ void openMappedPages(
   }
   if (pageName == "Salary Slip") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return SalarySlipHome(
+      return RequisitionGrid(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
       );
@@ -415,6 +415,18 @@ void openMappedPages(
 
     return;
   }
+
+   if (pageName == "Requisition Report") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return RequisitionGrid(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+
+    return;
+  }
+
 
   if (pageName == "TADA Apply") {
     Get.to(() => TadaApplyHomeScreen(

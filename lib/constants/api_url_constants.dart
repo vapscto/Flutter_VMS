@@ -351,4 +351,10 @@ class URLS {
       'api/Rating_TransactionFacade/get_Consolidated_details';
   static String ratingList =
       'api/Rating_TransactionFacade/getconsolidatedreport';
+
+  static String purchaserequisitiongridapi = 'api/INV_PurchaseRequisitionFacade/getloaddata';
+
+  static String ontapviewapi = 'api/INV_PurchaseRequisitionFacade/get_prdetails/';
+
+  static String onpurchaseviewapi = 'api/INV_RequisitionNotificationFacade/savedetails/';
 }

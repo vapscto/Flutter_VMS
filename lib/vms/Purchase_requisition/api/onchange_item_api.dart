@@ -13,15 +13,14 @@ import 'package:m_skool_flutter/vms/Purchase_requisition/model/item_details_mode
     required PurchaseRequisitionController controller}) async {
   final Dio ins = getGlobalDio();
   final api = base + URLS.indentItem;
-  logger.d(api);
-  logger.d({"MI_Id": miId, "Userid": userId, "INVMI_Id": itemId});
-
   try {
     controller.updateisLoadingIndentItem(true);
 
     final Response response = await ins.post(api,
         options: Options(headers: getSession()),
         data: {"MI_Id": miId, "Userid": userId, "INVMI_Id": itemId});
+          logger.w(api);
+  logger.w({"MI_Id": miId, "Userid": userId, "INVMI_Id": itemId});
 
     // logger.d(response.data['get_itemDetail']);
     if (response.data['get_itemDetail'] == null) {
