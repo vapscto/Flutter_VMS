@@ -12,7 +12,6 @@ Future<int> approveApi({
 }) async {
   final Dio ins = getGlobalDio();
   String apiUrl = base + URLS.submitCheck;
- 
   logger.d(apiUrl);
 
   try {

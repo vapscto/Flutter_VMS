@@ -15,7 +15,7 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
-import 'package:open_filex/open_filex.dart';
+// import 'package:open_filex/open_filex.dart';
 
 import '../../../constants/constants.dart';
 
@@ -359,17 +359,17 @@ class _AppliedLeaveAprovalItemState extends State<AppliedLeaveAprovalItem> {
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: InkWell(
                               onTap: () {
-                                if (widget.value.hRELAPSupportingDocument
-                                    .toString()
-                                    .contains('https:')) {
-                                  createPreview(
-                                      context,
-                                      widget.value.hRELAPSupportingDocument
-                                          .toString());
-                                } else {
-                                  OpenFilex.open(
-                                      widget.value.hRELAPSupportingDocument);
-                                }
+                                // if (widget.value.hRELAPSupportingDocument
+                                //     .toString()
+                                //     .contains('https:')) {
+                                createPreview(
+                                    context,
+                                    widget.value.hRELAPSupportingDocument
+                                        .toString());
+                                // } else {
+                                //   OpenFilex.open(
+                                //       widget.value.hRELAPSupportingDocument);
+                                // }
                                 logger.i(widget.value.hRELAPSupportingDocument);
                               },
                               child: Container(

@@ -195,7 +195,7 @@ class _IndentApprovalState extends State<IndentApproval> {
                     ),
                     child: DropdownButtonFormField<
                         InstitutionIndentApprovalModelValues>(
-                      value: indentApprovalController.organizationList.first,
+                      // value: indentApprovalController.organizationList.first,
                       decoration: InputDecoration(
                         focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(

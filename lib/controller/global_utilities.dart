@@ -21,6 +21,7 @@ import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart
 import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/emp_review.dart';
+import 'package:m_skool_flutter/vms/call_letter/call_letter_home.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/certificate_approval.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/dailyrpt_home.dart';
@@ -147,7 +148,8 @@ String getDashboardIcon(String pageName) {
     return "${icon}FeeReceipt.png";
   }
 
-  if (pageName.toLowerCase().contains('task')) {
+  if (pageName.toLowerCase().contains('task') ||
+      pageName.toLowerCase().contains("call")) {
     return "${icon}Classwork.png";
   }
   if (pageName.toLowerCase().contains('sales')) {
@@ -645,6 +647,16 @@ void openMappedPages(
       return NocApproval(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
+      );
+    }));
+    return;
+  }
+  if (pageName == "Call Letter") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return CallLetterHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        title: pageName,
       );
     }));
     return;

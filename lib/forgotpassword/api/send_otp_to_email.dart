@@ -27,6 +27,7 @@ class SendOtpToEmail {
         "usertype": "",
         "UserName": userName
       });
+      logger.i(getSession());
       if (response.data['message'] == null) {
         return Future.error({
           "errorTitle": "Unable to send otp",
@@ -58,6 +59,7 @@ class SendOtpToEmail {
           await ins.post(api, options: Options(headers: getSession()), data: {
         "EMAILOTP": otp,
       });
+      logger.i(getSession());
       logger.w({"EMAILOTP": otp});
       statusController.updateOtp(response.data);
       logger.d(statusController.otp.value);
