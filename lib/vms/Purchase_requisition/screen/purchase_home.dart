@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -228,6 +229,27 @@ class _PurchaserequisitionHomeState extends State<PurchaserequisitionHome> {
   }
 
   _saveData() async {
+              if (selectedDate == null) {
+              Fluttertoast.showToast(
+              msg: "Please select requisition date",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+             backgroundColor: Colors.black,
+              textColor: Colors.white,
+               fontSize: 16.0,
+                     );
+             return;
+           }
+               if ( commonRemarksController.text.isEmpty) {
+              Fluttertoast.showToast(msg: "Kindly Enter the remarks");
+              return;
+            }
+              if (totalAmount.text.isEmpty) {
+              Fluttertoast.showToast(msg: "Kindly Enter Total Approximate Amount");
+              return;
+            }
+
     purchaseRequisitionController.saveLoading(true);
     drDetailsCtrlr.updateTabLoading(true);
     int hrmdId = 0;

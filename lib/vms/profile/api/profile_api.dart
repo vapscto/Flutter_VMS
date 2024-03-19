@@ -32,6 +32,8 @@ class ProfileAPI {
       required int roleId}) async {
     var dio = Dio();
     var api = base + URLS.profileData;
+          logger.d({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
+      logger.d(api);
     try {
       profileController.profileLoading(true);
       var response = await dio.post(api,
