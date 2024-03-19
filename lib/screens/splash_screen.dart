@@ -3,15 +3,12 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/apis/authenticate_user_api.dart';
 import 'package:m_skool_flutter/apis/institutional_code_api.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/forgotpassword/screens/change_expired_password.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/categories_api_item.dart';
 import 'package:m_skool_flutter/model/institutional_code_model.dart';
@@ -21,7 +18,8 @@ import 'package:m_skool_flutter/screens/institutional_login.dart';
 import 'package:m_skool_flutter/screens/login_screen.dart';
 import 'package:m_skool_flutter/screens/on_board.dart';
 import 'package:m_skool_flutter/vms/gps/controller/get_gps_controller.dart';
-import 'package:m_skool_flutter/widget/mskoll_btn.dart';
+import 'package:m_skool_flutter/vms/profile/api/profile_api.dart';
+import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 
 class SplashScreen extends StatefulWidget {
   final int miIdNew;
@@ -53,6 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
     initializeFCMNotification();
     getDeviceToken();
     controller.getLocation();
+
     super.initState();
   }
 
@@ -145,8 +144,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 return snapshot.data!;
               }
               if (snapshot.hasError) {
-                dynamic err = snapshot.error;
-
+                // dynamic err = snapshot.error;
+/* 
                 if (err['type'] != null &&
                     err['type'] == "exp" &&
                     err['userName'] != null) {
@@ -195,8 +194,8 @@ class _SplashScreenState extends State<SplashScreen> {
                           ],
                         )),
                   );
-                }
-                return Center(
+                } */
+/*                 return Center(
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height,
                     child: Column(
@@ -223,7 +222,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       ],
                     ),
                   ),
-                );
+                ); */
               }
 
               return Center(
@@ -280,10 +279,11 @@ class _SplashScreenState extends State<SplashScreen> {
           mskoolController: mskoolController,
         ));
       }
-      String userName = logInBox!.get("userName");
-      String password = logInBox!.get("password");
+      // String userName = logInBox!.get("userName");
+      // String password = logInBox!.get("password");
       int miId = importantIds!.get(URLS.miId);
       logger.v(miId);
+      // ignore: unused_local_variable
       String loginBaseUrl = "";
       for (int i = 0; i < codeModel.apiarray.values.length; i++) {
         final CategoriesApiItem apiItem =
@@ -292,14 +292,30 @@ class _SplashScreenState extends State<SplashScreen> {
           loginBaseUrl = apiItem.iivrscurLAPIURL;
         }
       }
+      // final LoginSuccessModel loginSuccessModel =
+      //     await AuthenticateUserApi.instance.authenticateNow(
+      //         userName,
+      //         password,
+      //         (widget.miIdNew == 0) ? miId : widget.miIdNew,
+      //         loginBaseUrl,
+      //         deviceid);
+      //user one time
+      var response = await logInBox!.get("loginRespose");
       final LoginSuccessModel loginSuccessModel =
-          await AuthenticateUserApi.instance.authenticateNow(
-              userName,
-              password,
-              (widget.miIdNew == 0) ? miId : widget.miIdNew,
-              loginBaseUrl,
-              deviceid);
+          LoginSuccessModel.fromJson(jsonDecode(response));
+
+      //logger.e(logins.userName);
+      // final LoginSuccessModel loginSuccessModel =
+      // LoginSuccessModel.fromJson(response);
+      // logger.e(loginSuccessModel.toJson());
       mskoolController.updateLoginSuccessModel(loginSuccessModel);
+      ProfileController profileController = Get.put(ProfileController());
+      await lateIn(
+          base: baseUrlFromInsCode("issuemanager", mskoolController),
+          miId: loginSuccessModel.mIID!,
+          roleId: loginSuccessModel.roleId!,
+          controller: profileController,
+          userId: loginSuccessModel.userId!);
       getDeviceTokenForFCM(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController);

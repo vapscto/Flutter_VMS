@@ -51,7 +51,7 @@ class _AllPlannersState extends State<AllPlanners> {
   List<dynamic> headerDropDownList = ['Approve All', 'Reject All'];
   String headerGroupValue = 'Approve All';
   //
-  String dataRowGroupValue = 'Approve';
+
   //
   RxList<String> rowStatus = <String>[].obs;
   void getStatus(List<String> status) {
@@ -169,6 +169,9 @@ class _AllPlannersState extends State<AllPlanners> {
           value.iSMTCRASTOEndDate!));
     }
     widget.plannerApprovalController.approvalLoading(false);
+    if (headerGroupValue == 'Approve All') {
+      dataRowGroupValue = ddl.first;
+    }
   }
 
   String startDate = '';
@@ -194,11 +197,13 @@ class _AllPlannersState extends State<AllPlanners> {
         child: Text(item),
       );
     }).toList();
+
     super.initState();
   }
 
+  String dataRowGroupValue = '';
+  List<String> ddl = ['Approve', 'Reject'];
   List<DropdownMenuItem<String>> _dropDownItem() {
-    List<String> ddl = ['Approve', 'Reject'];
     return ddl
         .map((value) => DropdownMenuItem(
               value: value,
@@ -225,13 +230,15 @@ class _AllPlannersState extends State<AllPlanners> {
         "ISMTCR_Id": value.iSMTCRId,
         "ISMTPLAPTA_StartDate": value.iSMTPLTAStartDate,
         "ISMTPLAPTA_EndDate": value.iSMTPLTAEndDate,
-        "ISMTPLAPTA_EffortInHrs": value.iSMTPLTAEffortInHrs,
+        "ISMTPLAPTA_EffortInHrs": effortController.elementAt(i).text,
         "ISMTPLAPTA_Status": selectedItemValue[i], //value.status,
-        "plannerStatus": (dataRowGroupValue == 'Approve') ? 1 : 0,
+        "plannerStatus": (selectedItemValue[i] == 'Approve') ? 1 : 0,
         "ISMTPLTA_Id": value.iSMTPLTAId,
         "ISMTPL_Id": widget.ismtplId,
         "extraflag": 0,
-        "PTSCount": value.pTSCount
+        "PTSCount": value.pTSCount,
+        "ISMTPL_StartDate": value.iSMTPLTAStartDate,
+        "ISMTPL_EndDate": value.iSMTPLTAEndDate,
       });
     }
     await PlannerApprovalSaveAPI.instance.plannerapproval(
@@ -265,6 +272,11 @@ class _AllPlannersState extends State<AllPlanners> {
         miId: widget.loginSuccessModel.mIID!,
         roleId: widget.loginSuccessModel.roleId!);
     widget.plannerApprovalController.plannerLoading(false);
+    for (int i = 0;
+        i < widget.plannerApprovalController.plannerApprovalList.length;
+        i++) {
+      selectedItemValue.add('');
+    }
   }
 
   @override
@@ -665,9 +677,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                     i <
                                         widget.plannerApprovalController
                                             .plannerApprovalList.length;
-                                    i++) {
-                                  selectedItemValue.add(dataRowGroupValue);
-                                }
+                                    i++) {}
                                 addRemarks(TextEditingController(
                                     text: widget
                                             .plannerApprovalController
@@ -699,6 +709,15 @@ class _AllPlannersState extends State<AllPlanners> {
                                     '${eDt.day}-${eDt.month}-${eDt.year}';
                                 endDate = val.iSMTPLTAEndDate!;
                                 //
+
+                                if (headerGroupValue == 'Approve All') {
+                                  ddl = ['Approve', 'Reject'];
+                                  dataRowGroupValue = ddl.first;
+                                } else if (headerGroupValue == 'Reject All') {
+                                  ddl = ['Reject', 'Approve'];
+                                }
+
+                                selectedItemValue.add(dataRowGroupValue);
                                 return DataRow(
                                     color: (widget.plannerApprovalController
                                                 .plannerApprovalList
@@ -812,7 +831,7 @@ class _AllPlannersState extends State<AllPlanners> {
                                             RichText(
                                                 text: TextSpan(children: [
                                               TextSpan(
-                                                  text: 'Clint: ',
+                                                  text: 'Client: ',
                                                   style: Get
                                                       .textTheme.titleSmall!
                                                       .copyWith(
@@ -907,8 +926,9 @@ class _AllPlannersState extends State<AllPlanners> {
                                                       color: Colors.black)),
                                               child: Center(
                                                   child: DropdownButton(
-                                                value: selectedItemValue[index]
-                                                    .toString(),
+                                                value:
+                                                    selectedItemValue[index] =
+                                                        dataRowGroupValue,
                                                 items: _dropDownItem(),
                                                 onChanged: (value) {
                                                   selectedItemValue[index] =

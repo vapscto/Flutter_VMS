@@ -94,12 +94,15 @@ class _AddExtraTaskScreenState extends State<AddExtraTaskScreen> {
         iSMTPLTAStartDate: v.startdatenew,
         iSMTPLTAEndDate: v.enddatenew,
         iSMDRPTRemarks: widget.controller.remarksController.elementAt(i).text,
+        plannerFileUpload: [],
       ));
+      widget.controller.compOffCheckBox.add(false);
       widget.controller.etResponse.add(TextEditingController(text: ''));
       widget.controller.hoursEt.add(TextEditingController(text: ''));
       widget.controller.minutesEt.add(TextEditingController(text: ''));
       widget.controller.statusEtField.add(TextEditingController(text: ''));
       widget.controller.deveationEtField.add(TextEditingController(text: ''));
+      widget.controller.deveationIdEtField.add(TextEditingController(text: ''));
       widget.controller.checkBoxList.add(false);
       logger.w("after ${widget.controller.getTaskDrList.length}");
     }

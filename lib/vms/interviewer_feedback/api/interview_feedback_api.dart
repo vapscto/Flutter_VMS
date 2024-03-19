@@ -3,9 +3,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/vms/intervoewer_feedback/controller/interview_feedback_controller.dart';
-import 'package:m_skool_flutter/vms/intervoewer_feedback/model/interview_grid_list_model.dart';
-import 'package:m_skool_flutter/vms/intervoewer_feedback/model/update_data_model.dart';
+import 'package:m_skool_flutter/vms/interviewer_feedback/controller/interview_feedback_controller.dart';
+import 'package:m_skool_flutter/vms/interviewer_feedback/model/interview_grid_list_model.dart';
+import 'package:m_skool_flutter/vms/interviewer_feedback/model/update_data_model.dart';
 
 class InterviewFeedbackAPI {
   InterviewFeedbackAPI.init();

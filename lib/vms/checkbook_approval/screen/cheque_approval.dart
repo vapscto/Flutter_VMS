@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/api/approve_cheque_book.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/api/fetch_companies_list.dart';
@@ -35,10 +36,10 @@ class ChequeApproval extends StatefulWidget {
 class _ChequeApprovalState extends State<ChequeApproval> {
   final ChequeController _chequeController = Get.put(ChequeController());
   final GetDetailedToDo _controller = Get.put(GetDetailedToDo());
-  List<int> selectCheckBox = <int>[].obs;
+  RxList<int> selectCheckBox = <int>[].obs;
   DrDetailsCtrlr loadingCntrl = Get.put(DrDetailsCtrlr());
 
-  bool allSelect = false;
+  RxBool allSelect =  RxBool(false);
   List<Map<String, dynamic>> detailsList = [];
   bool isLoding = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -57,6 +58,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
   }
 
   submitData() async {
+    showLoading();
     detailsList.clear();
     loadingCntrl.updateTabLoading(true);
     for (int i = 0; i < selectCheckBox.length; i++) {
@@ -79,7 +81,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
             .sanctionLevelNo!,
       });
     }
-    // print(detailsList);
+    logger.w(detailsList);
     int status = await approveApi(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         userId: widget.loginSuccessModel.userId!,
@@ -88,11 +90,35 @@ class _ChequeApprovalState extends State<ChequeApproval> {
         otp: 1010);
     if (status == 200) {
       Fluttertoast.showToast(msg: " Successfully  submitted ");
+      _chequeController.updateBtn.value = false;
+      Get.back();
     }
     loadingCntrl.updateTabLoading(false);
     setState(() {
       _controller.getTaDaModelList.clear();
     });
+  }
+
+  void showLoading() {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: SizedBox(
+            height: 130,
+            child: Column(
+              children: [
+                Text(
+                  "Please wait...",
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -241,6 +267,8 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                               _controller.tEControllerListOfApprovalRemark
                                   .clear();
                               _controller.checkList.clear();
+                               selectCheckBox.clear();
+                              allSelect.value = false;
                               mid = s!.mIId;
                               await updateCheque(
                                   userId: widget.loginSuccessModel.userId!,
@@ -248,6 +276,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                   base: baseUrlFromInsCode(
                                       "issuemanager", widget.mskoolController),
                                   controller: _controller);
+                              _chequeController.updateBtns(false);
                             },
                           ),
                         ),
@@ -329,10 +358,10 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                               BorderRadius
                                                                   .circular(
                                                                       10)),
-                                                  value: allSelect,
+                                                  value: allSelect.value,
                                                   onChanged: (value) {
-                                                    allSelect = value!;
-                                                    if (allSelect) {
+                                                    allSelect.value = value!;
+                                                    if (allSelect.value) {
                                                       for (var i = 0;
                                                           i <
                                                               _controller
@@ -355,6 +384,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                         _controller
                                                                 .checkList[i] =
                                                             false;
+
                                                       }
                                                     }
                                                   },
@@ -522,53 +552,47 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                 child: Align(
                                                   child: InkWell(
                                                     onTap: () {},
-                                                    child: _controller
-                                                                .getTaDaModelList
-                                                                .elementAt(
-                                                                    index)
-                                                                .vPAYVOUStatusFlg!
-                                                                .toString() ==
-                                                            "Rejected"
-                                                        ? const SizedBox()
-                                                        : Checkbox(
-                                                            activeColor:
-                                                                const Color
-                                                                        .fromRGBO(
-                                                                    0,
-                                                                    4,
-                                                                    250,
-                                                                    0.898),
-                                                            shape: ContinuousRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10)),
-                                                            onChanged: (value) {
-                                                              setState(() {
-                                                                _controller.checkList[
-                                                                        index] =
-                                                                    value!;
-
-                                                                if (selectCheckBox
-                                                                    .contains(
-                                                                        index)) {
-                                                                  selectCheckBox
-                                                                      .remove(
-                                                                          index);
-                                                                  // print("slected: " + selectCheckBox.toString());
-                                                                } else {
-                                                                  selectCheckBox
-                                                                      .add(
-                                                                          index);
-                                                                  // print("slected: " + selectCheckBox.toString());
-                                                                }
-                                                              });
-                                                            },
-                                                            value: _controller
-                                                                .checkList
-                                                                .elementAt(
-                                                                    index),
-                                                          ),
+                                                    child: Checkbox(
+                                                      activeColor:
+                                                          const Color.fromRGBO(
+                                                              0, 4, 250, 0.898),
+                                                      shape:
+                                                          ContinuousRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                      onChanged: (value) {
+                                                           _controller.checkList[
+                                                              index] = value!;
+                                                              if(_controller.checkList[index]){
+                                                                _controller
+                                                                      .getTaDaModelList
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .vPAYVOUStatusFlg =
+                                                                  "Approved";
+                                                              }
+                                                          if (selectCheckBox
+                                                              .contains(
+                                                                  index)) {
+                                                            selectCheckBox
+                                                                .remove(index);
+                                                            if(_controller.checkList.length != selectCheckBox.length){
+                                                              allSelect.value = false;
+                                                            }
+                                                            } else {
+                                                            selectCheckBox
+                                                                .add(index);
+                                                             if(_controller.checkList.length == selectCheckBox.length){
+                                                              allSelect.value = true;
+                                                             }
+                                                          }
+                                                      },
+                                                      value: _controller
+                                                          .checkList
+                                                          .elementAt(index),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -582,22 +606,42 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                   child: SizedBox(
                                                     height: 30,
                                                     width: 40,
-                                                    child: Radio(
-                                                      activeColor:
-                                                          Theme.of(context)
-                                                              .primaryColor,
-                                                      visualDensity:
-                                                          const VisualDensity(
-                                                              horizontal: -4.0),
-                                                      value: 1,
-                                                      groupValue: _controller
-                                                          .radioSelect
-                                                          .elementAt(index),
-                                                      onChanged: (value) {
-                                                        _controller.radioSelect[
-                                                            index] = value!;
-                                                      },
-                                                    ),
+                                                    child: _controller
+                                                            .checkList[index]
+                                                        ? Radio(
+                                                            fillColor: MaterialStateProperty
+                                                                .all(Theme.of(
+                                                                        context)
+                                                                    .primaryColor),
+                                                            activeColor: Theme
+                                                                    .of(context)
+                                                                .primaryColor,
+                                                            visualDensity:
+                                                                const VisualDensity(
+                                                                    horizontal:
+                                                                        -4.0),
+                                                            value: 1,
+                                                            groupValue:
+                                                                _controller
+                                                                    .radioSelect
+                                                                    .elementAt(
+                                                                        index),
+                                                            onChanged: (value) {
+                                                              _controller
+                                                                      .radioSelect[
+                                                                  index] = value!;
+                                                            },
+                                                          )
+                                                        : Radio(
+                                                            activeColor:
+                                                                Colors.grey,
+                                                            fillColor:
+                                                                MaterialStateProperty
+                                                                    .all(Colors
+                                                                        .grey),
+                                                            value: null,
+                                                            groupValue: 0,
+                                                            onChanged: null),
                                                   ),
                                                 ),
                                               ),
@@ -607,29 +651,49 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                 alignment: Alignment.center,
                                                 child: Align(
                                                   child: SizedBox(
-                                                    height: 30,
-                                                    width: 40,
-                                                    child: Radio(
-                                                      focusColor:
-                                                          const Color.fromARGB(
-                                                                  255,
-                                                                  182,
-                                                                  180,
-                                                                  180)
-                                                              .withOpacity(.1),
-                                                      activeColor:
-                                                          Theme.of(context)
-                                                              .primaryColor,
-                                                      value: 0,
-                                                      groupValue: _controller
-                                                          .radioSelect
-                                                          .elementAt(index),
-                                                      onChanged: (value) {
-                                                        _controller.radioSelect[
-                                                            index] = value!;
-                                                      },
-                                                    ),
-                                                  ),
+                                                      height: 30,
+                                                      width: 40,
+                                                      child: _controller
+                                                              .checkList[index]
+                                                          ? Radio(
+                                                              fillColor: MaterialStateProperty
+                                                                  .all(Theme.of(
+                                                                          context)
+                                                                      .primaryColor),
+                                                              focusColor: const Color
+                                                                          .fromARGB(
+                                                                      255,
+                                                                      182,
+                                                                      180,
+                                                                      180)
+                                                                  .withOpacity(
+                                                                      .1),
+                                                              activeColor: Theme
+                                                                      .of(context)
+                                                                  .primaryColor,
+                                                              value: 0,
+                                                              groupValue:
+                                                                  _controller
+                                                                      .radioSelect
+                                                                      .elementAt(
+                                                                          index),
+                                                              onChanged:
+                                                                  (value) {
+                                                                _controller.radioSelect[
+                                                                        index] =
+                                                                    value!;
+                                                              },
+                                                            )
+                                                          : Radio(
+                                                              activeColor:
+                                                                  Colors.grey,
+                                                              fillColor:
+                                                                  MaterialStateProperty
+                                                                      .all(Colors
+                                                                          .grey),
+                                                              value: null,
+                                                              groupValue: 0,
+                                                              onChanged: null)),
                                                 ),
                                               ),
                                             ),
@@ -638,9 +702,25 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                               Align(
                                                 alignment: Alignment.center,
                                                 child: SizedBox(
-                                                  child: Text(
-                                                      "${_controller.getTaDaModelList.elementAt(index).hRMBDBankName} \n ${_controller.getTaDaModelList.elementAt(index).hRMBDBankAddress} "),
-                                                ),
+                                                  child:  Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Text("${_controller.getTaDaModelList.elementAt(index).hRMBDBankName}",
+                                                      style: Theme.of(context).textTheme.titleSmall!.merge(
+                                                        const TextStyle(
+                                                         fontWeight: FontWeight.w400,
+                                                        )),),
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text("AC No:${_controller.getTaDaModelList.elementAt(index).hRMBDBankAccountNo}",
+                                                      style: Theme.of(context).textTheme.titleSmall!.merge(
+                                                        const TextStyle(
+                                                         fontWeight: FontWeight.w400,
+                                                        )),)
+                                                    ],
+                                                  ),
+                                                )
                                               ),
                                             ),
                                             //b10
@@ -661,7 +741,10 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                               Align(
                                                 alignment: Alignment.center,
                                                 child: SizedBox(
-                                                  child: Text(_controller
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                  Text(_controller
                                                               .getTaDaModelList
                                                               .elementAt(index)
                                                               .vPAYVOUChequeNo ==
@@ -671,7 +754,17 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                           .getTaDaModelList
                                                           .elementAt(index)
                                                           .vPAYVOUChequeNo
-                                                          .toString()),
+                                                          .toString()),                                                     
+                                                          const SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          Text(
+                                                             _controller.getTaDaModelList.elementAt(index).vPAYVOUPaymentReference != null
+                                                             ? _controller.getTaDaModelList.elementAt(index).vPAYVOUPaymentReference! : ""
+                                                          )
+                                                    ],
+                                                  )
+
                                                 ),
                                               ),
                                             ),
@@ -762,7 +855,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                       const InputDecoration(
                                                           border:
                                                               InputBorder.none),
-                                                  validator: (value) {
+                                                  onChanged: (value) {
                                                     if (selectCheckBox.contains(
                                                         _controller
                                                             .getTaDaModelList
@@ -770,16 +863,17 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                                 .getTaDaModelList
                                                                 .elementAt(
                                                                     index)))) {
-                                                      if (double.parse(value!) >
+                                                      if (double.parse(value) >
                                                           double.parse(_controller
                                                               .getTaDaModelList
                                                               .elementAt(index)
                                                               .vPAYVOUAppliedAmount
                                                               .toString())) {
-                                                        return "Amount is greater than";
+                                                        Fluttertoast.showToast(
+                                                            msg:
+                                                                "Amount is greater than");
                                                       }
                                                     }
-                                                    return null;
                                                   },
                                                   readOnly: _controller
                                                                       .radioSelect[
@@ -908,8 +1002,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                 Obx(
                                   () => Visibility(
                                     visible:
-                                        _chequeController.updateBtn.isFalse &&
-                                            selectCheckBox.isNotEmpty,
+                                        _chequeController.updateBtn.isFalse,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: MSkollBtn(
@@ -983,8 +1076,6 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                           ],
                         ),
                       )
-
-                    //
                     : const Center(
                         child: AnimatedProgressWidget(
                           animationPath: 'assets/json/nodata.json',

@@ -45,6 +45,7 @@ class URLS {
   static String sendOtp = "api/LoginFacade/Mobileappotp";
   static String changePassword = "api/LoginFacade/forgotpassword";
   static String resetPassword = "api/changepwdFacade";
+  static String verifyOTP = 'api/Login/VerifyEmailOtp';
 
   //PaymentApi
 
@@ -66,7 +67,7 @@ class URLS {
 
   static String paymentCharges = "api/FeesCtrl/paymentGatewayrate/";
 
-  static String emailOtp = "api/LoginFacade/getOTPForEmail";
+  static String emailOtp = "api/Login/ForgotOTPForEmail";
 
   static String updateHwSeen =
       "api/StudentDashboardFacade/onclick_Homework_seen/";
@@ -166,6 +167,8 @@ class URLS {
   static String employeeModelList =
       "api/ISM_DailyReport_ApprovalFacade/DesgSelectionDetails/";
   static String getDrs = "api/ISM_DailyReport_ApprovalFacade/GetSavedDetails/";
+  static String getDrCheckList =
+      "api/ISM_DailyReport_ApprovalFacade/ViewCheckListSavedDetails/";
   static String deptList =
       "api/ISM_DailyReport_ApprovalFacade/DeptSelectionDetails/";
   static String security = "api/ISMDashboardFacade/getdetails";

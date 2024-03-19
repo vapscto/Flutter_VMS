@@ -6,9 +6,11 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/maker%20and%20checker/api/dr_aprove_api.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/api/submit_dr.dart';
 
 import 'package:m_skool_flutter/vms/maker%20and%20checker/controller/dr_details_ctrlr.dart';
+import 'package:m_skool_flutter/vms/maker%20and%20checker/widgets/check_list_widget.dart';
 import 'package:m_skool_flutter/vms/utils/save_btn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
@@ -344,7 +346,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                                                     )),
                                               ),
                                               const SizedBox(
-                                                height: 5,
+                                                height: 3,
                                               ),
                                               SizedBox(
                                                 width: 200,
@@ -367,7 +369,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                                                 ),
                                               ),
                                               const SizedBox(
-                                                height: 5,
+                                                height: 3,
                                               ),
                                               Text(
                                                 "DR Date : ${controller.drdList.elementAt(index).iSMDRPTDate!}",
@@ -384,7 +386,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                                                     )),
                                               ),
                                               const SizedBox(
-                                                height: 5,
+                                                height: 3,
                                               ),
                                               Text(
                                                 "DR Status : ${controller.drdList.elementAt(index).iSMDRPTStatus!}",
@@ -401,7 +403,7 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                                                     )),
                                               ),
                                               const SizedBox(
-                                                height: 5,
+                                                height: 3,
                                               ),
                                               Text(
                                                 "Task Category : ${controller.drdList.elementAt(index).iSMMTCATTaskCategoryName}",
@@ -417,8 +419,72 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                                                           TextOverflow.clip,
                                                     )),
                                               ),
-                                              const SizedBox(
-                                                height: 5,
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "View Checklist :",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall!
+                                                        .merge(const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        )),
+                                                  ),
+                                                  InkWell(
+                                                      onTap: () async {
+                                                        await makerCheckerAttachment(
+                                                                base: baseUrlFromInsCode(
+                                                                    "issuemanager",
+                                                                    widget
+                                                                        .mskoolController),
+                                                                body: {
+                                                                  "DRApprovalTypeFlag":
+                                                                      "DRApproval",
+                                                                  "ISMDRPT_Id": controller
+                                                                      .drdList
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .iSMDRPTId
+                                                                },
+                                                                controller:
+                                                                    controller)
+                                                            .then((value) {
+                                                          if (value == 200) {
+                                                            if (controller
+                                                                .checkList
+                                                                .isNotEmpty) {
+                                                              Get.dialog(
+                                                                  CheckListWidget(
+                                                                checkList:
+                                                                    controller
+                                                                        .checkList,
+                                                                eName: controller
+                                                                    .drdList
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .eMPLOYEENAME!,
+                                                                taskNo: controller
+                                                                    .drdList
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .iSMTCRTaskNo!,
+                                                              ));
+                                                            } else {
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg:
+                                                                          "Checklist is not Added for ${controller.drdList.elementAt(index).iSMTCRTaskNo!} Task");
+                                                            }
+                                                          }
+                                                        });
+                                                      },
+                                                      child: Icon(
+                                                        Icons.visibility,
+                                                        color: Theme.of(context)
+                                                            .primaryColor,
+                                                      ))
+                                                ],
                                               ),
                                             ])),
                                         DataCell(SizedBox(
@@ -473,7 +539,10 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                                               height: 5,
                                             ),
                                             Text(
-                                              "${controller.drdList.elementAt(index).iSMTPLTAEffortInHrs!.toInt().toString().padLeft(2, '0')} Hrs : 00 Mins",
+                                              formatTimeWithHour(controller
+                                                  .drdList
+                                                  .elementAt(index)
+                                                  .iSMTPLTAEffortInHrs!),
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .titleSmall!
@@ -507,7 +576,10 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                                                         .iSMDRPTTimeTakenInHrs !=
                                                     null)
                                                 ? Text(
-                                                    "${controller.drdList.elementAt(index).iSMDRPTTimeTakenInHrs!.toInt().toString().padLeft(2, '0')} Hrs : 00 Mins",
+                                                    formatTimeWithHour(controller
+                                                        .drdList
+                                                        .elementAt(index)
+                                                        .iSMDRPTTimeTakenInHrs!),
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .titleSmall!
@@ -751,9 +823,6 @@ class _DRApprovalScreenState extends State<DRApprovalScreen> {
                             ),
                           ),
                         )),
-              const SizedBox(
-                height: 20,
-              ),
               controller.drdList.isEmpty
                   ? const SizedBox()
                   : Padding(

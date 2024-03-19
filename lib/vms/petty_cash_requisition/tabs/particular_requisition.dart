@@ -129,19 +129,6 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
       var selectedParticular = rows[index].selectedParticular;
       var amount = rows[index].amountCountroller.text;
       var remarks = rows[index].remarksController.text;
-
-      // if (selectedParticular != null) {
-      //   reqDetailsDTOList.add({
-      //     "PCMPART_Id": selectedParticular.pcmparTId,
-      //     "PCMPART_ParticularName": selectedParticular.pcmparTParticularName,
-      //     "PCREQTNDET_Amount": double.parse(amount),
-      //     "PCREQTNDET_Id": cashRequisitionController.employeeList
-      //         .elementAt(index)
-      //         .pcreqtndeTId,
-      //     "PCREQTNDET_Remarks": remarks,
-      //   });
-      // }
-
       if (selectedParticular != null) {
         // Assume you want to process the first item in the employeeList
         int index = 0;
@@ -279,7 +266,7 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                           style: Theme.of(context).textTheme.labelSmall!.merge(
                               const TextStyle(
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 16.0,
+                                  fontSize: 14.0,
                                   letterSpacing: 0.3)),
                         ),
                       ),
@@ -546,285 +533,251 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              DataTable(
-                                dataTextStyle: const TextStyle(
-                                  fontSize: 15,
-                                  color: Color.fromRGBO(5, 5, 5, 0.945),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                dataRowHeight: 120,
-                                headingRowHeight: 55,
-                                horizontalMargin: 10,
-                                columnSpacing: 40,
-                                dividerThickness: 1,
-                                border: TableBorder.all(
-                                  borderRadius: const BorderRadius.only(
-                                    bottomRight: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: DataTable(
+                                  dataTextStyle: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromRGBO(5, 5, 5, 0.945),
+                                    fontWeight: FontWeight.w400,
                                   ),
-                                ),
-                                headingRowColor: MaterialStateProperty.all(
-                                  Theme.of(context).primaryColor,
-                                ),
-                                columns: const [
-                                  DataColumn(
-                                    label: Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "SLNO",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w800,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
+                                  dataRowHeight: 120,
+                                  headingRowHeight: 55,
+                                  horizontalMargin: 10,
+                                  columnSpacing: 40,
+                                  dividerThickness: 1,
+                                  border: TableBorder.all(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  headingRowColor: MaterialStateProperty.all(
+                                    Theme.of(context).primaryColor,
                                   ),
-                                  DataColumn(
-                                    label: Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "Particular",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w800,
-                                        ),
-                                        overflow: TextOverflow.fade,
-                                      ),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      "Amount",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      "Remarks",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      "Action",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                                rows: [
-                                  for (var index = 0;
-                                      index < rows.length;
-                                      index++)
-                                    DataRow(
-                                      cells: [
-                                        DataCell(Text((index + 1).toString())),
-                                        DataCell(
-                                          Align(
-                                            alignment: Alignment.center,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: Theme.of(context)
-                                                    .scaffoldBackgroundColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(16.0),
-                                                boxShadow: const [
-                                                  BoxShadow(
-                                                    offset: Offset(0, 1),
-                                                    blurRadius: 8,
-                                                    color: Colors.black12,
-                                                  ),
-                                                ],
-                                              ),
-                                              child: DropdownButtonFormField<
-                                                      ParticularsPcRequestModelValues>(
-                                                  value: rows[index]
-                                                      .selectedParticular,
-                                                  decoration: InputDecoration(
-                                                    focusedBorder:
-                                                        const OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Colors.transparent,
-                                                      ),
-                                                    ),
-                                                    enabledBorder:
-                                                        const OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Colors.transparent,
-                                                      ),
-                                                    ),
-                                                    hintStyle: Theme.of(context)
-                                                        .textTheme
-                                                        .labelSmall!
-                                                        .merge(const TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          fontSize: 15.0,
-                                                          color: Color.fromARGB(
-                                                              255,
-                                                              133,
-                                                              132,
-                                                              132),
-                                                          letterSpacing: 0.5,
-                                                        )),
-                                                    hintText: cashRequisitionController
-                                                            .itemsParticularList
-                                                            .isNotEmpty
-                                                        ? 'Select Particular'
-                                                        : 'No data available',
-                                                    floatingLabelBehavior:
-                                                        FloatingLabelBehavior
-                                                            .always,
-                                                    isDense: true,
-                                                  ),
-                                                  icon: const Padding(
-                                                    padding:
-                                                        EdgeInsets.only(top: 3),
-                                                    child: Icon(
-                                                      Icons
-                                                          .keyboard_arrow_down_rounded,
-                                                      size: 30,
-                                                    ),
-                                                  ),
-                                                  iconSize: 30,
-                                                  items: List.generate(
-                                                    cashRequisitionController
-                                                        .itemsParticularList
-                                                        .length,
-                                                    (index) {
-                                                      return DropdownMenuItem(
-                                                        value: cashRequisitionController
-                                                                .itemsParticularList[
-                                                            index],
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  top: 13,
-                                                                  left: 5),
-                                                          child: SizedBox(
-                                                            width: 180,
-                                                            child: Text(
-                                                              cashRequisitionController
-                                                                  .itemsParticularList[
-                                                                      index]
-                                                                  .pcmparTParticularName!,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .labelSmall!
-                                                                  .merge(
-                                                                      const TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    fontSize:
-                                                                        16.0,
-                                                                    letterSpacing:
-                                                                        0.3,
-                                                                  )),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                  onChanged: (selected) async {
-                                                    if (selected != null) {
-                                                      if (selectedValues
-                                                          .contains(selected)) {
-                                                        Fluttertoast.showToast(
-                                                          msg:
-                                                              "Particular already selected",
-                                                          toastLength: Toast
-                                                              .LENGTH_SHORT,
-                                                          gravity: ToastGravity
-                                                              .BOTTOM,
-                                                          timeInSecForIosWeb: 1,
-                                                          backgroundColor:
-                                                              Colors.red,
-                                                          textColor:
-                                                              Colors.white,
-                                                          fontSize: 16.0,
-                                                        );
-                                                      } else {
-                                                        rows[index]
-                                                                .selectedParticular =
-                                                            selected;
-                                                        selectedValues
-                                                            .add(selected);
-                                                        logger.i(selected
-                                                            .pcmparTParticularName!);
-                                                      }
-                                                    }
-                                                  }),
-                                            ),
+                                  columns: const [
+                                    DataColumn(
+                                      label: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          "SLNO",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w800,
                                           ),
+                                          overflow: TextOverflow.ellipsis,
                                         ),
-                                        DataCell(
-                                          SizedBox(
-                                            width: 250,
-                                            child: Align(
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          "Particular",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w800,
+                                          ),
+                                          overflow: TextOverflow.fade,
+                                        ),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        "Amount",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        "Remarks",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        "Action",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                  rows: [
+                                    for (var index = 0;
+                                        index < rows.length;
+                                        index++)
+                                      DataRow(
+                                        cells: [
+                                          DataCell(
+                                              Text((index + 1).toString())),
+                                          DataCell(
+                                            Align(
                                               alignment: Alignment.center,
-                                              child: TextFormField(
-                                                controller: rows[index]
-                                                    .amountCountroller,
-                                                onChanged: (value) {
-                                                  updateTotalAmount();
-                                                },
-                                                decoration:
-                                                    const InputDecoration(
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Theme.of(context)
+                                                      .scaffoldBackgroundColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          16.0),
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                      offset: Offset(0, 1),
+                                                      blurRadius: 8,
                                                       color: Colors.black12,
                                                     ),
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Color.fromRGBO(
-                                                          233, 232, 232, 1),
-                                                    ),
-                                                  ),
-                                                  hintText: "Enter Amount",
-                                                  hintStyle:
-                                                      TextStyle(fontSize: 14),
-                                                  fillColor: Color.fromARGB(
-                                                      31, 233, 231, 231),
-                                                  filled: true,
+                                                  ],
                                                 ),
-                                                keyboardType:
-                                                    TextInputType.number,
-                                                inputFormatters: [
-                                                  LengthLimitingTextInputFormatter(
-                                                      7)
-                                                ],
+                                                child: DropdownButtonFormField<
+                                                        ParticularsPcRequestModelValues>(
+                                                    value: rows[index]
+                                                        .selectedParticular,
+                                                    decoration: InputDecoration(
+                                                      focusedBorder:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Colors
+                                                              .transparent,
+                                                        ),
+                                                      ),
+                                                      enabledBorder:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Colors
+                                                              .transparent,
+                                                        ),
+                                                      ),
+                                                      hintStyle: Theme.of(
+                                                              context)
+                                                          .textTheme
+                                                          .labelSmall!
+                                                          .merge(
+                                                              const TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontSize: 15.0,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    133,
+                                                                    132,
+                                                                    132),
+                                                            letterSpacing: 0.5,
+                                                          )),
+                                                      hintText: cashRequisitionController
+                                                              .itemsParticularList
+                                                              .isNotEmpty
+                                                          ? 'Select Particular'
+                                                          : 'No data available',
+                                                      floatingLabelBehavior:
+                                                          FloatingLabelBehavior
+                                                              .always,
+                                                      isDense: true,
+                                                    ),
+                                                    icon: const Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: 3),
+                                                      child: Icon(
+                                                        Icons
+                                                            .keyboard_arrow_down_rounded,
+                                                        size: 30,
+                                                      ),
+                                                    ),
+                                                    iconSize: 30,
+                                                    items: List.generate(
+                                                      cashRequisitionController
+                                                          .itemsParticularList
+                                                          .length,
+                                                      (index) {
+                                                        return DropdownMenuItem(
+                                                          value: cashRequisitionController
+                                                                  .itemsParticularList[
+                                                              index],
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    top: 13,
+                                                                    left: 5),
+                                                            child: SizedBox(
+                                                              width: 180,
+                                                              child: Text(
+                                                                cashRequisitionController
+                                                                    .itemsParticularList[
+                                                                        index]
+                                                                    .pcmparTParticularName!,
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .labelSmall!
+                                                                    .merge(
+                                                                        const TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      fontSize:
+                                                                          16.0,
+                                                                      letterSpacing:
+                                                                          0.3,
+                                                                    )),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                    onChanged:
+                                                        (selected) async {
+                                                      if (selected != null) {
+                                                        if (selectedValues
+                                                            .contains(
+                                                                selected)) {
+                                                          Fluttertoast
+                                                              .showToast(
+                                                            msg:
+                                                                "Particular already selected",
+                                                            toastLength: Toast
+                                                                .LENGTH_SHORT,
+                                                            gravity:
+                                                                ToastGravity
+                                                                    .BOTTOM,
+                                                            timeInSecForIosWeb:
+                                                                1,
+                                                            backgroundColor:
+                                                                Colors.red,
+                                                            textColor:
+                                                                Colors.white,
+                                                            fontSize: 16.0,
+                                                          );
+                                                        } else {
+                                                          rows[index]
+                                                                  .selectedParticular =
+                                                              selected;
+                                                          selectedValues
+                                                              .add(selected);
+                                                          logger.i(selected
+                                                              .pcmparTParticularName!);
+                                                        }
+                                                      }
+                                                    }),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        DataCell(
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: SizedBox(
-                                              width: 200,
+                                          DataCell(
+                                            SizedBox(
+                                              width: 250,
                                               child: Align(
                                                 alignment: Alignment.center,
-                                                child: TextField(
+                                                child: TextFormField(
                                                   controller: rows[index]
-                                                      .remarksController,
+                                                      .amountCountroller,
+                                                  onChanged: (value) {
+                                                    updateTotalAmount();
+                                                  },
                                                   decoration:
                                                       const InputDecoration(
                                                     focusedBorder:
@@ -840,59 +793,103 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                                                             233, 232, 232, 1),
                                                       ),
                                                     ),
-                                                    filled: true,
-                                                    hintStyle: TextStyle(
-                                                      fontSize: 14,
-                                                      fontStyle:
-                                                          FontStyle.italic,
-                                                    ),
-                                                    hintText: "Write Remarks",
+                                                    hintText: "Enter Amount",
+                                                    hintStyle:
+                                                        TextStyle(fontSize: 14),
                                                     fillColor: Color.fromARGB(
                                                         31, 233, 231, 231),
+                                                    filled: true,
                                                   ),
-                                                  maxLines: 3,
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  inputFormatters: [
+                                                    LengthLimitingTextInputFormatter(
+                                                        7)
+                                                  ],
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        DataCell(
-                                          Row(
-                                            children: [
-                                              if (index == 0 && showAddButton)
-                                                IconButton(
-                                                  icon: const Icon(Icons.add),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      rows.add(
-                                                          DataTableRowModel(
-                                                        sno: rows.length + 1,
-                                                        selectedParticular:
-                                                            selectedParticular,
-                                                        amountCountroller:
-                                                            TextEditingController(),
-                                                        remarksController:
-                                                            TextEditingController(),
-                                                      ));
-                                                    });
-                                                  },
-                                                )
-                                              else
-                                                IconButton(
-                                                  icon:
-                                                      const Icon(Icons.remove),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      rows.removeAt(index);
-                                                    });
-                                                  },
+                                          DataCell(
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: SizedBox(
+                                                width: 200,
+                                                child: Align(
+                                                  alignment: Alignment.center,
+                                                  child: TextField(
+                                                    controller: rows[index]
+                                                        .remarksController,
+                                                    decoration:
+                                                        const InputDecoration(
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Colors.black12,
+                                                        ),
+                                                      ),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Color.fromRGBO(
+                                                              233, 232, 232, 1),
+                                                        ),
+                                                      ),
+                                                      filled: true,
+                                                      hintStyle: TextStyle(
+                                                        fontSize: 14,
+                                                        fontStyle:
+                                                            FontStyle.italic,
+                                                      ),
+                                                      hintText: "Write Remarks",
+                                                      fillColor: Color.fromARGB(
+                                                          31, 233, 231, 231),
+                                                    ),
+                                                    maxLines: 3,
+                                                  ),
                                                 ),
-                                            ],
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                ],
+                                          DataCell(
+                                            Row(
+                                              children: [
+                                                if (index == 0 && showAddButton)
+                                                  IconButton(
+                                                    icon: const Icon(Icons.add),
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        rows.add(
+                                                            DataTableRowModel(
+                                                          sno: rows.length + 1,
+                                                          selectedParticular:
+                                                              selectedParticular,
+                                                          amountCountroller:
+                                                              TextEditingController(),
+                                                          remarksController:
+                                                              TextEditingController(),
+                                                        ));
+                                                      });
+                                                    },
+                                                  )
+                                                else
+                                                  IconButton(
+                                                    icon: const Icon(
+                                                        Icons.remove),
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        rows.removeAt(index);
+                                                      });
+                                                    },
+                                                  ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -1072,7 +1069,6 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
     }
     cashRequisitionController.departmentList.clear();
     cashRequisitionController.employeeList.clear();
-    // cashRequisitionController.particularsList.clear();
 
     super.dispose();
   }

@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/forgotpassword/api/send_otp_mobile.dart';
 import 'package:m_skool_flutter/forgotpassword/api/send_otp_to_email.dart';
 import 'package:m_skool_flutter/forgotpassword/controller/opt_sent_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/screens/change_expired_password.dart';
@@ -57,14 +56,10 @@ class _OTPScreenState extends State<OTPScreen> {
       SendOtpToEmail.instance.sendOtpNow(
           miId: widget.mskoolController.universalInsCodeModel!.value.miId,
           email: widget.otpSendingInfo,
-          base: baseUrlFromInsCode("login", widget.mskoolController),
-          statusController: otpSentStatusController);
-    } else {
-      SendOtpToMobile.instance.sendOtp(
-          miId: widget.mskoolController.universalInsCodeModel!.value.miId,
-          mobileNo: int.parse(widget.otpSendingInfo.trim()),
-          base: baseUrlFromInsCode("login", widget.mskoolController),
-          statusController: otpSentStatusController);
+          base:
+              'https://vms.vapstech.com/', // baseUrlFromInsCode("login", widget.mskoolController),
+          statusController: otpSentStatusController,
+          userName: widget.userName);
     }
     super.initState();
   }
@@ -202,38 +197,22 @@ class _OTPScreenState extends State<OTPScreen> {
                                         : () async {
                                             otpSentStatusController
                                                 .updateDisableResendBtn(true);
-                                            if (widget.isEmailVerification) {
-                                              await SendOtpToEmail.instance
-                                                  .sendOtpNow(
-                                                      miId: widget
-                                                          .mskoolController
-                                                          .universalInsCodeModel!
-                                                          .value
-                                                          .miId,
-                                                      email:
-                                                          widget.otpSendingInfo,
-                                                      base: baseUrlFromInsCode(
-                                                          "login",
-                                                          widget
-                                                              .mskoolController),
-                                                      statusController:
-                                                          otpSentStatusController);
-                                            } else {
-                                              await SendOtpToMobile.instance.sendOtp(
-                                                  miId: widget
-                                                      .mskoolController
-                                                      .universalInsCodeModel!
-                                                      .value
-                                                      .miId,
-                                                  mobileNo: int.parse(widget
-                                                      .otpSendingInfo
-                                                      .trim()),
-                                                  base: baseUrlFromInsCode(
-                                                      "login",
-                                                      widget.mskoolController),
-                                                  statusController:
-                                                      otpSentStatusController);
-                                            }
+
+                                            await SendOtpToEmail.instance
+                                                .sendOtpNow(
+                                                    miId: widget
+                                                        .mskoolController
+                                                        .universalInsCodeModel!
+                                                        .value
+                                                        .miId,
+                                                    email:
+                                                        widget.otpSendingInfo,
+                                                    base:
+                                                        'https://vms.vapstech.com/',
+                                                    statusController:
+                                                        otpSentStatusController,
+                                                    userName: widget.userName);
+
                                             otpSentStatusController
                                                 .updateRemainingTime(59);
                                           },
@@ -272,7 +251,6 @@ class _OTPScreenState extends State<OTPScreen> {
                                       .titleSmall!
                                       .merge(
                                         const TextStyle(
-                                            // decoration: TextDecoration.underline,
                                             color: Color(0xFFFF828A)),
                                       ),
                                 );
@@ -289,44 +267,56 @@ class _OTPScreenState extends State<OTPScreen> {
                                       borderRadius: BorderRadius.circular(24.0),
                                     ),
                                     minimumSize: Size(Get.width * 0.4, 50)),
-                                onPressed: () {
+                                onPressed: () async {
                                   if (entredOtp.text.isEmpty) {
                                     Fluttertoast.showToast(
                                         msg: "Please provide otp to continue");
                                     return;
                                   }
-
-                                  if (entredOtp.text !=
-                                      otpSentStatusController.otp.value) {
-                                    Fluttertoast.showToast(
-                                        msg:
-                                            "You are entering wrong otp, we didn't sent this otp, check and try again");
-                                    return;
-                                  }
-                                  Fluttertoast.showToast(
-                                      msg:
-                                          "Otp Verified Successfully, you can now change your password");
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) {
-                                        return widget.forExpiry
-                                            ? ResetExpiredPassword(
-                                                base: baseUrlFromInsCode(
-                                                    "login",
-                                                    widget.mskoolController),
-                                                userName: widget.userName,
-                                                mskoolController:
-                                                    widget.mskoolController,
-                                              )
-                                            : ChangePassword(
-                                                mskoolController:
-                                                    widget.mskoolController,
-                                                userName: widget.userName,
-                                              );
-                                      },
-                                    ),
-                                  );
+                                  await SendOtpToEmail.instance
+                                      .verifyOtpNow(
+                                          base: 'https://vms.vapstech.com/',
+                                          statusController:
+                                              otpSentStatusController,
+                                          otp: entredOtp.text)
+                                      .then((value) {
+                                    if (value!.toLowerCase() == 'success') {
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "Otp Verified Successfully, you can now change your password");
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) {
+                                            return widget.forExpiry
+                                                ? ResetExpiredPassword(
+                                                    base: baseUrlFromInsCode(
+                                                        "login",
+                                                        widget
+                                                            .mskoolController),
+                                                    userName: widget.userName,
+                                                    mskoolController:
+                                                        widget.mskoolController,
+                                                  )
+                                                : ChangePassword(
+                                                    mskoolController:
+                                                        widget.mskoolController,
+                                                    userName: widget.userName,
+                                                  );
+                                          },
+                                        ),
+                                      );
+                                    } else if (value.toLowerCase() == 'fail') {
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "You are entering wrong otp, we didn't sent this otp, check and try again");
+                                      return;
+                                    } else {
+                                      Fluttertoast.showToast(
+                                          msg: "OTP Expaired");
+                                      return;
+                                    }
+                                  });
                                 },
                                 child: Text(
                                   "Continue",

@@ -16,9 +16,7 @@ class OpetionLeaveController extends GetxController {
     if (optionalLeaveList.isNotEmpty) {
       optionalLeaveList.clear();
     }
-    for (int i = 0; i < optionalLeave.length; i++) {
-      optionalLeaveList.add(optionalLeave.elementAt(i));
-    }
+    optionalLeaveList.addAll(optionalLeave);
   }
 
   RxList<LeaveCountModelValues> leaveCountList = <LeaveCountModelValues>[].obs;

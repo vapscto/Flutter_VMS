@@ -200,12 +200,13 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
           "ISMTCR_Id": widget.plannerCreationController.createdTaskList
               .elementAt(index)
               .iSMTCRId,
-          "ISMTPLTA_StartDate": widget.plannerCreationController.createdTaskList
+          "ISMTPLTA_StartDate": (widget
+              .plannerCreationController.createdTaskList
               .elementAt(index)
-              .iSMTPLTAStartDate,
-          "ISMTPLTA_EndDate": widget.plannerCreationController.createdTaskList
+              .iSMTPLTAStartDate!),
+          "ISMTPLTA_EndDate": (widget.plannerCreationController.createdTaskList
               .elementAt(index)
-              .iSMTPLTAEndDate,
+              .iSMTPLTAEndDate!),
           "ISMTPLTA_EffortInHrs": widget
               .plannerCreationController.createdTaskList
               .elementAt(index)
@@ -259,6 +260,16 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
       requiredEff = double.parse(newdt) -
           widget.plannerCreationController.categoryWisePlan[i]
               .ismtcrastOEffortInHrs!;
+      for (int index = 0;
+          index < widget.plannerCreationController.categoryWisePlan.length;
+          index++) {
+        categoryArray.add({
+          "ISMMTCAT_Id": widget.plannerCreationController.categoryWisePlan
+              .elementAt(index)
+              .ismmtcaTId,
+        });
+        // newCategoryArray.addAll(categoryArray);
+      }
       //Add in list
       if (widget.plannerCreationController.categoryWisePlan[i]
               .ismtcrastOEffortInHrs! <
@@ -280,16 +291,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId!));
       }
     }
-    for (int index = 0;
-        index < widget.plannerCreationController.categoryWisePlan.length;
-        index++) {
-      categoryArray.add({
-        "ISMMTCAT_Id": widget.plannerCreationController.categoryWisePlan
-            .elementAt(index)
-            .ismmtcaTId,
-      });
-      newCategoryArray.addAll(categoryArray.toSet());
-    }
+
     widget.plannerCreationController.taskLoading(false);
   }
 
@@ -1072,14 +1074,16 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
                         child: RichText(
                             text: TextSpan(children: [
                           TextSpan(
-                              text: data.iSMTCRASTOStartDate,
+                              text: dateFormat(
+                                  DateTime.parse(data.iSMTCRASTOStartDate!)),
                               style: Get.textTheme.titleSmall!),
                           TextSpan(
                               text: ' TO ',
                               style: Get.textTheme.titleSmall!
                                   .copyWith(color: Colors.red)),
                           TextSpan(
-                              text: data.iSMTCRASTOEndDate,
+                              text: dateFormat(
+                                  DateTime.parse(data.iSMTCRASTOEndDate!)),
                               style: Get.textTheme.titleSmall!.copyWith()),
                         ])),
                       ),
@@ -1114,6 +1118,10 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
         ),
       ),
     );
+  }
+
+  String dateFormat(DateTime dt) {
+    return "${dt.day}-${dt.month}-${dt.year}";
   }
 
   _createCategortTable() {

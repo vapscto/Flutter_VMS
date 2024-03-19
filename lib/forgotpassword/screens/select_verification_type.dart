@@ -26,7 +26,7 @@ class SelectVerificationType extends StatefulWidget {
 }
 
 class _SelectVerificationTypeState extends State<SelectVerificationType> {
-  String verificationType = "mobile";
+  String verificationType = "email";
   final TextEditingController controller = TextEditingController();
   @override
   void initState() {
@@ -110,7 +110,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Select Email/ Mobile Number",
+                          "OTP Sending",
                           style: Theme.of(context).textTheme.titleMedium!.merge(
                                 const TextStyle(fontSize: 20.0),
                               ),
@@ -119,7 +119,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                           height: 12.0,
                         ),
                         const Text(
-                          "To sent the password recovery instructions choose mail\\ Mobile Number.",
+                          "We will send an OTP to your email address.",
                           style: TextStyle(fontSize: 16),
                         ),
                       ],
@@ -129,37 +129,37 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                     padding: const EdgeInsets.symmetric(horizontal: 18.0),
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            Theme(
-                              data: ThemeData(
-                                  unselectedWidgetColor:
-                                      Theme.of(context).primaryColor),
-                              child: Radio(
-                                value: "mobile",
-                                activeColor: Theme.of(context).primaryColor,
-                                focusColor: Theme.of(context).primaryColor,
-                                visualDensity: const VisualDensity(
-                                  horizontal: VisualDensity.minimumDensity,
-                                  vertical: VisualDensity.minimumDensity,
-                                ),
-                                groupValue: verificationType,
-                                onChanged: (e) {
-                                  verificationType = e!;
-                                  controller.text = widget.mobileNo;
-                                  setState(() {});
-                                },
-                              ),
-                            ),
-                            Text(
-                              "Mobile Number",
-                              style:
-                                  Theme.of(context).textTheme.titleSmall!.merge(
-                                        const TextStyle(fontSize: 16.0),
-                                      ),
-                            )
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     Theme(
+                        //       data: ThemeData(
+                        //           unselectedWidgetColor:
+                        //               Theme.of(context).primaryColor),
+                        //       child: Radio(
+                        //         value: "mobile",
+                        //         activeColor: Theme.of(context).primaryColor,
+                        //         focusColor: Theme.of(context).primaryColor,
+                        //         visualDensity: const VisualDensity(
+                        //           horizontal: VisualDensity.minimumDensity,
+                        //           vertical: VisualDensity.minimumDensity,
+                        //         ),
+                        //         groupValue: verificationType,
+                        //         onChanged: (e) {
+                        //           verificationType = e!;
+                        //           controller.text = widget.mobileNo;
+                        //           setState(() {});
+                        //         },
+                        //       ),
+                        //     ),
+                        //     Text(
+                        //       "Mobile Number",
+                        //       style:
+                        //           Theme.of(context).textTheme.titleSmall!.merge(
+                        //                 const TextStyle(fontSize: 16.0),
+                        //               ),
+                        //     )
+                        //   ],
+                        // ),
                         Row(
                           children: [
                             Theme(

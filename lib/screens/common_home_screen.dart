@@ -67,6 +67,7 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
         profileController: profileController,
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!,
+        contex: context,
         roleId: widget.loginSuccessModel.roleId!);
     numberController.text =
         profileController.profileDataValue.first.hRMEMobileNo.toString();
@@ -112,11 +113,11 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
 
   @override
   void initState() {
-    version(widget.loginSuccessModel, widget.mskoolController);
-    _getProfile();
     _getInstitute();
     _getPunch();
     _getLocation();
+    _getProfile();
+    version(widget.loginSuccessModel, widget.mskoolController);
     homePage.addAll(
       [
         HomePageModel(
@@ -125,7 +126,6 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
           page: DashboardTab(
             loginSuccessModel: widget.loginSuccessModel,
             mskoolController: widget.mskoolController,
-            // controller: controller,
             profileController: profileController,
           ),
           selectedColor: const Color(0xFF9900F0),
@@ -147,8 +147,6 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
             page: CoeHomeScreen(
               loginSuccessModel: widget.loginSuccessModel,
               mskoolController: widget.mskoolController,
-              // title: 'COE',
-              // previousScreen: '1',
               profileController: profileController,
             ),
             selectedColor: const Color.fromRGBO(247, 80, 80, 1),
@@ -182,6 +180,10 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
       return false;
     }
     return true;
+  }
+  Future<bool> usrDtct() async{
+    return true;
+
   }
 
   @override

@@ -36,8 +36,6 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
     super.dispose();
   }
 
-  int appHours = 0;
-  int appMinutes = 0;
   int count1 = 0;
   int count2 = 0;
   double count3 = 0;
@@ -282,16 +280,6 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
                               int minutes =
                                   ((val.efforts! - hours) * 60).round();
 
-                              if (val.iSMDRPTApprovedTime != null) {
-                                appHours = val.iSMDRPTApprovedTime!.floor();
-                                appMinutes =
-                                    ((val.iSMDRPTApprovedTime! - hours) * 60)
-                                        .round();
-                              }
-                              // if (val.iSMDRPTDate != null) {
-                              //   DateTime dt = DateTime.parse(val.iSMDRPTDate!);
-                              //   var date = '${dt.day}-${dt.month}-${dt.year}';
-                              // }
                               return DataRow(cells: [
                                 DataCell(Text(v.toString())),
                                 DataCell(Column(
@@ -365,8 +353,22 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
                                     ),
                                   ],
                                 )),
-                                DataCell(Text(val.iSMTCRDesc ?? '')),
-                                DataCell(Text(val.iSMDRPTRemarks ?? '')),
+                                DataCell(SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.45,
+                                    child: Text(
+                                      val.iSMTCRDesc ?? '',
+                                      maxLines: 8,
+                                      overflow: TextOverflow.fade,
+                                    ))),
+                                DataCell(SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
+                                    child: Text(
+                                      val.iSMDRPTRemarks ?? '',
+                                      maxLines: 8,
+                                      overflow: TextOverflow.fade,
+                                    ))),
                                 DataCell(Text('$hours.$minutes Hr')),
                                 DataCell(Text(
                                   val.iSMDRPTApprovedFlg ?? '',
@@ -378,7 +380,8 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
                                           : Colors.red),
                                 )),
                                 DataCell(Text((val.iSMDRPTApprovedTime != null)
-                                    ? '$appHours.$appMinutes Hr'
+                                    ? convertDoubleToHourMinute(
+                                        val.iSMDRPTApprovedTime!)
                                     : '')),
                               ]);
                             }),
@@ -395,5 +398,15 @@ class _SearchPreviousTaskState extends State<SearchPreviousTask> {
         ],
       ),
     );
+  }
+
+  String convertDoubleToHourMinute(double time) {
+    int hours = time.toInt();
+    int minutes = ((time - hours) * 60).round();
+
+    String hourStr = hours.toString().padLeft(2, '0');
+    String minStr = minutes.toString().padLeft(2, '0');
+
+    return '$hourStr.$minStr Hrs';
   }
 }

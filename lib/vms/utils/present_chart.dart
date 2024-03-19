@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -12,13 +13,6 @@ class PresentChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int data = 0;
-    DateTime feb1 = DateTime(DateTime.now().year, DateTime.now().month, 1);
-    DateTime feb23 = DateTime.now();
-    int differenceInDays = feb23.difference(feb1).inDays + 1;
-    data = differenceInDays -
-        (controller.present.value + controller.holiday.value);
-    controller.absent.value = data;
     final List<AttandanceData> chartData = [];
     chartData.add(AttandanceData(
         name: 'Present', count: controller.present.value, color: Colors.green));
@@ -127,50 +121,118 @@ class RatingData extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: Colors.grey)),
       padding: const EdgeInsets.all(4),
-      child: Column(children: [
-        RatingBar.builder(
-          ignoreGestures: true,
-          initialRating: double.parse(controller
-              .ratingDataModelValues.first.overallRating!
-              .round()
-              .toString()),
-          minRating: 1,
-          direction: Axis.horizontal,
-          allowHalfRating: false,
-          itemCount: 5,
-          itemPadding: const EdgeInsets.only(right: 2),
-          itemSize: 20,
-          itemBuilder: (context, _) => const Icon(
-            Icons.star,
-            color: Colors.amber,
-          ),
-          onRatingUpdate: (rating) {},
-        ),
-        const SizedBox(height: 5),
-        Padding(
-          padding: const EdgeInsets.only(left: 6.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "${controller.ratingDataModelValues.first.overallRating} Average Based on Review",
-                textAlign: TextAlign.center,
-                style: Get.textTheme.titleSmall!
-                    .copyWith(color: Theme.of(context).primaryColor),
-              ),
-              // Text(
-              //   "${doubleToTime(controller.hour)} Hr",
-              //   style: Get.textTheme.titleSmall!.copyWith(color: Colors.red),
-              // ),
-              // Text(
-              //   "Late-In / Early-Out Time",
-              //   textAlign: TextAlign.center,
-              //   style: Get.textTheme.titleSmall!.copyWith(color: Colors.red),
-              // ),
-            ],
-          ),
-        )
-      ]),
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Column(children: [
+          (controller.ratingDataModelValues.first.overallRating != null)
+              ? RatingBar.builder(
+                  ignoreGestures: true,
+                  initialRating: double.parse(controller
+                      .ratingDataModelValues.first.overallRating!
+                      .round()
+                      .toString()),
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  allowHalfRating: false,
+                  itemCount: 5,
+                  itemPadding: const EdgeInsets.only(right: 2),
+                  itemSize: 20,
+                  itemBuilder: (context, _) => const Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (rating) {},
+                )
+              : const SizedBox(),
+          const SizedBox(height: 5),
+          Padding(
+            padding: const EdgeInsets.only(left: 6.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                (controller.ratingDataModelValues.first.overallRating != null)
+                    ? Text(
+                        "${controller.ratingDataModelValues.first.overallRating} Average Based on Review",
+                        textAlign: TextAlign.center,
+                        style: Get.textTheme.titleSmall!
+                            .copyWith(color: Theme.of(context).primaryColor),
+                      )
+                    : const SizedBox(),
+                (controller.lateInMinute != '')
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 3.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              controller.lateInMinute,
+                              style: Get.textTheme.titleSmall!
+                                  .copyWith(color: Colors.red),
+                            ),
+                            Text(
+                              "Late-In / Early-Out Time",
+                              textAlign: TextAlign.center,
+                              style: Get.textTheme.titleSmall!
+                                  .copyWith(color: Colors.red),
+                            ),
+                          ],
+                        ),
+                      )
+                    : const SizedBox(),
+                (controller.leaveDataList.isNotEmpty)
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 3.0),
+                        child: Text(
+                          "Total Leave:- ${controller.leaveDataList.first.hrelSTotalLeaves ?? 0}",
+                          textAlign: TextAlign.center,
+                          style: Get.textTheme.titleSmall!
+                              .copyWith(color: Colors.black),
+                        ),
+                      )
+                    : const SizedBox(),
+                (controller.leaveDataList.isNotEmpty)
+                    ? Text(
+                        "Leave Balance:- ${controller.leaveDataList.first.hrelSCBLeaves ?? 0}",
+                        textAlign: TextAlign.center,
+                        style: Get.textTheme.titleSmall!
+                            .copyWith(color: Colors.black),
+                      )
+                    : const SizedBox(),
+                (controller.upcomIngHolidayList.isNotEmpty)
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 3.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              "UPComing Holiday",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(
+                                      color: Theme.of(context).primaryColor),
+                            ),
+                            Text(
+                              "${controller.upcomIngHolidayList.first.fomhwdDName}",
+                              textAlign: TextAlign.center,
+                              style: Get.textTheme.titleSmall!
+                                  .copyWith(color: Colors.orange, fontSize: 13),
+                            ),
+                            Text(
+                              dateFormatNew(DateTime.parse(controller
+                                  .upcomIngHolidayList.first.fomhwdDFromDate!)),
+                              textAlign: TextAlign.center,
+                              style: Get.textTheme.titleSmall!
+                                  .copyWith(color: Colors.red, fontSize: 12),
+                            )
+                          ],
+                        ),
+                      )
+                    : const SizedBox()
+              ],
+            ),
+          )
+        ]),
+      ),
     );
   }
 

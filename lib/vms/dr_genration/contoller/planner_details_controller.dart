@@ -236,6 +236,7 @@ class PlannerDetails extends GetxController {
 
   List<UploadDrImage> uploadAllAttachment = [];
   List<Map<String, dynamic>> imageUploadedList = [];
+  List<bool> compOffCheckBox = [];
 }
 //
 

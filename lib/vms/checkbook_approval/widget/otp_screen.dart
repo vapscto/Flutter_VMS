@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/config/themes/theme_data.dart';
 
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/controller/opt_sent_controller.dart';
+
 import 'package:m_skool_flutter/model/login_success_model.dart';
 
 import 'package:m_skool_flutter/vms/checkbook_approval/controller/cheque_controller.dart';
@@ -38,6 +39,9 @@ class _OTpScreenState extends State<OTpScreen> {
 
   Timer? timer;
   // int seconds = 59;
+  RxString timr = "".obs;
+  String? toastMsg =
+      "You are entering wrong otp, we didn't sent this otp, check and try again";
   @override
   void initState() {
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
@@ -136,16 +140,19 @@ class _OTpScreenState extends State<OTpScreen> {
                         msg: "Please provide otp to continue");
                     return;
                   }
-
+                  if ('${otpSentStatusController.minutes.value}:${otpSentStatusController.remainingSeconds.toString().padLeft(2, '0')}' ==
+                      "0:00") {
+                    widget.chequeController.otpResponseList.first.emailotp =
+                        "0";
+                    toastMsg = "Otp Expired: ${entredOtp.text}";
+                  }
                   if (entredOtp.text ==
                       widget.chequeController.otpResponseList.first.emailotp) {
                     Fluttertoast.showToast(msg: "Otp Verified Successfully");
                     _chequeController.updateBtns(true);
                     Get.back();
                   } else {
-                    Fluttertoast.showToast(
-                        msg:
-                            "You are entering wrong otp, we didn't sent this otp, check and try again");
+                    Fluttertoast.showToast(msg: toastMsg!);
                   }
                 },
                 child: Text(

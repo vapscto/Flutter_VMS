@@ -4,10 +4,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/apis/institutional_code_api.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/institutional_code_model.dart';
 import 'package:m_skool_flutter/screens/login_screen.dart';
+import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
@@ -21,9 +23,17 @@ class InstitutionalLogin extends StatefulWidget {
 
 class _InstitutionalLoginState extends State<InstitutionalLogin> {
   final TextEditingController insCode = TextEditingController();
+  final ProfileController profileController = Get.put(ProfileController());
 
   @override
   void initState() {
+    //user one time
+    if (profileController.userDeviceId.value.isNotEmpty &&
+        profileController.userDeviceId.value.characters.length > 3) {
+      if (profileController.userDeviceId.value != deviceid) {
+        Fluttertoast.showToast(msg: "User Already Logged In Other Device");
+      }
+    }
     super.initState();
   }
 

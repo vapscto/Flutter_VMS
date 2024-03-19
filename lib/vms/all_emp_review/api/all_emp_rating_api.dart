@@ -16,6 +16,8 @@ class AllEmpRatingAPI {
       required Map<String, dynamic> body,
       required EmpRatingController controller}) async {
     var api = base + URLS.allEmpRating;
+    logger.i(api);
+    logger.i(body);
     try {
       controller.empLoad(true);
       var response = await dio.post(api,

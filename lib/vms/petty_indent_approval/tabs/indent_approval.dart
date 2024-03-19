@@ -79,11 +79,6 @@ class _IndentApprovalState extends State<IndentApproval> {
   ////*** SAVE VALIDATION ***////
 
   bool validateFields() {
-    // if (selectedIndent == null) {
-    //   Fluttertoast.showToast(msg: "select an Indent.");
-    //   return false;
-    // }
-
     if (selectCheckBx!.isEmpty) {
       Fluttertoast.showToast(
           msg: "Select Requisition Particular Details checkbox");
@@ -236,7 +231,7 @@ class _IndentApprovalState extends State<IndentApproval> {
                         padding: EdgeInsets.only(top: 3),
                         child: Icon(
                           Icons.keyboard_arrow_down_rounded,
-                          size: 30,
+                          size: 25,
                         ),
                       ),
                       iconSize: 30,
@@ -247,17 +242,21 @@ class _IndentApprovalState extends State<IndentApproval> {
                           value:
                               indentApprovalController.organizationList[index],
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 13, left: 5),
-                            child: Text(
-                              indentApprovalController
-                                  .organizationList[index].mIName!,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall!
-                                  .merge(const TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.3)),
+                            padding: const EdgeInsets.only(
+                                top: 10, left: 5, bottom: 2),
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.75,
+                              child: Text(
+                                indentApprovalController
+                                    .organizationList[index].mIName!,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .merge(const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.3)),
+                              ),
                             ),
                           ),
                         );
@@ -268,7 +267,8 @@ class _IndentApprovalState extends State<IndentApproval> {
                         });
 
                         getIndentApprovalOnChange(
-                            miId: widget.loginSuccessModel.mIID!,
+                            miId: selectedOrganization!
+                                .mIId!, //widget.loginSuccessModel.mIID!,
                             base: baseUrlFromInsCode(
                                 "issuemanager", widget.mskoolController),
                             controller: indentApprovalController,
@@ -285,7 +285,6 @@ class _IndentApprovalState extends State<IndentApproval> {
             Visibility(
               visible: indentApprovalController.organizationList.isNotEmpty,
               child: Row(
-                //crossAxisAlignment: CrossAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
@@ -294,7 +293,6 @@ class _IndentApprovalState extends State<IndentApproval> {
                         readOnly: true,
                         controller: fromDate,
                         style: Theme.of(context).textTheme.titleSmall,
-                        //controller: date,
                         decoration: InputDecoration(
                           contentPadding:
                               const EdgeInsets.only(top: 48.0, left: 12),
@@ -380,7 +378,8 @@ class _IndentApprovalState extends State<IndentApproval> {
                                       .clear();
 
                                   await getPcIndentApproval(
-                                      miId: widget.loginSuccessModel.mIID!,
+                                      miId: selectedOrganization!
+                                          .mIId!, //widget.loginSuccessModel.mIID!,
                                       base: baseUrlFromInsCode("issuemanager",
                                           widget.mskoolController),
                                       roleId: widget.loginSuccessModel.roleId!,
@@ -496,7 +495,8 @@ class _IndentApprovalState extends State<IndentApproval> {
                                       .clear();
 
                                   await getPcIndentApproval(
-                                      miId: widget.loginSuccessModel.mIID!,
+                                      miId: selectedOrganization!
+                                          .mIId!, //widget.loginSuccessModel.mIID!,
                                       base: baseUrlFromInsCode("issuemanager",
                                           widget.mskoolController),
                                       roleId: widget.loginSuccessModel.roleId!,
@@ -535,8 +535,6 @@ class _IndentApprovalState extends State<IndentApproval> {
                         height: 35,
                       ),
 
-                      ///*****   DATA TABLE FOR REQUISITION  INDENT DETAILS   *****/////
-
                       const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -552,279 +550,285 @@ class _IndentApprovalState extends State<IndentApproval> {
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
-                        child: DataTable(
-                          dataTextStyle: const TextStyle(
-                            fontSize: 15,
-                            color: Color.fromRGBO(5, 5, 5, 0.945),
-                            fontWeight: FontWeight.w500,
-                          ),
-                          dataRowHeight: 60,
-                          headingRowHeight: 55,
-                          horizontalMargin: 10,
-                          columnSpacing: 40,
-                          dividerThickness: 1,
-                          border: TableBorder.all(
-                            borderRadius: const BorderRadius.only(
-                              bottomRight: Radius.circular(10),
-                              bottomLeft: Radius.circular(10),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: DataTable(
+                            dataTextStyle: const TextStyle(
+                              fontSize: 15,
+                              color: Color.fromRGBO(5, 5, 5, 0.945),
+                              fontWeight: FontWeight.w400,
                             ),
-                          ),
-                          headingRowColor: MaterialStateProperty.all(
-                              Theme.of(context).primaryColor),
-                          columns: [
-                            DataColumn(
-                              label: Checkbox(
-                                activeColor:
-                                    const Color.fromARGB(31, 68, 4, 247),
-                                value: selectedRows.length ==
-                                    indentApprovalController
-                                        .requisitiondetais.length,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    if (value != null) {
-                                      if (value) {
-                                        indentApprovalController
-                                            .particularRequisitionDetais
-                                            .clear();
+                            dataRowHeight: 60,
+                            headingRowHeight: 55,
+                            horizontalMargin: 10,
+                            columnSpacing: 40,
+                            dividerThickness: 1,
+                            border: TableBorder.all(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            headingRowColor: MaterialStateProperty.all(
+                                Theme.of(context).primaryColor),
+                            columns: [
+                              DataColumn(
+                                label: Checkbox(
+                                  activeColor:
+                                      const Color.fromARGB(31, 68, 4, 247),
+                                  value: selectedRows.length ==
+                                      indentApprovalController
+                                          .requisitiondetais.length,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      if (value != null) {
+                                        if (value) {
+                                          indentApprovalController
+                                              .particularRequisitionDetais
+                                              .clear();
+
+                                          // selectedRows.clear();
+                                          selectedRows = Set<int>.from(
+                                            List.generate(
+                                              indentApprovalController
+                                                  .requisitiondetais.length,
+                                              (index) => index,
+                                            ),
+                                          );
+                                        } else {
+                                          indentApprovalController
+                                              .particularRequisitionDetais
+                                              .clear();
+                                          selectedRows.clear();
+                                        }
+
+                                        selectedRequisitionIds.clear();
+                                        totalRequestedAmount = 0.0;
+                                        tempRequisitionId.clear();
+                                        for (int i = 0;
+                                            i < selectedRows.length;
+                                            i++) {
+                                          selectedRequisitionIds.add(i);
+                                          tempRequisitionId.add({
+                                            "PCREQTN_Id":
+                                                indentApprovalController
+                                                    .requisitiondetais[i]
+                                                    .pcreqtNId,
+                                          });
+                                          totalRequestedAmount +=
+                                              indentApprovalController
+                                                      .requisitiondetais[
+                                                          selectedRows
+                                                              .elementAt(i)]
+                                                      .pcreqtNTotAmount ??
+                                                  0.0;
+                                        }
 
                                         // selectedRows.clear();
-                                        selectedRows = Set<int>.from(
-                                          List.generate(
-                                            indentApprovalController
-                                                .requisitiondetais.length,
-                                            (index) => index,
-                                          ),
+
+                                        particularReqDetails(
+                                          tempRequisitionId: tempRequisitionId,
+                                          miId: selectedOrganization!
+                                              .mIId!, //widget.loginSuccessModel.mIID!,
+                                          asmaYId:
+                                              widget.loginSuccessModel.asmaYId!,
+                                          base: baseUrlFromInsCode(
+                                              "issuemanager",
+                                              widget.mskoolController),
+                                          controller: indentApprovalController,
+                                          roleFlag: widget
+                                              .loginSuccessModel.roleforlogin!,
+                                          roleId:
+                                              widget.loginSuccessModel.roleId!,
+                                          userId:
+                                              widget.loginSuccessModel.userId!,
                                         );
-                                      } else {
-                                        indentApprovalController
-                                            .particularRequisitionDetais
-                                            .clear();
-                                        selectedRows.clear();
                                       }
-
-                                      selectedRequisitionIds.clear();
-                                      totalRequestedAmount = 0.0;
-                                      tempRequisitionId.clear();
-                                      for (int i = 0;
-                                          i < selectedRows.length;
-                                          i++) {
-                                        selectedRequisitionIds.add(i);
-                                        tempRequisitionId.add({
-                                          "PCREQTN_Id": indentApprovalController
-                                              .requisitiondetais[i].pcreqtNId,
-                                        });
-                                        totalRequestedAmount +=
-                                            indentApprovalController
-                                                    .requisitiondetais[
-                                                        selectedRows
-                                                            .elementAt(i)]
-                                                    .pcreqtNTotAmount ??
-                                                0.0;
-                                      }
-
-                                      // selectedRows.clear();
-
-                                      particularReqDetails(
-                                        tempRequisitionId: tempRequisitionId,
-                                        miId: widget.loginSuccessModel.mIID!,
-                                        asmaYId:
-                                            widget.loginSuccessModel.asmaYId!,
-                                        base: baseUrlFromInsCode("issuemanager",
-                                            widget.mskoolController),
-                                        controller: indentApprovalController,
-                                        roleFlag: widget
-                                            .loginSuccessModel.roleforlogin!,
-                                        roleId:
-                                            widget.loginSuccessModel.roleId!,
-                                        userId:
-                                            widget.loginSuccessModel.userId!,
-                                      );
-                                    }
-                                  });
-                                },
+                                    });
+                                  },
+                                ),
                               ),
-                            ),
-                            const DataColumn(
-                              label: Text("Sl No",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w800)),
-                            ),
-                            const DataColumn(
-                              label: Text("Requisition No.",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w800)),
-                            ),
-                            const DataColumn(
-                              label: Text("Department",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w800)),
-                            ),
-                            const DataColumn(
-                              label: Text("Requested By",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w800)),
-                            ),
-                            const DataColumn(
-                              label: Text("Date",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w800)),
-                            ),
-                            const DataColumn(
-                              label: Text("Total Amount",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w800)),
-                            ),
-                            const DataColumn(
-                              label: Text("Purpose",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w800)),
-                            ),
-                          ],
-                          rows: List.generate(
-                            indentApprovalController.requisitiondetais.length,
-                            (index) {
-                              var i = index + 1;
+                              const DataColumn(
+                                label: Text("Sl No",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w800)),
+                              ),
+                              const DataColumn(
+                                label: Text("Requisition No.",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w800)),
+                              ),
+                              const DataColumn(
+                                label: Text("Department",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w800)),
+                              ),
+                              const DataColumn(
+                                label: Text("Requested By",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w800)),
+                              ),
+                              const DataColumn(
+                                label: Text("Date",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w800)),
+                              ),
+                              const DataColumn(
+                                label: Text("Total Amount",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w800)),
+                              ),
+                              const DataColumn(
+                                label: Text("Purpose",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w800)),
+                              ),
+                            ],
+                            rows: List.generate(
+                              indentApprovalController.requisitiondetais.length,
+                              (index) {
+                                var i = index + 1;
 
-                              return DataRow(
-                                cells: [
-                                  DataCell(
-                                    Checkbox(
-                                      activeColor: const Color.fromARGB(
-                                          255, 55, 67, 241),
-                                      value: selectedRequisitionIds
-                                          .contains(index),
-                                      onChanged: (bool? value) {
-                                        setState(() {
-                                          if (value != null) {
-                                            if (value) {
-                                              selectedRequisitionIds.add(index);
-                                              totalRequestedAmount +=
-                                                  indentApprovalController
-                                                          .requisitiondetais[
-                                                              index]
-                                                          .pcreqtNTotAmount ??
-                                                      0.0;
-                                            } else {
-                                              selectedRequisitionIds
-                                                  .remove(index);
-                                              totalRequestedAmount -=
-                                                  indentApprovalController
-                                                          .requisitiondetais[
-                                                              index]
-                                                          .pcreqtNTotAmount ??
-                                                      0;
-
-                                              indentApprovalController
-                                                  .checkBoxList
-                                                  .clear();
-                                              selectAll = false;
-                                            }
-                                            tempRequisitionId.clear();
-                                            for (int i = 0;
-                                                i <
-                                                    selectedRequisitionIds
-                                                        .length;
-                                                i++) {
-                                              tempRequisitionId.add({
-                                                "PCREQTN_Id":
+                                return DataRow(
+                                  cells: [
+                                    DataCell(
+                                      Checkbox(
+                                        activeColor: const Color.fromARGB(
+                                            255, 55, 67, 241),
+                                        value: selectedRequisitionIds
+                                            .contains(index),
+                                        onChanged: (bool? value) {
+                                          setState(() {
+                                            if (value != null) {
+                                              if (value) {
+                                                selectedRequisitionIds
+                                                    .add(index);
+                                                totalRequestedAmount +=
                                                     indentApprovalController
-                                                        .requisitiondetais[
-                                                            selectedRequisitionIds[
-                                                                i]]
-                                                        .pcreqtNId,
-                                              });
-                                            }
+                                                            .requisitiondetais[
+                                                                index]
+                                                            .pcreqtNTotAmount ??
+                                                        0.0;
+                                              } else {
+                                                selectedRequisitionIds
+                                                    .remove(index);
+                                                totalRequestedAmount -=
+                                                    indentApprovalController
+                                                            .requisitiondetais[
+                                                                index]
+                                                            .pcreqtNTotAmount ??
+                                                        0;
 
-                                            if (indentApprovalController
-                                                .particularRequisitionDetais
-                                                .isNotEmpty) {
-                                              indentApprovalController
+                                                indentApprovalController
+                                                    .checkBoxList
+                                                    .clear();
+                                                selectAll = false;
+                                              }
+                                              tempRequisitionId.clear();
+                                              for (int i = 0;
+                                                  i <
+                                                      selectedRequisitionIds
+                                                          .length;
+                                                  i++) {
+                                                tempRequisitionId.add({
+                                                  "PCREQTN_Id":
+                                                      indentApprovalController
+                                                          .requisitiondetais[
+                                                              selectedRequisitionIds[
+                                                                  i]]
+                                                          .pcreqtNId,
+                                                });
+                                              }
+
+                                              if (indentApprovalController
                                                   .particularRequisitionDetais
-                                                  .clear();
-                                              selectCheckBx!.clear();
-                                            }
+                                                  .isNotEmpty) {
+                                                indentApprovalController
+                                                    .particularRequisitionDetais
+                                                    .clear();
+                                                selectCheckBx!.clear();
+                                              }
 
-                                            particularReqDetails(
-                                              tempRequisitionId:
-                                                  tempRequisitionId,
-                                              miId: widget
-                                                  .loginSuccessModel.mIID!,
-                                              asmaYId: widget
-                                                  .loginSuccessModel.asmaYId!,
-                                              base: baseUrlFromInsCode(
-                                                  "issuemanager",
-                                                  widget.mskoolController),
-                                              controller:
-                                                  indentApprovalController,
-                                              roleFlag: widget.loginSuccessModel
-                                                  .roleforlogin!,
-                                              roleId: widget
-                                                  .loginSuccessModel.roleId!,
-                                              userId: widget
-                                                  .loginSuccessModel.userId!,
-                                            );
-                                          } else {
-                                            selectCheckBx!.clear();
-                                            selectCheckBx!.remove(index);
-                                          }
-                                        });
-                                      },
+                                              particularReqDetails(
+                                                tempRequisitionId:
+                                                    tempRequisitionId,
+                                                miId: selectedOrganization!
+                                                    .mIId!, //widget.loginSuccessModel.mIID!,
+                                                asmaYId: widget
+                                                    .loginSuccessModel.asmaYId!,
+                                                base: baseUrlFromInsCode(
+                                                    "issuemanager",
+                                                    widget.mskoolController),
+                                                controller:
+                                                    indentApprovalController,
+                                                roleFlag: widget
+                                                    .loginSuccessModel
+                                                    .roleforlogin!,
+                                                roleId: widget
+                                                    .loginSuccessModel.roleId!,
+                                                userId: widget
+                                                    .loginSuccessModel.userId!,
+                                              );
+                                            } else {
+                                              selectCheckBx!.clear();
+                                              selectCheckBx!.remove(index);
+                                            }
+                                          });
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                  DataCell(
-                                    Align(
+                                    DataCell(
+                                      Align(
+                                          alignment: Alignment.center,
+                                          child: Text('$i')),
+                                    ),
+                                    DataCell(
+                                      Align(
                                         alignment: Alignment.center,
-                                        child: Text('$i')),
-                                  ),
-                                  DataCell(
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                          "${indentApprovalController.requisitiondetais.elementAt(index).pcreqtNRequisitionNo}"),
+                                        child: Text(
+                                            "${indentApprovalController.requisitiondetais.elementAt(index).pcreqtNRequisitionNo}"),
+                                      ),
                                     ),
-                                  ),
-                                  DataCell(
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                          "${indentApprovalController.requisitiondetais.elementAt(index).departmentname}"),
+                                    DataCell(
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                            "${indentApprovalController.requisitiondetais.elementAt(index).departmentname}"),
+                                      ),
                                     ),
-                                  ),
-                                  DataCell(
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                          "${indentApprovalController.requisitiondetais.elementAt(index).employeename}"),
+                                    DataCell(
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                            "${indentApprovalController.requisitiondetais.elementAt(index).employeename}"),
+                                      ),
                                     ),
-                                  ),
-                                  DataCell(
-                                    Text(getDateNeed(DateTime.parse(
-                                        indentApprovalController
-                                            .requisitiondetais
-                                            .elementAt(index)
-                                            .createdate!))),
-                                  ),
-                                  DataCell(
-                                    Text(
-                                        "${indentApprovalController.requisitiondetais.elementAt(index).pcreqtNTotAmount}"),
-                                  ),
-                                  DataCell(
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                          "${indentApprovalController.requisitiondetais.elementAt(index).pcreqtNPurpose}"),
+                                    DataCell(
+                                      Text(getDateNeed(DateTime.parse(
+                                          indentApprovalController
+                                              .requisitiondetais
+                                              .elementAt(index)
+                                              .createdate!))),
                                     ),
-                                  ),
-                                ],
-                              );
-                            },
+                                    DataCell(
+                                      Text(
+                                          "${indentApprovalController.requisitiondetais.elementAt(index).pcreqtNTotAmount}"),
+                                    ),
+                                    DataCell(
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                            "${indentApprovalController.requisitiondetais.elementAt(index).pcreqtNPurpose}"),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),
@@ -863,329 +867,339 @@ class _IndentApprovalState extends State<IndentApproval> {
                                   ),
                                   SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
-                                    child: DataTable(
-                                        dataTextStyle: const TextStyle(
-                                            fontSize: 15,
-                                            color:
-                                                Color.fromRGBO(5, 5, 5, 0.945),
-                                            fontWeight: FontWeight.w500),
-                                        dataRowHeight: 60,
-                                        headingRowHeight: 55,
-                                        horizontalMargin: 10,
-                                        columnSpacing: 40,
-                                        dividerThickness: 1,
-                                        border: TableBorder.all(
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                                    bottomRight:
-                                                        Radius.circular(10),
-                                                    bottomLeft:
-                                                        Radius.circular(10))),
-                                        headingRowColor:
-                                            MaterialStateProperty.all(
-                                                Theme.of(context).primaryColor),
-                                        columns: [
-                                          DataColumn(
-                                              label: Checkbox(
-                                            shape: ContinuousRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            activeColor: Colors.indigo,
-                                            value: selectAll,
-                                            onChanged: (value) {
-                                              selectAll = value!;
-                                              setState(() {
-                                                if (selectAll) {
-                                                  selectCheckBx!.clear();
-                                                  for (int i = 0;
-                                                      i <
-                                                          indentApprovalController
-                                                              .eTapprovalAmount
-                                                              .length;
-                                                      i++) {
-                                                    selectCheckBx!.add(i);
-                                                    indentApprovalController
-                                                        .checkBoxList[i] = true;
-
-                                                    print(selectCheckBx
-                                                        .toString());
-                                                  }
-                                                } else {
-                                                  for (int i = 0;
-                                                      i <
-                                                          indentApprovalController
-                                                              .eTapprovalAmount
-                                                              .length;
-                                                      i++) {
-                                                    selectCheckBx!.remove(i);
-
-                                                    indentApprovalController
-                                                            .checkBoxList[i] =
-                                                        false;
-
-                                                    indentApprovalController
-                                                        .eTapprovalAmount[i]
-                                                        .text = '';
-                                                    print(selectCheckBx
-                                                        .toString());
-                                                  }
-                                                }
-                                              });
-                                            },
-                                          )),
-                                          const DataColumn(
-                                              label: Text("S No.",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w800))),
-                                          const DataColumn(
-                                              label: Text("Requisition No.",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w800))),
-                                          const DataColumn(
-                                              label: Text("Particulars",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w800))),
-                                          const DataColumn(
-                                              label: Text("Requested Amount",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w800))),
-                                          const DataColumn(
-                                              label: Text("Approved Amount",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w800))),
-                                          const DataColumn(
-                                              label: Text("Remarks",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w800))),
-                                        ],
-                                        rows: List.generate(
-                                            indentApprovalController
-                                                .particularRequisitionDetais
-                                                .length, (index) {
-                                          var i = index + 1;
-                                          return DataRow(
-                                            cells: [
-                                              DataCell(Align(
-                                                alignment: Alignment.center,
-                                                child: Checkbox(
-                                                  activeColor: Colors.indigo,
-                                                  shape:
-                                                      ContinuousRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      10)),
-                                                  value:
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: DataTable(
+                                          dataTextStyle: const TextStyle(
+                                              fontSize: 15,
+                                              color: Color.fromRGBO(
+                                                  5, 5, 5, 0.945),
+                                              fontWeight: FontWeight.w400),
+                                          dataRowHeight: 60,
+                                          headingRowHeight: 55,
+                                          horizontalMargin: 10,
+                                          columnSpacing: 40,
+                                          dividerThickness: 1,
+                                          border: TableBorder.all(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          headingRowColor:
+                                              MaterialStateProperty.all(
+                                                  Theme.of(context)
+                                                      .primaryColor),
+                                          columns: [
+                                            DataColumn(
+                                                label: Checkbox(
+                                              shape: ContinuousRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              activeColor: Colors.indigo,
+                                              value: selectAll,
+                                              onChanged: (value) {
+                                                selectAll = value!;
+                                                setState(() {
+                                                  if (selectAll) {
+                                                    selectCheckBx!.clear();
+                                                    for (int i = 0;
+                                                        i <
+                                                            indentApprovalController
+                                                                .eTapprovalAmount
+                                                                .length;
+                                                        i++) {
+                                                      selectCheckBx!.add(i);
                                                       indentApprovalController
-                                                          .checkBoxList
-                                                          .elementAt(index),
-                                                  onChanged: (value) {
-                                                    indentApprovalController
-                                                            .checkBoxList[
-                                                        index] = value!;
-                                                    setState(() {
-                                                      if (value) {
-                                                        if (selectCheckBx!
-                                                            .contains(index)) {
-                                                          selectCheckBx!
-                                                              .remove(index);
-                                                          print(selectCheckBx
-                                                              .toString());
+                                                              .checkBoxList[i] =
+                                                          true;
 
+                                                      print(selectCheckBx
+                                                          .toString());
+                                                    }
+                                                  } else {
+                                                    for (int i = 0;
+                                                        i <
+                                                            indentApprovalController
+                                                                .eTapprovalAmount
+                                                                .length;
+                                                        i++) {
+                                                      selectCheckBx!.remove(i);
+
+                                                      indentApprovalController
+                                                              .checkBoxList[i] =
+                                                          false;
+
+                                                      indentApprovalController
+                                                          .eTapprovalAmount[i]
+                                                          .text = '';
+                                                      print(selectCheckBx
+                                                          .toString());
+                                                    }
+                                                  }
+                                                });
+                                              },
+                                            )),
+                                            const DataColumn(
+                                                label: Text("S No.",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w800))),
+                                            const DataColumn(
+                                                label: Text("Requisition No.",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w800))),
+                                            const DataColumn(
+                                                label: Text("Particulars",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w800))),
+                                            const DataColumn(
+                                                label: Text("Requested Amount",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w800))),
+                                            const DataColumn(
+                                                label: Text("Approved Amount",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w800))),
+                                            const DataColumn(
+                                                label: Text("Remarks",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w800))),
+                                          ],
+                                          rows: List.generate(
+                                              indentApprovalController
+                                                  .particularRequisitionDetais
+                                                  .length, (index) {
+                                            var i = index + 1;
+                                            return DataRow(
+                                              cells: [
+                                                DataCell(Align(
+                                                  alignment: Alignment.center,
+                                                  child: Checkbox(
+                                                    activeColor: Colors.indigo,
+                                                    shape:
+                                                        ContinuousRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10)),
+                                                    value:
+                                                        indentApprovalController
+                                                            .checkBoxList
+                                                            .elementAt(index),
+                                                    onChanged: (value) {
+                                                      indentApprovalController
+                                                              .checkBoxList[
+                                                          index] = value!;
+                                                      setState(() {
+                                                        if (value) {
+                                                          if (selectCheckBx!
+                                                              .contains(
+                                                                  index)) {
+                                                            selectCheckBx!
+                                                                .remove(index);
+                                                            print(selectCheckBx
+                                                                .toString());
+
+                                                            indentApprovalController
+                                                                .eTapprovalAmount
+                                                                .elementAt(
+                                                                    index)
+                                                                .text = '';
+
+                                                            if (indentApprovalController
+                                                                    .checkBoxList
+                                                                    .length !=
+                                                                selectCheckBx!
+                                                                    .length) {
+                                                              selectAll = false;
+                                                            }
+                                                          } else {
+                                                            updateTotalApprovedAmount(
+                                                                index);
+                                                            selectCheckBx!
+                                                                .add(index);
+                                                            print("select  ");
+                                                            if (indentApprovalController
+                                                                    .checkBoxList
+                                                                    .length ==
+                                                                selectCheckBx!
+                                                                    .length) {
+                                                              selectAll = true;
+                                                              print(
+                                                                  "select all");
+                                                            }
+                                                          }
+                                                        } else {
                                                           indentApprovalController
                                                               .eTapprovalAmount
                                                               .elementAt(index)
                                                               .text = '';
 
+                                                          selectCheckBx!
+                                                              .remove(index);
+                                                          print(selectCheckBx
+                                                              .toString());
                                                           if (indentApprovalController
-                                                                  .checkBoxList
+                                                                  .eTapprovalAmount
                                                                   .length !=
                                                               selectCheckBx!
                                                                   .length) {
                                                             selectAll = false;
                                                           }
-                                                        } else {
-                                                          updateTotalApprovedAmount(
-                                                              index);
-                                                          selectCheckBx!
-                                                              .add(index);
-                                                          print("select  ");
-                                                          if (indentApprovalController
-                                                                  .checkBoxList
-                                                                  .length ==
-                                                              selectCheckBx!
-                                                                  .length) {
-                                                            selectAll = true;
-                                                            print("select all");
-                                                          }
                                                         }
-                                                      } else {
-                                                        indentApprovalController
-                                                            .eTapprovalAmount
-                                                            .elementAt(index)
-                                                            .text = '';
-
-                                                        selectCheckBx!
-                                                            .remove(index);
-                                                        print(selectCheckBx
-                                                            .toString());
-                                                        if (indentApprovalController
-                                                                .eTapprovalAmount
-                                                                .length !=
-                                                            selectCheckBx!
-                                                                .length) {
-                                                          selectAll = false;
-                                                        }
-                                                      }
-                                                    });
-                                                  },
-                                                ),
-                                              )),
-                                              DataCell(Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text('$i'))),
-                                              DataCell(Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                    "${indentApprovalController.particularRequisitionDetais.elementAt(index).pcreqtNRequisitionNo}"),
-                                              )),
-                                              DataCell(Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                    "${indentApprovalController.particularRequisitionDetais.elementAt(index).pcmparTParticularName}"),
-                                              )),
-                                              DataCell(Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                    "${indentApprovalController.particularRequisitionDetais.elementAt(index).pcreqtndeTAmount}"),
-                                              )),
-                                              DataCell(
-                                                Align(
+                                                      });
+                                                    },
+                                                  ),
+                                                )),
+                                                DataCell(Align(
                                                     alignment: Alignment.center,
-                                                    // child: TapRegion(
-                                                    // onTapOutside:(event) {
-                                                    //   if(indentApprovalController.eTapprovalAmount.last ==true){
-                                                    //      updateTotalAmount(index);
-                                                    //   }
+                                                    child: Text('$i'))),
+                                                DataCell(Align(
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                      "${indentApprovalController.particularRequisitionDetais.elementAt(index).pcreqtNRequisitionNo}"),
+                                                )),
+                                                DataCell(Align(
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                      "${indentApprovalController.particularRequisitionDetais.elementAt(index).pcmparTParticularName}"),
+                                                )),
+                                                DataCell(Align(
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                      "${indentApprovalController.particularRequisitionDetais.elementAt(index).pcreqtndeTAmount}"),
+                                                )),
+                                                DataCell(
+                                                  Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      // child: TapRegion(
+                                                      // onTapOutside:(event) {
+                                                      //   if(indentApprovalController.eTapprovalAmount.last ==true){
+                                                      //      updateTotalAmount(index);
+                                                      //   }
 
-                                                    // } ,
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        if (!indentApprovalController
-                                                            .checkBoxList
-                                                            .elementAt(index)) {
-                                                          Fluttertoast.showToast(
-                                                              msg:
-                                                                  "Select Checkbox");
-                                                        } else {
-                                                          // Handle tap event when the condition is met
-                                                        }
-                                                      },
-                                                      child: AbsorbPointer(
-                                                        absorbing:
-                                                            !indentApprovalController
-                                                                .checkBoxList
-                                                                .elementAt(
-                                                                    index),
-                                                        child: TextFormField(
-                                                          controller:
-                                                              indentApprovalController
-                                                                  .eTapprovalAmount
+                                                      // } ,
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          if (!indentApprovalController
+                                                              .checkBoxList
+                                                              .elementAt(
+                                                                  index)) {
+                                                            Fluttertoast.showToast(
+                                                                msg:
+                                                                    "Select Checkbox");
+                                                          } else {
+                                                            // Handle tap event when the condition is met
+                                                          }
+                                                        },
+                                                        child: AbsorbPointer(
+                                                          absorbing:
+                                                              !indentApprovalController
+                                                                  .checkBoxList
                                                                   .elementAt(
                                                                       index),
-                                                          keyboardType:
-                                                              TextInputType
-                                                                  .number,
-                                                          enabled:
-                                                              indentApprovalController
-                                                                  .checkBoxList
-                                                                  .elementAt(
-                                                                      index), // Enable the TextField when the condition is met
-                                                          validator: (value) {
-                                                            if (value == null ||
-                                                                value.isEmpty) {
-                                                              return 'Enter Amount';
-                                                            }
-                                                            return null;
-                                                          },
-                                                          // onChanged: (text) {
-                                                          //   if (!indentApprovalController
-                                                          //       .checkBoxList
-                                                          //       .elementAt(
-                                                          //           index)) {
-                                                          //     indentApprovalController
-                                                          //         .eTapprovalAmount
-                                                          //         .elementAt(
-                                                          //             index)
-                                                          //         .text = '';
-                                                          //   }
-                                                          // },
-
-                                                          onChanged: (text) {
-                                                            if (!indentApprovalController
+                                                          child: TextFormField(
+                                                            style: Get.textTheme
+                                                                .titleSmall,
+                                                            controller:
+                                                                indentApprovalController
+                                                                    .eTapprovalAmount
+                                                                    .elementAt(
+                                                                        index),
+                                                            keyboardType:
+                                                                TextInputType
+                                                                    .number,
+                                                            enabled: indentApprovalController
                                                                 .checkBoxList
                                                                 .elementAt(
-                                                                    index)) {
-                                                              indentApprovalController
-                                                                  .eTapprovalAmount
+                                                                    index), // Enable the TextField when the condition is met
+                                                            validator: (value) {
+                                                              if (value ==
+                                                                      null ||
+                                                                  value
+                                                                      .isEmpty) {
+                                                                return 'Enter Amount';
+                                                              }
+                                                              return null;
+                                                            },
+                                                            // onChanged: (text) {
+                                                            //   if (!indentApprovalController
+                                                            //       .checkBoxList
+                                                            //       .elementAt(
+                                                            //           index)) {
+                                                            //     indentApprovalController
+                                                            //         .eTapprovalAmount
+                                                            //         .elementAt(
+                                                            //             index)
+                                                            //         .text = '';
+                                                            //   }
+                                                            // },
+
+                                                            onChanged: (text) {
+                                                              if (!indentApprovalController
+                                                                  .checkBoxList
                                                                   .elementAt(
-                                                                      index)
-                                                                  .text = '';
-                                                            } else {
-                                                              double
-                                                                  approvalAmount =
-                                                                  double.tryParse(
-                                                                          text) ??
-                                                                      0.0;
-                                                              double requestedAmount = double.tryParse(indentApprovalController
-                                                                      .particularRequisitionDetais
-                                                                      .elementAt(
-                                                                          index)
-                                                                      .pcreqtndeTAmount
-                                                                      .toString()) ??
-                                                                  0.0;
+                                                                      index)) {
+                                                                indentApprovalController
+                                                                    .eTapprovalAmount
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .text = '';
+                                                              } else {
+                                                                double
+                                                                    approvalAmount =
+                                                                    double.tryParse(
+                                                                            text) ??
+                                                                        0.0;
+                                                                double requestedAmount = double.tryParse(indentApprovalController
+                                                                        .particularRequisitionDetais
+                                                                        .elementAt(
+                                                                            index)
+                                                                        .pcreqtndeTAmount
+                                                                        .toString()) ??
+                                                                    0.0;
 
-                                                              setState(() {
-                                                                if (approvalAmount >
-                                                                    requestedAmount) {
-                                                                  indentApprovalController
-                                                                      .eTapprovalAmount
-                                                                      .elementAt(
-                                                                          index)
-                                                                      .text = '';
+                                                                setState(() {
+                                                                  if (approvalAmount >
+                                                                      requestedAmount) {
+                                                                    indentApprovalController
+                                                                        .eTapprovalAmount
+                                                                        .elementAt(
+                                                                            index)
+                                                                        .text = '';
 
-                                                                  // Show a popup message
-                                                                  showPopup(
-                                                                      "Approved amount should not be greater than requested amount");
-                                                                }
-                                                              });
-                                                            }
-                                                          },
+                                                                    // Show a popup message
+                                                                    showPopup(
+                                                                        "Approved amount should not be greater than requested amount");
+                                                                  }
+                                                                });
+                                                              }
+                                                            },
+                                                          ),
                                                         ),
-                                                      ),
-                                                    )),
-                                              )
-                                              // )
-                                              ,
-                                              DataCell(
-                                                Text(
-                                                    "${indentApprovalController.particularRequisitionDetais.elementAt(index).pcreqtndeTRemarks}"),
-                                              ),
-                                            ],
-                                          );
-                                        })),
+                                                      )),
+                                                )
+                                                // )
+                                                ,
+                                                DataCell(
+                                                  Text(
+                                                      "${indentApprovalController.particularRequisitionDetais.elementAt(index).pcreqtndeTRemarks}"),
+                                                ),
+                                              ],
+                                            );
+                                          })),
+                                    ),
                                   ),
                                   const SizedBox(height: 35),
                                   CustomContainer(
@@ -1229,11 +1243,17 @@ class _IndentApprovalState extends State<IndentApproval> {
                                         child: Container(
                                           padding: const EdgeInsets.all(20),
                                           decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                255, 241, 253, 240),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
+                                              color: const Color.fromARGB(
+                                                  255, 241, 253, 240),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                    offset: Offset(1, 2.1),
+                                                    blurRadius: 0,
+                                                    spreadRadius: 0,
+                                                    color: Colors.black12),
+                                              ]),
                                           child: const Text(
                                             "Calculate",
                                             style: TextStyle(
@@ -1244,12 +1264,12 @@ class _IndentApprovalState extends State<IndentApproval> {
                                         ),
                                       ),
                                       const SizedBox(
-                                        width: 15,
+                                        width: 10,
                                       ),
                                       Container(
                                         width:
                                             MediaQuery.of(context).size.width /
-                                                1.6,
+                                                1.7,
                                         decoration: BoxDecoration(
                                           borderRadius: const BorderRadius.all(
                                               Radius.circular(10)),
@@ -1299,7 +1319,7 @@ class _IndentApprovalState extends State<IndentApproval> {
                                                   ),
                                                   const SizedBox(width: 6.0),
                                                   Text(
-                                                    " Total Approved Amount ",
+                                                    "Total Amount",
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .labelMedium!
@@ -1546,7 +1566,8 @@ class _IndentApprovalState extends State<IndentApproval> {
                                               widget.loginSuccessModel.userId!,
                                           roleId:
                                               widget.loginSuccessModel.roleId!,
-                                          miId: widget.loginSuccessModel.mIID!,
+                                          miId: selectedOrganization!
+                                              .mIId!, //widget.loginSuccessModel.mIID!,
                                           asmayId:
                                               widget.loginSuccessModel.asmaYId!,
                                           // pcIndentId: ,
@@ -1664,384 +1685,3 @@ class _IndentApprovalState extends State<IndentApproval> {
     return "${dt.month.toString().padLeft(2, "0")}-${dt.day.toString().padLeft(2, "0")}-${dt.year}";
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//             SingleChildScrollView(
-//       scrollDirection: Axis.horizontal,
-//       child: DataTable(
-//         dataTextStyle: const TextStyle(
-//           fontSize: 15,
-//           color: Color.fromRGBO(5, 5, 5, 0.945),
-//           fontWeight: FontWeight.w500,
-//         ),
-//         dataRowHeight: 60,
-//         headingRowHeight: 55,
-//         horizontalMargin: 10,
-//         columnSpacing: 40,
-//         dividerThickness: 1,
-//         border: TableBorder.all(
-//           borderRadius: const BorderRadius.only(
-//             bottomRight: Radius.circular(10),
-//             bottomLeft: Radius.circular(10),
-//           ),
-//         ),
-//         headingRowColor: MaterialStateProperty.all(
-//           Theme.of(context).primaryColor,
-//         ),
-//         columns: [
-
-
-
-
-
-
-
-
-
-
-//               DataColumn(
-//                                                   label: Checkbox(
-//                                                 shape:
-//                                                     ContinuousRectangleBorder(
-//                                                         borderRadius:
-//                                                             BorderRadius
-//                                                                 .circular(10)),
-//                                                 activeColor: Colors.indigo,
-//                                                 value: selectAll,
-//                                                 onChanged: (value) {
-//                                                   selectAll = value!;
-//                                                   setState(() {
-//                                                     if (selectAll) {
-//                                                       selectCheckBx!.clear();
-//                                                       for (int i = 0;
-//                                                           i <
-//                                                               textEditingCtrlParticularAmt[i]!.text
-//                                                                   .length;
-//                                                           i++) {
-//                                                         selectCheckBx!.add(i);
-//                                                         indentApprovalController
-//                                                                 .checkBoxList[i] =
-//                                                             true;
-
-//                                                         print(selectCheckBx
-//                                                             .toString());
-//                                                       }
-//                                                     } else {
-//                                                       for (int i = 0;
-//                                                           i <
-//                                                               textEditingCtrlParticularAmt[i]!.text
-//                                                                   .length;
-//                                                           i++) {
-//                                                         selectCheckBx!
-//                                                             .remove(i);
-
-//                                                         indentApprovalController
-//                                                                 .checkBoxList[i] =
-//                                                             false;
-
-//                                                         textEditingCtrlParticularAmt[i]!.text = '';
-//                                                         print(selectCheckBx
-//                                                             .toString());
-//                                                       }
-//                                                     }
-//                                                   });
-//                                                 },
-//                                               )),
-
-
-
-
-
-
-
-
-
-
-
-
-// //            DataColumn(
-// //   label: Row(
-// //     children: [
-// //       Checkbox(
-// //         activeColor: const Color.fromARGB(31, 68, 4, 247),
-// //         value: allSelected.value,
-// //         onChanged: (value) {
-// //           dataColumnSelected = value!; 
-          
-// //           setState(() {
-// //             for (int i = 0;
-// //               i < indentApprovalController.particularRequisitionDetais.length;
-// //               i++) {
-// //             selectedRowsParticular[i] = value;
-// //             textEditingCtrlParticularAmt[i]?.text = '';
-// //           }
-// //           allSelected.value = value;
-// //           });
-// //         },
-// //       ),
-// //       const Text("Sl No",
-// //           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800)),
-// //     ],
-// //   ),
-// // ),
-//           const DataColumn(
-//             label: Text("Requisition No", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800)),
-//           ),
-//           const DataColumn(
-//             label: Text("Particular", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800)),
-//           ),
-//           const DataColumn(
-//             label: Text("Requested Amount", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800)),
-//           ),
-//           const DataColumn(
-//             label: Text("Approved Amount", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800)),
-//           ),
-//           const DataColumn(
-//             label: Text("Remarks", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800)),
-//           ),
-//         ],
-//         rows: List.generate(
-//           indentApprovalController.particularRequisitionDetais.length,
-//           (index) {
-//             var i = index + 1;
-//             textEditingCtrlParticularAmt.putIfAbsent(index, () => TextEditingController());
-
-//             return DataRow(
-//               cells: [
-
-
-
-
-
-
-//                       DataCell(Align(
-//                                                     alignment: Alignment.center,
-//                                                     child: Checkbox(
-//                                                       activeColor:
-//                                                           Colors.indigo,
-//                                                       shape:
-//                                                           ContinuousRectangleBorder(
-//                                                               borderRadius:
-//                                                                   BorderRadius
-//                                                                       .circular(
-//                                                                           10)),
-//                                                       value:
-//                                                           indentApprovalController
-//                                                               .checkBoxList
-//                                                               .elementAt(index) ==  true,
-//                                                       onChanged: (value) {
-//                                                         indentApprovalController
-//                                                                 .checkBoxList[
-//                                                             index] = value!;
-//                                                         setState(() {
-//                                                           if (value) {
-//                                                             if (selectCheckBx!
-//                                                                 .contains(
-//                                                                     index)) {
-//                                                               selectCheckBx!
-//                                                                   .remove(
-//                                                                       index);
-//                                                               print(selectCheckBx
-//                                                                   .toString());
-
-//                                                               // totalApprovedAmount = 0.0;
-
-//                                                               textEditingCtrlParticularAmt[i]!.text = '';
-
-//                                                               if (textEditingCtrlParticularAmt[i]!.text
-//                                                                       .length !=
-//                                                                   selectCheckBx!
-//                                                                       .length) {
-//                                                                 selectAll =
-//                                                                     false;
-//                                                               }
-//                                                             } else {
-//                                                               updateTotalApprovedAmount(
-//                                                                   index);
-//                                                               selectCheckBx!
-//                                                                   .add(index);
-//                                                               print(selectCheckBx
-//                                                                   .toString());
-//                                                               if (textEditingCtrlParticularAmt[i]!.text
-//                                                                       .length ==
-//                                                                   selectCheckBx!
-//                                                                       .length) {
-//                                                                 selectAll =
-//                                                                     true;
-//                                                               }
-//                                                             }
-//                                                           } else {
-//                                                             textEditingCtrlParticularAmt[i]!.text = '';
-
-//                                                             // totalApprovedAmount = 0.0;
-
-//                                                             selectCheckBx!
-//                                                                 .remove(index);
-//                                                             print(selectCheckBx
-//                                                                 .toString());
-//                                                             if (textEditingCtrlParticularAmt[i]!.text
-//                                                                     .length !=
-//                                                                 selectCheckBx!
-//                                                                     .length) {
-//                                                               selectAll = false;
-//                                                             }
-//                                                           }
-//                                                         });
-//                                                       },
-//                                                     ),
-//                                                   )),
-
-
-
-
-
-
-
-
-
-// //                  DataCell(
-// //   Row(
-// //     children: [
-// //       Checkbox(
-// //         activeColor: const Color.fromARGB(255, 55, 67, 241),
-// //         value: selectedRowsParticular[index] ?? false,
-// //         onChanged: (value) {
-// //           selectedRowsParticular[index] = value;
-// //           textEditingCtrlParticularAmt[index]?.text = '';
-// //           if (selectedRowsParticular.values.length ==indentApprovalController.particularRequisitionDetais.length) { 
-// //             allSelected.value = true;
-            
-// //             // if (selectedRowsParticular.values.every((value) => value == true)) {
-// //             //   allSelected.value = true;
-// //             // } else {
-// //             //   allSelected.value = false;
-// //             // }
-// //           } else if (selectedRowsParticular.values.length !=indentApprovalController.particularRequisitionDetais.length){
-// //             allSelected.value = false;
-// //           }
-// //           setState(() {});
-// //         },
-// //       ),
-// //       Text('$i'),
-// //     ],
-// //   ),
-// // ),
-//                 DataCell(
-//                   Text(
-//                     "${indentApprovalController.particularRequisitionDetais.elementAt(index).pcreqtNRequisitionNo}",
-//                   ),
-//                 ),
-//                 DataCell(
-//                   Text(
-//                     "${indentApprovalController.particularRequisitionDetais.elementAt(index).pcmparTParticularName}",
-//                   ),
-//                 ),
-//                 DataCell(
-//                   Text(
-//                     "${indentApprovalController.particularRequisitionDetais.elementAt(index).pcreqtndeTAmount}",
-//                   ),
-//                 ),
-//                 DataCell(
-//                   TextField(
-//                     controller: textEditingCtrlParticularAmt[index],
-//                     enabled: selectedRowsParticular[index] ?? false,
-//                     keyboardType: TextInputType.number,
-//                   ),
-//                 ),
-//                 DataCell(
-//                   Text(
-//                     "${indentApprovalController.particularRequisitionDetais.elementAt(index).pcreqtndeTRemarks}",
-//                   ),
-//                 ),
-//               ],
-//             );
-//           },
-//         ),
-//       ),
-//     ),
-
-
-
-

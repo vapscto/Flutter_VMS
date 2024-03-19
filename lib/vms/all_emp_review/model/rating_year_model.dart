@@ -53,7 +53,7 @@ class RatingYearModelValues {
   RatingYearModelValues.fromJson(Map<String, dynamic> json) {
     hrmlYId = json['hrmlY_Id'];
     mIId = json['mI_Id'];
-    hrmlYLeaveYear = json['hrmlY_LeaveYear'];
+    hrmlYLeaveYear = json['asmaY_Year']; //hrmlY_LeaveYear
     hrmlYFromDate = json['hrmlY_FromDate'];
     hrmlYToDate = json['hrmlY_ToDate'];
     hrmlYActiveFlag = json['hrmlY_ActiveFlag'];
@@ -68,7 +68,7 @@ class RatingYearModelValues {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['hrmlY_Id'] = hrmlYId;
     data['mI_Id'] = mIId;
-    data['hrmlY_LeaveYear'] = hrmlYLeaveYear;
+    data['asmaY_Year'] = hrmlYLeaveYear;
     data['hrmlY_FromDate'] = hrmlYFromDate;
     data['hrmlY_ToDate'] = hrmlYToDate;
     data['hrmlY_ActiveFlag'] = hrmlYActiveFlag;

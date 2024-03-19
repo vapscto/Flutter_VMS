@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/forgotpassword/screens/forgot_password_screen.dart';
 import 'package:m_skool_flutter/vms/controller/vms_common_controller.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/vms/utils/drawer_widget.dart';
@@ -102,30 +101,30 @@ class CommonDrawer extends StatelessWidget {
                               ));
                         },
                       ),
-                (loginSuccessModel.roleforlogin == "ADMIN")
-                    ? const SizedBox()
-                    : ListTile(
-                        title: const Text("Forgot Password"),
-                        leading: Container(
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: const CircleAvatar(
-                            // radius: 18,
-                            backgroundImage: AssetImage(
-                              "assets/images/ForgotPassword.png",
-                            ),
-                            backgroundColor: Colors.white,
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                          Get.to(() => ForgotPasswordScreen(
-                                mskoolController: mskoolController,
-                                forExpire: false,
-                              ));
-                        },
-                      ),
+                // (loginSuccessModel.roleforlogin == "ADMIN")
+                //     ? const SizedBox()
+                //     : ListTile(
+                //         title: const Text("Forgot Password"),
+                //         leading: Container(
+                //           decoration: const BoxDecoration(
+                //             shape: BoxShape.circle,
+                //           ),
+                //           child: const CircleAvatar(
+                //             // radius: 18,
+                //             backgroundImage: AssetImage(
+                //               "assets/images/ForgotPassword.png",
+                //             ),
+                //             backgroundColor: Colors.white,
+                //           ),
+                //         ),
+                //         onTap: () {
+                //           Navigator.pop(context);
+                //           Get.to(() => ForgotPasswordScreen(
+                //                 mskoolController: mskoolController,
+                //                 forExpire: false,
+                //               ));
+                //         },
+                //       ),
                 (loginSuccessModel.roleforlogin == "ADMIN")
                     ? ListTile(
                         leading: Container(
@@ -154,7 +153,6 @@ class CommonDrawer extends StatelessWidget {
                       shape: BoxShape.circle,
                     ),
                     child: const CircleAvatar(
-                      // radius: 18,
                       backgroundImage: AssetImage(
                         "assets/images/theme.png",
                       ),

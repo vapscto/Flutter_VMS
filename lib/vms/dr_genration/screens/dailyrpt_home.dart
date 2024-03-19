@@ -237,7 +237,15 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
           : null;
     }
     for (int i = 0; i < _plannerDetailsController.getTaskDrList.length; i++) {
-      compOffCheckBox.add(false);
+      _plannerDetailsController.compOffCheckBox.add(false);
+    }
+    for (int i = 0; i < fliteresList.length; i++) {
+      if (fliteresList.elementAt(i).drFlag == 1) {
+        _plannerDetailsController.checkBoxList[i] = true;
+      } else {
+        _plannerDetailsController.checkBoxList[i] = false;
+      }
+      setState(() {});
     }
   }
 
@@ -332,7 +340,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                 ? _plannerDetailsController.imageUploadedList
                 : [],
             "Temp_TaskReponseList": null,
-            "ISMDRPT_CompoffApplicableflag": compOffCheckBox[index]
+            "ISMDRPT_CompoffApplicableflag":
+                _plannerDetailsController.compOffCheckBox[index]
           });
         }
         if (halfDay.value == false) {
@@ -483,7 +492,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
 
   String fileName = '';
   String filePath = '';
-  List<bool> compOffCheckBox = [];
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -1097,7 +1105,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                   color: Color.fromRGBO(
                                                       0, 0, 0, 0.95),
                                                   fontWeight: FontWeight.w500),
-                                              dataRowHeight: 160,
+                                              dataRowHeight: 170,
                                               headingRowHeight: 40,
                                               horizontalMargin: 10,
                                               columnSpacing: 30,
@@ -1202,10 +1210,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                   endDt =
                                                       "${newDt.day}-${newDt.month}-${newDt.year}";
                                                 }
-                                                // DateTime endNewDate =
-                                                //     DateTime.parse(fliteresList
-                                                //         .elementAt(index)
-                                                //         .iSMTPLEndDate!);
                                                 DateTime currentDt =
                                                     DateTime.now();
                                                 DateTime? previousDt;
@@ -1220,6 +1224,7 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             hours) *
                                                         60)
                                                     .round();
+
                                                 return DataRow(cells: [
                                                   DataCell(Align(
                                                       alignment:
@@ -1247,15 +1252,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                       21,
                                                                       46,
                                                                       189),
-                                                              value: (fliteresList
-                                                                          .elementAt(
-                                                                              index)
-                                                                          .drFlag ==
-                                                                      1)
-                                                                  ? true
-                                                                  : _plannerDetailsController
-                                                                          .checkBoxList[
-                                                                      index],
+                                                              value: _plannerDetailsController
+                                                                      .checkBoxList[
+                                                                  index],
                                                               onChanged:
                                                                   (value) {
                                                                 value == true
@@ -1431,13 +1430,26 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                           fliteresList
                                                               .elementAt(index)
                                                               .iSMTCRTaskNo!,
-                                                          style: Theme
-                                                                  .of(context)
+                                                          style: Theme.of(context)
                                                               .textTheme
                                                               .titleSmall!
-                                                              .merge(const TextStyle(
-                                                                  color: Color
-                                                                      .fromARGB(
+                                                              .merge(TextStyle(
+                                                                  color: (fliteresList
+                                                                              .elementAt(
+                                                                                  index)
+                                                                              .approvedflag !=
+                                                                          null)
+                                                                      ? (fliteresList.elementAt(index).approvedflag! ==
+                                                                              0)
+                                                                          ? const Color.fromARGB(
+                                                                              255,
+                                                                              52,
+                                                                              82,
+                                                                              252)
+                                                                          : Colors
+                                                                              .red
+                                                                      : const Color
+                                                                              .fromARGB(
                                                                           255,
                                                                           52,
                                                                           82,
@@ -1530,32 +1542,41 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                         .w400,
                                                                 fontSize: 14)),
                                                       ),
-                                                      ListTileTheme(
-                                                        contentPadding:
-                                                            EdgeInsets.zero,
-                                                        horizontalTitleGap: 2,
-                                                        minVerticalPadding: -4,
-                                                        child: CheckboxListTile(
-                                                            dense: true,
-                                                            contentPadding: EdgeInsets
-                                                                .zero,
-                                                            controlAffinity:
-                                                                ListTileControlAffinity
-                                                                    .leading,
-                                                            visualDensity:
-                                                                const VisualDensity(
+                                                      SizedBox(
+                                                        height: 20,
+                                                        child: Row(
+                                                          children: [
+                                                            Checkbox(
+                                                                visualDensity: const VisualDensity(
                                                                     vertical: 0,
                                                                     horizontal:
                                                                         -4),
-                                                            checkboxShape:
-                                                                RoundedRectangleBorder(
-                                                                    borderRadius: BorderRadius
-                                                                        .circular(
+                                                                shape: RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
                                                                             6)),
-                                                            checkColor: Theme
-                                                                    .of(context)
-                                                                .primaryColor,
-                                                            title: Text(
+                                                                checkColor: Theme.of(
+                                                                        context)
+                                                                    .primaryColor,
+                                                                value: _plannerDetailsController
+                                                                        .compOffCheckBox[
+                                                                    index],
+                                                                onChanged:
+                                                                    (value) {
+                                                                  setState(() {
+                                                                    if (value ==
+                                                                        true) {
+                                                                      _plannerDetailsController
+                                                                              .compOffCheckBox[index] =
+                                                                          true;
+                                                                    } else {
+                                                                      _plannerDetailsController
+                                                                              .compOffCheckBox[index] =
+                                                                          false;
+                                                                    }
+                                                                  });
+                                                                }),
+                                                            Text(
                                                               "Consider For Comp Off?",
                                                               style: Get
                                                                   .textTheme
@@ -1565,24 +1586,9 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                               context)
                                                                           .primaryColor),
                                                             ),
-                                                            value:
-                                                                compOffCheckBox[
-                                                                    index],
-                                                            onChanged: (value) {
-                                                              setState(() {
-                                                                if (value ==
-                                                                    true) {
-                                                                  compOffCheckBox[
-                                                                          index] =
-                                                                      true;
-                                                                } else {
-                                                                  compOffCheckBox[
-                                                                          index] =
-                                                                      false;
-                                                                }
-                                                              });
-                                                            }),
-                                                      )
+                                                          ],
+                                                        ),
+                                                      ),
                                                     ],
                                                   )),
                                                   DataCell(Align(
@@ -1858,125 +1864,194 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                   DataCell(SizedBox(
                                                     width: 180,
                                                     child: GestureDetector(
-                                                      onTapUp: (details) {
-                                                        final offset = details
-                                                            .globalPosition;
-                                                        showMenu(
-                                                            context: context,
-                                                            position:
-                                                                RelativeRect
-                                                                    .fromLTRB(
-                                                              offset.dx,
-                                                              offset.dy,
-                                                              MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width -
-                                                                  offset.dx,
-                                                              MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .height -
-                                                                  offset.dy,
-                                                            ),
-                                                            items:
-                                                                List.generate(
-                                                              _plannerDetailsController
-                                                                  .statusDrList
-                                                                  .length,
-                                                              (i) {
-                                                                return PopupMenuItem(
-                                                                  onTap: () {
-                                                                    _plannerDetailsController
-                                                                            .statusEtField[
-                                                                                index]
-                                                                            .text =
-                                                                        _plannerDetailsController
-                                                                            .statusDrList[i]
-                                                                            .ismmistSStatusName!;
-                                                                    setState(
-                                                                        () {});
-                                                                  },
-                                                                  child: Text(
-                                                                    _plannerDetailsController
-                                                                        .statusDrList[
-                                                                            i]
-                                                                        .ismmistSStatusName!,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .merge(
-                                                                            const TextStyle(
-                                                                          fontSize:
-                                                                              16,
-                                                                        )),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ));
-                                                      },
-                                                      onTapDown:
-                                                          (details) async {
-                                                        final offset = details
-                                                            .globalPosition;
+                                                      // onTapUp: (details) {
+                                                      //   final offset = details
+                                                      //       .globalPosition;
+                                                      //   showMenu(
+                                                      //       context: context,
+                                                      //       position:
+                                                      //           RelativeRect
+                                                      //               .fromLTRB(
+                                                      //         offset.dx,
+                                                      //         offset.dy,
+                                                      //         MediaQuery.of(
+                                                      //                     context)
+                                                      //                 .size
+                                                      //                 .width -
+                                                      //             offset.dx,
+                                                      //         MediaQuery.of(
+                                                      //                     context)
+                                                      //                 .size
+                                                      //                 .height -
+                                                      //             offset.dy,
+                                                      //       ),
+                                                      //       items:
+                                                      //           List.generate(
+                                                      //         _plannerDetailsController
+                                                      //             .statusDrList
+                                                      //             .length,
+                                                      //         (i) {
+                                                      //           return PopupMenuItem(
+                                                      //             onTap: () {
+                                                      //               _plannerDetailsController
+                                                      //                       .statusEtField[
+                                                      //                           index]
+                                                      //                       .text =
+                                                      //                   _plannerDetailsController
+                                                      //                       .statusDrList[i]
+                                                      //                       .ismmistSStatusName!;
+                                                      //               setState(
+                                                      //                   () {});
+                                                      //             },
+                                                      //             child: Text(
+                                                      //               _plannerDetailsController
+                                                      //                   .statusDrList[
+                                                      //                       i]
+                                                      //                   .ismmistSStatusName!,
+                                                      //               style: Theme.of(
+                                                      //                       context)
+                                                      //                   .textTheme
+                                                      //                   .titleSmall!
+                                                      //                   .merge(
+                                                      //                       const TextStyle(
+                                                      //                     fontSize:
+                                                      //                         16,
+                                                      //                   )),
+                                                      //             ),
+                                                      //           );
+                                                      //         },
+                                                      //       ));
+                                                      // },
+                                                      // onTapDown:
+                                                      //     (details) async {
+                                                      //   final offset = details
+                                                      //       .globalPosition;
 
-                                                        showMenu(
-                                                            context: context,
-                                                            position:
-                                                                RelativeRect
-                                                                    .fromLTRB(
-                                                              offset.dx,
-                                                              offset.dy,
-                                                              MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width -
-                                                                  offset.dx,
-                                                              MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .height -
-                                                                  offset.dy,
-                                                            ),
-                                                            items:
-                                                                List.generate(
-                                                              _plannerDetailsController
-                                                                  .statusDrList
-                                                                  .length,
-                                                              (i) {
-                                                                return PopupMenuItem(
-                                                                  onTap: () {
-                                                                    _plannerDetailsController
-                                                                            .statusEtField[
-                                                                                index]
-                                                                            .text =
-                                                                        _plannerDetailsController
-                                                                            .statusDrList[i]
-                                                                            .ismmistSStatusName!;
-                                                                    setState(
-                                                                        () {});
-                                                                  },
-                                                                  child: Text(
-                                                                    _plannerDetailsController
-                                                                        .statusDrList[
-                                                                            i]
-                                                                        .ismmistSStatusName!,
-                                                                    style: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .titleSmall!
-                                                                        .merge(
-                                                                            const TextStyle(
-                                                                          fontSize:
-                                                                              16,
-                                                                        )),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ));
-                                                      },
+                                                      //   showMenu(
+                                                      //       context: context,
+                                                      //       position:
+                                                      //           RelativeRect
+                                                      //               .fromLTRB(
+                                                      //         offset.dx,
+                                                      //         offset.dy,
+                                                      //         MediaQuery.of(
+                                                      //                     context)
+                                                      //                 .size
+                                                      //                 .width -
+                                                      //             offset.dx,
+                                                      //         MediaQuery.of(
+                                                      //                     context)
+                                                      //                 .size
+                                                      //                 .height -
+                                                      //             offset.dy,
+                                                      //       ),
+                                                      //       items:
+                                                      //           List.generate(
+                                                      //         _plannerDetailsController
+                                                      //             .statusDrList
+                                                      //             .length,
+                                                      //         (i) {
+                                                      //           return PopupMenuItem(
+                                                      //             onTap: () {
+                                                      //               _plannerDetailsController
+                                                      //                       .statusEtField[
+                                                      //                           index]
+                                                      //                       .text =
+                                                      //                   _plannerDetailsController
+                                                      //                       .statusDrList[i]
+                                                      //                       .ismmistSStatusName!;
+                                                      //               setState(
+                                                      //                   () {});
+                                                      //             },
+                                                      //             child: Text(
+                                                      //               _plannerDetailsController
+                                                      //                   .statusDrList[
+                                                      //                       i]
+                                                      //                   .ismmistSStatusName!,
+                                                      //               style: Theme.of(
+                                                      //                       context)
+                                                      //                   .textTheme
+                                                      //                   .titleSmall!
+                                                      //                   .merge(
+                                                      //                       const TextStyle(
+                                                      //                     fontSize:
+                                                      //                         16,
+                                                      //                   )),
+                                                      //             ),
+                                                      //           );
+                                                      //         },
+                                                      //       ));
+                                                      // },
                                                       child: TextFormField(
+                                                        onTap: () {
+                                                          final RenderBox
+                                                              overlay =
+                                                              Overlay.of(context)
+                                                                      .context
+                                                                      .findRenderObject()
+                                                                  as RenderBox;
+                                                          final RenderBox
+                                                              textField =
+                                                              context.findRenderObject()
+                                                                  as RenderBox;
+
+                                                          showMenu(
+                                                              context: context,
+                                                              position:
+                                                                  RelativeRect
+                                                                      .fromRect(
+                                                                Rect.fromPoints(
+                                                                  textField.localToGlobal(
+                                                                      Offset
+                                                                          .zero,
+                                                                      ancestor:
+                                                                          overlay),
+                                                                  textField.localToGlobal(
+                                                                      textField
+                                                                          .size
+                                                                          .bottomRight(Offset
+                                                                              .zero),
+                                                                      ancestor:
+                                                                          overlay),
+                                                                ),
+                                                                Offset.zero &
+                                                                    overlay
+                                                                        .size,
+                                                              ),
+                                                              items:
+                                                                  List.generate(
+                                                                _plannerDetailsController
+                                                                    .statusDrList
+                                                                    .length,
+                                                                (i) {
+                                                                  return PopupMenuItem(
+                                                                    onTap: () {
+                                                                      _plannerDetailsController
+                                                                          .statusEtField[
+                                                                              index]
+                                                                          .text = _plannerDetailsController.statusDrList[i].ismmistSStatusName!;
+                                                                      setState(
+                                                                          () {});
+                                                                    },
+                                                                    child: Text(
+                                                                      _plannerDetailsController
+                                                                          .statusDrList[
+                                                                              i]
+                                                                          .ismmistSStatusName!,
+                                                                      style: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .titleSmall!
+                                                                          .merge(
+                                                                              const TextStyle(
+                                                                            fontSize:
+                                                                                16,
+                                                                          )),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ));
+                                                        },
                                                         validator: (value) {
                                                           if (value!.isEmpty) {
                                                             if (selectCheckbox
@@ -2100,6 +2175,82 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                             : null;
                                                       },
                                                       child: TextFormField(
+                                                        onTap: () {
+                                                          final RenderBox
+                                                              overlay =
+                                                              Overlay.of(context)
+                                                                      .context
+                                                                      .findRenderObject()
+                                                                  as RenderBox;
+                                                          final RenderBox
+                                                              textField =
+                                                              context.findRenderObject()
+                                                                  as RenderBox;
+                                                          (currentDt.isAfter(DateTime.parse(fliteresList
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .iSMTPLEndDate!)
+                                                                  .add(const Duration(
+                                                                      days:
+                                                                          1))))
+                                                              ? showMenu(
+                                                                  context:
+                                                                      context,
+                                                                  position:
+                                                                      RelativeRect
+                                                                          .fromRect(
+                                                                    Rect.fromPoints(
+                                                                      textField.localToGlobal(
+                                                                          Offset
+                                                                              .zero,
+                                                                          ancestor:
+                                                                              overlay),
+                                                                      textField.localToGlobal(
+                                                                          textField.size.bottomRight(Offset
+                                                                              .zero),
+                                                                          ancestor:
+                                                                              overlay),
+                                                                    ),
+                                                                    Offset.zero &
+                                                                        overlay
+                                                                            .size,
+                                                                  ),
+                                                                  items: List
+                                                                      .generate(
+                                                                    _plannerDetailsController
+                                                                        .depWiseDevitnList
+                                                                        .length,
+                                                                    (i) {
+                                                                      return PopupMenuItem(
+                                                                        onTap:
+                                                                            () {
+                                                                          _plannerDetailsController
+                                                                              .deveationEtField[index]
+                                                                              .text = _plannerDetailsController.depWiseDevitnList[i].ismdRRemarks!;
+                                                                          _plannerDetailsController.deveationIdEtField[index].text = _plannerDetailsController
+                                                                              .depWiseDevitnList[i]
+                                                                              .ismdRId!
+                                                                              .toString();
+                                                                          setState(
+                                                                              () {});
+                                                                        },
+                                                                        child:
+                                                                            Text(
+                                                                          _plannerDetailsController
+                                                                              .depWiseDevitnList[i]
+                                                                              .ismdRRemarks!,
+                                                                          style: Theme.of(context)
+                                                                              .textTheme
+                                                                              .titleSmall!
+                                                                              .merge(const TextStyle(
+                                                                                fontSize: 16,
+                                                                              )),
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  ))
+                                                              : null;
+                                                        },
                                                         validator: (value) {
                                                           if (value!.isEmpty) {
                                                             if (selectCheckbox
@@ -2182,11 +2333,12 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20))),
                               onPressed: () {
-                                Get.to(AddExtraTaskScreen(
-                                  loginSuccessModel: widget.loginSuccessModel,
-                                  mskoolController: widget.mskoolController,
-                                  controller: _plannerDetailsController,
-                                ));
+                                Get.to(() => AddExtraTaskScreen(
+                                      loginSuccessModel:
+                                          widget.loginSuccessModel,
+                                      mskoolController: widget.mskoolController,
+                                      controller: _plannerDetailsController,
+                                    ));
                               },
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
