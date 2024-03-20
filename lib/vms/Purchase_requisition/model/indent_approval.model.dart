@@ -15,10 +15,10 @@ class PurchaseApprovalModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -26,10 +26,10 @@ class PurchaseApprovalModel {
 
 class PurchaseApprovalModelValues {
   String? type;
-dynamic iNVMPIAPPId;
+  dynamic iNVMPIAPPId;
   String? iNVMPIAPPPINo;
   String? iNVMPIAPPPIDate;
-dynamic iNVMPIAPPApproxTotAmount;
+  dynamic iNVMPIAPPApproxTotAmount;
   String? approvedBy;
   String? iNVMPIAPPRemarks;
   bool? iNVMPIAPPRejectFlg;
@@ -56,15 +56,15 @@ dynamic iNVMPIAPPApproxTotAmount;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['INVMPIAPP_Id'] = this.iNVMPIAPPId;
-    data['INVMPIAPP_PINo'] = this.iNVMPIAPPPINo;
-    data['INVMPIAPP_PIDate'] = this.iNVMPIAPPPIDate;
-    data['INVMPIAPP_ApproxTotAmount'] = this.iNVMPIAPPApproxTotAmount;
-    data['ApprovedBy'] = this.approvedBy;
-    data['INVMPIAPP_Remarks'] = this.iNVMPIAPPRemarks;
-    data['INVMPIAPP_RejectFlg'] = this.iNVMPIAPPRejectFlg;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['INVMPIAPP_Id'] = iNVMPIAPPId;
+    data['INVMPIAPP_PINo'] = iNVMPIAPPPINo;
+    data['INVMPIAPP_PIDate'] = iNVMPIAPPPIDate;
+    data['INVMPIAPP_ApproxTotAmount'] = iNVMPIAPPApproxTotAmount;
+    data['ApprovedBy'] = approvedBy;
+    data['INVMPIAPP_Remarks'] = iNVMPIAPPRemarks;
+    data['INVMPIAPP_RejectFlg'] = iNVMPIAPPRejectFlg;
     return data;
   }
 }

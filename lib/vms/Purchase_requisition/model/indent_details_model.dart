@@ -15,10 +15,10 @@ class IndentDetailsModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -28,13 +28,13 @@ class IndentDetailsModelValues {
   String? type;
   String? iNVMPIPINo;
   String? iNVMPIPIDate;
- dynamic iNVMPIApproxTotAmount;
- dynamic iNVMIId;
+  dynamic iNVMPIApproxTotAmount;
+  dynamic iNVMIId;
   String? iNVMIItemName;
- dynamic iNVTPIApproveQty;
- dynamic iNVTPIPIQty;
- dynamic iNVTPIApproxAmount;
-  Null? iNVTPIRemarks;
+  dynamic iNVTPIApproveQty;
+  dynamic iNVTPIPIQty;
+  dynamic iNVTPIApproxAmount;
+  dynamic iNVTPIRemarks;
   bool? iNVTPIRejectFlg;
 
   IndentDetailsModelValues(
@@ -65,18 +65,18 @@ class IndentDetailsModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['INVMPI_PINo'] = this.iNVMPIPINo;
-    data['INVMPI_PIDate'] = this.iNVMPIPIDate;
-    data['INVMPI_ApproxTotAmount'] = this.iNVMPIApproxTotAmount;
-    data['INVMI_Id'] = this.iNVMIId;
-    data['INVMI_ItemName'] = this.iNVMIItemName;
-    data['INVTPI_ApproveQty'] = this.iNVTPIApproveQty;
-    data['INVTPI_PIQty'] = this.iNVTPIPIQty;
-    data['INVTPI_ApproxAmount'] = this.iNVTPIApproxAmount;
-    data['INVTPI_Remarks'] = this.iNVTPIRemarks;
-    data['INVTPI_RejectFlg'] = this.iNVTPIRejectFlg;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['INVMPI_PINo'] = iNVMPIPINo;
+    data['INVMPI_PIDate'] = iNVMPIPIDate;
+    data['INVMPI_ApproxTotAmount'] = iNVMPIApproxTotAmount;
+    data['INVMI_Id'] = iNVMIId;
+    data['INVMI_ItemName'] = iNVMIItemName;
+    data['INVTPI_ApproveQty'] = iNVTPIApproveQty;
+    data['INVTPI_PIQty'] = iNVTPIPIQty;
+    data['INVTPI_ApproxAmount'] = iNVTPIApproxAmount;
+    data['INVTPI_Remarks'] = iNVTPIRemarks;
+    data['INVTPI_RejectFlg'] = iNVTPIRejectFlg;
     return data;
   }
 }

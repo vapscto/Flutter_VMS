@@ -15,7 +15,7 @@ class PurchaseRequsitionGridModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['\$type'] = type;
     if (values != null) {
       data['\$values'] = values!.map((v) => v.toJson()).toList();
@@ -104,7 +104,7 @@ class PurchaseRequsitionGridModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['returnval'] = returnval;
     data['already_cnt'] = alreadyCnt;
     data['mI_Id'] = mIId;

@@ -15,10 +15,10 @@ class GetPrDetailModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -113,34 +113,34 @@ class GetPrDetailModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['returnval'] = this.returnval;
-    data['already_cnt'] = this.alreadyCnt;
-    data['mI_Id'] = this.mIId;
-    data['mI_IdNew'] = this.mIIdNew;
-    data['hrmD_Id'] = this.hrmDId;
-    data['asmaY_Id'] = this.asmaYId;
-    data['userId'] = this.userId;
-    data['invmI_Id'] = this.invmIId;
-    data['invmI_ItemName'] = this.invmIItemName;
-    data['invmuoM_Id'] = this.invmuoMId;
-    data['invmuoM_UOMName'] = this.invmuoMUOMName;
-    data['invmpR_Id'] = this.invmpRId;
-    data['invmpR_PRNo'] = this.invmpRPRNo;
-    data['invmpR_PRDate'] = this.invmpRPRDate;
-    data['invmpR_Remarks'] = this.invmpRRemarks;
-    data['invmpR_ApproxTotAmount'] = this.invmpRApproxTotAmount;
-    data['invmpR_PICreatedFlg'] = this.invmpRPICreatedFlg;
-    data['invmpR_ActiveFlg'] = this.invmpRActiveFlg;
-    data['invmpR_RejectFlg'] = this.invmpRRejectFlg;
-    data['invtpR_RejectFlg'] = this.invtpRRejectFlg;
-    data['invtpR_Id'] = this.invtpRId;
-    data['invtpR_PRQty'] = this.invtpRPRQty;
-    data['invtpR_ApproxAmount'] = this.invtpRApproxAmount;
-    data['invtpR_ApprovedQty'] = this.invtpRApprovedQty;
-    data['invtpR_PRUnitRate'] = this.invtpRPRUnitRate;
-    data['invtpR_Remarks'] = this.invtpRRemarks;
-    data['invtpR_ActiveFlg'] = this.invtpRActiveFlg;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['returnval'] = returnval;
+    data['already_cnt'] = alreadyCnt;
+    data['mI_Id'] = mIId;
+    data['mI_IdNew'] = mIIdNew;
+    data['hrmD_Id'] = hrmDId;
+    data['asmaY_Id'] = asmaYId;
+    data['userId'] = userId;
+    data['invmI_Id'] = invmIId;
+    data['invmI_ItemName'] = invmIItemName;
+    data['invmuoM_Id'] = invmuoMId;
+    data['invmuoM_UOMName'] = invmuoMUOMName;
+    data['invmpR_Id'] = invmpRId;
+    data['invmpR_PRNo'] = invmpRPRNo;
+    data['invmpR_PRDate'] = invmpRPRDate;
+    data['invmpR_Remarks'] = invmpRRemarks;
+    data['invmpR_ApproxTotAmount'] = invmpRApproxTotAmount;
+    data['invmpR_PICreatedFlg'] = invmpRPICreatedFlg;
+    data['invmpR_ActiveFlg'] = invmpRActiveFlg;
+    data['invmpR_RejectFlg'] = invmpRRejectFlg;
+    data['invtpR_RejectFlg'] = invtpRRejectFlg;
+    data['invtpR_Id'] = invtpRId;
+    data['invtpR_PRQty'] = invtpRPRQty;
+    data['invtpR_ApproxAmount'] = invtpRApproxAmount;
+    data['invtpR_ApprovedQty'] = invtpRApprovedQty;
+    data['invtpR_PRUnitRate'] = invtpRPRUnitRate;
+    data['invtpR_Remarks'] = invtpRRemarks;
+    data['invtpR_ActiveFlg'] = invtpRActiveFlg;
     return data;
   }
 }
