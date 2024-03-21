@@ -302,6 +302,32 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
           });
         }
 
+        if (halfDay.value == false) {
+          if (totalhrs >=
+              double.parse(fliteresList
+                  .elementAt(index)
+                  .iSMTPLTAEffortInHrs
+                  .toString())) {
+            totalworkinghrsflag = 1;
+          }
+
+          if (totalhrs > 24) {
+            Fluttertoast.showToast(
+                msg:
+                    "Effort Should Be Less Than Equal To 24 Hours Per Day, Total Efforts Selected $totalhrs Hours");
+            return;
+          }
+        } else if (halfDay.value == true) {
+          var efforts = double.parse(fliteresList
+                  .elementAt(index)
+                  .iSMTPLTAEffortInHrs
+                  .toString()) /
+              2;
+          if (totalhrs != efforts) {
+            totalworkinghrsflag = 0.5;
+          }
+        }
+
         if (_plannerDetailsController.checkBoxList.elementAt(index) == true) {
           logger.v("Index === $uploadImageIndex");
           String countHr =
@@ -343,27 +369,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
             "ISMDRPT_CompoffApplicableflag":
                 _plannerDetailsController.compOffCheckBox[index]
           });
-        }
-        if (halfDay.value == false) {
-          if (totalhrs >=
-              double.parse(fliteresList
-                  .elementAt(index)
-                  .iSMTPLTAEffortInHrs
-                  .toString())) {
-            totalworkinghrsflag = 1;
-          }
-
-          if (totalhrs > 24) {
-            Fluttertoast.showToast(
-                msg:
-                    "Effort Should Be  Less Than Equal To 24 Hours Per Day , Total Efforts Selected  $totalhrs  Hours");
-            return;
-          }
-        } else if (halfDay.value == true) {
-          var efforts = double.parse(value.effortss!) / 2;
-          if (totalhrs == efforts) {
-            totalworkinghrsflag = 1;
-          }
         }
       }
       _plannerDetailsController.saveLoading(true);
