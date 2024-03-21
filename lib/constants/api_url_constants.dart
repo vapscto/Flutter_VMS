@@ -367,4 +367,6 @@ class URLS {
 
   static String getTourLeadList="api/TADA_Advance_TourFacade/Lead_Update";
   static String generateTemplate = 'api/AppointmentFacade/';
+
+  static String getTourDemoResponseApi="api/TADA_Advance_TourFacade/Edit_response_lead_demo";
 }
