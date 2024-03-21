@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/call_letter/api/call_letter_api.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
@@ -490,9 +492,36 @@ class _CallLetterHomeState extends State<CallLetterHome> {
                 alignment: Alignment.bottomCenter,
                 child: MSkollBtn(
                     title: "Generate Template",
-                    onPress: () {
+                    onPress: () async {
                       if (_key.currentState!.validate()) {
-                        Fluttertoast.showToast(msg: "Success");
+                        await generateCallLetter(
+                                base: baseUrlFromInsCode(
+                                    'recruitement', widget.mskoolController),
+                                updateBy: widget.loginSuccessModel.userId!)
+                            .then((value) {
+                          if (value == 'Error occured') {
+                            Fluttertoast.showToast(
+                                msg: "Template is not Generated");
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Template Generated Successfully");
+                            callLetterController.clear();
+                            candidateNameController.clear();
+                            addressController.clear();
+                            positionController.clear();
+                            candidateEmail.clear();
+                            companyController.clear();
+                            jobPostingSiteController.clear();
+                            jobLocationController.clear();
+                            postDateController.clear();
+                            interviewDt.clear();
+                            interviewTime.clear();
+                            officeEmail.clear();
+                            officePhone.clear();
+                            Get.back();
+                            setState(() {});
+                          }
+                        });
                       } else {
                         Fluttertoast.showToast(msg: "Fill All Fields");
                       }
@@ -508,8 +537,6 @@ class _CallLetterHomeState extends State<CallLetterHome> {
   }
 
   DateTime? postDate;
-
   DateTime? ivDate;
-
   TimeOfDay? newTime;
 }
