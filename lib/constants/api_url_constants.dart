@@ -360,4 +360,8 @@ class URLS {
   static String ontapviewapi = 'api/INV_PurchaseRequisitionFacade/get_prdetails/';
 
   static String onpurchaseviewapi = 'api/INV_RequisitionNotificationFacade/savedetails/';
+
+  static String getTourName="api/TADA_Advance_TourFacade/getload";
+
+  static String getTourLeadList="api/TADA_Advance_TourFacade/Lead_Update";
 }
