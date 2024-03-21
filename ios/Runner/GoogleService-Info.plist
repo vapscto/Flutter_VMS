@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyDgSZSbtzYT-JAf57wOTOYOFtcqAYlHMeI</string>
+	<string>AIzaSyBUN8yDXrIGXde2vBwEzXNCH4YITy1Z9cY</string>
 	<key>GCM_SENDER_ID</key>
-	<string>276785854051</string>
+	<string>542163507398</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.app.vmss</string>
+	<string>com.app.nms</string>
 	<key>PROJECT_ID</key>
-	<string>vms-mobile-app-d99a0</string>
+	<string>mskool-6b32d</string>
 	<key>STORAGE_BUCKET</key>
-	<string>vms-mobile-app-d99a0.appspot.com</string>
+	<string>mskool-6b32d.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:276785854051:ios:510722f120433f23f3ea56</string>
+	<string>1:542163507398:ios:0d5e900336b9b2a4f69fc7</string>
 </dict>
 </plist>
