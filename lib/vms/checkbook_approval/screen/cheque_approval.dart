@@ -39,7 +39,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
   RxList<int> selectCheckBox = <int>[].obs;
   DrDetailsCtrlr loadingCntrl = Get.put(DrDetailsCtrlr());
 
-  RxBool allSelect =  RxBool(false);
+  RxBool allSelect = RxBool(false);
   List<Map<String, dynamic>> detailsList = [];
   bool isLoding = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -72,7 +72,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
         "VPAYVOU_Remarks": _controller.tEControllerListOfNarration
             .elementAt(selectCheckBox[i])
             .text,
-        "VTADAAA_Remarks": _controller.tEControllerListOfApprovalRemark
+        "VTADAAA_Remarks": _controller.tEControllerListOfNarration
             .elementAt(selectCheckBox[i])
             .text,
         "approvecnt": _controller.radioSelect[selectCheckBox[i]],
@@ -267,7 +267,7 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                               _controller.tEControllerListOfApprovalRemark
                                   .clear();
                               _controller.checkList.clear();
-                               selectCheckBox.clear();
+                              selectCheckBox.clear();
                               allSelect.value = false;
                               mid = s!.mIId;
                               await updateCheque(
@@ -384,7 +384,6 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                         _controller
                                                                 .checkList[i] =
                                                             false;
-
                                                       }
                                                     }
                                                   },
@@ -563,31 +562,40 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                                                       .circular(
                                                                           10)),
                                                       onChanged: (value) {
-                                                           _controller.checkList[
-                                                              index] = value!;
-                                                              if(_controller.checkList[index]){
-                                                                _controller
-                                                                      .getTaDaModelList
-                                                                      .elementAt(
-                                                                          index)
-                                                                      .vPAYVOUStatusFlg =
-                                                                  "Approved";
-                                                              }
-                                                          if (selectCheckBox
-                                                              .contains(
-                                                                  index)) {
-                                                            selectCheckBox
-                                                                .remove(index);
-                                                            if(_controller.checkList.length != selectCheckBox.length){
-                                                              allSelect.value = false;
-                                                            }
-                                                            } else {
-                                                            selectCheckBox
-                                                                .add(index);
-                                                             if(_controller.checkList.length == selectCheckBox.length){
-                                                              allSelect.value = true;
-                                                             }
+                                                        _controller.checkList[
+                                                            index] = value!;
+                                                        if (_controller
+                                                            .checkList[index]) {
+                                                          _controller
+                                                                  .getTaDaModelList
+                                                                  .elementAt(index)
+                                                                  .vPAYVOUStatusFlg =
+                                                              "Approved";
+                                                        }
+                                                        if (selectCheckBox
+                                                            .contains(index)) {
+                                                          selectCheckBox
+                                                              .remove(index);
+                                                          if (_controller
+                                                                  .checkList
+                                                                  .length !=
+                                                              selectCheckBox
+                                                                  .length) {
+                                                            allSelect.value =
+                                                                false;
                                                           }
+                                                        } else {
+                                                          selectCheckBox
+                                                              .add(index);
+                                                          if (_controller
+                                                                  .checkList
+                                                                  .length ==
+                                                              selectCheckBox
+                                                                  .length) {
+                                                            allSelect.value =
+                                                                true;
+                                                          }
+                                                        }
                                                       },
                                                       value: _controller
                                                           .checkList
@@ -700,28 +708,45 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                             //b11
                                             DataCell(
                                               Align(
-                                                alignment: Alignment.center,
-                                                child: SizedBox(
-                                                  child:  Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Text("${_controller.getTaDaModelList.elementAt(index).hRMBDBankName}",
-                                                      style: Theme.of(context).textTheme.titleSmall!.merge(
-                                                        const TextStyle(
-                                                         fontWeight: FontWeight.w400,
-                                                        )),),
-                                                      const SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      Text("AC No:${_controller.getTaDaModelList.elementAt(index).hRMBDBankAccountNo}",
-                                                      style: Theme.of(context).textTheme.titleSmall!.merge(
-                                                        const TextStyle(
-                                                         fontWeight: FontWeight.w400,
-                                                        )),)
-                                                    ],
-                                                  ),
-                                                )
-                                              ),
+                                                  alignment: Alignment.center,
+                                                  child: SizedBox(
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          "${_controller.getTaDaModelList.elementAt(index).hRMBDBankName}",
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .titleSmall!
+                                                              .merge(
+                                                                  const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                              )),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 5,
+                                                        ),
+                                                        Text(
+                                                          "AC No:${_controller.getTaDaModelList.elementAt(index).hRMBDBankAccountNo}",
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .titleSmall!
+                                                              .merge(
+                                                                  const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                              )),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  )),
                                             ),
                                             //b10
                                             DataCell(
@@ -741,31 +766,38 @@ class _ChequeApprovalState extends State<ChequeApproval> {
                                               Align(
                                                 alignment: Alignment.center,
                                                 child: SizedBox(
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                  Text(_controller
-                                                              .getTaDaModelList
-                                                              .elementAt(index)
-                                                              .vPAYVOUChequeNo ==
-                                                          null
-                                                      ? ""
-                                                      : _controller
-                                                          .getTaDaModelList
-                                                          .elementAt(index)
-                                                          .vPAYVOUChequeNo
-                                                          .toString()),                                                     
-                                                          const SizedBox(
-                                                            height: 5,
-                                                          ),
-                                                          Text(
-                                                             _controller.getTaDaModelList.elementAt(index).vPAYVOUPaymentReference != null
-                                                             ? _controller.getTaDaModelList.elementAt(index).vPAYVOUPaymentReference! : ""
-                                                          )
-                                                    ],
-                                                  )
-
-                                                ),
+                                                    child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(_controller
+                                                                .getTaDaModelList
+                                                                .elementAt(
+                                                                    index)
+                                                                .vPAYVOUChequeNo ==
+                                                            null
+                                                        ? ""
+                                                        : _controller
+                                                            .getTaDaModelList
+                                                            .elementAt(index)
+                                                            .vPAYVOUChequeNo
+                                                            .toString()),
+                                                    const SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Text(_controller
+                                                                .getTaDaModelList
+                                                                .elementAt(
+                                                                    index)
+                                                                .vPAYVOUPaymentReference !=
+                                                            null
+                                                        ? _controller
+                                                            .getTaDaModelList
+                                                            .elementAt(index)
+                                                            .vPAYVOUPaymentReference!
+                                                        : "")
+                                                  ],
+                                                )),
                                               ),
                                             ),
                                             // //b8

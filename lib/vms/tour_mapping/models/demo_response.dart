@@ -9,16 +9,16 @@ class DemoResponseModel {
     if (json['\$values'] != null) {
       values = <DemoResponseModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new DemoResponseModelValues.fromJson(v));
+        values!.add(DemoResponseModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -50,13 +50,13 @@ class DemoResponseModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['ismsmpR_ProductName'] = this.ismsmpRProductName;
-    data['ismsmpR_Id'] = this.ismsmpRId;
-    data['ismsledmpR_DiscussionPoints'] = this.ismsledmpRDiscussionPoints;
-    data['ismsledM_Id'] = this.ismsledMId;
-    data['ismslE_Id'] = this.ismslEId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['ismsmpR_ProductName'] = ismsmpRProductName;
+    data['ismsmpR_Id'] = ismsmpRId;
+    data['ismsledmpR_DiscussionPoints'] = ismsledmpRDiscussionPoints;
+    data['ismsledM_Id'] = ismsledMId;
+    data['ismslE_Id'] = ismslEId;
     return data;
   }
 }
