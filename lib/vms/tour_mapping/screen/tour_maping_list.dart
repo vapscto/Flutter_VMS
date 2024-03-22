@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/interaction/screen/composetab.dart';
 import 'package:m_skool_flutter/vms/tour_mapping/api/demo_response_api.dart';
 import 'package:m_skool_flutter/vms/tour_mapping/api/tour_lead_list.dart';
 import 'package:m_skool_flutter/vms/tour_mapping/api/tour_lead_name_api.dart';
@@ -26,6 +27,12 @@ class TourMapingList extends StatefulWidget {
 
 class _TourMapingListState extends State<TourMapingList> {
   TourLeadController controller = Get.put(TourLeadController());
+  String category = '';
+  int ismsLEDMID =0;
+  int ierID = 0;
+  String statusName ="";
+  int iSMSLEId =0;
+  int categoryId = 0;
   @override
   void initState() {
     intiApi();
@@ -310,6 +317,12 @@ class _TourMapingListState extends State<TourMapingList> {
                                           alignment: Alignment.center,
                                           child: InkWell(
                                             onTap: () async {
+                                              category = controller.listTourListName.elementAt(index).iMRCCategoryName!;
+                                              ismsLEDMID =  controller.listTourListName.elementAt(index).iSMSLEDMId!;
+                                              ierID = controller.listTourListName.elementAt(index).iERID!;
+                                              statusName =  controller.listTourListName.elementAt(index).iVRMMSName!;
+                                              iSMSLEId =  controller.listTourListName.elementAt(index).iSMSLEId!;
+                                              categoryId =  controller.listTourListName.elementAt(index).iMRCCategoryId!;
                                               if (controller.listDemoRespose
                                                       .isNotEmpty &&
                                                   controller.listDemoStatus
@@ -329,6 +342,8 @@ class _TourMapingListState extends State<TourMapingList> {
                                                     .clear();
                                                 controller.demoMouList.clear();    
                                                 controller.demoDropDown.clear();
+                                                 controller.cheackedCheckBox.clear();
+                                                 controller.demoQutionFlag.clear();
                                               }
                                               await featchDemoResponse(
                                                 base: baseUrlFromInsCode(
@@ -377,6 +392,12 @@ class _TourMapingListState extends State<TourMapingList> {
                             controller: controller,
                             loginSuccessModel: widget.loginSuccessModel,
                             mskoolController: widget.mskoolController,
+                            category:category ,
+                            ismsLEDMID: ismsLEDMID,
+                            iredId: ierID,
+                            stataName:statusName ,
+                            iSMSLEId: iSMSLEId,
+                            categoryId: categoryId,
                           )
                         : const SizedBox()
                   ],

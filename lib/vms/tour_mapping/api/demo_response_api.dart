@@ -34,6 +34,7 @@ Future<void> featchDemoResponse(
       controller.demoMouList.add(false);
       controller.demoNegotiate.add(TextEditingController(text: ""));
       controller.demoDropDown.add("");
+      controller.demoQutionFlag.add(false);
     }
   } on DioError catch (e) {
     logger.e(e.message);
