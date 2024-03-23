@@ -14,7 +14,7 @@ xmlns:tools="http://schemas.android.com/tools"
         <package android:name="com.whatsapp" />
     </queries>
    <application
-        android:label="NMS"
+        android:label="B2B"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
          android:requestLegacyExternalStorage="true"
