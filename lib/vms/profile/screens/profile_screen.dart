@@ -197,7 +197,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                       return Align(
                                         alignment: Alignment.topCenter,
                                         child: Image.asset(
-                                            "assets/images/vaps_bg_image.jpeg"),
+                                            "assets/images/b2b.jpg"),
                                       );
                                     },
                                   ),

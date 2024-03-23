@@ -178,25 +178,56 @@ class RatingData extends StatelessWidget {
                         ),
                       )
                     : const SizedBox(),
-                (controller.leaveDataList.isNotEmpty)
+                    (controller.leaveDataList.isNotEmpty)
                     ? Padding(
                         padding: const EdgeInsets.only(top: 3.0),
                         child: Text(
-                          "Total Leave:- ${controller.leaveDataList.first.hrelSTotalLeaves ?? 0}",
+                          "${controller.leaveDataList.first.hrelSTotalLeaves ?? 0}",
                           textAlign: TextAlign.center,
                           style: Get.textTheme.titleSmall!
-                              .copyWith(color: Colors.black),
+                              .copyWith(color: Colors.blue,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold
+                              ),
                         ),
                       )
                     : const SizedBox(),
                 (controller.leaveDataList.isNotEmpty)
-                    ? Text(
-                        "Leave Balance:- ${controller.leaveDataList.first.hrelSCBLeaves ?? 0}",
-                        textAlign: TextAlign.center,
-                        style: Get.textTheme.titleSmall!
-                            .copyWith(color: Colors.black),
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 3.0),
+                        child: Text(
+                          "Total Leave",
+                          textAlign: TextAlign.center,
+                          style: Get.textTheme.titleSmall!
+                              .copyWith(color: Colors.black,
+                              fontSize: 16,
+                               fontWeight: FontWeight.w600
+                              ),
+                        ),
                       )
                     : const SizedBox(),
+                   const SizedBox(height: 10,),
+                     (controller.leaveDataList.isNotEmpty)
+                    ? Text(
+                        "${controller.leaveDataList.first.hrelSCBLeaves ?? 0}",
+                        textAlign: TextAlign.center,
+                        style: Get.textTheme.titleSmall!
+                            .copyWith(color: Colors.blue,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold
+                            ),
+                      )
+                    : const SizedBox(),
+                (controller.leaveDataList.isNotEmpty)
+                    ? Text(
+                        "Leave Balance",
+                        textAlign: TextAlign.center,
+                        style: Get.textTheme.titleSmall!
+                            .copyWith(color: Colors.black,
+                             fontWeight: FontWeight.w600),
+                      )
+                    : const SizedBox(),
+                     const SizedBox(height: 10,),
                 (controller.upcomIngHolidayList.isNotEmpty)
                     ? Padding(
                         padding: const EdgeInsets.only(top: 3.0),
@@ -209,20 +240,24 @@ class RatingData extends StatelessWidget {
                                   .textTheme
                                   .titleSmall!
                                   .copyWith(
-                                      color: Theme.of(context).primaryColor),
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 18),
                             ),
+                            const SizedBox(height: 5,),
                             Text(
                               "${controller.upcomIngHolidayList.first.fomhwdDName}",
                               textAlign: TextAlign.center,
                               style: Get.textTheme.titleSmall!
-                                  .copyWith(color: Colors.orange, fontSize: 13),
+                                  .copyWith(color: Colors.orange, fontSize: 16,
+                                  fontWeight: FontWeight.bold),
                             ),
                             Text(
                               dateFormatNew(DateTime.parse(controller
                                   .upcomIngHolidayList.first.fomhwdDFromDate!)),
                               textAlign: TextAlign.center,
                               style: Get.textTheme.titleSmall!
-                                  .copyWith(color: Colors.red, fontSize: 12),
+                                  .copyWith(color: Colors.red, fontSize: 16,
+                                   fontWeight: FontWeight.bold),
                             )
                           ],
                         ),
