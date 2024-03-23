@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/vms/tour_mapping/api/tour_lead_name_api.dart';
 import 'package:m_skool_flutter/vms/tour_mapping/controller/tour_lead_cntroller.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
+// ignore: must_be_immutable
 class TourMapingList extends StatefulWidget {
   LoginSuccessModel loginSuccessModel;
   MskoolController mskoolController;
@@ -50,7 +51,7 @@ class _TourMapingListState extends State<TourMapingList> {
         () => SingleChildScrollView(
           child: Column(
             children: [
-              controller.listTourListName .isNotEmpty
+              controller.listTourListName.isNotEmpty
                   ? Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 14, horizontal: 20),
@@ -70,10 +71,7 @@ class _TourMapingListState extends State<TourMapingList> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                           "Planer Name: ${controller.listLeadName
-                                .elementAt(0)
-                                .iERPlanName
-                                .toString()}",
+                            "Planer Name: ${controller.listLeadName.elementAt(0).iERPlanName.toString()}",
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
@@ -81,7 +79,7 @@ class _TourMapingListState extends State<TourMapingList> {
                           ).paddingSymmetric(horizontal: 10),
                         ),
                       ))
-                  : SizedBox(),
+                  : const SizedBox(),
               SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   scrollDirection: Axis.horizontal,
@@ -210,76 +208,90 @@ class _TourMapingListState extends State<TourMapingList> {
                           return DataRow(cells: [
                             DataCell(Align(
                                 alignment: Alignment.center,
-                                child: Text(controller.listTourListName
-                                    .elementAt(index)
-                                    .iMRCCategoryName!,
+                                child: Text(
+                                    controller.listTourListName
+                                        .elementAt(index)
+                                        .iMRCCategoryName!,
                                     style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .merge(const TextStyle(
-                                          fontSize: 14, color: Colors.black))))),
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black))))),
                             DataCell(Align(
                                 alignment: Alignment.center,
-                                child: Text(controller.listTourListName
-                                    .elementAt(index)
-                                    .iSMSLELeadName!,
+                                child: Text(
+                                    controller.listTourListName
+                                        .elementAt(index)
+                                        .iSMSLELeadName!,
                                     style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .merge(const TextStyle(
-                                          fontSize: 14, color: Colors.black))))),
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black))))),
                             DataCell(Align(
                                 alignment: Alignment.center,
-                                child: Text(controller.listTourListName
-                                    .elementAt(index)
-                                    .iSMSLEStudentStrength!
-                                    .toString(),
+                                child: Text(
+                                    controller.listTourListName
+                                        .elementAt(index)
+                                        .iSMSLEStudentStrength!
+                                        .toString(),
                                     style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .merge(const TextStyle(
-                                          fontSize: 14, color: Colors.black))))),
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black))))),
                             DataCell(Align(
                                 alignment: Alignment.center,
-                                child: Text(controller.listTourListName
-                                    .elementAt(index)
-                                    .iSMSLEStaffStrength
-                                    .toString(),
+                                child: Text(
+                                    controller.listTourListName
+                                        .elementAt(index)
+                                        .iSMSLEStaffStrength
+                                        .toString(),
                                     style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .merge(const TextStyle(
-                                          fontSize: 14, color: Colors.black))))),
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black))))),
                             DataCell(Align(
                                 alignment: Alignment.center,
-                                child: Text(controller.listTourListName
-                                    .elementAt(index)
-                                    .iSMSMPRProductName!,
+                                child: Text(
+                                    controller.listTourListName
+                                        .elementAt(index)
+                                        .iSMSMPRProductName!,
                                     style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .merge(const TextStyle(
-                                          fontSize: 14, color: Colors.black))))),
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black))))),
                             DataCell(Align(
                                 alignment: Alignment.center,
-                                child: Text(controller.listTourListName
-                                    .elementAt(index)
-                                    .sourceName!,
+                                child: Text(
+                                    controller.listTourListName
+                                        .elementAt(index)
+                                        .sourceName!,
                                     style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .merge(const TextStyle(
-                                          fontSize: 14, color: Colors.black))))),
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black))))),
                             DataCell(Align(
                                 alignment: Alignment.center,
-                                child: Text(controller.listTourListName
-                                    .elementAt(index)
-                                    .iVRMMSName!,
+                                child: Text(
+                                    controller.listTourListName
+                                        .elementAt(index)
+                                        .iVRMMSName!,
                                     style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .merge(const TextStyle(
-                                          fontSize: 14, color: Colors.black))))),
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black))))),
                             DataCell(Align(
                                 alignment: Alignment.center,
                                 child: Text(
