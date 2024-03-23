@@ -9,16 +9,16 @@ class StatusDemoModel {
     if (json['\$values'] != null) {
       values = <StatusDemoModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new StatusDemoModelValues.fromJson(v));
+        values!.add(StatusDemoModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -59,16 +59,16 @@ class StatusDemoModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ismsmsT_Id'] = this.ismsmsTId;
-    data['mI_Id'] = this.mIId;
-    data['ismsmsT_StatusName'] = this.ismsmsTStatusName;
-    data['ismsmsT_Remarks'] = this.ismsmsTRemarks;
-    data['ismsmsT_ActiveFlag'] = this.ismsmsTActiveFlag;
-    data['createdDate'] = this.createdDate;
-    data['updatedDate'] = this.updatedDate;
-    data['ismsmsT_CreatedBy'] = this.ismsmsTCreatedBy;
-    data['ismsmsT_UpdatedBy'] = this.ismsmsTUpdatedBy;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ismsmsT_Id'] = ismsmsTId;
+    data['mI_Id'] = mIId;
+    data['ismsmsT_StatusName'] = ismsmsTStatusName;
+    data['ismsmsT_Remarks'] = ismsmsTRemarks;
+    data['ismsmsT_ActiveFlag'] = ismsmsTActiveFlag;
+    data['createdDate'] = createdDate;
+    data['updatedDate'] = updatedDate;
+    data['ismsmsT_CreatedBy'] = ismsmsTCreatedBy;
+    data['ismsmsT_UpdatedBy'] = ismsmsTUpdatedBy;
     return data;
   }
 }

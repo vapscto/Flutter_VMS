@@ -493,11 +493,7 @@ void openMappedPages(
 
   if (pageName == "Rating Report") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
-      // return TourMapingList(
-      //   loginSuccessModel: loginSuccessModel,
-      //   mskoolController: mskoolController,
-      // );
-        return RatingReportHome(
+      return RatingReportHome(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
       );

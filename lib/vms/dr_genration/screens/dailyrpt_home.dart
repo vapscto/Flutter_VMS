@@ -326,6 +326,8 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
           if (totalhrs != efforts) {
             totalworkinghrsflag = 0.5;
           }
+        } else {
+          totalworkinghrsflag = 1;
         }
 
         if (_plannerDetailsController.checkBoxList.elementAt(index) == true) {

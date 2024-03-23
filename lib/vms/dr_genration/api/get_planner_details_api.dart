@@ -63,10 +63,12 @@ Future<bool> getPlanerdetails({
         if (taskDrListModel.values!.elementAt(i).drFlag == 1) {
           // List<String> newList = [];
           String deviation = '';
+          int id = 0;
           for (int j = 0; j < controller.depWiseDevitnList.length; j++) {
             if (v.iSMDRId ==
                 controller.depWiseDevitnList.elementAt(j).ismdRId) {
               deviation = controller.depWiseDevitnList[j].ismdRRemarks ?? '';
+              id = controller.depWiseDevitnList[j].ismdRId!;
             }
           }
           int hours = v.iSMDRPTTimeTakenInHrs!
@@ -86,6 +88,8 @@ Future<bool> getPlanerdetails({
               .add(TextEditingController(text: v.iSMDRPTRemarks));
           controller.deveationEtField
               .add(TextEditingController(text: deviation));
+          controller.deveationIdEtField
+              .add(TextEditingController(text: id.toString()));
           // add uploaded file
           // if (controller.uploadedFileList.isNotEmpty) {
           //   for (int k = 0; k < controller.uploadedFileList.length; k++) {
