@@ -317,84 +317,135 @@ class _TourMapingListState extends State<TourMapingList> {
                                                       color: Colors.black))))),
                                       DataCell(Align(
                                           alignment: Alignment.center,
-                                          child: InkWell(
-                                            onTap: () async {
-                                              category = controller
-                                                  .listTourListName
-                                                  .elementAt(index)
-                                                  .iMRCCategoryName!;
-                                              ismsLEDMID = controller
-                                                  .listTourListName
-                                                  .elementAt(index)
-                                                  .iSMSLEDMId!;
-                                              ierID = controller
-                                                  .listTourListName
-                                                  .elementAt(index)
-                                                  .iERID!;
-                                              statusName = controller
-                                                  .listTourListName
-                                                  .elementAt(index)
-                                                  .iVRMMSName!;
-                                              iSMSLEId = controller
-                                                  .listTourListName
-                                                  .elementAt(index)
-                                                  .iSMSLEId!;
-                                              categoryId = controller
-                                                  .listTourListName
-                                                  .elementAt(index)
-                                                  .iMRCCategoryId!;
-                                              if (controller.listDemoRespose
-                                                      .isNotEmpty &&
-                                                  controller.listDemoStatus
-                                                      .isNotEmpty) {
-                                                controller.listDemoRespose
-                                                    .clear();
-                                                controller.listDemoStatus
-                                                    .clear();
-                                                controller.demoRemarkEdt
-                                                    .clear();
-                                                controller.demoNegotiateList
-                                                    .clear();
-                                                controller.checkBoxList.clear();
-                                                controller.demoCancelList
-                                                    .clear();
-                                                controller.demoNegotiate
-                                                    .clear();
-                                                controller.demoMouList.clear();
-                                                controller.demoDropDown.clear();
-                                                controller.cheackedCheckBox
-                                                    .clear();
-                                                controller.demoQutionFlag
-                                                    .clear();
-                                              }
-                                              await featchDemoResponse(
-                                                base: baseUrlFromInsCode(
-                                                    "issuemanager",
-                                                    widget.mskoolController),
-                                                controller: controller,
-                                                ismsle: controller
-                                                    .listTourListName
-                                                    .elementAt(index)
-                                                    .iSMSLEId!,
-                                                ismsledm: controller
-                                                    .listTourListName
-                                                    .elementAt(index)
-                                                    .iSMSLEDMId!,
-                                                miId: controller
-                                                    .listTourListName
-                                                    .elementAt(index)
-                                                    .iVRMMSId!,
-                                              );
-                                            },
-                                            child: Text(
-                                              "View Demo Respose",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall!
-                                                  .merge(const TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.blue)),
-                                            ),
+                                          child: Row(
+                                            children: [
+                                              InkWell(
+                                                onTap: ()async {
+                                                  if (controller.listDemoRespose
+                                                          .isNotEmpty ||
+                                                      controller.listDemoStatus
+                                                          .isNotEmpty) {
+                                                    controller.listDemoRespose
+                                                        .clear();
+                                                    controller.listDemoStatus
+                                                        .clear();
+                                                    controller.demoRemarkEdt
+                                                        .clear();
+                                                    controller.demoNegotiateList
+                                                        .clear();
+                                                    controller.checkBoxList.clear();
+                                                    controller.demoCancelList
+                                                        .clear();
+                                                    controller.demoNegotiate
+                                                        .clear();
+                                                    controller.demoMouList.clear();
+                                                    controller.demoDropDown.clear();
+                                                    controller.cheackedCheckBox
+                                                        .clear();
+                                                    controller.demoQutionFlag
+                                                        .clear();
+                                                  }
+                                                  if(controller.viewDemoResopnseList.isNotEmpty||
+                                                  controller.viewDemoPRoductList.isNotEmpty||
+                                                  controller.viewDemoResponseDetailsList.isNotEmpty
+                                                  ){
+                                                  controller.viewDemoResopnseList.clear();
+                                                  controller.viewDemoPRoductList.clear();
+                                                   controller.viewDemoResponseDetailsList.clear();
+                                                  }
+                                                  await featchViewDemoRespose(
+                                                    base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+                                                    miId: widget.loginSuccessModel.mIID!,
+                                                    controller: controller,
+                                                    ismsleId: controller.listTourListName.elementAt(index).iSMSLEId!,
+                                                    ismsledm: controller.listTourListName.elementAt(index).iSMSLEDMId!);
+                                                },
+                                                child:const  Icon(Icons.visibility,
+                                                color: Colors.blue,),
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              InkWell(
+                                                onTap: () async {
+                                                  category = controller
+                                                      .listTourListName
+                                                      .elementAt(index)
+                                                      .iMRCCategoryName!;
+                                                  ismsLEDMID = controller
+                                                      .listTourListName
+                                                      .elementAt(index)
+                                                      .iSMSLEDMId!;
+                                                  ierID = controller
+                                                      .listTourListName
+                                                      .elementAt(index)
+                                                      .iERID!;
+                                                  statusName = controller
+                                                      .listTourListName
+                                                      .elementAt(index)
+                                                      .iVRMMSName!;
+                                                  iSMSLEId = controller
+                                                      .listTourListName
+                                                      .elementAt(index)
+                                                      .iSMSLEId!;
+                                                  categoryId = controller
+                                                      .listTourListName
+                                                      .elementAt(index)
+                                                      .iMRCCategoryId!;
+                                                  if (controller.listDemoRespose
+                                                          .isNotEmpty &&
+                                                      controller.listDemoStatus
+                                                          .isNotEmpty) {
+                                                    controller.listDemoRespose
+                                                        .clear();
+                                                    controller.listDemoStatus
+                                                        .clear();
+                                                    controller.demoRemarkEdt
+                                                        .clear();
+                                                    controller.demoNegotiateList
+                                                        .clear();
+                                                    controller.checkBoxList.clear();
+                                                    controller.demoCancelList
+                                                        .clear();
+                                                    controller.demoNegotiate
+                                                        .clear();
+                                                    controller.demoMouList.clear();
+                                                    controller.demoDropDown.clear();
+                                                    controller.cheackedCheckBox
+                                                        .clear();
+                                                    controller.demoQutionFlag
+                                                        .clear();
+                                                  }
+                                                  await featchDemoResponse(
+                                                    base: baseUrlFromInsCode(
+                                                        "issuemanager",
+                                                        widget.mskoolController),
+                                                    controller: controller,
+                                                    ismsle: controller
+                                                        .listTourListName
+                                                        .elementAt(index)
+                                                        .iSMSLEId!,
+                                                    ismsledm: controller
+                                                        .listTourListName
+                                                        .elementAt(index)
+                                                        .iSMSLEDMId!,
+                                                    miId: controller
+                                                        .listTourListName
+                                                        .elementAt(index)
+                                                        .iVRMMSId!,
+                                                  );
+                                                },
+                                                child: Text(
+                                                  "View Demo Respose",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .merge(const TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.blue)),
+                                                ),
+                                              ),
+                                            ],
                                           ))),
                                       const DataCell(Align(
                                           alignment: Alignment.center,

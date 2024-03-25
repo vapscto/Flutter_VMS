@@ -7,7 +7,11 @@ import 'package:m_skool_flutter/vms/rating_report/screen/report_data_screen.dart
 Future<void> saveDemoResponse(
     {required String base,
     required List<Map<String, dynamic>> saveDataList,
-    required BuildContext context}) async {
+    required BuildContext context,
+     required int mIId,
+      required int userId, 
+      required String latitude,
+       required String longitude}) async {
   final Dio ins = getGlobalDio();
   String apiUrl = base + URLS.getSaveDemoResponse;
   showDialog(
