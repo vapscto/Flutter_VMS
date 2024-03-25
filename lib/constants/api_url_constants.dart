@@ -371,4 +371,6 @@ class URLS {
   static String getTourDemoResponseApi="api/TADA_Advance_TourFacade/Edit_response_lead_demo";
 
   static String getSaveDemoResponse="api/TADA_Advance_TourFacade/Save_response_lead_demo";
+
+  static String getLeadDemoResponse="api/TADA_Advance_TourFacade/view_lead_demo";
 }

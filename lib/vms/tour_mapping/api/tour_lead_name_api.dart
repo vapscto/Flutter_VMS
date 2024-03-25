@@ -12,11 +12,11 @@ Future<void> featchTourName(
   final Dio ins = getGlobalDio();
   String apiUrl = base + URLS.getTourName;
   controller.tourLeadNameLoading.value = true;
-  logger.i(apiUrl);
+// logger.i(apiUrl);
  try {
     final Response response = await ins.post(apiUrl,
         options: Options(headers: getSession()), data: {"UserId": userId});
-        logger.w(response.data['tourPlanDetails']);
+      //  logger.w(response.data['tourPlanDetails']);
    TourPlanModel tourName = TourPlanModel.fromJson(response.data['tourPlanDetails']);    
    controller.listLeadName.addAll(tourName.values!);
    controller.tourLeadNameLoading.value = false;

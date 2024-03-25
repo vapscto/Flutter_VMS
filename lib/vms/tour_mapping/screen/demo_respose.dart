@@ -43,7 +43,7 @@ class _DemoResponsePageState extends State<DemoResponsePage> {
   final GetEmpDetailsController gpsController =
       Get.put(GetEmpDetailsController());
   List<Map<String, dynamic>> detailsList = [];
-  List<Map<String, dynamic>> saveDataList = [];
+  Map<String, dynamic> saveDataList = {};
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -761,69 +761,56 @@ class _DemoResponsePageState extends State<DemoResponsePage> {
                       i < widget.controller.cheackedCheckBox.length;
                       i++) {
                     detailsList.add({
-                      "ISMSLEDM_Id": widget.controller.listDemoRespose
-                          .elementAt(widget.controller.cheackedCheckBox[i])
-                          .ismsledMId,
-                      "ISMSLEDMPR_Id": widget.iSMSLEId,
-                      "ISMSMST_Id": widget.controller.demoDropDown
+                      "ISMSLECOM_SendQuotationFlg": widget
+                          .controller.demoQutionFlag
                           .elementAt(widget.controller.cheackedCheckBox[i]),
                       "ISMSLEDMPR_Remarks": widget.controller.demoRemarkEdt
                           .elementAt(widget.controller.cheackedCheckBox[i])
                           .text,
-                      "ISMSLECOM_SendQuotationFlg":
-                          widget.controller.demoQutionFlag.elementAt(
-                                      widget.controller.cheackedCheckBox[i]) ==
-                                  true
-                              ? 1
-                              : 0,
-                      "ISMSLECOM_MoMFlg": widget.controller.demoMouList
-                                  .elementAt(
-                                      widget.controller.cheackedCheckBox[i]) ==
-                              true
-                          ? 1
-                          : 0,
-                      "ISMSLECOM_NonFlg": widget.controller.demoNegotiateList
-                                  .elementAt(
-                                      widget.controller.cheackedCheckBox[i]) ==
-                              true
-                          ? 1
-                          : 0,
-                      "NON_Amount": widget.controller.demoNegotiateList
-                                  .elementAt(
-                                      widget.controller.cheackedCheckBox[i]) ==
-                              true
-                          ? widget.controller.demoNegotiate
-                              .elementAt(widget.controller.cheackedCheckBox[i])
-                              .text
-                          : "",
-                      "ISMSLECOM_CancelFlg": widget.controller.demoCancelList
-                                  .elementAt(
-                                      widget.controller.cheackedCheckBox[i]) ==
-                              true
-                          ? 1
-                          : 0,
-                      "SMSLEDM_CategaroyId": widget.categoryId,
-                      "IER_ID": widget.iredId,
-                      "ISMSLEDMPR_ActiveFlag": false,
-                      "ISMSMST_StatusName": widget.stataName
+                      "ISMSLEDM_DemoCancelledFlg": widget
+                          .controller.demoCancelList
+                          .elementAt(widget.controller.cheackedCheckBox[i]),
+                      "ISMSLEDM_MOMFlg": widget.controller.demoMouList
+                          .elementAt(widget.controller.cheackedCheckBox[i]),
+                      "ISMSLEDM_NegotiationAmt": widget
+                          .controller.demoNegotiateList
+                          .elementAt(widget.controller.cheackedCheckBox[i]),
+                      "ISMSLEDM_NegotiationFlg": widget
+                          .controller.demoNegotiateList
+                          .elementAt(widget.controller.cheackedCheckBox[i]),
+                      "ISMSMST_Id": widget.controller.demoDropDown
+                          .elementAt(widget.controller.cheackedCheckBox[i]),
+                      "ismslE_Id": widget.controller.listDemoRespose
+                          .elementAt(widget.controller.cheackedCheckBox[i])
+                          .ismslEId,
+                      "ismsledM_Id": widget.controller.listDemoRespose
+                          .elementAt(widget.controller.cheackedCheckBox[i])
+                          .ismsledMId,
+                      "ismsledmpR_DiscussionPoints": widget
+                          .controller.listDemoRespose
+                          .elementAt(widget.controller.cheackedCheckBox[i])
+                          .ismsledmpRDiscussionPoints!,
+                      "ismsmpR_Id": widget.controller.listDemoRespose
+                          .elementAt(widget.controller.cheackedCheckBox[i])
+                          .ismsmpRId,
+                      "ismsmpR_ProductName": widget.controller.listDemoRespose
+                          .elementAt(widget.controller.cheackedCheckBox[i])
+                          .ismsmpRProductName!,
+                      "ismsmsT_StatusName": widget.stataName
                     });
                   }
-                  saveDataList.add({
-                    "ILRR_Lat": "${gpsController.latitude}",
-                    "ILRR_Long": "${gpsController.longitude}",
-                    "MI_Id": widget.loginSuccessModel.mIID,
-                    "UserId": widget.loginSuccessModel.userId,
-                    "product_demo_master_temp2": detailsList
-                  });
-
+                  //  for (int i = 0; i < saveDataList.length; i++) {
+                  //                     logger.i(saveDataList[i]);
+                  //                   }
                   await saveDemoResponse(
                       base: baseUrlFromInsCode(
                           "issuemanager", widget.mskoolController),
                       context: context,
-                      saveDataList: saveDataList);
-                  for (int i = 0; i < saveDataList.length; i++) {
-                    logger.i(saveDataList[i]);
-                  }
+                      mIId: widget.loginSuccessModel.mIID!,
+                      userId: widget.loginSuccessModel.userId!,
+                      latitude: "${gpsController.latitude}",
+                      longitude: "${gpsController.longitude}",
+                      saveDataList: detailsList);
                 },
               )
             ],

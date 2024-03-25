@@ -499,7 +499,14 @@ void openMappedPages(
       );
     }));
   }
-
+  if (pageName == "Tour Maping") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return TourMapingList(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+  }
   if (pageName == "Leave Apply") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return ApplyLeaveHomeScreen(
