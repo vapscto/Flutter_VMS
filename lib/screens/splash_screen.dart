@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/apis/authenticate_user_api.dart';
 import 'package:m_skool_flutter/apis/institutional_code_api.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
@@ -279,8 +280,8 @@ class _SplashScreenState extends State<SplashScreen> {
           mskoolController: mskoolController,
         ));
       }
-      // String userName = logInBox!.get("userName");
-      // String password = logInBox!.get("password");
+      String userName = logInBox!.get("userName");
+      String password = logInBox!.get("password");
       int miId = importantIds!.get(URLS.miId);
       logger.v(miId);
       // ignore: unused_local_variable
@@ -292,22 +293,14 @@ class _SplashScreenState extends State<SplashScreen> {
           loginBaseUrl = apiItem.iivrscurLAPIURL;
         }
       }
-      // final LoginSuccessModel loginSuccessModel =
-      //     await AuthenticateUserApi.instance.authenticateNow(
-      //         userName,
-      //         password,
-      //         (widget.miIdNew == 0) ? miId : widget.miIdNew,
-      //         loginBaseUrl,
-      //         deviceid);
-      //user one time
-      var response = await logInBox!.get("loginRespose");
       final LoginSuccessModel loginSuccessModel =
-          LoginSuccessModel.fromJson(jsonDecode(response));
-
-      //logger.e(logins.userName);
-      // final LoginSuccessModel loginSuccessModel =
-      // LoginSuccessModel.fromJson(response);
-      // logger.e(loginSuccessModel.toJson());
+          await AuthenticateUserApi.instance.authenticateNow(
+              userName,
+              password,
+              (widget.miIdNew == 0) ? miId : widget.miIdNew,
+              loginBaseUrl,
+              deviceid);
+ 
       mskoolController.updateLoginSuccessModel(loginSuccessModel);
       ProfileController profileController = Get.put(ProfileController());
       await lateIn(

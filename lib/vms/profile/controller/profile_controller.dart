@@ -13,8 +13,7 @@ import 'package:m_skool_flutter/vms/profile/model/up_coming_holiday_model.dart';
 class ProfileController extends GetxController {
   RxBool isErrorLoading = RxBool(false);
   RxBool isProfileLoading = RxBool(false);
-  //user one time
-  RxString userDeviceId = "".obs;
+ 
   void errorLoading(bool loading) {
     isErrorLoading.value = loading;
   }

@@ -42,21 +42,7 @@ class ProfileAPI {
       // logger.v({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
       // logger.w(api);
       if (response.statusCode == 200) {
-        //user one time
-        EmployeeDetails empDtl =
-            EmployeeDetails.fromJson(response.data['employeedetails']);
-        profileController.userDeviceId.value = empDtl.values!.first.deviceID!;
-
-        if (profileController.userDeviceId.value.isNotEmpty &&
-            profileController.userDeviceId.value != deviceid) {
-          // ignore: use_build_context_synchronously
-
-          await institutionalCode!.clear();
-          Get.offAll(() => const SplashScreen(miIdNew: 0));
-        }
-        //user one time
-        logger.e("User deviceId:${profileController.userDeviceId.value}");
-        ProfileDataModel profileDataModel =
+      ProfileDataModel profileDataModel =
             ProfileDataModel.fromJson(response.data['emp_deatils']);
         profileController.getProfile(profileDataModel.values!);
         if (response.data['birthdaylist'] != null) {

@@ -11,6 +11,7 @@ import 'package:m_skool_flutter/vms/tour_mapping/api/view_response.dart';
 import 'package:m_skool_flutter/vms/tour_mapping/controller/tour_lead_cntroller.dart';
 import 'package:m_skool_flutter/vms/tour_mapping/screen/demo_respose.dart';
 import 'package:m_skool_flutter/vms/tour_mapping/screen/sales_lead_demo.dart';
+import 'package:m_skool_flutter/vms/tour_mapping/screen/upload_tada.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
@@ -416,6 +417,14 @@ class _TourMapingListState extends State<TourMapingList> {
                                                     controller.demoQutionFlag
                                                         .clear();
                                                   }
+                                                  if(controller.viewDemoResopnseList.isNotEmpty||
+                                                  controller.viewDemoPRoductList.isNotEmpty||
+                                                  controller.viewDemoResponseDetailsList.isNotEmpty
+                                                  ){
+                                                  controller.viewDemoResopnseList.clear();
+                                                  controller.viewDemoPRoductList.clear();
+                                                   controller.viewDemoResponseDetailsList.clear();
+                                                  }
                                                   await featchDemoResponse(
                                                     base: baseUrlFromInsCode(
                                                         "issuemanager",
@@ -479,7 +488,14 @@ class _TourMapingListState extends State<TourMapingList> {
                             mskoolController: widget.mskoolController,
                             controller: controller,
                           ).paddingOnly(top: 20)
-                        : SizedBox()
+                        : SizedBox(),
+                        const SizedBox(height: 10,),
+                        UploadTadaDocument(
+                          controller: controller,
+                          loginSuccessModel: widget.loginSuccessModel,
+                          mskoolController: widget.mskoolController,
+                        )
+                        ,const SizedBox(height: 50,)
                   ],
                 ),
         ),
