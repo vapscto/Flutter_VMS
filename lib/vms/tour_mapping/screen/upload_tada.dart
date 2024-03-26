@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/homework/model/upload_hw_cw_model.dart';
+import 'package:m_skool_flutter/vms/tour_mapping/api/upload_doc.dart';
 import 'package:m_skool_flutter/vms/tour_mapping/controller/tour_lead_cntroller.dart';
+import 'package:m_skool_flutter/vms/widgets/attachment_viewer.dart';
 
 class UploadTadaDocument extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -21,17 +25,19 @@ class UploadTadaDocument extends StatefulWidget {
 }
 
 class _UploadTadaDocumentState extends State<UploadTadaDocument> {
-  RxList<int> tableIncrease = <int>[].obs;
+  RxList<TadaUpload> tableIncrease = <TadaUpload>[].obs;
   FilePickerResult? result;
-
+  RxList<TextEditingController> etController = <TextEditingController>[].obs;
+  RxList<TextEditingController> etRemarkController =
+      <TextEditingController>[].obs;
   @override
   void initState() {
-    init();
-    tableIncrease.add(0);
+    tableIncrease.add(TadaUpload(filePath: '', fileName: ''));
+    etController.add(TextEditingController(text: ''));
+    etRemarkController.add(TextEditingController(text: ''));
     super.initState();
   }
 
-  init() async {}
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -137,16 +143,19 @@ class _UploadTadaDocumentState extends State<UploadTadaDocument> {
                             child: MaterialButton(
                               onPressed: () async {
                                 result = await FilePicker.platform.pickFiles();
-
                                 if (result != null) {
                                   PlatformFile file = result!.files.first;
-                                   logger.e(file.name);
-                                   logger.e(file.bytes);
-                                   logger.e(file.size);
-                                   logger.e(file.extension);
-                                   logger.e(file.path);
-                                } else {
-                                   
+                                  UploadHwCwModel model = await uploadTADAAtt(
+                                      file: File(file.path!),
+                                      miId: widget.loginSuccessModel.mIID!);
+                                  tableIncrease[index].filePath = model.path;
+                                  tableIncrease[index].fileName = model.name;
+                                  setState(() {
+                                    });
+                                  // for(int i = 0; i < tableIncrease.length;i++){
+                                  // print("${i} = ${tableIncrease[i].filePath}");
+                                  // }
+                                  // print(file.path);
                                 }
                               },
                               height: 40,
@@ -163,12 +172,42 @@ class _UploadTadaDocumentState extends State<UploadTadaDocument> {
                                 )),
                               ),
                             ))),
-                        const DataCell(Align(
-                            alignment: Alignment.center, child: Text(" "))),
-                        const DataCell(Align(
-                            alignment: Alignment.center, child: Text(" "))),
-                        const DataCell(Align(
-                            alignment: Alignment.center, child: Text(" "))),
+                        DataCell(Align(
+                            alignment: Alignment.center,
+                            child: InkWell(
+                                onTap: () {
+                                  Get.to(() => AttachmentViewer(
+                                        loadFromRawData: true,
+                                        url: tableIncrease
+                                            .elementAt(index)
+                                            .filePath,
+                                      ));
+                                },
+                                child:
+                                    tableIncrease.elementAt(index).filePath !=
+                                            ''
+                                        ? const Icon(Icons.visibility)
+                                        : const SizedBox()))),
+                        DataCell(Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                            width: 200,
+                              child: TextField(
+                                controller: etController.elementAt(index),
+                                decoration: const InputDecoration(
+                                    border: OutlineInputBorder()),
+                              ),
+                            ))),
+                        DataCell(Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                              width: 200,
+                              child: TextField(
+                                controller: etRemarkController.elementAt(index),
+                                decoration: const InputDecoration(
+                                    border: OutlineInputBorder()),
+                              ),
+                            ))),
                         DataCell(Align(
                             alignment: Alignment.center,
                             child: index == tableIncrease.length - 1
@@ -176,13 +215,23 @@ class _UploadTadaDocumentState extends State<UploadTadaDocument> {
                                     children: [
                                       InkWell(
                                           onTap: () {
-                                            tableIncrease.add(index);
+                                            tableIncrease.add(TadaUpload(
+                                                filePath: '', fileName: ''));
+                                            etController.add(
+                                                TextEditingController(
+                                                    text: ''));
+                                            etRemarkController.add(
+                                                TextEditingController(
+                                                    text: ''));
                                           },
                                           child: const Icon(Icons.add)),
                                       index >= 1
                                           ? InkWell(
                                               onTap: () {
-                                                tableIncrease.remove(index);
+                                                tableIncrease.removeAt(index);
+                                                etController.removeAt(index);
+                                                etRemarkController
+                                                    .removeAt(index);
                                               },
                                               child: const Icon(Icons.remove))
                                           : const SizedBox()
@@ -191,7 +240,9 @@ class _UploadTadaDocumentState extends State<UploadTadaDocument> {
                                 : index < tableIncrease.length
                                     ? InkWell(
                                         onTap: () {
-                                          tableIncrease.remove(index);
+                                          tableIncrease.removeAt(index);
+                                          etController.removeAt(index);
+                                          etRemarkController.removeAt(index);
                                         },
                                         child: const Icon(Icons.remove))
                                     : null))
@@ -208,6 +259,14 @@ class _UploadTadaDocumentState extends State<UploadTadaDocument> {
   @override
   void dispose() {
     tableIncrease.clear();
+    etController.clear();
+    etRemarkController.clear();
     super.dispose();
   }
+}
+
+class TadaUpload {
+  String? filePath;
+  String? fileName;
+  TadaUpload({required this.filePath, required this.fileName});
 }

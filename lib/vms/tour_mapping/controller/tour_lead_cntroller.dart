@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/sales_report/pre_sales/model/demo_response_model.dart';
+import 'package:m_skool_flutter/vms/tadaModule/tada_apply_module/controller/tada_apply_controller.dart';
 import 'package:m_skool_flutter/vms/tour_mapping/models/demo_response_details.dart';
 import 'package:m_skool_flutter/vms/tour_mapping/models/status_demo.dart';
 import 'package:m_skool_flutter/vms/tour_mapping/models/tour_paln_model.dart';
@@ -29,4 +30,5 @@ class TourLeadController extends GetxController {
   RxList<ViewLeadDemoValues>  viewDemoResopnseList = <ViewLeadDemoValues>[].obs;
   RxList<ViewLeadDemoProductResponseValues> viewDemoPRoductList = <ViewLeadDemoProductResponseValues>[].obs;
   RxList<DemoResponseDetailsValues> viewDemoResponseDetailsList = <DemoResponseDetailsValues>[].obs;
+  RxList<AtachmentFile> addListBrowserFiles = <AtachmentFile>[].obs;
 }
