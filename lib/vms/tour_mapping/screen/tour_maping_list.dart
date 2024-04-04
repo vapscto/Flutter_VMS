@@ -321,7 +321,7 @@ class _TourMapingListState extends State<TourMapingList> {
                                           child: Row(
                                             children: [
                                               InkWell(
-                                                onTap: ()async {
+                                                onTap: () async {
                                                   if (controller.listDemoRespose
                                                           .isNotEmpty ||
                                                       controller.listDemoStatus
@@ -334,35 +334,62 @@ class _TourMapingListState extends State<TourMapingList> {
                                                         .clear();
                                                     controller.demoNegotiateList
                                                         .clear();
-                                                    controller.checkBoxList.clear();
+                                                    controller.checkBoxList
+                                                        .clear();
                                                     controller.demoCancelList
                                                         .clear();
                                                     controller.demoNegotiate
                                                         .clear();
-                                                    controller.demoMouList.clear();
-                                                    controller.demoDropDown.clear();
+                                                    controller.demoMouList
+                                                        .clear();
+                                                    controller.demoDropDown
+                                                        .clear();
                                                     controller.cheackedCheckBox
                                                         .clear();
                                                     controller.demoQutionFlag
                                                         .clear();
                                                   }
-                                                  if(controller.viewDemoResopnseList.isNotEmpty||
-                                                  controller.viewDemoPRoductList.isNotEmpty||
-                                                  controller.viewDemoResponseDetailsList.isNotEmpty
-                                                  ){
-                                                  controller.viewDemoResopnseList.clear();
-                                                  controller.viewDemoPRoductList.clear();
-                                                   controller.viewDemoResponseDetailsList.clear();
+                                                  if (controller
+                                                          .viewDemoResopnseList
+                                                          .isNotEmpty ||
+                                                      controller
+                                                          .viewDemoPRoductList
+                                                          .isNotEmpty ||
+                                                      controller
+                                                          .viewDemoResponseDetailsList
+                                                          .isNotEmpty) {
+                                                    controller
+                                                        .viewDemoResopnseList
+                                                        .clear();
+                                                    controller
+                                                        .viewDemoPRoductList
+                                                        .clear();
+                                                    controller
+                                                        .viewDemoResponseDetailsList
+                                                        .clear();
                                                   }
                                                   await featchViewDemoRespose(
-                                                    base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
-                                                    miId: widget.loginSuccessModel.mIID!,
-                                                    controller: controller,
-                                                    ismsleId: controller.listTourListName.elementAt(index).iSMSLEId!,
-                                                    ismsledm: controller.listTourListName.elementAt(index).iSMSLEDMId!);
+                                                      base: baseUrlFromInsCode(
+                                                          "issuemanager",
+                                                          widget
+                                                              .mskoolController),
+                                                      miId: widget
+                                                          .loginSuccessModel
+                                                          .mIID!,
+                                                      controller: controller,
+                                                      ismsleId: controller
+                                                          .listTourListName
+                                                          .elementAt(index)
+                                                          .iSMSLEId!,
+                                                      ismsledm: controller
+                                                          .listTourListName
+                                                          .elementAt(index)
+                                                          .iSMSLEDMId!);
                                                 },
-                                                child:const  Icon(Icons.visibility,
-                                                color: Colors.blue,),
+                                                child: const Icon(
+                                                  Icons.visibility,
+                                                  color: Colors.blue,
+                                                ),
                                               ),
                                               const SizedBox(
                                                 width: 5,
@@ -405,30 +432,45 @@ class _TourMapingListState extends State<TourMapingList> {
                                                         .clear();
                                                     controller.demoNegotiateList
                                                         .clear();
-                                                    controller.checkBoxList.clear();
+                                                    controller.checkBoxList
+                                                        .clear();
                                                     controller.demoCancelList
                                                         .clear();
                                                     controller.demoNegotiate
                                                         .clear();
-                                                    controller.demoMouList.clear();
-                                                    controller.demoDropDown.clear();
+                                                    controller.demoMouList
+                                                        .clear();
+                                                    controller.demoDropDown
+                                                        .clear();
                                                     controller.cheackedCheckBox
                                                         .clear();
                                                     controller.demoQutionFlag
                                                         .clear();
                                                   }
-                                                  if(controller.viewDemoResopnseList.isNotEmpty||
-                                                  controller.viewDemoPRoductList.isNotEmpty||
-                                                  controller.viewDemoResponseDetailsList.isNotEmpty
-                                                  ){
-                                                  controller.viewDemoResopnseList.clear();
-                                                  controller.viewDemoPRoductList.clear();
-                                                   controller.viewDemoResponseDetailsList.clear();
+                                                  if (controller
+                                                          .viewDemoResopnseList
+                                                          .isNotEmpty ||
+                                                      controller
+                                                          .viewDemoPRoductList
+                                                          .isNotEmpty ||
+                                                      controller
+                                                          .viewDemoResponseDetailsList
+                                                          .isNotEmpty) {
+                                                    controller
+                                                        .viewDemoResopnseList
+                                                        .clear();
+                                                    controller
+                                                        .viewDemoPRoductList
+                                                        .clear();
+                                                    controller
+                                                        .viewDemoResponseDetailsList
+                                                        .clear();
                                                   }
                                                   await featchDemoResponse(
                                                     base: baseUrlFromInsCode(
                                                         "issuemanager",
-                                                        widget.mskoolController),
+                                                        widget
+                                                            .mskoolController),
                                                     controller: controller,
                                                     ismsle: controller
                                                         .listTourListName
@@ -488,14 +530,18 @@ class _TourMapingListState extends State<TourMapingList> {
                             mskoolController: widget.mskoolController,
                             controller: controller,
                           ).paddingOnly(top: 20)
-                        : SizedBox(),
-                        const SizedBox(height: 10,),
-                        UploadTadaDocument(
-                          controller: controller,
-                          loginSuccessModel: widget.loginSuccessModel,
-                          mskoolController: widget.mskoolController,
-                        )
-                        ,const SizedBox(height: 50,)
+                        : const SizedBox(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    UploadTadaDocument(
+                      controller: controller,
+                      loginSuccessModel: widget.loginSuccessModel,
+                      mskoolController: widget.mskoolController,
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    )
                   ],
                 ),
         ),

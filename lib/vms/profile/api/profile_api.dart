@@ -2,14 +2,11 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/screens/splash_screen.dart';
 import 'package:m_skool_flutter/vms/coe/model/holiday_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
-import 'package:m_skool_flutter/vms/profile/model/employee_details.dart';
 import 'package:m_skool_flutter/vms/profile/model/birthday_list_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/dash_board_leave_model.dart';
 import 'package:m_skool_flutter/vms/profile/model/issues_list_model.dart';
@@ -32,8 +29,8 @@ class ProfileAPI {
       required int roleId}) async {
     var dio = Dio();
     var api = base + URLS.profileData;
-          logger.d({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
-      logger.d(api);
+    logger.d({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
+    logger.d(api);
     try {
       profileController.profileLoading(true);
       var response = await dio.post(api,
@@ -42,7 +39,7 @@ class ProfileAPI {
       // logger.v({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
       // logger.w(api);
       if (response.statusCode == 200) {
-      ProfileDataModel profileDataModel =
+        ProfileDataModel profileDataModel =
             ProfileDataModel.fromJson(response.data['emp_deatils']);
         profileController.getProfile(profileDataModel.values!);
         if (response.data['birthdaylist'] != null) {

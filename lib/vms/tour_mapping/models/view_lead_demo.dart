@@ -15,10 +15,10 @@ class ViewLeadDemo {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -59,16 +59,16 @@ class ViewLeadDemoValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['employeename'] = this.employeename;
-    data['hrmE_Id'] = this.hrmEId;
-    data['ismslE_LeadName'] = this.ismslELeadName;
-    data['ismslE_LeadCode'] = this.ismslELeadCode;
-    data['ismsledM_ContactPerson'] = this.ismsledMContactPerson;
-    data['ismslE_ContactNo'] = this.ismslEContactNo;
-    data['ismsledM_DemoAddress'] = this.ismsledMDemoAddress;
-    data['ismsledM_Remarks'] = this.ismsledMRemarks;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['employeename'] = employeename;
+    data['hrmE_Id'] = hrmEId;
+    data['ismslE_LeadName'] = ismslELeadName;
+    data['ismslE_LeadCode'] = ismslELeadCode;
+    data['ismsledM_ContactPerson'] = ismsledMContactPerson;
+    data['ismslE_ContactNo'] = ismslEContactNo;
+    data['ismsledM_DemoAddress'] = ismsledMDemoAddress;
+    data['ismsledM_Remarks'] = ismsledMRemarks;
     return data;
   }
 }

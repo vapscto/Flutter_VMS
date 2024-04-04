@@ -15,6 +15,7 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/common_home_screen.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginScreen extends StatefulWidget {
   final MskoolController mskoolController;
@@ -278,21 +279,50 @@ class _LoginScreenState extends State<LoginScreen> {
                               policyAccepted = v!;
                               setState(() {});
                             }),
-                        RichText(
-                            text: TextSpan(
-                                text: 'I agree to all your ',
-                                style: Theme.of(context).textTheme.titleSmall,
-                                children: [
-                              TextSpan(
-                                  text: "T&C",
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium),
-                              const TextSpan(text: " and "),
-                              TextSpan(
-                                  text: "Privacy Policy",
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium)
-                            ]))
+                        Text(
+                          'I agree to all your ',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                        Text("T&C",
+                            style: Theme.of(context).textTheme.titleMedium),
+                        Text(" and ",
+                            style: Theme.of(context).textTheme.titleSmall),
+                        InkWell(
+                          onTap: () async {
+                            // ignore: deprecated_member_use
+                            if (await canLaunch(
+                                'https://vapstech.com/terms-of-use/')) {
+                              // ignore: deprecated_member_use
+                              await launch(
+                                  'https://vapstech.com/terms-of-use/');
+                            } else {
+                              throw 'Could not launch';
+                            }
+                          },
+                          child: Text(
+                            "Privacy Policy",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(),
+                          ),
+                        )
+
+                        // RichText(
+                        //     text: TextSpan(
+                        //         text: 'I agree to all your ',
+                        //         style: Theme.of(context).textTheme.titleSmall,
+                        //         children: [
+                        //       TextSpan(
+                        //           text: "T&C",
+                        //           style:
+                        //               Theme.of(context).textTheme.titleMedium),
+                        //       const TextSpan(text: " and "),
+                        //       TextSpan(
+                        //           text: "Privacy Policy",
+                        //           style:
+                        //               Theme.of(context).textTheme.titleMedium)
+                        //     ]))
                       ],
                     ),
                     const SizedBox(

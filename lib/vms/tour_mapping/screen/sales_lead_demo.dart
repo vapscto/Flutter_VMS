@@ -32,12 +32,11 @@ class _SalesLeadDemoState extends State<SalesLeadDemo> {
             children: [
               Text(
                 "SALES LEAD DEMO",
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .merge(const TextStyle(fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue)),
+                style: Theme.of(context).textTheme.titleMedium!.merge(
+                    const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue)),
               ),
               const SizedBox(
                 height: 10,
@@ -53,19 +52,20 @@ class _SalesLeadDemoState extends State<SalesLeadDemo> {
                   "${widget.controller.viewDemoResopnseList.first.ismsledMContactPerson}",
                   "Address",
                   "${widget.controller.viewDemoResopnseList.first.ismsledMDemoAddress}"),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  Text(
-                "PRODUCT DETAILS",
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .merge(const TextStyle(fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue)),
+              const SizedBox(
+                height: 40,
               ),
-              const SizedBox(height: 10,),
+              Text(
+                "PRODUCT DETAILS",
+                style: Theme.of(context).textTheme.titleMedium!.merge(
+                    const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue)),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: DataTable(
@@ -124,8 +124,7 @@ class _SalesLeadDemoState extends State<SalesLeadDemo> {
                       int num = index + 1;
                       return DataRow(cells: [
                         DataCell(Align(
-                            alignment: Alignment.center,
-                            child: Text("${num}"))),
+                            alignment: Alignment.center, child: Text("$num"))),
                         DataCell(Align(
                             alignment: Alignment.center,
                             child: Text(
@@ -137,20 +136,21 @@ class _SalesLeadDemoState extends State<SalesLeadDemo> {
                       ]);
                     }),
                   )),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  Text(
-                "RESPONSE DETAILS",
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .merge(const TextStyle(fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue)),
+              const SizedBox(
+                height: 40,
               ),
-              const SizedBox(height: 10,),
-                ClipRRect(
+              Text(
+                "RESPONSE DETAILS",
+                style: Theme.of(context).textTheme.titleMedium!.merge(
+                    const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue)),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: DataTable(
                     dataTextStyle: const TextStyle(
@@ -212,7 +212,7 @@ class _SalesLeadDemoState extends State<SalesLeadDemo> {
                             ),
                           ),
                         ),
-                      ) ,
+                      ),
                       DataColumn(
                         label: Align(
                           alignment: Alignment.center,
@@ -223,15 +223,15 @@ class _SalesLeadDemoState extends State<SalesLeadDemo> {
                             ),
                           ),
                         ),
-                      )                     
+                      )
                     ],
                     rows: List.generate(
-                        widget.controller.viewDemoResponseDetailsList.length, (index) {
+                        widget.controller.viewDemoResponseDetailsList.length,
+                        (index) {
                       int num = index + 1;
                       return DataRow(cells: [
                         DataCell(Align(
-                            alignment: Alignment.center,
-                            child: Text("${num}"))),
+                            alignment: Alignment.center, child: Text("$num"))),
                         DataCell(Align(
                             alignment: Alignment.center,
                             child: Text(
@@ -248,14 +248,12 @@ class _SalesLeadDemoState extends State<SalesLeadDemo> {
                             alignment: Alignment.center,
                             child: Text(
                                 "${widget.controller.viewDemoResponseDetailsList.elementAt(index).ismsledmpRRemarks}"))),
-                                                                   
-                      
                       ]);
                     }),
-                  )), 
-                  const SizedBox(
-                    height: 50,
-                  )             
+                  )),
+              const SizedBox(
+                height: 50,
+              )
             ],
           ),
         ),

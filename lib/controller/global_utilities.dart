@@ -203,7 +203,7 @@ String getDashboardIcon(String pageName) {
   if (pageName.toLowerCase().contains("homework")) {
     return icon += "staff_hw.png";
   }
-  if (pageName.toLowerCase().contains("classwork")) {
+  if (pageName.toLowerCase().contains("requisition report")) {
     return icon += "staff_classwork.png";
   }
   if (pageName.toLowerCase().contains("notice")) {

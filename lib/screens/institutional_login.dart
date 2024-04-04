@@ -4,7 +4,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/apis/institutional_code_api.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
-import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/institutional_code_model.dart';
@@ -27,7 +26,6 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
 
   @override
   void initState() {
-    
     super.initState();
   }
 
