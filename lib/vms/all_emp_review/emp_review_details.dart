@@ -14,12 +14,14 @@ class EmpRatingDetails extends StatefulWidget {
   final MskoolController mskoolController;
   final LoginSuccessModel loginSuccessModel;
   final String data;
+  final String year;
   const EmpRatingDetails(
       {super.key,
       required this.controller,
       required this.mskoolController,
       required this.loginSuccessModel,
-      required this.data});
+      required this.data,
+      required this.year});
 
   @override
   State<EmpRatingDetails> createState() => _EmpRatingDetailsState();
@@ -42,8 +44,6 @@ class _EmpRatingDetailsState extends State<EmpRatingDetails> {
             "${widget.controller.selectedMonthList[j].ivrMMonthName}"
       });
     }
-    logger.i(monthList);
-    logger.v(empList);
     widget.controller.rating(true);
     await AllEmpRatingAPI.i.ratingList(
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
@@ -53,46 +53,47 @@ class _EmpRatingDetailsState extends State<EmpRatingDetails> {
           "Role_flag": "A",
           "IVRMRT_Id": widget.loginSuccessModel.roleId,
           "arrayuserEmp": empList,
-          "arrayuserdes": [
-            {"HRMDES_Id": 408},
-            {"HRMDES_Id": 373},
-            {"HRMDES_Id": 406},
-            {"HRMDES_Id": 596},
-            {"HRMDES_Id": 444},
-            {"HRMDES_Id": 512},
-            {"HRMDES_Id": 438},
-            {"HRMDES_Id": 342},
-            {"HRMDES_Id": 474},
-            {"HRMDES_Id": 475},
-            {"HRMDES_Id": 479},
-            {"HRMDES_Id": 481},
-            {"HRMDES_Id": 483},
-            {"HRMDES_Id": 429},
-            {"HRMDES_Id": 473},
-            {"HRMDES_Id": 299},
-            {"HRMDES_Id": 298},
-            {"HRMDES_Id": 426},
-            {"HRMDES_Id": 296},
-            {"HRMDES_Id": 314},
-            {"HRMDES_Id": 388},
-            {"HRMDES_Id": 478},
-            {"HRMDES_Id": 485},
-            {"HRMDES_Id": 476},
-            {"HRMDES_Id": 477},
-            {"HRMDES_Id": 482},
-            {"HRMDES_Id": 484},
-            {"HRMDES_Id": 529},
-            {"HRMDES_Id": 545},
-            {"HRMDES_Id": 409},
-            {"HRMDES_Id": 3},
-            {"HRMDES_Id": 318},
-            {"HRMDES_Id": 319}
-          ],
-          "departmentlist": [
-            {"HRMDC_ID": 9, "HRMD_ID": 0}
-          ],
+          "year": widget.year,
+          // "arrayuserdes": [
+          //   {"HRMDES_Id": 408},
+          //   {"HRMDES_Id": 373},
+          //   {"HRMDES_Id": 406},
+          //   {"HRMDES_Id": 596},
+          //   {"HRMDES_Id": 444},
+          //   {"HRMDES_Id": 512},
+          //   {"HRMDES_Id": 438},
+          //   {"HRMDES_Id": 342},
+          //   {"HRMDES_Id": 474},
+          //   {"HRMDES_Id": 475},
+          //   {"HRMDES_Id": 479},
+          //   {"HRMDES_Id": 481},
+          //   {"HRMDES_Id": 483},
+          //   {"HRMDES_Id": 429},
+          //   {"HRMDES_Id": 473},
+          //   {"HRMDES_Id": 299},
+          //   {"HRMDES_Id": 298},
+          //   {"HRMDES_Id": 426},
+          //   {"HRMDES_Id": 296},
+          //   {"HRMDES_Id": 314},
+          //   {"HRMDES_Id": 388},
+          //   {"HRMDES_Id": 478},
+          //   {"HRMDES_Id": 485},
+          //   {"HRMDES_Id": 476},
+          //   {"HRMDES_Id": 477},
+          //   {"HRMDES_Id": 482},
+          //   {"HRMDES_Id": 484},
+          //   {"HRMDES_Id": 529},
+          //   {"HRMDES_Id": 545},
+          //   {"HRMDES_Id": 409},
+          //   {"HRMDES_Id": 3},
+          //   {"HRMDES_Id": 318},
+          //   {"HRMDES_Id": 319}
+          // ],
+          // "departmentlist": [
+          //   {"HRMDC_ID": 9, "HRMD_ID": 0}
+          // ],
           "monthList": monthList,
-          "ratingtypelist": [],
+          // "ratingtypelist": [],
           "flag": widget.data
         },
         controller: widget.controller);

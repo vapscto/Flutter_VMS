@@ -63,6 +63,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
 import '../model/version_change.dart';
+import '../vms/hr_modules/add_to_hrms/add_to_hrms_home.dart';
 
 RxInt currentHomeTab = 0.obs;
 RxList<int> previousHomeTab = [0].obs;
@@ -200,7 +201,7 @@ String getDashboardIcon(String pageName) {
     return icon += "staff_dt.png";
   }
 
-  if (pageName.toLowerCase().contains("homework")) {
+  if (pageName.toLowerCase().contains("extension")) {
     return icon += "staff_hw.png";
   }
   if (pageName.toLowerCase().contains("requisition report")) {
@@ -675,6 +676,16 @@ void openMappedPages(
   if (pageName == "Call Letter") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return CallLetterHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        title: pageName,
+      );
+    }));
+    return;
+  }
+  if (pageName == "Add To HRMS") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return AddToHrmsHome(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
         title: pageName,

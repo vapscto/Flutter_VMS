@@ -51,16 +51,15 @@ class AllEmpRatingAPI {
       required Map<String, dynamic> body,
       required EmpRatingController controller}) async {
     var api = base + URLS.ratingList;
+    logger.e(api);
+    logger.d(body);
     try {
       controller.rating(true);
       var response = await dio.post(api,
           data: body, options: Options(headers: getSession()));
       if (response.statusCode == 200) {
-        RatingEmpModel ratingEmpModel =
-            RatingEmpModel.fromJson(response.data['get_userEmplist']);
-        controller.employeeList.clear();
-        controller.employeeList.addAll(ratingEmpModel.values!);
-
+        logger.v(response.data);
+        if (response.data['consolidateData'] != null) {}
         controller.rating(false);
       }
     } on DioError catch (e) {

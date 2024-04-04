@@ -50,7 +50,7 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
   @override
   void initState() {
     _loadData();
-    filterEmpList = controller.employeeList;
+    filterEmpList.value = controller.employeeList;
     super.initState();
   }
 
@@ -66,7 +66,7 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
 
   Future<void> _refresh() async {
     _loadData();
-    filterEmpList = controller.employeeList;
+    filterEmpList.value = controller.employeeList;
   }
 
   RatingYearModelValues? selectedYear;
@@ -89,32 +89,40 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
           padding: const EdgeInsets.fromLTRB(0, 8, 16, 8),
           child: InkWell(
             onTap: () {
-              if (selectedData == 'All') {
-                if (controller.selectedEmployeeList.isEmpty) {
-                  Fluttertoast.showToast(msg: "Select Employee");
-                } else {
-                  Get.to(() => EmpRatingDetails(
-                        controller: controller,
-                        loginSuccessModel: widget.loginSuccessModel,
-                        mskoolController: widget.mskoolController,
-                        data: selectedvalue,
-                      ));
+              if (selectedYear != null) {
+                if (selectedData == 'All') {
+                  if (controller.selectedEmployeeList.isEmpty) {
+                    Fluttertoast.showToast(msg: "Select Employee");
+                    return;
+                  } else {
+                    Get.to(() => EmpRatingDetails(
+                          controller: controller,
+                          loginSuccessModel: widget.loginSuccessModel,
+                          mskoolController: widget.mskoolController,
+                          data: selectedvalue,
+                          year: selectedYear!.hrmlYLeaveYear!,
+                        ));
+                  }
+                } else if (selectedData == 'Month Wise') {
+                  if (controller.selectedEmployeeList.isEmpty) {
+                    Fluttertoast.showToast(msg: "Select Employee");
+                    return;
+                  } else if (controller.selectedMonthList.isEmpty) {
+                    Fluttertoast.showToast(msg: "Select Month");
+                    return;
+                  } else {
+                    Get.to(() => EmpRatingDetails(
+                          controller: controller,
+                          loginSuccessModel: widget.loginSuccessModel,
+                          mskoolController: widget.mskoolController,
+                          data: selectedvalue,
+                          year: selectedYear!.hrmlYLeaveYear.toString(),
+                        ));
+                  }
                 }
-              } else if (selectedData == 'Month Wise') {
-                if (selectedYear == null) {
-                  Fluttertoast.showToast(msg: "Select Year");
-                } else if (controller.selectedMonthList.isEmpty) {
-                  Fluttertoast.showToast(msg: "Select Month");
-                } else if (controller.selectedEmployeeList.isEmpty) {
-                  Fluttertoast.showToast(msg: "Select Employee");
-                } else {
-                  Get.to(() => EmpRatingDetails(
-                        controller: controller,
-                        loginSuccessModel: widget.loginSuccessModel,
-                        mskoolController: widget.mskoolController,
-                        data: selectedvalue,
-                      ));
-                }
+              } else {
+                Fluttertoast.showToast(msg: "Select Year");
+                return;
               }
             },
             child: Container(
@@ -197,7 +205,6 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
                           child: CustomContainer(
                             child:
                                 DropdownButtonFormField<RatingYearModelValues>(
-                              // value: controller.yearList.first,
                               decoration: InputDecoration(
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.always,
@@ -263,8 +270,9 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
                                         top: 12.0, left: 8, right: 8),
                                     child: Text(
                                       controller.yearList
-                                          .elementAt(index)
-                                          .hrmlYLeaveYear!,
+                                              .elementAt(index)
+                                              .hrmlYLeaveYear ??
+                                          '',
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelSmall!
@@ -326,12 +334,9 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
                                           child: TextFormField(
                                             controller: searchController,
                                             onChanged: (value) {
-                                              if (value.isEmpty) {
-                                                filterEmpList =
-                                                    controller.employeeList;
-                                              } else {
+                                              setState(() {
                                                 filterEmployees(value);
-                                              }
+                                              });
                                             },
                                             style: Get.textTheme.titleSmall,
                                             decoration: InputDecoration(
@@ -458,7 +463,7 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
                           ],
                         ),
                         const SizedBox(height: 30),
-                        (selectedData == 'Month Wise')
+                        (selectedData != 'Month Wise')
                             ? const SizedBox()
                             : Stack(
                                 clipBehavior: Clip.none,
@@ -759,12 +764,19 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
   }
 
   void filterEmployees(String query) {
-    filterEmpList.value = controller.employeeList
-        .where((employee) =>
-            employee.userEmpName!.toLowerCase().contains(query.toLowerCase()) ||
-            employee.hRMDDepartmentName!.toLowerCase().trim() ==
-                query.toLowerCase().trim())
-        .toList();
+    if (query.isEmpty) {
+      filterEmpList.value = controller.employeeList;
+    } else {
+      filterEmpList.value = controller.employeeList
+          .where((employee) =>
+              employee.userEmpName!
+                  .toLowerCase()
+                  .contains(query.toLowerCase()) ||
+              employee.hRMDDepartmentName!.toLowerCase().trim() ==
+                  query.toLowerCase().trim())
+          .toList();
+    }
+
     setState(() {});
   }
 }
