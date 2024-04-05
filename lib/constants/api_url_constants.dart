@@ -361,16 +361,24 @@ class URLS {
   static String ontapviewapi =
       'api/INV_PurchaseRequisitionFacade/get_prdetails/';
 
-  static String onpurchaseviewapi = 'api/INV_RequisitionNotificationFacade/savedetails/';
+  static String onpurchaseviewapi =
+      'api/INV_RequisitionNotificationFacade/savedetails/';
 
-  static String getTourName="api/TADA_Advance_TourFacade/getload";
+  static String getTourName = "api/TADA_Advance_TourFacade/getload";
 
-  static String getTourLeadList="api/TADA_Advance_TourFacade/Lead_Update";
+  static String getTourLeadList = "api/TADA_Advance_TourFacade/Lead_Update";
   static String generateTemplate = 'api/AppointmentFacade/';
 
-  static String getTourDemoResponseApi="api/TADA_Advance_TourFacade/Edit_response_lead_demo";
+  static String getTourDemoResponseApi =
+      "api/TADA_Advance_TourFacade/Edit_response_lead_demo";
 
-  static String getSaveDemoResponse="api/TADA_Advance_TourFacade/Save_response_lead_demo";
+  static String getSaveDemoResponse =
+      "api/TADA_Advance_TourFacade/Save_response_lead_demo";
 
-  static String getLeadDemoResponse="api/TADA_Advance_TourFacade/view_lead_demo";
+  static String getLeadDemoResponse =
+      "api/TADA_Advance_TourFacade/view_lead_demo";
+
+  //Interview schdule
+  static String interviewSchduleOnLoad =
+      'api/AddCandidateInterviewVMSFacade/onloadgetdetails';
 }
