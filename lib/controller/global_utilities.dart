@@ -32,6 +32,7 @@ import 'package:m_skool_flutter/vms/extension/extension_home_screen.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/health_chequeup/screens/healtha_check_up.dart';
 import 'package:m_skool_flutter/vms/hr_modules/interview_schdule/interview_schdule.dart';
+import 'package:m_skool_flutter/vms/hr_modules/job_posting/job_posting_home.dart';
 import 'package:m_skool_flutter/vms/interviewer_feedback/screens/interview_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
@@ -179,7 +180,8 @@ String getDashboardIcon(String pageName) {
     return "${icon}Certificate.png";
   }
   if (pageName.toLowerCase().contains("entry") &&
-      !pageName.toLowerCase().contains("mark")) {
+          !pageName.toLowerCase().contains("mark") ||
+      pageName.toLowerCase().contains("job posting")) {
     return icon += "staff_stu_attendance.png";
   }
 
@@ -698,6 +700,16 @@ void openMappedPages(
   if (pageName == "Schedule Interview") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return InterViewSchduleHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        title: pageName,
+      );
+    }));
+    return;
+  }
+  if (pageName == "Job Posting") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return JobPostingHomeScreen(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
         title: pageName,
