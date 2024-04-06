@@ -31,6 +31,7 @@ import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_home.dart
 import 'package:m_skool_flutter/vms/extension/extension_home_screen.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/health_chequeup/screens/healtha_check_up.dart';
+import 'package:m_skool_flutter/vms/hr_modules/interview_schdule/interview_schdule.dart';
 import 'package:m_skool_flutter/vms/interviewer_feedback/screens/interview_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
@@ -153,7 +154,8 @@ String getDashboardIcon(String pageName) {
   }
 
   if (pageName.toLowerCase().contains('task') ||
-      pageName.toLowerCase().contains("call")) {
+      pageName.toLowerCase().contains("call") ||
+      pageName.toLowerCase().contains("schedule interview")) {
     return "${icon}Classwork.png";
   }
   if (pageName.toLowerCase().contains('sales')) {
@@ -693,6 +695,16 @@ void openMappedPages(
     }));
     return;
   }
+  if (pageName == "Schedule Interview") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return InterViewSchduleHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        title: pageName,
+      );
+    }));
+    return;
+  }
 }
 
 bool isWebsite(String url) {
@@ -794,6 +806,29 @@ String dateFormat(DateTime dt) {
   return '${dt.year}-${dt.month}-${dt.day}';
 }
 
+String dateFormat1(DateTime dt) {
+  return '${numberList[dt.day]}-${numberList[dt.month]}-${dt.year}';
+}
+
 String dateFormatNew(DateTime dt) {
   return '${numberList[dt.day]}-${months[dt.month - 1]}-${dt.year}';
 }
+
+List interviewRound = [
+  {"name": "Face to Face"},
+  {"name": "Telephonic"},
+  {"name": "Written"},
+  {"name": "Technical"},
+  {"name": "HR Round"},
+  {"name": "Department Head"},
+  {"name": "Managerial"},
+  {"name": "MD Round"},
+  {"name": "Third Party"},
+  {"name": "Online Test"},
+  {"name": "Online Test VC"},
+  {"name": "Others"},
+];
+List interviewstatus = [
+  {"name": "Upcomming"},
+  {"name": "InProgress"},
+];

@@ -381,4 +381,5 @@ class URLS {
   //Interview schdule
   static String interviewSchduleOnLoad =
       'api/AddCandidateInterviewVMSFacade/onloadgetdetails';
+  static String interviewSchedule = 'api/AddCandidateInterviewVMSFacade/';
 }
