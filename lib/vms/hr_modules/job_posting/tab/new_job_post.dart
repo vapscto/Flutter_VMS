@@ -1093,7 +1093,7 @@ class _NewJobPostState extends State<NewJobPost> {
                                           "HRMD_Id": hrmdId,
                                           "HRMPR_Id": hrmprId,
                                           "HRMPT_Id": hrmptId,
-                                          "HRMRFR_MRFNO": 1,
+                                          "HRMRFR_MRFNO": mrfNoController.text,
                                           "HRMC_Id": hrmcId,
                                           "HRMRFR_NoofPosition":
                                               positionCountController.text,
@@ -1117,7 +1117,12 @@ class _NewJobPostState extends State<NewJobPost> {
                                           "HRMRFR_UpdatedBy":
                                               widget.loginSuccessModel.userId,
                                           "HRMRFR_ManagerFlag": true,
-                                          "HRMRFR_JobLocation": selectedRadio
+                                          "HRMRFR_JobLocation":
+                                              (selectedRadio == "HO")
+                                                  ? "HO"
+                                                  : (selectedRadio == "Client")
+                                                      ? clientController.text
+                                                      : locationController.text
                                         });
                                       }
                                     }),

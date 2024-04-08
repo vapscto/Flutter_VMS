@@ -4,6 +4,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/controller/job_posting_controller.dart';
+import 'package:m_skool_flutter/vms/hr_modules/job_posting/tab/job_posting_grid.dart';
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/tab/new_job_post.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
@@ -64,7 +65,11 @@ class _JobPostingHomeScreenState extends State<JobPostingHomeScreen>
                   mskoolController: widget.mskoolController,
                   controller: controller,
                 ),
-                Container()
+                JobPostingGrid(
+                  loginSuccessModel: widget.loginSuccessModel,
+                  mskoolController: widget.mskoolController,
+                  controller: controller,
+                ),
               ],
             ),
           ),
