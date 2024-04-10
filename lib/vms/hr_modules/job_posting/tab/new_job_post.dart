@@ -86,7 +86,7 @@ class _NewJobPostState extends State<NewJobPost> {
       SuggestionsBoxController();
   final SuggestionsBoxController _suggestionsBoxController6 =
       SuggestionsBoxController();
-  final _key = GlobalKey<FormState>();
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
   final positionCountController = TextEditingController();
   final descriptionController = TextEditingController();
   final ageController = TextEditingController();
@@ -99,6 +99,7 @@ class _NewJobPostState extends State<NewJobPost> {
   final locationController = TextEditingController();
   List locationList = ['HO', 'Client', 'Location'];
   String selectedRadio = 'HO';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,1083 +116,1154 @@ class _NewJobPostState extends State<NewJobPost> {
                     desc: "",
                     animatorHeight: 250,
                   )
-                : Form(
-                    key: _key,
-                    child: ListView(
-                      padding: const EdgeInsets.all(16),
-                      children: [
-                        TypeAheadFormField<PositionListModelValues>(
-                          validator: (value) {
-                            if (value == null) {
-                              return "";
-                            }
-                            return null;
-                          },
-                          suggestionsBoxController: _suggestionsBoxController,
-                          getImmediateSuggestions: true,
-                          textFieldConfiguration: TextFieldConfiguration(
-                            style: Get.textTheme.titleSmall,
-                            controller: positionController,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    borderSide:
-                                        const BorderSide(color: Colors.grey)),
-                                focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(color: Colors.grey, fontSize: 14),
-                                hintText:
-                                    widget.controller.positionList.isNotEmpty
+                : ListView(
+                    padding: const EdgeInsets.all(16),
+                    children: [
+                      Form(
+                        key: _key,
+                        autovalidateMode: AutovalidateMode.always,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TypeAheadFormField<PositionListModelValues>(
+                              validator: (value) {
+                                if (value == null ||
+                                    value.isEmpty ||
+                                    value.isEmpty) {
+                                  return " ";
+                                }
+                                return null;
+                              },
+                              suggestionsBoxController:
+                                  _suggestionsBoxController,
+                              getImmediateSuggestions: true,
+                              textFieldConfiguration: TextFieldConfiguration(
+                                style: Get.textTheme.titleSmall,
+                                controller: positionController,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        borderSide: const BorderSide(
+                                            color: Colors.grey)),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                            color: Colors.grey, fontSize: 14),
+                                    hintText: widget
+                                            .controller.positionList.isNotEmpty
                                         ? 'Position'
                                         : 'No data available',
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.always,
-                                labelText: 'Position',
-                                labelStyle: Get.textTheme.titleSmall,
-                                suffixIcon: (positionController.text.isEmpty)
-                                    ? const Icon(
-                                        Icons.keyboard_arrow_down,
-                                        color: Colors.black,
-                                        size: 30,
-                                      )
-                                    : IconButton(
-                                        onPressed: () {
-                                          positionController.clear();
-                                          hrmpId = 0;
-                                          setState(() {});
-                                        },
-                                        icon:
-                                            const Icon(Icons.clear_outlined))),
-                          ),
-                          suggestionsCallback: (v) {
-                            return widget.controller.positionList.where((d) => d
-                                .hrmPPosition!
-                                .toLowerCase()
-                                .contains(v.toLowerCase()));
-                          },
-                          itemBuilder: (context, suggestion) {
-                            return ListTile(
-                              onTap: () async {
-                                positionController.text =
-                                    suggestion.hrmPPosition!;
-                                hrmpId = suggestion.hrmPId!;
-                                logger.v(hrmpId);
-                                _suggestionsBoxController.close();
-                                setState(() {});
-                              },
-                              title: Text(
-                                suggestion.hrmPPosition!,
-                                style: Get.textTheme.titleSmall,
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.always,
+                                    labelText: 'Position',
+                                    labelStyle: Get.textTheme.titleSmall!
+                                        .copyWith(fontSize: 18),
+                                    suffixIcon:
+                                        (positionController.text.isEmpty)
+                                            ? const Icon(
+                                                Icons.keyboard_arrow_down,
+                                                color: Colors.black,
+                                                size: 30,
+                                              )
+                                            : IconButton(
+                                                onPressed: () {
+                                                  positionController.clear();
+                                                  hrmpId = 0;
+                                                  setState(() {});
+                                                },
+                                                icon: const Icon(
+                                                    Icons.clear_outlined))),
                               ),
-                            );
-                          },
-                          onSuggestionSelected: (suggestion) {},
-                          noItemsFoundBuilder: (context) {
-                            return const SizedBox();
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        TypeAheadFormField<PriorityListModelValues>(
-                          validator: (value) {
-                            if (value == null) {
-                              return "";
-                            }
-                            return null;
-                          },
-                          suggestionsBoxController: _suggestionsBoxController1,
-                          getImmediateSuggestions: true,
-                          textFieldConfiguration: TextFieldConfiguration(
-                            style: Get.textTheme.titleSmall,
-                            controller: priorityController,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    borderSide:
-                                        const BorderSide(color: Colors.grey)),
-                                focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blue,
+                              suggestionsCallback: (v) {
+                                return widget.controller.positionList.where(
+                                    (d) => d.hrmPPosition!
+                                        .toLowerCase()
+                                        .contains(v.toLowerCase()));
+                              },
+                              itemBuilder: (context, suggestion) {
+                                return ListTile(
+                                  onTap: () async {
+                                    positionController.text =
+                                        suggestion.hrmPPosition!;
+                                    hrmpId = suggestion.hrmPId!;
+                                    logger.v(hrmpId);
+                                    _suggestionsBoxController.close();
+                                    setState(() {});
+                                  },
+                                  title: Text(
+                                    suggestion.hrmPPosition!,
+                                    style: Get.textTheme.titleSmall,
                                   ),
-                                ),
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(color: Colors.grey, fontSize: 14),
-                                hintText:
-                                    widget.controller.priorityList.isNotEmpty
+                                );
+                              },
+                              onSuggestionSelected: (suggestion) {},
+                              noItemsFoundBuilder: (context) {
+                                return const SizedBox();
+                              },
+                            ),
+                            const SizedBox(height: 15),
+                            TypeAheadFormField<PriorityListModelValues>(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "";
+                                }
+                                return null;
+                              },
+                              suggestionsBoxController:
+                                  _suggestionsBoxController1,
+                              getImmediateSuggestions: true,
+                              textFieldConfiguration: TextFieldConfiguration(
+                                style: Get.textTheme.titleSmall,
+                                controller: priorityController,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        borderSide: const BorderSide(
+                                            color: Colors.grey)),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                            color: Colors.grey, fontSize: 14),
+                                    hintText: widget
+                                            .controller.priorityList.isNotEmpty
                                         ? 'Priority '
                                         : 'No data available',
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.always,
+                                    labelText: 'Priority ',
+                                    labelStyle: Get.textTheme.titleSmall!
+                                        .copyWith(fontSize: 18),
+                                    suffixIcon:
+                                        (priorityController.text.isEmpty)
+                                            ? const Icon(
+                                                Icons.keyboard_arrow_down,
+                                                color: Colors.black,
+                                                size: 30,
+                                              )
+                                            : IconButton(
+                                                onPressed: () {
+                                                  priorityController.clear();
+                                                  hrmpId = 0;
+                                                  setState(() {});
+                                                },
+                                                icon: const Icon(
+                                                    Icons.clear_outlined))),
+                              ),
+                              suggestionsCallback: (v) {
+                                return widget.controller.priorityList.where(
+                                    (d) => d.hrmPName!
+                                        .toLowerCase()
+                                        .contains(v.toLowerCase()));
+                              },
+                              itemBuilder: (context, suggestion) {
+                                return ListTile(
+                                  onTap: () async {
+                                    priorityController.text =
+                                        suggestion.hrmPName!;
+                                    hrmprId = suggestion.hrmpRId!;
+                                    logger.v(hrmprId);
+                                    _suggestionsBoxController1.close();
+                                    setState(() {});
+                                  },
+                                  title: Text(
+                                    suggestion.hrmPName!,
+                                    style: Get.textTheme.titleSmall,
+                                  ),
+                                );
+                              },
+                              onSuggestionSelected: (suggestion) {},
+                              noItemsFoundBuilder: (context) {
+                                return const SizedBox();
+                              },
+                            ),
+                            const SizedBox(height: 15),
+                            TypeAheadFormField<QualificationListModelValues>(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "";
+                                }
+                                return null;
+                              },
+                              suggestionsBoxController:
+                                  _suggestionsBoxController2,
+                              getImmediateSuggestions: true,
+                              textFieldConfiguration: TextFieldConfiguration(
+                                style: Get.textTheme.titleSmall,
+                                controller: qualifacationController,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        borderSide: const BorderSide(
+                                            color: Colors.grey)),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                            color: Colors.grey, fontSize: 14),
+                                    hintText: widget.controller
+                                            .qualificationList.isNotEmpty
+                                        ? 'Qualification'
+                                        : 'No data available',
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.always,
+                                    labelText: 'Qualification',
+                                    labelStyle: Get.textTheme.titleSmall!
+                                        .copyWith(fontSize: 18),
+                                    suffixIcon: (qualifacationController
+                                            .text.isEmpty)
+                                        ? const Icon(
+                                            Icons.keyboard_arrow_down,
+                                            color: Colors.black,
+                                            size: 30,
+                                          )
+                                        : IconButton(
+                                            onPressed: () {
+                                              qualifacationController.clear();
+                                              hrmpId = 0;
+                                              setState(() {});
+                                            },
+                                            icon: const Icon(
+                                                Icons.clear_outlined))),
+                              ),
+                              suggestionsCallback: (v) {
+                                return widget.controller.qualificationList
+                                    .where((d) => d.hrmCQulaificationName!
+                                        .toLowerCase()
+                                        .contains(v.toLowerCase()));
+                              },
+                              itemBuilder: (context, suggestion) {
+                                return ListTile(
+                                  onTap: () async {
+                                    qualifacationController.text =
+                                        suggestion.hrmCQulaificationName!;
+                                    hrmcId = suggestion.hrmCId!;
+                                    logger.v(hrmcId);
+                                    _suggestionsBoxController2.close();
+                                    setState(() {});
+                                  },
+                                  title: Text(
+                                    suggestion.hrmCQulaificationName!,
+                                    style: Get.textTheme.titleSmall,
+                                  ),
+                                );
+                              },
+                              onSuggestionSelected: (suggestion) {},
+                              noItemsFoundBuilder: (context) {
+                                return const SizedBox();
+                              },
+                            ),
+                            const SizedBox(height: 15),
+                            TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return '';
+                                }
+                                return null;
+                              },
+                              controller: positionCountController,
+                              style: Get.textTheme.titleSmall,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'[0-9]')),
+                              ],
+                              decoration: InputDecoration(
+                                hintText: "No. of Postion",
+                                hintStyle: Get.textTheme.titleSmall!
+                                    .copyWith(color: Colors.grey),
+                                labelText: 'No. of Postion',
+                                labelStyle: Get.textTheme.titleSmall!
+                                    .copyWith(fontSize: 18),
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.always,
-                                labelText: 'Priority ',
-                                labelStyle: Get.textTheme.titleSmall,
-                                suffixIcon: (priorityController.text.isEmpty)
-                                    ? const Icon(
-                                        Icons.keyboard_arrow_down,
-                                        color: Colors.black,
-                                        size: 30,
-                                      )
-                                    : IconButton(
-                                        onPressed: () {
-                                          priorityController.clear();
-                                          hrmpId = 0;
-                                          setState(() {});
-                                        },
-                                        icon:
-                                            const Icon(Icons.clear_outlined))),
-                          ),
-                          suggestionsCallback: (v) {
-                            return widget.controller.priorityList.where((d) => d
-                                .hrmPName!
-                                .toLowerCase()
-                                .contains(v.toLowerCase()));
-                          },
-                          itemBuilder: (context, suggestion) {
-                            return ListTile(
-                              onTap: () async {
-                                priorityController.text = suggestion.hrmPName!;
-                                hrmprId = suggestion.hrmpRId!;
-                                logger.v(hrmprId);
-                                _suggestionsBoxController1.close();
-                                setState(() {});
-                              },
-                              title: Text(
-                                suggestion.hrmPName!,
-                                style: Get.textTheme.titleSmall,
-                              ),
-                            );
-                          },
-                          onSuggestionSelected: (suggestion) {},
-                          noItemsFoundBuilder: (context) {
-                            return const SizedBox();
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        TypeAheadFormField<QualificationListModelValues>(
-                          validator: (value) {
-                            if (value == null) {
-                              return "";
-                            }
-                            return null;
-                          },
-                          suggestionsBoxController: _suggestionsBoxController2,
-                          getImmediateSuggestions: true,
-                          textFieldConfiguration: TextFieldConfiguration(
-                            style: Get.textTheme.titleSmall,
-                            controller: qualifacationController,
-                            decoration: InputDecoration(
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(5),
                                     borderSide:
                                         const BorderSide(color: Colors.grey)),
-                                focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(color: Colors.grey, fontSize: 14),
-                                hintText: widget
-                                        .controller.qualificationList.isNotEmpty
-                                    ? 'Qualification'
-                                    : 'No data available',
+                              ),
+                            ),
+                            const SizedBox(height: 15),
+                            TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return '';
+                                }
+                                return null;
+                              },
+                              controller: descriptionController,
+                              style: Get.textTheme.titleSmall,
+                              decoration: InputDecoration(
+                                hintText: "Job Description",
+                                hintStyle: Get.textTheme.titleSmall!
+                                    .copyWith(color: Colors.grey),
+                                labelText: 'Job Description',
+                                labelStyle: Get.textTheme.titleSmall!
+                                    .copyWith(fontSize: 18),
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.always,
-                                labelText: 'Qualification',
-                                labelStyle: Get.textTheme.titleSmall,
-                                suffixIcon: (qualifacationController
-                                        .text.isEmpty)
-                                    ? const Icon(
-                                        Icons.keyboard_arrow_down,
-                                        color: Colors.black,
-                                        size: 30,
-                                      )
-                                    : IconButton(
-                                        onPressed: () {
-                                          qualifacationController.clear();
-                                          hrmpId = 0;
-                                          setState(() {});
-                                        },
-                                        icon:
-                                            const Icon(Icons.clear_outlined))),
-                          ),
-                          suggestionsCallback: (v) {
-                            return widget.controller.qualificationList.where(
-                                (d) => d.hrmCQulaificationName!
-                                    .toLowerCase()
-                                    .contains(v.toLowerCase()));
-                          },
-                          itemBuilder: (context, suggestion) {
-                            return ListTile(
-                              onTap: () async {
-                                qualifacationController.text =
-                                    suggestion.hrmCQulaificationName!;
-                                hrmcId = suggestion.hrmCId!;
-                                logger.v(hrmcId);
-                                _suggestionsBoxController2.close();
-                                setState(() {});
-                              },
-                              title: Text(
-                                suggestion.hrmCQulaificationName!,
-                                style: Get.textTheme.titleSmall,
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey)),
                               ),
-                            );
-                          },
-                          onSuggestionSelected: (suggestion) {},
-                          noItemsFoundBuilder: (context) {
-                            return const SizedBox();
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return '';
-                            }
-                            return null;
-                          },
-                          controller: positionCountController,
-                          style: Get.textTheme.titleSmall,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                          ],
-                          decoration: InputDecoration(
-                            hintText: "No. of Postion",
-                            hintStyle: Get.textTheme.titleSmall!
-                                .copyWith(color: Colors.grey),
-                            labelText: 'No. of Postion',
-                            labelStyle: Get.textTheme.titleSmall,
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                borderSide:
-                                    const BorderSide(color: Colors.grey)),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return '';
-                            }
-                            return null;
-                          },
-                          controller: descriptionController,
-                          style: Get.textTheme.titleSmall,
-                          decoration: InputDecoration(
-                            hintText: "Job Description",
-                            hintStyle: Get.textTheme.titleSmall!
-                                .copyWith(color: Colors.grey),
-                            labelText: 'Job Description',
-                            labelStyle: Get.textTheme.titleSmall,
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                borderSide:
-                                    const BorderSide(color: Colors.grey)),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return '';
-                            }
-                            return null;
-                          },
-                          controller: ageController,
-                          style: Get.textTheme.titleSmall,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                          ],
-                          decoration: InputDecoration(
-                            hintText: "Age",
-                            hintStyle: Get.textTheme.titleSmall!
-                                .copyWith(color: Colors.grey),
-                            labelText: 'Age',
-                            labelStyle: Get.textTheme.titleSmall,
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                borderSide:
-                                    const BorderSide(color: Colors.grey)),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return '';
-                            }
-                            return null;
-                          },
-                          controller: reasonController,
-                          style: Get.textTheme.titleSmall,
-                          decoration: InputDecoration(
-                            hintText: "Reason",
-                            hintStyle: Get.textTheme.titleSmall!
-                                .copyWith(color: Colors.grey),
-                            labelText: 'Reason',
-                            labelStyle: Get.textTheme.titleSmall,
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                borderSide:
-                                    const BorderSide(color: Colors.grey)),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          "Location:",
-                          style: Get.textTheme.titleSmall,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: locationList.map<Widget>((location) {
-                            return Row(
-                              children: [
-                                Radio<String>(
-                                  activeColor: Colors.green,
-                                  fillColor:
-                                      MaterialStateProperty.resolveWith<Color>(
-                                          (Set<MaterialState> states) {
-                                    return Theme.of(context).primaryColor;
-                                  }),
-                                  value: location,
-                                  groupValue: selectedRadio,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedRadio = value!;
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  location,
-                                  style: Get.textTheme.titleSmall,
-                                ),
+                            ),
+                            const SizedBox(height: 15),
+                            TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return '';
+                                }
+                                return null;
+                              },
+                              controller: ageController,
+                              style: Get.textTheme.titleSmall,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'[0-9]')),
                               ],
-                            );
-                          }).toList(),
-                        ),
-                        (selectedRadio == "Location")
-                            ? TextFormField(
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return '';
-                                  }
-                                  return null;
-                                },
-                                controller: locationController,
+                              decoration: InputDecoration(
+                                hintText: "Age",
+                                hintStyle: Get.textTheme.titleSmall!
+                                    .copyWith(color: Colors.grey),
+                                labelText: 'Age',
+                                labelStyle: Get.textTheme.titleSmall!
+                                    .copyWith(fontSize: 18),
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey)),
+                              ),
+                            ),
+                            const SizedBox(height: 15),
+                            TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return '';
+                                }
+                                return null;
+                              },
+                              controller: reasonController,
+                              style: Get.textTheme.titleSmall,
+                              decoration: InputDecoration(
+                                hintText: "Reason",
+                                hintStyle: Get.textTheme.titleSmall!
+                                    .copyWith(color: Colors.grey),
+                                labelText: 'Reason',
+                                labelStyle: Get.textTheme.titleSmall!
+                                    .copyWith(fontSize: 18),
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey)),
+                              ),
+                            ),
+                            const SizedBox(height: 15),
+                            Text(
+                              "Location:",
+                              style: Get.textTheme.titleSmall,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: locationList.map<Widget>((location) {
+                                return Row(
+                                  children: [
+                                    Radio<String>(
+                                      activeColor: Colors.green,
+                                      fillColor: MaterialStateProperty
+                                          .resolveWith<Color>(
+                                              (Set<MaterialState> states) {
+                                        return Theme.of(context).primaryColor;
+                                      }),
+                                      value: location,
+                                      groupValue: selectedRadio,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          selectedRadio = value!;
+                                        });
+                                      },
+                                    ),
+                                    Text(
+                                      location,
+                                      style: Get.textTheme.titleSmall,
+                                    ),
+                                  ],
+                                );
+                              }).toList(),
+                            ),
+                            (selectedRadio == "Location")
+                                ? TextFormField(
+                                    // validator: (value) {
+                                    //   if (value == null || value.isEmpty) {
+                                    //     return '';
+                                    //   }
+                                    //   return null;
+                                    // },
+                                    controller: locationController,
+                                    style: Get.textTheme.titleSmall,
+                                    decoration: InputDecoration(
+                                      hintText: "Location",
+                                      hintStyle: Get.textTheme.titleSmall!
+                                          .copyWith(color: Colors.grey),
+                                      labelText: 'Location',
+                                      labelStyle: Get.textTheme.titleSmall!
+                                          .copyWith(fontSize: 18),
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          borderSide: const BorderSide(
+                                              color: Colors.grey)),
+                                    ),
+                                  )
+                                : (selectedRadio == "Client")
+                                    ? TypeAheadFormField<ClientListModelValues>(
+                                        // validator: (value) {
+                                        //   if (value == null || value.isEmpty) {
+                                        //     return "";
+                                        //   }
+                                        //   return null;
+                                        // },
+                                        direction: AxisDirection.up,
+                                        suggestionsBoxController:
+                                            _suggestionsBoxController3,
+                                        getImmediateSuggestions: true,
+                                        textFieldConfiguration:
+                                            TextFieldConfiguration(
+                                          style: Get.textTheme.titleSmall,
+                                          controller: clientController,
+                                          decoration: InputDecoration(
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  borderSide: const BorderSide(
+                                                      color: Colors.grey)),
+                                              focusedBorder:
+                                                  const OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                              enabledBorder:
+                                                  const OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                              hintStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .copyWith(
+                                                      color: Colors.grey,
+                                                      fontSize: 14),
+                                              hintText: widget.controller
+                                                      .clientList.isNotEmpty
+                                                  ? 'Client'
+                                                  : 'No data available',
+                                              floatingLabelBehavior:
+                                                  FloatingLabelBehavior.always,
+                                              labelText: 'Client',
+                                              labelStyle: Get
+                                                  .textTheme.titleSmall!
+                                                  .copyWith(fontSize: 18),
+                                              suffixIcon: (clientController
+                                                      .text.isEmpty)
+                                                  ? const Icon(
+                                                      Icons.keyboard_arrow_down,
+                                                      color: Colors.black,
+                                                      size: 30,
+                                                    )
+                                                  : IconButton(
+                                                      onPressed: () {
+                                                        clientController
+                                                            .clear();
+                                                        hrmpId = 0;
+                                                        setState(() {});
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.clear_outlined))),
+                                        ),
+                                        suggestionsCallback: (v) {
+                                          return widget.controller.clientList
+                                              .where((d) => d.ismmclTClientName!
+                                                  .toLowerCase()
+                                                  .contains(v.toLowerCase()));
+                                        },
+                                        itemBuilder: (context, suggestion) {
+                                          return ListTile(
+                                            onTap: () async {
+                                              clientController.text =
+                                                  suggestion.ismmclTClientName!;
+                                              immcltId = suggestion.ismmclTId!;
+                                              logger.v(immcltId);
+                                              _suggestionsBoxController3
+                                                  .close();
+                                              setState(() {});
+                                            },
+                                            title: Text(
+                                              suggestion.ismmclTClientName!,
+                                              style: Get.textTheme.titleSmall,
+                                            ),
+                                          );
+                                        },
+                                        onSuggestionSelected: (suggestion) {},
+                                        noItemsFoundBuilder: (context) {
+                                          return const SizedBox();
+                                        },
+                                      )
+                                    : const SizedBox(),
+                            const SizedBox(height: 15),
+                            TypeAheadFormField<JobDepartmentListModelValues>(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "";
+                                }
+                                return null;
+                              },
+                              direction: AxisDirection.up,
+                              suggestionsBoxController:
+                                  _suggestionsBoxController4,
+                              getImmediateSuggestions: true,
+                              textFieldConfiguration: TextFieldConfiguration(
                                 style: Get.textTheme.titleSmall,
+                                controller: departmentController,
                                 decoration: InputDecoration(
-                                  hintText: "Location",
-                                  hintStyle: Get.textTheme.titleSmall!
-                                      .copyWith(color: Colors.grey),
-                                  labelText: 'Location',
-                                  labelStyle: Get.textTheme.titleSmall,
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.always,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                      borderSide:
-                                          const BorderSide(color: Colors.grey)),
-                                ),
-                              )
-                            : (selectedRadio == "Client")
-                                ? TypeAheadFormField<ClientListModelValues>(
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        borderSide: const BorderSide(
+                                            color: Colors.grey)),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                            color: Colors.grey, fontSize: 14),
+                                    hintText: widget.controller
+                                            .jobDepartmentList.isNotEmpty
+                                        ? 'Department'
+                                        : 'No data available',
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.always,
+                                    labelText: 'Department',
+                                    labelStyle: Get.textTheme.titleSmall!
+                                        .copyWith(fontSize: 18),
+                                    suffixIcon:
+                                        (departmentController.text.isEmpty)
+                                            ? const Icon(
+                                                Icons.keyboard_arrow_down,
+                                                color: Colors.black,
+                                                size: 30,
+                                              )
+                                            : IconButton(
+                                                onPressed: () {
+                                                  departmentController.clear();
+                                                  hrmdId = 0;
+                                                  setState(() {});
+                                                },
+                                                icon: const Icon(
+                                                    Icons.clear_outlined))),
+                              ),
+                              suggestionsCallback: (v) {
+                                return widget.controller.jobDepartmentList
+                                    .where((d) => d.hrmDDepartmentName!
+                                        .toLowerCase()
+                                        .contains(v.toLowerCase()));
+                              },
+                              itemBuilder: (context, suggestion) {
+                                return ListTile(
+                                  onTap: () async {
+                                    departmentController.text =
+                                        suggestion.hrmDDepartmentName!;
+                                    hrmdId = suggestion.hrmDId!;
+                                    logger.v(hrmdId);
+                                    _suggestionsBoxController4.close();
+                                    setState(() {});
+                                  },
+                                  title: Text(
+                                    suggestion.hrmDDepartmentName!,
+                                    style: Get.textTheme.titleSmall,
+                                  ),
+                                );
+                              },
+                              onSuggestionSelected: (suggestion) {},
+                              noItemsFoundBuilder: (context) {
+                                return const SizedBox();
+                              },
+                            ),
+                            const SizedBox(height: 15),
+                            TypeAheadFormField<JobPostListModelValues>(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "";
+                                }
+                                return null;
+                              },
+                              direction: AxisDirection.up,
+                              suggestionsBoxController:
+                                  _suggestionsBoxController6,
+                              getImmediateSuggestions: true,
+                              textFieldConfiguration: TextFieldConfiguration(
+                                style: Get.textTheme.titleSmall,
+                                controller: positionTypeController,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        borderSide: const BorderSide(
+                                            color: Colors.grey)),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                            color: Colors.grey, fontSize: 14),
+                                    hintText:
+                                        widget.controller.jobPostList.isNotEmpty
+                                            ? 'Position Type'
+                                            : 'No data available',
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.always,
+                                    labelText: 'Position Type',
+                                    labelStyle: Get.textTheme.titleSmall!
+                                        .copyWith(fontSize: 18),
+                                    suffixIcon: (positionTypeController
+                                            .text.isEmpty)
+                                        ? const Icon(
+                                            Icons.keyboard_arrow_down,
+                                            color: Colors.black,
+                                            size: 30,
+                                          )
+                                        : IconButton(
+                                            onPressed: () {
+                                              positionTypeController.clear();
+                                              hrmdId = 0;
+                                              setState(() {});
+                                            },
+                                            icon: const Icon(
+                                                Icons.clear_outlined))),
+                              ),
+                              suggestionsCallback: (v) {
+                                return widget.controller.jobPostList.where(
+                                    (d) => d.hrmpTName!
+                                        .toLowerCase()
+                                        .contains(v.toLowerCase()));
+                              },
+                              itemBuilder: (context, suggestion) {
+                                return ListTile(
+                                  onTap: () async {
+                                    positionTypeController.text =
+                                        suggestion.hrmpTName!;
+                                    hrmptId = suggestion.hrmpTId!;
+                                    logger.v(hrmptId);
+                                    _suggestionsBoxController6.close();
+                                    setState(() {});
+                                  },
+                                  title: Text(
+                                    suggestion.hrmpTName!,
+                                    style: Get.textTheme.titleSmall,
+                                  ),
+                                );
+                              },
+                              onSuggestionSelected: (suggestion) {},
+                              noItemsFoundBuilder: (context) {
+                                return const SizedBox();
+                              },
+                            ),
+                            const SizedBox(height: 15),
+                            TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return '';
+                                }
+                                return null;
+                              },
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'[0-9]')),
+                              ],
+                              controller: mrfNoController,
+                              style: Get.textTheme.titleSmall,
+                              decoration: InputDecoration(
+                                hintText: "MRF No.",
+                                hintStyle: Get.textTheme.titleSmall!
+                                    .copyWith(color: Colors.grey),
+                                labelText: 'MRF No.',
+                                labelStyle: Get.textTheme.titleSmall!
+                                    .copyWith(fontSize: 18),
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey)),
+                              ),
+                            ),
+                            const SizedBox(height: 15),
+                            TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return '';
+                                }
+                                return null;
+                              },
+                              controller: skillController,
+                              style: Get.textTheme.titleSmall,
+                              decoration: InputDecoration(
+                                hintText: "Skill",
+                                hintStyle: Get.textTheme.titleSmall!
+                                    .copyWith(color: Colors.grey),
+                                labelText: 'Skill',
+                                labelStyle: Get.textTheme.titleSmall!
+                                    .copyWith(fontSize: 18),
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey)),
+                              ),
+                            ),
+                            const SizedBox(height: 15),
+                            Text(
+                              "Experience(Year)",
+                              style: Get.textTheme.titleSmall,
+                            ),
+                            const SizedBox(height: 15),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: TextFormField(
                                     validator: (value) {
-                                      if (value == null) {
-                                        return "";
+                                      if (value == null || value.isEmpty) {
+                                        return '';
                                       }
                                       return null;
                                     },
-                                    direction: AxisDirection.up,
-                                    suggestionsBoxController:
-                                        _suggestionsBoxController3,
-                                    getImmediateSuggestions: true,
-                                    textFieldConfiguration:
-                                        TextFieldConfiguration(
-                                      style: Get.textTheme.titleSmall,
-                                      controller: clientController,
-                                      decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              borderSide: const BorderSide(
-                                                  color: Colors.grey)),
-                                          focusedBorder:
-                                              const OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Colors.blue,
-                                            ),
-                                          ),
-                                          enabledBorder:
-                                              const OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                          hintStyle: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall!
-                                              .copyWith(
-                                                  color: Colors.grey,
-                                                  fontSize: 14),
-                                          hintText: widget.controller.clientList
-                                                  .isNotEmpty
-                                              ? 'Client'
-                                              : 'No data available',
-                                          floatingLabelBehavior:
-                                              FloatingLabelBehavior.always,
-                                          labelText: 'Client',
-                                          labelStyle: Get.textTheme.titleSmall,
-                                          suffixIcon: (clientController
-                                                  .text.isEmpty)
-                                              ? const Icon(
-                                                  Icons.keyboard_arrow_down,
-                                                  color: Colors.black,
-                                                  size: 30,
-                                                )
-                                              : IconButton(
-                                                  onPressed: () {
-                                                    clientController.clear();
-                                                    hrmpId = 0;
-                                                    setState(() {});
-                                                  },
-                                                  icon: const Icon(
-                                                      Icons.clear_outlined))),
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[0-9]')),
+                                    ],
+                                    controller: expFromController,
+                                    style: Get.textTheme.titleSmall,
+                                    decoration: InputDecoration(
+                                      hintText: "From",
+                                      hintStyle: Get.textTheme.titleSmall!
+                                          .copyWith(color: Colors.grey),
+                                      labelText: 'From',
+                                      labelStyle: Get.textTheme.titleSmall,
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          borderSide: const BorderSide(
+                                              color: Colors.grey)),
                                     ),
-                                    suggestionsCallback: (v) {
-                                      return widget.controller.clientList.where(
-                                          (d) => d.ismmclTClientName!
-                                              .toLowerCase()
-                                              .contains(v.toLowerCase()));
+                                  ),
+                                ),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: TextFormField(
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return '';
+                                      }
+                                      return null;
                                     },
-                                    itemBuilder: (context, suggestion) {
-                                      return ListTile(
-                                        onTap: () async {
-                                          clientController.text =
-                                              suggestion.ismmclTClientName!;
-                                          immcltId = suggestion.ismmclTId!;
-                                          logger.v(immcltId);
-                                          _suggestionsBoxController3.close();
-                                          setState(() {});
-                                        },
-                                        title: Text(
-                                          suggestion.ismmclTClientName!,
-                                          style: Get.textTheme.titleSmall,
-                                        ),
-                                      );
-                                    },
-                                    onSuggestionSelected: (suggestion) {},
-                                    noItemsFoundBuilder: (context) {
-                                      return const SizedBox();
-                                    },
-                                  )
-                                : const SizedBox(),
-                        const SizedBox(height: 10),
-                        TypeAheadFormField<JobDepartmentListModelValues>(
-                          validator: (value) {
-                            if (value == null) {
-                              return "";
-                            }
-                            return null;
-                          },
-                          direction: AxisDirection.up,
-                          suggestionsBoxController: _suggestionsBoxController4,
-                          getImmediateSuggestions: true,
-                          textFieldConfiguration: TextFieldConfiguration(
-                            style: Get.textTheme.titleSmall,
-                            controller: departmentController,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    borderSide:
-                                        const BorderSide(color: Colors.grey)),
-                                focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blue,
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp(r'[0-9]')),
+                                    ],
+                                    controller: expToController,
+                                    style: Get.textTheme.titleSmall,
+                                    decoration: InputDecoration(
+                                      hintText: "To",
+                                      hintStyle: Get.textTheme.titleSmall!
+                                          .copyWith(color: Colors.grey),
+                                      labelText: 'To',
+                                      labelStyle: Get.textTheme.titleSmall,
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          borderSide: const BorderSide(
+                                              color: Colors.grey)),
+                                    ),
                                   ),
                                 ),
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(color: Colors.grey, fontSize: 14),
-                                hintText: widget
-                                        .controller.jobDepartmentList.isNotEmpty
-                                    ? 'Department'
-                                    : 'No data available',
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.always,
-                                labelText: 'Department',
-                                labelStyle: Get.textTheme.titleSmall,
-                                suffixIcon: (departmentController.text.isEmpty)
-                                    ? const Icon(
-                                        Icons.keyboard_arrow_down,
-                                        color: Colors.black,
-                                        size: 30,
-                                      )
-                                    : IconButton(
-                                        onPressed: () {
-                                          departmentController.clear();
-                                          hrmdId = 0;
-                                          setState(() {});
-                                        },
-                                        icon:
-                                            const Icon(Icons.clear_outlined))),
-                          ),
-                          suggestionsCallback: (v) {
-                            return widget.controller.jobDepartmentList.where(
-                                (d) => d.hrmDDepartmentName!
-                                    .toLowerCase()
-                                    .contains(v.toLowerCase()));
-                          },
-                          itemBuilder: (context, suggestion) {
-                            return ListTile(
-                              onTap: () async {
-                                departmentController.text =
-                                    suggestion.hrmDDepartmentName!;
-                                hrmdId = suggestion.hrmDId!;
-                                logger.v(hrmdId);
-                                _suggestionsBoxController4.close();
-                                setState(() {});
-                              },
-                              title: Text(
-                                suggestion.hrmDDepartmentName!,
-                                style: Get.textTheme.titleSmall,
-                              ),
-                            );
-                          },
-                          onSuggestionSelected: (suggestion) {},
-                          noItemsFoundBuilder: (context) {
-                            return const SizedBox();
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        TypeAheadFormField<JobPostListModelValues>(
-                          validator: (value) {
-                            if (value == null) {
-                              return "";
-                            }
-                            return null;
-                          },
-                          direction: AxisDirection.up,
-                          suggestionsBoxController: _suggestionsBoxController6,
-                          getImmediateSuggestions: true,
-                          textFieldConfiguration: TextFieldConfiguration(
-                            style: Get.textTheme.titleSmall,
-                            controller: positionTypeController,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    borderSide:
-                                        const BorderSide(color: Colors.grey)),
-                                focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(color: Colors.grey, fontSize: 14),
-                                hintText:
-                                    widget.controller.jobPostList.isNotEmpty
-                                        ? 'Position Type'
-                                        : 'No data available',
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.always,
-                                labelText: 'Position Type',
-                                labelStyle: Get.textTheme.titleSmall,
-                                suffixIcon: (positionTypeController
-                                        .text.isEmpty)
-                                    ? const Icon(
-                                        Icons.keyboard_arrow_down,
-                                        color: Colors.black,
-                                        size: 30,
-                                      )
-                                    : IconButton(
-                                        onPressed: () {
-                                          positionTypeController.clear();
-                                          hrmdId = 0;
-                                          setState(() {});
-                                        },
-                                        icon:
-                                            const Icon(Icons.clear_outlined))),
-                          ),
-                          suggestionsCallback: (v) {
-                            return widget.controller.jobPostList.where((d) => d
-                                .hrmpTName!
-                                .toLowerCase()
-                                .contains(v.toLowerCase()));
-                          },
-                          itemBuilder: (context, suggestion) {
-                            return ListTile(
-                              onTap: () async {
-                                positionTypeController.text =
-                                    suggestion.hrmpTName!;
-                                hrmptId = suggestion.hrmpTId!;
-                                logger.v(hrmptId);
-                                _suggestionsBoxController6.close();
-                                setState(() {});
-                              },
-                              title: Text(
-                                suggestion.hrmpTName!,
-                                style: Get.textTheme.titleSmall,
-                              ),
-                            );
-                          },
-                          onSuggestionSelected: (suggestion) {},
-                          noItemsFoundBuilder: (context) {
-                            return const SizedBox();
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return '';
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                          ],
-                          controller: mrfNoController,
-                          style: Get.textTheme.titleSmall,
-                          decoration: InputDecoration(
-                            hintText: "MRF No.",
-                            hintStyle: Get.textTheme.titleSmall!
-                                .copyWith(color: Colors.grey),
-                            labelText: 'MRF No.',
-                            labelStyle: Get.textTheme.titleSmall,
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                borderSide:
-                                    const BorderSide(color: Colors.grey)),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return '';
-                            }
-                            return null;
-                          },
-                          controller: skillController,
-                          style: Get.textTheme.titleSmall,
-                          decoration: InputDecoration(
-                            hintText: "Skill",
-                            hintStyle: Get.textTheme.titleSmall!
-                                .copyWith(color: Colors.grey),
-                            labelText: 'Skill',
-                            labelStyle: Get.textTheme.titleSmall,
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                borderSide:
-                                    const BorderSide(color: Colors.grey)),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          "Experience(Year)",
-                          style: Get.textTheme.titleSmall,
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return '';
-                                  }
-                                  return null;
-                                },
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp(r'[0-9]')),
-                                ],
-                                controller: expFromController,
-                                style: Get.textTheme.titleSmall,
-                                decoration: InputDecoration(
-                                  hintText: "From",
-                                  hintStyle: Get.textTheme.titleSmall!
-                                      .copyWith(color: Colors.grey),
-                                  labelText: 'From',
-                                  labelStyle: Get.textTheme.titleSmall,
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.always,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                      borderSide:
-                                          const BorderSide(color: Colors.grey)),
-                                ),
-                              ),
+                              ],
                             ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return '';
-                                  }
-                                  return null;
-                                },
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp(r'[0-9]')),
-                                ],
-                                controller: expToController,
+                            const SizedBox(height: 15),
+                            TypeAheadFormField<JobGenderListModelValues>(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "";
+                                }
+                                return null;
+                              },
+                              direction: AxisDirection.up,
+                              suggestionsBoxController:
+                                  _suggestionsBoxController5,
+                              getImmediateSuggestions: true,
+                              textFieldConfiguration: TextFieldConfiguration(
                                 style: Get.textTheme.titleSmall,
+                                controller: genderController,
                                 decoration: InputDecoration(
-                                  hintText: "To",
-                                  hintStyle: Get.textTheme.titleSmall!
-                                      .copyWith(color: Colors.grey),
-                                  labelText: 'To',
-                                  labelStyle: Get.textTheme.titleSmall,
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.always,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                      borderSide:
-                                          const BorderSide(color: Colors.grey)),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        TypeAheadFormField<JobGenderListModelValues>(
-                          validator: (value) {
-                            if (value == null) {
-                              return "";
-                            }
-                            return null;
-                          },
-                          direction: AxisDirection.up,
-                          suggestionsBoxController: _suggestionsBoxController5,
-                          getImmediateSuggestions: true,
-                          textFieldConfiguration: TextFieldConfiguration(
-                            style: Get.textTheme.titleSmall,
-                            controller: genderController,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    borderSide:
-                                        const BorderSide(color: Colors.grey)),
-                                focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                hintStyle: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(color: Colors.grey, fontSize: 14),
-                                hintText:
-                                    widget.controller.jobGenderList.isNotEmpty
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: const BorderSide(
+                                            color: Colors.grey)),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                            color: Colors.grey, fontSize: 14),
+                                    hintText: widget
+                                            .controller.jobGenderList.isNotEmpty
                                         ? 'Gender'
                                         : 'No data available',
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.always,
+                                    labelText: 'Gender',
+                                    labelStyle: Get.textTheme.titleSmall!
+                                        .copyWith(fontSize: 18),
+                                    suffixIcon: (genderController.text.isEmpty)
+                                        ? const Icon(
+                                            Icons.keyboard_arrow_down,
+                                            color: Colors.black,
+                                            size: 30,
+                                          )
+                                        : IconButton(
+                                            onPressed: () {
+                                              genderController.clear();
+                                              ivrmmgId = 0;
+                                              setState(() {});
+                                            },
+                                            icon: const Icon(
+                                                Icons.clear_outlined))),
+                              ),
+                              suggestionsCallback: (v) {
+                                return widget.controller.jobGenderList.where(
+                                    (d) => d.ivrmmGGenderName!
+                                        .toLowerCase()
+                                        .contains(v.toLowerCase()));
+                              },
+                              itemBuilder: (context, suggestion) {
+                                return ListTile(
+                                  onTap: () async {
+                                    genderController.text =
+                                        suggestion.ivrmmGGenderName!;
+                                    ivrmmgId = suggestion.ivrmmGId!;
+                                    logger.v(ivrmmgId);
+                                    _suggestionsBoxController5.close();
+                                    setState(() {});
+                                  },
+                                  title: Text(
+                                    suggestion.ivrmmGGenderName!,
+                                    style: Get.textTheme.titleSmall,
+                                  ),
+                                );
+                              },
+                              onSuggestionSelected: (suggestion) {},
+                              noItemsFoundBuilder: (context) {
+                                return const SizedBox();
+                              },
+                            ),
+                            const SizedBox(height: 15),
+                            TextFormField(
+                              controller: remarksController,
+                              style: Get.textTheme.titleSmall,
+                              decoration: InputDecoration(
+                                hintText: "Remark",
+                                hintStyle: Get.textTheme.titleSmall!
+                                    .copyWith(color: Colors.grey),
+                                labelText: 'Remark',
+                                labelStyle: Get.textTheme.titleSmall!
+                                    .copyWith(fontSize: 18),
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.always,
-                                labelText: 'Gender',
-                                labelStyle: Get.textTheme.titleSmall,
-                                suffixIcon: (genderController.text.isEmpty)
-                                    ? const Icon(
-                                        Icons.keyboard_arrow_down,
-                                        color: Colors.black,
-                                        size: 30,
-                                      )
-                                    : IconButton(
-                                        onPressed: () {
-                                          genderController.clear();
-                                          ivrmmgId = 0;
-                                          setState(() {});
-                                        },
-                                        icon:
-                                            const Icon(Icons.clear_outlined))),
-                          ),
-                          suggestionsCallback: (v) {
-                            return widget.controller.jobGenderList.where((d) =>
-                                d.ivrmmGGenderName!
-                                    .toLowerCase()
-                                    .contains(v.toLowerCase()));
-                          },
-                          itemBuilder: (context, suggestion) {
-                            return ListTile(
-                              onTap: () async {
-                                genderController.text =
-                                    suggestion.ivrmmGGenderName!;
-                                ivrmmgId = suggestion.ivrmmGId!;
-                                logger.v(ivrmmgId);
-                                _suggestionsBoxController5.close();
-                                setState(() {});
-                              },
-                              title: Text(
-                                suggestion.ivrmmGGenderName!,
-                                style: Get.textTheme.titleSmall,
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey)),
                               ),
-                            );
-                          },
-                          onSuggestionSelected: (suggestion) {},
-                          noItemsFoundBuilder: (context) {
-                            return const SizedBox();
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        TextFormField(
-                          controller: remarksController,
-                          style: Get.textTheme.titleSmall,
-                          decoration: InputDecoration(
-                            hintText: "Remark",
-                            hintStyle: Get.textTheme.titleSmall!
-                                .copyWith(color: Colors.grey),
-                            labelText: 'Remark',
-                            labelStyle: Get.textTheme.titleSmall,
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                borderSide:
-                                    const BorderSide(color: Colors.grey)),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        SizedBox(
-                          height: 30,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Checkbox(
-                                  visualDensity: const VisualDensity(
-                                      vertical: 0, horizontal: 0),
-                                  checkColor: Colors.indigo,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6)),
-                                  value: isWritten,
-                                  onChanged: (v) {
-                                    setState(() {
-                                      isWritten = v!;
-                                    });
-                                  }),
-                              Text(
-                                testList[0],
-                                style: Get.textTheme.titleSmall,
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 25,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Checkbox(
-                                  visualDensity: const VisualDensity(
-                                      vertical: 0, horizontal: 0),
-                                  checkColor: Colors.indigo,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6)),
-                                  value: isOnline,
-                                  onChanged: (v) {
-                                    setState(() {
-                                      isOnline = v!;
-                                    });
-                                  }),
-                              Text(
-                                testList[1],
-                                style: Get.textTheme.titleSmall,
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Checkbox(
-                                  visualDensity: const VisualDensity(
-                                      vertical: 0, horizontal: 0),
-                                  checkColor: Colors.indigo,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6)),
-                                  value: isTechnical,
-                                  onChanged: (v) {
-                                    setState(() {
-                                      isTechnical = v!;
-                                    });
-                                  }),
-                              Text(
-                                testList[2],
-                                style: Get.textTheme.titleSmall,
-                              )
-                            ],
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 16),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.54,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Theme.of(context).primaryColor,
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        offset: Offset(1, 2.1),
-                                        blurRadius: 0,
-                                        spreadRadius: 0,
-                                        color: Colors.black12)
-                                  ]),
-                              padding: const EdgeInsets.all(8),
+                            ),
+                            const SizedBox(height: 15),
+                            SizedBox(
+                              height: 30,
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        uploadFile();
-                                      });
-                                    },
-                                    child: Text(
-                                      "Upload Document",
-                                      style: Get.textTheme.titleMedium!
-                                          .copyWith(color: Colors.white),
-                                    ),
-                                  ),
-                                  (fileName.isEmpty)
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 8.0),
-                                          child: InkWell(
-                                              onTap: () {
-                                                createPreview(
-                                                    context, filePath);
-                                              },
-                                              child: const Icon(
-                                                Icons.remove_red_eye,
-                                                color: Colors.white,
-                                              )),
-                                        ),
+                                  Checkbox(
+                                      visualDensity: const VisualDensity(
+                                          vertical: 0, horizontal: 0),
+                                      checkColor: Colors.indigo,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(6)),
+                                      value: isWritten,
+                                      onChanged: (v) {
+                                        setState(() {
+                                          isWritten = v!;
+                                        });
+                                      }),
+                                  Text(
+                                    testList[0],
+                                    style: Get.textTheme.titleSmall,
+                                  )
                                 ],
                               ),
                             ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0),
-                            child: widget.controller.isSaving.value == true
-                                ? const SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: CircularProgressIndicator(),
-                                  )
-                                : MSkollBtn(
-                                    title: "Save & Publish",
-                                    onPress: () {
-                                      if (_key.currentState!.validate()) {
-                                        _saveAPI({
-                                          "MI_Id":
-                                              widget.loginSuccessModel.mIID,
-                                          "HRMP_Id": hrmpId,
-                                          "HRMLO_Id": 0,
-                                          "HRMD_Id": hrmdId,
-                                          "HRMPR_Id": hrmprId,
-                                          "HRMPT_Id": hrmptId,
-                                          "HRMRFR_MRFNO": mrfNoController.text,
-                                          "HRMC_Id": hrmcId,
-                                          "HRMRFR_NoofPosition":
-                                              positionCountController.text,
-                                          "HRMRFR_Skills": skillController.text,
-                                          "HRMRFR_JobDesc":
-                                              positionController.text,
-                                          "HRMRFR_ExpFrom":
-                                              expFromController.text,
-                                          "HRMRFR_ExpTo": expToController.text,
-                                          "HRMRFR_Age": ageController.text,
-                                          "IVRMMG_Id": ivrmmgId,
-                                          "HRMRFR_Reason":
-                                              reasonController.text,
-                                          "HRMRFR_WrittenTestFlg": isWritten,
-                                          "HRMRFR_OnlineTestFlg": isOnline,
-                                          "HRMRFR_TechnicalInterviewFlg":
-                                              isTechnical,
-                                          "HRMRFR_Gender":
-                                              genderController.text,
-                                          "HRMRFR_Attachment": filePath,
-                                          "HRMRFR_ActiveFlag": false,
-                                          "HRMRFR_Status": "Pending",
-                                          "HRMRFR_CreatedBy": 0,
-                                          "HRMRFR_UpdatedBy":
-                                              widget.loginSuccessModel.userId,
-                                          "HRMRFR_ManagerFlag": true,
-                                          "HRMRFR_JobLocation":
-                                              (selectedRadio == "HO")
-                                                  ? "HO"
-                                                  : (selectedRadio == "Client")
-                                                      ? clientController.text
-                                                      : locationController.text
+                            SizedBox(
+                              height: 25,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Checkbox(
+                                      visualDensity: const VisualDensity(
+                                          vertical: 0, horizontal: 0),
+                                      checkColor: Colors.indigo,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(6)),
+                                      value: isOnline,
+                                      onChanged: (v) {
+                                        setState(() {
+                                          isOnline = v!;
                                         });
-                                      }
-                                    }),
-                          ),
-                        )
-                      ],
-                    ),
+                                      }),
+                                  Text(
+                                    testList[1],
+                                    style: Get.textTheme.titleSmall,
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Checkbox(
+                                      visualDensity: const VisualDensity(
+                                          vertical: 0, horizontal: 0),
+                                      checkColor: Colors.indigo,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(6)),
+                                      value: isTechnical,
+                                      onChanged: (v) {
+                                        setState(() {
+                                          isTechnical = v!;
+                                        });
+                                      }),
+                                  Text(
+                                    testList[2],
+                                    style: Get.textTheme.titleSmall,
+                                  )
+                                ],
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 16),
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.54,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Theme.of(context).primaryColor,
+                                      boxShadow: const [
+                                        BoxShadow(
+                                            offset: Offset(1, 2.1),
+                                            blurRadius: 0,
+                                            spreadRadius: 0,
+                                            color: Colors.black12)
+                                      ]),
+                                  padding: const EdgeInsets.all(8),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            uploadFile();
+                                          });
+                                        },
+                                        child: Text(
+                                          "Upload Document",
+                                          style: Get.textTheme.titleMedium!
+                                              .copyWith(color: Colors.white),
+                                        ),
+                                      ),
+                                      (fileName.isEmpty)
+                                          ? const SizedBox()
+                                          : Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 8.0),
+                                              child: InkWell(
+                                                  onTap: () {
+                                                    createPreview(
+                                                        context, filePath);
+                                                  },
+                                                  child: const Icon(
+                                                    Icons.remove_red_eye,
+                                                    color: Colors.white,
+                                                  )),
+                                            ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16.0),
+                                child: widget.controller.isSaving.value == true
+                                    ? const SizedBox(
+                                        height: 20,
+                                        width: 20,
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : MSkollBtn(
+                                        title: "Save & Publish",
+                                        onPress: () {
+                                          if (_key.currentState!.validate()) {
+                                            _saveAPI({
+                                              "MI_Id":
+                                                  widget.loginSuccessModel.mIID,
+                                              "HRMP_Id": hrmpId,
+                                              "HRMLO_Id": 0,
+                                              "HRMD_Id": hrmdId,
+                                              "HRMPR_Id": hrmprId,
+                                              "HRMPT_Id": hrmptId,
+                                              "HRMRFR_MRFNO":
+                                                  mrfNoController.text,
+                                              "HRMC_Id": hrmcId,
+                                              "HRMRFR_NoofPosition":
+                                                  positionCountController.text,
+                                              "HRMRFR_Skills":
+                                                  skillController.text,
+                                              "HRMRFR_JobDesc":
+                                                  positionController.text,
+                                              "HRMRFR_ExpFrom":
+                                                  expFromController.text,
+                                              "HRMRFR_ExpTo":
+                                                  expToController.text,
+                                              "HRMRFR_Age": ageController.text,
+                                              "IVRMMG_Id": ivrmmgId,
+                                              "HRMRFR_Reason":
+                                                  reasonController.text,
+                                              "HRMRFR_WrittenTestFlg":
+                                                  isWritten,
+                                              "HRMRFR_OnlineTestFlg": isOnline,
+                                              "HRMRFR_TechnicalInterviewFlg":
+                                                  isTechnical,
+                                              "HRMRFR_Gender":
+                                                  genderController.text,
+                                              "HRMRFR_Attachment": filePath,
+                                              "HRMRFR_ActiveFlag": false,
+                                              "HRMRFR_Status": "Pending",
+                                              "HRMRFR_CreatedBy": 0,
+                                              "HRMRFR_UpdatedBy": widget
+                                                  .loginSuccessModel.userId,
+                                              "HRMRFR_ManagerFlag": true,
+                                              "HRMRFR_JobLocation":
+                                                  (selectedRadio == "HO")
+                                                      ? "HO"
+                                                      : (selectedRadio ==
+                                                              "Client")
+                                                          ? clientController
+                                                              .text
+                                                          : locationController
+                                                              .text
+                                            });
+                                          }
+                                        }),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
                   );
       }),
     );

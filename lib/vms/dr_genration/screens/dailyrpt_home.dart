@@ -1387,24 +1387,29 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                               .isNotEmpty)
                                                           ? (uploadImageIndex ==
                                                                   i - 1)
-                                                              ? InkWell(
-                                                                  onTap: () {
-                                                                    Get.to(() =>
-                                                                        MultipleAttachmentViewer(
-                                                                          value: fliteresList
-                                                                              .elementAt(index)
-                                                                              .plannerFileUpload!,
-                                                                        ));
-                                                                    // createPreview(
-                                                                    //     context,
-                                                                    //     _plannerDetailsController
-                                                                    //         .uploadImages[index]
-                                                                    //         .path);
-                                                                  },
-                                                                  child: const Icon(
-                                                                      Icons
-                                                                          .visibility_outlined),
-                                                                )
+                                                              ? (fliteresList
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .plannerFileUpload!
+                                                                      .isEmpty)
+                                                                  ? const SizedBox()
+                                                                  : InkWell(
+                                                                      onTap:
+                                                                          () {
+                                                                        Get.to(() =>
+                                                                            MultipleAttachmentViewer(
+                                                                              value: fliteresList.elementAt(index).plannerFileUpload!,
+                                                                            ));
+                                                                        // createPreview(
+                                                                        //     context,
+                                                                        //     _plannerDetailsController
+                                                                        //         .uploadImages[index]
+                                                                        //         .path);
+                                                                      },
+                                                                      child: const Icon(
+                                                                          Icons
+                                                                              .visibility_outlined),
+                                                                    )
                                                               : const SizedBox()
                                                           : const SizedBox(),
                                                     ],

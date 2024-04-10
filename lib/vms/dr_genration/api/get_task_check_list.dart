@@ -19,12 +19,12 @@ Future<CategoryCheckListModel?> getCategoryChecklistDetails(
     required PlannerDetails controller}) async {
   final Dio ins = getGlobalDio();
   final String apiUrl = base + URLS.getTaskCheckList;
-  logger.e(apiUrl);
+  logger.e('=== $apiUrl');
   try {
     final Response response = await ins.post(apiUrl,
         options: Options(headers: getSession()),
         data: {"ISMMTCAT_Id": ismmcatId, "ISMTCR_Id": ismctrId});
-    logger.e(apiUrl);
+    logger.e({"ISMMTCAT_Id": ismmcatId, "ISMTCR_Id": ismctrId});
     CategoryCheckListModel checkListModel = CategoryCheckListModel.fromJson(
         response.data['gettaskcategorychecklist']);
 

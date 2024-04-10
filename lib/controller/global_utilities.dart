@@ -844,3 +844,14 @@ List interviewstatus = [
   {"name": "Upcomming"},
   {"name": "InProgress"},
 ];
+List companyName = [
+  {"name": "Vaps Knowledge Services Pvt Ltd"},
+  {"name": "Vaps Technosoft Pvt Ltd"},
+  {"name": "Unnathi Marketing"},
+  {"name": "Smart infrastructure and Service"},
+  {"name": "Marga Innovation infrastructure and Developer"},
+  {"name": "Pacific System Enterprises"},
+  {"name": "Global Quality Training & Assessors Pvt Ltd"},
+  {"name": "Vaps Akshaya Foundation"},
+  {"name": "House of Raadhya"},
+];

@@ -385,4 +385,7 @@ class URLS {
   //Job Posting
   static String jobPostingOnLoad = 'api/AddJobVMSFacade/onloadgetdetails';
   static String postJob = 'api/AddJobVMSFacade/';
+  // Add to HRMS
+  static String addToHrmsOnLoad = 'api/AddtoHRMSFacade/onloadgetdetails';
+  static String addToHrmsSave = 'api/AddtoHRMSFacade/savetohrms/';
 }
