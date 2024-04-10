@@ -1,11 +1,16 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/homework/model/upload_hw_cw_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/api/job_posting_api.dart';
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/controller/job_posting_controller.dart';
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/model/client_list_model.dart';
@@ -17,6 +22,8 @@ import 'package:m_skool_flutter/vms/hr_modules/job_posting/model/priority_list_m
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/model/ql_list_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
+
+import '../../../health_chequeup/api/hc_save_api.dart';
 
 class NewJobPost extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -1072,6 +1079,58 @@ class _NewJobPostState extends State<NewJobPost> {
                           ),
                         ),
                         Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 16),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.54,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Theme.of(context).primaryColor,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                        offset: Offset(1, 2.1),
+                                        blurRadius: 0,
+                                        spreadRadius: 0,
+                                        color: Colors.black12)
+                                  ]),
+                              padding: const EdgeInsets.all(8),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        uploadFile();
+                                      });
+                                    },
+                                    child: Text(
+                                      "Upload Document",
+                                      style: Get.textTheme.titleMedium!
+                                          .copyWith(color: Colors.white),
+                                    ),
+                                  ),
+                                  (fileName.isEmpty)
+                                      ? const SizedBox()
+                                      : Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8.0),
+                                          child: InkWell(
+                                              onTap: () {
+                                                createPreview(
+                                                    context, filePath);
+                                              },
+                                              child: const Icon(
+                                                Icons.remove_red_eye,
+                                                color: Colors.white,
+                                              )),
+                                        ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Align(
                           alignment: Alignment.bottomCenter,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -1111,6 +1170,9 @@ class _NewJobPostState extends State<NewJobPost> {
                                           "HRMRFR_OnlineTestFlg": isOnline,
                                           "HRMRFR_TechnicalInterviewFlg":
                                               isTechnical,
+                                          "HRMRFR_Gender":
+                                              genderController.text,
+                                          "HRMRFR_Attachment": filePath,
                                           "HRMRFR_ActiveFlag": false,
                                           "HRMRFR_Status": "Pending",
                                           "HRMRFR_CreatedBy": 0,
@@ -1147,4 +1209,61 @@ class _NewJobPostState extends State<NewJobPost> {
   bool isOnline = false;
   bool isTechnical = false;
   List testList = ['Written Test', 'Online Test', 'Technical Interview'];
+  int maxFileSize = 5 * 1024 * 1024;
+  Future<void> uploadFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: [
+        'jpg',
+        'jpeg',
+        'png',
+        'doc',
+        'docx',
+        'xls',
+        'xlsx',
+        'pdf'
+      ],
+    );
+
+    if (result != null) {
+      int fileSize = result.files.single.size;
+      if (fileSize > maxFileSize) {
+        Fluttertoast.showToast(
+            msg: 'File size exceeds the maximum allowed size.');
+      } else {
+        setState(() {
+          File file = File(result.files.single.path!);
+          _getImageUrl(file);
+        });
+      }
+    } else {
+      Fluttertoast.showToast(msg: "Image Is not Uploaded Please try Again");
+    }
+  }
+
+  _getImageUrl(
+    File path,
+  ) async {
+    try {
+      uploadAttachment.add(
+          await uploadAtt(miId: widget.loginSuccessModel.mIID!, file: path));
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Please Upload Image");
+      return Future.error({
+        "errorTitle": "An Error Occured",
+        "errorMsg": "While trying to upload attchement, we encountered an error"
+      });
+    }
+    setState(() {
+      Fluttertoast.showToast(msg: "Image Uploaded");
+      for (var i in uploadAttachment) {
+        filePath = i.path;
+        fileName = i.name;
+      }
+    });
+  }
+
+  List<UploadHwCwModel> uploadAttachment = [];
+  String filePath = '';
+  String fileName = '';
 }

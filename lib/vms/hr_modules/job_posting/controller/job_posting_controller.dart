@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/model/client_list_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/model/depart_list_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/model/job_gender_model.dart';
+import 'package:m_skool_flutter/vms/hr_modules/job_posting/model/job_list_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/model/job_post_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/model/position_list_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/model/priority_list_model.dart';
@@ -11,6 +12,11 @@ class JobPostingController extends GetxController {
   RxBool isLoading = RxBool(false);
   void loading(bool l) {
     isLoading.value = l;
+  }
+
+  RxBool isGridLoading = RxBool(false);
+  void gridloading(bool l) {
+    isGridLoading.value = l;
   }
 
   RxList<PositionListModelValues> positionList =
@@ -28,5 +34,18 @@ class JobPostingController extends GetxController {
   RxBool isSaving = RxBool(false);
   void saving(bool b) {
     isSaving.value = b;
+  }
+
+  int year = DateTime.now().year;
+  RxList<JobListModelValues> jobGridList = <JobListModelValues>[].obs;
+  void data(List<JobListModelValues> jobGrid) {
+    if (jobGridList.isNotEmpty) {
+      jobGridList.clear();
+    }
+    for (var i in jobGrid) {
+      if (i.createdDate!.contains(year.toString())) {
+        jobGridList.add(i);
+      }
+    }
   }
 }

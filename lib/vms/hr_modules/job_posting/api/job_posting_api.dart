@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/vms/hr_modules/job_posting/controller/job_postin
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/model/client_list_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/model/depart_list_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/model/job_gender_model.dart';
+import 'package:m_skool_flutter/vms/hr_modules/job_posting/model/job_list_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/model/job_post_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/model/position_list_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/model/priority_list_model.dart';
@@ -58,6 +59,24 @@ class JobPostingAPI {
     }
   }
 
+//
+  onLoadGrid(
+      {required String base,
+      required int miId,
+      required JobPostingController controller}) async {
+    var api = base + URLS.jobPostingOnLoad;
+    controller.gridloading(true);
+    var response = await dio.post(api,
+        data: {"MI_Id": miId}, options: Options(headers: getSession()));
+    if (response.statusCode == 200) {
+      JobListModel jobListModel =
+          JobListModel.fromJson(response.data['gridrecordMRF']);
+      controller.data(jobListModel.values!);
+      controller.gridloading(false);
+    }
+  }
+
+//
   saveData({required String base, required Map<String, dynamic> body}) async {
     var api = base + URLS.postJob;
     var response = await dio.post(api,
