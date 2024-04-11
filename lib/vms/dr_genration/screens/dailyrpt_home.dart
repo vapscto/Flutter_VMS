@@ -1385,31 +1385,24 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                       const SizedBox(height: 5),
                                                       (selectCheckbox
                                                               .isNotEmpty)
-                                                          ? (uploadImageIndex ==
-                                                                  i - 1)
-                                                              ? (fliteresList
-                                                                      .elementAt(
-                                                                          index)
-                                                                      .plannerFileUpload!
-                                                                      .isEmpty)
-                                                                  ? const SizedBox()
-                                                                  : InkWell(
-                                                                      onTap:
-                                                                          () {
-                                                                        Get.to(() =>
-                                                                            MultipleAttachmentViewer(
-                                                                              value: fliteresList.elementAt(index).plannerFileUpload!,
-                                                                            ));
-                                                                        // createPreview(
-                                                                        //     context,
-                                                                        //     _plannerDetailsController
-                                                                        //         .uploadImages[index]
-                                                                        //         .path);
-                                                                      },
-                                                                      child: const Icon(
-                                                                          Icons
-                                                                              .visibility_outlined),
-                                                                    )
+                                                          ? (fliteresList
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .plannerFileUpload!
+                                                                  .isNotEmpty)
+                                                              ? InkWell(
+                                                                  onTap: () {
+                                                                    Get.to(() =>
+                                                                        MultipleAttachmentViewer(
+                                                                          value: fliteresList
+                                                                              .elementAt(index)
+                                                                              .plannerFileUpload!,
+                                                                        ));
+                                                                  },
+                                                                  child: const Icon(
+                                                                      Icons
+                                                                          .visibility_outlined),
+                                                                )
                                                               : const SizedBox()
                                                           : const SizedBox(),
                                                     ],
