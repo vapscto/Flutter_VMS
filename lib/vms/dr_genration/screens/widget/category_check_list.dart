@@ -95,6 +95,7 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
   int id = 0;
   String drName = '';
   String refNo = '';
+  bool uploadFlag = false;
   CategoryCheckListModelValues? category;
   @override
   Widget build(BuildContext context) {
@@ -176,6 +177,7 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                     category = s!;
                     id = s.ismmtcatcLId!;
                     drName = s.ismmtcatcLCheckListName!;
+                    uploadFlag = s.ismmtcatcLUploadEnterFlg!;
                   },
                 ),
               ),
@@ -421,10 +423,14 @@ class _CategoryCheckListState extends State<CategoryCheckList> {
                       onPress: () async {
                         if (drName.isEmpty) {
                           Fluttertoast.showToast(msg: "Select Checklist");
-                        } else if (widget.plannerDetailsController
-                                .addListBrowser.last.file ==
-                            null) {
-                          Fluttertoast.showToast(msg: " Upload File");
+                        } else if (uploadFlag == true &&
+                            widget.plannerDetailsController.addListBrowser.last
+                                    .file ==
+                                null) {
+                          Fluttertoast.showToast(msg: "Upload File");
+                        } else if (uploadFlag == false &&
+                            commentController.isEmpty) {
+                          Fluttertoast.showToast(msg: "Please Add Comment");
                         } else {
                           setState(() {
                             isLoading = true;
