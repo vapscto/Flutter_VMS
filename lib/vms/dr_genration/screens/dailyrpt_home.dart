@@ -1385,8 +1385,11 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                       const SizedBox(height: 5),
                                                       (selectCheckbox
                                                               .isNotEmpty)
-                                                          ? (uploadImageIndex ==
-                                                                  i - 1)
+                                                          ? (fliteresList
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .plannerFileUpload!
+                                                                  .isNotEmpty)
                                                               ? InkWell(
                                                                   onTap: () {
                                                                     Get.to(() =>
@@ -1395,11 +1398,6 @@ class _DailyReportGenrationState extends State<DailyReportGenration> {
                                                                               .elementAt(index)
                                                                               .plannerFileUpload!,
                                                                         ));
-                                                                    // createPreview(
-                                                                    //     context,
-                                                                    //     _plannerDetailsController
-                                                                    //         .uploadImages[index]
-                                                                    //         .path);
                                                                   },
                                                                   child: const Icon(
                                                                       Icons

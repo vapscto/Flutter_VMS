@@ -22,8 +22,8 @@ import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/requsition_grid.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/emp_review.dart';
-import 'package:m_skool_flutter/vms/call_letter/call_letter_home.dart';
 import 'package:m_skool_flutter/vms/candidate_interview_list/screen/canidate_home.dart';
+// import 'package:m_skool_flutter/vms/call_letter/call_letter_home.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/certificate_approval.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/dailyrpt_home.dart';
@@ -32,6 +32,8 @@ import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_home.dart
 import 'package:m_skool_flutter/vms/extension/extension_home_screen.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/health_chequeup/screens/healtha_check_up.dart';
+import 'package:m_skool_flutter/vms/hr_modules/interview_schdule/interview_schdule.dart';
+import 'package:m_skool_flutter/vms/hr_modules/job_posting/job_posting_home.dart';
 import 'package:m_skool_flutter/vms/interviewer_feedback/screens/interview_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
@@ -154,7 +156,8 @@ String getDashboardIcon(String pageName) {
   }
 
   if (pageName.toLowerCase().contains('task') ||
-      pageName.toLowerCase().contains("call")) {
+      pageName.toLowerCase().contains("call") ||
+      pageName.toLowerCase().contains("schedule interview")) {
     return "${icon}Classwork.png";
   }
   if (pageName.toLowerCase().contains('sales')) {
@@ -178,7 +181,8 @@ String getDashboardIcon(String pageName) {
     return "${icon}Certificate.png";
   }
   if (pageName.toLowerCase().contains("entry") &&
-      !pageName.toLowerCase().contains("mark")) {
+          !pageName.toLowerCase().contains("mark") ||
+      pageName.toLowerCase().contains("job posting")) {
     return icon += "staff_stu_attendance.png";
   }
 
@@ -674,9 +678,19 @@ void openMappedPages(
     }));
     return;
   }
-  if (pageName == "Call Letter") {
+  // if (pageName == "Call Letter") {
+  //   Navigator.push(context, MaterialPageRoute(builder: (_) {
+  //     return CallLetterHome(
+  //       loginSuccessModel: loginSuccessModel,
+  //       mskoolController: mskoolController,
+  //       title: pageName,
+  //     );
+  //   }));
+  //   return;
+  // }
+  if (pageName == "Add To HRMS") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return CallLetterHome(
+      return AddToHrmsHome(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
         title: pageName,
@@ -684,9 +698,19 @@ void openMappedPages(
     }));
     return;
   }
-  if (pageName == "Add To HRMS") {
+  if (pageName == "Schedule Interview") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return AddToHrmsHome(
+      return InterViewSchduleHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        title: pageName,
+      );
+    }));
+    return;
+  }
+  if (pageName == "Job Posting") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return JobPostingHomeScreen(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
         title: pageName,
@@ -806,6 +830,40 @@ String dateFormat(DateTime dt) {
   return '${dt.year}-${dt.month}-${dt.day}';
 }
 
+String dateFormat1(DateTime dt) {
+  return '${numberList[dt.day]}-${numberList[dt.month]}-${dt.year}';
+}
+
 String dateFormatNew(DateTime dt) {
   return '${numberList[dt.day]}-${months[dt.month - 1]}-${dt.year}';
 }
+
+List interviewRound = [
+  {"name": "Face to Face"},
+  {"name": "Telephonic"},
+  {"name": "Written"},
+  {"name": "Technical"},
+  {"name": "HR Round"},
+  {"name": "Department Head"},
+  {"name": "Managerial"},
+  {"name": "MD Round"},
+  {"name": "Third Party"},
+  {"name": "Online Test"},
+  {"name": "Online Test VC"},
+  {"name": "Others"},
+];
+List interviewstatus = [
+  {"name": "Upcomming"},
+  {"name": "InProgress"},
+];
+List companyName = [
+  {"name": "Vaps Knowledge Services Pvt Ltd"},
+  {"name": "Vaps Technosoft Pvt Ltd"},
+  {"name": "Unnathi Marketing"},
+  {"name": "Smart infrastructure and Service"},
+  {"name": "Marga Innovation infrastructure and Developer"},
+  {"name": "Pacific System Enterprises"},
+  {"name": "Global Quality Training & Assessors Pvt Ltd"},
+  {"name": "Vaps Akshaya Foundation"},
+  {"name": "House of Raadhya"},
+];

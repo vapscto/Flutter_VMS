@@ -361,22 +361,31 @@ class URLS {
   static String ontapviewapi =
       'api/INV_PurchaseRequisitionFacade/get_prdetails/';
 
-  static String onpurchaseviewapi = 'api/INV_RequisitionNotificationFacade/savedetails/';
+  static String onpurchaseviewapi =
+      'api/INV_RequisitionNotificationFacade/savedetails/';
 
-  static String getTourName="api/TADA_Advance_TourFacade/getload";
+  static String getTourName = "api/TADA_Advance_TourFacade/getload";
 
-  static String getTourLeadList="api/TADA_Advance_TourFacade/Lead_Update";
+  static String getTourLeadList = "api/TADA_Advance_TourFacade/Lead_Update";
   static String generateTemplate = 'api/AppointmentFacade/';
 
-  static String getTourDemoResponseApi="api/TADA_Advance_TourFacade/Edit_response_lead_demo";
+  static String getTourDemoResponseApi =
+      "api/TADA_Advance_TourFacade/Edit_response_lead_demo";
 
-  static String getSaveDemoResponse="api/TADA_Advance_TourFacade/Save_response_lead_demo";
+  static String getSaveDemoResponse =
+      "api/TADA_Advance_TourFacade/Save_response_lead_demo";
 
-  static String getLeadDemoResponse="api/TADA_Advance_TourFacade/view_lead_demo";
+  static String getLeadDemoResponse =
+      "api/TADA_Advance_TourFacade/view_lead_demo";
 
-  static String candidate = "api/CandidateInterviewListVMSFacade/getallwithoutcondtn";
-
-  // static String saveCandidatee = "api/CandidateInterviewListVMSFacade/getRecordById/";
-
-  static var editcandidate = "api/CandidateInterviewListVMSFacade/getRecordById/";
+  //Interview schdule
+  static String interviewSchduleOnLoad =
+      'api/AddCandidateInterviewVMSFacade/onloadgetdetails';
+  static String interviewSchedule = 'api/AddCandidateInterviewVMSFacade/';
+  //Job Posting
+  static String jobPostingOnLoad = 'api/AddJobVMSFacade/onloadgetdetails';
+  static String postJob = 'api/AddJobVMSFacade/';
+  // Add to HRMS
+  static String addToHrmsOnLoad = 'api/AddtoHRMSFacade/onloadgetdetails';
+  static String addToHrmsSave = 'api/AddtoHRMSFacade/savetohrms/';
 }
