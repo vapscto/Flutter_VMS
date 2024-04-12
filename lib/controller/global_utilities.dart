@@ -22,7 +22,7 @@ import 'package:m_skool_flutter/vms/Purchase_indent/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.dart';
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/requsition_grid.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/emp_review.dart';
-import 'package:m_skool_flutter/vms/call_letter/call_letter_home.dart';
+// import 'package:m_skool_flutter/vms/call_letter/call_letter_home.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/certificate_approval.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/dailyrpt_home.dart';
@@ -677,16 +677,16 @@ void openMappedPages(
     }));
     return;
   }
-  if (pageName == "Call Letter") {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return CallLetterHome(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
-        title: pageName,
-      );
-    }));
-    return;
-  }
+  // if (pageName == "Call Letter") {
+  //   Navigator.push(context, MaterialPageRoute(builder: (_) {
+  //     return CallLetterHome(
+  //       loginSuccessModel: loginSuccessModel,
+  //       mskoolController: mskoolController,
+  //       title: pageName,
+  //     );
+  //   }));
+  //   return;
+  // }
   if (pageName == "Add To HRMS") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return AddToHrmsHome(
