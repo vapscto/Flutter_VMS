@@ -5,7 +5,6 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/candidate_interview_list/api/candidate_api.dart';
-import 'package:m_skool_flutter/vms/candidate_interview_list/api/candidate_edit_api.dart';
 import 'package:m_skool_flutter/vms/candidate_interview_list/controller/candidate_controller.dart';
 import 'package:m_skool_flutter/vms/candidate_interview_list/model/edit_candidate_model.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';

@@ -388,4 +388,8 @@ class URLS {
   // Add to HRMS
   static String addToHrmsOnLoad = 'api/AddtoHRMSFacade/onloadgetdetails';
   static String addToHrmsSave = 'api/AddtoHRMSFacade/savetohrms/';
+
+  static String candidate = 'api/CandidateInterviewListVMSFacade/onloadgetdetails/';
+
+  static var editcandidate = 'api/CandidateInterviewListVMSFacade/getRecordById/';
 }
