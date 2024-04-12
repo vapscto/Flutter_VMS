@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -1074,10 +1076,10 @@ class _AddToHrmsHomeState extends State<AddToHrmsHome> {
                                         newList.addAll({
                                           "HRCD_Id": candidateselected!.hrcDId,
                                           "MI_Id": selectedCompany!.mIId,
-                                          "HRMPT_Id": 6,
-                                          "HRMC_Id": 2,
-                                          "HRME_Id": 0,
-                                          "HRCD_MRFNO": 0,
+                                          "HRMPT_Id": empSelectedType!.hrmpTId,
+                                          "HRMC_Id": selectedCast!.hrmCId,
+                                          "HRME_Id": candidateselected!.hrmEID,
+                                          "HRCD_MRFNO": selectedDep!.hrcDMRFNO,
                                           "HRCD_FullName":
                                               candidateselected!.hrcDFullName,
                                           "HRCD_FirstName":
@@ -1104,46 +1106,57 @@ class _AddToHrmsHomeState extends State<AddToHrmsHome> {
                                               "Antal International",
                                           "HRCD_ResumeSource": "Indeed",
                                           "HRCD_JobPortalName": "Indeed",
-                                          "HRCD_RefCode": "564",
-                                          "HRCD_LastCTC": 25000.0,
-                                          "HRCD_ExpectedCTC": 28000.0,
-                                          "HRCD_AppDate": "2019-11-24T04:00:00",
+                                          "HRCD_RefCode": '',
+                                          "HRCD_LastCTC":
+                                              candidateselected!.hrcDLastCTC,
+                                          "HRCD_ExpectedCTC": candidateselected!
+                                              .hrcDExpectedCTC,
+                                          "HRCD_AppDate":
+                                              candidateselected!.hrcDAppDate,
                                           "HRCD_InterviewDate":
-                                              "2019-11-25T04:00:00",
+                                              candidateselected!
+                                                  .hrcDInterviewDate,
                                           "HRCD_ExitDate":
-                                              "0001-01-01T00:00:00",
-                                          "HRCD_NoticePeriod": 0,
+                                              candidateselected!.hrcDExitDate,
+                                          "HRCD_NoticePeriod":
+                                              candidateselected!
+                                                  .hrcDNoticePeriod,
                                           "HRCD_Remarks":
                                               "Selected in final round",
-                                          "HRCD_Resume":
-                                              "https://dcampusstrg.blob.core.windows.net/files/16/NAACDocumentsUpload/b1cd6a8d-6de4-4b1f-b302-70366dfbc4fe.pdf",
+                                          "HRCD_Resume": "",
                                           "HRCD_RecruitmentStatus": "Selected",
                                           "HRCD_ActiveFlg": true,
-                                          "HRCD_CreatedBy": 0,
-                                          "HRCD_UpdatedBy": 60051,
-                                          "HRCD_Department": "Sales",
-                                          "HRME_ID": 0,
-                                          "candidateflage": false,
-                                          "HRME_RFCardId": "11",
-                                          "HRCED_ActiveFlag": false,
+                                          "HRCD_UpdatedBy":
+                                              widget.loginSuccessModel.userId,
+                                          "HRCD_Department":
+                                              departmentController.text,
+                                          "HRME_ID": candidateselected!.hrmEID,
+                                          "candidateflage":
+                                              candidateselected!.candidateflage,
+                                          "HRME_RFCardId":
+                                              cardNoController.text,
+                                          "HRCED_ActiveFlag":
+                                              selectedCast!.hrceDActiveFlag,
                                           "HRCD_Photo":
-                                              "https://dcampusstrg.blob.core.windows.net/files/16/EmployeeProfilePics/6175717b-e0bb-42e1-bce1-60b60ec7c65a.jpg",
-                                          "HRCD_AadharNo": 987655455555,
+                                              candidateselected!.hrcDPhoto,
+                                          "HRCD_AadharNo":
+                                              candidateselected!.hrcDAadharNo,
                                           "HRCD_Designation":
-                                              "Computer Faculty",
+                                              designationController.text,
                                           "HRCD_AddressLocal":
                                               candidateselected!
                                                   .hrcDAddressLocal,
                                           "HRCD_AddressPermanent":
                                               candidateselected!
                                                   .hrcDAddressPermanent,
-                                          "HRMET_Id": 4,
-                                          "HRMGT_Id": 75,
-                                          "HRMG_Id": 6,
+                                          "HRMET_Id": empSelectedType!.hrmeTId,
+                                          "HRMGT_Id": selectGroupType!.hrmgTId,
+                                          "HRMG_Id": selectedGrade!.hrmGId,
                                           "HRME_EmployeeCode":
                                               empCodeController.text,
                                           "HRCISC_InterviewDateTime":
-                                              "0001-01-01T00:00:00",
+                                              candidateselected!
+                                                  .hrcisCInterviewDateTime,
                                           "HRCD_NationalityId":
                                               candidateselected!
                                                   .hrcDNationalityId,
@@ -1154,13 +1167,17 @@ class _AddToHrmsHomeState extends State<AddToHrmsHome> {
                                           "HRCD_BloodGroup": "A-",
                                           "HRCD_CasteId":
                                               selectedCast!.hrcDCasteId,
-                                          "HRCD_AddLocalPlace": "Bangalore",
-                                          "HRCD_AddPermanentPlace": "Bangalore",
-                                          "HRMP_Id": 33,
+                                          "HRCD_AddLocalPlace":
+                                              candidateselected!
+                                                  .hrcDAddressLocal,
+                                          "HRCD_AddPermanentPlace":
+                                              candidateselected!
+                                                  .hrcDAddressPermanent,
+                                          "HRMP_Id": candidateselected!.hrmPId,
                                           "CreatedDate":
-                                              "2019-11-30T10:51:39.637",
+                                              selectedCompany!.createdDate,
                                           "UpdatedDate":
-                                              "2022-01-19T07:05:46.96"
+                                              selectedCompany!.updatedDate
                                         });
                                         await AddToHRMSAPI.i.addHrms(
                                             base: baseUrlFromInsCode(
