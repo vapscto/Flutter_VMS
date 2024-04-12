@@ -23,6 +23,7 @@ import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.da
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/requsition_grid.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/emp_review.dart';
 import 'package:m_skool_flutter/vms/call_letter/call_letter_home.dart';
+import 'package:m_skool_flutter/vms/candidate_interview_list/screen/canidate_home.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/certificate_approval.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/dailyrpt_home.dart';
@@ -693,6 +694,17 @@ void openMappedPages(
     }));
     return;
   }
+
+   if (pageName == "Candidate list") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return CandidateHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+    return;
+  }
+
 }
 
 bool isWebsite(String url) {

@@ -373,4 +373,10 @@ class URLS {
   static String getSaveDemoResponse="api/TADA_Advance_TourFacade/Save_response_lead_demo";
 
   static String getLeadDemoResponse="api/TADA_Advance_TourFacade/view_lead_demo";
+
+  static String candidate = "api/CandidateInterviewListVMSFacade/getallwithoutcondtn";
+
+  // static String saveCandidatee = "api/CandidateInterviewListVMSFacade/getRecordById/";
+
+  static var editcandidate = "api/CandidateInterviewListVMSFacade/getRecordById/";
 }
