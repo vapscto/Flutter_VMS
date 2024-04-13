@@ -89,6 +89,8 @@ class AddToHRMSAPI {
 
   addHrms({required String base, required Map<String, dynamic> body}) async {
     var api = base + URLS.addToHrmsSave;
+    logger.i(body);
+    logger.e(api);
     var response = await dio.post(api,
         options: Options(headers: getSession()), data: body);
     if (response.statusCode == 200) {
@@ -101,7 +103,6 @@ class AddToHRMSAPI {
             backgroundColor: Colors.red,
             textColor: Colors.white,
           );
-          Get.back();
         } else if (response.data['retrunMsg'] == "false") {
           Fluttertoast.showToast(
             msg: "Record Not saved / Updated.. Fail",
@@ -118,7 +119,6 @@ class AddToHRMSAPI {
             backgroundColor: Colors.green,
             textColor: Colors.white,
           );
-          Get.back();
         } else if (response.data['retrunMsg'] == "Update") {
           Fluttertoast.showToast(
             msg: "Record Updated Successfully..",
@@ -127,7 +127,6 @@ class AddToHRMSAPI {
             backgroundColor: Colors.green,
             textColor: Colors.white,
           );
-          Get.back();
         } else {
           Fluttertoast.showToast(
             msg: "Something went wrong..! Kindly contact Administrator",

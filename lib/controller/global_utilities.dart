@@ -719,7 +719,7 @@ void openMappedPages(
     return;
   }
 
-   if (pageName == "Candidate list") {
+  if (pageName == "Candidate list") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return CandidateHome(
         loginSuccessModel: loginSuccessModel,
@@ -728,7 +728,6 @@ void openMappedPages(
     }));
     return;
   }
-
 }
 
 bool isWebsite(String url) {

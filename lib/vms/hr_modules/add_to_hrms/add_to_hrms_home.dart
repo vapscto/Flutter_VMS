@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -1088,8 +1085,8 @@ class _AddToHrmsHomeState extends State<AddToHrmsHome> {
                                               candidateselected!.hrcDMiddleName,
                                           "HRCD_LastName":
                                               candidateselected!.hrcDLastName,
-                                          "HRMJ_Id": 6,
-                                          "HRCD_Skills": "Recruitment",
+                                          "HRMJ_Id": candidateselected!.hrmJId,
+                                          "HRCD_Skills": "",
                                           "HRCD_DOB":
                                               candidateselected!.hrcDDOB,
                                           "IVRMMG_Id":
@@ -1102,10 +1099,9 @@ class _AddToHrmsHomeState extends State<AddToHrmsHome> {
                                               candidateselected!.hrcDExpFrom,
                                           "HRCD_ExpTo":
                                               candidateselected!.hrcDExpTo,
-                                          "HRCD_CurrentCompany":
-                                              "Antal International",
-                                          "HRCD_ResumeSource": "Indeed",
-                                          "HRCD_JobPortalName": "Indeed",
+                                          "HRCD_CurrentCompany": "",
+                                          "HRCD_ResumeSource": "",
+                                          "HRCD_JobPortalName": "",
                                           "HRCD_RefCode": '',
                                           "HRCD_LastCTC":
                                               candidateselected!.hrcDLastCTC,
@@ -1121,11 +1117,11 @@ class _AddToHrmsHomeState extends State<AddToHrmsHome> {
                                           "HRCD_NoticePeriod":
                                               candidateselected!
                                                   .hrcDNoticePeriod,
-                                          "HRCD_Remarks":
-                                              "Selected in final round",
+                                          "HRCD_Remarks": "",
                                           "HRCD_Resume": "",
-                                          "HRCD_RecruitmentStatus": "Selected",
-                                          "HRCD_ActiveFlg": true,
+                                          "HRCD_RecruitmentStatus": "",
+                                          "HRCD_ActiveFlg":
+                                              candidateselected!.hrcDActiveFlg,
                                           "HRCD_UpdatedBy":
                                               widget.loginSuccessModel.userId,
                                           "HRCD_Department":
@@ -1164,7 +1160,7 @@ class _AddToHrmsHomeState extends State<AddToHrmsHome> {
                                               religionSelected!.hrcDReligion,
                                           "HRCD_MaritalStatus": selectedMarital!
                                               .hrcDMaritalStatus,
-                                          "HRCD_BloodGroup": "A-",
+                                          "HRCD_BloodGroup": "",
                                           "HRCD_CasteId":
                                               selectedCast!.hrcDCasteId,
                                           "HRCD_AddLocalPlace":
@@ -1190,7 +1186,7 @@ class _AddToHrmsHomeState extends State<AddToHrmsHome> {
                                                   widget.loginSuccessModel.mIID,
                                               "Employeedto": newList
                                             });
-                                        Fluttertoast.showToast(msg: "Success");
+                                        Get.back();
                                       }
                                     }),
                               ),
