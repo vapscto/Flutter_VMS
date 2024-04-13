@@ -32,6 +32,7 @@ import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_home.dart
 import 'package:m_skool_flutter/vms/extension/extension_home_screen.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/health_chequeup/screens/healtha_check_up.dart';
+import 'package:m_skool_flutter/vms/hr_modules/interview_report/int_report_home.dart';
 import 'package:m_skool_flutter/vms/hr_modules/interview_schdule/interview_schdule.dart';
 import 'package:m_skool_flutter/vms/hr_modules/job_posting/job_posting_home.dart';
 import 'package:m_skool_flutter/vms/interviewer_feedback/screens/interview_home_screen.dart';
@@ -212,7 +213,8 @@ String getDashboardIcon(String pageName) {
   if (pageName.toLowerCase().contains("requisition report")) {
     return icon += "staff_classwork.png";
   }
-  if (pageName.toLowerCase().contains("notice")) {
+  if (pageName.toLowerCase().contains("notice") ||
+      pageName.toLowerCase().contains("interview report")) {
     return icon += "staff_nb.png";
   }
 
@@ -724,6 +726,16 @@ void openMappedPages(
       return CandidateHome(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
+      );
+    }));
+    return;
+  }
+  if (pageName == "Interview Report") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return InterviewReportHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        title: pageName,
       );
     }));
     return;

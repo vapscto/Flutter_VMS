@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/hr_modules/interview_report/controller/int_report_controller.dart';
@@ -10,11 +11,12 @@ class InterviewReportAPI {
   getList({
     required String base,
     required Map<String, dynamic> body,
-    required String status,
     required IntviewGridController controller,
   }) async {
     var dio = Dio();
-    var api = base;
+    var api = base + URLS.report;
+    logger.i(api);
+    logger.i(body);
     controller.loading(true);
     try {
       var response = await dio.post(api,
