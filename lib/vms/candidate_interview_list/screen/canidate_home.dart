@@ -127,32 +127,7 @@ class _CandidateHomeState extends State<CandidateHome> {
                                   ],
                                 ),
                               ),
-                                Align(
-                                alignment: Alignment.topRight,
-                                child: InkWell(
-                                  onTap: () {
-                                   Navigator.push(
-                                   context,
-                                   MaterialPageRoute(
-                                    builder: (_) {
-                                  return EditFormCandidate(
-                                   mskoolController: widget.mskoolController,
-                                   loginSuccessModel: widget.loginSuccessModel, 
-                                  //  values: controller.getcandiateeditList[index],
-                          );
-                        },
-                      ),
-                    );
-                                  },
-                                  child: Chip(
-                                      backgroundColor: noticeColor[bgColor],
-                                      label: Text(
-                                        "Edit Form",
-                                        style: Get.textTheme.titleSmall!
-                                            .copyWith(color: Colors.white),
-                                      )),
-                                ),
-                              ),
+                              
                             ],
                           ),
                         );
