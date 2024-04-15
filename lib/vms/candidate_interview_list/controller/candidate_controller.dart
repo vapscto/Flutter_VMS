@@ -21,14 +21,6 @@ class CandidateController extends GetxController {
 
   RxList<CandidateListModelValues> getcandiateList = RxList();
 
-  void updatecandiadateList(List<CandidateListModelValues> candi) {
-    if (getcandiateList.isNotEmpty) {
-      getcandiateList.clear();
-    }
-    getcandiateList.addAll(candi);
-  }
-
-
   RxList<DataChangeCandidateModelValues> getcandiateeditList = RxList();
 
   // void updatecandiadateeditList(List<DataChangeCandidateModelValues> candiedit) {
@@ -38,15 +30,11 @@ class CandidateController extends GetxController {
   //   getcandiateeditList.addAll(candiedit);
   // }
 
-
   RxList<DataChangeCandidateModelValues> updateeditData =
       <DataChangeCandidateModelValues>[].obs;
-
 
   RxBool isSaveeLoading = RxBool(false);
   void saveeLoading(bool l) {
     isSaveeLoading.value = l;
   }
-
-
 }

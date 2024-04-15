@@ -6,9 +6,9 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/candidate_interview_list/api/candidate_api.dart';
 import 'package:m_skool_flutter/vms/candidate_interview_list/controller/candidate_controller.dart';
-import 'package:m_skool_flutter/vms/candidate_interview_list/screen/candidate_edit.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+
 class CandidateHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
@@ -27,9 +27,11 @@ class _CandidateHomeState extends State<CandidateHome> {
   @override
   void initState() {
     CandidateListApi.instance.getCandidateListApi(
-        base: baseUrlFromInsCode('recruitement', widget.mskoolController),
-        userId: widget.loginSuccessModel.userId!,
-        controller: controller, miId: widget.loginSuccessModel.mIID!, );
+      base: baseUrlFromInsCode('recruitement', widget.mskoolController),
+      userId: widget.loginSuccessModel.userId!,
+      controller: controller,
+      miId: widget.loginSuccessModel.mIID!,
+    );
     super.initState();
   }
 
@@ -37,8 +39,8 @@ class _CandidateHomeState extends State<CandidateHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: 'Candidate Interview List')
-            .getAppBar(),
+        appBar:
+            const CustomAppBar(title: 'Candidate Interview List').getAppBar(),
         body: Obx(() {
           return (controller.isLoadingRequest.value)
               ? const AnimatedProgressWidget(
@@ -90,8 +92,7 @@ class _CandidateHomeState extends State<CandidateHome> {
                                               .copyWith(
                                                   fontWeight: FontWeight.w600)),
                                       TextSpan(
-                                          text:
-                                              '${value.hrcDFullName}',
+                                          text: '${value.hrcDFullName}',
                                           style: Get.textTheme.titleSmall)
                                     ])),
                                     Text.rich(TextSpan(children: [
@@ -111,10 +112,11 @@ class _CandidateHomeState extends State<CandidateHome> {
                                               .copyWith(
                                                   fontWeight: FontWeight.w600)),
                                       TextSpan(
-                                          text: '${value.hrcisCInterviewRounds}',
+                                          text:
+                                              '${value.hrcisCInterviewRounds}',
                                           style: Get.textTheme.titleSmall)
                                     ])),
-                                     Text.rich(TextSpan(children: [
+                                    Text.rich(TextSpan(children: [
                                       TextSpan(
                                           text: 'Status : ',
                                           style: Get.textTheme.titleSmall!
@@ -127,7 +129,6 @@ class _CandidateHomeState extends State<CandidateHome> {
                                   ],
                                 ),
                               ),
-                              
                             ],
                           ),
                         );

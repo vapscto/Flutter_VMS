@@ -11,6 +11,7 @@ import 'package:m_skool_flutter/vms/hr_modules/interview_report/controller/int_r
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class InterviewReportHome extends StatefulWidget {
   final MskoolController mskoolController;
@@ -48,6 +49,13 @@ class _InterviewReportHomeState extends State<InterviewReportHome> {
   final _endDate = TextEditingController();
   DateTime? fromDate;
   DateTime? toDate;
+  @override
+  void dispose() {
+    controller.completedList.clear();
+    controller.inProgressList.clear();
+    controller.upComingList.clear();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -177,8 +185,6 @@ class _InterviewReportHomeState extends State<InterviewReportHome> {
                         if (toDate != null) {
                           _endDate.text =
                               "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
-
-                          await _onLoad();
                         }
                       } else {
                         Fluttertoast.showToast(msg: "Please Select Start Date");
@@ -202,8 +208,6 @@ class _InterviewReportHomeState extends State<InterviewReportHome> {
                             if (toDate != null) {
                               _endDate.text =
                                   "${numberList[toDate!.day]}:${numberList[toDate!.month]}:${toDate!.year}";
-
-                              await _onLoad();
                             }
                           } else {
                             Fluttertoast.showToast(
@@ -284,9 +288,24 @@ class _InterviewReportHomeState extends State<InterviewReportHome> {
                   onChanged: (value) {
                     setState(() {
                       selectedValue = value;
-                      _onLoad();
+                      // _onLoad();
                     });
                   })),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Align(
+                alignment: Alignment.bottomCenter,
+                child: MSkollBtn(
+                    title: "Report",
+                    onPress: () {
+                      if (_startDate.text.isEmpty && _endDate.text.isEmpty) {
+                        Fluttertoast.showToast(msg: "Select Date");
+                        return;
+                      } else {
+                        _onLoad();
+                      }
+                    })),
+          ),
           Obx(() {
             return controller.isLoading.value
                 ? AnimatedProgressWidget(
@@ -297,98 +316,12 @@ class _InterviewReportHomeState extends State<InterviewReportHome> {
                 : Expanded(
                     child: ListView(
                     children: [
-                      (selectedValue == "UpComming" &&
-                              controller.upComingList.isNotEmpty)
-                          ? SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              padding: const EdgeInsets.all(6),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: DataTable(
-                                  headingRowColor: MaterialStatePropertyAll(
-                                      Theme.of(context).primaryColor),
-                                  dataTextStyle: const TextStyle(
-                                      fontSize: 14,
-                                      color: Color.fromRGBO(0, 0, 0, 0.95),
-                                      fontWeight: FontWeight.w400),
-                                  dataRowHeight:
-                                      MediaQuery.of(context).size.height * 0.07,
-                                  headingRowHeight: 50,
-                                  // horizontalMargin: 10,
-                                  dividerThickness: 1,
-                                  headingTextStyle: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w700),
-                                  border: TableBorder.all(
-                                      borderRadius: BorderRadius.circular(10),
-                                      width: 0.5),
-                                  columns: const [
-                                    DataColumn(
-                                      label: Text('S.No'),
-                                    ),
-                                    DataColumn(
-                                      label: Text("Candidate Name"),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Interview Round'),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Interviewer Name'),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Interview Date'),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Interview Venue'),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Notify By Email'),
-                                    ),
-                                    DataColumn(
-                                      label: Text('Notify By SMS'),
-                                    ),
-                                  ],
-                                  rows: [
-                                    ...List.generate(
-                                        controller.upComingList.length,
-                                        (index) {
-                                      var i = index + 1;
-                                      var data = controller.upComingList
-                                          .elementAt(index);
-                                      return DataRow(cells: [
-                                        DataCell(Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: Text(
-                                            i.toString(),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        )),
-                                        DataCell(Text(
-                                          data.hrcDFirstName ?? "",
-                                        )),
-                                        DataCell(Text(
-                                            data.hrcisCInterviewRounds ?? "")),
-                                        DataCell(Text(
-                                            data.hrmEEmployeeFirstName ?? "")),
-                                        DataCell(Text(dateFormat1(
-                                            DateTime.parse(
-                                                data.hrcisCInterviewDateTime ??
-                                                    "")))),
-                                        DataCell(Text(
-                                            data.hrcisCInterviewVenue ?? "")),
-                                        DataCell(Text(
-                                            data.hrcisCNotifyEmail.toString())),
-                                        DataCell(Text(
-                                            data.hrcisCNotifySMS.toString())),
-                                      ]);
-                                    }),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : (selectedValue == "InProgress" &&
-                                  controller.inProgressList.isNotEmpty)
+                      (controller.upComingList.isEmpty &&
+                              controller.completedList.isEmpty &&
+                              controller.inProgressList.isEmpty)
+                          ? const SizedBox()
+                          : (selectedValue == "UpComming" &&
+                                  controller.upComingList.isNotEmpty)
                               ? SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   padding: const EdgeInsets.all(6),
@@ -434,13 +367,19 @@ class _InterviewReportHomeState extends State<InterviewReportHome> {
                                         DataColumn(
                                           label: Text('Interview Venue'),
                                         ),
+                                        DataColumn(
+                                          label: Text('Notify By Email'),
+                                        ),
+                                        DataColumn(
+                                          label: Text('Notify By SMS'),
+                                        ),
                                       ],
                                       rows: [
                                         ...List.generate(
-                                            controller.inProgressList.length,
+                                            controller.upComingList.length,
                                             (index) {
                                           var i = index + 1;
-                                          var data = controller.inProgressList
+                                          var data = controller.upComingList
                                               .elementAt(index);
                                           return DataRow(cells: [
                                             DataCell(Padding(
@@ -452,14 +391,13 @@ class _InterviewReportHomeState extends State<InterviewReportHome> {
                                               ),
                                             )),
                                             DataCell(Text(
-                                              data.hrcDFirstName ?? "",
+                                              "${data.hrcDFirstName ?? ""} ${data.hrcDMiddleName ?? ""} ${data.hrcDLastName ?? ""}",
                                             )),
                                             DataCell(Text(
                                                 data.hrcisCInterviewRounds ??
                                                     "")),
                                             DataCell(Text(
-                                                data.hrmEEmployeeFirstName ??
-                                                    "")),
+                                                '${data.hrmEEmployeeFirstName ?? ""} ${data.hrmEEmployeeMiddleName ?? ""} ${data.hrmEEmployeeLastName ?? ""}')),
                                             DataCell(Text(dateFormat1(
                                                 DateTime.parse(
                                                     data.hrcisCInterviewDateTime ??
@@ -467,108 +405,222 @@ class _InterviewReportHomeState extends State<InterviewReportHome> {
                                             DataCell(Text(
                                                 data.hrcisCInterviewVenue ??
                                                     "")),
+                                            DataCell(Text(data.hrcisCNotifyEmail
+                                                .toString())),
+                                            DataCell(Text(data.hrcisCNotifySMS
+                                                .toString())),
                                           ]);
                                         }),
                                       ],
                                     ),
                                   ),
                                 )
-                              : SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  padding: const EdgeInsets.all(6),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: DataTable(
-                                      headingRowColor: MaterialStatePropertyAll(
-                                          Theme.of(context).primaryColor),
-                                      dataTextStyle: const TextStyle(
-                                          fontSize: 14,
-                                          color: Color.fromRGBO(0, 0, 0, 0.95),
-                                          fontWeight: FontWeight.w400),
-                                      dataRowHeight:
-                                          MediaQuery.of(context).size.height *
+                              : (selectedValue == "InProgress" &&
+                                      controller.inProgressList.isNotEmpty)
+                                  ? SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      padding: const EdgeInsets.all(6),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: DataTable(
+                                          headingRowColor:
+                                              MaterialStatePropertyAll(
+                                                  Theme.of(context)
+                                                      .primaryColor),
+                                          dataTextStyle: const TextStyle(
+                                              fontSize: 14,
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.95),
+                                              fontWeight: FontWeight.w400),
+                                          dataRowHeight: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
                                               0.07,
-                                      headingRowHeight: 50,
-                                      // horizontalMargin: 10,
-                                      dividerThickness: 1,
-                                      headingTextStyle: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w700),
-                                      border: TableBorder.all(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          width: 0.5),
-                                      columns: const [
-                                        DataColumn(
-                                          label: Text('S.No'),
+                                          headingRowHeight: 50,
+                                          // horizontalMargin: 10,
+                                          dividerThickness: 1,
+                                          headingTextStyle: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w700),
+                                          border: TableBorder.all(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              width: 0.5),
+                                          columns: const [
+                                            DataColumn(
+                                              label: Text('S.No'),
+                                            ),
+                                            DataColumn(
+                                              label: Text("Candidate Name"),
+                                            ),
+                                            DataColumn(
+                                              label: Text('Interview Round'),
+                                            ),
+                                            DataColumn(
+                                              label: Text('Interviewer Name'),
+                                            ),
+                                            DataColumn(
+                                              label: Text('Interview Date'),
+                                            ),
+                                            DataColumn(
+                                              label: Text('Interview Venue'),
+                                            ),
+                                          ],
+                                          rows: [
+                                            ...List.generate(
+                                                controller.inProgressList
+                                                    .length, (index) {
+                                              var i = index + 1;
+                                              var data = controller
+                                                  .inProgressList
+                                                  .elementAt(index);
+                                              return DataRow(cells: [
+                                                DataCell(Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(4.0),
+                                                  child: Text(
+                                                    i.toString(),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                )),
+                                                DataCell(Text(
+                                                    "${data.hrcDFirstName ?? ""} ${data.hrcDMiddleName ?? ""} ${data.hrcDLastName ?? ""}")),
+                                                DataCell(Text(
+                                                    data.hrcisCInterviewRounds ??
+                                                        "")),
+                                                DataCell(Text(
+                                                    '${data.hrmEEmployeeFirstName ?? ""} ${data.hrmEEmployeeMiddleName ?? ""} ${data.hrmEEmployeeLastName ?? ""}')),
+                                                DataCell(Text(dateFormat1(
+                                                    DateTime.parse(
+                                                        data.hrcisCInterviewDateTime ??
+                                                            "")))),
+                                                DataCell(Text(
+                                                    data.hrcisCInterviewVenue ??
+                                                        "")),
+                                              ]);
+                                            }),
+                                          ],
                                         ),
-                                        DataColumn(
-                                          label: Text("Candidate Name"),
+                                      ),
+                                    )
+                                  : SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      padding: const EdgeInsets.all(6),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: DataTable(
+                                          headingRowColor:
+                                              MaterialStatePropertyAll(
+                                                  Theme.of(context)
+                                                      .primaryColor),
+                                          dataTextStyle: const TextStyle(
+                                              fontSize: 14,
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.95),
+                                              fontWeight: FontWeight.w400),
+                                          dataRowHeight: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.1,
+                                          headingRowHeight: 50,
+                                          horizontalMargin: 5,
+                                          dividerThickness: 1,
+                                          headingTextStyle: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w700),
+                                          border: TableBorder.all(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              width: 0.5),
+                                          columns: const [
+                                            DataColumn(
+                                              label: Text('S.No'),
+                                            ),
+                                            DataColumn(
+                                              label: Text("Candidate Name"),
+                                            ),
+                                            DataColumn(
+                                              label: Text('Interview Round'),
+                                            ),
+                                            DataColumn(
+                                              label: Text('Interviewer Name'),
+                                            ),
+                                            DataColumn(
+                                              label: Text('Interview Date'),
+                                            ),
+                                            DataColumn(
+                                              label: Text('Interview Venue'),
+                                            ),
+                                            DataColumn(
+                                              label: Text('Interview Feedback'),
+                                            ),
+                                            DataColumn(
+                                              label: Text('Candidate Status'),
+                                            ),
+                                          ],
+                                          rows: [
+                                            ...List.generate(
+                                                controller.completedList.length,
+                                                (index) {
+                                              var i = index + 1;
+                                              var data = controller
+                                                  .completedList
+                                                  .elementAt(index);
+                                              return DataRow(cells: [
+                                                DataCell(Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(4.0),
+                                                  child: Text(
+                                                    i.toString(),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                )),
+                                                DataCell(SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.3,
+                                                  child: Text(
+                                                      "${data.hrcDFirstName ?? ""} ${data.hrcDMiddleName ?? ""} ${data.hrcDLastName ?? ""}"),
+                                                )),
+                                                DataCell(Text(
+                                                    data.hrcisCInterviewRounds ??
+                                                        "")),
+                                                DataCell(SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.3,
+                                                  child: Text(
+                                                      '${data.hrmEEmployeeFirstName ?? ""} ${data.hrmEEmployeeMiddleName ?? ""} ${data.hrmEEmployeeLastName ?? ""}'),
+                                                )),
+                                                DataCell(Text(dateFormat1(
+                                                    DateTime.parse(
+                                                        data.hrcisCInterviewDateTime ??
+                                                            "")))),
+                                                DataCell(Text(
+                                                    data.hrcisCInterviewVenue ??
+                                                        "")),
+                                                DataCell(SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.6,
+                                                  child: Text(data
+                                                      .hrciSInterviewFeedBack
+                                                      .toString()),
+                                                )),
+                                                DataCell(Text(data
+                                                    .hrciSCandidateStatus
+                                                    .toString())),
+                                              ]);
+                                            }),
+                                          ],
                                         ),
-                                        DataColumn(
-                                          label: Text('Interview Round'),
-                                        ),
-                                        DataColumn(
-                                          label: Text('Interviewer Name'),
-                                        ),
-                                        DataColumn(
-                                          label: Text('Interview Date'),
-                                        ),
-                                        DataColumn(
-                                          label: Text('Interview Venue'),
-                                        ),
-                                        DataColumn(
-                                          label: Text('Interview Feedback'),
-                                        ),
-                                        DataColumn(
-                                          label: Text('Candidate Status'),
-                                        ),
-                                      ],
-                                      rows: [
-                                        ...List.generate(
-                                            controller.completedList.length,
-                                            (index) {
-                                          var i = index + 1;
-                                          var data = controller.completedList
-                                              .elementAt(index);
-                                          return DataRow(cells: [
-                                            DataCell(Padding(
-                                              padding:
-                                                  const EdgeInsets.all(4.0),
-                                              child: Text(
-                                                i.toString(),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            )),
-                                            DataCell(Text(
-                                              data.hrcDFirstName ?? "",
-                                            )),
-                                            DataCell(Text(
-                                                data.hrcisCInterviewRounds ??
-                                                    "")),
-                                            DataCell(Text(
-                                                data.hrmEEmployeeFirstName ??
-                                                    "")),
-                                            DataCell(Text(dateFormat1(
-                                                DateTime.parse(
-                                                    data.hrcisCInterviewDateTime ??
-                                                        "")))),
-                                            DataCell(Text(
-                                                data.hrcisCInterviewVenue ??
-                                                    "")),
-                                            DataCell(Text(data
-                                                .hrciSInterviewFeedBack
-                                                .toString())),
-                                            DataCell(Text(data
-                                                .hrciSCandidateStatus
-                                                .toString())),
-                                          ]);
-                                        }),
-                                      ],
-                                    ),
-                                  ),
-                                )
+                                      ),
+                                    )
                     ],
                   ));
           }),

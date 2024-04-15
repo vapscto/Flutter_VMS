@@ -174,7 +174,8 @@ String getDashboardIcon(String pageName) {
   }
 
   if (pageName.toLowerCase().contains("exam") ||
-      pageName.toLowerCase().contains('tada')) {
+      pageName.toLowerCase().contains('tada') ||
+      pageName.toLowerCase().contains("candidate list")) {
     return "${icon}exam.png";
   }
   if (pageName.toLowerCase().contains("certificate") ||
@@ -221,7 +222,8 @@ String getDashboardIcon(String pageName) {
   if (pageName.toLowerCase().contains("birth")) {
     return icon += "staff_bday.png";
   }
-  if (pageName.toLowerCase().contains("interaction")) {
+  if (pageName.toLowerCase().contains("interaction") ||
+      pageName.toLowerCase().contains("add to hrms")) {
     return icon += "staff_interaction.png";
   }
   if (pageName.toLowerCase().contains("leave")) {
