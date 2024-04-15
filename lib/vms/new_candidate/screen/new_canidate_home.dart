@@ -1,0 +1,155 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/new_candidate/api/new_candidate_api.dart';
+import 'package:m_skool_flutter/vms/new_candidate/controller/new_candidate_controller.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
+import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+
+class NewCandidateHome extends StatefulWidget {
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  const NewCandidateHome(
+      {super.key,
+      required this.loginSuccessModel,
+      required this.mskoolController});
+  @override
+  // ignore: library_private_types_in_public_api
+  _NewCandidateHomeState createState() => _NewCandidateHomeState();
+}
+
+class _NewCandidateHomeState extends State<NewCandidateHome> {
+  NewCandidateController controller = Get.put(NewCandidateController());
+
+  @override
+  void initState() {
+    NewCandidateListApi.instance.getNewCandidateListApi(
+      base: baseUrlFromInsCode('recruitement', widget.mskoolController),
+      controller: controller,
+      miId: widget.loginSuccessModel.mIID!,
+    );
+    super.initState();
+  }
+
+  int bgColor = -1;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar:
+            const CustomAppBar(title: 'New Candidate List').getAppBar(),
+        body: Obx(() {
+          return (controller.isLoadingRequest.value)
+              ? const AnimatedProgressWidget(
+                  animationPath: "assets/json/default.json",
+                  title: "Loading",
+                  desc: "We are under process to get your details from server.")
+              : (controller.getnewcandiateList.isEmpty)
+                  ? const AnimatedProgressWidget(
+                      animationPath: 'assets/json/nodata.json',
+                      title: 'Data is Loading',
+                      desc: "Interview candidate list is not available  ",
+                      animatorHeight: 250,
+                    )
+                  : ListView.separated(
+                      padding: const EdgeInsetsDirectional.symmetric(
+                          vertical: 16, horizontal: 16),
+                      itemBuilder: (context, index) {
+                        bgColor += 1;
+                        if (bgColor % 6 == 0) {
+                          bgColor = 0;
+                        }
+                        var value = controller.getnewcandiateList.elementAt(index);
+                        return Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 8),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              color: lighterColor.elementAt(bgColor),
+                              boxShadow: const [
+                                BoxShadow(
+                                    offset: Offset(1, 2.1),
+                                    blurRadius: 0,
+                                    spreadRadius: 0,
+                                    color: Colors.black12)
+                              ]),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text.rich(TextSpan(children: [
+                                      TextSpan(
+                                          text: 'Candidate: ',
+                                          style: Get.textTheme.titleSmall!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w600)),
+                                      TextSpan(
+                                          text: '${value.hrcDFullName}',
+                                          style: Get.textTheme.titleSmall)
+                                    ])),
+                                    Text.rich(TextSpan(children: [
+                                      TextSpan(
+                                        text: 'Job Title : ',
+                                          style: Get.textTheme.titleSmall!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w600)),
+                                      TextSpan(
+                                          text: '${value.hrmJJobTiTle}',
+                                          style: Get.textTheme.titleSmall)
+                                    ])),
+                                    Text.rich(TextSpan(children: [
+                                      TextSpan(
+                                          text: 'Experience : ',
+                                          style: Get.textTheme.titleSmall!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w600)),
+                                      TextSpan(
+                                          text:
+                                              '${value.hrcDExpFrom}',
+                                          style: Get.textTheme.titleSmall)
+                                    ])),
+                                    Text.rich(TextSpan(children: [
+                                      TextSpan(
+                                     text: 'Application Date : ',
+                                          style: Get.textTheme.titleSmall!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w600)),
+                                      TextSpan(
+                                          text: '${value.applydate}',
+                                          style: Get.textTheme.titleSmall)
+                                    ])),
+                                     Text.rich(TextSpan(children: [
+                                      TextSpan(
+                                          text: 'Status : ',
+                                          style: Get.textTheme.titleSmall!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w600)),
+                                      TextSpan(
+                                          text: '${value.hrcDRecruitmentStatus}',
+                                          style: Get.textTheme.titleSmall)
+                                    ])),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(height: 10);
+                      },
+                      itemCount: controller.getnewcandiateList.length);
+        }));
+  }
+
+  String dateFormat(DateTime dt) {
+    return '${dt.day}-${dt.month}-${dt.year}';
+  }
+}

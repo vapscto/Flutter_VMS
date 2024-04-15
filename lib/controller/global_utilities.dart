@@ -38,6 +38,7 @@ import 'package:m_skool_flutter/vms/hr_modules/job_posting/job_posting_home.dart
 import 'package:m_skool_flutter/vms/interviewer_feedback/screens/interview_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
+import 'package:m_skool_flutter/vms/new_candidate/screen/new_canidate_home.dart';
 import 'package:m_skool_flutter/vms/noc_approval/screens/noc_approval_home.dart';
 import 'package:m_skool_flutter/vms/online_leave/screen/apply_leave_home.dart';
 import 'package:m_skool_flutter/vms/petty_indent_approval/screen/pc_indent_approval_home.dart';
@@ -732,6 +733,17 @@ void openMappedPages(
     }));
     return;
   }
+ 
+    if (pageName == "New Candidate") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return NewCandidateHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+    return;
+  }
+
   if (pageName == "Interview Report") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return InterviewReportHome(
