@@ -19,11 +19,11 @@ class NewCandidateListApi {
     try {
       final Response response =
           await ins.post(api2, options: Options(headers: getSession()), data: {
-        "MI_Id": 16,
+        "MI_Id": miId,
       });
       logger.w(api2);
       logger.w({
-        "MI_Id": 16,
+        "MI_Id": miId,
       });
       logger.i(response.data['vmsmrfList']);
       NewCandidateListModel newCandidateListModel = NewCandidateListModel.fromJson(
