@@ -15,7 +15,7 @@ class NewCandidateListApi {
     required NewCandidateController controller,
   }) async {
     final Dio ins = getGlobalDio();
-    String api2 = base + URLS.candidate;
+    String api2 = base + URLS.newcandidate;
     try {
       final Response response =
           await ins.post(api2, options: Options(headers: getSession()), data: {
@@ -25,9 +25,8 @@ class NewCandidateListApi {
       logger.w({
         "MI_Id": miId,
       });
-      logger.i(response.data['vmsmrfList']);
-      NewCandidateListModel newCandidateListModel = NewCandidateListModel.fromJson(
-          response.data['vmsmrfList']);
+      NewCandidateListModel newCandidateListModel =
+          NewCandidateListModel.fromJson(response.data['vmsmrfList']);
 
       controller.getnewcandiateList.clear();
       controller.getnewcandiateList.addAll(newCandidateListModel.values!);

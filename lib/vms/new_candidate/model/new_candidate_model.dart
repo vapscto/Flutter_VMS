@@ -15,7 +15,7 @@ class NewCandidateListModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['\$type'] = type;
     if (values != null) {
       data['\$values'] = values!.map((v) => v.toJson()).toList();
@@ -25,63 +25,63 @@ class NewCandidateListModel {
 }
 
 class NewCandidateListModelValues {
-  int? hrcDId;
-  int? mIId;
-  int? hrmpTId;
-  int? hrmCId;
-  int? hrmEId;
-  int? hrcDMRFNO;
+  dynamic hrcDId;
+  dynamic mIId;
+  dynamic hrmpTId;
+  dynamic hrmCId;
+  dynamic hrmEId;
+  dynamic hrcDMRFNO;
   String? hrcDFullName;
   String? hrcDFirstName;
   String? hrcDMiddleName;
   String? hrcDLastName;
-  int? hrmJId;
+  dynamic hrmJId;
   String? hrcDDOB;
-  int? ivrmmGId;
-  int? hrcDMobileNo;
+  dynamic ivrmmGId;
+  dynamic hrcDMobileNo;
   double? hrcDExpFrom;
-  int? hrcDExpTo;
-  int? hrcDLastCTC;
-  int? hrcDExpectedCTC;
+  dynamic hrcDExpTo;
+  dynamic hrcDLastCTC;
+  dynamic hrcDExpectedCTC;
   String? hrcDAppDate;
   String? hrcDInterviewDate;
   String? hrcDExitDate;
-  int? hrcDNoticePeriod;
+  dynamic hrcDNoticePeriod;
   String? hrcDRecruitmentStatus;
   bool? hrcDActiveFlg;
-  int? hrcDCreatedBy;
-  int? hrcDUpdatedBy;
+  dynamic hrcDCreatedBy;
+  dynamic hrcDUpdatedBy;
   String? applydate;
-  int? hrmEID;
+  dynamic hrmEID;
   bool? candidateflage;
   String? hrmJJobTiTle;
-  int? hrmDId;
-  int? hrmdeSId;
-  int? hrmeDId;
-  int? hrmedTId;
+  dynamic hrmDId;
+  dynamic hrmdeSId;
+  dynamic hrmeDId;
+  dynamic hrmedTId;
   bool? hrmeDActiveFlag;
-  int? hrmeDOrder;
-  int? hrceDId;
-  int? hrceDAmount;
+  dynamic hrmeDOrder;
+  dynamic hrceDId;
+  dynamic hrceDAmount;
   bool? hrceDActiveFlag;
   String? hrcisCInterviewDateTime;
-  int? casteCategoryId;
-  int? casteId;
-  int? religionId;
-  int? userId;
-  int? hrcDNationalityId;
-  int? hrcDReligion;
-  int? hrcDMaritalStatus;
-  int? hrcDCasteId;
+  dynamic casteCategoryId;
+  dynamic casteId;
+  dynamic religionId;
+  dynamic userId;
+  dynamic hrcDNationalityId;
+  dynamic hrcDReligion;
+  dynamic hrcDMaritalStatus;
+  dynamic hrcDCasteId;
   bool? welcomenotice;
   bool? thanksnotice;
-  int? hrcDAddLocalPIN;
-  int? hrcDAddPermanentPIN;
+  dynamic hrcDAddLocalPIN;
+  dynamic hrcDAddPermanentPIN;
   bool? hrcDDocSubmitFlag;
-  int? hrcAAnnualCTC;
-  int? hrcAMonthlyCTC;
-  int? hrcAId;
-  int? hrmPId;
+  dynamic hrcAAnnualCTC;
+  dynamic hrcAMonthlyCTC;
+  dynamic hrcAId;
+  dynamic hrmPId;
 
   NewCandidateListModelValues(
       {this.hrcDId,
@@ -203,7 +203,7 @@ class NewCandidateListModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['hrcD_Id'] = hrcDId;
     data['mI_Id'] = mIId;
     data['hrmpT_Id'] = hrmpTId;

@@ -26,20 +26,25 @@ class _NewCandidateHomeState extends State<NewCandidateHome> {
 
   @override
   void initState() {
-    NewCandidateListApi.instance.getNewCandidateListApi(
+    _onLoad();
+    super.initState();
+  }
+
+  _onLoad() async {
+    controller.updateIsLoadingRequest(true);
+    await NewCandidateListApi.instance.getNewCandidateListApi(
       base: baseUrlFromInsCode('recruitement', widget.mskoolController),
       controller: controller,
       miId: widget.loginSuccessModel.mIID!,
     );
-    super.initState();
+    controller.updateIsLoadingRequest(false);
   }
 
   int bgColor = -1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar:
-            const CustomAppBar(title: 'New Candidate List').getAppBar(),
+        appBar: const CustomAppBar(title: 'New Candidate List').getAppBar(),
         body: Obx(() {
           return (controller.isLoadingRequest.value)
               ? const AnimatedProgressWidget(
@@ -61,7 +66,8 @@ class _NewCandidateHomeState extends State<NewCandidateHome> {
                         if (bgColor % 6 == 0) {
                           bgColor = 0;
                         }
-                        var value = controller.getnewcandiateList.elementAt(index);
+                        var value =
+                            controller.getnewcandiateList.elementAt(index);
                         return Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10.0, vertical: 8),
@@ -96,7 +102,7 @@ class _NewCandidateHomeState extends State<NewCandidateHome> {
                                     ])),
                                     Text.rich(TextSpan(children: [
                                       TextSpan(
-                                        text: 'Job Title : ',
+                                          text: 'Job Title : ',
                                           style: Get.textTheme.titleSmall!
                                               .copyWith(
                                                   fontWeight: FontWeight.w600)),
@@ -111,13 +117,12 @@ class _NewCandidateHomeState extends State<NewCandidateHome> {
                                               .copyWith(
                                                   fontWeight: FontWeight.w600)),
                                       TextSpan(
-                                          text:
-                                              '${value.hrcDExpFrom}',
+                                          text: '${value.hrcDExpFrom}',
                                           style: Get.textTheme.titleSmall)
                                     ])),
                                     Text.rich(TextSpan(children: [
                                       TextSpan(
-                                     text: 'Application Date : ',
+                                          text: 'Application Date : ',
                                           style: Get.textTheme.titleSmall!
                                               .copyWith(
                                                   fontWeight: FontWeight.w600)),
@@ -125,14 +130,15 @@ class _NewCandidateHomeState extends State<NewCandidateHome> {
                                           text: '${value.applydate}',
                                           style: Get.textTheme.titleSmall)
                                     ])),
-                                     Text.rich(TextSpan(children: [
+                                    Text.rich(TextSpan(children: [
                                       TextSpan(
                                           text: 'Status : ',
                                           style: Get.textTheme.titleSmall!
                                               .copyWith(
                                                   fontWeight: FontWeight.w600)),
                                       TextSpan(
-                                          text: '${value.hrcDRecruitmentStatus}',
+                                          text:
+                                              '${value.hrcDRecruitmentStatus}',
                                           style: Get.textTheme.titleSmall)
                                     ])),
                                   ],
