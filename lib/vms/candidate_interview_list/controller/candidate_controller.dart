@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/candidate_interview_list/model/candidate_model.dart';
-import 'package:m_skool_flutter/vms/candidate_interview_list/model/edit_candidate_model.dart';
 
 class CandidateController extends GetxController {
   RxBool isFromDataRequest = RxBool(false);
@@ -21,20 +20,11 @@ class CandidateController extends GetxController {
 
   RxList<CandidateListModelValues> getcandiateList = RxList();
 
-  RxList<DataChangeCandidateModelValues> getcandiateeditList = RxList();
-
-  // void updatecandiadateeditList(List<DataChangeCandidateModelValues> candiedit) {
-  //   if (getcandiateeditList.isNotEmpty) {
-  //     getcandiateeditList.clear();
-  //   }
-  //   getcandiateeditList.addAll(candiedit);
-  // }
-
-  RxList<DataChangeCandidateModelValues> updateeditData =
-      <DataChangeCandidateModelValues>[].obs;
-
-  RxBool isSaveeLoading = RxBool(false);
-  void saveeLoading(bool l) {
-    isSaveeLoading.value = l;
+  void updatecandiadateeditList(List<CandidateListModelValues> candiedit) {
+    if (getcandiateList.isNotEmpty) {
+      getcandiateList.clear();
+    }
+    getcandiateList.addAll(candiedit);
   }
+
 }
