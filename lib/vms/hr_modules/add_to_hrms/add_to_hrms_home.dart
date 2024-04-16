@@ -199,6 +199,96 @@ class _AddToHrmsHomeState extends State<AddToHrmsHome> {
 
                                       _suggestionsBoxController.close();
                                       candidateselected = suggestion;
+                                      await candidateList(
+                                              base: baseUrlFromInsCode(
+                                                  "recruitement",
+                                                  widget.mskoolController),
+                                              controller: controller,
+                                              hrcdId: suggestion.hrcDId)
+                                          .then((value) {
+                                        setState(() {
+                                          for (var i
+                                              in controller.companyList) {
+                                            if (i.mIId ==
+                                                controller.candidateDetailsList
+                                                    .last.mIId) {
+                                              companynameController.text =
+                                                  i.mIName!;
+                                              selectedCompany = i;
+                                            }
+                                          }
+                                          for (var i
+                                              in controller.religionlist) {
+                                            if (i.ivrmmRId ==
+                                                controller.candidateDetailsList
+                                                    .last.hrcDReligion) {
+                                              religionController.text =
+                                                  i.ivrmmRName.toString();
+                                              religionSelected = i;
+                                            }
+                                          }
+                                          for (var i in controller.castList) {
+                                            if (i.imCId ==
+                                                controller.candidateDetailsList
+                                                    .last.hrcDCasteId) {
+                                              casteController.text =
+                                                  i.imCCasteName.toString();
+                                              selectedCast = i;
+                                            }
+                                            for (var i
+                                                in controller.maritalList) {
+                                              if (i.ivrmmmSId ==
+                                                  controller
+                                                      .candidateDetailsList
+                                                      .last
+                                                      .hrcDMaritalStatus) {
+                                                maritalStatusController.text = i
+                                                    .ivrmmmSMaritalStatus
+                                                    .toString();
+                                                selectedMarital = i;
+                                              }
+                                            }
+                                            if (controller.candidateDetailsList
+                                                        .last.department !=
+                                                    null &&
+                                                controller.candidateDetailsList
+                                                        .last.department !=
+                                                    "") {
+                                              for (var i
+                                                  in controller.depList) {
+                                                if (i.hrmDDepartmentName ==
+                                                    controller
+                                                        .candidateDetailsList
+                                                        .last
+                                                        .department!) {
+                                                  departmentController.text =
+                                                      i.hrmDDepartmentName!;
+                                                  selectedDep = i;
+                                                }
+                                              }
+                                            }
+                                            if (controller.candidateDetailsList
+                                                        .last.designation !=
+                                                    null &&
+                                                controller.candidateDetailsList
+                                                        .last.designation !=
+                                                    "") {
+                                              for (var i
+                                                  in controller.degList) {
+                                                if (i.hrmdeSDesignationName ==
+                                                    controller
+                                                        .candidateDetailsList
+                                                        .last
+                                                        .designation!) {
+                                                  designationController.text =
+                                                      i.hrmdeSDesignationName!;
+                                                  selectedDeg = i;
+                                                }
+                                              }
+                                            }
+                                          }
+                                        });
+                                      });
                                       setState(() {});
                                     },
                                     title: Text(
@@ -1071,57 +1161,127 @@ class _AddToHrmsHomeState extends State<AddToHrmsHome> {
                                       if (_key.currentState!.validate()) {
                                         newList.clear();
                                         newList.addAll({
-                                          "HRCD_Id": candidateselected!.hrcDId,
-                                          "MI_Id": selectedCompany!.mIId,
-                                          "HRMPT_Id": empSelectedType!.hrmpTId,
+                                          "HRCD_Id": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDId,
+                                          "MI_Id": controller
+                                              .candidateDetailsList.first.mIId,
+                                          "HRMPT_Id": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrmpTId,
                                           "HRMC_Id": selectedCast!.hrmCId,
                                           "HRME_Id": candidateselected!.hrmEID,
                                           "HRCD_MRFNO": selectedDep!.hrcDMRFNO,
                                           "HRCD_FullName":
                                               candidateselected!.hrcDFullName,
-                                          "HRCD_FirstName":
-                                              candidateselected!.hrcDFirstName,
-                                          "HRCD_MiddleName":
-                                              candidateselected!.hrcDMiddleName,
-                                          "HRCD_LastName":
-                                              candidateselected!.hrcDLastName,
-                                          "HRMJ_Id": candidateselected!.hrmJId,
-                                          "HRCD_Skills": "",
-                                          "HRCD_DOB":
-                                              candidateselected!.hrcDDOB,
-                                          "IVRMMG_Id":
-                                              candidateselected!.ivrmmGId,
-                                          "HRCD_MobileNo":
-                                              candidateselected!.hrcDMobileNo,
-                                          "HRCD_EmailId":
-                                              candidateselected!.hrcDEmailId,
-                                          "HRCD_ExpFrom":
-                                              candidateselected!.hrcDExpFrom,
-                                          "HRCD_ExpTo":
-                                              candidateselected!.hrcDExpTo,
-                                          "HRCD_CurrentCompany": "",
-                                          "HRCD_ResumeSource": "",
-                                          "HRCD_JobPortalName": "",
-                                          "HRCD_RefCode": '',
-                                          "HRCD_LastCTC":
-                                              candidateselected!.hrcDLastCTC,
-                                          "HRCD_ExpectedCTC": candidateselected!
+                                          "HRCD_FirstName": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDFirstName,
+                                          "HRCD_MiddleName": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDMiddleName,
+                                          "HRCD_LastName": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDLastName,
+                                          "HRMJ_Id": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrmJId,
+                                          "HRCD_Skills": controller
+                                                  .candidateDetailsList
+                                                  .first
+                                                  .hrcDSkills ??
+                                              "",
+                                          "HRCD_DOB": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDDOB,
+                                          "IVRMMG_Id": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .ivrmmGId,
+                                          "HRCD_MobileNo": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDMobileNo,
+                                          "HRCD_EmailId": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDEmailId,
+                                          "HRCD_ExpFrom": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDExpFrom,
+                                          "HRCD_ExpTo": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDExpTo,
+                                          "HRCD_CurrentCompany": controller
+                                                  .candidateDetailsList
+                                                  .first
+                                                  .hrcDCurrentCompany ??
+                                              "",
+                                          "HRCD_ResumeSource": controller
+                                                  .candidateDetailsList
+                                                  .first
+                                                  .hrcDResumeSource ??
+                                              "",
+                                          "HRCD_JobPortalName": controller
+                                                  .candidateDetailsList
+                                                  .first
+                                                  .hrcDJobPortalName ??
+                                              "",
+                                          "HRCD_RefCode": controller
+                                                  .candidateDetailsList
+                                                  .first
+                                                  .hrcDRefCode ??
+                                              "",
+                                          "HRCD_LastCTC": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDLastCTC,
+                                          "HRCD_ExpectedCTC": controller
+                                              .candidateDetailsList
+                                              .first
                                               .hrcDExpectedCTC,
-                                          "HRCD_AppDate":
-                                              candidateselected!.hrcDAppDate,
-                                          "HRCD_InterviewDate":
-                                              candidateselected!
-                                                  .hrcDInterviewDate,
+                                          "HRCD_AppDate": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDAppDate,
+                                          "HRCD_InterviewDate": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDInterviewDate,
                                           "HRCD_ExitDate":
                                               candidateselected!.hrcDExitDate,
-                                          "HRCD_NoticePeriod":
-                                              candidateselected!
-                                                  .hrcDNoticePeriod,
-                                          "HRCD_Remarks": "",
-                                          "HRCD_Resume": "",
-                                          "HRCD_RecruitmentStatus": "",
-                                          "HRCD_ActiveFlg":
-                                              candidateselected!.hrcDActiveFlg,
+                                          "HRCD_NoticePeriod": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDNoticePeriod,
+                                          "HRCD_Remarks": controller
+                                                  .candidateDetailsList
+                                                  .first
+                                                  .hrcDRemarks ??
+                                              "",
+                                          "HRCD_Resume": controller
+                                                  .candidateDetailsList
+                                                  .first
+                                                  .hrcDResume ??
+                                              "",
+                                          "HRCD_RecruitmentStatus": controller
+                                                  .candidateDetailsList
+                                                  .first
+                                                  .hrcDRecruitmentStatus ??
+                                              "",
+                                          "HRCD_ActiveFlg": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDActiveFlg,
                                           "HRCD_UpdatedBy":
                                               widget.loginSuccessModel.userId,
                                           "HRCD_Department":
@@ -1133,18 +1293,24 @@ class _AddToHrmsHomeState extends State<AddToHrmsHome> {
                                               cardNoController.text,
                                           "HRCED_ActiveFlag":
                                               selectedCast!.hrceDActiveFlag,
-                                          "HRCD_Photo":
-                                              candidateselected!.hrcDPhoto,
-                                          "HRCD_AadharNo":
-                                              candidateselected!.hrcDAadharNo,
+                                          "HRCD_Photo": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDPhoto,
+                                          "HRCD_AadharNo": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDAadharNo,
                                           "HRCD_Designation":
                                               designationController.text,
-                                          "HRCD_AddressLocal":
-                                              candidateselected!
-                                                  .hrcDAddressLocal,
-                                          "HRCD_AddressPermanent":
-                                              candidateselected!
-                                                  .hrcDAddressPermanent,
+                                          "HRCD_AddressLocal": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDAddressLocal,
+                                          "HRCD_AddressPermanent": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDAddressPermanent,
                                           "HRMET_Id": empSelectedType!.hrmeTId,
                                           "HRMGT_Id": selectGroupType!.hrmgTId,
                                           "HRMG_Id": selectedGrade!.hrmGId,
@@ -1153,35 +1319,51 @@ class _AddToHrmsHomeState extends State<AddToHrmsHome> {
                                           "HRCISC_InterviewDateTime":
                                               candidateselected!
                                                   .hrcisCInterviewDateTime,
-                                          "HRCD_NationalityId":
-                                              candidateselected!
-                                                  .hrcDNationalityId,
+                                          "HRCD_NationalityId": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDNationalityId,
                                           "HRCD_Religion":
                                               religionSelected!.hrcDReligion,
                                           "HRCD_MaritalStatus": selectedMarital!
                                               .hrcDMaritalStatus,
-                                          "HRCD_BloodGroup": "",
+                                          "HRCD_BloodGroup": controller
+                                                  .candidateDetailsList
+                                                  .first
+                                                  .hrcDBloodGroup ??
+                                              "",
                                           "HRCD_CasteId":
                                               selectedCast!.hrcDCasteId,
-                                          "HRCD_AddLocalPlace":
-                                              candidateselected!
-                                                  .hrcDAddressLocal,
-                                          "HRCD_AddPermanentPlace":
-                                              candidateselected!
-                                                  .hrcDAddressPermanent,
-                                          "HRMP_Id": candidateselected!.hrmPId,
-                                          "CreatedDate":
-                                              selectedCompany!.createdDate,
-                                          "UpdatedDate":
-                                              selectedCompany!.updatedDate
+                                          "HRCD_AddLocalPlace": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDAddressLocal,
+                                          "HRCD_AddPermanentPlace": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrcDAddressPermanent,
+                                          "HRMP_Id": controller
+                                              .candidateDetailsList
+                                              .first
+                                              .hrmPId,
+                                          "CreatedDate": controller
+                                              .candidateDetailsList
+                                              .last
+                                              .createdDate,
+                                          "UpdatedDate": controller
+                                              .candidateDetailsList
+                                              .last
+                                              .updatedDate
                                         });
                                         await AddToHRMSAPI.i.addHrms(
                                             base: baseUrlFromInsCode(
                                                 "recruitement",
                                                 widget.mskoolController),
                                             body: {
-                                              "HRCD_Id":
-                                                  candidateselected!.hrcDId,
+                                              "HRCD_Id": controller
+                                                  .candidateDetailsList
+                                                  .first
+                                                  .hrcDId,
                                               "MI_Id":
                                                   widget.loginSuccessModel.mIID,
                                               "Employeedto": newList

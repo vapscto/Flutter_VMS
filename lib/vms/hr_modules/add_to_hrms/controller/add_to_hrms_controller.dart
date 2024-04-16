@@ -3,6 +3,7 @@ import 'package:m_skool_flutter/vms/hr_modules/add_to_hrms/model/add_to_hrmd_deg
 import 'package:m_skool_flutter/vms/hr_modules/add_to_hrms/model/add_to_hrms_candidate_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/add_to_hrms/model/add_to_hrms_dep_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/add_to_hrms/model/add_to_hrms_emp_type.dart';
+import 'package:m_skool_flutter/vms/hr_modules/add_to_hrms/model/candidates_details_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/add_to_hrms/model/cast_list_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/add_to_hrms/model/company_list_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/add_to_hrms/model/grade_list_model.dart';
@@ -36,4 +37,6 @@ class AddToHRMSConttroller extends GetxController {
   RxList<GroupTypeListModelValues> groupTypeList =
       <GroupTypeListModelValues>[].obs;
   RxList<CompanyListModelValues> companyList = <CompanyListModelValues>[].obs;
+  RxList<CandidateDetailsModelValues> candidateDetailsList =
+      <CandidateDetailsModelValues>[].obs;
 }

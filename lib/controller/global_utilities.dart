@@ -241,7 +241,7 @@ String getDashboardIcon(String pageName) {
 
   if (pageName.toLowerCase().contains("student") ||
       pageName.toLowerCase().contains('maker') ||
-      pageName.toLowerCase().contains("new candidate")) {
+      pageName.toLowerCase().contains("schedule list")) {
     return icon += "student_details.png";
   }
   if (pageName.toLowerCase().contains("interaction") ||
@@ -725,7 +725,7 @@ void openMappedPages(
     return;
   }
 
-  if (pageName == "Candidate list") {
+  if (pageName == "Schedule List") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return CandidateHome(
         loginSuccessModel: loginSuccessModel,
@@ -734,8 +734,7 @@ void openMappedPages(
     }));
     return;
   }
-
-  if (pageName == "New Candidate") {
+  if (pageName == "Candidate list") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return NewCandidateHome(
         loginSuccessModel: loginSuccessModel,

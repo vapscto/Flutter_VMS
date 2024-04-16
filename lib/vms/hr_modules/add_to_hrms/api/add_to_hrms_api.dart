@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/vms/hr_modules/add_to_hrms/model/add_to_hrmd_deg
 import 'package:m_skool_flutter/vms/hr_modules/add_to_hrms/model/add_to_hrms_candidate_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/add_to_hrms/model/add_to_hrms_dep_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/add_to_hrms/model/add_to_hrms_emp_type.dart';
+import 'package:m_skool_flutter/vms/hr_modules/add_to_hrms/model/candidates_details_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/add_to_hrms/model/cast_list_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/add_to_hrms/model/company_list_model.dart';
 import 'package:m_skool_flutter/vms/hr_modules/add_to_hrms/model/grade_list_model.dart';
@@ -87,7 +88,7 @@ class AddToHRMSAPI {
   }
 
   addHrms({required String base, required Map<String, dynamic> body}) async {
-    var api = base + URLS.addToHrmsSave;
+    var api = 'base' + URLS.addToHrmsSave;
     logger.i(body);
     logger.e(api);
     var response = await dio.post(api,
@@ -138,4 +139,35 @@ class AddToHRMSAPI {
       }
     }
   }
+}
+
+Future<int?> candidateList(
+    {required String base,
+    required int hrcdId,
+    required AddToHRMSConttroller controller}) async {
+  // controller.loading(true);
+  var api = base + URLS.candidateDetails;
+  var dio = Dio();
+  logger.i(api);
+  logger.e({"HRCD_Id": hrcdId});
+  try {
+    var response = await dio.post(api,
+        options: Options(headers: getSession()), data: {"HRCD_Id": hrcdId});
+    if (response.statusCode == 200) {
+      logger.i(response.data['candidateDetails']);
+      CandidateDetailsModel addToHrmsCandidateListModel =
+          CandidateDetailsModel.fromJson(response.data['candidateDetails']);
+      controller.candidateDetailsList.clear();
+      controller.candidateDetailsList
+          .addAll(addToHrmsCandidateListModel.values!);
+
+      // controller.loading(false);
+    }
+    return response.statusCode;
+  } on DioError catch (e) {
+    logger.e(e.message);
+  } on Exception catch (e) {
+    logger.e(e.toString());
+  }
+  return 0;
 }
