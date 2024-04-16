@@ -194,6 +194,26 @@ class _AddToHrmsHomeState extends State<AddToHrmsHome> {
                                 itemBuilder: (context, suggestion) {
                                   return ListTile(
                                     onTap: () async {
+                                      companynameController.clear();
+                                      empTypeController.clear();
+                                      religionController.clear();
+                                      casteController.clear();
+                                      maritalStatusController.clear();
+                                      departmentController.clear();
+                                      designationController.clear();
+                                      empGradeController.clear();
+                                      groupTypeController.clear();
+                                      empCodeController.clear();
+                                      cardNoController.clear();
+                                      empSelectedType = null;
+                                      religionSelected = null;
+                                      selectedCast = null;
+                                      selectedMarital = null;
+                                      selectedDep = null;
+                                      selectedDeg = null;
+                                      selectedGrade = null;
+                                      selectGroupType = null;
+                                      selectedCompany = null;
                                       candidatenameController.text =
                                           suggestion.hrcDFullName!;
 
