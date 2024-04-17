@@ -10,7 +10,7 @@ import 'package:m_skool_flutter/vms/driver_indent/driver_ind_approval_list.dart'
 import 'package:m_skool_flutter/vms/driver_indent/widgets/indent_approve_popup.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
-import 'package:m_skool_flutter/widget/mskoll_btn.dart';
+// import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class DriverIndentApproval extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -287,46 +287,25 @@ class _DriverIndentApprovalState extends State<DriverIndentApproval> {
                     },
                     itemCount: controller.indentApprovalList.length);
       }),
-      // bottomSheet: Container(
-      //   height: 40,
-      //   decoration: const BoxDecoration(
-      //       borderRadius: BorderRadius.only(
-      //           topLeft: Radius.circular(10), topRight: Radius.circular(10))),
-      //   child: Align(
-      //     alignment: Alignment.bottomCenter,
-      //     child: (pageLoading == true)
-      //         ? const SizedBox(
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: Align(
+      //   alignment: Alignment.bottomCenter,
+      //   child: (pageLoading == true)
+      //       ? const Padding(
+      //           padding: EdgeInsets.only(bottom: 10.0),
+      //           child: SizedBox(
       //             height: 20,
       //             width: 20,
       //             child: CircularProgressIndicator(),
-      //           )
-      //         : MSkollBtn(
-      //             title: 'Driver Indent Approval Details',
-      //             onPress: () {
-      //               moveToNextScreen();
-      //               setState(() {});
-      //             }),
-      //   ),
+      //           ),
+      //         )
+      //       : MSkollBtn(
+      //           title: 'Driver Indent Approval Details',
+      //           onPress: () {
+      //             moveToNextScreen();
+      //             setState(() {});
+      //           }),
       // ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Align(
-        alignment: Alignment.bottomCenter,
-        child: (pageLoading == true)
-            ? const Padding(
-                padding: EdgeInsets.only(bottom: 10.0),
-                child: SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: CircularProgressIndicator(),
-                ),
-              )
-            : MSkollBtn(
-                title: 'Driver Indent Approval Details',
-                onPress: () {
-                  moveToNextScreen();
-                  setState(() {});
-                }),
-      ),
     );
   }
 

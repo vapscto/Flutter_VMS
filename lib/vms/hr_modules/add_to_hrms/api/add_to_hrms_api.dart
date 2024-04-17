@@ -88,7 +88,7 @@ class AddToHRMSAPI {
   }
 
   addHrms({required String base, required Map<String, dynamic> body}) async {
-    var api = 'base' + URLS.addToHrmsSave;
+    var api = base + URLS.addToHrmsSave;
     logger.i(body);
     logger.e(api);
     var response = await dio.post(api,
