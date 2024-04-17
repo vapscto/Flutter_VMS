@@ -39,12 +39,13 @@ Future<void> getIndentApprovalOnload(
     });
     if (response.data['getuserinstitution'] == null) {
       controller.updateErrorLoadingOnloadorganization(true);
-
     } else if (response.data['getuserinstitution'] != null) {
       controller.updateErrorLoadingOnloadorganization(false);
       controller.updateisLoadingOnloadorganization(false);
       InstitutionIndentApprovalModel organizationListResponse =
-          InstitutionIndentApprovalModel.fromJson(response.data['getuserinstitution']);
+          InstitutionIndentApprovalModel.fromJson(
+              response.data['getuserinstitution']);
+      controller.organizationList.clear();
       controller.organizationList.addAll(organizationListResponse.values!);
     }
 

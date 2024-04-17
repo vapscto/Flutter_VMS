@@ -73,6 +73,8 @@ class _IndentApprovalState extends State<IndentApproval> {
     indentApprovalController = Get.put(PettyIndentApprovalController());
     selectDate.text = getDate(DateTime.now());
     onLoadData();
+    fromDate.text = getDate(indentApprovalController.fromSelectedDate.value);
+    toDate.text = getDate(indentApprovalController.toSelectedDate.value);
     super.initState();
   }
 
@@ -120,14 +122,24 @@ class _IndentApprovalState extends State<IndentApproval> {
     totalAmountController.text = totalApprovedAmount.toString();
   }
 
-  onLoadData() {
-    getIndentApprovalOnload(
+  onLoadData() async {
+    await getIndentApprovalOnload(
         miId: widget.loginSuccessModel.mIID!,
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         roleId: widget.loginSuccessModel.roleId!,
         userId: widget.loginSuccessModel.userId!,
         asmaYId: widget.loginSuccessModel.asmaYId!,
         roleFlag: widget.loginSuccessModel.roleforlogin!,
+        controller: indentApprovalController);
+    await getPcIndentApproval(
+        miId: indentApprovalController
+            .organizationList.first.mIId!, //widget.loginSuccessModel.mIID!,
+        base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+        roleId: widget.loginSuccessModel.roleId!,
+        userId: widget.loginSuccessModel.userId!,
+        asmaYId: widget.loginSuccessModel.asmaYId!,
+        fromDate: getDateNeed(indentApprovalController.fromSelectedDate.value),
+        toDate: getDateNeed(indentApprovalController.toSelectedDate.value),
         controller: indentApprovalController);
   }
 
@@ -195,7 +207,7 @@ class _IndentApprovalState extends State<IndentApproval> {
                     ),
                     child: DropdownButtonFormField<
                         InstitutionIndentApprovalModelValues>(
-                      // value: indentApprovalController.organizationList.first,
+                      value: indentApprovalController.organizationList.first,
                       decoration: InputDecoration(
                         focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
@@ -350,7 +362,8 @@ class _IndentApprovalState extends State<IndentApproval> {
                                       .fromSelectedDate.value,
                                   firstDate: DateTime(
                                       1000), //DateTime.now().year, 01, 01
-                                  lastDate: DateTime.now(),
+                                  lastDate: DateTime(DateTime.now().year,
+                                      DateTime.now().month + 1, 0),
                                 );
 
                                 if (selectedDT == null) {
@@ -378,8 +391,12 @@ class _IndentApprovalState extends State<IndentApproval> {
                                       .clear();
 
                                   await getPcIndentApproval(
-                                      miId: selectedOrganization!
-                                          .mIId!, //widget.loginSuccessModel.mIID!,
+                                      miId: (selectedOrganization != null)
+                                          ? selectedOrganization!.mIId!
+                                          : indentApprovalController
+                                              .organizationList
+                                              .first
+                                              .mIId!, //widget.loginSuccessModel.mIID!,
                                       base: baseUrlFromInsCode("issuemanager",
                                           widget.mskoolController),
                                       roleId: widget.loginSuccessModel.roleId!,
@@ -477,7 +494,8 @@ class _IndentApprovalState extends State<IndentApproval> {
                                       .fromSelectedDate.value,
                                   firstDate: indentApprovalController
                                       .fromSelectedDate.value,
-                                  lastDate: DateTime.now(),
+                                  lastDate: DateTime(DateTime.now().year,
+                                      DateTime.now().month + 1, 0),
                                 );
 
                                 if (selectedDT == null) {
@@ -495,8 +513,12 @@ class _IndentApprovalState extends State<IndentApproval> {
                                       .clear();
 
                                   await getPcIndentApproval(
-                                      miId: selectedOrganization!
-                                          .mIId!, //widget.loginSuccessModel.mIID!,
+                                      miId: (selectedOrganization != null)
+                                          ? selectedOrganization!.mIId!
+                                          : indentApprovalController
+                                              .organizationList
+                                              .first
+                                              .mIId!, //widget.loginSuccessModel.mIID!,
                                       base: baseUrlFromInsCode("issuemanager",
                                           widget.mskoolController),
                                       roleId: widget.loginSuccessModel.roleId!,
@@ -625,8 +647,12 @@ class _IndentApprovalState extends State<IndentApproval> {
 
                                         particularReqDetails(
                                           tempRequisitionId: tempRequisitionId,
-                                          miId: selectedOrganization!
-                                              .mIId!, //widget.loginSuccessModel.mIID!,
+                                          miId: (selectedOrganization != null)
+                                              ? selectedOrganization!.mIId!
+                                              : indentApprovalController
+                                                  .organizationList
+                                                  .first
+                                                  .mIId!, //widget.loginSuccessModel.mIID!,
                                           asmaYId:
                                               widget.loginSuccessModel.asmaYId!,
                                           base: baseUrlFromInsCode(
@@ -713,6 +739,12 @@ class _IndentApprovalState extends State<IndentApproval> {
                                                                 index]
                                                             .pcreqtNTotAmount ??
                                                         0.0;
+                                                // if (indentApprovalController
+                                                //         .requisitiondetais
+                                                //         .length ==
+                                                //     selectedRows.length) {
+                                                //   selectAll = true;
+                                                // }
                                               } else {
                                                 selectedRequisitionIds
                                                     .remove(index);
@@ -726,7 +758,12 @@ class _IndentApprovalState extends State<IndentApproval> {
                                                 indentApprovalController
                                                     .checkBoxList
                                                     .clear();
-                                                selectAll = false;
+                                                // if (indentApprovalController
+                                                //         .requisitiondetais
+                                                //         .length !=
+                                                //     selectedRows.length) {
+                                                //   selectAll = false;
+                                                // }
                                               }
                                               tempRequisitionId.clear();
                                               for (int i = 0;
@@ -756,8 +793,14 @@ class _IndentApprovalState extends State<IndentApproval> {
                                               particularReqDetails(
                                                 tempRequisitionId:
                                                     tempRequisitionId,
-                                                miId: selectedOrganization!
-                                                    .mIId!, //widget.loginSuccessModel.mIID!,
+                                                miId: (selectedOrganization !=
+                                                        null)
+                                                    ? selectedOrganization!
+                                                        .mIId!
+                                                    : indentApprovalController
+                                                        .organizationList
+                                                        .first
+                                                        .mIId!, //widget.loginSuccessModel.mIID!,
                                                 asmaYId: widget
                                                     .loginSuccessModel.asmaYId!,
                                                 base: baseUrlFromInsCode(
