@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -8,6 +9,7 @@ import 'package:m_skool_flutter/vms/noc_approval/api/noc_approve_api.dart';
 import 'package:m_skool_flutter/vms/noc_approval/controller/noc_approved_controller.dart';
 import 'package:m_skool_flutter/vms/noc_approval/model/noc_details_model.dart';
 import 'package:m_skool_flutter/vms/noc_approval/model/noc_list_model.dart';
+import 'package:m_skool_flutter/vms/noc_approval/screens/approved_list_screen.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:m_skool_flutter/widget/reject_btn.dart';
@@ -130,28 +132,30 @@ class _NocDetailsScreenState extends State<NocDetailsScreen> {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          newListData.first.employeename ?? '',
-                          style: Get.textTheme.titleMedium,
-                        ),
-                        Text(
-                          newListData.first.mIName ?? '',
-                          style: Get.textTheme.titleSmall!
-                              .copyWith(color: Colors.red),
-                        ),
-                        Text(
-                          newListData.first.hRMDDepartmentName ?? "",
-                          style: Get.textTheme.titleSmall!
-                              .copyWith(color: Theme.of(context).primaryColor),
-                        ),
-                        Text(
-                          newListData.first.hRMDESDesignationName ?? "",
-                          style: Get.textTheme.titleSmall,
-                        )
-                      ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            newListData.first.employeename ?? '',
+                            style: Get.textTheme.titleMedium,
+                          ),
+                          Text(
+                            newListData.first.mIName ?? '',
+                            style: Get.textTheme.titleSmall!
+                                .copyWith(color: Colors.red),
+                          ),
+                          Text(
+                            newListData.first.hRMDDepartmentName ?? "",
+                            style: Get.textTheme.titleSmall!.copyWith(
+                                color: Theme.of(context).primaryColor),
+                          ),
+                          Text(
+                            newListData.first.hRMDESDesignationName ?? "",
+                            style: Get.textTheme.titleSmall,
+                          )
+                        ],
+                      ),
                     )
                   ],
                 ),
@@ -220,7 +224,16 @@ class _NocDetailsScreenState extends State<NocDetailsScreen> {
                             fontWeight: FontWeight.w600,
                             color: Theme.of(context).primaryColor)),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (widget.controller.approvedListModel.isNotEmpty) {
+                            Get.to(() => ApprovedListScreen(
+                                  data: widget.controller.approvedListModel,
+                                ));
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Data is not available");
+                          }
+                        },
                         icon: Icon(
                           Icons.visibility,
                           color: Theme.of(context).primaryColor,

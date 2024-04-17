@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/noc_approval/controller/noc_approved_controller.dart';
+import 'package:m_skool_flutter/vms/noc_approval/model/approved_list_model.dart';
 import 'package:m_skool_flutter/vms/noc_approval/model/noc_approval_check_model.dart';
 import 'package:m_skool_flutter/vms/noc_approval/model/noc_approved_model.dart';
 import 'package:m_skool_flutter/vms/noc_approval/model/noc_details_model.dart';
@@ -57,6 +58,7 @@ class NocApproveAPI {
   }) async {
     var dio = Dio();
     var api = base + URLS.nocDetails;
+    logger.i(api);
     try {
       var response =
           await dio.post(api, options: Options(headers: getSession()), data: {
@@ -80,6 +82,12 @@ class NocApproveAPI {
             NocApprovalChekListModel.fromJson(response.data['checklist']);
         controller.checkListModel.clear();
         controller.checkListModel.addAll(nocApprovalChekListModel.values!);
+        if (response.data['aprovedlist'] != null) {
+          NocApprovedListModel nocApprovedListModel =
+              NocApprovedListModel.fromJson(response.data['aprovedlist']);
+          controller.approvedListModel.clear();
+          controller.approvedListModel.addAll(nocApprovedListModel.values!);
+        }
         return nocApprovedModel;
       }
     } on DioError catch (e) {

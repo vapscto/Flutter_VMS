@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/vms/noc_approval/model/approved_list_model.dart';
 import 'package:m_skool_flutter/vms/noc_approval/model/noc_approval_check_model.dart';
 import 'package:m_skool_flutter/vms/noc_approval/model/noc_approved_model.dart';
 import 'package:m_skool_flutter/vms/noc_approval/model/noc_list_model.dart';
@@ -22,4 +23,6 @@ class NocApprovedController extends GetxController {
       <NocApprovalChekListModelValues>[].obs;
 
   RxList<NocAppliedListModelValues> nocList = <NocAppliedListModelValues>[].obs;
+  RxList<NocApprovedListModelValues> approvedListModel =
+      <NocApprovedListModelValues>[].obs;
 }

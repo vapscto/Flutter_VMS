@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -7,6 +8,7 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/noc_approval/api/noc_approve_api.dart';
 import 'package:m_skool_flutter/vms/noc_approval/controller/noc_approved_controller.dart';
 import 'package:m_skool_flutter/vms/noc_approval/model/noc_details_model.dart';
+import 'package:m_skool_flutter/vms/noc_approval/screens/approved_list_screen.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -131,44 +133,19 @@ class _NocApprovedListScreenState extends State<NocApprovedListScreen> {
                                                       mainAxisSize:
                                                           MainAxisSize.min,
                                                       children: [
-                                                        Text(
-                                                          '${data.employeename!} NOC is Approved by Managment',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: Get.textTheme
-                                                              .titleSmall!
-                                                              .copyWith(
-                                                                  color: Colors
-                                                                      .red),
-                                                        ),
-                                                        // Row(
-                                                        //   children: [
-                                                        //     Text(
-                                                        //       'NOC Certificate',
-                                                        //       textAlign:
-                                                        //           TextAlign
-                                                        //               .center,
-                                                        //       style: Get
-                                                        //           .textTheme
-                                                        //           .titleSmall!
-                                                        //           .copyWith(
-                                                        //               color: Colors
-                                                        //                   .red),
-                                                        //     ),
-                                                        //     InkWell(
-                                                        //       onTap: () {},
-                                                        //       child: Icon(
-                                                        //         Icons
-                                                        //             .visibility,
-                                                        //         color: Theme.of(
-                                                        //                 context)
-                                                        //             .primaryColor,
-                                                        //       ),
-                                                        //     )
-                                                        //   ],
+                                                        // Text(
+                                                        //   '${data.employeename!} NOC is Approved by Managment',
+                                                        //   textAlign:
+                                                        //       TextAlign.center,
+                                                        //   style: Get.textTheme
+                                                        //       .titleSmall!
+                                                        //       .copyWith(
+                                                        //           color: Colors
+                                                        //               .red),
                                                         // ),
-                                                        const SizedBox(
-                                                            height: 5),
+
+                                                        // const SizedBox(
+                                                        //     height: 5),
                                                         Row(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
@@ -336,7 +313,24 @@ class _NocApprovedListScreenState extends State<NocApprovedListScreen> {
                                                                   .titleMedium,
                                                             ),
                                                             InkWell(
-                                                              onTap: () {},
+                                                              onTap: () {
+                                                                if (widget
+                                                                    .controller
+                                                                    .approvedListModel
+                                                                    .isNotEmpty) {
+                                                                  Get.to(() =>
+                                                                      ApprovedListScreen(
+                                                                        data: widget
+                                                                            .controller
+                                                                            .approvedListModel,
+                                                                      ));
+                                                                } else {
+                                                                  Fluttertoast
+                                                                      .showToast(
+                                                                          msg:
+                                                                              "Data is not available");
+                                                                }
+                                                              },
                                                               child: Icon(
                                                                 Icons
                                                                     .visibility,
