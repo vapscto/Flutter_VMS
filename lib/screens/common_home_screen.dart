@@ -181,9 +181,9 @@ class _CommonHomeScreenState extends State<CommonHomeScreen> {
     }
     return true;
   }
-  Future<bool> usrDtct() async{
-    return true;
 
+  Future<bool> usrDtct() async {
+    return true;
   }
 
   @override

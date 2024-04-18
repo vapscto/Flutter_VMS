@@ -185,19 +185,20 @@ class EmpRatingController extends GetxController {
               qnCount += 1;
             }
             if (qnCount > 0) {
+              overallAvg = 0;
               double rr = (j.totalRating / qnCount);
               if (rr >= -2) {
-                j.totalRating = rr;
+                j.totalRating = rr.toStringAsFixed(2);
               } else {
-                j.totalRating = 0;
+                j.totalRating = 0.toStringAsFixed(2);
               }
-              overallAvg += double.parse(j.totalRating);
-              j.overallAvg = overallAvg;
+              overallAvg += double.parse(j.totalRating.toString());
+              j.overallAvg = overallAvg.toStringAsFixed(2);
             }
             tempList.add(j);
           }
         }
-        i.totalAverage = (overallAvg / tempList.length);
+        i.totalAverage = (overallAvg / tempList.length).toStringAsFixed(2);
       }
     }
   }

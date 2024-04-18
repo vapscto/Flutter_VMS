@@ -90,13 +90,13 @@ dependencies:
   permission_handler: ^10.3.0
   intl: ^0.17.0
   text_scroll: ^0.2.0
-  location: ^4.3.0
+  # location: ^4.3.0
   dropdown_search: ^4.0.0
   flutter_typeahead: ^4.6.1
   http_parser: ^4.0.2
   flutter_rating_bar: ^4.0.1
   http: ^0.13.6
-  # geolocator: ^9.0.1
+  geolocator: ^8.2.1
   syncfusion_flutter_pdfviewer:
   
 dev_dependencies:
