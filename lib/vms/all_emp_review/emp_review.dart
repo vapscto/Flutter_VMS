@@ -103,7 +103,7 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
                           loginSuccessModel: widget.loginSuccessModel,
                           mskoolController: widget.mskoolController,
                           data: selectedvalue,
-                          year: selectedYear!.hrmlYLeaveYear!,
+                          year: selectedYearData,
                         ));
                   }
                 } else if (selectedData == 'Month Wise') {
@@ -119,7 +119,7 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
                           loginSuccessModel: widget.loginSuccessModel,
                           mskoolController: widget.mskoolController,
                           data: selectedvalue,
-                          year: selectedYear!.hrmlYLeaveYear.toString(),
+                          year: selectedYearData,
                         ));
                   }
                 }
@@ -208,6 +208,11 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
                           child: CustomContainer(
                             child:
                                 DropdownButtonFormField<RatingYearModelValues>(
+                              onTap: () {
+                                setState(() {
+                                  year.clear();
+                                });
+                              },
                               decoration: InputDecoration(
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.always,
@@ -291,7 +296,7 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
                                 setState(() {
                                   selectedYear = s;
                                   year.clear();
-                                  year.add(
+                                  year.addAll(
                                       selectedYear!.hrmlYLeaveYear!.split("-"));
                                   logger.v(year);
                                 });
