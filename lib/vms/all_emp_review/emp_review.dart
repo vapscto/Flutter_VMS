@@ -54,6 +54,9 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
     super.initState();
   }
 
+  List year = [];
+  String selectedYearData = '';
+
   final ScrollController _controller = ScrollController();
   final ScrollController _controller1 = ScrollController();
   // final ScrollController _controller2 = ScrollController();
@@ -219,7 +222,7 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
                                     color: Colors.transparent,
                                   ),
                                 ),
-                                hintText: 'Select Year',
+                                hintText: 'Select Academic Year',
                                 hintStyle: Get.textTheme.titleSmall!
                                     .copyWith(color: Colors.grey),
                                 label: Container(
@@ -287,11 +290,107 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
                               onChanged: (s) async {
                                 setState(() {
                                   selectedYear = s;
+                                  year.clear();
+                                  year.add(
+                                      selectedYear!.hrmlYLeaveYear!.split("-"));
+                                  logger.v(year);
                                 });
                               },
                             ),
                           ),
                         ),
+                        year.isEmpty
+                            ? const SizedBox()
+                            : Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: CustomContainer(
+                                  child: DropdownButtonFormField(
+                                    decoration: InputDecoration(
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      contentPadding:
+                                          const EdgeInsets.all(16.0),
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      enabledBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      hintText: 'Select  Year',
+                                      hintStyle: Get.textTheme.titleSmall!
+                                          .copyWith(color: Colors.grey),
+                                      label: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16.0, vertical: 5),
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFDFFBFE),
+                                            borderRadius:
+                                                BorderRadius.circular(24.0)),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Image.asset(
+                                              "assets/images/cap.png",
+                                              height: 28.0,
+                                            ),
+                                            const SizedBox(
+                                              width: 12.0,
+                                            ),
+                                            Text(
+                                              "Year",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium!
+                                                  .merge(const TextStyle(
+                                                      fontSize: 20,
+                                                      color:
+                                                          Color(0xFF28B6C8))),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    icon: const Padding(
+                                      padding: EdgeInsets.only(top: 8.0),
+                                      child: Icon(
+                                        Icons.keyboard_arrow_down_rounded,
+                                        size: 30,
+                                      ),
+                                    ),
+                                    iconSize: 30,
+                                    items: List.generate(
+                                      year.length,
+                                      (index) => DropdownMenuItem(
+                                        value: year.elementAt(index),
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 12.0, left: 8, right: 8),
+                                          child: Text(
+                                            year.elementAt(index),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelSmall!
+                                                .merge(const TextStyle(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 16.0,
+                                                    letterSpacing: 0.3)),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    onChanged: (s) async {
+                                      setState(() {
+                                        selectedYearData = s.toString();
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
                         const SizedBox(height: 20),
                         Stack(
                           clipBehavior: Clip.none,
