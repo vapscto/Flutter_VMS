@@ -677,16 +677,6 @@ void openMappedPages(
     }));
     return;
   }
-  // if (pageName == "Call Letter") {
-  //   Navigator.push(context, MaterialPageRoute(builder: (_) {
-  //     return CallLetterHome(
-  //       loginSuccessModel: loginSuccessModel,
-  //       mskoolController: mskoolController,
-  //       title: pageName,
-  //     );
-  //   }));
-  //   return;
-  // }
   if (pageName == "Add To HRMS") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return AddToHrmsHome(

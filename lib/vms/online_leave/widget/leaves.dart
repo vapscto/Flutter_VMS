@@ -144,7 +144,10 @@ class _LeavesState extends State<Leaves> {
         return AlertDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          content: Text(message),
+          content: Text(
+            message,
+            style: Get.textTheme.titleMedium,
+          ),
           contentTextStyle: Get.textTheme.titleMedium,
           actions: <Widget>[
             Align(
