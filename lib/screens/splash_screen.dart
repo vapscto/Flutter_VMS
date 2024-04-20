@@ -52,7 +52,6 @@ class _SplashScreenState extends State<SplashScreen> {
     initializeFCMNotification();
     getDeviceToken();
     controller.getLocation();
-
     super.initState();
   }
 
@@ -300,7 +299,7 @@ class _SplashScreenState extends State<SplashScreen> {
               (widget.miIdNew == 0) ? miId : widget.miIdNew,
               loginBaseUrl,
               deviceid);
- 
+
       mskoolController.updateLoginSuccessModel(loginSuccessModel);
       ProfileController profileController = Get.put(ProfileController());
       await lateIn(

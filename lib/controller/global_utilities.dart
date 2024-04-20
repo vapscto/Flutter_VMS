@@ -361,13 +361,6 @@ void openMappedPages(
   BuildContext context,
 ) {
   logger.i(pageName);
-  // if (pageName == "Appointment Approval") {
-  //   Get.to(() => InteractionHome(
-  //       loginSuccessModel: loginSuccessModel,
-  //       mskoolController: mskoolController));
-  //   return;
-  // }
-
   if (pageName == "DR Generation") {
     Get.to(() => DailyReportGenration(
           loginSuccessModel: loginSuccessModel,
