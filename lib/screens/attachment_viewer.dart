@@ -26,45 +26,41 @@ class AttachmentViewer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: 'Preview').getAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-        child: loadFromRawData && rawData != null
-            ? SfPdfViewer.memory(rawData!)
-            : url!.isImageFileName
-                ? InteractiveViewer(
-                    child: Image.network(url!),
-                  )
-                : url!.isPDFFileName
-                    ? SfPdfViewer.network(url!)
-                    : Column(
-                        children: [
-                          Icon(
-                            Icons.preview_outlined,
-                            size: 36.0,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          const SizedBox(
-                            height: 8.0,
-                          ),
-                          Text(
-                            "No Preview Available",
-                            textAlign: TextAlign.center,
-                            style:
-                                Theme.of(context).textTheme.titleMedium!.merge(
-                                      const TextStyle(fontSize: 18),
-                                    ),
-                          ),
-                          const SizedBox(
-                            height: 6.0,
-                          ),
-                          Text(
-                            "You can download this file to view the content inside it",
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.titleSmall,
-                          )
-                        ],
-                      ),
-      ),
+      body: loadFromRawData && rawData != null
+          ? SfPdfViewer.memory(rawData!)
+          : url!.isImageFileName
+              ? InteractiveViewer(
+                  child: Image.network(url!),
+                )
+              : url!.isPDFFileName
+                  ? SfPdfViewer.network(url!)
+                  : Column(
+                      children: [
+                        Icon(
+                          Icons.preview_outlined,
+                          size: 36.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        const SizedBox(
+                          height: 8.0,
+                        ),
+                        Text(
+                          "No Preview Available",
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.titleMedium!.merge(
+                                const TextStyle(fontSize: 18),
+                              ),
+                        ),
+                        const SizedBox(
+                          height: 6.0,
+                        ),
+                        Text(
+                          "You can download this file to view the content inside it",
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        )
+                      ],
+                    ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: MSkollBtn(
