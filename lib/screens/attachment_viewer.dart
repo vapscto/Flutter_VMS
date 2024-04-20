@@ -147,18 +147,23 @@ class AttachmentViewer extends StatelessWidget {
               } else {
                 FileDownloader.downloadFile(
                     url: url!,
-                    onProgress: (name, progress) {
+                    onProgress: (name, progress) async {
                       SaveServiceNotification.showProgressNotification(
                         progress,
                       );
                     },
                     onDownloadCompleted: (String? path) {
-                      // logger.d(path);
-
                       SaveServiceNotification.showSaveNotification(
                           path!,
                           "File Downloaded",
                           "You can tap here to view the file");
+                      SaveServiceNotification.initializeNotification();
+                      SaveServiceNotification.showSaveNotification(
+                          path,
+                          "document Saved",
+                          "We have save document to your download folder, tap to view");
+                      Fluttertoast.showToast(
+                          msg: "Document saved to download folder.");
                     });
               }
             }
