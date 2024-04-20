@@ -80,33 +80,32 @@ class AttachmentViewer extends StatelessWidget {
                   Directory? directory =
                       await getApplicationDocumentsDirectory();
                   String savePath =
-                      "${directory.path}${Platform.pathSeparator}/Media/Salary-Slip-${DateTime.now().millisecondsSinceEpoch}.pdf";
+                      "${directory.path}${Platform.pathSeparator}/Media/document-${DateTime.now().millisecondsSinceEpoch}.pdf";
                   File file = await File(savePath).writeAsBytes(rawData!);
                   SaveServiceNotification.initializeNotification();
                   SaveServiceNotification.showSaveNotification(
                       file.path,
-                      "Salary Slip Saved",
-                      "We have save salary slip to your download folder, tap to view");
-                  // Fluttertoast.showToast(
-                  //     msg: "Salary slip saved to download folder.");
+                      "document Saved",
+                      "We have save document to your download folder, tap to view");
+
                   Fluttertoast.showToast(
                       msg: "File downloaded successfully in your device");
                 } else {
                   await DocumentFileSavePlus.saveFile(
                     rawData!,
-                    "Salary-Slip-${DateTime.now().millisecondsSinceEpoch}",
+                    "document-${DateTime.now().millisecondsSinceEpoch}",
                     "application/pdf",
                   );
                   String filepath =
                       await SaveServiceNotification.getStoragePathAndSave(
-                          rawData!, "Salary-Slip-");
+                          rawData!, "document-");
                   SaveServiceNotification.initializeNotification();
                   SaveServiceNotification.showSaveNotification(
                       filepath,
-                      "Salary Slip Saved",
-                      "We have save salary slip to your download folder, tap to view");
+                      "document Saved",
+                      "We have save document to your download folder, tap to view");
                   Fluttertoast.showToast(
-                      msg: "Salary slip saved to download folder.");
+                      msg: "Document saved to download folder.");
                 }
               } catch (e) {
                 logger.e(e.toString());
