@@ -367,7 +367,10 @@ class URLS {
   static String getTourName = "api/TADA_Advance_TourFacade/getload";
 
   static String getTourLeadList = "api/TADA_Advance_TourFacade/Lead_Update";
+  // Call Letter
   static String generateTemplate = 'api/AppointmentFacade/';
+  static String sendCallletter =
+      'api/AddCandidateVMSFacade/sendCallLettermail/';
 
   static String getTourDemoResponseApi =
       "api/TADA_Advance_TourFacade/Edit_response_lead_demo";
