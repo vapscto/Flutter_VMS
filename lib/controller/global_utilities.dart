@@ -49,6 +49,7 @@ import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/screen/leave_list_home.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/screens/tada_approval_home.dart';
+import 'package:m_skool_flutter/vms/tada_tour_approval/screens/tada_tour_view.dart';
 import 'package:m_skool_flutter/vms/tour_mapping/screen/tour_maping_list.dart';
 // import 'package:m_skool_flutter/vms/tour_mapping/screen/tour_maping_list.dart';
 // import 'package:m_skool_flutter/vms/tada_tour_plan/screen/lead_select_screen.dart';
@@ -604,7 +605,7 @@ void openMappedPages(
 
   if (pageName == "Health Checkup") {
     Get.to(
-      () => HomeHCheckup(
+      () =>  TadaViewTourView(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
       ),
