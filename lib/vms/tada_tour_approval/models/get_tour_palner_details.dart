@@ -9,16 +9,16 @@ class GetTourPlanDetails {
     if (json['\$values'] != null) {
       values = <GetTourPlanDetailsValues>[];
       json['\$values'].forEach((v) {
-        values!.add(  GetTourPlanDetailsValues.fromJson(v));
+        values!.add(GetTourPlanDetailsValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -65,18 +65,18 @@ class GetTourPlanDetailsValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ieR_ID'] = this.ieRID;
-    data['ieR_EmpId'] = this.ieREmpId;
-    data['ieR_Plan_StartDate'] = this.ieRPlanStartDate;
-    data['ieR_Plan_EndDate'] = this.ieRPlanEndDate;
-    data['ieR_Createdby'] = this.ieRCreatedby;
-    data['ieR_CreatedDate'] = this.ieRCreatedDate;
-    data['ieR_Updateby'] = this.ieRUpdateby;
-    data['ieR_UpdateDate'] = this.ieRUpdateDate;
-    data['isM_Active'] = this.isMActive;
-    data['ieR_PlanName'] = this.ieRPlanName;
-    data['ieR_Remarks'] = this.ieRRemarks;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ieR_ID'] = ieRID;
+    data['ieR_EmpId'] = ieREmpId;
+    data['ieR_Plan_StartDate'] = ieRPlanStartDate;
+    data['ieR_Plan_EndDate'] = ieRPlanEndDate;
+    data['ieR_Createdby'] = ieRCreatedby;
+    data['ieR_CreatedDate'] = ieRCreatedDate;
+    data['ieR_Updateby'] = ieRUpdateby;
+    data['ieR_UpdateDate'] = ieRUpdateDate;
+    data['isM_Active'] = isMActive;
+    data['ieR_PlanName'] = ieRPlanName;
+    data['ieR_Remarks'] = ieRRemarks;
     return data;
   }
 }

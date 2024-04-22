@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:get/get.dart';
@@ -6,10 +5,8 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/call_letter/call_letter_view.dart';
 import 'package:m_skool_flutter/vms/call_letter/model/call_letter_add_model.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
-import 'package:pdf/widgets.dart' as pw;
 
 class GenerateCallLetter {
   GenerateCallLetter.init();
