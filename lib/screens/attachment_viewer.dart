@@ -26,45 +26,41 @@ class AttachmentViewer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: 'Preview').getAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-        child: loadFromRawData && rawData != null
-            ? SfPdfViewer.memory(rawData!)
-            : url!.isImageFileName
-                ? InteractiveViewer(
-                    child: Image.network(url!),
-                  )
-                : url!.isPDFFileName
-                    ? SfPdfViewer.network(url!)
-                    : Column(
-                        children: [
-                          Icon(
-                            Icons.preview_outlined,
-                            size: 36.0,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          const SizedBox(
-                            height: 8.0,
-                          ),
-                          Text(
-                            "No Preview Available",
-                            textAlign: TextAlign.center,
-                            style:
-                                Theme.of(context).textTheme.titleMedium!.merge(
-                                      const TextStyle(fontSize: 18),
-                                    ),
-                          ),
-                          const SizedBox(
-                            height: 6.0,
-                          ),
-                          Text(
-                            "You can download this file to view the content inside it",
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.titleSmall,
-                          )
-                        ],
-                      ),
-      ),
+      body: loadFromRawData && rawData != null
+          ? SfPdfViewer.memory(rawData!)
+          : url!.isImageFileName
+              ? InteractiveViewer(
+                  child: Image.network(url!),
+                )
+              : url!.isPDFFileName
+                  ? SfPdfViewer.network(url!)
+                  : Column(
+                      children: [
+                        Icon(
+                          Icons.preview_outlined,
+                          size: 36.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        const SizedBox(
+                          height: 8.0,
+                        ),
+                        Text(
+                          "No Preview Available",
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.titleMedium!.merge(
+                                const TextStyle(fontSize: 18),
+                              ),
+                        ),
+                        const SizedBox(
+                          height: 6.0,
+                        ),
+                        Text(
+                          "You can download this file to view the content inside it",
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        )
+                      ],
+                    ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: MSkollBtn(
@@ -84,33 +80,32 @@ class AttachmentViewer extends StatelessWidget {
                   Directory? directory =
                       await getApplicationDocumentsDirectory();
                   String savePath =
-                      "${directory.path}${Platform.pathSeparator}/Media/Salary-Slip-${DateTime.now().millisecondsSinceEpoch}.pdf";
+                      "${directory.path}${Platform.pathSeparator}/Media/document-${DateTime.now().millisecondsSinceEpoch}.pdf";
                   File file = await File(savePath).writeAsBytes(rawData!);
                   SaveServiceNotification.initializeNotification();
                   SaveServiceNotification.showSaveNotification(
                       file.path,
-                      "Salary Slip Saved",
-                      "We have save salary slip to your download folder, tap to view");
-                  // Fluttertoast.showToast(
-                  //     msg: "Salary slip saved to download folder.");
+                      "document Saved",
+                      "We have save document to your download folder, tap to view");
+
                   Fluttertoast.showToast(
                       msg: "File downloaded successfully in your device");
                 } else {
                   await DocumentFileSavePlus.saveFile(
                     rawData!,
-                    "Salary-Slip-${DateTime.now().millisecondsSinceEpoch}",
+                    "document-${DateTime.now().millisecondsSinceEpoch}",
                     "application/pdf",
                   );
                   String filepath =
                       await SaveServiceNotification.getStoragePathAndSave(
-                          rawData!, "Salary-Slip-");
+                          rawData!, "document-");
                   SaveServiceNotification.initializeNotification();
                   SaveServiceNotification.showSaveNotification(
                       filepath,
-                      "Salary Slip Saved",
-                      "We have save salary slip to your download folder, tap to view");
+                      "document Saved",
+                      "We have save document to your download folder, tap to view");
                   Fluttertoast.showToast(
-                      msg: "Salary slip saved to download folder.");
+                      msg: "Document saved to download folder.");
                 }
               } catch (e) {
                 logger.e(e.toString());
@@ -148,18 +143,23 @@ class AttachmentViewer extends StatelessWidget {
               } else {
                 FileDownloader.downloadFile(
                     url: url!,
-                    onProgress: (name, progress) {
+                    onProgress: (name, progress) async {
                       SaveServiceNotification.showProgressNotification(
                         progress,
                       );
                     },
                     onDownloadCompleted: (String? path) {
-                      // logger.d(path);
-
                       SaveServiceNotification.showSaveNotification(
                           path!,
                           "File Downloaded",
                           "You can tap here to view the file");
+                      SaveServiceNotification.initializeNotification();
+                      SaveServiceNotification.showSaveNotification(
+                          path,
+                          "document Saved",
+                          "We have save document to your download folder, tap to view");
+                      Fluttertoast.showToast(
+                          msg: "Document saved to download folder.");
                     });
               }
             }

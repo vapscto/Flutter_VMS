@@ -49,9 +49,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
   OpetionLeaveController controllerOL = Get.put(OpetionLeaveController());
   var addleave = 0;
   ProfileController profileController = Get.put(ProfileController());
-
   StaffPrevilegeListModelValues? selectedEmployee;
-
   DateTime newDt = DateTime.now();
   @override
   void initState() {
@@ -76,7 +74,6 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
   }
 
   final TextEditingController reason = TextEditingController();
-
   final TextEditingController startDate = TextEditingController();
   final TextEditingController endDate = TextEditingController();
   final TextEditingController reportingDate = TextEditingController();
@@ -1114,11 +1111,88 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                 ),
               )
             : const SizedBox(),
-        const SizedBox(
-          height: 20,
-        ),
-        const LeaveAttachmentScreen(
-          login: 'staff',
+        (widget.values.hrmLLeaveCode == "EL")
+            ? Container(
+                margin: const EdgeInsets.only(
+                    top: 30, left: 0, right: 0, bottom: 0),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: BorderRadius.circular(16.0),
+                  boxShadow: const [
+                    BoxShadow(
+                      offset: Offset(0, 1),
+                      blurRadius: 8,
+                      color: Colors.black12,
+                    ),
+                  ],
+                ),
+                child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    hintStyle: Theme.of(context).textTheme.labelSmall!.merge(
+                        const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14.0,
+                            letterSpacing: 0.3)),
+                    hintText:
+                        elReason.isNotEmpty ? 'EL Reason' : 'No data available',
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    isDense: true,
+                    label: const CustomDropDownLabel(
+                      icon: 'assets/images/ClassTeacher.png',
+                      containerColor: Color.fromRGBO(250, 238, 253, 1),
+                      text: 'EL Reason',
+                      textColor: Color.fromRGBO(146, 79, 190, 1),
+                    ),
+                  ),
+                  icon: const Padding(
+                    padding: EdgeInsets.only(top: 3),
+                    child: Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      size: 30,
+                    ),
+                  ),
+                  iconSize: 30,
+                  items: List.generate(elReason.length, (index) {
+                    return DropdownMenuItem(
+                      value: elReason[index],
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 13, left: 5),
+                        child: Text(
+                          elReason[index],
+                          style: Theme.of(context).textTheme.labelSmall!.merge(
+                              const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16.0,
+                                  letterSpacing: 0.3)),
+                        ),
+                      ),
+                    );
+                  }),
+                  onChanged: (s) {
+                    setState(() {
+                      elSelected = s!;
+                    });
+
+                    // selectedEmployee = s;
+                  },
+                ),
+              )
+            : const SizedBox(),
+        const Padding(
+          padding: EdgeInsets.only(top: 20.0),
+          child: LeaveAttachmentScreen(
+            login: 'staff',
+          ),
         ),
         const SizedBox(
           height: 16.0,
@@ -1175,6 +1249,12 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
             if (reportingDate.text.isEmpty) {
               Fluttertoast.showToast(msg: "Please provide reporting date");
               return;
+            }
+            if (widget.values.hrmLLeaveCode == "EL") {
+              if (elSelected == '') {
+                Fluttertoast.showToast(msg: "Select Reason");
+                return;
+              }
             }
 
             // ignore: use_build_context_synchronously
@@ -1310,3 +1390,10 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
 bool isSameDay(DateTime a, DateTime b) {
   return a.year == b.year && a.month == b.month && a.day == b.day;
 }
+
+List elReason = [
+  'SERIOUS ACCIDENT',
+  'BE BEREAVEMENT OR FUNERAL',
+  'MEDICAL EMERGENCY'
+];
+String elSelected = '';

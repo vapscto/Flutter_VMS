@@ -318,49 +318,56 @@ class _UpdatedInterviewStatusState extends State<UpdatedInterviewStatus> {
                       ),
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child: MSkollBtn(
-                            title: "Update",
-                            onPress: () {
-                              if (selectedRadio == '') {
-                                Fluttertoast.showToast(
-                                    msg: "Select Candidate Status");
-                                return;
-                              } else if (remarkController.text.isEmpty) {
-                                Fluttertoast.showToast(msg: "Enter Remarks");
-                                return;
-                              } else {
-                                if (selectedData == "InProgress") {
-                                  Fluttertoast.showToast(
-                                      msg: "Record Saved Successfully..");
-                                  Get.back();
-                                  return;
-                                } else {
-                                  _saveData({
-                                    "HRCISC_Id": data!.hrcisCId,
-                                    "HRCD_Id": data!.hrcDId,
-                                    "MI_Id": widget.loginSuccessModel.mIID,
-                                    "HRCISC_InterviewRounds":
-                                        data!.hrcisCInterviewRounds,
-                                    "HRCISC_InterviewDateTime":
-                                        data!.hrcisCInterviewDateTime,
-                                    "HRCISC_InterviewVenue":
-                                        data!.hrcisCInterviewVenue!,
-                                    "HRCISC_CreatedBy":
-                                        widget.loginSuccessModel.userId,
-                                    "HRCISC_UpdatedBy":
-                                        widget.loginSuccessModel.userId,
-                                    "HRCISC_Status": selectedData,
-                                    "HRCISC_NotifyEmail": true,
-                                    "HRCISC_NotifySMS": true,
-                                    "HRCD_FullName": data!.hrcDFullName,
-                                    "HRCD_Resume": data!.hrcDResume ?? '',
-                                    "HRCIS_InterviewFeedBack":
-                                        remarkController.text,
-                                    "HRCIS_CandidateStatus": selectedRadio
-                                  });
-                                }
-                              }
-                            }),
+                        child: widget.controller.isSaveLoading.value
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(),
+                              )
+                            : MSkollBtn(
+                                title: "Update",
+                                onPress: () {
+                                  if (selectedRadio == '') {
+                                    Fluttertoast.showToast(
+                                        msg: "Select Candidate Status");
+                                    return;
+                                  } else if (remarkController.text.isEmpty) {
+                                    Fluttertoast.showToast(
+                                        msg: "Enter Remarks");
+                                    return;
+                                  } else {
+                                    if (selectedData == "InProgress") {
+                                      Fluttertoast.showToast(
+                                          msg: "Record Saved Successfully..");
+                                      Get.back();
+                                      return;
+                                    } else {
+                                      _saveData({
+                                        "HRCISC_Id": data!.hrcisCId,
+                                        "HRCD_Id": data!.hrcDId,
+                                        "MI_Id": widget.loginSuccessModel.mIID,
+                                        "HRCISC_InterviewRounds":
+                                            data!.hrcisCInterviewRounds,
+                                        "HRCISC_InterviewDateTime":
+                                            data!.hrcisCInterviewDateTime,
+                                        "HRCISC_InterviewVenue":
+                                            data!.hrcisCInterviewVenue!,
+                                        "HRCISC_CreatedBy":
+                                            widget.loginSuccessModel.userId,
+                                        "HRCISC_UpdatedBy":
+                                            widget.loginSuccessModel.userId,
+                                        "HRCISC_Status": selectedData,
+                                        "HRCISC_NotifyEmail": true,
+                                        "HRCISC_NotifySMS": true,
+                                        "HRCD_FullName": data!.hrcDFullName,
+                                        "HRCD_Resume": data!.hrcDResume ?? '',
+                                        "HRCIS_InterviewFeedBack":
+                                            remarkController.text,
+                                        "HRCIS_CandidateStatus": selectedRadio
+                                      });
+                                    }
+                                  }
+                                }),
                       ),
                     ],
                   );

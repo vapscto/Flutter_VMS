@@ -1285,16 +1285,7 @@ class _NewJobPostState extends State<NewJobPost> {
   Future<void> uploadFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: [
-        'jpg',
-        'jpeg',
-        'png',
-        'doc',
-        'docx',
-        'xls',
-        'xlsx',
-        'pdf'
-      ],
+      allowedExtensions: ['jpg', 'jpeg', 'png', 'gif', 'bmp'],
     );
 
     if (result != null) {

@@ -288,7 +288,6 @@ class _InterviewReportHomeState extends State<InterviewReportHome> {
                   onChanged: (value) {
                     setState(() {
                       selectedValue = value;
-                      // _onLoad();
                     });
                   })),
           Padding(
@@ -298,8 +297,8 @@ class _InterviewReportHomeState extends State<InterviewReportHome> {
                 child: MSkollBtn(
                     title: "Report",
                     onPress: () {
-                      if (_startDate.text.isEmpty && _endDate.text.isEmpty) {
-                        Fluttertoast.showToast(msg: "Select Date");
+                      if (_startDate.text.isEmpty || _endDate.text.isEmpty) {
+                        Fluttertoast.showToast(msg: "Enter Date");
                         return;
                       } else {
                         _onLoad();

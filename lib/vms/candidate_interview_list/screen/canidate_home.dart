@@ -26,13 +26,19 @@ class _CandidateHomeState extends State<CandidateHome> {
 
   @override
   void initState() {
-    CandidateListApi.instance.getCandidateListApi(
+    _onload();
+    super.initState();
+  }
+
+  _onload() async {
+    controller.updateIsLoadingRequest(true);
+    await CandidateListApi.instance.getCandidateListApi(
       base: baseUrlFromInsCode('recruitement', widget.mskoolController),
       userId: widget.loginSuccessModel.userId!,
       controller: controller,
       miId: widget.loginSuccessModel.mIID!,
     );
-    super.initState();
+    controller.updateIsLoadingRequest(false);
   }
 
   int bgColor = -1;
@@ -40,7 +46,7 @@ class _CandidateHomeState extends State<CandidateHome> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar:
-            const CustomAppBar(title: 'Candidate Interview List').getAppBar(),
+            const CustomAppBar(title: 'Interview Schedule List').getAppBar(),
         body: Obx(() {
           return (controller.isLoadingRequest.value)
               ? const AnimatedProgressWidget(
