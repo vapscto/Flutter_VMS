@@ -23,7 +23,6 @@ import 'package:m_skool_flutter/vms/Purchase_requisition/screen/purchase_home.da
 import 'package:m_skool_flutter/vms/Purchase_requisition/screen/requsition_grid.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/emp_review.dart';
 import 'package:m_skool_flutter/vms/candidate_interview_list/screen/canidate_home.dart';
-// import 'package:m_skool_flutter/vms/call_letter/call_letter_home.dart';
 import 'package:m_skool_flutter/vms/certificate_approval/certificate_approval.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/dailyrpt_home.dart';
@@ -51,8 +50,6 @@ import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/screens/tada_sho
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/screens/tada_approval_home.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/screens/tada_tour_view.dart';
 import 'package:m_skool_flutter/vms/tour_mapping/screen/tour_maping_list.dart';
-// import 'package:m_skool_flutter/vms/tour_mapping/screen/tour_maping_list.dart';
-// import 'package:m_skool_flutter/vms/tada_tour_plan/screen/lead_select_screen.dart';
 import 'package:m_skool_flutter/vms/utils/video_screen.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
@@ -605,7 +602,7 @@ void openMappedPages(
 
   if (pageName == "Health Checkup") {
     Get.to(
-      () =>  TadaViewTourView(
+      () => HomeHCheckup(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
       ),

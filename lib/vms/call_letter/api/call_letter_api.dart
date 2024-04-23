@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -7,6 +9,22 @@ class CallLetterAPI {
   CallLetterAPI.init();
   static final CallLetterAPI i = CallLetterAPI.init();
   var dio = Dio();
+  saveCallLetter(
+      {required String base, required Map<String, dynamic> body}) async {
+    var api = base + URLS.sendCallletter;
+    logger.i(api);
+    logger.v(body);
+    try {
+      var response = await dio.post(api,
+          options: Options(headers: getSession()), data: body);
+      if (response.statusCode == 200) {
+        Fluttertoast.showToast(msg: "Call Letter send Successfully");
+        Get.back();
+      }
+    } catch (e) {
+      logger.e(e);
+    }
+  }
 }
 
 Future<String?> generateCallLetter(

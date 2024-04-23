@@ -1318,7 +1318,7 @@ class _NewJobPostState extends State<NewJobPost> {
       });
     }
     setState(() {
-      Fluttertoast.showToast(msg: "Image Uploaded");
+      Fluttertoast.showToast(msg: "Uploaded");
       for (var i in uploadAttachment) {
         filePath = i.path;
         fileName = i.name;

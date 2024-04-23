@@ -9,16 +9,16 @@ class GetTourView {
     if (json['\$values'] != null) {
       values = <GetTourViewValues>[];
       json['\$values'].forEach((v) {
-        values!.add( GetTourViewValues.fromJson(v));
+        values!.add(GetTourViewValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -101,30 +101,30 @@ class GetTourViewValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['MI_Id'] = this.mIId;
-    data['MI_Name'] = this.mIName;
-    data['VTADAAA_Id'] = this.vTADAAAId;
-    data['HRME_Id'] = this.hRMEId;
-    data['VTADAAA_ToAddress'] = this.vTADAAAToAddress;
-    data['VTADAAA_AppliedDate'] = this.vTADAAAAppliedDate;
-    data['VTADAAA_FromDate'] = this.vTADAAAFromDate;
-    data['VTADAAA_ToDate'] = this.vTADAAAToDate;
-    data['VTADAAA_Remarks'] = this.vTADAAARemarks;
-    data['VTADAAA_ClientId'] = this.vTADAAAClientId;
-    data['IVRMMCT_Id'] = this.iVRMMCTId;
-    data['VTADAAA_TotalAppliedAmount'] = this.vTADAAATotalAppliedAmount;
-    data['VTADAAA_TotalSactionedAmount'] = this.vTADAAATotalSactionedAmount;
-    data['VTADAAA_TotalPaidAmount'] = this.vTADAAATotalPaidAmount;
-    data['VTADAAA_StatusFlg'] = this.vTADAAAStatusFlg;
-    data['User_Id'] = this.userId;
-    data['SanctionLevelNo'] = this.sanctionLevelNo;
-    data['EmpName'] = this.empName;
-    data['ClientName'] = this.clientName;
-    data['CityName'] = this.cityName;
-    data['VTADAAAA_SactionedAmount'] = this.vTADAAAASactionedAmount;
-    data['IER_ID'] = this.iERID;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['MI_Id'] = mIId;
+    data['MI_Name'] = mIName;
+    data['VTADAAA_Id'] = vTADAAAId;
+    data['HRME_Id'] = hRMEId;
+    data['VTADAAA_ToAddress'] = vTADAAAToAddress;
+    data['VTADAAA_AppliedDate'] = vTADAAAAppliedDate;
+    data['VTADAAA_FromDate'] = vTADAAAFromDate;
+    data['VTADAAA_ToDate'] = vTADAAAToDate;
+    data['VTADAAA_Remarks'] = vTADAAARemarks;
+    data['VTADAAA_ClientId'] = vTADAAAClientId;
+    data['IVRMMCT_Id'] = iVRMMCTId;
+    data['VTADAAA_TotalAppliedAmount'] = vTADAAATotalAppliedAmount;
+    data['VTADAAA_TotalSactionedAmount'] = vTADAAATotalSactionedAmount;
+    data['VTADAAA_TotalPaidAmount'] = vTADAAATotalPaidAmount;
+    data['VTADAAA_StatusFlg'] = vTADAAAStatusFlg;
+    data['User_Id'] = userId;
+    data['SanctionLevelNo'] = sanctionLevelNo;
+    data['EmpName'] = empName;
+    data['ClientName'] = clientName;
+    data['CityName'] = cityName;
+    data['VTADAAAA_SactionedAmount'] = vTADAAAASactionedAmount;
+    data['IER_ID'] = iERID;
     return data;
   }
 }

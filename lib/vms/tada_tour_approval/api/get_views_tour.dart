@@ -31,7 +31,6 @@ Future<void> getViewList(
     if (response.data['getadvancetada'] != null) {
       tadaTourController.viewLoading.value = false;
     }
- 
 
     for (var item in tadaTourController.getTourViewList) {
       for (var element in tadaTourController.getTourPlanDetails) {
@@ -48,7 +47,9 @@ Future<void> getViewList(
         tadaTourController.planerName.add(TourMap(item.iERID.toString(), ""));
       }
     }
-     
+    for (var element in tadaTourController.planerName) {
+      logger.w(element.locationName);
+    }
   } on DioError catch (e) {
     logger.e(e.message);
   } on Exception catch (e) {

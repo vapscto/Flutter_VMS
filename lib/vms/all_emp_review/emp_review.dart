@@ -59,7 +59,6 @@ class _AllEmpReviewHomeState extends State<AllEmpReviewHome> {
 
   final ScrollController _controller = ScrollController();
   final ScrollController _controller1 = ScrollController();
-  // final ScrollController _controller2 = ScrollController();
   final RxBool selectAllEmployee = RxBool(false);
   final RxBool selectAllMonth = RxBool(false);
   final RxBool selectAllYear = RxBool(false);
