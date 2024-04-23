@@ -50,7 +50,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
         tadaTourController: widget.controller,
         userId: widget.getTourViewValues.userId!,
         vtadaaaId: widget.getTourViewValues.vTADAAAId!);
-        await getViewTada(
+    await getViewTada(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         hrmeId: widget.getTourViewValues.hRMEId!,
         ierId: int.parse(widget.getTourViewValues.iERID!),
@@ -391,105 +391,143 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                               ]);
                                             }),
                                           ))),
-                                           SingleChildScrollView(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 0),
-                                      scrollDirection: Axis.horizontal,
-                                      child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          child: DataTable(
-                                            dataTextStyle: const TextStyle(
-                                                fontSize: 14,
-                                                color: Color.fromRGBO(
-                                                    0, 0, 0, 0.95),
-                                                fontWeight: FontWeight.w500),
-                                            dataRowHeight: 50,
-                                            headingRowHeight: 40,
-                                            horizontalMargin: 10,
-                                            columnSpacing: 30,
-                                            dividerThickness: 1,
-                                            headingTextStyle: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700),
-                                            border: TableBorder.all(
+                                  Obx(
+                                    () => widget.controller.getTadaCategory
+                                            .isNotEmpty
+                                        ? SingleChildScrollView(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10, horizontal: 0),
+                                            scrollDirection: Axis.horizontal,
+                                            child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(10),
-                                                width: 0.5),
-                                            headingRowColor:
-                                                MaterialStateProperty.all(
-                                                    Theme.of(context)
-                                                        .primaryColor),
-                                            columns: const [
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text(""),
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("Closure"),
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("HOT"),
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("Follow Up"),
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("Cold"),
-                                                ),
-                                              ),
-                                              
-                                            ],
-                                            rows: List.generate(1, (index) {
-                                              return DataRow(cells: [
-                                                 const DataCell(
-                                                   Align(
-                                                  child:  Text("Percentage"),
-                                                )),
-                                                 DataCell(
-                                                   Align(
-                                                  child:  Text("${widget.controller.getTadaCategory[0].iMRCPercentage.toString()} %",
-                                                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                                                    color: Colors.red
-                                                  ), ),
-                                                )),
-                                                DataCell(Align(
-                                                  child: Text("${widget.controller.getTadaCategory[1].iMRCPercentage.toString()} %",
-                                                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                                                    color: Colors.red
-                                                  ),),
-                                                )),
-                                                //from date
-                                                DataCell(Align(
-                                                  child: Text( "${widget.controller.getTadaCategory[2].iMRCPercentage!.toInt().toString()} %",
-                                                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                                                    color: Colors.red
-                                                  ),),
-                                                )),
-                                                // departure time
-                                                DataCell(Align(
-                                                  child: Text("${widget.controller.getTadaCategory[3].iMRCPercentage!.toInt().toString()} %",
-                                                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                                                    color: Colors.red
-                                                  ),),
-                                                )),
-                                                 
-                                              ]);
-                                            }),
-                                          )))
+                                                child: DataTable(
+                                                  dataTextStyle:
+                                                      const TextStyle(
+                                                          fontSize: 14,
+                                                          color: Color.fromRGBO(
+                                                              0, 0, 0, 0.95),
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                  dataRowHeight: 50,
+                                                  headingRowHeight: 40,
+                                                  horizontalMargin: 10,
+                                                  columnSpacing: 30,
+                                                  dividerThickness: 1,
+                                                  headingTextStyle:
+                                                      const TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w700),
+                                                  border: TableBorder.all(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      width: 0.5),
+                                                  headingRowColor:
+                                                      MaterialStateProperty.all(
+                                                          Theme.of(context)
+                                                              .primaryColor),
+                                                  columns: const [
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(""),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text("Closure"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text("HOT"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child:
+                                                            Text("Follow Up"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text("Cold"),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                  rows:
+                                                      List.generate(1, (index) {
+                                                    return DataRow(cells: [
+                                                      const DataCell(Align(
+                                                        child:
+                                                            Text("Percentage"),
+                                                      )),
+                                                      DataCell(Align(
+                                                        child: Text(
+                                                          "${widget.controller.getTadaCategory[0].iMRCPercentage.toString()} %",
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodySmall!
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .red),
+                                                        ),
+                                                      )),
+                                                      DataCell(Align(
+                                                        child: Text(
+                                                          "${widget.controller.getTadaCategory[1].iMRCPercentage.toString()} %",
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodySmall!
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .red),
+                                                        ),
+                                                      )),
+                                                      //from date
+                                                      DataCell(Align(
+                                                        child: Text(
+                                                          "${widget.controller.getTadaCategory[2].iMRCPercentage!.toInt().toString()} %",
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodySmall!
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .red),
+                                                        ),
+                                                      )),
+                                                      // departure time
+                                                      DataCell(Align(
+                                                        child: Text(
+                                                          "${widget.controller.getTadaCategory[3].iMRCPercentage!.toInt().toString()} %",
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodySmall!
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .red),
+                                                        ),
+                                                      )),
+                                                    ]);
+                                                  }),
+                                                )))
+                                        : SizedBox(),
+                                  )
                                 ],
                               ).marginSymmetric(horizontal: 20, vertical: 20))
                         ]),
