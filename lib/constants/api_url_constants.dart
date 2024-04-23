@@ -399,4 +399,7 @@ class URLS {
   static String newcandidate = 'api/CandidateListVMSFacade/onloadgetdetails';
 
   static String getTourViews="api/TADAAdvanceApprovalFacade/getTourApproval/";
+  static String editTadaTour ="api/TADAAdvanceApprovalFacade/editTour/";
+
+  static String getViewTada="api/TADAAdvanceApprovalFacade/getView/";
 }

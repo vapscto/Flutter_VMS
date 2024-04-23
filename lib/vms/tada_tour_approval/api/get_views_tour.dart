@@ -48,9 +48,7 @@ Future<void> getViewList(
         tadaTourController.planerName.add(TourMap(item.iERID.toString(), ""));
       }
     }
-    tadaTourController.planerName.forEach((element) {
-      logger.w(element.locationName);
-    });
+     
   } on DioError catch (e) {
     logger.e(e.message);
   } on Exception catch (e) {
