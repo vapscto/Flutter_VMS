@@ -604,7 +604,7 @@ void openMappedPages(
 
   if (pageName == "Health Checkup") {
     Get.to(
-      () => TadaViewTourView(
+      () => HomeHCheckup(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
       ),
