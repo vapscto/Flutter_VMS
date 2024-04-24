@@ -1282,7 +1282,10 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                       DateTime.now().toLocal().toString(),
                                   contactNoOnLeave:
                                       int.parse(numberController.text),
-                                  leaveReason: reason.text,
+                                  leaveReason:
+                                      (widget.values.hrmLLeaveCode == "EL")
+                                          ? elSelected
+                                          : reason.text,
                                   reportingDate:
                                       reportingDT.toLocal().toString(),
                                   supportingDocument:

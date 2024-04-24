@@ -9,16 +9,16 @@ class TadaGetCategoryModel {
     if (json['\$values'] != null) {
       values = <TadaGetCategoryModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(  TadaGetCategoryModelValues.fromJson(v));
+        values!.add(TadaGetCategoryModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -50,13 +50,13 @@ class TadaGetCategoryModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['IMRC_CategoryId'] = this.iMRCCategoryId;
-    data['IMRC_CategoryName'] = this.iMRCCategoryName;
-    data['IMRC_Percentage'] = this.iMRCPercentage;
-    data['HRME_EmployeeFirstName'] = this.hRMEEmployeeFirstName;
-    data['HRME_EmailId'] = this.hRMEEmailId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['IMRC_CategoryId'] = iMRCCategoryId;
+    data['IMRC_CategoryName'] = iMRCCategoryName;
+    data['IMRC_Percentage'] = iMRCPercentage;
+    data['HRME_EmployeeFirstName'] = hRMEEmployeeFirstName;
+    data['HRME_EmailId'] = hRMEEmailId;
     return data;
   }
 }

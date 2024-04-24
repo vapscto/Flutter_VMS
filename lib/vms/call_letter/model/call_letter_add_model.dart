@@ -1,5 +1,5 @@
 class CallLetterModel {
-  int? callLetterNo;
+  String? callLetterNo;
   String? candidateName;
   String? address;
   String? positionName;

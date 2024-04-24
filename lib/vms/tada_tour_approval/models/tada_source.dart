@@ -15,10 +15,10 @@ class TadaClientSources {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -50,13 +50,13 @@ class TadaClientSourcesValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['ISMSMSO_SourceName'] = this.iSMSMSOSourceName;
-    data['Closure'] = this.closure;
-    data['Cold'] = this.cold;
-    data['Follow Up'] = this.followUp;
-    data['HOT'] = this.hOT;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['ISMSMSO_SourceName'] = iSMSMSOSourceName;
+    data['Closure'] = closure;
+    data['Cold'] = cold;
+    data['Follow Up'] = followUp;
+    data['HOT'] = hOT;
     return data;
   }
 }

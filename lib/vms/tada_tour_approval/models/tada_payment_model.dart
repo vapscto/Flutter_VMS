@@ -9,16 +9,16 @@ class TadaPaymentDetailsModel {
     if (json['\$values'] != null) {
       values = <TadaPaymentDetailsModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(  TadaPaymentDetailsModelValues.fromJson(v));
+        values!.add(TadaPaymentDetailsModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
-    data['$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -68,19 +68,19 @@ class TadaPaymentDetailsModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['TotalAppliedAmount'] = this.totalAppliedAmount;
-    data['TotalAppliedAmountByPart'] = this.totalAppliedAmountByPart;
-    data['TotalSactionedAmount'] = this.totalSactionedAmount;
-    data['TotalSactionedAmountByPart'] = this.totalSactionedAmountByPart;
-    data['TotalPaidAmount'] = this.totalPaidAmount;
-    data['TotalPaidAmountByPart'] = this.totalPaidAmountByPart;
-    data['PaymentTime'] = this.paymentTime;
-    data['PaymentMode'] = this.paymentMode;
-    data['VTADAAA_Id'] = this.vTADAAAId;
-    data['HRME_Id'] = this.hRMEId;
-    data['MI_Id'] = this.mIId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['TotalAppliedAmount'] = totalAppliedAmount;
+    data['TotalAppliedAmountByPart'] = totalAppliedAmountByPart;
+    data['TotalSactionedAmount'] = totalSactionedAmount;
+    data['TotalSactionedAmountByPart'] = totalSactionedAmountByPart;
+    data['TotalPaidAmount'] = totalPaidAmount;
+    data['TotalPaidAmountByPart'] = totalPaidAmountByPart;
+    data['PaymentTime'] = paymentTime;
+    data['PaymentMode'] = paymentMode;
+    data['VTADAAA_Id'] = vTADAAAId;
+    data['HRME_Id'] = hRMEId;
+    data['MI_Id'] = mIId;
     return data;
   }
 }

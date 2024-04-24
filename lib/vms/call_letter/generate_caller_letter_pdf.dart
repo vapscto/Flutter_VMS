@@ -111,6 +111,7 @@ class GenerateCallLetter {
           ]);
         }));
     Uint8List data = await document.save();
+    // String data1 = await document.save();
 
     Get.to(() => CallLetterView(
           name: value.candidateName!,

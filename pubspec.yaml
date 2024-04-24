@@ -97,6 +97,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   http: ^0.13.6
   geolocator: ^8.2.1
+  syncfusion_flutter_pdf: ^20.2.38
   syncfusion_flutter_pdfviewer:
   
 dev_dependencies:
