@@ -17,7 +17,8 @@ class ViewTourPLan extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final TadaTourController controller;
   const ViewTourPLan(
-      {required this.getTourViewValues,
+      {super.key,
+      required this.getTourViewValues,
       required this.mskoolController,
       required this.loginSuccessModel,
       required this.planerNme,

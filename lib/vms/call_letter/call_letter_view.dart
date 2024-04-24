@@ -14,6 +14,7 @@ import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class CallLetterView extends StatelessWidget {
@@ -22,6 +23,7 @@ class CallLetterView extends StatelessWidget {
   final MskoolController mskoolController;
   final String email;
   final LoginSuccessModel loginSuccessModel;
+  // final String document;
   const CallLetterView({
     super.key,
     required this.name,
@@ -48,6 +50,15 @@ class CallLetterView extends StatelessWidget {
                   child: MSkollBtn(
                       title: "Send Mail",
                       onPress: () async {
+                        PdfDocument document = PdfDocument(inputBytes: rawData);
+
+                        PdfTextExtractor extractor = PdfTextExtractor(document);
+
+                        String result = extractor.extractText(
+                          layoutText: true,
+                          startPageIndex: 0,
+                        );
+                        logger.w((result));
                         await CallLetterAPI.i.saveCallLetter(
                             base: baseUrlFromInsCode(
                                 'recruitement', mskoolController),
@@ -55,7 +66,7 @@ class CallLetterView extends StatelessWidget {
                               "MI_Id": loginSuccessModel.mIID,
                               "HRCD_EmailId": email,
                               "UserId": loginSuccessModel.userId,
-                              "Template": rawData
+                              "Template": result
                             });
                       }),
                 ),

@@ -9,16 +9,16 @@ class TadaTimeArray {
     if (json['\$values'] != null) {
       values = <TadaTimeArrayValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new TadaTimeArrayValues.fromJson(v));
+        values!.add(TadaTimeArrayValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -95,28 +95,28 @@ class TadaTimeArrayValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['vtadaaA_Id'] = this.vtadaaAId;
-    data['mI_Id'] = this.mIId;
-    data['hrmE_Id'] = this.hrmEId;
-    data['vtadaaA_AppliedDate'] = this.vtadaaAAppliedDate;
-    data['vtadaaA_FromDate'] = this.vtadaaAFromDate;
-    data['vtadaaA_ToDate'] = this.vtadaaAToDate;
-    data['vtadaaA_ClientId'] = this.vtadaaAClientId;
-    data['vtadaaA_Remarks'] = this.vtadaaARemarks;
-    data['vtadaaA_TotalAppliedAmount'] = this.vtadaaATotalAppliedAmount;
-    data['vtadaaA_TotalSactionedAmount'] = this.vtadaaATotalSactionedAmount;
-    data['vtadaaA_TotalPaidAmount'] = this.vtadaaATotalPaidAmount;
-    data['vtadaaA_StatusFlg'] = this.vtadaaAStatusFlg;
-    data['vtadaaA_ActiveFlg'] = this.vtadaaAActiveFlg;
-    data['vtadaaA_CreatedBy'] = this.vtadaaACreatedBy;
-    data['vtadaaA_UpdatedBy'] = this.vtadaaAUpdatedBy;
-    data['vtadaaA_CreatedDate'] = this.vtadaaACreatedDate;
-    data['vtadaaA_UpdatedDate'] = this.vtadaaAUpdatedDate;
-    data['ivrmmcT_Id'] = this.ivrmmcTId;
-    data['vtadaaA_DepartureTime'] = this.vtadaaADepartureTime;
-    data['vtadaaA_ArrivalTime'] = this.vtadaaAArrivalTime;
-    data['ieR_ID'] = this.ieRID;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['vtadaaA_Id'] = vtadaaAId;
+    data['mI_Id'] = mIId;
+    data['hrmE_Id'] = hrmEId;
+    data['vtadaaA_AppliedDate'] = vtadaaAAppliedDate;
+    data['vtadaaA_FromDate'] = vtadaaAFromDate;
+    data['vtadaaA_ToDate'] = vtadaaAToDate;
+    data['vtadaaA_ClientId'] = vtadaaAClientId;
+    data['vtadaaA_Remarks'] = vtadaaARemarks;
+    data['vtadaaA_TotalAppliedAmount'] = vtadaaATotalAppliedAmount;
+    data['vtadaaA_TotalSactionedAmount'] = vtadaaATotalSactionedAmount;
+    data['vtadaaA_TotalPaidAmount'] = vtadaaATotalPaidAmount;
+    data['vtadaaA_StatusFlg'] = vtadaaAStatusFlg;
+    data['vtadaaA_ActiveFlg'] = vtadaaAActiveFlg;
+    data['vtadaaA_CreatedBy'] = vtadaaACreatedBy;
+    data['vtadaaA_UpdatedBy'] = vtadaaAUpdatedBy;
+    data['vtadaaA_CreatedDate'] = vtadaaACreatedDate;
+    data['vtadaaA_UpdatedDate'] = vtadaaAUpdatedDate;
+    data['ivrmmcT_Id'] = ivrmmcTId;
+    data['vtadaaA_DepartureTime'] = vtadaaADepartureTime;
+    data['vtadaaA_ArrivalTime'] = vtadaaAArrivalTime;
+    data['ieR_ID'] = ieRID;
     return data;
   }
 }

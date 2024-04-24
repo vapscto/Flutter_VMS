@@ -500,8 +500,7 @@ class _CallLetterHomeState extends State<CallLetterHome> {
                           if (_key.currentState!.validate()) {
                             callLetterList.clear();
                             callLetterList.add(CallLetterModel(
-                              callLetterNo:
-                                  int.parse(callLetterController.text),
+                              callLetterNo: callLetterController.text,
                               candidateName: candidateNameController.text,
                               address: addressController.text,
                               positionName: positionController.text,
