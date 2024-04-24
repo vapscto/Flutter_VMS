@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/rating_report/screen/report_data_screen.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/api/edit_tour_api.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/api/get_view.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/controller/tada_tour_cntrl.dart';
@@ -30,13 +32,12 @@ class ViewTourPLan extends StatefulWidget {
 class _ViewTourPLanState extends State<ViewTourPLan> {
   var height, width;
   var dayCount;
-
+ RxBool radioBtn =RxBool(true);
   @override
   void initState() {
     dayCount = dayCounts(widget.getTourViewValues.vTADAAAFromDate!,
         widget.getTourViewValues.vTADAAAToDate!);
     initApi();
-
     super.initState();
   }
 
@@ -79,7 +80,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                       child: Container(
                         child: Column(children: [
                           Container(
-                            width: width,
+                            width: 1650,
                             height: 150,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -251,8 +252,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                             ),
                           ),
                           Container(
-                              width: width,
-                              height: 300,
+                              width: 1650,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   border:
@@ -270,129 +270,545 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold)),
                                   ),
-                                  SingleChildScrollView(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 0),
-                                      scrollDirection: Axis.horizontal,
-                                      child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          child: DataTable(
-                                            dataTextStyle: const TextStyle(
-                                                fontSize: 14,
-                                                color: Color.fromRGBO(
-                                                    0, 0, 0, 0.95),
-                                                fontWeight: FontWeight.w500),
-                                            dataRowHeight: 50,
-                                            headingRowHeight: 40,
-                                            horizontalMargin: 10,
-                                            columnSpacing: 30,
-                                            dividerThickness: 1,
-                                            headingTextStyle: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700),
-                                            border: TableBorder.all(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                width: 0.5),
-                                            headingRowColor:
-                                                MaterialStateProperty.all(
-                                                    Theme.of(context)
-                                                        .primaryColor),
-                                            columns: const [
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("SL.No"),
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("Tour Plan Name"),
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("Day"),
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("FromDate"),
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("Departure Time"),
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("Todate"),
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("Arrival Time"),
-                                                ),
-                                              ),
-                                            ],
-                                            rows: List.generate(1, (index) {
-                                              return DataRow(cells: [
-                                                DataCell(Align(
-                                                  child: Text("${index + 1}"),
-                                                )),
-                                                DataCell(Align(
-                                                  child: Text(widget.planerNme
-                                                      .toUpperCase()),
-                                                )),
-                                                DataCell(Align(
-                                                  child: Text(dayCount),
-                                                )),
-                                                //from date
-                                                DataCell(Align(
-                                                  child: Text(getDate(
-                                                      DateTime.parse(widget
+                                  Row(
+                                    children: [
+                                      SingleChildScrollView(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 0),
+                                          scrollDirection: Axis.horizontal,
+                                          child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: DataTable(
+                                                dataTextStyle: const TextStyle(
+                                                    fontSize: 14,
+                                                    color: Color.fromRGBO(
+                                                        0, 0, 0, 0.95),
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                                dataRowHeight: 50,
+                                                headingRowHeight: 40,
+                                                horizontalMargin: 10,
+                                                columnSpacing: 30,
+                                                dividerThickness: 1,
+                                                headingTextStyle:
+                                                    const TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                border: TableBorder.all(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    width: 0.5),
+                                                headingRowColor:
+                                                    MaterialStateProperty.all(
+                                                        Theme.of(context)
+                                                            .primaryColor),
+                                                columns: const [
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text("SL.No"),
+                                                    ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text(
+                                                          "Tour Plan Name"),
+                                                    ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text("Day"),
+                                                    ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text("FromDate"),
+                                                    ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text(
+                                                          "Departure Time"),
+                                                    ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text("Todate"),
+                                                    ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child:
+                                                          Text("Arrival Time"),
+                                                    ),
+                                                  ),
+                                                ],
+                                                rows: List.generate(1, (index) {
+                                                  return DataRow(cells: [
+                                                    DataCell(Align(
+                                                      child:
+                                                          Text("${index + 1}"),
+                                                    )),
+                                                    DataCell(Align(
+                                                      child: Text(widget
+                                                          .planerNme
+                                                          .toUpperCase()),
+                                                    )),
+                                                    DataCell(Align(
+                                                      child: Text(dayCount),
+                                                    )),
+                                                    //from date
+                                                    DataCell(Align(
+                                                      child: Text(getDate(
+                                                          DateTime.parse(widget
+                                                              .controller
+                                                              .timeArrayList
+                                                              .first
+                                                              .vtadaaAFromDate!))),
+                                                    )),
+                                                    // departure time
+                                                    DataCell(Align(
+                                                      child: Text(timeFormate(widget
                                                           .controller
                                                           .timeArrayList
                                                           .first
-                                                          .vtadaaAFromDate!))),
-                                                )),
-                                                // departure time
-                                                DataCell(Align(
-                                                  child: Text(timeFormate(widget
-                                                      .controller
-                                                      .timeArrayList
-                                                      .first
-                                                      .vtadaaADepartureTime!)),
-                                                )),
-                                                //tob date
-                                                DataCell(Align(
-                                                  child: Text(getDate(
-                                                      DateTime.parse(widget
+                                                          .vtadaaADepartureTime!)),
+                                                    )),
+                                                    //tob date
+                                                    DataCell(Align(
+                                                      child: Text(getDate(
+                                                          DateTime.parse(widget
+                                                              .controller
+                                                              .timeArrayList
+                                                              .first
+                                                              .vtadaaAToDate!))),
+                                                    )),
+                                                    DataCell(Align(
+                                                      child: Text(timeFormate(widget
                                                           .controller
                                                           .timeArrayList
                                                           .first
-                                                          .vtadaaAToDate!))),
-                                                )),
-                                                DataCell(Align(
-                                                  child: Text(timeFormate(widget
-                                                      .controller
-                                                      .timeArrayList
-                                                      .first
-                                                      .vtadaaAArrivalTime!)),
-                                                )),
-                                              ]);
-                                            }),
-                                          ))),
+                                                          .vtadaaAArrivalTime!)),
+                                                    )),
+                                                  ]);
+                                                }),
+                                              ))),
+                                      const SizedBox(
+                                        width: 50,
+                                      ),
+                                      Obx(
+                                        () => widget.controller.getTadaCategory
+                                                .isNotEmpty
+                                            ? SingleChildScrollView(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 10,
+                                                        horizontal: 0),
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    child: DataTable(
+                                                      dataTextStyle:
+                                                          const TextStyle(
+                                                              fontSize: 14,
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      0,
+                                                                      0,
+                                                                      0,
+                                                                      0.95),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                      dataRowHeight: 50,
+                                                      headingRowHeight: 40,
+                                                      horizontalMargin: 10,
+                                                      columnSpacing: 30,
+                                                      dividerThickness: 1,
+                                                      headingTextStyle:
+                                                          const TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700),
+                                                      border: TableBorder.all(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          width: 0.5),
+                                                      headingRowColor:
+                                                          MaterialStateProperty
+                                                              .all(Theme.of(
+                                                                      context)
+                                                                  .primaryColor),
+                                                      columns: const [
+                                                        DataColumn(
+                                                          label: Align(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child: Text(""),
+                                                          ),
+                                                        ),
+                                                        DataColumn(
+                                                          label: Align(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child:
+                                                                Text("Closure"),
+                                                          ),
+                                                        ),
+                                                        DataColumn(
+                                                          label: Align(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child: Text("HOT"),
+                                                          ),
+                                                        ),
+                                                        DataColumn(
+                                                          label: Align(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child: Text(
+                                                                "Follow Up"),
+                                                          ),
+                                                        ),
+                                                        DataColumn(
+                                                          label: Align(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child: Text("Cold"),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                      rows: List.generate(1,
+                                                          (index) {
+                                                        return DataRow(cells: [
+                                                          const DataCell(Align(
+                                                            child: Text(
+                                                                "Percentage"),
+                                                          )),
+                                                          DataCell(Align(
+                                                            child: Text(
+                                                              "${widget.controller.getTadaCategory[0].iMRCPercentage.toString()} %",
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodySmall!
+                                                                  .copyWith(
+                                                                      color: Colors
+                                                                          .red),
+                                                            ),
+                                                          )),
+                                                          DataCell(Align(
+                                                            child: Text(
+                                                              "${widget.controller.getTadaCategory[1].iMRCPercentage.toString()} %",
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodySmall!
+                                                                  .copyWith(
+                                                                      color: Colors
+                                                                          .red),
+                                                            ),
+                                                          )),
+                                                          //from date
+                                                          DataCell(Align(
+                                                            child: Text(
+                                                              "${widget.controller.getTadaCategory[2].iMRCPercentage!.toInt().toString()} %",
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodySmall!
+                                                                  .copyWith(
+                                                                      color: Colors
+                                                                          .red),
+                                                            ),
+                                                          )),
+                                                          // departure time
+                                                          DataCell(Align(
+                                                            child: Text(
+                                                              "${widget.controller.getTadaCategory[3].iMRCPercentage!.toInt().toString()} %",
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodySmall!
+                                                                  .copyWith(
+                                                                      color: Colors
+                                                                          .red),
+                                                            ),
+                                                          )),
+                                                        ]);
+                                                      }),
+                                                    )))
+                                            : SizedBox(),
+                                      ),
+                                    ],
+                                  ),
+                                  /**
+                                   *  Lead adds
+                                   */
+                                  Obx(() => widget.controller.getPlanerListData
+                                          .isNotEmpty
+                                      ? SingleChildScrollView(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 0),
+                                          // scrollDirection: Axis.horizontal,
+                                          child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: DataTable(
+                                                dataTextStyle: const TextStyle(
+                                                    fontSize: 14,
+                                                    color: Color.fromRGBO(
+                                                        0, 0, 0, 0.95),
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                                dataRowHeight: 50,
+                                                headingRowHeight: 40,
+                                                horizontalMargin: 10,
+                                                columnSpacing: 30,
+                                                dividerThickness: 1,
+                                                headingTextStyle:
+                                                    const TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                border: TableBorder.all(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    width: 0.5),
+                                                headingRowColor:
+                                                    MaterialStateProperty.all(
+                                                        Theme.of(context)
+                                                            .primaryColor),
+                                                columns: const [
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child:
+                                                          Text("Category Name"),
+                                                    ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text("Lead Name"),
+                                                    ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text(
+                                                          "Student Strength"),
+                                                    ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child:
+                                                          Text("Product Name"),
+                                                    ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child:
+                                                          Text("Source Name"),
+                                                    ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text("Created By"),
+                                                    ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child:
+                                                          Text("Demo given By"),
+                                                    ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text("State Name"),
+                                                    ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text("Remove"),
+                                                    ),
+                                                  ),
+                                                ],
+                                                rows: List.generate(
+                                                    widget
+                                                        .controller
+                                                        .getPlanerListData
+                                                        .length, (index) {
+                                                  return DataRow(cells: [
+                                                    DataCell(Align(
+                                                        child: Text(
+                                                      widget.controller
+                                                          .getPlanerListData
+                                                          .elementAt(index)
+                                                          .iMRCCategoryName!,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodySmall!
+                                                          .copyWith(
+                                                              color: const Color
+                                                                      .fromARGB(
+                                                                  255,
+                                                                  17,
+                                                                  17,
+                                                                  17)),
+                                                    ))),
+                                                    DataCell(Align(
+                                                      child: Text(
+                                                        widget.controller
+                                                            .getPlanerListData
+                                                            .elementAt(index)
+                                                            .iSMSLELeadName!,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                                color: Colors
+                                                                    .black),
+                                                      ),
+                                                    )),
+                                                    DataCell(Align(
+                                                      child: Text(
+                                                        widget.controller
+                                                            .getPlanerListData
+                                                            .elementAt(index)
+                                                            .iSMSLEStudentStrength!
+                                                            .toString(),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                                color: Colors
+                                                                    .black),
+                                                      ),
+                                                    )),
+                                                    //from date
+                                                    DataCell(Align(
+                                                      child: Text(
+                                                        widget.controller
+                                                            .getPlanerListData
+                                                            .elementAt(index)
+                                                            .iSMSMPRProductName!,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                                color: Colors
+                                                                    .black),
+                                                      ),
+                                                    )),
+                                                    // departure time
+                                                    DataCell(Align(
+                                                      child: Text(
+                                                        widget.controller
+                                                            .getPlanerListData
+                                                            .elementAt(index)
+                                                            .sourceName!,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                                color: Colors
+                                                                    .black),
+                                                      ),
+                                                    )),
+                                                    DataCell(Align(
+                                                      child: Text(
+                                                        widget.controller
+                                                            .getPlanerListData
+                                                            .elementAt(index)
+                                                            .hRMEEmployeeFirstName!,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                                color: Colors
+                                                                    .black),
+                                                      ),
+                                                    )),
+                                                    DataCell(Align(
+                                                      child: Text(
+                                                        widget.controller
+                                                            .getPlanerListData
+                                                            .elementAt(index)
+                                                            .demoEmployeeFirstName!,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                                color: Colors
+                                                                    .black),
+                                                      ),
+                                                    )),
+                                                    DataCell(Align(
+                                                      child: Text(
+                                                        widget.controller
+                                                            .getPlanerListData
+                                                            .elementAt(index)
+                                                            .iVRMMSName!,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                                color: Colors
+                                                                    .black),
+                                                      ),
+                                                    )),
+
+                                                    const DataCell(Align(
+                                                      child: Icon(
+                                                        Icons.remove,
+                                                        color: Colors.redAccent,
+                                                      ),
+                                                    ))
+                                                  ]);
+                                                }),
+                                              )))
+                                      : const SizedBox()),
                                   Obx(
-                                    () => widget.controller.getTadaCategory
+                                    () => widget.controller.accomdationList
                                             .isNotEmpty
                                         ? SingleChildScrollView(
                                             padding: const EdgeInsets.symmetric(
@@ -433,21 +849,35 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                       label: Align(
                                                         alignment:
                                                             Alignment.center,
-                                                        child: Text(""),
+                                                        child: Text("SL NO"),
                                                       ),
                                                     ),
                                                     DataColumn(
                                                       label: Align(
                                                         alignment:
                                                             Alignment.center,
-                                                        child: Text("Closure"),
+                                                        child: Text("Approve"),
                                                       ),
                                                     ),
                                                     DataColumn(
                                                       label: Align(
                                                         alignment:
                                                             Alignment.center,
-                                                        child: Text("HOT"),
+                                                        child: Text("Reject"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text("Header"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text("Amount"),
                                                       ),
                                                     ),
                                                     DataColumn(
@@ -455,79 +885,304 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                         alignment:
                                                             Alignment.center,
                                                         child:
-                                                            Text("Follow Up"),
+                                                            Text("Total Slots"),
                                                       ),
                                                     ),
                                                     DataColumn(
                                                       label: Align(
                                                         alignment:
                                                             Alignment.center,
-                                                        child: Text("Cold"),
+                                                        child: Text("Slots"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text("Amount"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child:
+                                                            Text("Percentage"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                            "Sancation Amouunt"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                            "Approval Remarks"),
                                                       ),
                                                     ),
                                                   ],
-                                                  rows:
-                                                      List.generate(1, (index) {
-                                                    return DataRow(cells: [
-                                                      const DataCell(Align(
-                                                        child:
-                                                            Text("Percentage"),
+                                                  rows: List.generate(
+                                                      widget
+                                                          .controller
+                                                          .accomdationList
+                                                          .length, (index) {
+                                                    var num = index + 1;
+                                                    return DataRow(
+                                                      color: widget.controller.radioItems[index].isRejected ? const MaterialStatePropertyAll(
+                                                      Colors.redAccent
+                                                      ): const MaterialStatePropertyAll( 
+                                                        Colors.white
+                                                      ),
+                                                      cells: [
+                                                      DataCell(Align(
+                                                        child: Text("$num"),
+                                                      )),
+                                                      DataCell(Align(
+                                                        child: Radio(
+                                                        value: radioBtn.value,
+                                                        groupValue:widget.controller. radioItems[index].isApproved,
+                                                        onChanged: (value) {
+                                                            setState(() {
+                                                            widget.controller.radioItems[index].isApproved = value as bool;
+                                                            widget.controller.radioItems[index].isRejected = !value;
+                                                            updateCounts();
+                                                            });
+                                                          },
+                                                      ),
+                                                      )),
+                                                      DataCell(Align(
+                                                        child:   Radio(
+                                                        value: radioBtn.value,
+                                                        groupValue: widget.controller. radioItems[index].isRejected,
+                                                        onChanged: (value) {
+                                                             setState(() {
+                                                             widget.controller.radioItems[index].isRejected = value as bool;
+                                                            widget.controller.radioItems[index].isApproved = !value;
+                                                            updateCounts();                                                               
+                                                             });
+                                                          },
+                                                      )
                                                       )),
                                                       DataCell(Align(
                                                         child: Text(
-                                                          "${widget.controller.getTadaCategory[0].iMRCPercentage.toString()} %",
+                                                          widget.controller
+                                                              .accomdationList
+                                                              .elementAt(index)
+                                                              .vTADAAADExpenditureHead!,
                                                           style: Theme.of(
                                                                   context)
                                                               .textTheme
                                                               .bodySmall!
                                                               .copyWith(
                                                                   color: Colors
-                                                                      .red),
+                                                                      .black),
                                                         ),
                                                       )),
                                                       DataCell(Align(
                                                         child: Text(
-                                                          "${widget.controller.getTadaCategory[1].iMRCPercentage.toString()} %",
+                                                          index == 0
+                                                              ? widget
+                                                                  .controller
+                                                                  .accomdationList
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .vTADACMAccommodationAmt!
+                                                                  .toInt()
+                                                                  .toString()
+                                                              : index == 1
+                                                                  ? widget
+                                                                      .controller
+                                                                      .accomdationList
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .vTADACMFoodAmt!
+                                                                      .toInt()
+                                                                      .toString()
+                                                                  : index == 2
+                                                                      ? widget
+                                                                          .controller
+                                                                          .accomdationList
+                                                                          .elementAt(
+                                                                              index)
+                                                                          .vTADACMTransportAmt!
+                                                                          .toInt()
+                                                                          .toString()
+                                                                      : "",
                                                           style: Theme.of(
                                                                   context)
                                                               .textTheme
                                                               .bodySmall!
                                                               .copyWith(
                                                                   color: Colors
-                                                                      .red),
+                                                                      .black),
                                                         ),
                                                       )),
                                                       //from date
                                                       DataCell(Align(
                                                         child: Text(
-                                                          "${widget.controller.getTadaCategory[2].iMRCPercentage!.toInt().toString()} %",
+                                                          widget.controller
+                                                              .accomdationList
+                                                              .elementAt(index)
+                                                              .vTADAAADTotalSlots!
+                                                              .toInt()
+                                                              .toString(),
                                                           style: Theme.of(
                                                                   context)
                                                               .textTheme
                                                               .bodySmall!
                                                               .copyWith(
                                                                   color: Colors
-                                                                      .red),
+                                                                      .black),
                                                         ),
                                                       )),
                                                       // departure time
                                                       DataCell(Align(
                                                         child: Text(
-                                                          "${widget.controller.getTadaCategory[3].iMRCPercentage!.toInt().toString()} %",
+                                                          widget.controller
+                                                              .accomdationList
+                                                              .elementAt(index)
+                                                              .vTADAAADSlots!
+                                                              .toInt()
+                                                              .toString(),
                                                           style: Theme.of(
                                                                   context)
                                                               .textTheme
                                                               .bodySmall!
                                                               .copyWith(
                                                                   color: Colors
-                                                                      .red),
+                                                                      .black),
+                                                        ),
+                                                      )),
+                                                      DataCell(Align(
+                                                        child: Text(
+                                                          widget.controller
+                                                              .accomdationList
+                                                              .elementAt(index)
+                                                              .vTADAAADAmount!
+                                                              .toInt()
+                                                              .toString(),
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodySmall!
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .black),
+                                                        ),
+                                                      )),
+                                                      DataCell(Align(
+                                                        child: TextField(
+                                                           readOnly: widget.controller.radioItems[index].isRejected ?true : false,
+                                                           inputFormatters: [
+                                                            FilteringTextInputFormatter
+                                                                .digitsOnly,
+                                                            LengthLimitingTextInputFormatter(
+                                                                2)
+                                                          ],
+                                                          onChanged: (value) {
+                                                            var percent =
+                                                                int.parse(widget
+                                                                    .controller
+                                                                    .percentageET[
+                                                                        index]
+                                                                    .text);
+                                                            var amounts = widget
+                                                                .controller
+                                                                .accomdationList
+                                                                .elementAt(
+                                                                    index)
+                                                                .vTADAAADAmount!;
+                                                            double
+                                                                sancationAmount =
+                                                                amounts *
+                                                                    (percent /
+                                                                        100);
+                                                            widget
+                                                                    .controller
+                                                                    .sancationAmountEt[
+                                                                        index]
+                                                                    .text =
+                                                                sancationAmount
+                                                                    .toInt()
+                                                                    .toString();
+                                                          },
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                          decoration:
+                                                              const InputDecoration(
+                                                                  border:
+                                                                      OutlineInputBorder()),
+                                                          controller: widget
+                                                                  .controller
+                                                                  .percentageET[
+                                                              index],
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodySmall!
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .black),
+                                                        ),
+                                                      )),
+                                                      DataCell(Align(
+                                                        child: TextField(
+                                                           readOnly: widget.controller.radioItems[index].isRejected ?true : false,
+                                                           decoration:
+                                                              const InputDecoration(
+                                                                  border:
+                                                                      OutlineInputBorder()),
+                                                          controller: widget
+                                                                  .controller
+                                                                  .sancationAmountEt[
+                                                              index],
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodySmall!
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .black),
+                                                        ),
+                                                      )),
+                                                      DataCell(Align(
+                                                        child: TextField(
+                                                          readOnly: widget.controller.radioItems[index].isRejected ?true : false,
+                                                          decoration:
+                                                              const InputDecoration(
+                                                                  border:
+                                                                      OutlineInputBorder()),
+                                                          controller: widget
+                                                                  .controller
+                                                                  .approvalRemarkEt[
+                                                              index],
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .name,
+                                                          textInputAction:
+                                                              TextInputAction
+                                                                  .done,
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodySmall!
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .black),
                                                         ),
                                                       )),
                                                     ]);
                                                   }),
                                                 )))
                                         : SizedBox(),
-                                  )
+                                  ),
                                 ],
                               ).marginSymmetric(horizontal: 20, vertical: 20))
                         ]),
@@ -539,6 +1194,23 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
             : const SizedBox(),
       ),
     );
+  }
+void updateCounts() {
+   widget.controller.approvedCount.value =  widget.controller.radioItems.where((item) =>  item.isApproved).length;
+   widget.controller.rejectedCount.value = widget.controller.radioItems.where((item) => item.isRejected).length;
+  }
+  @override
+  void dispose() {
+      super.dispose();
+    widget.controller.dispose();
+    widget.controller.timeArrayList.clear();
+    widget.controller.sourcesList.clear();
+    widget.controller.paymentDetails.clear();
+    widget.controller.accomdationList.clear();
+    widget.controller.sancationAmountEt.clear();
+    widget.controller.percentageET.clear();
+    widget.controller.approvalRemarkEt.clear();
+    widget.controller.getPlanerListData.clear();
   }
 }
 
@@ -556,7 +1228,6 @@ String dayCounts(String fromDate, String toDate) {
 
 String timeFormate(String dt) {
   DateTime time = DateFormat("HH:mm").parse(dt);
-
   String timeFrmt = DateFormat("hh:mm a").format(time);
   return timeFrmt;
 }

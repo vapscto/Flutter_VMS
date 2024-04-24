@@ -130,8 +130,8 @@ class TadaAccomodationModelValues {
     vTADAAADAmount = json['VTADAAAD_Amount'];
     vTADAAAAHSactionedAmount = json['VTADAAAAH_SactionedAmount'];
     vTADAAADRemarks = json['VTADAAAD_Remarks'];
-    vTADAAADSlots = json['VTADAAAD_Slots'];
-    vTADAAADTotalSlots = json['VTADAAAD_TotalSlots'];
+    vTADAAADSlots = json['VTADAAAD_Slots']?? 0.0;
+    vTADAAADTotalSlots = json['VTADAAAD_TotalSlots'] ?? 0.0;
     hCNT = json['HCNT'];
     vTADAAAAHStatusFlg = json['VTADAAAAH_StatusFlg'];
   }

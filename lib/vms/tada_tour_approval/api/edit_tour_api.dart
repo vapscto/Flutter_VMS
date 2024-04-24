@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -56,7 +57,13 @@ Future<void> getEditTour(
     TadaAccomodationModel tadaAccomodationModel =
         TadaAccomodationModel.fromJson(response.data['editArray']);
     tadaTourController.accomdationList.addAll(tadaAccomodationModel.values!);
-
+   for(int i =0;i<tadaAccomodationModel.values!.length;i++){
+    tadaTourController.percentageET.add(TextEditingController(text: "80"));
+    var sancationAmount = tadaAccomodationModel.values![i].vTADAAADAmount!.toInt();
+    var percaent = sancationAmount * (80 /100);
+     tadaTourController.sancationAmountEt.add(TextEditingController(text: "$percaent"));
+     tadaTourController.approvalRemarkEt.add(TextEditingController(text: ""));
+   }
     TadaPaymentDetailsModel paymentDetails =
         TadaPaymentDetailsModel.fromJson(response.data['editArrayTwo']);
     tadaTourController.paymentDetails.addAll(paymentDetails.values!);
