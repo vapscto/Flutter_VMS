@@ -77,462 +77,449 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 20),
                       scrollDirection: Axis.horizontal,
-                      child: Container(
-                        child: Column(children: [
-                          Container(
+                      child: Column(children: [
+                        Container(
+                          width: width,
+                          height: 150,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.blue, width: 2)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    RichText(
+                                        text: TextSpan(children: [
+                                      TextSpan(
+                                          text: "Companny Name : ",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .merge(TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.blue[600]))),
+                                      TextSpan(
+                                          text: widget.getTourViewValues.mIName,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .merge(const TextStyle(
+                                                  fontSize: 16,
+                                                  color: Color.fromARGB(
+                                                      255, 10, 10, 10))))
+                                    ])),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    RichText(
+                                        text: TextSpan(children: [
+                                      TextSpan(
+                                          text: "Applied Date :",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .merge(TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.blue[600]))),
+                                      TextSpan(
+                                          text: getDate(DateTime.parse(widget
+                                              .getTourViewValues
+                                              .vTADAAAAppliedDate!)),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .merge(const TextStyle(
+                                                  fontSize: 16,
+                                                  color: Color.fromARGB(
+                                                      255, 10, 10, 10)))),
+                                    ])),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    RichText(
+                                        text: TextSpan(children: [
+                                      TextSpan(
+                                          text: "Staff Name : ",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .merge(TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.blue[600]))),
+                                      TextSpan(
+                                          text:
+                                              widget.getTourViewValues.empName,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .merge(const TextStyle(
+                                                  fontSize: 16,
+                                                  color: Color.fromARGB(
+                                                      255, 10, 10, 10))))
+                                    ])),
+                                    RichText(
+                                        text: TextSpan(children: [
+                                      TextSpan(
+                                          text: "Date :",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .merge(TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.blue[600]))),
+                                      TextSpan(
+                                          text:
+                                              "${getDate(DateTime.parse(widget.getTourViewValues.vTADAAAFromDate!))} To ${getDate(DateTime.parse(widget.getTourViewValues.vTADAAAToDate!))}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .merge(const TextStyle(
+                                                  fontSize: 16,
+                                                  color: Color.fromARGB(
+                                                      255, 10, 10, 10)))),
+                                    ])),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    RichText(
+                                        text: TextSpan(children: [
+                                      TextSpan(
+                                          text: "Applied Amount : ",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .merge(TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.blue[600]))),
+                                      TextSpan(
+                                          text: widget.getTourViewValues
+                                              .vTADAAATotalAppliedAmount!
+                                              .toDouble()
+                                              .toString(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .merge(const TextStyle(
+                                                  fontSize: 16,
+                                                  color: Color.fromARGB(
+                                                      255, 10, 10, 10))))
+                                    ])),
+                                    RichText(
+                                        text: TextSpan(children: [
+                                      TextSpan(
+                                          text: "Remarks :",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .merge(TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.blue[600]))),
+                                      TextSpan(
+                                          text:
+                                              "${widget.getTourViewValues.vTADAAARemarks}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .merge(const TextStyle(
+                                                  fontSize: 16,
+                                                  color: Color.fromARGB(
+                                                      255, 10, 10, 10)))),
+                                    ])),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
                             width: width,
-                            height: 150,
+                            height: 300,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 border:
                                     Border.all(color: Colors.blue, width: 2)),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 10),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      RichText(
-                                          text: TextSpan(children: [
-                                        TextSpan(
-                                            text: "Companny Name : ",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .merge(TextStyle(
-                                                    fontSize: 16,
-                                                    color: Colors.blue[600]))),
-                                        TextSpan(
-                                            text:
-                                                widget.getTourViewValues.mIName,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .merge(const TextStyle(
-                                                    fontSize: 16,
-                                                    color: Color.fromARGB(
-                                                        255, 10, 10, 10))))
-                                      ])),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      RichText(
-                                          text: TextSpan(children: [
-                                        TextSpan(
-                                            text: "Applied Date :",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .merge(TextStyle(
-                                                    fontSize: 16,
-                                                    color: Colors.blue[600]))),
-                                        TextSpan(
-                                            text: getDate(DateTime.parse(widget
-                                                .getTourViewValues
-                                                .vTADAAAAppliedDate!)),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .merge(const TextStyle(
-                                                    fontSize: 16,
-                                                    color: Color.fromARGB(
-                                                        255, 10, 10, 10)))),
-                                      ])),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      RichText(
-                                          text: TextSpan(children: [
-                                        TextSpan(
-                                            text: "Staff Name : ",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .merge(TextStyle(
-                                                    fontSize: 16,
-                                                    color: Colors.blue[600]))),
-                                        TextSpan(
-                                            text: widget
-                                                .getTourViewValues.empName,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .merge(const TextStyle(
-                                                    fontSize: 16,
-                                                    color: Color.fromARGB(
-                                                        255, 10, 10, 10))))
-                                      ])),
-                                      RichText(
-                                          text: TextSpan(children: [
-                                        TextSpan(
-                                            text: "Date :",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .merge(TextStyle(
-                                                    fontSize: 16,
-                                                    color: Colors.blue[600]))),
-                                        TextSpan(
-                                            text:
-                                                "${getDate(DateTime.parse(widget.getTourViewValues.vTADAAAFromDate!))} To ${getDate(DateTime.parse(widget.getTourViewValues.vTADAAAToDate!))}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .merge(const TextStyle(
-                                                    fontSize: 16,
-                                                    color: Color.fromARGB(
-                                                        255, 10, 10, 10)))),
-                                      ])),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      RichText(
-                                          text: TextSpan(children: [
-                                        TextSpan(
-                                            text: "Applied Amount : ",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .merge(TextStyle(
-                                                    fontSize: 16,
-                                                    color: Colors.blue[600]))),
-                                        TextSpan(
-                                            text: widget.getTourViewValues
-                                                .vTADAAATotalAppliedAmount!
-                                                .toDouble()
-                                                .toString(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .merge(const TextStyle(
-                                                    fontSize: 16,
-                                                    color: Color.fromARGB(
-                                                        255, 10, 10, 10))))
-                                      ])),
-                                      RichText(
-                                          text: TextSpan(children: [
-                                        TextSpan(
-                                            text: "Remarks :",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .merge(TextStyle(
-                                                    fontSize: 16,
-                                                    color: Colors.blue[600]))),
-                                        TextSpan(
-                                            text:
-                                                "${widget.getTourViewValues.vTADAAARemarks}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .merge(const TextStyle(
-                                                    fontSize: 16,
-                                                    color: Color.fromARGB(
-                                                        255, 10, 10, 10)))),
-                                      ])),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                              width: width,
-                              height: 300,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border:
-                                      Border.all(color: Colors.blue, width: 2)),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "TOUR - ADAVANCE TRAVEL DETAILS",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .merge(TextStyle(
-                                            color: Colors.blue[600],
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold)),
-                                  ),
-                                  SingleChildScrollView(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 0),
-                                      scrollDirection: Axis.horizontal,
-                                      child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          child: DataTable(
-                                            dataTextStyle: const TextStyle(
-                                                fontSize: 14,
-                                                color: Color.fromRGBO(
-                                                    0, 0, 0, 0.95),
-                                                fontWeight: FontWeight.w500),
-                                            dataRowHeight: 50,
-                                            headingRowHeight: 40,
-                                            horizontalMargin: 10,
-                                            columnSpacing: 30,
-                                            dividerThickness: 1,
-                                            headingTextStyle: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700),
-                                            border: TableBorder.all(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                width: 0.5),
-                                            headingRowColor:
-                                                MaterialStateProperty.all(
-                                                    Theme.of(context)
-                                                        .primaryColor),
-                                            columns: const [
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("SL.No"),
-                                                ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "TOUR - ADAVANCE TRAVEL DETAILS",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .merge(TextStyle(
+                                          color: Colors.blue[600],
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                SingleChildScrollView(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 0),
+                                    scrollDirection: Axis.horizontal,
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: DataTable(
+                                          dataTextStyle: const TextStyle(
+                                              fontSize: 14,
+                                              color:
+                                                  Color.fromRGBO(0, 0, 0, 0.95),
+                                              fontWeight: FontWeight.w500),
+                                          dataRowHeight: 50,
+                                          headingRowHeight: 40,
+                                          horizontalMargin: 10,
+                                          columnSpacing: 30,
+                                          dividerThickness: 1,
+                                          headingTextStyle: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700),
+                                          border: TableBorder.all(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              width: 0.5),
+                                          headingRowColor:
+                                              MaterialStateProperty.all(
+                                                  Theme.of(context)
+                                                      .primaryColor),
+                                          columns: const [
+                                            DataColumn(
+                                              label: Align(
+                                                alignment: Alignment.center,
+                                                child: Text("SL.No"),
                                               ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("Tour Plan Name"),
-                                                ),
+                                            ),
+                                            DataColumn(
+                                              label: Align(
+                                                alignment: Alignment.center,
+                                                child: Text("Tour Plan Name"),
                                               ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("Day"),
-                                                ),
+                                            ),
+                                            DataColumn(
+                                              label: Align(
+                                                alignment: Alignment.center,
+                                                child: Text("Day"),
                                               ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("FromDate"),
-                                                ),
+                                            ),
+                                            DataColumn(
+                                              label: Align(
+                                                alignment: Alignment.center,
+                                                child: Text("FromDate"),
                                               ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("Departure Time"),
-                                                ),
+                                            ),
+                                            DataColumn(
+                                              label: Align(
+                                                alignment: Alignment.center,
+                                                child: Text("Departure Time"),
                                               ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("Todate"),
-                                                ),
+                                            ),
+                                            DataColumn(
+                                              label: Align(
+                                                alignment: Alignment.center,
+                                                child: Text("Todate"),
                                               ),
-                                              DataColumn(
-                                                label: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text("Arrival Time"),
-                                                ),
+                                            ),
+                                            DataColumn(
+                                              label: Align(
+                                                alignment: Alignment.center,
+                                                child: Text("Arrival Time"),
                                               ),
-                                            ],
-                                            rows: List.generate(1, (index) {
-                                              return DataRow(cells: [
-                                                DataCell(Align(
-                                                  child: Text("${index + 1}"),
-                                                )),
-                                                DataCell(Align(
-                                                  child: Text(widget.planerNme
-                                                      .toUpperCase()),
-                                                )),
-                                                DataCell(Align(
-                                                  child: Text(dayCount),
-                                                )),
-                                                //from date
-                                                DataCell(Align(
-                                                  child: Text(getDate(
-                                                      DateTime.parse(widget
-                                                          .controller
-                                                          .timeArrayList
-                                                          .first
-                                                          .vtadaaAFromDate!))),
-                                                )),
-                                                // departure time
-                                                DataCell(Align(
-                                                  child: Text(timeFormate(widget
-                                                      .controller
-                                                      .timeArrayList
-                                                      .first
-                                                      .vtadaaADepartureTime!)),
-                                                )),
-                                                //tob date
-                                                DataCell(Align(
-                                                  child: Text(getDate(
-                                                      DateTime.parse(widget
-                                                          .controller
-                                                          .timeArrayList
-                                                          .first
-                                                          .vtadaaAToDate!))),
-                                                )),
-                                                DataCell(Align(
-                                                  child: Text(timeFormate(widget
-                                                      .controller
-                                                      .timeArrayList
-                                                      .first
-                                                      .vtadaaAArrivalTime!)),
-                                                )),
-                                              ]);
-                                            }),
-                                          ))),
-                                  Obx(
-                                    () => widget.controller.getTadaCategory
-                                            .isNotEmpty
-                                        ? SingleChildScrollView(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 10, horizontal: 0),
-                                            scrollDirection: Axis.horizontal,
-                                            child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                child: DataTable(
-                                                  dataTextStyle:
-                                                      const TextStyle(
-                                                          fontSize: 14,
-                                                          color: Color.fromRGBO(
-                                                              0, 0, 0, 0.95),
-                                                          fontWeight:
-                                                              FontWeight.w500),
-                                                  dataRowHeight: 50,
-                                                  headingRowHeight: 40,
-                                                  horizontalMargin: 10,
-                                                  columnSpacing: 30,
-                                                  dividerThickness: 1,
-                                                  headingTextStyle:
-                                                      const TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.w700),
-                                                  border: TableBorder.all(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      width: 0.5),
-                                                  headingRowColor:
-                                                      MaterialStateProperty.all(
-                                                          Theme.of(context)
-                                                              .primaryColor),
-                                                  columns: const [
-                                                    DataColumn(
-                                                      label: Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Text(""),
-                                                      ),
+                                            ),
+                                          ],
+                                          rows: List.generate(1, (index) {
+                                            return DataRow(cells: [
+                                              DataCell(Align(
+                                                child: Text("${index + 1}"),
+                                              )),
+                                              DataCell(Align(
+                                                child: Text(widget.planerNme
+                                                    .toUpperCase()),
+                                              )),
+                                              DataCell(Align(
+                                                child: Text(dayCount),
+                                              )),
+                                              //from date
+                                              DataCell(Align(
+                                                child: Text(getDate(
+                                                    DateTime.parse(widget
+                                                        .controller
+                                                        .timeArrayList
+                                                        .first
+                                                        .vtadaaAFromDate!))),
+                                              )),
+                                              // departure time
+                                              DataCell(Align(
+                                                child: Text(timeFormate(widget
+                                                    .controller
+                                                    .timeArrayList
+                                                    .first
+                                                    .vtadaaADepartureTime!)),
+                                              )),
+                                              //tob date
+                                              DataCell(Align(
+                                                child: Text(getDate(
+                                                    DateTime.parse(widget
+                                                        .controller
+                                                        .timeArrayList
+                                                        .first
+                                                        .vtadaaAToDate!))),
+                                              )),
+                                              DataCell(Align(
+                                                child: Text(timeFormate(widget
+                                                    .controller
+                                                    .timeArrayList
+                                                    .first
+                                                    .vtadaaAArrivalTime!)),
+                                              )),
+                                            ]);
+                                          }),
+                                        ))),
+                                Obx(
+                                  () => widget
+                                          .controller.getTadaCategory.isNotEmpty
+                                      ? SingleChildScrollView(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 0),
+                                          scrollDirection: Axis.horizontal,
+                                          child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: DataTable(
+                                                dataTextStyle: const TextStyle(
+                                                    fontSize: 14,
+                                                    color: Color.fromRGBO(
+                                                        0, 0, 0, 0.95),
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                                dataRowHeight: 50,
+                                                headingRowHeight: 40,
+                                                horizontalMargin: 10,
+                                                columnSpacing: 30,
+                                                dividerThickness: 1,
+                                                headingTextStyle:
+                                                    const TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                border: TableBorder.all(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    width: 0.5),
+                                                headingRowColor:
+                                                    MaterialStateProperty.all(
+                                                        Theme.of(context)
+                                                            .primaryColor),
+                                                columns: const [
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text(""),
                                                     ),
-                                                    DataColumn(
-                                                      label: Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Text("Closure"),
-                                                      ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text("Closure"),
                                                     ),
-                                                    DataColumn(
-                                                      label: Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Text("HOT"),
-                                                      ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text("HOT"),
                                                     ),
-                                                    DataColumn(
-                                                      label: Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child:
-                                                            Text("Follow Up"),
-                                                      ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text("Follow Up"),
                                                     ),
-                                                    DataColumn(
-                                                      label: Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Text("Cold"),
-                                                      ),
+                                                  ),
+                                                  DataColumn(
+                                                    label: Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text("Cold"),
                                                     ),
-                                                  ],
-                                                  rows:
-                                                      List.generate(1, (index) {
-                                                    return DataRow(cells: [
-                                                      const DataCell(Align(
-                                                        child:
-                                                            Text("Percentage"),
-                                                      )),
-                                                      DataCell(Align(
-                                                        child: Text(
-                                                          "${widget.controller.getTadaCategory[0].iMRCPercentage.toString()} %",
-                                                          style: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .bodySmall!
-                                                              .copyWith(
-                                                                  color: Colors
-                                                                      .red),
-                                                        ),
-                                                      )),
-                                                      DataCell(Align(
-                                                        child: Text(
-                                                          "${widget.controller.getTadaCategory[1].iMRCPercentage.toString()} %",
-                                                          style: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .bodySmall!
-                                                              .copyWith(
-                                                                  color: Colors
-                                                                      .red),
-                                                        ),
-                                                      )),
-                                                      //from date
-                                                      DataCell(Align(
-                                                        child: Text(
-                                                          "${widget.controller.getTadaCategory[2].iMRCPercentage!.toInt().toString()} %",
-                                                          style: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .bodySmall!
-                                                              .copyWith(
-                                                                  color: Colors
-                                                                      .red),
-                                                        ),
-                                                      )),
-                                                      // departure time
-                                                      DataCell(Align(
-                                                        child: Text(
-                                                          "${widget.controller.getTadaCategory[3].iMRCPercentage!.toInt().toString()} %",
-                                                          style: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .bodySmall!
-                                                              .copyWith(
-                                                                  color: Colors
-                                                                      .red),
-                                                        ),
-                                                      )),
-                                                    ]);
-                                                  }),
-                                                )))
-                                        : SizedBox(),
-                                  )
-                                ],
-                              ).marginSymmetric(horizontal: 20, vertical: 20))
-                        ]),
-                      ),
+                                                  ),
+                                                ],
+                                                rows: List.generate(1, (index) {
+                                                  return DataRow(cells: [
+                                                    const DataCell(Align(
+                                                      child: Text("Percentage"),
+                                                    )),
+                                                    DataCell(Align(
+                                                      child: Text(
+                                                        "${widget.controller.getTadaCategory[0].iMRCPercentage.toString()} %",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                                color:
+                                                                    Colors.red),
+                                                      ),
+                                                    )),
+                                                    DataCell(Align(
+                                                      child: Text(
+                                                        "${widget.controller.getTadaCategory[1].iMRCPercentage.toString()} %",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                                color:
+                                                                    Colors.red),
+                                                      ),
+                                                    )),
+                                                    //from date
+                                                    DataCell(Align(
+                                                      child: Text(
+                                                        "${widget.controller.getTadaCategory[2].iMRCPercentage!.toInt().toString()} %",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                                color:
+                                                                    Colors.red),
+                                                      ),
+                                                    )),
+                                                    // departure time
+                                                    DataCell(Align(
+                                                      child: Text(
+                                                        "${widget.controller.getTadaCategory[3].iMRCPercentage!.toInt().toString()} %",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                                color:
+                                                                    Colors.red),
+                                                      ),
+                                                    )),
+                                                  ]);
+                                                }),
+                                              )))
+                                      : const SizedBox(),
+                                )
+                              ],
+                            ).marginSymmetric(horizontal: 20, vertical: 20))
+                      ]),
                     ),
                   ],
                 ),

@@ -12,8 +12,8 @@ import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 class TadaViewTourView extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  TadaViewTourView(
-      {required this.loginSuccessModel, required this.mskoolController});
+  const TadaViewTourView(
+      {super.key, required this.loginSuccessModel, required this.mskoolController});
 
   @override
   State<TadaViewTourView> createState() => _TadaViewTourViewState();
