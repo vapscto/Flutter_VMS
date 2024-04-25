@@ -18,8 +18,19 @@ class CallLetterAPI {
       var response = await dio.post(api,
           options: Options(headers: getSession()), data: body);
       if (response.statusCode == 200) {
-        Fluttertoast.showToast(msg: "Call Letter send Successfully");
-        Get.back();
+        if (response.data['retrunMsg'] == "success") {
+          Fluttertoast.showToast(msg: "Email Sent..!!!");
+          Get.back();
+        } else if (response.data['retrunMsg'] == "notFound") {
+          Fluttertoast.showToast(
+              msg: "Email Not sent..!!!\nDefault Email-Id is Not Found.. !!!");
+        } else if (response.data['retrunMsg'] == "Error") {
+          Fluttertoast.showToast(
+              msg: "Something went wrong\nTry After some time..!!");
+        } else {
+          Fluttertoast.showToast(
+              msg: "Something went wrong\nTry After some time..!!");
+        }
       }
     } catch (e) {
       logger.e(e);

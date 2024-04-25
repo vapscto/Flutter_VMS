@@ -51,17 +51,6 @@ class CallLetterView extends StatelessWidget {
                   child: MSkollBtn(
                       title: "Send Mail",
                       onPress: () async {
-                        // PdfDocument document = PdfDocument(inputBytes: rawData);
-
-                        // PdfTextExtractor extractor = PdfTextExtractor(document);
-
-                        // String result = extractor.extractText(
-                        //   layoutText: true,
-                        //   startPageIndex: 0,
-                        // );
-                        logger.w(InterviewCallLetter(
-                          value: value,
-                        ));
                         await CallLetterAPI.i.saveCallLetter(
                             base: baseUrlFromInsCode(
                                 'recruitement', mskoolController),
