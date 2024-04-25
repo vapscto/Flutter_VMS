@@ -54,7 +54,8 @@ class GetEmpDetailsController extends GetxController {
   }
 
   _getLocation() async {
-    Position position = await Geolocator.getCurrentPosition();
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best);
     latitude.value = position.latitude;
     longitude.value = position.longitude;
     logger.d(longitude.value);
