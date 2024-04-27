@@ -352,8 +352,7 @@ class URLS {
   // All Emp rating
   static String allEmpRating =
       'api/Rating_TransactionFacade/get_Consolidated_details';
-  static String ratingList =
-      'api/Rating_TransactionFacade/getconsolidatedreport';
+  static String ratingList = 'api/Rating_TransactionFacade/mobemployeerating/';
 
   static String purchaserequisitiongridapi =
       'api/INV_PurchaseRequisitionFacade/getloaddata';
@@ -401,8 +400,8 @@ class URLS {
   //
   static String newcandidate = 'api/CandidateListVMSFacade/onloadgetdetails';
 
-  static String getTourViews="api/TADAAdvanceApprovalFacade/getTourApproval/";
-  static String editTadaTour ="api/TADAAdvanceApprovalFacade/editTour/";
+  static String getTourViews = "api/TADAAdvanceApprovalFacade/getTourApproval/";
+  static String editTadaTour = "api/TADAAdvanceApprovalFacade/editTour/";
 
-  static String getViewTada="api/TADAAdvanceApprovalFacade/getView/";
+  static String getViewTada = "api/TADAAdvanceApprovalFacade/getView/";
 }
