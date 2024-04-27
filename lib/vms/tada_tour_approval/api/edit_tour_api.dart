@@ -21,7 +21,7 @@ Future<void> getEditTour(
   final String apiUrl = base + URLS.editTadaTour;
   logger.w(apiUrl);
 
-   try {
+  try {
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
       "HRME_Id": hrmeId,
@@ -40,11 +40,14 @@ Future<void> getEditTour(
     if (tadaTourController.timeArrayList.isNotEmpty ||
         tadaTourController.sourcesList.isNotEmpty ||
         tadaTourController.accomdationList.isNotEmpty ||
-        tadaTourController.paymentDetails.isNotEmpty) {
+        tadaTourController.paymentDetails.isNotEmpty ||
+        tadaTourController.chartData.isNotEmpty) {
       tadaTourController.timeArrayList.clear();
       tadaTourController.sourcesList.clear();
       tadaTourController.paymentDetails.clear();
       tadaTourController.accomdationList.clear();
+      tadaTourController.chartData.clear();
+      tadaTourController.sancationAmountEt.clear();
     }
     TadaTimeArray timeArrayList =
         TadaTimeArray.fromJson(response.data['timeArray']);
@@ -53,18 +56,57 @@ Future<void> getEditTour(
     TadaClientSources sourcList =
         TadaClientSources.fromJson(response.data['client_Master']);
     tadaTourController.sourcesList.addAll(sourcList.values!);
-
+    for (int i = 0; i < tadaTourController.sourcesList.length; i++) {
+      if (tadaTourController.sourcesList[i].closure != null) {
+        tadaTourController.chartData.add(ChartData(
+            x: "Closer",
+            y: tadaTourController.sourcesList[i].closure!.toDouble()));
+      }
+      if (tadaTourController.sourcesList[i].cold != null) {
+        tadaTourController.chartData.add(ChartData(
+            x: "Cold", y: tadaTourController.sourcesList[i].cold!.toDouble()));
+      }
+      if (tadaTourController.sourcesList[i].followUp != null) {
+        tadaTourController.chartData.add(ChartData(
+            x: "FollowUp",
+            y: tadaTourController.sourcesList[i].followUp!.toDouble()));
+      }
+      if (tadaTourController.sourcesList[i].nEGOTATION != null) {
+        tadaTourController.chartData.add(ChartData(
+            x: "Negotn",
+            y: tadaTourController.sourcesList[i].nEGOTATION!.toDouble()));
+      }
+      if (tadaTourController.sourcesList[i].hOT != null) {
+        tadaTourController.chartData.add(ChartData(
+            x: "Hot", y: tadaTourController.sourcesList[i].hOT!.toDouble()));
+      }
+    }
+    if (tadaTourController.sourcesList.first.nEGOTATION != null) {
+      tadaTourController.showTable.value = true;
+      // logger.i("showTable${tadaTourController.showTable.value}");
+    } else if (tadaTourController.sourcesList.first.cold != null) {
+      tadaTourController.showTable.value = false;
+      //logger.i("showTable${tadaTourController.showTable.value}");
+    }
     TadaAccomodationModel tadaAccomodationModel =
         TadaAccomodationModel.fromJson(response.data['editArray']);
     tadaTourController.accomdationList.addAll(tadaAccomodationModel.values!);
-   for(int i =0;i<tadaAccomodationModel.values!.length;i++){
-    tadaTourController.percentageET.add(TextEditingController(text: "80"));
-    var sancationAmount = tadaAccomodationModel.values![i].vTADAAADAmount!.toInt();
-    var percaent = sancationAmount * (80 /100);
-     tadaTourController.sancationAmountEt.add(TextEditingController(text: "$percaent"));
-     tadaTourController.approvalRemarkEt.add(TextEditingController(text: ""));
-   }
-    TadaPaymentDetailsModel paymentDetails =
+    for (int i = 0; i < tadaAccomodationModel.values!.length; i++) {
+      tadaTourController.percentageET.add(TextEditingController(text: "80"));
+      var sancationAmount =
+          tadaAccomodationModel.values![i].vTADAAADAmount!.toInt();
+      var percaent = sancationAmount * (80 / 100);
+       
+      tadaTourController.sancationAmountEt
+          .add(TextEditingController(text: "${percaent.toInt()}"));
+      tadaTourController.approvalRemarkEt.add(TextEditingController(text: ""));
+        tadaTourController.sancationAmountEt[i].addListener(() {
+       tadaTourController.calculateSum();
+      });
+    
+    }
+  
+     TadaPaymentDetailsModel paymentDetails =
         TadaPaymentDetailsModel.fromJson(response.data['editArrayTwo']);
     tadaTourController.paymentDetails.addAll(paymentDetails.values!);
   } on DioError catch (e) {

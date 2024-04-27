@@ -31,14 +31,15 @@ class TadaClientSourcesValues {
   int? cold;
   int? followUp;
   int? hOT;
-
+  int? nEGOTATION;
   TadaClientSourcesValues(
       {this.type,
       this.iSMSMSOSourceName,
       this.closure,
       this.cold,
       this.followUp,
-      this.hOT});
+      this.hOT,
+      this.nEGOTATION});
 
   TadaClientSourcesValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
@@ -47,6 +48,7 @@ class TadaClientSourcesValues {
     cold = json['Cold'];
     followUp = json['Follow Up'];
     hOT = json['HOT'];
+    nEGOTATION =json['NEGOTATION'];
   }
 
   Map<String, dynamic> toJson() {
@@ -57,6 +59,7 @@ class TadaClientSourcesValues {
     data['Cold'] = cold;
     data['Follow Up'] = followUp;
     data['HOT'] = hOT;
+    data['NEGOTATION']=nEGOTATION;
     return data;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/models/get_planerdata.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/models/get_tour_palner_details.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/models/get_tour_view_model.dart';
@@ -23,11 +24,30 @@ RxList<TadaPlanerDataValues> getPlanerListData = <TadaPlanerDataValues>[].obs;
 RxList<TextEditingController> percentageET = <TextEditingController>[].obs;
 RxList<TextEditingController> sancationAmountEt=<TextEditingController>[].obs;
 RxList<TextEditingController> approvalRemarkEt = <TextEditingController>[].obs;
+RxString totalSamount ="".obs;
+RxBool showTable = RxBool(false);
+RxList<ChartData> chartData  = <ChartData>[].obs;
+
+  Rx<TextEditingController> sancationAmountTotal = TextEditingController( text:  "").obs;
  RxList<Item> radioItems = RxList.generate(3, (index) => Item(isApproved: false, isRejected: false));
   RxInt approvedCount = 0.obs;
   RxInt rejectedCount = 0.obs;
- }
 
+  void calculateSum() {
+    int sum = 0;
+    for (TextEditingController controller in sancationAmountEt) {
+      int value = int.tryParse(controller.text) ?? 0;
+      sum += value;
+    }
+  
+     totalSamount.value = '$sum';
+  }
+}
+class ChartData {
+  String? x;
+  double? y;
+  ChartData({required this.x, required this.y});
+} 
 class TourMap{
   String?ieRID;
   String? locationName;

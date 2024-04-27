@@ -34,8 +34,9 @@ Future<void> getViewTada(
       "VTADAAA_Id": vtadaaaId,
       "userId": userId
     });
-    if (tadaTourController.getTadaCategory.isNotEmpty) {
+    if (tadaTourController.getTadaCategory.isNotEmpty || tadaTourController.getPlanerListData.isNotEmpty) {
       tadaTourController.getTadaCategory.clear();
+      tadaTourController.getPlanerListData.clear();
     }
     TadaGetCategoryModel categoryModel =
         TadaGetCategoryModel.fromJson(response.data['getCategoryArray']);
@@ -43,7 +44,6 @@ Future<void> getViewTada(
     TadaPlanerData getPalnerList =
      TadaPlanerData.fromJson(response.data['getPlanerdata']);
     tadaTourController.getPlanerListData.addAll(getPalnerList.values!);
-
   } on DioError catch (e) {
     logger.e(e.message);
   } on Exception catch (e) {
