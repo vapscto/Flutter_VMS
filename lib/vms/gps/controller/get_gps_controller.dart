@@ -33,28 +33,20 @@ class GetEmpDetailsController extends GetxController {
   }
 
   Future<bool> getLocation() async {
-    // var status = await Permission.location.request();
-    // if (status.isGranted) {
-    //   LocationData locationData = await Location().getLocation();
-    //   latitude.value = locationData.latitude!;
-    //   longitude.value = locationData.longitude!;
-    //   return true;
-    // }
     var status1 = await Geolocator.requestPermission();
     if (status1 == LocationPermission.denied) {
       Fluttertoast.showToast(msg: "Location Permission is denied");
     } else {
-      LocationPermission permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.always) {
-        _getLocation();
-        return true;
-      }
+      // LocationPermission permission = await Geolocator.checkPermission();
+      _getLocation();
+      return true;
     }
     return false;
   }
 
   _getLocation() async {
-    Position position = await Geolocator.getCurrentPosition();
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best);
     latitude.value = position.latitude;
     longitude.value = position.longitude;
     logger.d(longitude.value);

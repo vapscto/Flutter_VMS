@@ -476,11 +476,11 @@ class _CallLetterHomeState extends State<CallLetterHome> {
                     inputFormatters: [LengthLimitingTextInputFormatter(10)],
                     style: Get.textTheme.titleSmall,
                     decoration: InputDecoration(
-                        hintText: "Office Office Ph No.",
+                        hintText: " Office Ph No.",
                         hintStyle: Get.textTheme.titleSmall!
                             .copyWith(color: Colors.grey),
                         labelStyle: Get.textTheme.titleSmall,
-                        labelText: 'Office Office Ph No.',
+                        labelText: ' Office Ph No.',
                         border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide(color: Colors.grey),

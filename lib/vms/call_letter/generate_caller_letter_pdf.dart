@@ -119,6 +119,7 @@ class GenerateCallLetter {
           mskoolController: mskoolController,
           email: value.candidateEmail!,
           loginSuccessModel: loginSuccessModel,
+          value: value,
         ));
   }
 }
