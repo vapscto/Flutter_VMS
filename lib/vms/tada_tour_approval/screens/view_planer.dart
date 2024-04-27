@@ -1086,6 +1086,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                   )))
                                           : const SizedBox()),
                                       Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Obx(
                                             () =>
@@ -1484,48 +1485,9 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                     : const SizedBox(),
                                           ),
                                           const SizedBox(
-                                            width: 50,
+                                            width: 20,
                                           ),
-                                          Obx(
-                                            () => widget.controller.chartData
-                                                        .length >
-                                                    3
-                                                ? Container(
-                                                    width: 250,
-                                                    child: SfCartesianChart(
-                                                        enableAxisAnimation:
-                                                            true,
-                                                        primaryXAxis:
-                                                            CategoryAxis(),
-                                                        series: <
-                                                            CartesianSeries<
-                                                                ChartData,
-                                                                String>>[
-                                                          // Renders column chart
-                                                          ColumnSeries<
-                                                                  ChartData,
-                                                                  String>(
-                                                              dataSource: widget
-                                                                  .controller
-                                                                  .chartData,
-                                                              xValueMapper:
-                                                                  (ChartData data,
-                                                                          _) =>
-                                                                      data.x,
-                                                              yValueMapper:
-                                                                  (ChartData data,
-                                                                          _) =>
-                                                                      data.y)
-                                                        ]))
-                                                : const SizedBox(),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Obx(
+                                           Obx(
                                             () =>
                                                 widget.controller.paymentDetails
                                                         .isNotEmpty
@@ -1559,7 +1521,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                   40,
                                                               horizontalMargin:
                                                                   10,
-                                                              columnSpacing: 30,
+                                                              columnSpacing: 10,
                                                               dividerThickness:
                                                                   1,
                                                               headingTextStyle:
@@ -1685,6 +1647,45 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                             )))
                                                     : const SizedBox(),
                                           ),
+                                         ],
+                                      ),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                             Obx(
+                                            () => widget.controller.chartData
+                                                        .length >
+                                                    3
+                                                ? Container(
+                                                    width: 250,
+                                                    child: SfCartesianChart(
+                                                        enableAxisAnimation:
+                                                            true,
+                                                        primaryXAxis:
+                                                            CategoryAxis(),
+                                                        series: <
+                                                            CartesianSeries<
+                                                                ChartData,
+                                                                String>>[
+                                                          // Renders column chart
+                                                          ColumnSeries<
+                                                                  ChartData,
+                                                                  String>(
+                                                              dataSource: widget
+                                                                  .controller
+                                                                  .chartData,
+                                                              xValueMapper:
+                                                                  (ChartData data,
+                                                                          _) =>
+                                                                      data.x,
+                                                              yValueMapper:
+                                                                  (ChartData data,
+                                                                          _) =>
+                                                                      data.y)
+                                                        ]))
+                                                : const SizedBox(),
+                                          ),  
                                           const SizedBox(
                                             width: 50,
                                           ),
@@ -1695,10 +1696,9 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                  Obx(
-                                                    ()=> Text(
-                                                      "Total Applied Amount :${ widget.controller.totalSamount.value}"),
-                                                  ),
+                                                   const Text(
+                                                      "Total Applied Amount :"),
+                                                  
                                                 const SizedBox(
                                                   height: 5,
                                                 ),
