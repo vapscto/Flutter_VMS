@@ -5,7 +5,6 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/controller/all_emp_rating_controller.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/model/all_rating_emp_model.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/model/all_rating_month.dart';
-import 'package:m_skool_flutter/vms/all_emp_review/model/rating_data_list_model.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/model/rating_list_data_model.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/model/rating_year_model.dart';
 
