@@ -13,6 +13,7 @@ Future<int> modalViewDetails(
     required int asmaYId,
     required String roleFlag,
     required int pcReqTNid,
+    required int pcmPartId,
     required ModalViewController controller}) async {
   final Dio ins = getGlobalDio();
   final api = base + URLS.viewDataPcReq;
@@ -25,11 +26,10 @@ Future<int> modalViewDetails(
       "MI_Id": miId,
       "ASMAY_Id": asmaYId,
       "Role_flag": roleFlag,
-      "PCREQTN_Id": pcReqTNid
+      "PCREQTN_Id": pcReqTNid,
+      "PCMPART_Id": pcmPartId
     });
-
     controller.updateisLoadingModalView(true);
-
     final Response response =
         await ins.post(api, options: Options(headers: getSession()), data: {
       "roleid": roleId,
@@ -37,16 +37,9 @@ Future<int> modalViewDetails(
       "MI_Id": miId,
       "ASMAY_Id": asmaYId,
       "Role_flag": roleFlag,
-      "PCREQTN_Id": pcReqTNid
+      "PCREQTN_Id": pcReqTNid,
+      "PCMPART_Id": pcmPartId
     });
-
-    logger.d(response.data['modalview']);
-
-    // if (response.data['modalview'] == null) {
-    //   controller.updateErrorLoadingModalView(true);
-    //   return 0;
-    // }
-
     ModalViewPcReqModel modalList =
         ModalViewPcReqModel.fromJson(response.data['modalview']);
     controller.getData(modalList.values!);
