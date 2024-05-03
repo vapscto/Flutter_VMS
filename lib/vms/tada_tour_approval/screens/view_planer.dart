@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/api/edit_tour_api.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/api/get_view.dart';
+import 'package:m_skool_flutter/vms/tada_tour_approval/api/save_tada_tour.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/controller/tada_tour_cntrl.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/models/get_tour_view_model.dart';
+import 'package:m_skool_flutter/vms/tada_tour_approval/screens/add_lead_screen.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -39,20 +43,145 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
   TextEditingController appliedEt = TextEditingController(text: "");
   TextEditingController remarkEt = TextEditingController(text: "");
   RxString totalSanctionAmount = "".obs;
-
+  List<Map<String, dynamic>> mapAccomdationList = [];
+  List<Map<String, dynamic>> emplyeList = [];
+  String tp = "AR";
+   
+  var totalApproveCount;
   @override
   void initState() {
-    dayCount = dayCounts(widget.getTourViewValues.vTADAAAFromDate!,
+    addRadio();
+     initApi();
+   dayCount = dayCounts(widget.getTourViewValues.vTADAAAFromDate!,
         widget.getTourViewValues.vTADAAAToDate!);
     appliedEt.text =
         widget.getTourViewValues.vTADAAATotalAppliedAmount.toString();
-    initApi();
-    super.initState();
-   
+    updateCounts();
+ totalApproveCount = widget.controller.approvedCount.value;
+   super.initState();
+   }
+ addRadio()async{
+for(int i = 0;i<3;i++){
+  widget.controller.radioItems.add(Item(isApproved: true, isRejected: false));
+}
+ }
+  Future<void> addAccomdation(bool tap) async {
+    if (mapAccomdationList.isNotEmpty || emplyeList.isNotEmpty) {
+      mapAccomdationList.clear();
+      emplyeList.clear();
     }
-  
+    totalApproveCount = widget.controller.approvedCount.value;
+    String planneEndDate = getDate(
+        DateTime.parse(widget.getTourViewValues.vTADAAAToDate.toString()));
+    String planneStartDate = getDate(
+        DateTime.parse(widget.getTourViewValues.vTADAAAFromDate.toString()));
+    for (int i = 0; i < widget.controller.accomdationList1.length; i++) {
+      if (i != 2) {
+        mapAccomdationList.add({
+          "VTADAAAAH_SactionedAmount": widget
+                  .controller.radioItems[i].isApproved
+              ? "${int.parse(widget.controller.sancationAmountEt[i].text)}.00"
+              : 0,
+          "VTADAAAD_Amount":
+              widget.controller.accomdationList1[i].vTADAAADAmount!.toInt(),
+          "VTADAAAD_ExpenditureHead":
+              widget.controller.accomdationList1[i].vTADAAADExpenditureHead,
+          "VTADAAAD_Id": widget.controller.accomdationList1[i].vTADAAADId,
+          "VTADAAAD_Slots":
+              widget.controller.accomdationList1[i].vTADAAADSlots!.toInt(),
+          "VTADAAAD_TotalSlots":
+              widget.controller.accomdationList1[i].vTADAAADTotalSlots!.toInt(),
+          "VTADAAA_Id": widget.controller.accomdationList1[i].vTADAAAId,
+          "VTADACM_AccommodationAmt": widget
+              .controller.accomdationList1[i].vTADACMAccommodationAmt!
+              .toInt(),
+          "VTADACM_FoodAmt":
+              widget.controller.accomdationList1[i].vTADACMFoodAmt!.toInt(),
+          "VTADACM_TransportAmt":
+              widget.controller.accomdationList1[i].vTADACMTransportAmt!.toInt(),
+          "classname":
+              widget.controller.radioItems[i].isApproved ? "neww" : "oldd",
+          "flag": tap? widget.controller.radioItems[i].isApproved ? "A" : "R" :"R",
+          "vtdaA_Percentage": int.parse(widget.controller.percentageET[i].text)
+        });
+      } else {
+        mapAccomdationList.add({
+          "VTADAAAAH_SactionedAmount": widget
+                  .controller.radioItems[i].isApproved
+              ? "${int.parse(widget.controller.sancationAmountEt[i].text)}.00"
+              : 0,
+          "VTADAAAD_Amount":
+              widget.controller.accomdationList1[i].vTADAAADAmount!.toInt(),
+          "VTADAAAD_ExpenditureHead":
+              widget.controller.accomdationList1[i].vTADAAADExpenditureHead,
+          "VTADAAAD_Id": widget.controller.accomdationList1[i].vTADAAADId,
+          "VTADACM_AccommodationAmt": widget
+              .controller.accomdationList1[i].vTADACMAccommodationAmt!
+              .toInt(),
+          "VTADACM_FoodAmt":
+              widget.controller.accomdationList1[i].vTADACMFoodAmt!.toInt(),
+          "VTADACM_TransportAmt":
+              widget.controller.accomdationList1[i].vTADACMTransportAmt!.toInt(),
+          "classname":
+              widget.controller.radioItems[i].isApproved ? "neww" : "oldd",
+          "flag": tap? widget.controller.radioItems[i].isApproved ? "A" : "R":"R",
+          "vtdaA_Percentage": int.parse(widget.controller.percentageET[i].text)
+        });
+      }
+    }
+    if (widget.controller.adminFlag.value) {
+      for (int i = 0; i < widget.controller.getPlanerListData.length; i++) {
+        emplyeList.add({
+          "CategoryId": widget.controller.getPlanerListData[i].iMRCCategoryId,
+          "ClientId": widget.controller.getPlanerListData[i].iSMSLEId,
+          "ISMSMPR_Id": widget.controller.getPlanerListData[i].iSMSMPRId
+        });
+      }
+    }
+    // if (widget.controller.approvedCount.value == 3) {
+    //   tp = "AR";
+    // } else if (widget.controller.approvedCount.value < 3 &&
+    //     widget.controller.approvedCount.value >= 1) {
+    //   tp = "AR";
+    // } else
+     if (widget.controller.rejectedCount.value == 3) {
+      tp = "R";
+      totalApproveCount = 0;
+    }
+    if(tap == false){
+      tp = "R";
+      totalApproveCount = 0;
+    }
+    await saveTadaTour(
+      context:  context,
+      userID:  widget.loginSuccessModel.userId!,
+         base: baseUrlFromInsCode("issuemanager", widget.mskoolController) ,
+        adminFlag: widget.controller.adminFlag.value,
+        approvecount: totalApproveCount,
+        hrmeId: widget.getTourViewValues.hRMEId!,
+        ierId: widget.getTourViewValues.iERID!,
+        leavel: widget.getTourViewValues.sanctionLevelNo!,
+        miID: widget.getTourViewValues.mIId!,
+        planerEndDate: planneEndDate,
+        planerName: widget.planerNme,
+        plannerStarDate: planneStartDate,
+        tadaRemark: remarkEt.text,
+        totalSanctionAmount: tap? int.parse(widget.controller.sancationAmountTotal.value.text):0,
+        tourRemark: "",
+        tp: tp,
+        vTADAAADId: widget.getTourViewValues.vTADAAAId!,
+        empList:widget.controller.adminFlag.value ? emplyeList: [],
+        headArray: mapAccomdationList).then((value) {
+        Fluttertoast.showToast(msg: 
+        "Saved Successfully");
+      //  Get.back();
+        logger.w("double back");
+        Get.back();
+        },);
+  }
+
   initApi() async {
-   await getEditTour(
+    await getEditTour(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
         hrmeId: widget.getTourViewValues.hRMEId!,
         ierId: widget.getTourViewValues.iERID!.toString(),
@@ -68,18 +197,32 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
         tadaTourController: widget.controller,
         userId: widget.getTourViewValues.userId!,
         vtadaaaId: widget.getTourViewValues.vTADAAAId!);
-      setState(() {
-        widget.controller.calculateSum();
-    widget.controller.sancationAmountTotal.value.text   = widget.controller.totalSamount.value;
-      });  
-    } 
+    setState(() {
+      widget.controller.calculateSum();
+      widget.controller.sancationAmountTotal.value.text =
+          widget.controller.totalSamount.value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.width;
     width = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: const CustomAppBar(title: "View TADA TourMap").getAppBar(),
+      appBar: CustomAppBar(title: "View TADA TourMap", action: [
+        MSkollBtn(
+          title: "Add To Lead",
+          onPress: () {
+            Get.to(() => AddLeadScreen(
+                  hrmeId: widget.getTourViewValues.hRMEId!,
+                  miID: widget.loginSuccessModel.mIID!,
+                  tadaTourController: widget.controller,
+                  userId: widget.loginSuccessModel.userId!,
+                  mskoolController: widget.mskoolController,
+                ));
+          },
+        )
+      ]).getAppBar(),
       body: Obx(
         () => widget.controller.timeArrayList.isNotEmpty
             ? SingleChildScrollView(
@@ -502,113 +645,10 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                   .all(Theme.of(
                                                                           context)
                                                                       .primaryColor),
-                                                          columns: const [
-                                                            DataColumn(
-                                                              label: Align(
-                                                                alignment:
-                                                                    Alignment
-                                                                        .center,
-                                                                child: Text(""),
-                                                              ),
-                                                            ),
-                                                            DataColumn(
-                                                              label: Align(
-                                                                alignment:
-                                                                    Alignment
-                                                                        .center,
-                                                                child: Text(
-                                                                    "Closure"),
-                                                              ),
-                                                            ),
-                                                            DataColumn(
-                                                              label: Align(
-                                                                alignment:
-                                                                    Alignment
-                                                                        .center,
-                                                                child:
-                                                                    Text("HOT"),
-                                                              ),
-                                                            ),
-                                                            DataColumn(
-                                                              label: Align(
-                                                                alignment:
-                                                                    Alignment
-                                                                        .center,
-                                                                child: Text(
-                                                                    "Follow Up"),
-                                                              ),
-                                                            ),
-                                                            DataColumn(
-                                                              label: Align(
-                                                                alignment:
-                                                                    Alignment
-                                                                        .center,
-                                                                child: Text(
-                                                                    "Cold"),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                          rows: List.generate(1,
-                                                              (index) {
-                                                            return DataRow(
-                                                                cells: [
-                                                                  const DataCell(
-                                                                      Align(
-                                                                    child: Text(
-                                                                        "Percentage"),
-                                                                  )),
-                                                                  DataCell(
-                                                                      Align(
-                                                                    child: Text(
-                                                                      "${widget.controller.getTadaCategory[0].iMRCPercentage.toString()} %",
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodySmall!
-                                                                          .copyWith(
-                                                                              color: Colors.red),
-                                                                    ),
-                                                                  )),
-                                                                  DataCell(
-                                                                      Align(
-                                                                    child: Text(
-                                                                      "${widget.controller.getTadaCategory[1].iMRCPercentage.toString()} %",
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodySmall!
-                                                                          .copyWith(
-                                                                              color: Colors.red),
-                                                                    ),
-                                                                  )),
-                                                                  //from date
-                                                                  DataCell(
-                                                                      Align(
-                                                                    child: Text(
-                                                                      "${widget.controller.getTadaCategory[2].iMRCPercentage!.toInt().toString()} %",
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodySmall!
-                                                                          .copyWith(
-                                                                              color: Colors.red),
-                                                                    ),
-                                                                  )),
-                                                                  // departure time
-                                                                  DataCell(
-                                                                      Align(
-                                                                    child: Text(
-                                                                      "${widget.controller.getTadaCategory[3].iMRCPercentage!.toInt().toString()} %",
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .bodySmall!
-                                                                          .copyWith(
-                                                                              color: Colors.red),
-                                                                    ),
-                                                                  )),
-                                                                ]);
-                                                          }),
+                                                          columns:  widget.controller.columns,
+                                                          rows:  [
+                                                            DataRow(cells: widget.controller.rows )
+                                                          ]
                                                         )))
                                                 : const SizedBox(),
                                           ),
@@ -672,7 +712,8 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                       .all(Theme.of(
                                                                               context)
                                                                           .primaryColor),
-                                                              columns: [
+                                                              columns:
+                                                               [
                                                                 const DataColumn(
                                                                   label: Align(
                                                                     alignment:
@@ -682,6 +723,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                         "Source Name"),
                                                                   ),
                                                                 ),
+                                                                 
                                                                 const DataColumn(
                                                                   label: Align(
                                                                     alignment:
@@ -1074,11 +1116,27 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                           ),
                                                         )),
 
-                                                        const DataCell(Align(
-                                                          child: Icon(
-                                                            Icons.remove,
-                                                            color: Colors
-                                                                .redAccent,
+                                                          DataCell(Align(
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              widget
+                                                            .controller
+                                                            .getPlanerListData.remove(widget.controller.getPlanerListData.elementAt(index));
+                                                            setState(() {
+                                                              
+                                                            });
+                                                              widget
+                                                            .controller
+                                                            .getPlanerListData.forEach((element) { 
+                                                              logger.w(element.iSMSLELeadName);
+                                                            });
+                                                            },
+                                                            child:const Icon(
+                                                              Icons.remove,
+                                                              size: 30,
+                                                              color: Colors
+                                                                  .redAccent,
+                                                            ),
                                                           ),
                                                         ))
                                                       ]);
@@ -1086,13 +1144,14 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                   )))
                                           : const SizedBox()),
                                       Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Obx(
                                             () =>
                                                 widget
                                                         .controller
-                                                        .accomdationList
+                                                        .accomdationList1
                                                         .isNotEmpty
                                                     ? SingleChildScrollView(
                                                         padding:
@@ -1249,7 +1308,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                               rows: List.generate(
                                                                   widget
                                                                       .controller
-                                                                      .accomdationList
+                                                                      .accomdationList1
                                                                       .length,
                                                                   (index) {
                                                                 var num =
@@ -1285,7 +1344,13 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                             setState(() {
                                                                               widget.controller.radioItems[index].isApproved = value as bool;
                                                                               widget.controller.radioItems[index].isRejected = !value;
+                                                                              widget.controller.sancationAmountEt[index].text = widget.controller.radioItems[index].isApproved ? widget.controller.accomdationList1[index].vTADAAADAmount!.toInt().toString() : "0";
+                                                                              //
+
                                                                               updateCounts();
+                                                                            });
+                                                                            setState(() {
+                                                                              calPercnt(index);
                                                                             });
                                                                           },
                                                                         ),
@@ -1299,7 +1364,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                             .controller
                                                                             .radioItems[index]
                                                                             .isRejected,
-                                                                        onChanged:
+                                                                        onChanged: 
                                                                             (value) {
                                                                           setState(
                                                                               () {
@@ -1307,6 +1372,12 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                                 value as bool;
                                                                             widget.controller.radioItems[index].isApproved =
                                                                                 !value;
+                                                                            widget.controller.sancationAmountEt[index].text = widget.controller.radioItems[index].isRejected
+                                                                                ? "0"
+                                                                                : "0";
+                                                                            setState(() {
+                                                                              calPercnt(index);
+                                                                            });
                                                                             updateCounts();
                                                                           });
                                                                         },
@@ -1317,7 +1388,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                             Text(
                                                                           widget
                                                                               .controller
-                                                                              .accomdationList
+                                                                              .accomdationList1
                                                                               .elementAt(index)
                                                                               .vTADAAADExpenditureHead!,
                                                                           style: Theme.of(context)
@@ -1331,12 +1402,13 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                         child:
                                                                             Text(
                                                                           index == 0
-                                                                              ? widget.controller.accomdationList.elementAt(index).vTADACMAccommodationAmt!.toInt().toString()
+                                                                              ? widget.controller.accomdationList1.elementAt(index).vTADACMAccommodationAmt!.toInt().toString()
                                                                               : index == 1
-                                                                                  ? widget.controller.accomdationList.elementAt(index).vTADACMFoodAmt!.toInt().toString()
+                                                                                  ? widget.controller.accomdationList1.elementAt(index).vTADACMFoodAmt!.toInt().toString()
                                                                                   : index == 2
-                                                                                      ? widget.controller.accomdationList.elementAt(index).vTADACMTransportAmt!.toInt().toString()
-                                                                                      : "",
+                                                                                      ? widget.controller.accomdationList1.elementAt(index).vTADACMTransportAmt!.toInt().toString()
+                                                                                      : 
+                                                                                      "",
                                                                           style: Theme.of(context)
                                                                               .textTheme
                                                                               .bodySmall!
@@ -1350,7 +1422,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                             Text(
                                                                           widget
                                                                               .controller
-                                                                              .accomdationList
+                                                                              .accomdationList1
                                                                               .elementAt(index)
                                                                               .vTADAAADTotalSlots!
                                                                               .toInt()
@@ -1368,7 +1440,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                             Text(
                                                                           widget
                                                                               .controller
-                                                                              .accomdationList
+                                                                              .accomdationList1
                                                                               .elementAt(index)
                                                                               .vTADAAADSlots!
                                                                               .toInt()
@@ -1385,7 +1457,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                             Text(
                                                                           widget
                                                                               .controller
-                                                                              .accomdationList
+                                                                              .accomdationList1
                                                                               .elementAt(index)
                                                                               .vTADAAADAmount!
                                                                               .toInt()
@@ -1409,15 +1481,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                           ],
                                                                           onChanged:
                                                                               (value) {
-                                                                            var percent =
-                                                                                int.parse(widget.controller.percentageET[index].text);
-                                                                            var amounts =
-                                                                                widget.controller.accomdationList.elementAt(index).vTADAAADAmount!;
-                                                                            double
-                                                                                sancationAmount =
-                                                                                amounts * (percent / 100);
-                                                                            widget.controller.sancationAmountEt[index].text =
-                                                                                sancationAmount.toInt().toString();
+                                                                            calPercnt(index);
                                                                           },
                                                                           keyboardType:
                                                                               TextInputType.number,
@@ -1436,13 +1500,14 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                           Align(
                                                                         child:
                                                                             TextField(
-                                                                              keyboardType: TextInputType.number,
-                                                                              onChanged: (value) {
-                                                                                setState(() {
-                                                                                      widget.controller.sancationAmountTotal.value.text   = widget.controller.totalSamount.value;
-
-                                                                                });
-                                                                              },
+                                                                          keyboardType:
+                                                                              TextInputType.number,
+                                                                          onChanged:
+                                                                              (value) {
+                                                                            setState(() {
+                                                                              widget.controller.sancationAmountTotal.value.text = widget.controller.totalSamount.value;
+                                                                            });
+                                                                          },
                                                                           readOnly: widget.controller.radioItems[index].isRejected
                                                                               ? true
                                                                               : false,
@@ -1463,7 +1528,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                             TextField(
                                                                           readOnly: widget.controller.radioItems[index].isRejected
                                                                               ? true
-                                                                              : false,
+                                                                               : false,
                                                                           decoration:
                                                                               const InputDecoration(border: OutlineInputBorder()),
                                                                           controller: widget
@@ -1487,7 +1552,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                           const SizedBox(
                                             width: 20,
                                           ),
-                                           Obx(
+                                          Obx(
                                             () =>
                                                 widget.controller.paymentDetails
                                                         .isNotEmpty
@@ -1647,13 +1712,13 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                             )))
                                                     : const SizedBox(),
                                           ),
-                                         ],
+                                        ],
                                       ),
                                       Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                             Obx(
+                                          Obx(
                                             () => widget.controller.chartData
                                                         .length >
                                                     3
@@ -1685,7 +1750,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                       data.y)
                                                         ]))
                                                 : const SizedBox(),
-                                          ),  
+                                          ),
                                           const SizedBox(
                                             width: 50,
                                           ),
@@ -1696,9 +1761,8 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                   const Text(
-                                                      "Total Applied Amount :"),
-                                                  
+                                                const Text(
+                                                    "Total Applied Amount :"),
                                                 const SizedBox(
                                                   height: 5,
                                                 ),
@@ -1748,12 +1812,13 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 const Text(
-                                                  "Remarks ",
+                                                  "Remarks",
                                                 ),
                                                 const SizedBox(
                                                   height: 5,
                                                 ),
                                                 TextField(
+                                                  controller: remarkEt,
                                                   decoration: InputDecoration(
                                                       hintText: "Enter Remarks",
                                                       helperStyle: Theme.of(
@@ -1787,14 +1852,38 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                         children: [
                                           MSkollBtn(
                                             title: "Approve",
-                                            onPress: () {},
+                                            onPress: () async {
+                                              Get.dialog(AlertDialog(
+                                              insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+                                              contentPadding: const EdgeInsets.all(8),
+                                              shape:
+                                                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                              content: SizedBox(
+                                                  width: Get.width,
+                                                  child: Container(
+                                                    height: 240,
+                                                    child: Center(child: Text("Please Wait...",
+                                                    style: Theme.of(context).textTheme.bodyMedium!.merge(
+                                                     const TextStyle(
+                                                        color: Color.fromARGB(255, 39, 4, 196)
+                                                      )
+                                                    ),
+                                                    ),),
+                                                  )   ),
+                                                 
+                                            ));
+                                              
+                                              await addAccomdation(true);
+                                            },
                                           ),
                                           const SizedBox(
                                             width: 20,
                                           ),
                                           MSkollBtn(
                                             title: "Reject ",
-                                            onPress: () {},
+                                            onPress: () async{
+                                               await addAccomdation(false);
+                                            },
                                           ),
                                           const SizedBox(
                                             width: 20,
@@ -1821,7 +1910,22 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
       ),
     );
   }
-  
+
+  calPercnt(int index) {
+    var percent = int.parse(widget.controller.percentageET[index].text);
+    var amounts = widget.controller.radioItems[index].isApproved
+        ? widget.controller.accomdationList1.elementAt(index).vTADAAADAmount!
+        : double.parse("00");
+    double sancationAmount = amounts * (percent / 100);
+    widget.controller.sancationAmountEt[index].text =
+        sancationAmount.toInt().toString();
+    setState(() {
+      widget.controller.calculateSum();
+      widget.controller.sancationAmountTotal.value.text =
+          widget.controller.totalSamount.value;
+    });
+  }
+
   void updateCounts() {
     widget.controller.approvedCount.value =
         widget.controller.radioItems.where((item) => item.isApproved).length;
@@ -1831,30 +1935,33 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
 
   @override
   void dispose() {
-    super.dispose();
-   
-    widget.controller.timeArrayList.clear();
+       widget.controller.timeArrayList.clear();
     widget.controller.sourcesList.clear();
     widget.controller.paymentDetails.clear();
-    widget.controller.accomdationList.clear();
-    widget.controller.sancationAmountEt.clear();
-    widget.controller.percentageET.clear();
-    widget.controller.approvalRemarkEt.clear();
+    widget.controller.accomdationList1.clear();
+   widget.controller.sancationAmountEt.clear();
+   widget.controller.percentageET.clear();
+   widget.controller.approvalRemarkEt.clear();
     widget.controller.getPlanerListData.clear();
     widget.controller.chartData.clear();
-      totalSanctionAmount.close();
- 
-  }
+    totalSanctionAmount.close();
+    widget.controller.columns.clear();
+     widget.controller.rows.clear();
+     widget.controller.radioItems.clear();
+     emplyeList.clear();
+     widget.controller.adminFlag.value=false;
+      mapAccomdationList.clear();
+    super.dispose();
+ }
 }
 
 String getDate(DateTime dt) {
-  return "${dt.day}-${dt.month}-${dt.year}";
+  return "${dt.year}-${dt.month.toString().padLeft(2,'0')}-${dt.day.toString().padLeft(2, "0")}";
 }
 
 String dayCounts(String fromDate, String toDate) {
   final berlinWallFell = DateTime.parse(toDate);
   final dDay = DateTime.parse(fromDate);
-
   final difference = berlinWallFell.difference(dDay).inDays + 1;
   return "$difference";
 }

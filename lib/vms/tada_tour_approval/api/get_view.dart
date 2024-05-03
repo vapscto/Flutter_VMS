@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -37,13 +38,22 @@ Future<void> getViewTada(
     if (tadaTourController.getTadaCategory.isNotEmpty || tadaTourController.getPlanerListData.isNotEmpty) {
       tadaTourController.getTadaCategory.clear();
       tadaTourController.getPlanerListData.clear();
+       tadaTourController.rows.clear();
+       tadaTourController.columns.clear();
     }
     TadaGetCategoryModel categoryModel =
         TadaGetCategoryModel.fromJson(response.data['getCategoryArray']);
     tadaTourController.getTadaCategory.addAll(categoryModel.values!);
+     tadaTourController.columns.add(const DataColumn(label: Text('')));
+     tadaTourController.rows.add(const DataCell(Text('Percentage', )),  );
+   tadaTourController.getTadaCategory.forEach((element) { 
+      tadaTourController.columns.add(DataColumn(label: Text(element.iMRCCategoryName!)),);
+      tadaTourController.rows.add( DataCell(Text('${element.iMRCPercentage!.toInt()} %', )),  );
+    });
     TadaPlanerData getPalnerList =
      TadaPlanerData.fromJson(response.data['getPlanerdata']);
     tadaTourController.getPlanerListData.addAll(getPalnerList.values!);
+    tadaTourController.adminTotal.value = tadaTourController.getTadaCategory.length;
   } on DioError catch (e) {
     logger.e(e.message);
   } on Exception catch (e) {

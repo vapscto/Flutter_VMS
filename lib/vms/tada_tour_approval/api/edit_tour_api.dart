@@ -37,23 +37,22 @@ Future<void> getEditTour(
       "VTADAAA_Id": vtadaaaId,
       "userId": userId
     });
-    if (tadaTourController.timeArrayList.isNotEmpty ||
-        tadaTourController.sourcesList.isNotEmpty ||
-        tadaTourController.accomdationList.isNotEmpty ||
-        tadaTourController.paymentDetails.isNotEmpty ||
-        tadaTourController.chartData.isNotEmpty) {
-      tadaTourController.timeArrayList.clear();
-      tadaTourController.sourcesList.clear();
-      tadaTourController.paymentDetails.clear();
-      tadaTourController.accomdationList.clear();
-      tadaTourController.chartData.clear();
-      tadaTourController.sancationAmountEt.clear();
-    }
+    // if (tadaTourController.timeArrayList.isNotEmpty ||
+    //     tadaTourController.sourcesList.isNotEmpty ||
+    //     tadaTourController.accomdationList.isNotEmpty ||
+    //     tadaTourController.paymentDetails.isNotEmpty ||
+    //     tadaTourController.chartData.isNotEmpty) {
+    //   tadaTourController.timeArrayList.clear();
+    //   tadaTourController.sourcesList.clear();
+    //   tadaTourController.paymentDetails.clear();
+    //   tadaTourController.accomdationList.clear();
+    //   tadaTourController.chartData.clear();
+    //   tadaTourController.sancationAmountEt.clear();
+    // }
     TadaTimeArray timeArrayList =
         TadaTimeArray.fromJson(response.data['timeArray']);
     tadaTourController.timeArrayList.addAll(timeArrayList.values!);
-
-    TadaClientSources sourcList =
+     TadaClientSources sourcList =
         TadaClientSources.fromJson(response.data['client_Master']);
     tadaTourController.sourcesList.addAll(sourcList.values!);
     for (int i = 0; i < tadaTourController.sourcesList.length; i++) {
@@ -65,20 +64,24 @@ Future<void> getEditTour(
       if (tadaTourController.sourcesList[i].cold != null) {
         tadaTourController.chartData.add(ChartData(
             x: "Cold", y: tadaTourController.sourcesList[i].cold!.toDouble()));
+        
       }
       if (tadaTourController.sourcesList[i].followUp != null) {
         tadaTourController.chartData.add(ChartData(
             x: "FollowUp",
             y: tadaTourController.sourcesList[i].followUp!.toDouble()));
+         
       }
       if (tadaTourController.sourcesList[i].nEGOTATION != null) {
         tadaTourController.chartData.add(ChartData(
             x: "Negotn",
             y: tadaTourController.sourcesList[i].nEGOTATION!.toDouble()));
+         
       }
       if (tadaTourController.sourcesList[i].hOT != null) {
         tadaTourController.chartData.add(ChartData(
             x: "Hot", y: tadaTourController.sourcesList[i].hOT!.toDouble()));
+           
       }
     }
     if (tadaTourController.sourcesList.first.nEGOTATION != null) {
@@ -88,9 +91,13 @@ Future<void> getEditTour(
       tadaTourController.showTable.value = false;
       //logger.i("showTable${tadaTourController.showTable.value}");
     }
+    if(response.data['editArray'] !=null){
+      
+    }
     TadaAccomodationModel tadaAccomodationModel =
         TadaAccomodationModel.fromJson(response.data['editArray']);
-    tadaTourController.accomdationList.addAll(tadaAccomodationModel.values!);
+    logger.w(response.data['editArray']);    
+    tadaTourController.accomdationList1.addAll(tadaAccomodationModel.values!);
     for (int i = 0; i < tadaAccomodationModel.values!.length; i++) {
       tadaTourController.percentageET.add(TextEditingController(text: "80"));
       var sancationAmount =
