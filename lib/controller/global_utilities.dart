@@ -505,6 +505,14 @@ void openMappedPages(
       );
     }));
   }
+  if (pageName == "TADA Tour Approval") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return TadaViewTourView(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+  }
   if (pageName == "Tour Maping") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return TourMapingList(
