@@ -122,25 +122,32 @@ class _RequestedParticularDetailsPCState
                                         TextButton(
                                           onPressed: () async {
                                             await modalViewDetails(
-                                              miId: widget
-                                                  .loginSuccessModel.mIID!,
-                                              base: baseUrlFromInsCode(
-                                                  "issuemanager",
-                                                  widget.mskoolController),
-                                              roleId: widget
-                                                  .loginSuccessModel.roleId!,
-                                              userId: widget
-                                                  .loginSuccessModel.userId!,
-                                              asmaYId: widget
-                                                  .loginSuccessModel.asmaYId!,
-                                              roleFlag: widget.loginSuccessModel
-                                                  .roleforlogin!,
-                                              pcReqTNid: widget
-                                                  .controller
-                                                  .getViewDataParticular[index]
-                                                  .pcreqtNId!,
-                                              controller: modalViewController,
-                                            );
+                                                miId: widget
+                                                    .loginSuccessModel.mIID!,
+                                                base: baseUrlFromInsCode(
+                                                    "issuemanager",
+                                                    widget.mskoolController),
+                                                roleId: widget
+                                                    .loginSuccessModel.roleId!,
+                                                userId: widget
+                                                    .loginSuccessModel.userId!,
+                                                asmaYId: widget
+                                                    .loginSuccessModel.asmaYId!,
+                                                roleFlag: widget
+                                                    .loginSuccessModel
+                                                    .roleforlogin!,
+                                                pcReqTNid: widget
+                                                    .controller
+                                                    .getViewDataParticular[
+                                                        index]
+                                                    .pcreqtNId!,
+                                                controller: modalViewController,
+                                                pcmPartId: widget
+                                                        .controller
+                                                        .getViewDataParticular[
+                                                            index]
+                                                        .pcmparTId ??
+                                                    0);
 
                                             // if (status == 200) {
 

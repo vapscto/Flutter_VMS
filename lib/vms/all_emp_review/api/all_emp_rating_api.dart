@@ -5,7 +5,7 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/controller/all_emp_rating_controller.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/model/all_rating_emp_model.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/model/all_rating_month.dart';
-import 'package:m_skool_flutter/vms/all_emp_review/model/rating_data_list_model.dart';
+import 'package:m_skool_flutter/vms/all_emp_review/model/rating_list_data_model.dart';
 import 'package:m_skool_flutter/vms/all_emp_review/model/rating_year_model.dart';
 
 class AllEmpRatingAPI {
@@ -59,10 +59,9 @@ class AllEmpRatingAPI {
       var response = await dio.post(api,
           data: body, options: Options(headers: getSession()));
       if (response.statusCode == 200) {
-        logger.v(response.data['consolidateData']);
-        if (response.data['consolidateData'] != null) {
-          RatingDataListModel ratingDataListModel =
-              RatingDataListModel.fromJson(response.data['consolidateData']);
+        if (response.data['autoCaluclatedRating'] != null) {
+          RatingListData ratingDataListModel =
+              RatingListData.fromJson(response.data['autoCaluclatedRating']);
           controller.ratingDataList.clear();
           controller.getRating(ratingDataListModel.values!);
         }

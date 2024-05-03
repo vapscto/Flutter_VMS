@@ -1609,11 +1609,11 @@ class _IndentApprovalState extends State<IndentApproval> {
                                               widget.loginSuccessModel.userId!,
                                           roleId:
                                               widget.loginSuccessModel.roleId!,
-                                          miId: selectedOrganization!
-                                              .mIId!, //widget.loginSuccessModel.mIID!,
+                                          miId: (selectedOrganization != null)
+                                              ? selectedOrganization!.mIId!
+                                              : widget.loginSuccessModel.mIID!,
                                           asmayId:
                                               widget.loginSuccessModel.asmaYId!,
-                                          // pcIndentId: ,
                                           pcIndentId: 0,
                                           pcIndentDesc:
                                               descriptionController.text,
