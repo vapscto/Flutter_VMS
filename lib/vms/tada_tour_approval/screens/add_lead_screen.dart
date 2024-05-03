@@ -80,6 +80,7 @@ class _AddLeadScreenState extends State<AddLeadScreen> {
     if(widget.tadaTourController.getPlanerListData.length > widget.tadaTourController.adminTotal.value){
         widget.tadaTourController.adminFlag.value =true;
     }
+    Get.back();
   }
   @override
   Widget build(BuildContext context) {
@@ -345,5 +346,12 @@ class _AddLeadScreenState extends State<AddLeadScreen> {
      return p0.iVRMMSName!.contains(Query) || p0.sourceName!.contains(Query) ||  p0.iSMSLELeadName!.contains(Query)
      || p0.iSMSMPRProductName!.contains(Query);
    },).toList();
+  }
+  @override
+  void dispose() {
+     
+    fillterLeads.clear();
+    widget.tadaTourController.getPlanerListData.clear();
+    super.dispose();
   }
 }

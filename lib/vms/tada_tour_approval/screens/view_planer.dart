@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/vms/rating_report/screen/report_data_screen.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/api/edit_tour_api.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/api/get_view.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/api/save_tada_tour.dart';
@@ -152,6 +153,9 @@ for(int i = 0;i<3;i++){
       totalApproveCount = 0;
     }
     await saveTadaTour(
+      context:  context,
+      userID:  widget.loginSuccessModel.userId!,
+         base: baseUrlFromInsCode("issuemanager", widget.mskoolController) ,
         adminFlag: widget.controller.adminFlag.value,
         approvecount: totalApproveCount,
         hrmeId: widget.getTourViewValues.hRMEId!,
@@ -167,7 +171,13 @@ for(int i = 0;i<3;i++){
         tp: tp,
         vTADAAADId: widget.getTourViewValues.vTADAAAId!,
         empList:widget.controller.adminFlag.value ? emplyeList: [],
-        headArray: mapAccomdationList);
+        headArray: mapAccomdationList).then((value) {
+        Fluttertoast.showToast(msg: 
+        "Saved Successfully");
+      //  Get.back();
+        logger.w("double back");
+        Get.back();
+        },);
   }
 
   initApi() async {
@@ -1827,6 +1837,26 @@ for(int i = 0;i<3;i++){
                                           MSkollBtn(
                                             title: "Approve",
                                             onPress: () async {
+                                              Get.dialog(AlertDialog(
+                                              insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+                                              contentPadding: const EdgeInsets.all(8),
+                                              shape:
+                                                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                              content: SizedBox(
+                                                  width: Get.width,
+                                                  child: Container(
+                                                    height: 240,
+                                                    child: Center(child: Text("Please Wait...",
+                                                    style: Theme.of(context).textTheme.bodyMedium!.merge(
+                                                     const TextStyle(
+                                                        color: Color.fromARGB(255, 39, 4, 196)
+                                                      )
+                                                    ),
+                                                    ),),
+                                                  )   ),
+                                                 
+                                            ));
+                                              
                                               await addAccomdation(true);
                                             },
                                           ),
@@ -1902,6 +1932,9 @@ for(int i = 0;i<3;i++){
     widget.controller.columns.clear();
      widget.controller.rows.clear();
      widget.controller.radioItems.clear();
+     emplyeList.clear();
+     widget.controller.adminFlag.value=false;
+      mapAccomdationList.clear();
     super.dispose();
  }
 }

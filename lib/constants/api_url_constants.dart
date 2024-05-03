@@ -408,4 +408,6 @@ class URLS {
   static String getTadaCat="api/TADAAdvanceApprovalFacade/TadaAllwence/";
 
   static String getLeadsClients="api/TADAAdvanceApprovalFacade/TadaAllwence/";
+
+  static String savaTadaTourApi="api/TADAAdvanceApprovalFacade/TourApproval/";
 }
