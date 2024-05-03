@@ -403,13 +403,9 @@ class URLS {
   static String getTourViews = "api/TADAAdvanceApprovalFacade/getTourApproval/";
   static String editTadaTour = "api/TADAAdvanceApprovalFacade/editTour/";
 
-<<<<<<< HEAD
   static String getViewTada="api/TADAAdvanceApprovalFacade/getView/";
 
   static String getTadaCat="api/TADAAdvanceApprovalFacade/TadaAllwence/";
 
   static String getLeadsClients="api/TADAAdvanceApprovalFacade/TadaAllwence/";
-=======
-  static String getViewTada = "api/TADAAdvanceApprovalFacade/getView/";
->>>>>>> 42d260fd895efeba953f3205432720089aaaa3dd
 }
