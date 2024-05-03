@@ -1116,11 +1116,27 @@ for(int i = 0;i<3;i++){
                                                           ),
                                                         )),
 
-                                                        const DataCell(Align(
-                                                          child: Icon(
-                                                            Icons.remove,
-                                                            color: Colors
-                                                                .redAccent,
+                                                          DataCell(Align(
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              widget
+                                                            .controller
+                                                            .getPlanerListData.remove(widget.controller.getPlanerListData.elementAt(index));
+                                                            setState(() {
+                                                              
+                                                            });
+                                                              widget
+                                                            .controller
+                                                            .getPlanerListData.forEach((element) { 
+                                                              logger.w(element.iSMSLELeadName);
+                                                            });
+                                                            },
+                                                            child:const Icon(
+                                                              Icons.remove,
+                                                              size: 30,
+                                                              color: Colors
+                                                                  .redAccent,
+                                                            ),
                                                           ),
                                                         ))
                                                       ]);
@@ -1456,9 +1472,9 @@ for(int i = 0;i<3;i++){
                                                                           Align(
                                                                         child:
                                                                             TextField(
-                                                                          // readOnly: widget.controller.radioItems[index].isRejected
-                                                                          //     ? true
-                                                                          //     : false,
+                                                                          readOnly: widget.controller.radioItems[index].isRejected
+                                                                              ? true
+                                                                              : false,
                                                                           inputFormatters: [
                                                                             FilteringTextInputFormatter.digitsOnly,
                                                                             LengthLimitingTextInputFormatter(2)
@@ -1492,9 +1508,9 @@ for(int i = 0;i<3;i++){
                                                                               widget.controller.sancationAmountTotal.value.text = widget.controller.totalSamount.value;
                                                                             });
                                                                           },
-                                                                          // readOnly: widget.controller.radioItems[index].isRejected
-                                                                          //     ? true
-                                                                          //     : false,
+                                                                          readOnly: widget.controller.radioItems[index].isRejected
+                                                                              ? true
+                                                                              : false,
                                                                           decoration:
                                                                               const InputDecoration(border: OutlineInputBorder()),
                                                                           controller: widget
@@ -1510,9 +1526,9 @@ for(int i = 0;i<3;i++){
                                                                           Align(
                                                                         child:
                                                                             TextField(
-                                                                          // readOnly: widget.controller.radioItems[index].isRejected
-                                                                          //     ? true
-                                                                          //      : false,
+                                                                          readOnly: widget.controller.radioItems[index].isRejected
+                                                                              ? true
+                                                                               : false,
                                                                           decoration:
                                                                               const InputDecoration(border: OutlineInputBorder()),
                                                                           controller: widget
