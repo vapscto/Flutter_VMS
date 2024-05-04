@@ -269,7 +269,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                           RichText(
                                               text: TextSpan(children: [
                                             TextSpan(
-                                                text: "Companny Name : ",
+                                                text: "Company Name : ",
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .titleMedium!

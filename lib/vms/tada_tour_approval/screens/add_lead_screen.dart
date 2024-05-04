@@ -55,7 +55,7 @@ class _AddLeadScreenState extends State<AddLeadScreen> {
         miID: widget.miID,
         tadaTourController: widget.tadaTourController);
   }
-  addToLead(){
+  addToLead(){ 
     //getPlanerListData
     for(int i=0; i<checkedList.length;i++){
     widget.tadaTourController.getPlanerListData.add(
@@ -349,9 +349,8 @@ class _AddLeadScreenState extends State<AddLeadScreen> {
   }
   @override
   void dispose() {
-     
-    fillterLeads.clear();
-    widget.tadaTourController.getPlanerListData.clear();
+   fillterLeads.clear();
+  // widget.tadaTourController.getPlanerListData.clear();
     super.dispose();
   }
 }
