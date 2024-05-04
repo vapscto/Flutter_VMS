@@ -46,23 +46,22 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
   List<Map<String, dynamic>> mapAccomdationList = [];
   List<Map<String, dynamic>> emplyeList = [];
   String tp = "AR";
-   
+
   var totalApproveCount;
   @override
   void initState() {
     addRadio();
-     initApi();
-   dayCount = dayCounts(widget.getTourViewValues.vTADAAAFromDate!,
+    initApi();
+    dayCount = dayCounts(widget.getTourViewValues.vTADAAAFromDate!,
         widget.getTourViewValues.vTADAAAToDate!);
     appliedEt.text =
         widget.getTourViewValues.vTADAAATotalAppliedAmount.toString();
     updateCounts();
- totalApproveCount = widget.controller.approvedCount.value;
-   super.initState();
-   }
- addRadio()async{
+    totalApproveCount = widget.controller.approvedCount.value;
+    super.initState();
+  }
 
- }
+  addRadio() async {}
   Future<void> addAccomdation(bool tap) async {
     if (mapAccomdationList.isNotEmpty || emplyeList.isNotEmpty) {
       mapAccomdationList.clear();
@@ -95,11 +94,16 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
               .toInt(),
           "VTADACM_FoodAmt":
               widget.controller.accomdationList1[i].vTADACMFoodAmt!.toInt(),
-          "VTADACM_TransportAmt":
-              widget.controller.accomdationList1[i].vTADACMTransportAmt!.toInt(),
+          "VTADACM_TransportAmt": widget
+              .controller.accomdationList1[i].vTADACMTransportAmt!
+              .toInt(),
           "classname":
               widget.controller.radioItems[i].isApproved ? "neww" : "oldd",
-          "flag": tap? widget.controller.radioItems[i].isApproved ? "A" : "R" :"R",
+          "flag": tap
+              ? widget.controller.radioItems[i].isApproved
+                  ? "A"
+                  : "R"
+              : "R",
           "vtdaA_Percentage": int.parse(widget.controller.percentageET[i].text)
         });
       } else {
@@ -118,11 +122,16 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
               .toInt(),
           "VTADACM_FoodAmt":
               widget.controller.accomdationList1[i].vTADACMFoodAmt!.toInt(),
-          "VTADACM_TransportAmt":
-              widget.controller.accomdationList1[i].vTADACMTransportAmt!.toInt(),
+          "VTADACM_TransportAmt": widget
+              .controller.accomdationList1[i].vTADACMTransportAmt!
+              .toInt(),
           "classname":
               widget.controller.radioItems[i].isApproved ? "neww" : "oldd",
-          "flag": tap? widget.controller.radioItems[i].isApproved ? "A" : "R":"R",
+          "flag": tap
+              ? widget.controller.radioItems[i].isApproved
+                  ? "A"
+                  : "R"
+              : "R",
           "vtdaA_Percentage": int.parse(widget.controller.percentageET[i].text)
         });
       }
@@ -142,40 +151,44 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
     //     widget.controller.approvedCount.value >= 1) {
     //   tp = "AR";
     // } else
-     if (widget.controller.rejectedCount.value == 3) {
+    if (widget.controller.rejectedCount.value == 3) {
       tp = "R";
       totalApproveCount = 0;
     }
-    if(tap == false){
+    if (tap == false) {
       tp = "R";
       totalApproveCount = 0;
     }
     await saveTadaTour(
-      context:  context,
-      userID:  widget.loginSuccessModel.userId!,
-         base: baseUrlFromInsCode("issuemanager", widget.mskoolController) ,
-        adminFlag: widget.controller.adminFlag.value,
-        approvecount: totalApproveCount,
-        hrmeId: widget.getTourViewValues.hRMEId!,
-        ierId: widget.getTourViewValues.iERID!,
-        leavel: widget.getTourViewValues.sanctionLevelNo!,
-        miID: widget.getTourViewValues.mIId!,
-        planerEndDate: planneEndDate,
-        planerName: widget.planerNme,
-        plannerStarDate: planneStartDate,
-        tadaRemark: remarkEt.text,
-        totalSanctionAmount: tap? int.parse(widget.controller.sancationAmountTotal.value.text):0,
-        tourRemark: "",
-        tp: tp,
-        vTADAAADId: widget.getTourViewValues.vTADAAAId!,
-        empList:widget.controller.adminFlag.value ? emplyeList: [],
-        headArray: mapAccomdationList).then((value) {
-        Fluttertoast.showToast(msg: 
-        "Saved Successfully");
-      //  Get.back();
+            context: context,
+            userID: widget.loginSuccessModel.userId!,
+            base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
+            adminFlag: widget.controller.adminFlag.value,
+            approvecount: totalApproveCount,
+            hrmeId: widget.getTourViewValues.hRMEId!,
+            ierId: widget.getTourViewValues.iERID!,
+            leavel: widget.getTourViewValues.sanctionLevelNo!,
+            miID: widget.getTourViewValues.mIId!,
+            planerEndDate: planneEndDate,
+            planerName: widget.planerNme,
+            plannerStarDate: planneStartDate,
+            tadaRemark: remarkEt.text,
+            totalSanctionAmount: tap
+                ? int.parse(widget.controller.sancationAmountTotal.value.text)
+                : 0,
+            tourRemark: "",
+            tp: tp,
+            vTADAAADId: widget.getTourViewValues.vTADAAAId!,
+            empList: widget.controller.adminFlag.value ? emplyeList : [],
+            headArray: mapAccomdationList)
+        .then(
+      (value) {
+        Fluttertoast.showToast(msg: "Saved Successfully");
+        //  Get.back();
         logger.w("double back");
         Get.back();
-        },);
+      },
+    );
   }
 
   initApi() async {
@@ -597,57 +610,37 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                             () => widget.controller
                                                     .getTadaCategory.isNotEmpty
                                                 ? SingleChildScrollView(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        vertical: 10,
-                                                        horizontal: 0),
+                                                    padding:
+                                                        const EdgeInsets.symmetric(
+                                                            vertical: 10,
+                                                            horizontal: 0),
                                                     scrollDirection:
                                                         Axis.horizontal,
                                                     child: ClipRRect(
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                            BorderRadius.circular(
+                                                                10),
                                                         child: DataTable(
-                                                          dataTextStyle:
-                                                              const TextStyle(
-                                                                  fontSize: 14,
-                                                                  color: Color
-                                                                      .fromRGBO(
-                                                                          0,
-                                                                          0,
-                                                                          0,
-                                                                          0.95),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
-                                                          dataRowHeight: 50,
-                                                          headingRowHeight: 40,
-                                                          horizontalMargin: 10,
-                                                          columnSpacing: 30,
-                                                          dividerThickness: 1,
-                                                          headingTextStyle:
-                                                              const TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700),
-                                                          border: TableBorder.all(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                              width: 0.5),
-                                                          headingRowColor:
-                                                              MaterialStateProperty
-                                                                  .all(Theme.of(
-                                                                          context)
-                                                                      .primaryColor),
-                                                          columns:  widget.controller.columns,
-                                                          rows:  [
-                                                            DataRow(cells: widget.controller.rows )
-                                                          ]
-                                                        )))
+                                                            dataTextStyle:
+                                                                const TextStyle(
+                                                                    fontSize: 14,
+                                                                    color: Color.fromRGBO(0, 0, 0, 0.95),
+                                                                    fontWeight: FontWeight.w500),
+                                                            dataRowHeight: 50,
+                                                            headingRowHeight: 40,
+                                                            horizontalMargin: 10,
+                                                            columnSpacing: 30,
+                                                            dividerThickness: 1,
+                                                            headingTextStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+                                                            border: TableBorder.all(borderRadius: BorderRadius.circular(10), width: 0.5),
+                                                            headingRowColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+                                                            columns: widget.controller.columns,
+                                                            rows: [
+                                                              DataRow(
+                                                                  cells: widget
+                                                                      .controller
+                                                                      .rows)
+                                                            ])))
                                                 : const SizedBox(),
                                           ),
                                           const SizedBox(
@@ -710,8 +703,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                       .all(Theme.of(
                                                                               context)
                                                                           .primaryColor),
-                                                              columns:
-                                                               [
+                                                              columns: [
                                                                 const DataColumn(
                                                                   label: Align(
                                                                     alignment:
@@ -721,7 +713,6 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                         "Source Name"),
                                                                   ),
                                                                 ),
-                                                                 
                                                                 const DataColumn(
                                                                   label: Align(
                                                                     alignment:
@@ -1114,22 +1105,26 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                           ),
                                                         )),
 
-                                                          DataCell(Align(
+                                                        DataCell(Align(
                                                           child: InkWell(
                                                             onTap: () {
-                                                              widget
-                                                            .controller
-                                                            .getPlanerListData.remove(widget.controller.getPlanerListData.elementAt(index));
-                                                            setState(() {
-                                                              
-                                                            });
-                                                              widget
-                                                            .controller
-                                                            .getPlanerListData.forEach((element) { 
-                                                              logger.w(element.iSMSLELeadName);
-                                                            });
+                                                              widget.controller
+                                                                  .getPlanerListData
+                                                                  .remove(widget
+                                                                      .controller
+                                                                      .getPlanerListData
+                                                                      .elementAt(
+                                                                          index));
+                                                              setState(() {});
+                                                              widget.controller
+                                                                  .getPlanerListData
+                                                                  .forEach(
+                                                                      (element) {
+                                                                logger.w(element
+                                                                    .iSMSLELeadName);
+                                                              });
                                                             },
-                                                            child:const Icon(
+                                                            child: const Icon(
                                                               Icons.remove,
                                                               size: 30,
                                                               color: Colors
@@ -1362,7 +1357,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                             .controller
                                                                             .radioItems[index]
                                                                             .isRejected,
-                                                                        onChanged: 
+                                                                        onChanged:
                                                                             (value) {
                                                                           setState(
                                                                               () {
@@ -1405,8 +1400,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                                   ? widget.controller.accomdationList1.elementAt(index).vTADACMFoodAmt!.toInt().toString()
                                                                                   : index == 2
                                                                                       ? widget.controller.accomdationList1.elementAt(index).vTADACMTransportAmt!.toInt().toString()
-                                                                                      : 
-                                                                                      "",
+                                                                                      : "",
                                                                           style: Theme.of(context)
                                                                               .textTheme
                                                                               .bodySmall!
@@ -1526,7 +1520,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                             TextField(
                                                                           readOnly: widget.controller.radioItems[index].isRejected
                                                                               ? true
-                                                                               : false,
+                                                                              : false,
                                                                           decoration:
                                                                               const InputDecoration(border: OutlineInputBorder()),
                                                                           controller: widget
@@ -1852,25 +1846,38 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                             title: "Approve",
                                             onPress: () async {
                                               Get.dialog(AlertDialog(
-                                              insetPadding: const EdgeInsets.symmetric(horizontal: 16),
-                                              contentPadding: const EdgeInsets.all(8),
-                                              shape:
-                                                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                              content: SizedBox(
-                                                  width: Get.width,
-                                                  child: Container(
-                                                    height: 240,
-                                                    child: Center(child: Text("Please Wait...",
-                                                    style: Theme.of(context).textTheme.bodyMedium!.merge(
-                                                     const TextStyle(
-                                                        color: Color.fromARGB(255, 39, 4, 196)
-                                                      )
-                                                    ),
-                                                    ),),
-                                                  )   ),
-                                                 
-                                            ));
-                                              
+                                                insetPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 16),
+                                                contentPadding:
+                                                    const EdgeInsets.all(8),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                content: SizedBox(
+                                                    width: Get.width,
+                                                    child: Container(
+                                                      height: 240,
+                                                      child: Center(
+                                                        child: Text(
+                                                          "Please Wait...",
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodyMedium!
+                                                              .merge(const TextStyle(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          39,
+                                                                          4,
+                                                                          196))),
+                                                        ),
+                                                      ),
+                                                    )),
+                                              ));
+
                                               await addAccomdation(true);
                                             },
                                           ),
@@ -1879,8 +1886,8 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                           ),
                                           MSkollBtn(
                                             title: "Reject ",
-                                            onPress: () async{
-                                               await addAccomdation(false);
+                                            onPress: () async {
+                                              await addAccomdation(false);
                                             },
                                           ),
                                           const SizedBox(
@@ -1888,7 +1895,11 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                           ),
                                           MSkollBtn(
                                             title: "Cancel ",
-                                            onPress: () {},
+                                            onPress: () {
+                                              clearAll();
+
+                                              Get.back();
+                                            },
                                           )
                                         ],
                                       ),
@@ -1933,28 +1944,32 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
 
   @override
   void dispose() {
-       widget.controller.timeArrayList.clear();
+    clearAll();
+    super.dispose();
+  }
+
+  clearAll() {
+    widget.controller.timeArrayList.clear();
     widget.controller.sourcesList.clear();
     widget.controller.paymentDetails.clear();
     widget.controller.accomdationList1.clear();
-   widget.controller.sancationAmountEt.clear();
-   widget.controller.percentageET.clear();
-   widget.controller.approvalRemarkEt.clear();
+    widget.controller.sancationAmountEt.clear();
+    widget.controller.percentageET.clear();
+    widget.controller.approvalRemarkEt.clear();
     widget.controller.getPlanerListData.clear();
     widget.controller.chartData.clear();
     totalSanctionAmount.close();
     widget.controller.columns.clear();
-     widget.controller.rows.clear();
-     widget.controller.radioItems.clear();
-     emplyeList.clear();
-     widget.controller.adminFlag.value=false;
-      mapAccomdationList.clear();
-    super.dispose();
- }
+    widget.controller.rows.clear();
+    widget.controller.radioItems.clear();
+    emplyeList.clear();
+    widget.controller.adminFlag.value = false;
+    mapAccomdationList.clear();
+  }
 }
 
 String getDate(DateTime dt) {
-  return "${dt.year}-${dt.month.toString().padLeft(2,'0')}-${dt.day.toString().padLeft(2, "0")}";
+  return "${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, "0")}";
 }
 
 String dayCounts(String fromDate, String toDate) {
