@@ -61,9 +61,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
    super.initState();
    }
  addRadio()async{
-for(int i = 0;i<3;i++){
-  widget.controller.radioItems.add(Item(isApproved: true, isRejected: false));
-}
+
  }
   Future<void> addAccomdation(bool tap) async {
     if (mapAccomdationList.isNotEmpty || emplyeList.isNotEmpty) {

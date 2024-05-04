@@ -30,6 +30,7 @@ Future<void> getEditTour(
       "VTADAAA_Id": vtadaaaId,
       "userId": userId
     });
+
     logger.e({
       "HRME_Id": hrmeId,
       "IER_ID": ierId,
@@ -110,8 +111,14 @@ Future<void> getEditTour(
         tadaTourController.sancationAmountEt[i].addListener(() {
        tadaTourController.calculateSum();
       });
-    
-    }
+      if(
+      tadaAccomodationModel.values![i].vTADAAAAHStatusFlg=="Pending"||tadaAccomodationModel.values![i].vTADAAAAHStatusFlg=="Approved"  
+      ){
+      tadaTourController.radioItems.add(Item(isApproved: true, isRejected: false));
+      }else if(tadaAccomodationModel.values![i].vTADAAAAHStatusFlg=="Rejected"){
+             tadaTourController.radioItems.add(Item(isApproved: false, isRejected: true));
+      }
+   }
   
      TadaPaymentDetailsModel paymentDetails =
         TadaPaymentDetailsModel.fromJson(response.data['editArrayTwo']);
