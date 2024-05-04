@@ -323,6 +323,8 @@ class URLS {
   static String instituteList = 'api/LoginFacade/getMIdataMaster';
   static String extensionLoad = 'api/ISM_ExtensionFacade/getdetails';
   static String extensionSave = 'api/ISM_ExtensionFacade/savedata';
+  static String attendance =
+      'api/FrontOfficeMonthEndReportFacade/getmonthreport/';
   //Certificate Approval
   static String certificateList =
       'api/ISM_Certificate_Process_Facade/loaddata/';

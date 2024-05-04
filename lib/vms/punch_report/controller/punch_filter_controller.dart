@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/vms/punch_report/model/att_staff_details_model.dart';
 import 'package:m_skool_flutter/vms/punch_report/model/current_punch_details.dart';
+import 'package:m_skool_flutter/vms/punch_report/model/leave_name_model.dart';
 import 'package:m_skool_flutter/vms/punch_report/model/punch_report_model.dart';
 
 class PunchFilterController extends GetxController {
@@ -79,4 +81,20 @@ class PunchFilterController extends GetxController {
       currentPunchList.add(currentPunch.elementAt(i));
     }
   }
+
+  RxList<dynamic> staffDetails = <dynamic>[].obs;
+  RxBool isAtt = RxBool(false);
+  void attendance(bool i) {
+    isAtt.value = i;
+  }
+
+  RxList<AttStaffDetailsModelValues> staffDetailsModel =
+      <AttStaffDetailsModelValues>[].obs;
+  RxDouble unAuthorizedLeave = RxDouble(0);
+  RxInt workingDays = RxInt(0);
+  String unauthleavedates = "";
+  String unauthleavedatesdisplay = "";
+  String unauthleavedatestemp = "";
+  RxList<AttLeaveNameModelValues> leaveListName =
+      <AttLeaveNameModelValues>[].obs;
 }
