@@ -184,9 +184,8 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
         .then(
       (value) {
         Fluttertoast.showToast(msg: "Saved Successfully");
-        //  Get.back();
-        logger.w("double back");
-        Get.back();
+         Get.back();
+          Get.back();
       },
     );
   }
