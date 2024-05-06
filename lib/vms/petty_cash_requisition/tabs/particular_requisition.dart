@@ -998,15 +998,13 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                       hrmEId: selectedEmployee!.hrmEId!,
                       reqPurpose: purposeController.text,
                       reqTotalAmount: double.parse(totalAmountController.text),
-                      reqDate: getDateNeed(
-                          cashRequisitionController.selectDate.value),
+                      reqDate: getDateNeed(DateTime.parse(selectDate.text)),
                       reqDetailsDTOList: reqDetailsDTOList,
                     );
 
                     if (status == 200) {
                       setState(() {
                         isLoading = false;
-
                         selectedDepartment = null;
                         selectedEmployee = null;
                         selectDate.clear();
