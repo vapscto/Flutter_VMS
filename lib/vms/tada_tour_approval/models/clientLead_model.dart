@@ -9,16 +9,16 @@ class LeadsModel {
     if (json['\$values'] != null) {
       values = <LeadsModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add( LeadsModelValues.fromJson(v));
+        values!.add(LeadsModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['\$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -59,16 +59,16 @@ class LeadsModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['ISMSLE_Id'] = this.iSMSLEId;
-    data['ISMSLE_LeadName'] = this.iSMSLELeadName;
-    data['ISMSLE_StudentStrength'] = this.iSMSLEStudentStrength;
-    data['ISMSLE_StaffStrength'] = this.iSMSLEStaffStrength;
-    data['ISMSMPR_Id'] = this.iSMSMPRId;
-    data['ISMSMPR_ProductName'] = this.iSMSMPRProductName;
-    data['SourceName'] = this.sourceName;
-    data['IVRMMS_Name'] = this.iVRMMSName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['ISMSLE_Id'] = iSMSLEId;
+    data['ISMSLE_LeadName'] = iSMSLELeadName;
+    data['ISMSLE_StudentStrength'] = iSMSLEStudentStrength;
+    data['ISMSLE_StaffStrength'] = iSMSLEStaffStrength;
+    data['ISMSMPR_Id'] = iSMSMPRId;
+    data['ISMSMPR_ProductName'] = iSMSMPRProductName;
+    data['SourceName'] = sourceName;
+    data['IVRMMS_Name'] = iVRMMSName;
     return data;
   }
 }
