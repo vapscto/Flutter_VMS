@@ -1558,6 +1558,8 @@ class _IndentApprovalState extends State<IndentApproval> {
 
                                             selectDate.text =
                                                 getDate(selectedDT);
+                                            indentApprovalController
+                                                .selectDate.value = selectedDT;
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.all(12.0),
