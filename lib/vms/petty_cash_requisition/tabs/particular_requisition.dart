@@ -492,10 +492,10 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                     ),
                     suffixIcon: InkWell(
                       onTap: () async {
-                        DateTime? selectedDT = await showDatePicker(
+                        selectedDT = await showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
-                          firstDate: DateTime(1000),
+                          firstDate: DateTime(2000),
                           lastDate: DateTime.now(),
                         );
 
@@ -506,7 +506,7 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                         }
                         changes.value += 1;
 
-                        selectDate.text = getDate(selectedDT);
+                        selectDate.text = getDate(selectedDT!);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
@@ -998,7 +998,8 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                       hrmEId: selectedEmployee!.hrmEId!,
                       reqPurpose: purposeController.text,
                       reqTotalAmount: double.parse(totalAmountController.text),
-                      reqDate: getDateNeed(DateTime.parse(selectDate.text)),
+                      reqDate: getDateNeed(
+                          (selectedDT != null) ? selectedDT! : DateTime.now()),
                       reqDetailsDTOList: reqDetailsDTOList,
                     );
 
@@ -1040,11 +1041,9 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
                           ),
                         )
                       : const Padding(
-                          padding: EdgeInsets.only(
-                            top: 13.0,
-                            bottom: 13,
-                            left: 14,
-                            right: 14,
+                          padding: EdgeInsets.symmetric(
+                            vertical: 13.0,
+                            horizontal: 14,
                           ),
                           child: Text(
                             "Save",
@@ -1078,4 +1077,6 @@ class _PcRequisitionScreenState extends State<PcRequisitionScreen> {
   String getDateNeed(DateTime dt) {
     return "${dt.month.toString().padLeft(2, "0")}-${dt.day.toString().padLeft(2, "0")}-${dt.year}";
   }
+
+  DateTime? selectedDT;
 }
