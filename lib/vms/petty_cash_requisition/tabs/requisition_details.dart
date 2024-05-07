@@ -146,11 +146,12 @@ class _PcRequisitionDetailsScreenState
                                                 "${requestedDetailsPC.getLoadDataList.elementAt(index).departmentname}")),
                                             DataCell(Text(
                                                 "${requestedDetailsPC.getLoadDataList.elementAt(index).employeename}")),
-                                            DataCell(Text(getDateNeed(DateTime
-                                                .parse(requestedDetailsPC
-                                                    .getLoadDataList
-                                                    .elementAt(index)
-                                                    .pcreqtNCreatedDate!)))),
+                                            DataCell(Text(getDateNeed(
+                                                DateTime.parse(
+                                                    requestedDetailsPC
+                                                        .getLoadDataList
+                                                        .elementAt(index)
+                                                        .pcreqtNDate!)))),
                                             DataCell(Text(
                                                 "${requestedDetailsPC.getLoadDataList.elementAt(index).pcreqtNPurpose}")),
                                             DataCell(Row(
