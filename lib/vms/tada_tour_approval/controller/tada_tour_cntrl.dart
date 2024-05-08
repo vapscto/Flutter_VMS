@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/vms/tada_tour_approval/models/clientLead_model.dart';
+import 'package:m_skool_flutter/vms/tada_tour_approval/models/client_lead_model.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/models/get_planerdata.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/models/get_tour_palner_details.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/models/get_tour_view_model.dart';
@@ -32,18 +32,18 @@ class TadaTourController extends GetxController {
       <TextEditingController>[].obs;
   RxString totalSamount = "".obs;
   RxBool showTable = RxBool(false);
-  RxList<bool> checkBoxList  =  <bool>[].obs;
+  RxList<bool> checkBoxList = <bool>[].obs;
   RxList<LeadsModelValues> leadsList = <LeadsModelValues>[].obs;
   RxList<ChartData> chartData = <ChartData>[].obs;
   RxList<LeadsModelValues> leadList = <LeadsModelValues>[].obs;
   Rx<TextEditingController> sancationAmountTotal =
       TextEditingController(text: "").obs;
   RxList<Item> radioItems = <Item>[].obs;
-       
+
   RxInt approvedCount = 0.obs;
   RxInt rejectedCount = 0.obs;
-  RxInt adminTotal =0.obs;
-   RxList<DataColumn> columns =<DataColumn>[].obs;
+  RxInt adminTotal = 0.obs;
+  RxList<DataColumn> columns = <DataColumn>[].obs;
   RxList<DataCell> rows = <DataCell>[].obs;
   RxList<DataColumn> sourceColumns = <DataColumn>[].obs;
   RxList<String> sourceRows = <String>[].obs;
@@ -54,7 +54,7 @@ class TadaTourController extends GetxController {
       int value = int.tryParse(controller.text) ?? 0;
       sum += value;
     }
-  totalSamount.value = '$sum';
+    totalSamount.value = '$sum';
   }
 }
 

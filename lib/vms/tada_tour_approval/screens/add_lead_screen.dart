@@ -5,13 +5,14 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/api/add_lead.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/controller/tada_tour_cntrl.dart';
-import 'package:m_skool_flutter/vms/tada_tour_approval/models/clientLead_model.dart';
+import 'package:m_skool_flutter/vms/tada_tour_approval/models/client_lead_model.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/models/get_planerdata.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/models/tada_getcategory.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/drop_down_level.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
+// ignore: must_be_immutable
 class AddLeadScreen extends StatefulWidget {
   TadaTourController tadaTourController;
   final MskoolController mskoolController;
@@ -35,12 +36,13 @@ class _AddLeadScreenState extends State<AddLeadScreen> {
   RxString categoryName = "".obs;
   RxList<int> checkedList = <int>[].obs;
   Rx<TextEditingController> serachEt = TextEditingController(text: "").obs;
-  RxList<LeadsModelValues> fillterLeads =  <LeadsModelValues>[].obs;
+  RxList<LeadsModelValues> fillterLeads = <LeadsModelValues>[].obs;
   @override
   void initState() {
     selectCatId.value =
         widget.tadaTourController.getTadaCategory.first.iMRCCategoryId!.toInt();
-    categoryName.value = widget.tadaTourController.getTadaCategory.first.iMRCCategoryName!;    
+    categoryName.value =
+        widget.tadaTourController.getTadaCategory.first.iMRCCategoryName!;
     super.initState();
     initApi();
     fillterLeads.value = widget.tadaTourController.leadList;
@@ -55,41 +57,47 @@ class _AddLeadScreenState extends State<AddLeadScreen> {
         miID: widget.miID,
         tadaTourController: widget.tadaTourController);
   }
-  addToLead(){ 
+
+  addToLead() {
     //getPlanerListData
-    for(int i=0; i<checkedList.length;i++){
-    widget.tadaTourController.getPlanerListData.add(
-      TadaPlanerDataValues(
-        iSMSLEId: fillterLeads.elementAt( checkedList[i]).iSMSLEId,
-        iMRCCategoryId:   selectCatId.value,
+    for (int i = 0; i < checkedList.length; i++) {
+      widget.tadaTourController.getPlanerListData.add(TadaPlanerDataValues(
+        iSMSLEId: fillterLeads.elementAt(checkedList[i]).iSMSLEId,
+        iMRCCategoryId: selectCatId.value,
         iSMSLELeadName: fillterLeads.elementAt(checkedList[i]).iSMSLELeadName,
-        iSMSLEStudentStrength: fillterLeads.elementAt(checkedList[i]).iSMSLEStudentStrength,
-        iSMSLEStaffStrength: fillterLeads.elementAt(checkedList[i]).iSMSLEStaffStrength,
+        iSMSLEStudentStrength:
+            fillterLeads.elementAt(checkedList[i]).iSMSLEStudentStrength,
+        iSMSLEStaffStrength:
+            fillterLeads.elementAt(checkedList[i]).iSMSLEStaffStrength,
         iSMSMPRId: fillterLeads.elementAt(checkedList[i]).iSMSMPRId,
-        iSMSMPRProductName: fillterLeads.elementAt(checkedList[i]).iSMSMPRProductName,
+        iSMSMPRProductName:
+            fillterLeads.elementAt(checkedList[i]).iSMSMPRProductName,
         sourceName: fillterLeads.elementAt(checkedList[i]).sourceName,
         iVRMMSName: fillterLeads.elementAt(checkedList[i]).iVRMMSName,
         demoEmployeeFirstName: "",
         hRMEEmployeeFirstName: "",
         iERID: 0,
-        iMRCCategoryName:categoryName.value,
+        iMRCCategoryName: categoryName.value,
         iVRMMSId: 0,
-    )
-    );
+      ));
     }
-    if(widget.tadaTourController.getPlanerListData.length > widget.tadaTourController.adminTotal.value){
-        widget.tadaTourController.adminFlag.value =true;
+    if (widget.tadaTourController.getPlanerListData.length >
+        widget.tadaTourController.adminTotal.value) {
+      widget.tadaTourController.adminFlag.value = true;
     }
     Get.back();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  CustomAppBar(title: "Leads",
-      action: [
-        MSkollBtn(title: "Add Leads", onPress:  () {
-           addToLead();
-        },)
+      appBar: CustomAppBar(title: "Leads", action: [
+        MSkollBtn(
+          title: "Add Leads",
+          onPress: () {
+            addToLead();
+          },
+        )
       ]).getAppBar(),
       body: Obx(
         () => SingleChildScrollView(
@@ -169,7 +177,7 @@ class _AddLeadScreenState extends State<AddLeadScreen> {
                     selectCatId.value = s!.iMRCCategoryId!;
                     categoryName.value = s.iMRCCategoryName!;
                     if (widget.tadaTourController.leadList.isNotEmpty) {
-                     widget.tadaTourController.leadList.clear();
+                      widget.tadaTourController.leadList.clear();
                     }
                     initApi();
                   },
@@ -184,15 +192,16 @@ class _AddLeadScreenState extends State<AddLeadScreen> {
                 },
                 controller: serachEt.value,
                 style: Theme.of(context).textTheme.titleSmall!,
-                decoration: InputDecoration(border:const OutlineInputBorder(),
-                hintText: "Search...",
-                prefixIcon:const Icon(Icons.search),
-                hintStyle: Theme.of(context).textTheme.bodySmall),
+                decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    hintText: "Search...",
+                    prefixIcon: const Icon(Icons.search),
+                    hintStyle: Theme.of(context).textTheme.bodySmall),
               ).paddingSymmetric(horizontal: 20),
               const SizedBox(
                 height: 20,
               ),
-             fillterLeads.isNotEmpty
+              fillterLeads.isNotEmpty
                   ? SingleChildScrollView(
                       padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 20),
@@ -260,9 +269,7 @@ class _AddLeadScreenState extends State<AddLeadScreen> {
                               ),
                             ),
                           ],
-                          rows: List.generate(
-                             fillterLeads.length,
-                              (index) {
+                          rows: List.generate(fillterLeads.length, (index) {
                             int nums = index + 1;
                             return DataRow(cells: [
                               DataCell(Align(
@@ -270,11 +277,11 @@ class _AddLeadScreenState extends State<AddLeadScreen> {
                               )),
                               DataCell(Align(
                                 child: Checkbox(
-                                  activeColor:const Color.fromARGB(255, 6, 26, 209),
+                                  activeColor:
+                                      const Color.fromARGB(255, 6, 26, 209),
                                   shape: ContinuousRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)
-                                  ),
-                                  value:widget
+                                      borderRadius: BorderRadius.circular(5)),
+                                  value: widget
                                       .tadaTourController.checkBoxList[index],
                                   onChanged: (value) {
                                     widget.tadaTourController
@@ -291,15 +298,13 @@ class _AddLeadScreenState extends State<AddLeadScreen> {
                               )),
                               DataCell(Align(
                                 child: Text(
-                                 fillterLeads
-                                      .elementAt(index)
-                                      .iSMSLELeadName!,
+                                  fillterLeads.elementAt(index).iSMSLELeadName!,
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               )),
                               DataCell(Align(
                                 child: Text(
-                                 fillterLeads
+                                  fillterLeads
                                       .elementAt(index)
                                       .iSMSLEStudentStrength!
                                       .toString(),
@@ -308,7 +313,7 @@ class _AddLeadScreenState extends State<AddLeadScreen> {
                               )),
                               DataCell(Align(
                                 child: Text(
-                                 fillterLeads
+                                  fillterLeads
                                       .elementAt(index)
                                       .iSMSMPRProductName!,
                                   style: Theme.of(context).textTheme.bodySmall,
@@ -316,17 +321,13 @@ class _AddLeadScreenState extends State<AddLeadScreen> {
                               )),
                               DataCell(Align(
                                 child: Text(
-                                 fillterLeads
-                                      .elementAt(index)
-                                      .sourceName!,
+                                  fillterLeads.elementAt(index).sourceName!,
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               )),
                               DataCell(Align(
                                 child: Text(
-                                 fillterLeads
-                                      .elementAt(index)
-                                      .iVRMMSName!,
+                                  fillterLeads.elementAt(index).iVRMMSName!,
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ))
@@ -341,16 +342,22 @@ class _AddLeadScreenState extends State<AddLeadScreen> {
       ),
     );
   }
-  Future<void> filterLead(String Query)async{
-   fillterLeads.value =  widget.tadaTourController.leadList.where((p0) {
-     return p0.iVRMMSName!.contains(Query) || p0.sourceName!.contains(Query) ||  p0.iSMSLELeadName!.contains(Query)
-     || p0.iSMSMPRProductName!.contains(Query);
-   },).toList();
+
+  Future<void> filterLead(String query) async {
+    fillterLeads.value = widget.tadaTourController.leadList.where(
+      (p0) {
+        return p0.iVRMMSName!.contains(query) ||
+            p0.sourceName!.contains(query) ||
+            p0.iSMSLELeadName!.contains(query) ||
+            p0.iSMSMPRProductName!.contains(query);
+      },
+    ).toList();
   }
+
   @override
   void dispose() {
-   fillterLeads.clear();
-  // widget.tadaTourController.getPlanerListData.clear();
+    fillterLeads.clear();
+    // widget.tadaTourController.getPlanerListData.clear();
     super.dispose();
   }
 }
