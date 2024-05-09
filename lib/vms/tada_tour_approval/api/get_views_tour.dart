@@ -52,7 +52,9 @@ Future<void> getViewList(
     }
   } on DioError catch (e) {
     logger.e(e.message);
+     tadaTourController.viewLoading.value = true;
   } on Exception catch (e) {
     logger.e(e.toString());
+     tadaTourController.viewLoading.value = true;
   }
 }

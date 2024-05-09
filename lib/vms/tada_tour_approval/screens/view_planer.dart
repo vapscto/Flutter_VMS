@@ -1709,7 +1709,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Obx(
+                                       /**    Obx(
                                             () => widget.controller.chartData
                                                         .length >
                                                     3
@@ -1745,6 +1745,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                           const SizedBox(
                                             width: 50,
                                           ),
+                                          */
                                           Container(
                                             height: 250,
                                             width: 250,
@@ -1839,7 +1840,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                       ),
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                            MainAxisAlignment.start,
                                         children: [
                                           MSkollBtn(
                                             title: "Approve",
@@ -1956,7 +1957,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
     widget.controller.percentageET.clear();
     widget.controller.approvalRemarkEt.clear();
     widget.controller.getPlanerListData.clear();
-    widget.controller.chartData.clear();
+    //widget.controller.chartData.clear();
     totalSanctionAmount.close();
     widget.controller.columns.clear();
     widget.controller.rows.clear();

@@ -41,11 +41,16 @@ class _TadaViewTourViewState extends State<TadaViewTourView> {
       body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Obx(
-            () => controller.getTourViewList.isEmpty
+            () => controller.viewLoading.isTrue ?
+            const AnimatedProgressWidget(
+                    title: "No Data",
+                    desc: "No data is available",
+                    animationPath: "assets/json/default.json"):
+             controller.getTourViewList.isEmpty
                 ? const AnimatedProgressWidget(
                     title: "Please Wait",
                     desc: "We are trying to loging you in.",
-                    animationPath: "assets/json/default.json")
+                    animationPath: "assets/json/nodata.json")
                 : Column(
                     children: [
                       SingleChildScrollView(
