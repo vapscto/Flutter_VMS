@@ -35,25 +35,37 @@ Future<void> getViewTada(
       "VTADAAA_Id": vtadaaaId,
       "userId": userId
     });
-    if (tadaTourController.getTadaCategory.isNotEmpty || tadaTourController.getPlanerListData.isNotEmpty) {
+    if (tadaTourController.getTadaCategory.isNotEmpty ||
+        tadaTourController.getPlanerListData.isNotEmpty) {
       tadaTourController.getTadaCategory.clear();
       tadaTourController.getPlanerListData.clear();
-       tadaTourController.rows.clear();
-       tadaTourController.columns.clear();
+      tadaTourController.rows.clear();
+      tadaTourController.columns.clear();
     }
     TadaGetCategoryModel categoryModel =
         TadaGetCategoryModel.fromJson(response.data['getCategoryArray']);
     tadaTourController.getTadaCategory.addAll(categoryModel.values!);
-     tadaTourController.columns.add(const DataColumn(label: Text('')));
-     tadaTourController.rows.add(const DataCell(Text('Percentage', )),  );
-   tadaTourController.getTadaCategory.forEach((element) { 
-      tadaTourController.columns.add(DataColumn(label: Text(element.iMRCCategoryName!)),);
-      tadaTourController.rows.add( DataCell(Text('${element.iMRCPercentage!.toInt()} %', )),  );
-    });
+    tadaTourController.columns.add(const DataColumn(label: Text('')));
+    tadaTourController.rows.add(
+      const DataCell(Text(
+        'Percentage',
+      )),
+    );
+    for (var element in tadaTourController.getTadaCategory) {
+      tadaTourController.columns.add(
+        DataColumn(label: Text(element.iMRCCategoryName!)),
+      );
+      tadaTourController.rows.add(
+        DataCell(Text(
+          '${element.iMRCPercentage!.toInt()} %',
+        )),
+      );
+    }
     TadaPlanerData getPalnerList =
-     TadaPlanerData.fromJson(response.data['getPlanerdata']);
+        TadaPlanerData.fromJson(response.data['getPlanerdata']);
     tadaTourController.getPlanerListData.addAll(getPalnerList.values!);
-    tadaTourController.adminTotal.value = tadaTourController.getTadaCategory.length;
+    tadaTourController.adminTotal.value =
+        tadaTourController.getTadaCategory.length;
   } on DioError catch (e) {
     logger.e(e.message);
   } on Exception catch (e) {

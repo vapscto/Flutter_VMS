@@ -1332,6 +1332,8 @@ class _PcIndentApprovalScreenState extends State<PcIndentApprovalScreen> {
 
                                                 selectDate.text =
                                                     getDate(selectedDT);
+                                                _pcapprovalController.selectDate
+                                                    .value = selectedDT;
                                               },
                                               child: Padding(
                                                 padding:

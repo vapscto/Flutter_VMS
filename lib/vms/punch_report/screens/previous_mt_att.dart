@@ -695,24 +695,30 @@ class _PreviousMonthAttendanceScreenState
                                               .length, (index) {
                                         return TableRow(children: [
                                           TableCell(
-                                              child: Text(widget
-                                                      .controller
-                                                      .leaveListName[index]
-                                                      .leavename ??
-                                                  '')),
+                                              child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 6.0, horizontal: 5),
+                                            child: Text(widget
+                                                    .controller
+                                                    .leaveListName[index]
+                                                    .leavename ??
+                                                ''),
+                                          )),
                                           TableCell(
-                                              child: Text((widget
-                                                          .controller
-                                                          .leaveListName[index]
-                                                          .drNotSentDates !=
-                                                      null)
-                                                  ? DateTime.parse(widget
-                                                          .controller
-                                                          .leaveListName[index]
-                                                          .drNotSentDates!)
-                                                      .day
-                                                      .toString()
-                                                  : ""))
+                                              child: Center(
+                                            child: Text((widget
+                                                        .controller
+                                                        .leaveListName[index]
+                                                        .drNotSentDates !=
+                                                    null)
+                                                ? DateTime.parse(widget
+                                                        .controller
+                                                        .leaveListName[index]
+                                                        .drNotSentDates!)
+                                                    .day
+                                                    .toString()
+                                                : ""),
+                                          ))
                                         ]);
                                       }),
                                     ],
