@@ -31,7 +31,7 @@ Future<bool> saveTadaTour(
  )async{
     final Dio ins = getGlobalDio();
   final String apiUrl = base + URLS.savaTadaTourApi;
-    
+  logger.w(apiUrl);
   logger.e({
  "AdminFlag": adminFlag,
   "HRME_Id": hrmeId,
@@ -55,11 +55,11 @@ Future<bool> saveTadaTour(
    try {
     final Response response =
         await ins.post(apiUrl, options: Options(headers: getSession()), data: {
-      "AdminFlag": adminFlag,
+ "AdminFlag": adminFlag,
   "HRME_Id": hrmeId,
   "IER_ID": ierId ,
   "MI_Id": miID,
-  "userId":userID,
+   "userId":userID,
   "PlanEndDate": planerEndDate ,
   "PlanName": planerName,
   "PlanStartDate": plannerStarDate,

@@ -50,24 +50,24 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
   var totalApproveCount;
   @override
   void initState() {
-    addRadio();
+     
     initApi();
     dayCount = dayCounts(widget.getTourViewValues.vTADAAAFromDate!,
         widget.getTourViewValues.vTADAAAToDate!);
     appliedEt.text =
         widget.getTourViewValues.vTADAAATotalAppliedAmount.toString();
-    updateCounts();
-    totalApproveCount = widget.controller.approvedCount.value;
+   
+    // totalApproveCount = widget.controller.approvedCount.value;
+    // logger.e("count1$totalApproveCount");
     super.initState();
   }
-
-  addRadio() async {}
   Future<void> addAccomdation(bool tap) async {
     if (mapAccomdationList.isNotEmpty || emplyeList.isNotEmpty) {
       mapAccomdationList.clear();
       emplyeList.clear();
     }
     totalApproveCount = widget.controller.approvedCount.value;
+    logger.e("count2$totalApproveCount");
     String planneEndDate = getDate(
         DateTime.parse(widget.getTourViewValues.vTADAAAToDate.toString()));
     String planneStartDate = getDate(
@@ -212,6 +212,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
       widget.controller.sancationAmountTotal.value.text =
           widget.controller.totalSamount.value;
     });
+     updateCounts();
   }
 
   @override
