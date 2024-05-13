@@ -15,8 +15,7 @@ import 'package:m_skool_flutter/vms/tada_tour_approval/models/get_tour_view_mode
 import 'package:m_skool_flutter/vms/tada_tour_approval/screens/add_lead_screen.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-
+ 
 class ViewTourPLan extends StatefulWidget {
   final GetTourViewValues getTourViewValues;
   final String planerNme;
@@ -1518,10 +1517,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                           Align(
                                                                         child:
                                                                             TextField(
-                                                                          readOnly: widget.controller.radioItems[index].isRejected
-                                                                              ? true
-                                                                              : false,
-                                                                          decoration:
+                                                                           decoration:
                                                                               const InputDecoration(border: OutlineInputBorder()),
                                                                           controller: widget
                                                                               .controller
