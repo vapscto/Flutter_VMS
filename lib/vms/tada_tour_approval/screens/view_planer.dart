@@ -1114,7 +1114,9 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                                                                       .getPlanerListData
                                                                       .elementAt(
                                                                           index));
-                                                              setState(() {});
+                                                              setState(() {
+                                                                      widget.controller.adminFlag.value = true;
+                                                                      });
                                                               widget.controller
                                                                   .getPlanerListData
                                                                   .forEach(
