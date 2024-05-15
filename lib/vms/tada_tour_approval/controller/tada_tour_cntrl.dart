@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/models/client_lead_model.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/models/get_planerdata.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/models/get_tour_palner_details.dart';
@@ -55,6 +56,7 @@ class TadaTourController extends GetxController {
       sum += value;
     }
     totalSamount.value = '$sum';
+    logger.e("calcuating${totalSamount.value}");
   }
 }
 

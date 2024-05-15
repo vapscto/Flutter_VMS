@@ -100,6 +100,7 @@ Future<void> getEditTour(
     logger.w(response.data['editArray']);    
     tadaTourController.accomdationList1.addAll(tadaAccomodationModel.values!);
     for (int i = 0; i < tadaAccomodationModel.values!.length; i++) {
+    if(tadaAccomodationModel.values![i].sanctionLevelNo ==1){
       tadaTourController.percentageET.add(TextEditingController(text: "80"));
       var sancationAmount =
           tadaAccomodationModel.values![i].vTADAAADAmount!.toInt();
@@ -111,12 +112,31 @@ Future<void> getEditTour(
         tadaTourController.sancationAmountEt[i].addListener(() {
        tadaTourController.calculateSum();
       });
-      if(
+       if(
       tadaAccomodationModel.values![i].vTADAAAAHStatusFlg=="Pending"||tadaAccomodationModel.values![i].vTADAAAAHStatusFlg=="Approved"  
       ){
       tadaTourController.radioItems.add(Item(isApproved: true, isRejected: false));
       }else if(tadaAccomodationModel.values![i].vTADAAAAHStatusFlg=="Rejected"){
              tadaTourController.radioItems.add(Item(isApproved: false, isRejected: true));
+      }
+      } else if(
+        tadaAccomodationModel.values![i].sanctionLevelNo ==2
+      ){
+        var setPercntage2 = tadaAccomodationModel.values![i].vTADAAAAHSactionedAmount! /  tadaAccomodationModel.values![i].vTADAAADAmount! * 100;
+tadaTourController.sancationAmountEt
+          .add(TextEditingController(text: "${tadaAccomodationModel.values![i].vTADAAAAHSactionedAmount!.toInt()}"));
+      tadaTourController.percentageET.add(TextEditingController(text: "${setPercntage2.toInt()}"));
+      tadaTourController.approvalRemarkEt.add(TextEditingController(text: ""));
+        tadaTourController.sancationAmountEt[i].addListener(() {
+       tadaTourController.calculateSum();
+      });
+       if(
+      tadaAccomodationModel.values![i].vTADAAAAHStatusFlg=="Pending"||tadaAccomodationModel.values![i].vTADAAAAHStatusFlg=="Approved"  
+      ){
+      tadaTourController.radioItems.add(Item(isApproved: true, isRejected: false));
+      }else if(tadaAccomodationModel.values![i].vTADAAAAHStatusFlg=="Rejected"){
+             tadaTourController.radioItems.add(Item(isApproved: false, isRejected: true));
+      }
       }
    }
   
