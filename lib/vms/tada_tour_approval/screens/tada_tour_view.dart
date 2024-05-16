@@ -43,13 +43,13 @@ class _TadaViewTourViewState extends State<TadaViewTourView> {
           child: Obx(
             () => controller.viewLoading.isTrue ?
             const AnimatedProgressWidget(
-                    title: "No Data",
-                    desc: "No data is available",
+                    title: "Loading...",
+                    desc: "We are trying to loging you in.",
                     animationPath: "assets/json/default.json"):
              controller.getTourViewList.isEmpty
                 ? const AnimatedProgressWidget(
-                    title: "Please Wait",
-                    desc: "We are trying to loging you in.",
+                    title: "No Data",
+                    desc: "No Data is available",
                     animationPath: "assets/json/nodata.json")
                 : Column(
                     children: [

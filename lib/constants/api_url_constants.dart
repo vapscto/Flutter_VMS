@@ -412,4 +412,8 @@ class URLS {
   static String getLeadsClients="api/TADAAdvanceApprovalFacade/TadaAllwence/";
 
   static String savaTadaTourApi="api/TADAAdvanceApprovalFacade/TourApproval/";
+
+  static String getFinalAdavncedViewApi="api/TADAApprovalFacade/getfinaldata/";
+
+  static String getTadaTourPlanerDetails="api/TADA_Advance_TourFacade/FinalSubMission/";
 }
