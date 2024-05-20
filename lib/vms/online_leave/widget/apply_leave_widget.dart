@@ -584,75 +584,80 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                     logger.i(count1);
                                     logger.e(widget
                                         .values.hrmLMaxLeavesApplyPerMonth);
-
-                                    if (widget.values.hrmLLeaveCode == "CL") {
-                                      if (count1 >
-                                          widget.values
-                                              .hrmLMaxLeavesApplyPerMonth) {
-                                        // ignore: use_build_context_synchronously
-                                        showDialog(
-                                            barrierDismissible: false,
-                                            context: context,
-                                            builder: (context) {
-                                              return Center(
-                                                child: Container(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 20),
-                                                  height: 200,
-                                                  width: 300,
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      shape:
-                                                          BoxShape.rectangle),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                          "Monthly Limit Is Completed For This Leave",
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .titleMedium!
-                                                              .merge(const TextStyle(
-                                                                  fontSize: 20,
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          7,
-                                                                          85,
-                                                                          255)))),
-                                                      const SizedBox(
-                                                        height: 20,
-                                                      ),
-                                                      MSkollBtn(
-                                                        title: " OK ",
-                                                        onPress: () {
-                                                          totalDay.value = '0';
-                                                          reportingDate.clear();
-                                                          startDate.clear();
-                                                          endDate.clear();
-                                                          Get.back();
-                                                          Get.back();
-                                                        },
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              );
-                                            });
-                                      }
+                                    double count2 = 0;
+                                    if (widget.values.appliedCount == 0.00) {
+                                      count2 =
+                                          double.tryParse(totalDay.value)! +
+                                              widget.values.hrmLNoOfDays;
+                                    } else {
+                                      count2 =
+                                          double.tryParse(totalDay.value)! +
+                                              widget.values.appliedCount;
                                     }
+                                    // if (widget.values.hrmLLeaveCode == "CL") {
+                                    if (count2 >
+                                        widget.values
+                                            .hrmLMaxLeavesApplyPerMonth) {
+                                      // ignore: use_build_context_synchronously
+                                      showDialog(
+                                          barrierDismissible: false,
+                                          context: context,
+                                          builder: (context) {
+                                            return Center(
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 20),
+                                                height: 200,
+                                                width: 300,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    shape: BoxShape.rectangle),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                        "Monthly Limit Is Completed For This Leave",
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleMedium!
+                                                            .merge(const TextStyle(
+                                                                fontSize: 20,
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        7,
+                                                                        85,
+                                                                        255)))),
+                                                    const SizedBox(
+                                                      height: 20,
+                                                    ),
+                                                    MSkollBtn(
+                                                      title: " OK ",
+                                                      onPress: () {
+                                                        totalDay.value = '0';
+                                                        reportingDate.clear();
+                                                        startDate.clear();
+                                                        endDate.clear();
+                                                        Get.back();
+                                                        Get.back();
+                                                      },
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          });
+                                    }
+                                    // }
 
                                     if (widget.values.hrmLLeaveName ==
                                         'Privilege Leave') {
