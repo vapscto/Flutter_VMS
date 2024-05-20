@@ -32,7 +32,7 @@ class TadaPaymentDetailsModelValues {
   double? totalSactionedAmountByPart;
   double? totalPaidAmount;
   double? totalPaidAmountByPart;
-  double? paymentTime;
+  int? paymentTime;
   String? paymentMode;
   int? vTADAAAId;
   int? hRMEId;

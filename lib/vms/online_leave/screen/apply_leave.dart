@@ -22,13 +22,11 @@ class ApplyForLeave extends StatefulWidget {
 }
 
 class _ApplyForLeaveState extends State<ApplyForLeave> {
-  //RxBool isHalfDay = RxBool(false);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: "Apply Leave").getAppBar(),
       body: SingleChildScrollView(
-        // padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -42,21 +40,6 @@ class _ApplyForLeaveState extends State<ApplyForLeave> {
                 mskoolController: widget.mskoolController,
               ),
             ),
-
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            //   child: Text(
-            //     "Add Leave",
-            //     style: Theme.of(context)
-            //         .textTheme
-            //         .titleSmall!
-            //         .merge(const TextStyle(fontWeight: FontWeight.w600)),
-            //   ),
-            // ),
-            // const SizedBox(
-            //   height: 16.0,
-            // ),
-            //   const Leaves(),
           ],
         ),
       ),

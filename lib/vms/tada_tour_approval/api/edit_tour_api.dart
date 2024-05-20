@@ -120,7 +120,7 @@ Future<void> getEditTour(
              tadaTourController.radioItems.add(Item(isApproved: false, isRejected: true));
       }
       } else if(
-        tadaAccomodationModel.values![i].sanctionLevelNo ==2
+        tadaAccomodationModel.values![i].sanctionLevelNo! >1
       ){
         var setPercntage2 = tadaAccomodationModel.values![i].vTADAAAAHSactionedAmount! /  tadaAccomodationModel.values![i].vTADAAADAmount! * 100;
 tadaTourController.sancationAmountEt

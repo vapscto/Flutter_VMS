@@ -9,16 +9,16 @@ class FinalTourPlanDetails {
     if (json['\$values'] != null) {
       values = <FinalTourPlanDetailsValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new FinalTourPlanDetailsValues.fromJson(v));
+        values!.add(FinalTourPlanDetailsValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -68,19 +68,19 @@ class FinalTourPlanDetailsValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['IER_PlanName'] = this.iERPlanName;
-    data['IER_Remarks'] = this.iERRemarks;
-    data['VTADAAA_FromDate'] = this.vTADAAAFromDate;
-    data['VTADAAA_ToDate'] = this.vTADAAAToDate;
-    data['VTADAAA_DepartureTime'] = this.vTADAAADepartureTime;
-    data['VTADAAA_ArrivalTime'] = this.vTADAAAArrivalTime;
-    data['MI_Name'] = this.mIName;
-    data['VTADAAA_AppliedDate'] = this.vTADAAAAppliedDate;
-    data['HRME_EmployeeFirstName'] = this.hRMEEmployeeFirstName;
-    data['VTADAAA_TotalAppliedAmount'] = this.vTADAAATotalAppliedAmount;
-    data['VTADAAA_Id'] = this.vTADAAAId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['IER_PlanName'] = iERPlanName;
+    data['IER_Remarks'] = iERRemarks;
+    data['VTADAAA_FromDate'] = vTADAAAFromDate;
+    data['VTADAAA_ToDate'] = vTADAAAToDate;
+    data['VTADAAA_DepartureTime'] = vTADAAADepartureTime;
+    data['VTADAAA_ArrivalTime'] = vTADAAAArrivalTime;
+    data['MI_Name'] = mIName;
+    data['VTADAAA_AppliedDate'] = vTADAAAAppliedDate;
+    data['HRME_EmployeeFirstName'] = hRMEEmployeeFirstName;
+    data['VTADAAA_TotalAppliedAmount'] = vTADAAATotalAppliedAmount;
+    data['VTADAAA_Id'] = vTADAAAId;
     return data;
   }
 }
