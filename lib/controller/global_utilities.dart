@@ -500,7 +500,7 @@ void openMappedPages(
 
   if (pageName == "Rating Report") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return FinalTadaTourApprovalList(
+      return RatingReportHome(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
       );
