@@ -9,16 +9,16 @@ class FinalTadaTourApproval {
     if (json['\$values'] != null) {
       values = <FinalTadaTourApprovalValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new FinalTadaTourApprovalValues.fromJson(v));
+        values!.add(FinalTadaTourApprovalValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -96,7 +96,7 @@ class FinalTadaTourApprovalValues {
     userId = json['User_Id'];
     sanctionLevelNo = json['SanctionLevelNo'];
     empName = json['EmpName'];
-    clientName = json['ClientName'] ??"";
+    clientName = json['ClientName'] ?? "";
     cityName = json['CityName'];
     vTADAAAASactionedAmount = json['VTADAAAA_SactionedAmount'];
     vTADAAAId = json['VTADAAA_Id'];
@@ -104,31 +104,31 @@ class FinalTadaTourApprovalValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['MI_Id'] = this.mIId;
-    data['MI_Name'] = this.mIName;
-    data['VTADAA_Id'] = this.vTADAAId;
-    data['HRME_Id'] = this.hRMEId;
-    data['VTADAA_ToAddress'] = this.vTADAAToAddress;
-    data['VTADAA_AppliedDate'] = this.vTADAAAppliedDate;
-    data['VTADAA_FromDate'] = this.vTADAAFromDate;
-    data['VTADAA_ToDate'] = this.vTADAAToDate;
-    data['VTADAA_Remarks'] = this.vTADAARemarks;
-    data['VTADAA_ClientId'] = this.vTADAAClientId;
-    data['IVRMMCT_Id'] = this.iVRMMCTId;
-    data['VTADAA_TotalAppliedAmount'] = this.vTADAATotalAppliedAmount;
-    data['VTADAA_TotalSactionedAmount'] = this.vTADAATotalSactionedAmount;
-    data['VTADAA_TotalPaidAmount'] = this.vTADAATotalPaidAmount;
-    data['VTADAA_StatusFlg'] = this.vTADAAStatusFlg;
-    data['User_Id'] = this.userId;
-    data['SanctionLevelNo'] = this.sanctionLevelNo;
-    data['EmpName'] = this.empName;
-    data['ClientName'] = this.clientName;
-    data['CityName'] = this.cityName;
-    data['VTADAAAA_SactionedAmount'] = this.vTADAAAASactionedAmount;
-    data['VTADAAA_Id'] = this.vTADAAAId;
-    data['IER_ID'] = this.iERID;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['MI_Id'] = mIId;
+    data['MI_Name'] = mIName;
+    data['VTADAA_Id'] = vTADAAId;
+    data['HRME_Id'] = hRMEId;
+    data['VTADAA_ToAddress'] = vTADAAToAddress;
+    data['VTADAA_AppliedDate'] = vTADAAAppliedDate;
+    data['VTADAA_FromDate'] = vTADAAFromDate;
+    data['VTADAA_ToDate'] = vTADAAToDate;
+    data['VTADAA_Remarks'] = vTADAARemarks;
+    data['VTADAA_ClientId'] = vTADAAClientId;
+    data['IVRMMCT_Id'] = iVRMMCTId;
+    data['VTADAA_TotalAppliedAmount'] = vTADAATotalAppliedAmount;
+    data['VTADAA_TotalSactionedAmount'] = vTADAATotalSactionedAmount;
+    data['VTADAA_TotalPaidAmount'] = vTADAATotalPaidAmount;
+    data['VTADAA_StatusFlg'] = vTADAAStatusFlg;
+    data['User_Id'] = userId;
+    data['SanctionLevelNo'] = sanctionLevelNo;
+    data['EmpName'] = empName;
+    data['ClientName'] = clientName;
+    data['CityName'] = cityName;
+    data['VTADAAAA_SactionedAmount'] = vTADAAAASactionedAmount;
+    data['VTADAAA_Id'] = vTADAAAId;
+    data['IER_ID'] = iERID;
     return data;
   }
 }
