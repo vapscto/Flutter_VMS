@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/final_tour_approval/apis/tada_tour_approval_api.dart';
 import 'package:m_skool_flutter/vms/final_tour_approval/controller/final_tada_tour_approval.dart';
+import 'package:m_skool_flutter/vms/final_tour_approval/screens/view_planer.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
@@ -206,9 +207,19 @@ class _FinalTadaTourApprovalListState extends State<FinalTadaTourApprovalList> {
                                           child: Center(
                                             child: InkWell(
                                               onTap: () {
-                                                // Get.to(()=>
-
-                                                // );
+                                                Get.to(()=>
+                                            FinalViewPlaner(
+                                              loginSuccessModel: widget.loginSuccessModel,
+                                              mskoolController: widget.mskoolController,
+                                              ierID:  int.parse(controller.finaltadaTourApprovalList
+                                                .elementAt(index).iERID!),
+                                                miId: controller.finaltadaTourApprovalList.elementAt(index).mIId!,
+                                                vtadaaId: controller.finaltadaTourApprovalList.elementAt(index).vTADAAId!,
+                                                vtadaaaaId: controller.finaltadaTourApprovalList.elementAt(index).vTADAAAId!,
+                                                 finalTadaTourApproval: controller.finaltadaTourApprovalList.elementAt(index),
+                                                
+                                            )
+                                                );
                                               },
                                               child: Icon(Icons.visibility,
                                                   color: Colors.blue[900]),
