@@ -54,7 +54,7 @@ class FinalTourPlanDetailsValues {
 
   FinalTourPlanDetailsValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
-    iERPlanName = json['IER_PlanName'];
+    iERPlanName = json['IER_PlanName']??"";
     iERRemarks = json['IER_Remarks'];
     vTADAAAFromDate = json['VTADAAA_FromDate'];
     vTADAAAToDate = json['VTADAAA_ToDate'];

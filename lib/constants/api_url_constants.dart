@@ -416,4 +416,6 @@ class URLS {
   static String getFinalAdavncedViewApi="api/TADAApprovalFacade/getfinaldata/";
 
   static String getTadaTourPlanerDetails="api/TADA_Advance_TourFacade/FinalSubMission/";
+
+  static String getViewAdancedFinal="api/TADAApprovalFacade/editTada/";
 }

@@ -19,8 +19,7 @@ Future<void> getFinalAdavncedViewList(
     FinalTadaTourApproval finalTadaTourApproval =  FinalTadaTourApproval.fromJson(response.data['getadvancetada']); 
     controller.finaltadaTourApprovalList.addAll(finalTadaTourApproval.values!);
     if(response.data['getadvancetada'] !=null){
-      logger.d(response.data['getadvancetada']);
-      controller.showFinalTadaTourApprovalList.value =false;
+       controller.showFinalTadaTourApprovalList.value =false;
     }
   } on DioError catch (e) {
     logger.e(e.message);
