@@ -14,6 +14,7 @@ Future<void> getFinalAdavncedViewDetails(
     required TadaTourApprovalController controller}) async {
   final Dio ins = getGlobalDio();
   final String apiUrl = base + URLS.getViewAdancedFinal;
+   controller.lastLoading.value = true;
     try {
     final Response response = await ins.post(apiUrl,
         options: Options(headers: getSession()), data: {
@@ -25,7 +26,11 @@ Future<void> getFinalAdavncedViewDetails(
     controller.finalViewAdvance.addAll(finalViewAdvancDetail.values!);
     controller.etPaidAmount.value.text =  finalViewAdvancDetail.values!.first.paidAmount.toString();
     // logger.w(response.data['timeArray']['\$values'][0]['vtadaA_TotalSactionedAmount']);
-    controller.etSnactionedAmount.value.text = response.data['timeArray']['\$values'][0]['vtadaA_TotalSactionedAmount'].toString();
+    double sncAmount = response.data['timeArray']['\$values'][0]['vtadaA_TotalSactionedAmount'];
+    controller.etSnactionedAmount.value.text  = sncAmount.toInt().toString();
+    if(response.data['veiwdetails'] !=null){
+      controller.lastLoading.value = false;
+    }
      } on DioError catch (e) {
     logger.e(e.message);
    } on Exception catch (e) {

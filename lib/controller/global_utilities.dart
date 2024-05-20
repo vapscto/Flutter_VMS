@@ -30,6 +30,7 @@ import 'package:m_skool_flutter/vms/dr_genration/screens/dailyrpt_home.dart';
 import 'package:m_skool_flutter/vms/driver_indent/driver_indent_home.dart';
 import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/vms/extension/extension_home_screen.dart';
+import 'package:m_skool_flutter/vms/final_tour_approval/screens/final_approval_list.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
 import 'package:m_skool_flutter/vms/health_chequeup/screens/healtha_check_up.dart';
 import 'package:m_skool_flutter/vms/hr_modules/interview_report/int_report_home.dart';
@@ -499,7 +500,7 @@ void openMappedPages(
 
   if (pageName == "Rating Report") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return RatingReportHome(
+      return FinalTadaTourApprovalList(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
       );

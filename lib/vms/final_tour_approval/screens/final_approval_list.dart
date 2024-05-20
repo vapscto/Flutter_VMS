@@ -216,6 +216,8 @@ class _FinalTadaTourApprovalListState extends State<FinalTadaTourApprovalList> {
                                                 miId: controller.finaltadaTourApprovalList.elementAt(index).mIId!,
                                                 vtadaaId: controller.finaltadaTourApprovalList.elementAt(index).vTADAAId!,
                                                 vtadaaaaId: controller.finaltadaTourApprovalList.elementAt(index).vTADAAAId!,
+                                                 finalTadaTourApproval: controller.finaltadaTourApprovalList.elementAt(index),
+                                                
                                             )
                                                 );
                                               },

@@ -24,7 +24,7 @@ class TadaTourApprovalController extends GetxController{
   Rx<TextEditingController> etPaidAmount = TextEditingController(text:'').obs;
   Rx<TextEditingController> etDeductectedAmount = TextEditingController(text: '').obs;
   Rx<TextEditingController> etSnactionedAmount = TextEditingController(text:'').obs;
-  
+  RxBool lastLoading =  RxBool(false);
   RxDouble totalSancationedAmount = RxDouble(0.0);
   RxDouble totalFinalappliedAmount = RxDouble(0.0);
   RxDouble totalFinalSanctionAmount = RxDouble(0.0);
