@@ -75,7 +75,7 @@ class LeaveNamesModelValues {
     hrmLNoOfDays = json['hrmL_NoOfDays'];
     hrmLMaxLeavesApplyPerMonth = json['hrmL_MaxLeavesApplyPerMonth'];
     appliedCount = json['appliedCount'];
-    probationary = json['HRML_ProbationaryNAFlg'];
+    probationary = json['HRML_ProbationaryNAFlg'] ?? false;
     hrmeDoc = json['HRME_doc'];
   }
 

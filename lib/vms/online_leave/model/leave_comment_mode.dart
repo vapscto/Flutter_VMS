@@ -27,7 +27,7 @@ class LeaveCommentModel {
 class LeaveCommentModelValues {
   String? type;
   String? iVRMSTAULUserName;
-  int? hRLAONSanctionLevelNo;
+  dynamic hRLAONSanctionLevelNo;
   String? hRELAPALeaveStatus;
   String? hRELAPARemarks;
   String? hRELAPAFromDate;
