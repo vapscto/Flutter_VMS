@@ -726,6 +726,16 @@ void openMappedPages(
     }));
     return;
   }
+  //
+    if (pageName == "TADA Final Submission") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return FinalTadaTourApprovalList(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    }));
+    return;
+  }
   if (pageName == "Candidate list") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return NewCandidateHome(
