@@ -44,6 +44,7 @@ Future<void> saveFinalTadaApprovalApi(
       logger.w(response.data);
       if (response.data['returnvalue'] == true) {
         Navigator.pop(context);
+        Navigator.pop(context);
       }
     }
   } on DioError catch (e) {
