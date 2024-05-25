@@ -9,16 +9,16 @@ class ApprovalSubmision {
     if (json['\$values'] != null) {
       values = <ApprovalSubmisionValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new ApprovalSubmisionValues.fromJson(v));
+        values!.add(ApprovalSubmisionValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -56,15 +56,15 @@ class ApprovalSubmisionValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['IER_ID'] = this.iERID;
-    data['TotalAmt'] = this.totalAmt;
-    data['SactionedAmt'] = this.sactionedAmt;
-    data['EligibleAmt'] = this.eligibleAmt;
-    data['EligibleAmtToApply'] = this.eligibleAmtToApply;
-    data['SalaryCreditAmt'] = this.salaryCreditAmt;
-    data['CreditWalletAmount'] = this.creditWalletAmount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['IER_ID'] = iERID;
+    data['TotalAmt'] = totalAmt;
+    data['SactionedAmt'] = sactionedAmt;
+    data['EligibleAmt'] = eligibleAmt;
+    data['EligibleAmtToApply'] = eligibleAmtToApply;
+    data['SalaryCreditAmt'] = salaryCreditAmt;
+    data['CreditWalletAmount'] = creditWalletAmount;
     return data;
   }
 }

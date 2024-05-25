@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/final_tour_approval/apis/final_tada_tour_plan.dart';
 import 'package:m_skool_flutter/vms/final_tour_approval/apis/final_view_tadaAdanced.dart';
@@ -21,8 +20,9 @@ class FinalViewPlaner extends StatefulWidget {
   final int miId;
   final int vtadaaId;
   final int vtadaaaaId;
-  FinalViewPlaner(
-      {required this.loginSuccessModel,
+  const FinalViewPlaner(
+      {super.key,
+      required this.loginSuccessModel,
       required this.mskoolController,
       required this.finalTadaTourApproval,
       required this.ierID,

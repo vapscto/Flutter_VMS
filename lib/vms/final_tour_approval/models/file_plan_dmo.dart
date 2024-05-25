@@ -9,16 +9,16 @@ class TourPlanFileDmo {
     if (json['\$values'] != null) {
       values = <TourPlanFileDmoValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new TourPlanFileDmoValues.fromJson(v));
+        values!.add(TourPlanFileDmoValues.fromJson(v));
       });
     }
-  } 
+  }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -83,24 +83,24 @@ class TourPlanFileDmoValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['ILRT_ID'] = this.iLRTID;
-    data['IER_ID'] = this.iERID;
-    data['ILRT_FileName'] = this.iLRTFileName;
-    data['ILRT_Filedesc'] = this.iLRTFiledesc;
-    data['ILRT_FilePath'] = this.iLRTFilePath;
-    data['ILRT_ApprovedFlg'] = this.iLRTApprovedFlg;
-    data['ILRT_Remarks'] = this.iLRTRemarks;
-    data['ILRT_StatusFlg'] = this.iLRTStatusFlg;
-    data['ILRT_ActiveFlag'] = this.iLRTActiveFlag;
-    data['ILRT_Createdby'] = this.iLRTCreatedby;
-    data['ILRT_CreatedDate'] = this.iLRTCreatedDate;
-    data['ILRT_Updateby'] = this.iLRTUpdateby;
-    data['ILRT_UpdateDate'] = this.iLRTUpdateDate;
-    data['ILRT_VerifieRemarks'] = this.iLRTVerifieRemarks;
-    data['ILRT_Cost'] = this.iLRTCost;
-    data['IERC_ID'] = this.iERCID;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['ILRT_ID'] = iLRTID;
+    data['IER_ID'] = iERID;
+    data['ILRT_FileName'] = iLRTFileName;
+    data['ILRT_Filedesc'] = iLRTFiledesc;
+    data['ILRT_FilePath'] = iLRTFilePath;
+    data['ILRT_ApprovedFlg'] = iLRTApprovedFlg;
+    data['ILRT_Remarks'] = iLRTRemarks;
+    data['ILRT_StatusFlg'] = iLRTStatusFlg;
+    data['ILRT_ActiveFlag'] = iLRTActiveFlag;
+    data['ILRT_Createdby'] = iLRTCreatedby;
+    data['ILRT_CreatedDate'] = iLRTCreatedDate;
+    data['ILRT_Updateby'] = iLRTUpdateby;
+    data['ILRT_UpdateDate'] = iLRTUpdateDate;
+    data['ILRT_VerifieRemarks'] = iLRTVerifieRemarks;
+    data['ILRT_Cost'] = iLRTCost;
+    data['IERC_ID'] = iERCID;
     return data;
   }
 }

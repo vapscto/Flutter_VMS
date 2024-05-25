@@ -9,16 +9,16 @@ class LeadStatusNameModel {
     if (json['\$values'] != null) {
       values = <LeadStatusNameModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new LeadStatusNameModelValues.fromJson(v));
+        values!.add(LeadStatusNameModelValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -80,23 +80,23 @@ class LeadStatusNameModelValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['IER_ID'] = this.iERID;
-    data['IER_EmpId'] = this.iEREmpId;
-    data['IERCLE_Id'] = this.iERCLEId;
-    data['ISMSLE_LeadName'] = this.iSMSLELeadName;
-    data['ISMSMSO_SourceName'] = this.iSMSMSOSourceName;
-    data['ISMSMPR_Id'] = this.iSMSMPRId;
-    data['ISMSMPR_ProductName'] = this.iSMSMPRProductName;
-    data['IMRC_CategoryId'] = this.iMRCCategoryId;
-    data['IMRC_CategoryName'] = this.iMRCCategoryName;
-    data['IVRMMS_Id'] = this.iVRMMSId;
-    data['IVRMMS_Name'] = this.iVRMMSName;
-    data['LeadStatus'] = this.leadStatus;
-    data['TotalCost'] = this.totalCost;
-    data['HRME_EmployeeFirstName'] = this.hRMEEmployeeFirstName;
-    data['Demo_EmployeeFirstName'] = this.demoEmployeeFirstName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['IER_ID'] = iERID;
+    data['IER_EmpId'] = iEREmpId;
+    data['IERCLE_Id'] = iERCLEId;
+    data['ISMSLE_LeadName'] = iSMSLELeadName;
+    data['ISMSMSO_SourceName'] = iSMSMSOSourceName;
+    data['ISMSMPR_Id'] = iSMSMPRId;
+    data['ISMSMPR_ProductName'] = iSMSMPRProductName;
+    data['IMRC_CategoryId'] = iMRCCategoryId;
+    data['IMRC_CategoryName'] = iMRCCategoryName;
+    data['IVRMMS_Id'] = iVRMMSId;
+    data['IVRMMS_Name'] = iVRMMSName;
+    data['LeadStatus'] = leadStatus;
+    data['TotalCost'] = totalCost;
+    data['HRME_EmployeeFirstName'] = hRMEEmployeeFirstName;
+    data['Demo_EmployeeFirstName'] = demoEmployeeFirstName;
     return data;
   }
 }

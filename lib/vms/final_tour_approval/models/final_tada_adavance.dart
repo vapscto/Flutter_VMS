@@ -9,16 +9,16 @@ class FinalViewAdvancDetails {
     if (json['\$values'] != null) {
       values = <FinalViewAdvancDetailsValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new FinalViewAdvancDetailsValues.fromJson(v));
+        values!.add(FinalViewAdvancDetailsValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -103,13 +103,13 @@ class FinalViewAdvancDetailsValues {
     vTADAAAAppliedDate = json['VTADAAA_AppliedDate'];
     vTADAAAFromDate = json['VTADAAA_FromDate'];
     vTADAAAToDate = json['VTADAAA_ToDate'];
-    iSMMCLTClientName = json['ISMMCLT_ClientName']??"";
-    vTADAAAToAddress = json['VTADAAA_ToAddress']??"";
+    iSMMCLTClientName = json['ISMMCLT_ClientName'] ?? "";
+    vTADAAAToAddress = json['VTADAAA_ToAddress'] ?? "";
     advancedAppliedAmount = json['AdvancedAppliedAmount'];
     vTADAAADStatusFlg = json['VTADAAAD_StatusFlg'];
-    vTADAAADTotalSlots = json['VTADAAAD_TotalSlots']??0.0;
-    vTADAAADSlots = json['VTADAAAD_Slots']??0.0;
-    vTADAAADRemarks = json['VTADAAAD_Remarks']??"";
+    vTADAAADTotalSlots = json['VTADAAAD_TotalSlots'] ?? 0.0;
+    vTADAAADSlots = json['VTADAAAD_Slots'] ?? 0.0;
+    vTADAAADRemarks = json['VTADAAAD_Remarks'] ?? "";
     paidAmount = json['Paid_Amount'];
     vTADAAADepartureTime = json['VTADAAA_DepartureTime'];
     vTADAAAArrivalTime = json['VTADAAA_ArrivalTime'];
@@ -122,53 +122,53 @@ class FinalViewAdvancDetailsValues {
     headWiseAppliedAmount = json['HeadWiseAppliedAmount'];
     vTADAAAAStatusFlg = json['VTADAAAA_StatusFlg'];
     vTADAAAADate = json['VTADAAAA_Date'];
-    vTADAAAARemarks = json['VTADAAAA_Remarks']??"";
+    vTADAAAARemarks = json['VTADAAAA_Remarks'] ?? "";
     vTADAAAAHStatusFlg = json['VTADAAAAH_StatusFlg'];
-    vTADAAAAHRemarks = json['VTADAAAAH_Remarks']??"";
+    vTADAAAAHRemarks = json['VTADAAAAH_Remarks'] ?? "";
     vTADAAAACreatedDate = json['VTADAAAA_CreatedDate'];
     vTADACMAccommodationAmt = json['VTADACM_AccommodationAmt'];
-    vTADACMTransportAmt = json['VTADACM_TransportAmt']??"";
-    vTADACMFoodAmt = json['VTADACM_FoodAmt']??"";
-    vTADAAARemarks = json['VTADAAA_Remarks']??"";
+    vTADACMTransportAmt = json['VTADACM_TransportAmt'] ?? "";
+    vTADACMFoodAmt = json['VTADACM_FoodAmt'] ?? "";
+    vTADAAARemarks = json['VTADAAA_Remarks'] ?? "";
     iERID = json['IER_ID'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['HRME_Id'] = this.hRMEId;
-    data['AppliedName'] = this.appliedName;
-    data['VTADAAA_AppliedDate'] = this.vTADAAAAppliedDate;
-    data['VTADAAA_FromDate'] = this.vTADAAAFromDate;
-    data['VTADAAA_ToDate'] = this.vTADAAAToDate;
-    data['ISMMCLT_ClientName'] = this.iSMMCLTClientName;
-    data['VTADAAA_ToAddress'] = this.vTADAAAToAddress;
-    data['AdvancedAppliedAmount'] = this.advancedAppliedAmount;
-    data['VTADAAAD_StatusFlg'] = this.vTADAAADStatusFlg;
-    data['VTADAAAD_TotalSlots'] = this.vTADAAADTotalSlots;
-    data['VTADAAAD_Slots'] = this.vTADAAADSlots;
-    data['VTADAAAD_Remarks'] = this.vTADAAADRemarks;
-    data['Paid_Amount'] = this.paidAmount;
-    data['VTADAAA_DepartureTime'] = this.vTADAAADepartureTime;
-    data['VTADAAA_ArrivalTime'] = this.vTADAAAArrivalTime;
-    data['VTADAAAD_ExpenditureHead'] = this.vTADAAADExpenditureHead;
-    data['ApprovedBy'] = this.approvedBy;
-    data['VTADAAA_TotalSactionedAmount'] = this.vTADAAATotalSactionedAmount;
-    data['VTADAAAA_SanctioningLevel'] = this.vTADAAAASanctioningLevel;
-    data['VTADAAAA_SactionedAmount'] = this.vTADAAAASactionedAmount;
-    data['HeadWiseSactionedAmount'] = this.headWiseSactionedAmount;
-    data['HeadWiseAppliedAmount'] = this.headWiseAppliedAmount;
-    data['VTADAAAA_StatusFlg'] = this.vTADAAAAStatusFlg;
-    data['VTADAAAA_Date'] = this.vTADAAAADate;
-    data['VTADAAAA_Remarks'] = this.vTADAAAARemarks;
-    data['VTADAAAAH_StatusFlg'] = this.vTADAAAAHStatusFlg;
-    data['VTADAAAAH_Remarks'] = this.vTADAAAAHRemarks;
-    data['VTADAAAA_CreatedDate'] = this.vTADAAAACreatedDate;
-    data['VTADACM_AccommodationAmt'] = this.vTADACMAccommodationAmt;
-    data['VTADACM_TransportAmt'] = this.vTADACMTransportAmt;
-    data['VTADACM_FoodAmt'] = this.vTADACMFoodAmt;
-    data['VTADAAA_Remarks'] = this.vTADAAARemarks;
-    data['IER_ID'] = this.iERID;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['HRME_Id'] = hRMEId;
+    data['AppliedName'] = appliedName;
+    data['VTADAAA_AppliedDate'] = vTADAAAAppliedDate;
+    data['VTADAAA_FromDate'] = vTADAAAFromDate;
+    data['VTADAAA_ToDate'] = vTADAAAToDate;
+    data['ISMMCLT_ClientName'] = iSMMCLTClientName;
+    data['VTADAAA_ToAddress'] = vTADAAAToAddress;
+    data['AdvancedAppliedAmount'] = advancedAppliedAmount;
+    data['VTADAAAD_StatusFlg'] = vTADAAADStatusFlg;
+    data['VTADAAAD_TotalSlots'] = vTADAAADTotalSlots;
+    data['VTADAAAD_Slots'] = vTADAAADSlots;
+    data['VTADAAAD_Remarks'] = vTADAAADRemarks;
+    data['Paid_Amount'] = paidAmount;
+    data['VTADAAA_DepartureTime'] = vTADAAADepartureTime;
+    data['VTADAAA_ArrivalTime'] = vTADAAAArrivalTime;
+    data['VTADAAAD_ExpenditureHead'] = vTADAAADExpenditureHead;
+    data['ApprovedBy'] = approvedBy;
+    data['VTADAAA_TotalSactionedAmount'] = vTADAAATotalSactionedAmount;
+    data['VTADAAAA_SanctioningLevel'] = vTADAAAASanctioningLevel;
+    data['VTADAAAA_SactionedAmount'] = vTADAAAASactionedAmount;
+    data['HeadWiseSactionedAmount'] = headWiseSactionedAmount;
+    data['HeadWiseAppliedAmount'] = headWiseAppliedAmount;
+    data['VTADAAAA_StatusFlg'] = vTADAAAAStatusFlg;
+    data['VTADAAAA_Date'] = vTADAAAADate;
+    data['VTADAAAA_Remarks'] = vTADAAAARemarks;
+    data['VTADAAAAH_StatusFlg'] = vTADAAAAHStatusFlg;
+    data['VTADAAAAH_Remarks'] = vTADAAAAHRemarks;
+    data['VTADAAAA_CreatedDate'] = vTADAAAACreatedDate;
+    data['VTADACM_AccommodationAmt'] = vTADACMAccommodationAmt;
+    data['VTADACM_TransportAmt'] = vTADACMTransportAmt;
+    data['VTADACM_FoodAmt'] = vTADACMFoodAmt;
+    data['VTADAAA_Remarks'] = vTADAAARemarks;
+    data['IER_ID'] = iERID;
     return data;
   }
 }

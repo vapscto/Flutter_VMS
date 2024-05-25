@@ -9,16 +9,16 @@ class LeadFinalSubmission {
     if (json['\$values'] != null) {
       values = <LeadFinalSubmissionValues>[];
       json['\$values'].forEach((v) {
-        values!.add(new LeadFinalSubmissionValues.fromJson(v));
+        values!.add(LeadFinalSubmissionValues.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    if (this.values != null) {
-      data['\$values'] = this.values!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -65,18 +65,18 @@ class LeadFinalSubmissionValues {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$type'] = this.type;
-    data['IER_ID'] = this.iERID;
-    data['IER_EmpId'] = this.iEREmpId;
-    data['IMRC_CategoryId'] = this.iMRCCategoryId;
-    data['IMRC_CategoryName'] = this.iMRCCategoryName;
-    data['IERPC_Percentage'] = this.iERPCPercentage;
-    data['LeadCount'] = this.leadCount;
-    data['ExecutionLeadCount'] = this.executionLeadCount;
-    data['VTADAAA_TotalAppliedAmount'] = this.vTADAAATotalAppliedAmount;
-    data['VTADAAA_TotalSactionedAmount'] = this.vTADAAATotalSactionedAmount;
-    data['VTADAAA_TotalEligbleAmount'] = this.vTADAAATotalEligbleAmount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['IER_ID'] = iERID;
+    data['IER_EmpId'] = iEREmpId;
+    data['IMRC_CategoryId'] = iMRCCategoryId;
+    data['IMRC_CategoryName'] = iMRCCategoryName;
+    data['IERPC_Percentage'] = iERPCPercentage;
+    data['LeadCount'] = leadCount;
+    data['ExecutionLeadCount'] = executionLeadCount;
+    data['VTADAAA_TotalAppliedAmount'] = vTADAAATotalAppliedAmount;
+    data['VTADAAA_TotalSactionedAmount'] = vTADAAATotalSactionedAmount;
+    data['VTADAAA_TotalEligbleAmount'] = vTADAAATotalEligbleAmount;
     return data;
   }
 }
