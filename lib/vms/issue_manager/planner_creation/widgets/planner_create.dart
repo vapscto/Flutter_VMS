@@ -279,7 +279,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskPercentage} %',
             "$formattedTime Hr",
             "${widget.plannerCreationController.categoryWisePlan[i].ismtcrastOEffortInHrs} Hr",
-            "$requiredEff Hr",
+            "${widget.plannerCreationController.convertDecimalToTime(requiredEff)} Hr",
             widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId!));
       } else {
         categoryList.remove(CategoryPlanTable(
@@ -287,7 +287,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskPercentage} %',
             "$formattedTime Hr",
             "${widget.plannerCreationController.categoryWisePlan[i].ismtcrastOEffortInHrs} Hr",
-            "$requiredEff Hr",
+            "${widget.plannerCreationController.convertDecimalToTime(requiredEff)} Hr",
             widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId!));
       }
     }
