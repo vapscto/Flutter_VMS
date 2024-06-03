@@ -41,6 +41,7 @@ Future<void> getPcApprovalOnload(
       controller.updateisLoadingOnloadorganization(false);
       PCApprovalOnloadModel organizationListResponse =
           PCApprovalOnloadModel.fromJson(response.data['getuserinstitution']);
+      controller.organizationList.clear();
       controller.organizationList.addAll(organizationListResponse.values!);
     }
 
