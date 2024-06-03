@@ -38,7 +38,7 @@ class _PcApprovedHomeState extends State<PcApprovedHome> {
   }
 
   loadData() async {
-    getPcApprovalOnload(
+    await getPcApprovalOnload(
         miId: widget.loginSuccessModel.mIID!,
         base: baseUrlFromInsCode('issuemanager', widget.mskoolController),
         roleId: widget.loginSuccessModel.roleId!,
