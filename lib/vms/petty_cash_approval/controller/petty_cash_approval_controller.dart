@@ -54,7 +54,8 @@ class PettyCashApprovalController extends GetxController {
 
   /// ** APPROVEL INDENT DETAILS (FROM & TO DATE) CONTROLLER  **  ///
 
-  Rx<DateTime> fromSelectedDate = Rx(DateTime.now());
+  Rx<DateTime> fromSelectedDate =
+      Rx(DateTime(DateTime.now().year, DateTime.now().month, 1));
   Rx<DateTime> toSelectedDate = Rx(DateTime.now());
 
   RxBool isErrorOccuredWhileLoadingIndentDetails = RxBool(false);

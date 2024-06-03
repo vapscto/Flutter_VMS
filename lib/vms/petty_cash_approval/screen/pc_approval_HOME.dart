@@ -65,7 +65,7 @@ class _PCApprovalHomeState extends State<PCApprovalHome>
               physics: const NeverScrollableScrollPhysics(),
               controller: tabController,
               children: [
-                PcIndentApprovalScreen(
+                PcCashApprovalScreen(
                   loginSuccessModel: widget.loginSuccessModel,
                   mskoolController: widget.mskoolController,
                 ),

@@ -492,7 +492,7 @@ String convertToAgoShort(DateTime input) {
 }
 
 String getDate(DateTime dt) {
-  return "${dt.day}-${dt.month}-${dt.year}";
+  return "${numberList[dt.day]}-${numberList[dt.month]}-${dt.year}";
 }
 
 String timeDifference(String fTime, String sTime) {
