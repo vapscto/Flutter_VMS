@@ -362,8 +362,7 @@ class _IndentApprovalState extends State<IndentApproval> {
                                       .fromSelectedDate.value,
                                   firstDate: DateTime(
                                       1000), //DateTime.now().year, 01, 01
-                                  lastDate: DateTime(DateTime.now().year,
-                                      DateTime.now().month + 1, 0),
+                                  lastDate: DateTime.now(),
                                 );
 
                                 if (selectedDT == null) {
@@ -483,7 +482,7 @@ class _IndentApprovalState extends State<IndentApproval> {
                           ),
                           suffixIcon: InkWell(
                               onTap: () async {
-                                if (changes.value == -1) {
+                                if (fromDate.text.isEmpty) {
                                   Fluttertoast.showToast(
                                       msg: "Select from Date First");
                                   return;
@@ -494,8 +493,7 @@ class _IndentApprovalState extends State<IndentApproval> {
                                       .fromSelectedDate.value,
                                   firstDate: indentApprovalController
                                       .fromSelectedDate.value,
-                                  lastDate: DateTime(DateTime.now().year,
-                                      DateTime.now().month + 1, 0),
+                                  lastDate: DateTime.now(),
                                 );
 
                                 if (selectedDT == null) {

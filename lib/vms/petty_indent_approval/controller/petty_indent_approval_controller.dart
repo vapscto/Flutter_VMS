@@ -42,8 +42,7 @@ class PettyIndentApprovalController extends GetxController {
   ///*** DATE ***///
   Rx<DateTime> fromSelectedDate =
       Rx(DateTime(DateTime.now().year, DateTime.now().month, 1));
-  Rx<DateTime> toSelectedDate =
-      Rx(DateTime(DateTime.now().year, DateTime.now().month + 1, 0));
+  Rx<DateTime> toSelectedDate = Rx(DateTime.now());
   RxList<bool> checkBoxList = <bool>[].obs;
   RxList<TextEditingController> eTapprovalAmount =
       <TextEditingController>[].obs;
