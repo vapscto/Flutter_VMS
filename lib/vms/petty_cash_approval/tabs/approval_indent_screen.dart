@@ -500,8 +500,7 @@ class _PcCashApprovalScreenState extends State<PcCashApprovalScreen> {
                                     }
                                     DateTime? selectedDT = await showDatePicker(
                                       context: context,
-                                      initialDate: _pcapprovalController
-                                          .fromSelectedDate.value,
+                                      initialDate: DateTime.now(),
                                       firstDate: _pcapprovalController
                                           .fromSelectedDate.value,
                                       lastDate: DateTime.now(),

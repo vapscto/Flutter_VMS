@@ -489,8 +489,7 @@ class _IndentApprovalState extends State<IndentApproval> {
                                 }
                                 DateTime? selectedDT = await showDatePicker(
                                   context: context,
-                                  initialDate: indentApprovalController
-                                      .fromSelectedDate.value,
+                                  initialDate: DateTime.now(),
                                   firstDate: indentApprovalController
                                       .fromSelectedDate.value,
                                   lastDate: DateTime.now(),
