@@ -12,8 +12,10 @@ import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 class FinalTadaTourApprovalList extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  FinalTadaTourApprovalList(
-      {required this.loginSuccessModel, required this.mskoolController});
+  const FinalTadaTourApprovalList(
+      {super.key,
+      required this.loginSuccessModel,
+      required this.mskoolController});
 
   @override
   State<FinalTadaTourApprovalList> createState() =>
@@ -161,9 +163,10 @@ class _FinalTadaTourApprovalListState extends State<FinalTadaTourApprovalList> {
                                         )),
                                         DataCell(Align(
                                           child: Text(
-                                           getDate(controller.finaltadaTourApprovalList
+                                            getDate(controller
+                                                .finaltadaTourApprovalList
                                                 .elementAt(index)
-                                                .vTADAAAppliedDate!) ,
+                                                .vTADAAAppliedDate!),
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleSmall!
@@ -207,19 +210,32 @@ class _FinalTadaTourApprovalListState extends State<FinalTadaTourApprovalList> {
                                           child: Center(
                                             child: InkWell(
                                               onTap: () {
-                                                Get.to(()=>
-                                            FinalViewPlaner(
-                                              loginSuccessModel: widget.loginSuccessModel,
-                                              mskoolController: widget.mskoolController,
-                                              ierID:  int.parse(controller.finaltadaTourApprovalList
-                                                .elementAt(index).iERID!),
-                                                miId: controller.finaltadaTourApprovalList.elementAt(index).mIId!,
-                                                vtadaaId: controller.finaltadaTourApprovalList.elementAt(index).vTADAAId!,
-                                                vtadaaaaId: controller.finaltadaTourApprovalList.elementAt(index).vTADAAAId!,
-                                                 finalTadaTourApproval: controller.finaltadaTourApprovalList.elementAt(index),
-                                                
-                                            )
-                                                );
+                                                Get.to(() => FinalViewPlaner(
+                                                      loginSuccessModel: widget
+                                                          .loginSuccessModel,
+                                                      mskoolController: widget
+                                                          .mskoolController,
+                                                      ierID: int.parse(controller
+                                                          .finaltadaTourApprovalList
+                                                          .elementAt(index)
+                                                          .iERID!),
+                                                      miId: controller
+                                                          .finaltadaTourApprovalList
+                                                          .elementAt(index)
+                                                          .mIId!,
+                                                      vtadaaId: controller
+                                                          .finaltadaTourApprovalList
+                                                          .elementAt(index)
+                                                          .vTADAAId!,
+                                                      vtadaaaaId: controller
+                                                          .finaltadaTourApprovalList
+                                                          .elementAt(index)
+                                                          .vTADAAAId!,
+                                                      finalTadaTourApproval:
+                                                          controller
+                                                              .finaltadaTourApprovalList
+                                                              .elementAt(index),
+                                                    ));
                                               },
                                               child: Icon(Icons.visibility,
                                                   color: Colors.blue[900]),

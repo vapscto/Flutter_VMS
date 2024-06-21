@@ -15,7 +15,7 @@ import 'package:m_skool_flutter/vms/tada_tour_approval/models/get_tour_view_mode
 import 'package:m_skool_flutter/vms/tada_tour_approval/screens/add_lead_screen.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
- 
+
 class ViewTourPLan extends StatefulWidget {
   final GetTourViewValues getTourViewValues;
   final String planerNme;
@@ -49,17 +49,17 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
   var totalApproveCount;
   @override
   void initState() {
-     
     initApi();
     dayCount = dayCounts(widget.getTourViewValues.vTADAAAFromDate!,
         widget.getTourViewValues.vTADAAAToDate!);
     appliedEt.text =
         widget.getTourViewValues.vTADAAATotalAppliedAmount.toString();
-   
+
     // totalApproveCount = widget.controller.approvedCount.value;
     // logger.e("count1$totalApproveCount");
     super.initState();
   }
+
   Future<void> addAccomdation(bool tap) async {
     if (mapAccomdationList.isNotEmpty || emplyeList.isNotEmpty) {
       mapAccomdationList.clear();
@@ -183,8 +183,8 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
         .then(
       (value) {
         Fluttertoast.showToast(msg: "Saved Successfully");
-         Get.back();
-          Get.back();
+        Get.back();
+        Get.back();
       },
     );
   }
@@ -211,7 +211,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
       widget.controller.sancationAmountTotal.value.text =
           widget.controller.totalSamount.value;
     });
-     updateCounts();
+    updateCounts();
   }
 
   @override
@@ -243,1673 +243,1652 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 20),
                       scrollDirection: Axis.horizontal,
-                      child: Container(
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 1650,
+                              height: 150,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border:
+                                      Border.all(color: Colors.blue, width: 2)),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        RichText(
+                                            text: TextSpan(children: [
+                                          TextSpan(
+                                              text: "Company Name : ",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .merge(TextStyle(
+                                                      fontSize: 16,
+                                                      color:
+                                                          Colors.blue[600]))),
+                                          TextSpan(
+                                              text: widget
+                                                  .getTourViewValues.mIName,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .merge(const TextStyle(
+                                                      fontSize: 16,
+                                                      color: Color.fromARGB(
+                                                          255, 10, 10, 10))))
+                                        ])),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        RichText(
+                                            text: TextSpan(children: [
+                                          TextSpan(
+                                              text: "Applied Date :",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .merge(TextStyle(
+                                                      fontSize: 16,
+                                                      color:
+                                                          Colors.blue[600]))),
+                                          TextSpan(
+                                              text: getDate(DateTime.parse(
+                                                  widget.getTourViewValues
+                                                      .vTADAAAAppliedDate!)),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .merge(const TextStyle(
+                                                      fontSize: 16,
+                                                      color: Color.fromARGB(
+                                                          255, 10, 10, 10)))),
+                                        ])),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        RichText(
+                                            text: TextSpan(children: [
+                                          TextSpan(
+                                              text: "Staff Name : ",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .merge(TextStyle(
+                                                      fontSize: 16,
+                                                      color:
+                                                          Colors.blue[600]))),
+                                          TextSpan(
+                                              text: widget
+                                                  .getTourViewValues.empName,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .merge(const TextStyle(
+                                                      fontSize: 16,
+                                                      color: Color.fromARGB(
+                                                          255, 10, 10, 10))))
+                                        ])),
+                                        RichText(
+                                            text: TextSpan(children: [
+                                          TextSpan(
+                                              text: "Date :",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .merge(TextStyle(
+                                                      fontSize: 16,
+                                                      color:
+                                                          Colors.blue[600]))),
+                                          TextSpan(
+                                              text:
+                                                  "${getDate(DateTime.parse(widget.getTourViewValues.vTADAAAFromDate!))} To ${getDate(DateTime.parse(widget.getTourViewValues.vTADAAAToDate!))}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .merge(const TextStyle(
+                                                      fontSize: 16,
+                                                      color: Color.fromARGB(
+                                                          255, 10, 10, 10)))),
+                                        ])),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        RichText(
+                                            text: TextSpan(children: [
+                                          TextSpan(
+                                              text: "Applied Amount : ",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .merge(TextStyle(
+                                                      fontSize: 16,
+                                                      color:
+                                                          Colors.blue[600]))),
+                                          TextSpan(
+                                              text: widget.getTourViewValues
+                                                  .vTADAAATotalAppliedAmount!
+                                                  .toDouble()
+                                                  .toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .merge(const TextStyle(
+                                                      fontSize: 16,
+                                                      color: Color.fromARGB(
+                                                          255, 10, 10, 10))))
+                                        ])),
+                                        RichText(
+                                            text: TextSpan(children: [
+                                          TextSpan(
+                                              text: "Remarks :",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .merge(TextStyle(
+                                                      fontSize: 16,
+                                                      color:
+                                                          Colors.blue[600]))),
+                                          TextSpan(
+                                              text:
+                                                  "${widget.getTourViewValues.vTADAAARemarks}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .merge(const TextStyle(
+                                                      fontSize: 16,
+                                                      color: Color.fromARGB(
+                                                          255, 10, 10, 10)))),
+                                        ])),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
                                 width: 1650,
-                                height: 150,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
                                         color: Colors.blue, width: 2)),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: "Company Name : ",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .merge(TextStyle(
-                                                        fontSize: 16,
-                                                        color:
-                                                            Colors.blue[600]))),
-                                            TextSpan(
-                                                text: widget
-                                                    .getTourViewValues.mIName,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .merge(const TextStyle(
-                                                        fontSize: 16,
-                                                        color: Color.fromARGB(
-                                                            255, 10, 10, 10))))
-                                          ])),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: "Applied Date :",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .merge(TextStyle(
-                                                        fontSize: 16,
-                                                        color:
-                                                            Colors.blue[600]))),
-                                            TextSpan(
-                                                text: getDate(DateTime.parse(
-                                                    widget.getTourViewValues
-                                                        .vTADAAAAppliedDate!)),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .merge(const TextStyle(
-                                                        fontSize: 16,
-                                                        color: Color.fromARGB(
-                                                            255, 10, 10, 10)))),
-                                          ])),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: "Staff Name : ",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .merge(TextStyle(
-                                                        fontSize: 16,
-                                                        color:
-                                                            Colors.blue[600]))),
-                                            TextSpan(
-                                                text: widget
-                                                    .getTourViewValues.empName,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .merge(const TextStyle(
-                                                        fontSize: 16,
-                                                        color: Color.fromARGB(
-                                                            255, 10, 10, 10))))
-                                          ])),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: "Date :",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .merge(TextStyle(
-                                                        fontSize: 16,
-                                                        color:
-                                                            Colors.blue[600]))),
-                                            TextSpan(
-                                                text:
-                                                    "${getDate(DateTime.parse(widget.getTourViewValues.vTADAAAFromDate!))} To ${getDate(DateTime.parse(widget.getTourViewValues.vTADAAAToDate!))}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .merge(const TextStyle(
-                                                        fontSize: 16,
-                                                        color: Color.fromARGB(
-                                                            255, 10, 10, 10)))),
-                                          ])),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: "Applied Amount : ",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .merge(TextStyle(
-                                                        fontSize: 16,
-                                                        color:
-                                                            Colors.blue[600]))),
-                                            TextSpan(
-                                                text: widget.getTourViewValues
-                                                    .vTADAAATotalAppliedAmount!
-                                                    .toDouble()
-                                                    .toString(),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .merge(const TextStyle(
-                                                        fontSize: 16,
-                                                        color: Color.fromARGB(
-                                                            255, 10, 10, 10))))
-                                          ])),
-                                          RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text: "Remarks :",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .merge(TextStyle(
-                                                        fontSize: 16,
-                                                        color:
-                                                            Colors.blue[600]))),
-                                            TextSpan(
-                                                text:
-                                                    "${widget.getTourViewValues.vTADAAARemarks}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .merge(const TextStyle(
-                                                        fontSize: 16,
-                                                        color: Color.fromARGB(
-                                                            255, 10, 10, 10)))),
-                                          ])),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                  width: 1650,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                          color: Colors.blue, width: 2)),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "TOUR - ADAVANCE TRAVEL DETAILS",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .merge(TextStyle(
-                                                color: Colors.blue[600],
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold)),
-                                      ),
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SingleChildScrollView(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "TOUR - ADAVANCE TRAVEL DETAILS",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .merge(TextStyle(
+                                              color: Colors.blue[600],
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SingleChildScrollView(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10, horizontal: 0),
+                                            scrollDirection: Axis.horizontal,
+                                            child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: DataTable(
+                                                  dataTextStyle:
+                                                      const TextStyle(
+                                                          fontSize: 14,
+                                                          color: Color.fromRGBO(
+                                                              0, 0, 0, 0.95),
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                  dataRowHeight: 50,
+                                                  headingRowHeight: 40,
+                                                  horizontalMargin: 10,
+                                                  columnSpacing: 30,
+                                                  dividerThickness: 1,
+                                                  headingTextStyle:
+                                                      const TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w700),
+                                                  border: TableBorder.all(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      width: 0.5),
+                                                  headingRowColor:
+                                                      MaterialStateProperty.all(
+                                                          Theme.of(context)
+                                                              .primaryColor),
+                                                  columns: const [
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text("SL.No"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                            "Tour Plan Name"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text("Day"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text("FromDate"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                            "Departure Time"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text("Todate"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                            "Arrival Time"),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                  rows:
+                                                      List.generate(1, (index) {
+                                                    return DataRow(cells: [
+                                                      DataCell(Align(
+                                                        child: Text(
+                                                            "${index + 1}"),
+                                                      )),
+                                                      DataCell(Align(
+                                                        child: Text(widget
+                                                            .planerNme
+                                                            .toUpperCase()),
+                                                      )),
+                                                      DataCell(Align(
+                                                        child: Text(dayCount),
+                                                      )),
+                                                      //from date
+                                                      DataCell(Align(
+                                                        child: Text(getDate(
+                                                            DateTime.parse(widget
+                                                                .controller
+                                                                .timeArrayList
+                                                                .first
+                                                                .vtadaaAFromDate!))),
+                                                      )),
+                                                      // departure time
+                                                      DataCell(Align(
+                                                        child: Text(timeFormate(
+                                                            widget
+                                                                .controller
+                                                                .timeArrayList
+                                                                .first
+                                                                .vtadaaADepartureTime!)),
+                                                      )),
+                                                      //tob date
+                                                      DataCell(Align(
+                                                        child: Text(getDate(
+                                                            DateTime.parse(widget
+                                                                .controller
+                                                                .timeArrayList
+                                                                .first
+                                                                .vtadaaAToDate!))),
+                                                      )),
+                                                      DataCell(Align(
+                                                        child: Text(timeFormate(
+                                                            widget
+                                                                .controller
+                                                                .timeArrayList
+                                                                .first
+                                                                .vtadaaAArrivalTime!)),
+                                                      )),
+                                                    ]);
+                                                  }),
+                                                ))),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
+                                        Obx(
+                                          () => widget.controller
+                                                  .getTadaCategory.isNotEmpty
+                                              ? SingleChildScrollView(
+                                                  padding: const EdgeInsets.symmetric(
                                                       vertical: 10,
                                                       horizontal: 0),
-                                              scrollDirection: Axis.horizontal,
-                                              child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  child: DataTable(
-                                                    dataTextStyle:
-                                                        const TextStyle(
-                                                            fontSize: 14,
-                                                            color:
-                                                                Color.fromRGBO(
-                                                                    0,
-                                                                    0,
-                                                                    0,
-                                                                    0.95),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                    dataRowHeight: 50,
-                                                    headingRowHeight: 40,
-                                                    horizontalMargin: 10,
-                                                    columnSpacing: 30,
-                                                    dividerThickness: 1,
-                                                    headingTextStyle:
-                                                        const TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w700),
-                                                    border: TableBorder.all(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        width: 0.5),
-                                                    headingRowColor:
-                                                        MaterialStateProperty
-                                                            .all(Theme.of(
-                                                                    context)
-                                                                .primaryColor),
-                                                    columns: const [
-                                                      DataColumn(
-                                                        label: Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text("SL.No"),
-                                                        ),
-                                                      ),
-                                                      DataColumn(
-                                                        label: Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text(
-                                                              "Tour Plan Name"),
-                                                        ),
-                                                      ),
-                                                      DataColumn(
-                                                        label: Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text("Day"),
-                                                        ),
-                                                      ),
-                                                      DataColumn(
-                                                        label: Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child:
-                                                              Text("FromDate"),
-                                                        ),
-                                                      ),
-                                                      DataColumn(
-                                                        label: Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text(
-                                                              "Departure Time"),
-                                                        ),
-                                                      ),
-                                                      DataColumn(
-                                                        label: Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text("Todate"),
-                                                        ),
-                                                      ),
-                                                      DataColumn(
-                                                        label: Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text(
-                                                              "Arrival Time"),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                    rows: List.generate(1,
-                                                        (index) {
-                                                      return DataRow(cells: [
-                                                        DataCell(Align(
-                                                          child: Text(
-                                                              "${index + 1}"),
-                                                        )),
-                                                        DataCell(Align(
-                                                          child: Text(widget
-                                                              .planerNme
-                                                              .toUpperCase()),
-                                                        )),
-                                                        DataCell(Align(
-                                                          child: Text(dayCount),
-                                                        )),
-                                                        //from date
-                                                        DataCell(Align(
-                                                          child: Text(getDate(
-                                                              DateTime.parse(widget
-                                                                  .controller
-                                                                  .timeArrayList
-                                                                  .first
-                                                                  .vtadaaAFromDate!))),
-                                                        )),
-                                                        // departure time
-                                                        DataCell(Align(
-                                                          child: Text(
-                                                              timeFormate(widget
-                                                                  .controller
-                                                                  .timeArrayList
-                                                                  .first
-                                                                  .vtadaaADepartureTime!)),
-                                                        )),
-                                                        //tob date
-                                                        DataCell(Align(
-                                                          child: Text(getDate(
-                                                              DateTime.parse(widget
-                                                                  .controller
-                                                                  .timeArrayList
-                                                                  .first
-                                                                  .vtadaaAToDate!))),
-                                                        )),
-                                                        DataCell(Align(
-                                                          child: Text(
-                                                              timeFormate(widget
-                                                                  .controller
-                                                                  .timeArrayList
-                                                                  .first
-                                                                  .vtadaaAArrivalTime!)),
-                                                        )),
-                                                      ]);
-                                                    }),
-                                                  ))),
-                                          const SizedBox(
-                                            width: 20,
-                                          ),
-                                          Obx(
-                                            () => widget.controller
-                                                    .getTadaCategory.isNotEmpty
-                                                ? SingleChildScrollView(
-                                                    padding:
-                                                        const EdgeInsets.symmetric(
-                                                            vertical: 10,
-                                                            horizontal: 0),
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                10),
-                                                        child: DataTable(
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      child: DataTable(
+                                                          dataTextStyle:
+                                                              const TextStyle(
+                                                                  fontSize: 14,
+                                                                  color: Color.fromRGBO(
+                                                                      0, 0, 0, 0.95),
+                                                                  fontWeight: FontWeight.w500),
+                                                          dataRowHeight: 50,
+                                                          headingRowHeight: 40,
+                                                          horizontalMargin: 10,
+                                                          columnSpacing: 30,
+                                                          dividerThickness: 1,
+                                                          headingTextStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+                                                          border: TableBorder.all(borderRadius: BorderRadius.circular(10), width: 0.5),
+                                                          headingRowColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+                                                          columns: widget.controller.columns,
+                                                          rows: [
+                                                            DataRow(
+                                                                cells: widget
+                                                                    .controller
+                                                                    .rows)
+                                                          ])))
+                                              : const SizedBox(),
+                                        ),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
+                                        Obx(
+                                          () =>
+                                              widget.controller.getTadaCategory
+                                                      .isNotEmpty
+                                                  ? SingleChildScrollView(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          vertical: 10,
+                                                          horizontal: 0),
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          child: DataTable(
                                                             dataTextStyle:
                                                                 const TextStyle(
-                                                                    fontSize: 14,
-                                                                    color: Color.fromRGBO(0, 0, 0, 0.95),
-                                                                    fontWeight: FontWeight.w500),
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Color
+                                                                        .fromRGBO(
+                                                                            0,
+                                                                            0,
+                                                                            0,
+                                                                            0.95),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
                                                             dataRowHeight: 50,
-                                                            headingRowHeight: 40,
-                                                            horizontalMargin: 10,
+                                                            headingRowHeight:
+                                                                40,
+                                                            horizontalMargin:
+                                                                10,
                                                             columnSpacing: 30,
                                                             dividerThickness: 1,
-                                                            headingTextStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-                                                            border: TableBorder.all(borderRadius: BorderRadius.circular(10), width: 0.5),
-                                                            headingRowColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
-                                                            columns: widget.controller.columns,
-                                                            rows: [
-                                                              DataRow(
-                                                                  cells: widget
-                                                                      .controller
-                                                                      .rows)
-                                                            ])))
-                                                : const SizedBox(),
-                                          ),
-                                          const SizedBox(
-                                            width: 20,
-                                          ),
-                                          Obx(
-                                            () =>
-                                                widget
-                                                        .controller
-                                                        .getTadaCategory
-                                                        .isNotEmpty
-                                                    ? SingleChildScrollView(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                vertical: 10,
-                                                                horizontal: 0),
-                                                        scrollDirection:
-                                                            Axis.horizontal,
-                                                        child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                            child: DataTable(
-                                                              dataTextStyle: const TextStyle(
-                                                                  fontSize: 14,
-                                                                  color: Color
-                                                                      .fromRGBO(
-                                                                          0,
-                                                                          0,
-                                                                          0,
-                                                                          0.95),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
-                                                              dataRowHeight: 50,
-                                                              headingRowHeight:
-                                                                  40,
-                                                              horizontalMargin:
-                                                                  10,
-                                                              columnSpacing: 30,
-                                                              dividerThickness:
-                                                                  1,
-                                                              headingTextStyle:
-                                                                  const TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700),
-                                                              border: TableBorder.all(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                  width: 0.5),
-                                                              headingRowColor:
-                                                                  MaterialStateProperty
-                                                                      .all(Theme.of(
-                                                                              context)
-                                                                          .primaryColor),
-                                                              columns: [
-                                                                const DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "Source Name"),
-                                                                  ),
+                                                            headingTextStyle:
+                                                                const TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700),
+                                                            border: TableBorder.all(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                                width: 0.5),
+                                                            headingRowColor:
+                                                                MaterialStateProperty
+                                                                    .all(Theme.of(
+                                                                            context)
+                                                                        .primaryColor),
+                                                            columns: [
+                                                              const DataColumn(
+                                                                label: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                      "Source Name"),
                                                                 ),
-                                                                const DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "Closure"),
-                                                                  ),
+                                                              ),
+                                                              const DataColumn(
+                                                                label: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                      "Closure"),
                                                                 ),
-                                                                const DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "HOT"),
-                                                                  ),
+                                                              ),
+                                                              const DataColumn(
+                                                                label: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                      "HOT"),
                                                                 ),
-                                                                const DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "Follow Up"),
-                                                                  ),
+                                                              ),
+                                                              const DataColumn(
+                                                                label: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                      "Follow Up"),
                                                                 ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(widget
+                                                              ),
+                                                              DataColumn(
+                                                                label: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(widget
+                                                                          .controller
+                                                                          .showTable
+                                                                          .isFalse
+                                                                      ? "Cold"
+                                                                      : "NEGOTATION"),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                            rows: List.generate(
+                                                                widget
+                                                                    .controller
+                                                                    .sourcesList
+                                                                    .length,
+                                                                (index) {
+                                                              return DataRow(
+                                                                  cells: [
+                                                                    DataCell(
+                                                                        Align(
+                                                                      child:
+                                                                          Text(
+                                                                        widget
                                                                             .controller
-                                                                            .showTable
-                                                                            .isFalse
-                                                                        ? "Cold"
-                                                                        : "NEGOTATION"),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                              rows: List.generate(
-                                                                  widget
-                                                                      .controller
-                                                                      .sourcesList
-                                                                      .length,
-                                                                  (index) {
-                                                                return DataRow(
-                                                                    cells: [
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child:
-                                                                            Text(
-                                                                          widget
-                                                                              .controller
-                                                                              .sourcesList[index]
-                                                                              .iSMSMSOSourceName
-                                                                              .toString(),
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodySmall!
-                                                                              .copyWith(color: Colors.black),
-                                                                        ),
-                                                                      )),
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child:
-                                                                            Text(
-                                                                          widget
-                                                                              .controller
-                                                                              .sourcesList[index]
-                                                                              .closure
-                                                                              .toString(),
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodySmall!
-                                                                              .copyWith(color: Colors.black),
-                                                                        ),
-                                                                      )),
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child:
-                                                                            Text(
-                                                                          widget
-                                                                              .controller
-                                                                              .sourcesList[index]
-                                                                              .hOT
-                                                                              .toString(),
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodySmall!
-                                                                              .copyWith(color: Colors.black),
-                                                                        ),
-                                                                      )),
-                                                                      //from date
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child:
-                                                                            Text(
-                                                                          widget
-                                                                              .controller
-                                                                              .sourcesList[index]
-                                                                              .followUp
-                                                                              .toString(),
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodySmall!
-                                                                              .copyWith(color: Colors.black),
-                                                                        ),
-                                                                      )),
-                                                                      // departure time
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child:
-                                                                            Text(
-                                                                          widget.controller.showTable.isFalse
-                                                                              ? widget.controller.sourcesList[index].cold.toString()
-                                                                              : widget.controller.sourcesList[index].nEGOTATION.toString(),
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodySmall!
-                                                                              .copyWith(color: Colors.black),
-                                                                        ),
-                                                                      )),
-                                                                    ]);
-                                                              }),
-                                                            )))
-                                                    : const SizedBox(),
-                                          ),
-                                        ],
-                                      ),
-                                      /**
-                                   *  Lead adds
-                                   */
-                                      Obx(() => widget.controller
-                                              .getPlanerListData.isNotEmpty
-                                          ? SingleChildScrollView(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 10,
-                                                      horizontal: 0),
-                                              // scrollDirection: Axis.horizontal,
-                                              child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  child: DataTable(
-                                                    dataTextStyle:
-                                                        const TextStyle(
-                                                            fontSize: 14,
-                                                            color:
-                                                                Color.fromRGBO(
-                                                                    0,
-                                                                    0,
-                                                                    0,
-                                                                    0.95),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                    dataRowHeight: 50,
-                                                    headingRowHeight: 40,
-                                                    horizontalMargin: 10,
-                                                    columnSpacing: 30,
-                                                    dividerThickness: 1,
-                                                    headingTextStyle:
-                                                        const TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w700),
-                                                    border: TableBorder.all(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        width: 0.5),
-                                                    headingRowColor:
-                                                        MaterialStateProperty
-                                                            .all(Theme.of(
-                                                                    context)
-                                                                .primaryColor),
-                                                    columns: const [
-                                                      DataColumn(
-                                                        label: Align(
-                                                          alignment:
-                                                              Alignment.center,
+                                                                            .sourcesList[index]
+                                                                            .iSMSMSOSourceName
+                                                                            .toString(),
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodySmall!
+                                                                            .copyWith(color: Colors.black),
+                                                                      ),
+                                                                    )),
+                                                                    DataCell(
+                                                                        Align(
+                                                                      child:
+                                                                          Text(
+                                                                        widget
+                                                                            .controller
+                                                                            .sourcesList[index]
+                                                                            .closure
+                                                                            .toString(),
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodySmall!
+                                                                            .copyWith(color: Colors.black),
+                                                                      ),
+                                                                    )),
+                                                                    DataCell(
+                                                                        Align(
+                                                                      child:
+                                                                          Text(
+                                                                        widget
+                                                                            .controller
+                                                                            .sourcesList[index]
+                                                                            .hOT
+                                                                            .toString(),
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodySmall!
+                                                                            .copyWith(color: Colors.black),
+                                                                      ),
+                                                                    )),
+                                                                    //from date
+                                                                    DataCell(
+                                                                        Align(
+                                                                      child:
+                                                                          Text(
+                                                                        widget
+                                                                            .controller
+                                                                            .sourcesList[index]
+                                                                            .followUp
+                                                                            .toString(),
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodySmall!
+                                                                            .copyWith(color: Colors.black),
+                                                                      ),
+                                                                    )),
+                                                                    // departure time
+                                                                    DataCell(
+                                                                        Align(
+                                                                      child:
+                                                                          Text(
+                                                                        widget.controller.showTable.isFalse
+                                                                            ? widget.controller.sourcesList[index].cold.toString()
+                                                                            : widget.controller.sourcesList[index].nEGOTATION.toString(),
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodySmall!
+                                                                            .copyWith(color: Colors.black),
+                                                                      ),
+                                                                    )),
+                                                                  ]);
+                                                            }),
+                                                          )))
+                                                  : const SizedBox(),
+                                        ),
+                                      ],
+                                    ),
+                                    /**
+                                 *  Lead adds
+                                 */
+                                    Obx(() => widget.controller
+                                            .getPlanerListData.isNotEmpty
+                                        ? SingleChildScrollView(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10, horizontal: 0),
+                                            // scrollDirection: Axis.horizontal,
+                                            child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: DataTable(
+                                                  dataTextStyle:
+                                                      const TextStyle(
+                                                          fontSize: 14,
+                                                          color: Color.fromRGBO(
+                                                              0, 0, 0, 0.95),
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                  dataRowHeight: 50,
+                                                  headingRowHeight: 40,
+                                                  horizontalMargin: 10,
+                                                  columnSpacing: 30,
+                                                  dividerThickness: 1,
+                                                  headingTextStyle:
+                                                      const TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w700),
+                                                  border: TableBorder.all(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      width: 0.5),
+                                                  headingRowColor:
+                                                      MaterialStateProperty.all(
+                                                          Theme.of(context)
+                                                              .primaryColor),
+                                                  columns: const [
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                            "Category Name"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child:
+                                                            Text("Lead Name"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                            "Student Strength"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                            "Product Name"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child:
+                                                            Text("Source Name"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child:
+                                                            Text("Created By"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                            "Demo given By"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child:
+                                                            Text("State Name"),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text("Remove"),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                  rows: List.generate(
+                                                      widget
+                                                          .controller
+                                                          .getPlanerListData
+                                                          .length, (index) {
+                                                    return DataRow(cells: [
+                                                      DataCell(Align(
                                                           child: Text(
-                                                              "Category Name"),
-                                                        ),
-                                                      ),
-                                                      DataColumn(
-                                                        label: Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child:
-                                                              Text("Lead Name"),
-                                                        ),
-                                                      ),
-                                                      DataColumn(
-                                                        label: Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text(
-                                                              "Student Strength"),
-                                                        ),
-                                                      ),
-                                                      DataColumn(
-                                                        label: Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text(
-                                                              "Product Name"),
-                                                        ),
-                                                      ),
-                                                      DataColumn(
-                                                        label: Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text(
-                                                              "Source Name"),
-                                                        ),
-                                                      ),
-                                                      DataColumn(
-                                                        label: Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text(
-                                                              "Created By"),
-                                                        ),
-                                                      ),
-                                                      DataColumn(
-                                                        label: Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text(
-                                                              "Demo given By"),
-                                                        ),
-                                                      ),
-                                                      DataColumn(
-                                                        label: Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text(
-                                                              "State Name"),
-                                                        ),
-                                                      ),
-                                                      DataColumn(
-                                                        label: Align(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text("Remove"),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                    rows: List.generate(
-                                                        widget
-                                                            .controller
+                                                        widget.controller
                                                             .getPlanerListData
-                                                            .length, (index) {
-                                                      return DataRow(cells: [
-                                                        DataCell(Align(
-                                                            child: Text(
+                                                            .elementAt(index)
+                                                            .iMRCCategoryName!,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                                color: const Color
+                                                                        .fromARGB(
+                                                                    255,
+                                                                    17,
+                                                                    17,
+                                                                    17)),
+                                                      ))),
+                                                      DataCell(Align(
+                                                        child: Text(
                                                           widget.controller
                                                               .getPlanerListData
                                                               .elementAt(index)
-                                                              .iMRCCategoryName!,
+                                                              .iSMSLELeadName!,
                                                           style: Theme.of(
                                                                   context)
                                                               .textTheme
                                                               .bodySmall!
                                                               .copyWith(
-                                                                  color: const Color
-                                                                          .fromARGB(
-                                                                      255,
-                                                                      17,
-                                                                      17,
-                                                                      17)),
-                                                        ))),
-                                                        DataCell(Align(
-                                                          child: Text(
-                                                            widget.controller
-                                                                .getPlanerListData
-                                                                .elementAt(
-                                                                    index)
-                                                                .iSMSLELeadName!,
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodySmall!
-                                                                .copyWith(
-                                                                    color: Colors
-                                                                        .black),
-                                                          ),
-                                                        )),
-                                                        DataCell(Align(
-                                                          child: Text(
-                                                            widget.controller
-                                                                .getPlanerListData
-                                                                .elementAt(
-                                                                    index)
-                                                                .iSMSLEStudentStrength!
-                                                                .toString(),
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodySmall!
-                                                                .copyWith(
-                                                                    color: Colors
-                                                                        .black),
-                                                          ),
-                                                        )),
-                                                        //from date
-                                                        DataCell(Align(
-                                                          child: Text(
-                                                            widget.controller
-                                                                .getPlanerListData
-                                                                .elementAt(
-                                                                    index)
-                                                                .iSMSMPRProductName!,
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodySmall!
-                                                                .copyWith(
-                                                                    color: Colors
-                                                                        .black),
-                                                          ),
-                                                        )),
-                                                        // departure time
-                                                        DataCell(Align(
-                                                          child: Text(
-                                                            widget.controller
-                                                                .getPlanerListData
-                                                                .elementAt(
-                                                                    index)
-                                                                .sourceName!,
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodySmall!
-                                                                .copyWith(
-                                                                    color: Colors
-                                                                        .black),
-                                                          ),
-                                                        )),
-                                                        DataCell(Align(
-                                                          child: Text(
-                                                            widget.controller
-                                                                .getPlanerListData
-                                                                .elementAt(
-                                                                    index)
-                                                                .hRMEEmployeeFirstName!,
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodySmall!
-                                                                .copyWith(
-                                                                    color: Colors
-                                                                        .black),
-                                                          ),
-                                                        )),
-                                                        DataCell(Align(
-                                                          child: Text(
-                                                            widget.controller
-                                                                .getPlanerListData
-                                                                .elementAt(
-                                                                    index)
-                                                                .demoEmployeeFirstName!,
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodySmall!
-                                                                .copyWith(
-                                                                    color: Colors
-                                                                        .black),
-                                                          ),
-                                                        )),
-                                                        DataCell(Align(
-                                                          child: Text(
-                                                            widget.controller
-                                                                .getPlanerListData
-                                                                .elementAt(
-                                                                    index)
-                                                                .iVRMMSName!,
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodySmall!
-                                                                .copyWith(
-                                                                    color: Colors
-                                                                        .black),
-                                                          ),
-                                                        )),
+                                                                  color: Colors
+                                                                      .black),
+                                                        ),
+                                                      )),
+                                                      DataCell(Align(
+                                                        child: Text(
+                                                          widget.controller
+                                                              .getPlanerListData
+                                                              .elementAt(index)
+                                                              .iSMSLEStudentStrength!
+                                                              .toString(),
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodySmall!
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .black),
+                                                        ),
+                                                      )),
+                                                      //from date
+                                                      DataCell(Align(
+                                                        child: Text(
+                                                          widget.controller
+                                                              .getPlanerListData
+                                                              .elementAt(index)
+                                                              .iSMSMPRProductName!,
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodySmall!
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .black),
+                                                        ),
+                                                      )),
+                                                      // departure time
+                                                      DataCell(Align(
+                                                        child: Text(
+                                                          widget.controller
+                                                              .getPlanerListData
+                                                              .elementAt(index)
+                                                              .sourceName!,
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodySmall!
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .black),
+                                                        ),
+                                                      )),
+                                                      DataCell(Align(
+                                                        child: Text(
+                                                          widget.controller
+                                                              .getPlanerListData
+                                                              .elementAt(index)
+                                                              .hRMEEmployeeFirstName!,
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodySmall!
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .black),
+                                                        ),
+                                                      )),
+                                                      DataCell(Align(
+                                                        child: Text(
+                                                          widget.controller
+                                                              .getPlanerListData
+                                                              .elementAt(index)
+                                                              .demoEmployeeFirstName!,
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodySmall!
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .black),
+                                                        ),
+                                                      )),
+                                                      DataCell(Align(
+                                                        child: Text(
+                                                          widget.controller
+                                                              .getPlanerListData
+                                                              .elementAt(index)
+                                                              .iVRMMSName!,
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .bodySmall!
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .black),
+                                                        ),
+                                                      )),
 
-                                                        DataCell(Align(
-                                                          child: InkWell(
-                                                            onTap: () {
-                                                              widget.controller
-                                                                  .getPlanerListData
-                                                                  .remove(widget
-                                                                      .controller
-                                                                      .getPlanerListData
-                                                                      .elementAt(
-                                                                          index));
-                                                              setState(() {
-                                                                      widget.controller.adminFlag.value = true;
-                                                                      });
-                                                              widget.controller
-                                                                  .getPlanerListData
-                                                                  .forEach(
-                                                                      (element) {
-                                                                logger.w(element
-                                                                    .iSMSLELeadName);
-                                                              });
-                                                            },
-                                                            child: const Icon(
-                                                              Icons.remove,
-                                                              size: 30,
-                                                              color: Colors
-                                                                  .redAccent,
-                                                            ),
+                                                      DataCell(Align(
+                                                        child: InkWell(
+                                                          onTap: () {
+                                                            widget.controller
+                                                                .getPlanerListData
+                                                                .remove(widget
+                                                                    .controller
+                                                                    .getPlanerListData
+                                                                    .elementAt(
+                                                                        index));
+                                                            setState(() {
+                                                              widget
+                                                                  .controller
+                                                                  .adminFlag
+                                                                  .value = true;
+                                                            });
+                                                            for (var element
+                                                                in widget
+                                                                    .controller
+                                                                    .getPlanerListData) {
+                                                              logger.w(element
+                                                                  .iSMSLELeadName);
+                                                            }
+                                                          },
+                                                          child: const Icon(
+                                                            Icons.remove,
+                                                            size: 30,
+                                                            color: Colors
+                                                                .redAccent,
                                                           ),
-                                                        ))
-                                                      ]);
-                                                    }),
-                                                  )))
-                                          : const SizedBox()),
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Obx(
-                                            () =>
-                                                widget
-                                                        .controller
-                                                        .accomdationList1
-                                                        .isNotEmpty
-                                                    ? SingleChildScrollView(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                vertical: 10,
-                                                                horizontal: 0),
-                                                        scrollDirection:
-                                                            Axis.horizontal,
-                                                        child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                            child: DataTable(
-                                                              dataTextStyle: const TextStyle(
-                                                                  fontSize: 14,
-                                                                  color: Color
-                                                                      .fromRGBO(
-                                                                          0,
-                                                                          0,
-                                                                          0,
-                                                                          0.95),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
-                                                              dataRowHeight: 50,
-                                                              headingRowHeight:
-                                                                  40,
-                                                              horizontalMargin:
-                                                                  10,
-                                                              columnSpacing: 30,
-                                                              dividerThickness:
-                                                                  1,
-                                                              headingTextStyle:
-                                                                  const TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700),
-                                                              border: TableBorder.all(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                  width: 0.5),
-                                                              headingRowColor:
-                                                                  MaterialStateProperty
-                                                                      .all(Theme.of(
-                                                                              context)
-                                                                          .primaryColor),
-                                                              columns: const [
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "SL NO"),
-                                                                  ),
+                                                        ),
+                                                      ))
+                                                    ]);
+                                                  }),
+                                                )))
+                                        : const SizedBox()),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Obx(
+                                          () =>
+                                              widget.controller.accomdationList1
+                                                      .isNotEmpty
+                                                  ? SingleChildScrollView(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          vertical: 10,
+                                                          horizontal: 0),
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          child: DataTable(
+                                                            dataTextStyle:
+                                                                const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Color
+                                                                        .fromRGBO(
+                                                                            0,
+                                                                            0,
+                                                                            0,
+                                                                            0.95),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                            dataRowHeight: 50,
+                                                            headingRowHeight:
+                                                                40,
+                                                            horizontalMargin:
+                                                                10,
+                                                            columnSpacing: 30,
+                                                            dividerThickness: 1,
+                                                            headingTextStyle:
+                                                                const TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700),
+                                                            border: TableBorder.all(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                                width: 0.5),
+                                                            headingRowColor:
+                                                                MaterialStateProperty
+                                                                    .all(Theme.of(
+                                                                            context)
+                                                                        .primaryColor),
+                                                            columns: const [
+                                                              DataColumn(
+                                                                label: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                      "SL NO"),
                                                                 ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "Approve"),
-                                                                  ),
+                                                              ),
+                                                              DataColumn(
+                                                                label: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                      "Approve"),
                                                                 ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "Reject"),
-                                                                  ),
+                                                              ),
+                                                              DataColumn(
+                                                                label: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                      "Reject"),
                                                                 ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "Header"),
-                                                                  ),
+                                                              ),
+                                                              DataColumn(
+                                                                label: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                      "Header"),
                                                                 ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "Amount"),
-                                                                  ),
+                                                              ),
+                                                              DataColumn(
+                                                                label: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                      "Amount"),
                                                                 ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "Total Slots"),
-                                                                  ),
+                                                              ),
+                                                              DataColumn(
+                                                                label: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                      "Total Slots"),
                                                                 ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "Slots"),
-                                                                  ),
+                                                              ),
+                                                              DataColumn(
+                                                                label: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                      "Slots"),
                                                                 ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "Amount"),
-                                                                  ),
+                                                              ),
+                                                              DataColumn(
+                                                                label: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                      "Amount"),
                                                                 ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "Percentage"),
-                                                                  ),
+                                                              ),
+                                                              DataColumn(
+                                                                label: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                      "Percentage"),
                                                                 ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "Sancation Amouunt"),
-                                                                  ),
+                                                              ),
+                                                              DataColumn(
+                                                                label: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                      "Sancation Amouunt"),
                                                                 ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "Approval Remarks"),
-                                                                  ),
+                                                              ),
+                                                              DataColumn(
+                                                                label: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                      "Approval Remarks"),
                                                                 ),
-                                                              ],
-                                                              rows: List.generate(
-                                                                  widget
-                                                                      .controller
-                                                                      .accomdationList1
-                                                                      .length,
-                                                                  (index) {
-                                                                var num =
-                                                                    index + 1;
-                                                                return DataRow(
-                                                                    color: widget
-                                                                            .controller
-                                                                            .radioItems[
-                                                                                index]
-                                                                            .isRejected
-                                                                        ? const MaterialStatePropertyAll(Colors
-                                                                            .redAccent)
-                                                                        : const MaterialStatePropertyAll(
-                                                                            Colors.white),
-                                                                    cells: [
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child: Text(
-                                                                            "$num"),
-                                                                      )),
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child:
-                                                                            Radio(
-                                                                          value:
-                                                                              radioBtn.value,
-                                                                          groupValue: widget
-                                                                              .controller
-                                                                              .radioItems[index]
-                                                                              .isApproved,
-                                                                          onChanged:
-                                                                              (value) {
-                                                                            setState(() {
-                                                                              widget.controller.radioItems[index].isApproved = value as bool;
-                                                                              widget.controller.radioItems[index].isRejected = !value;
-                                                                              widget.controller.sancationAmountEt[index].text = widget.controller.radioItems[index].isApproved ? widget.controller.accomdationList1[index].vTADAAADAmount!.toInt().toString() : "0";
-                                                                              //
-
-                                                                              updateCounts();
-                                                                            });
-                                                                            setState(() {
-                                                                              calPercnt(index);
-                                                                            });
-                                                                          },
-                                                                        ),
-                                                                      )),
-                                                                      DataCell(
-                                                                          Align(
-                                                                              child: Radio(
+                                                              ),
+                                                            ],
+                                                            rows: List.generate(
+                                                                widget
+                                                                    .controller
+                                                                    .accomdationList1
+                                                                    .length,
+                                                                (index) {
+                                                              var num =
+                                                                  index + 1;
+                                                              return DataRow(
+                                                                  color: widget
+                                                                          .controller
+                                                                          .radioItems[
+                                                                              index]
+                                                                          .isRejected
+                                                                      ? const MaterialStatePropertyAll(
+                                                                          Colors
+                                                                              .redAccent)
+                                                                      : const MaterialStatePropertyAll(
+                                                                          Colors
+                                                                              .white),
+                                                                  cells: [
+                                                                    DataCell(
+                                                                        Align(
+                                                                      child: Text(
+                                                                          "$num"),
+                                                                    )),
+                                                                    DataCell(
+                                                                        Align(
+                                                                      child:
+                                                                          Radio(
                                                                         value: radioBtn
                                                                             .value,
                                                                         groupValue: widget
                                                                             .controller
                                                                             .radioItems[index]
-                                                                            .isRejected,
+                                                                            .isApproved,
                                                                         onChanged:
                                                                             (value) {
                                                                           setState(
                                                                               () {
-                                                                            widget.controller.radioItems[index].isRejected =
-                                                                                value as bool;
                                                                             widget.controller.radioItems[index].isApproved =
+                                                                                value as bool;
+                                                                            widget.controller.radioItems[index].isRejected =
                                                                                 !value;
-                                                                            widget.controller.sancationAmountEt[index].text = widget.controller.radioItems[index].isRejected
-                                                                                ? "0"
+                                                                            widget.controller.sancationAmountEt[index].text = widget.controller.radioItems[index].isApproved
+                                                                                ? widget.controller.accomdationList1[index].vTADAAADAmount!.toInt().toString()
                                                                                 : "0";
-                                                                            setState(() {
-                                                                              calPercnt(index);
-                                                                            });
+                                                                            //
+
                                                                             updateCounts();
                                                                           });
-                                                                        },
-                                                                      ))),
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child:
-                                                                            Text(
-                                                                          widget
-                                                                              .controller
-                                                                              .accomdationList1
-                                                                              .elementAt(index)
-                                                                              .vTADAAADExpenditureHead!,
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodySmall!
-                                                                              .copyWith(color: Colors.black),
-                                                                        ),
-                                                                      )),
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child:
-                                                                            Text(
-                                                                          index == 0
-                                                                              ? widget.controller.accomdationList1.elementAt(index).vTADACMAccommodationAmt!.toInt().toString()
-                                                                              : index == 1
-                                                                                  ? widget.controller.accomdationList1.elementAt(index).vTADACMFoodAmt!.toInt().toString()
-                                                                                  : index == 2
-                                                                                      ? widget.controller.accomdationList1.elementAt(index).vTADACMTransportAmt!.toInt().toString()
-                                                                                      : "",
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodySmall!
-                                                                              .copyWith(color: Colors.black),
-                                                                        ),
-                                                                      )),
-                                                                      //from date
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child:
-                                                                            Text(
-                                                                          widget
-                                                                              .controller
-                                                                              .accomdationList1
-                                                                              .elementAt(index)
-                                                                              .vTADAAADTotalSlots!
-                                                                              .toInt()
-                                                                              .toString(),
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodySmall!
-                                                                              .copyWith(color: Colors.black),
-                                                                        ),
-                                                                      )),
-                                                                      // departure time
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child:
-                                                                            Text(
-                                                                          widget
-                                                                              .controller
-                                                                              .accomdationList1
-                                                                              .elementAt(index)
-                                                                              .vTADAAADSlots!
-                                                                              .toInt()
-                                                                              .toString(),
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodySmall!
-                                                                              .copyWith(color: Colors.black),
-                                                                        ),
-                                                                      )),
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child:
-                                                                            Text(
-                                                                          widget
-                                                                              .controller
-                                                                              .accomdationList1
-                                                                              .elementAt(index)
-                                                                              .vTADAAADAmount!
-                                                                              .toInt()
-                                                                              .toString(),
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodySmall!
-                                                                              .copyWith(color: Colors.black),
-                                                                        ),
-                                                                      )),
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child:
-                                                                            TextField(
-                                                                          readOnly: widget.controller.radioItems[index].isRejected
-                                                                              ? true
-                                                                              : false,
-                                                                          inputFormatters: [
-                                                                            FilteringTextInputFormatter.digitsOnly,
-                                                                            LengthLimitingTextInputFormatter(2)
-                                                                          ],
-                                                                          onChanged:
-                                                                              (value) {
+                                                                          setState(
+                                                                              () {
                                                                             calPercnt(index);
-                                                                          },
-                                                                          keyboardType:
-                                                                              TextInputType.number,
-                                                                          decoration:
-                                                                              const InputDecoration(border: OutlineInputBorder()),
-                                                                          controller: widget
+                                                                          });
+                                                                        },
+                                                                      ),
+                                                                    )),
+                                                                    DataCell(Align(
+                                                                        child: Radio(
+                                                                      value: radioBtn
+                                                                          .value,
+                                                                      groupValue: widget
+                                                                          .controller
+                                                                          .radioItems[
+                                                                              index]
+                                                                          .isRejected,
+                                                                      onChanged:
+                                                                          (value) {
+                                                                        setState(
+                                                                            () {
+                                                                          widget
                                                                               .controller
-                                                                              .percentageET[index],
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodySmall!
-                                                                              .copyWith(color: Colors.black),
-                                                                        ),
-                                                                      )),
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child:
-                                                                            TextField(
-                                                                          keyboardType:
-                                                                              TextInputType.number,
-                                                                          onChanged:
-                                                                              (value) {
-                                                                            setState(() {
-                                                                              widget.controller.sancationAmountTotal.value.text = widget.controller.totalSamount.value;
-                                                                            });
-                                                                          },
-                                                                          readOnly: widget.controller.radioItems[index].isRejected
-                                                                              ? true
-                                                                              : false,
-                                                                          decoration:
-                                                                              const InputDecoration(border: OutlineInputBorder()),
-                                                                          controller: widget
+                                                                              .radioItems[index]
+                                                                              .isRejected = value as bool;
+                                                                          widget
                                                                               .controller
-                                                                              .sancationAmountEt[index],
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodySmall!
-                                                                              .copyWith(color: Colors.black),
-                                                                        ),
-                                                                      )),
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child:
-                                                                            TextField(
-                                                                           decoration:
-                                                                              const InputDecoration(border: OutlineInputBorder()),
-                                                                          controller: widget
+                                                                              .radioItems[index]
+                                                                              .isApproved = !value;
+                                                                          widget
                                                                               .controller
-                                                                              .approvalRemarkEt[index],
-                                                                          keyboardType:
-                                                                              TextInputType.name,
-                                                                          textInputAction:
-                                                                              TextInputAction.done,
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodySmall!
-                                                                              .copyWith(color: Colors.black),
-                                                                        ),
-                                                                      )),
-                                                                    ]);
-                                                              }),
-                                                            )))
-                                                    : const SizedBox(),
-                                          ),
-                                          const SizedBox(
-                                            width: 20,
-                                          ),
-                                          Obx(
-                                            () =>
-                                                widget.controller.paymentDetails
-                                                        .isNotEmpty
-                                                    ? SingleChildScrollView(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                vertical: 10,
-                                                                horizontal: 0),
-                                                        scrollDirection:
-                                                            Axis.horizontal,
-                                                        child: ClipRRect(
+                                                                              .sancationAmountEt[
+                                                                                  index]
+                                                                              .text = widget
+                                                                                  .controller.radioItems[index].isRejected
+                                                                              ? "0"
+                                                                              : "0";
+                                                                          setState(
+                                                                              () {
+                                                                            calPercnt(index);
+                                                                          });
+                                                                          updateCounts();
+                                                                        });
+                                                                      },
+                                                                    ))),
+                                                                    DataCell(
+                                                                        Align(
+                                                                      child:
+                                                                          Text(
+                                                                        widget
+                                                                            .controller
+                                                                            .accomdationList1
+                                                                            .elementAt(index)
+                                                                            .vTADAAADExpenditureHead!,
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodySmall!
+                                                                            .copyWith(color: Colors.black),
+                                                                      ),
+                                                                    )),
+                                                                    DataCell(
+                                                                        Align(
+                                                                      child:
+                                                                          Text(
+                                                                        index ==
+                                                                                0
+                                                                            ? widget.controller.accomdationList1.elementAt(index).vTADACMAccommodationAmt!.toInt().toString()
+                                                                            : index == 1
+                                                                                ? widget.controller.accomdationList1.elementAt(index).vTADACMFoodAmt!.toInt().toString()
+                                                                                : index == 2
+                                                                                    ? widget.controller.accomdationList1.elementAt(index).vTADACMTransportAmt!.toInt().toString()
+                                                                                    : "",
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodySmall!
+                                                                            .copyWith(color: Colors.black),
+                                                                      ),
+                                                                    )),
+                                                                    //from date
+                                                                    DataCell(
+                                                                        Align(
+                                                                      child:
+                                                                          Text(
+                                                                        widget
+                                                                            .controller
+                                                                            .accomdationList1
+                                                                            .elementAt(index)
+                                                                            .vTADAAADTotalSlots!
+                                                                            .toInt()
+                                                                            .toString(),
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodySmall!
+                                                                            .copyWith(color: Colors.black),
+                                                                      ),
+                                                                    )),
+                                                                    // departure time
+                                                                    DataCell(
+                                                                        Align(
+                                                                      child:
+                                                                          Text(
+                                                                        widget
+                                                                            .controller
+                                                                            .accomdationList1
+                                                                            .elementAt(index)
+                                                                            .vTADAAADSlots!
+                                                                            .toInt()
+                                                                            .toString(),
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodySmall!
+                                                                            .copyWith(color: Colors.black),
+                                                                      ),
+                                                                    )),
+                                                                    DataCell(
+                                                                        Align(
+                                                                      child:
+                                                                          Text(
+                                                                        widget
+                                                                            .controller
+                                                                            .accomdationList1
+                                                                            .elementAt(index)
+                                                                            .vTADAAADAmount!
+                                                                            .toInt()
+                                                                            .toString(),
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodySmall!
+                                                                            .copyWith(color: Colors.black),
+                                                                      ),
+                                                                    )),
+                                                                    DataCell(
+                                                                        Align(
+                                                                      child:
+                                                                          TextField(
+                                                                        readOnly: widget.controller.radioItems[index].isRejected
+                                                                            ? true
+                                                                            : false,
+                                                                        inputFormatters: [
+                                                                          FilteringTextInputFormatter
+                                                                              .digitsOnly,
+                                                                          LengthLimitingTextInputFormatter(
+                                                                              2)
+                                                                        ],
+                                                                        onChanged:
+                                                                            (value) {
+                                                                          calPercnt(
+                                                                              index);
+                                                                        },
+                                                                        keyboardType:
+                                                                            TextInputType.number,
+                                                                        decoration:
+                                                                            const InputDecoration(border: OutlineInputBorder()),
+                                                                        controller: widget
+                                                                            .controller
+                                                                            .percentageET[index],
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodySmall!
+                                                                            .copyWith(color: Colors.black),
+                                                                      ),
+                                                                    )),
+                                                                    DataCell(
+                                                                        Align(
+                                                                      child:
+                                                                          TextField(
+                                                                        keyboardType:
+                                                                            TextInputType.number,
+                                                                        onChanged:
+                                                                            (value) {
+                                                                          setState(
+                                                                              () {
+                                                                            widget.controller.sancationAmountTotal.value.text =
+                                                                                widget.controller.totalSamount.value;
+                                                                          });
+                                                                        },
+                                                                        readOnly: widget.controller.radioItems[index].isRejected
+                                                                            ? true
+                                                                            : false,
+                                                                        decoration:
+                                                                            const InputDecoration(border: OutlineInputBorder()),
+                                                                        controller: widget
+                                                                            .controller
+                                                                            .sancationAmountEt[index],
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodySmall!
+                                                                            .copyWith(color: Colors.black),
+                                                                      ),
+                                                                    )),
+                                                                    DataCell(
+                                                                        Align(
+                                                                      child:
+                                                                          TextField(
+                                                                        decoration:
+                                                                            const InputDecoration(border: OutlineInputBorder()),
+                                                                        controller: widget
+                                                                            .controller
+                                                                            .approvalRemarkEt[index],
+                                                                        keyboardType:
+                                                                            TextInputType.name,
+                                                                        textInputAction:
+                                                                            TextInputAction.done,
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .bodySmall!
+                                                                            .copyWith(color: Colors.black),
+                                                                      ),
+                                                                    )),
+                                                                  ]);
+                                                            }),
+                                                          )))
+                                                  : const SizedBox(),
+                                        ),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
+                                        Obx(
+                                          () => widget.controller.paymentDetails
+                                                  .isNotEmpty
+                                              ? SingleChildScrollView(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      vertical: 10,
+                                                      horizontal: 0),
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      child: DataTable(
+                                                        dataTextStyle:
+                                                            const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0.95),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                        dataRowHeight: 50,
+                                                        headingRowHeight: 40,
+                                                        horizontalMargin: 10,
+                                                        columnSpacing: 10,
+                                                        dividerThickness: 1,
+                                                        headingTextStyle:
+                                                            const TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700),
+                                                        border: TableBorder.all(
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
                                                                         10),
-                                                            child: DataTable(
-                                                              dataTextStyle: const TextStyle(
-                                                                  fontSize: 14,
-                                                                  color: Color
-                                                                      .fromRGBO(
-                                                                          0,
-                                                                          0,
-                                                                          0,
-                                                                          0.95),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
-                                                              dataRowHeight: 50,
-                                                              headingRowHeight:
-                                                                  40,
-                                                              horizontalMargin:
-                                                                  10,
-                                                              columnSpacing: 10,
-                                                              dividerThickness:
-                                                                  1,
-                                                              headingTextStyle:
-                                                                  const TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700),
-                                                              border: TableBorder.all(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                  width: 0.5),
-                                                              headingRowColor:
-                                                                  MaterialStateProperty
-                                                                      .all(Theme.of(
-                                                                              context)
-                                                                          .primaryColor),
-                                                              columns: const [
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "SL NO"),
-                                                                  ),
-                                                                ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "Total Amount"),
-                                                                  ),
-                                                                ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "Sanction Amount"),
-                                                                  ),
-                                                                ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "Payment Time"),
-                                                                  ),
-                                                                ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .center,
-                                                                    child: Text(
-                                                                        "Payment Mode"),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                              rows: List.generate(
-                                                                  widget
+                                                            width: 0.5),
+                                                        headingRowColor:
+                                                            MaterialStateProperty
+                                                                .all(Theme.of(
+                                                                        context)
+                                                                    .primaryColor),
+                                                        columns: const [
+                                                          DataColumn(
+                                                            label: Align(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child:
+                                                                  Text("SL NO"),
+                                                            ),
+                                                          ),
+                                                          DataColumn(
+                                                            label: Align(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: Text(
+                                                                  "Total Amount"),
+                                                            ),
+                                                          ),
+                                                          DataColumn(
+                                                            label: Align(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: Text(
+                                                                  "Sanction Amount"),
+                                                            ),
+                                                          ),
+                                                          DataColumn(
+                                                            label: Align(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: Text(
+                                                                  "Payment Time"),
+                                                            ),
+                                                          ),
+                                                          DataColumn(
+                                                            label: Align(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: Text(
+                                                                  "Payment Mode"),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                        rows: List.generate(
+                                                            widget
+                                                                .controller
+                                                                .paymentDetails
+                                                                .length,
+                                                            (index) {
+                                                          int num = index + 1;
+                                                          return DataRow(
+                                                              cells: [
+                                                                DataCell(Align(
+                                                                  child: Text(
+                                                                      "$num"),
+                                                                )),
+                                                                DataCell(Align(
+                                                                  child: Text(widget
                                                                       .controller
                                                                       .paymentDetails
-                                                                      .length,
-                                                                  (index) {
-                                                                int num =
-                                                                    index + 1;
-                                                                return DataRow(
-                                                                    cells: [
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child: Text(
-                                                                            "$num"),
-                                                                      )),
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child: Text(widget
-                                                                            .controller
-                                                                            .paymentDetails
-                                                                            .elementAt(index)
-                                                                            .totalAppliedAmount!
-                                                                            .toInt()
-                                                                            .toString()),
-                                                                      )),
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child: Text(widget
-                                                                            .controller
-                                                                            .paymentDetails
-                                                                            .elementAt(index)
-                                                                            .totalAppliedAmountByPart!
-                                                                            .toInt()
-                                                                            .toString()),
-                                                                      )),
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child: Text(widget
-                                                                            .controller
-                                                                            .paymentDetails
-                                                                            .elementAt(index)
-                                                                            .paymentTime!
-                                                                            .toInt()
-                                                                            .toString()),
-                                                                      )),
-                                                                      DataCell(
-                                                                          Align(
-                                                                        child: Text(widget
-                                                                            .controller
-                                                                            .paymentDetails
-                                                                            .elementAt(index)
-                                                                            .paymentMode!),
-                                                                      )),
-                                                                    ]);
-                                                              }),
-                                                            )))
-                                                    : const SizedBox(),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                       /**    Obx(
-                                            () => widget.controller.chartData
-                                                        .length >
-                                                    3
-                                                ? Container(
-                                                    width: 250,
-                                                    child: SfCartesianChart(
-                                                        enableAxisAnimation:
-                                                            true,
-                                                        primaryXAxis:
-                                                            CategoryAxis(),
-                                                        series: <
-                                                            CartesianSeries<
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .totalAppliedAmount!
+                                                                      .toInt()
+                                                                      .toString()),
+                                                                )),
+                                                                DataCell(Align(
+                                                                  child: Text(widget
+                                                                      .controller
+                                                                      .paymentDetails
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .totalAppliedAmountByPart!
+                                                                      .toInt()
+                                                                      .toString()),
+                                                                )),
+                                                                DataCell(Align(
+                                                                  child: Text(widget
+                                                                      .controller
+                                                                      .paymentDetails
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .paymentTime!
+                                                                      .toInt()
+                                                                      .toString()),
+                                                                )),
+                                                                DataCell(Align(
+                                                                  child: Text(widget
+                                                                      .controller
+                                                                      .paymentDetails
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .paymentMode!),
+                                                                )),
+                                                              ]);
+                                                        }),
+                                                      )))
+                                              : const SizedBox(),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        /**    Obx(
+                                          () => widget.controller.chartData
+                                                      .length >
+                                                  3
+                                              ? Container(
+                                                  width: 250,
+                                                  child: SfCartesianChart(
+                                                      enableAxisAnimation:
+                                                          true,
+                                                      primaryXAxis:
+                                                          CategoryAxis(),
+                                                      series: <
+                                                          CartesianSeries<
+                                                              ChartData,
+                                                              String>>[
+                                                        // Renders column chart
+                                                        ColumnSeries<
                                                                 ChartData,
-                                                                String>>[
-                                                          // Renders column chart
-                                                          ColumnSeries<
-                                                                  ChartData,
-                                                                  String>(
-                                                              dataSource: widget
-                                                                  .controller
-                                                                  .chartData,
-                                                              xValueMapper:
-                                                                  (ChartData data,
-                                                                          _) =>
-                                                                      data.x,
-                                                              yValueMapper:
-                                                                  (ChartData data,
-                                                                          _) =>
-                                                                      data.y)
-                                                        ]))
-                                                : const SizedBox(),
-                                          ),
-                                          const SizedBox(
-                                            width: 50,
-                                          ),
-                                          */
-                                          Container(
-                                            height: 250,
-                                            width: 250,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const Text(
-                                                    "Total Applied Amount :"),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
-                                                TextField(
-                                                  readOnly: true,
-                                                  controller: appliedEt,
+                                                                String>(
+                                                            dataSource: widget
+                                                                .controller
+                                                                .chartData,
+                                                            xValueMapper:
+                                                                (ChartData data,
+                                                                        _) =>
+                                                                    data.x,
+                                                            yValueMapper:
+                                                                (ChartData data,
+                                                                        _) =>
+                                                                    data.y)
+                                                      ]))
+                                              : const SizedBox(),
+                                        ),
+                                        const SizedBox(
+                                          width: 50,
+                                        ),
+                                        */
+                                        SizedBox(
+                                          height: 250,
+                                          width: 250,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const Text(
+                                                  "Total Applied Amount :"),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              TextField(
+                                                readOnly: true,
+                                                controller: appliedEt,
+                                                decoration: const InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder()),
+                                                style: const TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.black),
+                                              ),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              const Text(
+                                                  "Total Sanction Amount :"),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              Obx(
+                                                () => TextField(
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  controller: widget
+                                                      .controller
+                                                      .sancationAmountTotal
+                                                      .value,
                                                   decoration: const InputDecoration(
                                                       border:
                                                           OutlineInputBorder()),
-                                                  style: const TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.black),
                                                 ),
-                                                const SizedBox(
-                                                  height: 20,
-                                                ),
-                                                const Text(
-                                                    "Total Sanction Amount :"),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Obx(
-                                                  () => TextField(
-                                                    keyboardType:
-                                                        TextInputType.number,
-                                                    controller: widget
-                                                        .controller
-                                                        .sancationAmountTotal
-                                                        .value,
-                                                    decoration:
-                                                        const InputDecoration(
-                                                            border:
-                                                                OutlineInputBorder()),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
+                                              )
+                                            ],
                                           ),
-                                          const SizedBox(
-                                            width: 50,
+                                        ),
+                                        const SizedBox(
+                                          width: 50,
+                                        ),
+                                        SizedBox(
+                                          width: 420,
+                                          height: 200,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const Text(
+                                                "Remarks",
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              TextField(
+                                                controller: remarkEt,
+                                                decoration: InputDecoration(
+                                                    hintText: "Enter Remarks",
+                                                    helperStyle: Theme.of(
+                                                            context)
+                                                        .textTheme
+                                                        .bodySmall!
+                                                        .merge(const TextStyle(
+                                                            fontSize: 18)),
+                                                    border:
+                                                        const OutlineInputBorder()),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall!
+                                                    .merge(const TextStyle(
+                                                        fontSize: 18)),
+                                                maxLines: 6,
+                                              ),
+                                            ],
                                           ),
-                                          Container(
-                                            width: 420,
-                                            height: 200,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const Text(
-                                                  "Remarks",
-                                                ),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
-                                                TextField(
-                                                  controller: remarkEt,
-                                                  decoration: InputDecoration(
-                                                      hintText: "Enter Remarks",
-                                                      helperStyle: Theme.of(
-                                                              context)
-                                                          .textTheme
-                                                          .bodySmall!
-                                                          .merge(
-                                                              const TextStyle(
-                                                                  fontSize:
-                                                                      18)),
-                                                      border:
-                                                          const OutlineInputBorder()),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodySmall!
-                                                      .merge(const TextStyle(
-                                                          fontSize: 18)),
-                                                  maxLines: 6,
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          MSkollBtn(
-                                            title: "Approve",
-                                            onPress: () async {
-                                              Get.dialog(AlertDialog(
-                                                insetPadding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 16),
-                                                contentPadding:
-                                                    const EdgeInsets.all(8),
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20)),
-                                                content: SizedBox(
-                                                    width: Get.width,
-                                                    child: Container(
-                                                      height: 240,
-                                                      child: Center(
-                                                        child: Text(
-                                                          "Please Wait...",
-                                                          style: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .bodyMedium!
-                                                              .merge(const TextStyle(
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          39,
-                                                                          4,
-                                                                          196))),
-                                                        ),
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        MSkollBtn(
+                                          title: "Approve",
+                                          onPress: () async {
+                                            Get.dialog(AlertDialog(
+                                              insetPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 16),
+                                              contentPadding:
+                                                  const EdgeInsets.all(8),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              content: SizedBox(
+                                                  width: Get.width,
+                                                  child: SizedBox(
+                                                    height: 240,
+                                                    child: Center(
+                                                      child: Text(
+                                                        "Please Wait...",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium!
+                                                            .merge(const TextStyle(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        39,
+                                                                        4,
+                                                                        196))),
                                                       ),
-                                                    )),
-                                              ));
+                                                    ),
+                                                  )),
+                                            ));
 
-                                              await addAccomdation(true);
-                                            },
-                                          ),
-                                          const SizedBox(
-                                            width: 20,
-                                          ),
-                                          MSkollBtn(
-                                            title: "Reject ",
-                                            onPress: () async {
-                                              await addAccomdation(false);
-                                            },
-                                          ),
-                                          const SizedBox(
-                                            width: 20,
-                                          ),
-                                          MSkollBtn(
-                                            title: "Cancel ",
-                                            onPress: () {
-                                              clearAll();
+                                            await addAccomdation(true);
+                                          },
+                                        ),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
+                                        MSkollBtn(
+                                          title: "Reject ",
+                                          onPress: () async {
+                                            await addAccomdation(false);
+                                          },
+                                        ),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
+                                        MSkollBtn(
+                                          title: "Cancel ",
+                                          onPress: () {
+                                            clearAll();
 
-                                              Get.back();
-                                            },
-                                          )
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                    ],
-                                  ).marginSymmetric(
-                                      horizontal: 20, vertical: 20)),
-                            ]),
-                      ),
+                                            Get.back();
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                  ],
+                                ).marginSymmetric(
+                                    horizontal: 20, vertical: 20)),
+                          ]),
                     ),
                   ],
                 ),

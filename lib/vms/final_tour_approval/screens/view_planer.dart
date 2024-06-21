@@ -4,7 +4,7 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/final_tour_approval/apis/final_tada_tour_plan.dart';
-import 'package:m_skool_flutter/vms/final_tour_approval/apis/final_view_tadaAdanced.dart';
+import 'package:m_skool_flutter/vms/final_tour_approval/apis/final_view_tada_adanced.dart';
 import 'package:m_skool_flutter/vms/final_tour_approval/apis/save_tada.dart';
 import 'package:m_skool_flutter/vms/final_tour_approval/controller/final_tada_tour_approval.dart';
 import 'package:m_skool_flutter/vms/final_tour_approval/models/final_tada_tour_approval_lists.dart';
@@ -1313,7 +1313,7 @@ class _FinalViewPlanerState extends State<FinalViewPlaner> {
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          Container(
+                                          SizedBox(
                                             height: 50,
                                             width: 200,
                                             child: TextField(
@@ -1336,7 +1336,7 @@ class _FinalViewPlanerState extends State<FinalViewPlaner> {
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          Container(
+                                          SizedBox(
                                             height: 50,
                                             width: 200,
                                             child: TextField(
@@ -1359,7 +1359,7 @@ class _FinalViewPlanerState extends State<FinalViewPlaner> {
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          Container(
+                                          SizedBox(
                                             height: 50,
                                             width: 200,
                                             child: TextField(
@@ -1382,7 +1382,7 @@ class _FinalViewPlanerState extends State<FinalViewPlaner> {
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          Container(
+                                          SizedBox(
                                             height: 50,
                                             width: 200,
                                             child: TextField(
@@ -1406,7 +1406,7 @@ class _FinalViewPlanerState extends State<FinalViewPlaner> {
                                           const SizedBox(
                                             width: 40,
                                           ),
-                                          Container(
+                                          SizedBox(
                                             height: 50,
                                             width: 200,
                                             child: TextField(
@@ -1429,7 +1429,7 @@ class _FinalViewPlanerState extends State<FinalViewPlaner> {
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          Container(
+                                          SizedBox(
                                             height: 50,
                                             width: 200,
                                             child: TextField(
@@ -1453,7 +1453,7 @@ class _FinalViewPlanerState extends State<FinalViewPlaner> {
                                           const SizedBox(
                                             width: 115,
                                           ),
-                                          Container(
+                                          SizedBox(
                                             width: 400,
                                             child: TextField(
                                               controller:
@@ -1511,7 +1511,7 @@ class _FinalViewPlanerState extends State<FinalViewPlaner> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           content: SizedBox(
               width: Get.width,
-              child: Container(
+              child: SizedBox(
                 height: 100,
                 child: Center(
                   child: Row(
