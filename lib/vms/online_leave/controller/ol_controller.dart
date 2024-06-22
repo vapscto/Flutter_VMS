@@ -111,4 +111,6 @@ class OpetionLeaveController extends GetxController {
       totalLeaveCount.add(data.elementAt(i));
     }
   }
+
+  RxDouble totalLeaveApply = 0.0.obs;
 }

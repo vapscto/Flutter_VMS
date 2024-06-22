@@ -6,12 +6,14 @@ class AnimatedProgressWidget extends StatelessWidget {
   final String desc;
   final double? animatorHeight;
   final String animationPath;
+  final Color? color;
   const AnimatedProgressWidget(
       {super.key,
       required this.title,
       required this.desc,
       required this.animationPath,
-      this.animatorHeight});
+      this.animatorHeight,
+      this.color});
 
   @override
   Widget build(BuildContext context) {

@@ -318,7 +318,8 @@ void version(LoginSuccessModel loginSuccessModel,
       mskoolController,
     ),
   );
-  latestVersion = ctrl!.values!.last.iMVEAppVersion ?? '';
+  latestVersion =
+      (ctrl!.values!.isNotEmpty) ? ctrl.values!.last.iMVEAppVersion ?? '' : '';
   if (ctrl.values!.isNotEmpty) {
     Get.dialog(AlertDialog(
       title: const Text("Update App!"),

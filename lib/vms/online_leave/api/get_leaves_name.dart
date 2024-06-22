@@ -79,6 +79,9 @@ class GetLeaveCountApi {
         TotalLeaveCountModel leaveNames = TotalLeaveCountModel.fromJson(
             response.data['getemployeeleavedetails']);
         opetionLeaveController.getData(leaveNames.values!);
+        opetionLeaveController.totalLeaveApply.value = 0.0;
+        opetionLeaveController.totalLeaveApply.value =
+            response.data['hreltD_TotDays'];
       }
     } on DioError catch (e) {
       logger.e(e.message);

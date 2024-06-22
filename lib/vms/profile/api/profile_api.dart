@@ -146,10 +146,11 @@ Future<void> lateIn(
     if (response.statusCode == 200) {
       String responseBody = await response.stream.bytesToString();
       var jsonResponse = json.decode(responseBody);
-      logger.w(jsonResponse['lateindata']);
-      LateInModel lateInModel =
-          LateInModel.fromJson(jsonResponse['lateindata']);
-      controller.newData(lateInModel.values!);
+      if (jsonResponse['lateindata'] != null) {
+        LateInModel lateInModel =
+            LateInModel.fromJson(jsonResponse['lateindata']);
+        controller.newData(lateInModel.values!);
+      }
     } else {
       logger.i(response.reasonPhrase);
     }

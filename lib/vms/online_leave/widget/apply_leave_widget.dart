@@ -33,12 +33,14 @@ class ApplyLeaveWidget extends StatefulWidget {
   final Color color;
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final OpetionLeaveController controller;
   const ApplyLeaveWidget({
     Key? key,
     required this.values,
     required this.color,
     required this.loginSuccessModel,
     required this.mskoolController,
+    required this.controller,
   }) : super(key: key);
 
   @override
@@ -585,15 +587,10 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                     logger.e(widget
                                         .values.hrmLMaxLeavesApplyPerMonth);
                                     double count2 = 0;
-                                    if (widget.values.appliedCount == 0.00) {
-                                      count2 =
-                                          double.tryParse(totalDay.value)! +
-                                              widget.values.hrmLNoOfDays;
-                                    } else {
-                                      count2 =
-                                          double.tryParse(totalDay.value)! +
-                                              widget.values.appliedCount;
-                                    }
+
+                                    count2 = double.tryParse(totalDay.value)! +
+                                        widget.controller.totalLeaveApply.value;
+
                                     // if (widget.values.hrmLLeaveCode == "CL") {
                                     if (count2 >
                                         widget.values

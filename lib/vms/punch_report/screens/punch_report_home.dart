@@ -205,224 +205,240 @@ class _PunchReportState extends State<PunchReport> {
       ),
       body: Obx(() {
         logger.d("message");
-        return Column(
+        return Stack(
+          alignment: Alignment.center,
           children: [
-            // Text(
-            //   "Attendance",
-            //   style: Get.textTheme.titleMedium!
-            //       .copyWith(color: Theme.of(context).primaryColor),
-            // ),
-            // const SizedBox(height: 6),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   children: List.generate(attendance.length, (index) {
-            //     return Row(
-            //       children: [
-            //         InkWell(
-            //           onTap: () {
-            //             if (index == 1) {
-            //               Get.to(() => PreviousMonthAttendanceScreen(
-            //                     mskoolController: widget.mskoolController,
-            //                     loginSuccessModel: widget.loginSuccessModel,
-            //                     controller: punchFilterController,
-            //                   ));
-            //             } else if (index == 0) {
-            //               Get.to(() => CurrentMonthAttendanceScreen(
-            //                     mskoolController: widget.mskoolController,
-            //                     loginSuccessModel: widget.loginSuccessModel,
-            //                   ));
-            //             }
-            //           },
-            //           child: Card(
-            //               shape: RoundedRectangleBorder(
-            //                   borderRadius: BorderRadius.circular(10)),
-            //               color: Theme.of(context).primaryColor,
-            //               child: Padding(
-            //                 padding: const EdgeInsets.all(8.0),
-            //                 child: Text(
-            //                   attendance[index],
-            //                   style: Get.textTheme.titleSmall!
-            //                       .copyWith(color: Colors.white, fontSize: 15),
-            //                 ),
-            //               )),
-            //         )
-            //       ],
-            //     );
-            //   }),
-            // ),
-            punchFilterController.start.value == 0
-                ? const Center(
-                    child: AnimatedProgressWidget(
-                      title: "Please Select Start & End Date",
-                      desc:
-                          "When you select the data then your punch details will appear here.",
-                      animationPath: "assets/json/nodata.json",
-                      animatorHeight: 250,
-                    ),
-                  )
-                : punchFilterController.isErrorOccured.value
-                    ? Center(
-                        child: ErrWidget(
-                          err: {
-                            "errorTitle": "Unexpected Error Occured",
-                            "errorMsg": punchFilterController.message.value,
-                          },
+            SizedBox(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Image.asset(
+                "assets/images/vaps-about.jpg",
+                fit: BoxFit.fill,
+              ),
+            ),
+            Column(
+              children: [
+                // Text(
+                //   "Attendance",
+                //   style: Get.textTheme.titleMedium!
+                //       .copyWith(color: Theme.of(context).primaryColor),
+                // ),
+                // const SizedBox(height: 6),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //   children: List.generate(attendance.length, (index) {
+                //     return Row(
+                //       children: [
+                //         InkWell(
+                //           onTap: () {
+                //             if (index == 1) {
+                //               Get.to(() => PreviousMonthAttendanceScreen(
+                //                     mskoolController: widget.mskoolController,
+                //                     loginSuccessModel: widget.loginSuccessModel,
+                //                     controller: punchFilterController,
+                //                   ));
+                //             } else if (index == 0) {
+                //               Get.to(() => CurrentMonthAttendanceScreen(
+                //                     mskoolController: widget.mskoolController,
+                //                     loginSuccessModel: widget.loginSuccessModel,
+                //                   ));
+                //             }
+                //           },
+                //           child: Card(
+                //               shape: RoundedRectangleBorder(
+                //                   borderRadius: BorderRadius.circular(10)),
+                //               color: Theme.of(context).primaryColor,
+                //               child: Padding(
+                //                 padding: const EdgeInsets.all(8.0),
+                //                 child: Text(
+                //                   attendance[index],
+                //                   style: Get.textTheme.titleSmall!
+                //                       .copyWith(color: Colors.white, fontSize: 15),
+                //                 ),
+                //               )),
+                //         )
+                //       ],
+                //     );
+                //   }),
+                // ),
+                punchFilterController.start.value == 0
+                    ? const Center(
+                        child: AnimatedProgressWidget(
+                          title: "Please Select Start & End Date",
+                          desc:
+                              "When you select the data then your punch details will appear here.",
+                          animationPath: "assets/json/nodata.json",
+                          animatorHeight: 250,
                         ),
                       )
-                    : punchFilterController.startFilteration.value
-                        ? const Center(
-                            child: AnimatedProgressWidget(
-                                title: "Loading Punch Report",
-                                desc:
-                                    "Please wait, While we load Punch Report for you.",
-                                animationPath: "assets/json/default.json"),
+                    : punchFilterController.isErrorOccured.value
+                        ? Center(
+                            child: ErrWidget(
+                              err: {
+                                "errorTitle": "Unexpected Error Occured",
+                                "errorMsg": punchFilterController.message.value,
+                              },
+                            ),
                           )
-                        : punchFilterController.reports.isEmpty
+                        : punchFilterController.startFilteration.value
                             ? const Center(
                                 child: AnimatedProgressWidget(
-                                  animationPath: "assets/json/nodata.json",
-                                  animatorHeight: 250,
-                                  title: "No Record Found",
-                                  desc:
-                                      "At this selected date, there is no puch report available",
-                                ),
+                                    title: "Loading Punch Report",
+                                    desc:
+                                        "Please wait, While we load Punch Report for you.",
+                                    animationPath: "assets/json/default.json"),
                               )
-                            : Expanded(
-                                child: ListView.separated(
-                                    padding: const EdgeInsets.all(16.0),
-                                    itemBuilder: (_, index) {
-                                      backgroundColor += 1;
-                                      if (backgroundColor % 6 == 0) {
-                                        backgroundColor = 0;
-                                      }
+                            : punchFilterController.reports.isEmpty
+                                ? const Center(
+                                    child: AnimatedProgressWidget(
+                                      animationPath: "assets/json/nodata.json",
+                                      animatorHeight: 250,
+                                      title: "No Record Found",
+                                      desc:
+                                          "At this selected date, there is no puch report available",
+                                    ),
+                                  )
+                                : Expanded(
+                                    child: ListView.separated(
+                                        padding: const EdgeInsets.all(16.0),
+                                        itemBuilder: (_, index) {
+                                          backgroundColor += 1;
+                                          if (backgroundColor % 6 == 0) {
+                                            backgroundColor = 0;
+                                          }
 
-                                      return Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 12.0),
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                            color: lighterColor
-                                                .elementAt(backgroundColor)),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                          return Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 12.0),
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                                color: lighterColor.elementAt(
+                                                    backgroundColor)),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Text(
-                                                  getFormatedDate(
-                                                      DateTime.parse(
-                                                          punchFilterController
-                                                              .reports
-                                                              .elementAt(index)
-                                                              .punchdate!)),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleSmall!
-                                                      .merge(
-                                                        const TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                ),
-                                                Chip(
-                                                  label: Text(
-                                                    punchFilterController
-                                                                    .reports
-                                                                    .elementAt(
-                                                                        index)
-                                                                    .punchINtime ==
-                                                                null ||
-                                                            punchFilterController
-                                                                    .reports
-                                                                    .elementAt(
-                                                                        index)
-                                                                    .punchOUTtime ==
-                                                                null
-                                                        ? "N/A"
-                                                        : timeDifference(
-                                                            punchFilterController
-                                                                .reports
-                                                                .elementAt(
-                                                                    index)
-                                                                .punchINtime!,
-                                                            punchFilterController
-                                                                .reports
-                                                                .elementAt(
-                                                                    index)
-                                                                .punchOUTtime!),
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .titleSmall!
-                                                        .merge(
-                                                          const TextStyle(
-                                                            color: Colors.white,
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      getFormatedDate(
+                                                          DateTime.parse(
+                                                              punchFilterController
+                                                                  .reports
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .punchdate!)),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .titleSmall!
+                                                          .merge(
+                                                            const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                            ),
                                                           ),
-                                                        ),
-                                                  ),
-                                                  backgroundColor:
-                                                      noticeColor.elementAt(
-                                                          backgroundColor),
+                                                    ),
+                                                    Chip(
+                                                      label: Text(
+                                                        punchFilterController
+                                                                        .reports
+                                                                        .elementAt(
+                                                                            index)
+                                                                        .punchINtime ==
+                                                                    null ||
+                                                                punchFilterController
+                                                                        .reports
+                                                                        .elementAt(
+                                                                            index)
+                                                                        .punchOUTtime ==
+                                                                    null
+                                                            ? "N/A"
+                                                            : timeDifference(
+                                                                punchFilterController
+                                                                    .reports
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .punchINtime!,
+                                                                punchFilterController
+                                                                    .reports
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .punchOUTtime!),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall!
+                                                            .merge(
+                                                              const TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                            ),
+                                                      ),
+                                                      backgroundColor:
+                                                          noticeColor.elementAt(
+                                                              backgroundColor),
+                                                    ),
+                                                  ],
                                                 ),
+                                                const SizedBox(
+                                                  height: 6.0,
+                                                ),
+                                                PunchReportItem(
+                                                  title: "In Time",
+                                                  time: timing(
+                                                      "${punchFilterController.reports.elementAt(index).punchINtime}"),
+                                                ),
+                                                const SizedBox(
+                                                  height: 12.0,
+                                                ),
+                                                PunchReportItem(
+                                                  title: "Out Time",
+                                                  time: timing(
+                                                      "${punchFilterController.reports.elementAt(index).punchOUTtime}"),
+                                                ),
+                                                const SizedBox(
+                                                  height: 12.0,
+                                                ),
+                                                // PunchReportItem(
+                                                //   title: "Late In Time",
+                                                //   time: punchFilterController.reports
+                                                //           .elementAt(index)
+                                                //           .lateby ??
+                                                //       "N/A",
+                                                // ),
+                                                // const SizedBox(
+                                                //   height: 12.0,
+                                                // ),
+                                                // PunchReportItem(
+                                                //   title: "Early Out",
+                                                //   time: punchFilterController.reports
+                                                //           .elementAt(index)
+                                                //           .earlyby ??
+                                                //       "N/A",
+                                                // ),
+                                                // const SizedBox(
+                                                //   height: 12.0,
+                                                // ),
                                               ],
                                             ),
-                                            const SizedBox(
-                                              height: 6.0,
-                                            ),
-                                            PunchReportItem(
-                                              title: "In Time",
-                                              time: timing(
-                                                  "${punchFilterController.reports.elementAt(index).punchINtime}"),
-                                            ),
-                                            const SizedBox(
-                                              height: 12.0,
-                                            ),
-                                            PunchReportItem(
-                                              title: "Out Time",
-                                              time: timing(
-                                                  "${punchFilterController.reports.elementAt(index).punchOUTtime}"),
-                                            ),
-                                            const SizedBox(
-                                              height: 12.0,
-                                            ),
-                                            // PunchReportItem(
-                                            //   title: "Late In Time",
-                                            //   time: punchFilterController.reports
-                                            //           .elementAt(index)
-                                            //           .lateby ??
-                                            //       "N/A",
-                                            // ),
-                                            // const SizedBox(
-                                            //   height: 12.0,
-                                            // ),
-                                            // PunchReportItem(
-                                            //   title: "Early Out",
-                                            //   time: punchFilterController.reports
-                                            //           .elementAt(index)
-                                            //           .earlyby ??
-                                            //       "N/A",
-                                            // ),
-                                            // const SizedBox(
-                                            //   height: 12.0,
-                                            // ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                    separatorBuilder: (_, index) {
-                                      return const SizedBox(
-                                        height: 16.0,
-                                      );
-                                    },
-                                    itemCount:
-                                        punchFilterController.reports.length),
-                              ),
+                                          );
+                                        },
+                                        separatorBuilder: (_, index) {
+                                          return const SizedBox(
+                                            height: 16.0,
+                                          );
+                                        },
+                                        itemCount: punchFilterController
+                                            .reports.length),
+                                  ),
+              ],
+            ),
           ],
         );
       }),

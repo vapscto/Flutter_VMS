@@ -17,12 +17,14 @@ class Leaves extends StatefulWidget {
   final MskoolController mskoolController;
   final List<LeaveNamesModelValues> leaves;
   final List<TaskDeviationModelValues> deviation;
+  final OpetionLeaveController controller;
   const Leaves(
       {super.key,
       required this.loginSuccessModel,
       required this.mskoolController,
       required this.leaves,
-      required this.deviation});
+      required this.deviation,
+      required this.controller});
 
   @override
   State<Leaves> createState() => _LeavesState();
@@ -116,6 +118,7 @@ class _LeavesState extends State<Leaves> {
                       color: bgColor.elementAt(index),
                       loginSuccessModel: widget.loginSuccessModel,
                       mskoolController: widget.mskoolController,
+                      controller: widget.controller,
                     );
                   }));
                 }
