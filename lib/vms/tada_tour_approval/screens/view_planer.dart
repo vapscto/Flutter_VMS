@@ -35,7 +35,7 @@ class ViewTourPLan extends StatefulWidget {
 }
 
 class _ViewTourPLanState extends State<ViewTourPLan> {
-  var height, width;
+  var height = 0.0, width = 0.0;
   var dayCount;
   RxInt sum = 0.obs;
   RxBool radioBtn = RxBool(true);
