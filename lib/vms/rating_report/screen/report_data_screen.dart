@@ -114,157 +114,164 @@ class _ReportDataScreenState extends State<ReportDataScreen> {
                               top: 3, left: 15, right: 15, bottom: 30),
                           child: Column(
                             children: [
-                              DataTable(
-                                dataTextStyle: const TextStyle(
-                                  fontSize: 15,
-                                  color: Color.fromRGBO(5, 5, 5, 0.945),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                dataRowHeight: 60,
-                                headingRowHeight: 55,
-                                horizontalMargin: 10,
-                                columnSpacing: 40,
-                                dividerThickness: 1,
-                                border: TableBorder.all(
-                                  borderRadius: const BorderRadius.only(
-                                    bottomRight: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: DataTable(
+                                  dataTextStyle: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromRGBO(5, 5, 5, 0.945),
+                                    fontWeight: FontWeight.w500,
                                   ),
-                                ),
-                                headingRowColor: MaterialStateProperty.all(
-                                    Theme.of(context).primaryColor),
-                                columns: [
-                                  const DataColumn(
-                                    label: Text(
-                                      "Sl No",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
+                                  dataRowHeight: 60,
+                                  headingRowHeight: 55,
+                                  horizontalMargin: 10,
+                                  columnSpacing: 40,
+                                  dividerThickness: 1,
+                                  border: TableBorder.all(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  const DataColumn(
-                                    label: Text(
-                                      "Employee",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                  ),
-                                  const DataColumn(
-                                    label: Text(
-                                      "Overall Average",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                  ),
-                                  const DataColumn(
-                                    label: Text(
-                                      "Questions",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                  ),
-                                  for (int monthIndex in widget.selectedMonths)
-                                    DataColumn(
+                                  headingRowColor: MaterialStateProperty.all(
+                                      Theme.of(context).primaryColor),
+                                  columns: [
+                                    const DataColumn(
                                       label: Text(
-                                        widget.controller.monthList[monthIndex]
-                                            .ivrMMonthName!,
-                                        style: const TextStyle(
+                                        "Sl No",
+                                        style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w800,
                                         ),
                                       ),
                                     ),
-                                  const DataColumn(
-                                    label: Text(
-                                      "Total Average",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w800,
+                                    const DataColumn(
+                                      label: Text(
+                                        "Employee",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w800,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                                rows: List.generate(
-                                  widget.controller.ratingReportData.length,
-                                  (index) {
-                                    double showMiddleOfTable = widget.controller
-                                            .ratingReportData.length /
-                                        2;
-                                    if (showMiddleOfTable.toInt().isOdd) {
-                                      showMiddleOfTable + .5;
-                                    }
-                                    var data = widget
-                                        .controller.ratingReportData[index];
-
-                                    int totalSum = 0;
-                                    int monthCount = 0;
-                                    for (int monthIndex
-                                        in widget.selectedMonths) {
-                                      int? monthValue =
-                                          getMonthValue(data, monthIndex);
-                                      if (monthValue != null) {
-                                        totalSum += monthValue;
-                                        monthCount++;
-                                      }
-                                    }
-                                    double averageTotal = monthCount > 0
-                                        ? totalSum / monthCount
-                                        : 0;
-
-                                    return DataRow(cells: [
-                                      DataCell(Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                            index == showMiddleOfTable.toInt()
-                                                ? "1"
-                                                : ""),
-                                      )),
-                                      DataCell(Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                            index == showMiddleOfTable.toInt()
-                                                ? widget
-                                                    .controller
-                                                    .ratingReportData
-                                                    .first
-                                                    .empName!
-                                                : ""),
-                                      )),
-                                      DataCell(Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          index == showMiddleOfTable.toInt()
-                                              ? totalAverage.toStringAsFixed(2)
-                                              : "",
+                                    const DataColumn(
+                                      label: Text(
+                                        "Overall Average",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w800,
                                         ),
-                                      )),
-                                      DataCell(Text(
-                                          data.rATMQERatingQuestions ?? '')),
-                                      for (int monthIndex
-                                          in widget.selectedMonths)
-                                        DataCell(
-                                          Align(
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              getMonthData(data, monthIndex) ??
-                                                  '',
-                                            ),
+                                      ),
+                                    ),
+                                    const DataColumn(
+                                      label: Text(
+                                        "Questions",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                    ),
+                                    for (int monthIndex
+                                        in widget.selectedMonths)
+                                      DataColumn(
+                                        label: Text(
+                                          widget
+                                              .controller
+                                              .monthList[monthIndex]
+                                              .ivrMMonthName!,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w800,
                                           ),
                                         ),
-                                      DataCell(Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                            averageTotal.toStringAsFixed(2)),
-                                      )),
-                                    ]);
-                                  },
+                                      ),
+                                    const DataColumn(
+                                      label: Text(
+                                        "Total Average",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                  rows: List.generate(
+                                    widget.controller.ratingReportData.length,
+                                    (index) {
+                                      double showMiddleOfTable = widget
+                                              .controller
+                                              .ratingReportData
+                                              .length /
+                                          2;
+                                      if (showMiddleOfTable.toInt().isOdd) {
+                                        showMiddleOfTable + .5;
+                                      }
+                                      var data = widget
+                                          .controller.ratingReportData[index];
+
+                                      int totalSum = 0;
+                                      int monthCount = 0;
+                                      for (int monthIndex
+                                          in widget.selectedMonths) {
+                                        int? monthValue =
+                                            getMonthValue(data, monthIndex);
+                                        if (monthValue != null) {
+                                          totalSum += monthValue;
+                                          monthCount++;
+                                        }
+                                      }
+                                      double averageTotal = monthCount > 0
+                                          ? totalSum / monthCount
+                                          : 0;
+
+                                      return DataRow(cells: [
+                                        DataCell(Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                              index == showMiddleOfTable.toInt()
+                                                  ? "1"
+                                                  : ""),
+                                        )),
+                                        DataCell(Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                              index == showMiddleOfTable.toInt()
+                                                  ? widget
+                                                      .controller
+                                                      .ratingReportData
+                                                      .first
+                                                      .empName!
+                                                  : ""),
+                                        )),
+                                        DataCell(Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            index == showMiddleOfTable.toInt()
+                                                ? totalAverage
+                                                    .toStringAsFixed(2)
+                                                : "",
+                                          ),
+                                        )),
+                                        DataCell(Text(
+                                            data.rATMQERatingQuestions ?? '')),
+                                        for (int monthIndex
+                                            in widget.selectedMonths)
+                                          DataCell(
+                                            Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                getMonthData(
+                                                        data, monthIndex) ??
+                                                    '',
+                                              ),
+                                            ),
+                                          ),
+                                        DataCell(Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                              averageTotal.toStringAsFixed(2)),
+                                        )),
+                                      ]);
+                                    },
+                                  ),
                                 ),
                               ),
                             ],

@@ -102,17 +102,15 @@ class AuthenticateUserApi {
 
     final LoginSuccessModel loginSuccessModel =
         LoginSuccessModel.fromJson(response.data);
-    logger.d('=======${loginSuccessModel.roleId}');
     cookieBox!.put("cookie", response.headers.map['set-cookie']![0]);
     await importantIds!.put(URLS.miId, loginSuccessModel.mIID);
     await importantIds!.put(URLS.userId, loginSuccessModel.userId);
-
     await importantIds!.put(URLS.asmayId, loginSuccessModel.asmaYId);
     await importantIds!.put(URLS.ivrmrtId, 0);
     await importantIds!.put(URLS.amstId, loginSuccessModel.amsTId);
     await logInBox!.put("userName", userName);
     await logInBox!.put("password", password);
-  
+
     return Future.value(loginSuccessModel);
   }
 }

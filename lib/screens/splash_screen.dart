@@ -311,7 +311,6 @@ class _SplashScreenState extends State<SplashScreen> {
       getDeviceTokenForFCM(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController);
-      logger.d(loginSuccessModel.roleId);
       return Future.value(CommonHomeScreen(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController));

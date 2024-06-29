@@ -405,19 +405,31 @@ class URLS {
   static String getTourViews = "api/TADAAdvanceApprovalFacade/getTourApproval/";
   static String editTadaTour = "api/TADAAdvanceApprovalFacade/editTour/";
 
-  static String getViewTada="api/TADAAdvanceApprovalFacade/getView/";
+  static String getViewTada = "api/TADAAdvanceApprovalFacade/getView/";
 
-  static String getTadaCat="api/TADAAdvanceApprovalFacade/TadaAllwence/";
+  static String getTadaCat = "api/TADAAdvanceApprovalFacade/TadaAllwence/";
 
-  static String getLeadsClients="api/TADAAdvanceApprovalFacade/TadaAllwence/";
+  static String getLeadsClients = "api/TADAAdvanceApprovalFacade/TadaAllwence/";
 
-  static String savaTadaTourApi="api/TADAAdvanceApprovalFacade/TourApproval/";
+  static String savaTadaTourApi = "api/TADAAdvanceApprovalFacade/TourApproval/";
 
-  static String getFinalAdavncedViewApi="api/TADAApprovalFacade/getfinaldata/";
+  static String getFinalAdavncedViewApi =
+      "api/TADAApprovalFacade/getfinaldata/";
 
-  static String getTadaTourPlanerDetails="api/TADA_Advance_TourFacade/FinalSubMission/";
+  static String getTadaTourPlanerDetails =
+      "api/TADA_Advance_TourFacade/FinalSubMission/";
 
-  static String getViewAdancedFinal="api/TADAApprovalFacade/editTada/";
+  static String getViewAdancedFinal = "api/TADAApprovalFacade/editTada/";
 
-  static String saveFinalTadaApproval="api/TADAApprovalFacade/savefinaldta/";
+  static String saveFinalTadaApproval = "api/TADAApprovalFacade/savefinaldta/";
+  // Staff gate pass
+  static String gatePassOnload = 'api/StaffGatePassFacade/Getdetails';
+  static String gatePassDeg = 'api/StaffGatePassFacade/getdepchange/';
+  static String gatePassEmpList = 'api/StaffGatePassFacade/get_staff1';
+  static String gatePassSave = 'api/StaffGatePassFacade/saveRecord';
+  static String gatePassActive = 'api/StaffGatePassFacade/deactive';
+  // planner Deviation
+  static String devEmpList = 'api/ISM_PlannerDeviationReportFacade/getdetails/';
+  static String devReport =
+      'api/ISM_PlannerDeviationReportFacade/getdeviationReport';
 }

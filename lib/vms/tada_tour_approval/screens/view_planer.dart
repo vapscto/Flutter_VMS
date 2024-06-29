@@ -36,7 +36,7 @@ class ViewTourPLan extends StatefulWidget {
 
 class _ViewTourPLanState extends State<ViewTourPLan> {
   var height = 0.0, width = 0.0;
-  var dayCount;
+  var dayCount = '';
   RxInt sum = 0.obs;
   RxBool radioBtn = RxBool(true);
   TextEditingController appliedEt = TextEditingController(text: "");
@@ -46,7 +46,7 @@ class _ViewTourPLanState extends State<ViewTourPLan> {
   List<Map<String, dynamic>> emplyeList = [];
   String tp = "AR";
 
-  var totalApproveCount;
+  var totalApproveCount = 0;
   @override
   void initState() {
     initApi();

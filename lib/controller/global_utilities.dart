@@ -39,6 +39,7 @@ import 'package:m_skool_flutter/vms/hr_modules/job_posting/job_posting_home.dart
 import 'package:m_skool_flutter/vms/interviewer_feedback/screens/interview_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_approval/screens/planner_home_screen.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/screens/planner_create.dart';
+import 'package:m_skool_flutter/vms/issue_manager/planner_deviation/deviation_home.dart';
 import 'package:m_skool_flutter/vms/new_candidate/screen/new_canidate_home.dart';
 import 'package:m_skool_flutter/vms/noc_approval/screens/noc_approval_home.dart';
 import 'package:m_skool_flutter/vms/online_leave/screen/apply_leave_home.dart';
@@ -47,10 +48,12 @@ import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart'
 import 'package:m_skool_flutter/vms/rating_report/screen/rating_report_home.dart';
 import 'package:m_skool_flutter/vms/salary_details/screen/salary_home_screen.dart';
 import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
+import 'package:m_skool_flutter/vms/staff_gate_pass/staff_get_pass_home.dart';
 import 'package:m_skool_flutter/vms/staff_leave_approval/screen/leave_list_home.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_a._approval/screens/tada_show_screen.dart';
 import 'package:m_skool_flutter/vms/tadaModule/tada_approval/screens/tada_approval_home.dart';
 import 'package:m_skool_flutter/vms/tada_tour_approval/screens/tada_tour_view.dart';
+import 'package:m_skool_flutter/vms/task_creation_md_sir/task_creation_md_sir_screen.dart';
 import 'package:m_skool_flutter/vms/tour_mapping/screen/tour_maping_list.dart';
 import 'package:m_skool_flutter/vms/utils/video_screen.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
@@ -377,10 +380,35 @@ void openMappedPages(
     return;
   }
   if (pageName == "Task Creation") {
+    // if (loginSuccessModel.roleforlogin!.toLowerCase() == 'admin') {
+    //   Get.to(() => TaskCreationNewScreen(
+    //         loginSuccessModel: loginSuccessModel,
+    //         mskoolController: mskoolController,
+    //         title: pageName,
+    //       ));
+    //   return;
+    // } else {
     Get.to(() => TaskCreationHome(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
           previousScreen: pageName,
+        ));
+    return;
+    // }
+  }
+  if (pageName == 'Deviation Report') {
+    Get.to(() => PlannerDeviationScreen(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+          title: pageName,
+        ));
+    return;
+  }
+  if (pageName == 'Staff Gate Pass') {
+    Get.to(() => StaffGatePass(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+          title: pageName,
         ));
     return;
   }

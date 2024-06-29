@@ -208,14 +208,14 @@ class _PunchReportState extends State<PunchReport> {
         return Stack(
           alignment: Alignment.center,
           children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Image.asset(
-                "assets/images/vaps-about.jpg",
-                fit: BoxFit.fill,
-              ),
-            ),
+            // SizedBox(
+            //   height: MediaQuery.of(context).size.height,
+            //   width: MediaQuery.of(context).size.width,
+            //   child: Image.asset(
+            //     "assets/images/vaps-about.jpg",
+            //     fit: BoxFit.fill,
+            //   ),
+            // ),
             Column(
               children: [
                 // Text(

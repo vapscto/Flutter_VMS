@@ -40,7 +40,6 @@ Future<bool> getTskCompaniesList({
       "MI_Id": miId,
       "PageFlag": "app.ISM_TaskCreation"
     });
-    logger.i("nitin${response.data['emplyeeEnhancements']}");
     GetEmployeeId getEmployeeId = GetEmployeeId.fromJson(response.data);
     logInBox!.put("EmpId", getEmployeeId.hrmEId);
     GetDepts getDepts = GetDepts.fromJson(response.data['get_department']);

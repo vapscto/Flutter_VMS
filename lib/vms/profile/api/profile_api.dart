@@ -36,12 +36,12 @@ class ProfileAPI {
       var response = await dio.post(api,
           options: Options(headers: getSession()),
           data: {"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
-      // logger.v({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
-      // logger.w(api);
       if (response.statusCode == 200) {
-        ProfileDataModel profileDataModel =
-            ProfileDataModel.fromJson(response.data['emp_deatils']);
-        profileController.getProfile(profileDataModel.values!);
+        if (response.data['emp_deatils'] != null) {
+          ProfileDataModel profileDataModel =
+              ProfileDataModel.fromJson(response.data['emp_deatils']);
+          profileController.getProfile(profileDataModel.values!);
+        }
         if (response.data['birthdaylist'] != null) {
           BirthDayListModel birthDayListModel =
               BirthDayListModel.fromJson(response.data['birthdaylist']);
@@ -75,10 +75,13 @@ class ProfileAPI {
         } else {
           profileController.absent.value = 0;
         }
-        RatingDataModel ratingDataModel =
-            RatingDataModel.fromJson(response.data['ratingDetails']);
-        profileController.ratingDataModelValues.clear();
-        profileController.ratingDataModelValues.addAll(ratingDataModel.values!);
+        if (response.data['ratingDetails'] != null) {
+          RatingDataModel ratingDataModel =
+              RatingDataModel.fromJson(response.data['ratingDetails']);
+          profileController.ratingDataModelValues.clear();
+          profileController.ratingDataModelValues
+              .addAll(ratingDataModel.values!);
+        }
       }
       if (response.data['leavedetails'] != null) {
         DashBoardLeaveModel dashBoardLeaveModel =
@@ -137,7 +140,7 @@ Future<void> lateIn(
   var headers = {'Content-Type': 'application/json'};
 
   var request = http.Request('POST', Uri.parse("$base${URLS.profileData}"));
-  logger.e("$base${URLS.profileData}");
+  // logger.e("$base${URLS.profileData}");
   try {
     request.body =
         json.encode({"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
