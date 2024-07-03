@@ -8,6 +8,8 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/api/vms_transation_api.dart';
+import 'package:m_skool_flutter/vms/controller/vms_common_controller.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/priority_model.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/task_employee_list.dart';
@@ -41,6 +43,8 @@ class _TaskCreationNewScreenState extends State<TaskCreationNewScreen> {
   final descriptionController = TextEditingController();
   final depController = TextEditingController();
   final _suggestionsBoxController = SuggestionsBoxController();
+  final VmsTransationController _vmsTransationController =
+      Get.put(VmsTransationController());
   int depId = 0;
   DateTime? fdt;
   DateTime? toDt;
@@ -63,6 +67,13 @@ class _TaskCreationNewScreenState extends State<TaskCreationNewScreen> {
   @override
   void initState() {
     _onload();
+    VmsTransationAPI.init().getTransation(
+        base: baseUrlFromInsCode("login", widget.mskoolController),
+        vmsTransationController: _vmsTransationController,
+        userName: widget.loginSuccessModel.userName!,
+        password: logInBox!.get("password"),
+        miId: widget.loginSuccessModel.mIID!,
+        roleId: widget.loginSuccessModel.roleId!);
     super.initState();
   }
 
@@ -112,7 +123,71 @@ class _TaskCreationNewScreenState extends State<TaskCreationNewScreen> {
                     textColor: Colors.white);
                 return;
               } else {
-                Fluttertoast.showToast(msg: "Success");
+                transnumbconfiguration.clear();
+                for (int i = 0;
+                    i < _vmsTransationController.transationConfigmodel.length;
+                    i++) {
+                  transnumbconfiguration.addAll({
+                    "IMN_Id":
+                        _vmsTransationController.transationConfigmodel[i].imNId,
+                    "MI_Id":
+                        _vmsTransationController.transationConfigmodel[i].mIId,
+                    "IMN_AutoManualFlag": _vmsTransationController
+                        .transationConfigmodel[i].imNAutoManualFlag,
+                    "IMN_StartingNo": _vmsTransationController
+                        .transationConfigmodel[i].imNStartingNo,
+                    "IMN_WidthNumeric": _vmsTransationController
+                        .transationConfigmodel[i].imNWidthNumeric,
+                    "IMN_ZeroPrefixFlag": _vmsTransationController
+                        .transationConfigmodel[i].imNZeroPrefixFlag,
+                    "IMN_PrefixAcadYearCode": _vmsTransationController
+                        .transationConfigmodel[i].imNPrefixAcadYearCode,
+                    "IMN_PrefixParticular": _vmsTransationController
+                        .transationConfigmodel[i].imNPrefixParticular,
+                    "IMN_SuffixAcadYearCode": _vmsTransationController
+                        .transationConfigmodel[i].imNSuffixAcadYearCode,
+                    "IMN_SuffixParticular": "",
+                    "IMN_RestartNumFlag": _vmsTransationController
+                        .transationConfigmodel[i].imNRestartNumFlag,
+                    "IMN_Flag": _vmsTransationController
+                        .transationConfigmodel[i].imNFlag,
+                    "ASMAY_Id": 0
+                  });
+                }
+                await TaskCreateNewAPI.instance.taskSave(
+                    base: baseUrlFromInsCode(
+                        "issuemanager", widget.mskoolController),
+                    body: {
+                      "transnumbconfigurationsettingsss":
+                          transnumbconfiguration,
+                      "UserId": widget.loginSuccessModel.userId,
+                      "Role_flag": "S",
+                      "roletype": widget.loginSuccessModel.roleforlogin,
+                      "IVRMRT_Id": widget.loginSuccessModel.roleId,
+                      "plannerextapproval": false,
+                      "plannerMaxdate": "0001-01-01T00:00:00",
+                      "MI_Id": widget.loginSuccessModel.mIID,
+                      "HRME_Id": 0,
+                      "ASMAY_Id": widget.loginSuccessModel.asmaYId!,
+                      "HRMD_Id": depId,
+                      "ISMTCR_Title": titleController.text,
+                      "HRMPR_Id": selectPriority!.hrmpRId,
+                      "ISMTCR_Desc": descriptionController.text,
+                      "ISMTCR_Status": "Open",
+                      "ISMTCRCL_Id": 0,
+                      "enddate": toDt!.toIso8601String(),
+                      "startdate": fdt!.toIso8601String(),
+                      // "ISMMCLT_Id": iSMMCLTId,
+                      // "attachmentArray": att,
+                      // "ISMTCR_Hours": ismtcrHour,
+                      // "ISMTCR_Days": ismtcrDay,
+                      // "ISMTCR_MainGroupTaskFlg": ismtcrMainGroupTask,
+                      // "MulttaskDepartments": multiTask
+                    }).then((value) {
+                  if (value == true) {
+                    Fluttertoast.showToast(msg: "Success");
+                  }
+                });
               }
             },
           ),
@@ -839,4 +914,5 @@ class _TaskCreationNewScreenState extends State<TaskCreationNewScreen> {
   List<int> employeesID = [];
   bool selectAll = false;
   TextEditingController serchEmployee = TextEditingController();
+  Map<String, dynamic> transnumbconfiguration = {};
 }

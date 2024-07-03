@@ -57,4 +57,18 @@ class TaskCreateNewAPI {
       logger.e(e);
     }
   }
+
+  Future<bool?> taskSave(
+      {required String base, required Map<String, dynamic> body}) async {
+    final String apiUrl = base + URLS.saveTaskCreation;
+    try {
+      var response = await dio.post(apiUrl,
+          data: body, options: Options(headers: getSession()));
+      logger.d(response.data);
+      return true;
+    } catch (e) {
+      logger.e(e);
+    }
+    return false;
+  }
 }

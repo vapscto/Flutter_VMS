@@ -16,9 +16,7 @@ class PurchaseIndentApi {
     required PurchaseController controller,
   }) async {
     final Dio ins = getGlobalDio();
-    // final String api = base + URLS.purchaseindentapi;
-     String api2 =
-        base + URLS.purchaseLoadData;
+    String api2 = base + URLS.purchaseLoadData;
 
     if (controller.isErrorOccured.value) {
       controller.updateIsErrorOccured(false);
