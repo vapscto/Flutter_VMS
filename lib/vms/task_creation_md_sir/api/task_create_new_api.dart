@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/vms/task%20creation/model/created_task_list_model.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
+import 'package:m_skool_flutter/vms/task%20creation/model/get_emp_details.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/priority_model.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/task_employee_list.dart';
 import 'package:m_skool_flutter/vms/task_creation_md_sir/controller/task_controller.dart';
@@ -22,6 +24,8 @@ class TaskCreateNewAPI {
       var response = await dio.post(api,
           data: body, options: Options(headers: getSession()));
       if (response.statusCode == 200) {
+        GetEmployeeId getEmployeeId = GetEmployeeId.fromJson(response.data);
+        logInBox!.put("EmpId", getEmployeeId.hrmEId);
         if (response.data['get_department'] != null) {
           GetDepts getDepts =
               GetDepts.fromJson(response.data['get_department']);
@@ -41,6 +45,10 @@ class TaskCreateNewAPI {
         //   controller.employeeList.clear();
         //   controller.employeeList.addAll(emplyeeEnhancementModel.values!);
         // }
+        CreatedTaskListModel createdTaskListModel =
+            CreatedTaskListModel.fromJson(response.data['get_taskdetails']);
+        controller.getTaskList(createdTaskListModel.values!);
+        controller.maxPlannerDate = response.data['plannerMaxdate'];
         if (response.data['get_employeelist'] != null) {
           TaskEmployeeListModel employeeListModel =
               TaskEmployeeListModel.fromJson(response.data['get_employeelist']);
@@ -61,6 +69,8 @@ class TaskCreateNewAPI {
   Future<bool?> taskSave(
       {required String base, required Map<String, dynamic> body}) async {
     final String apiUrl = base + URLS.saveTaskCreation;
+    logger.v(apiUrl);
+    logger.w(body);
     try {
       var response = await dio.post(apiUrl,
           data: body, options: Options(headers: getSession()));

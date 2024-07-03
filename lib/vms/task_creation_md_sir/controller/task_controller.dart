@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/vms/task%20creation/model/created_task_list_model.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/employee_list_model.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/priority_model.dart';
@@ -17,4 +18,15 @@ class TaskCreationController extends GetxController {
   RxList<bool> checkBox = <bool>[].obs;
   RxList<TaskEmployeeListModelValues> employeeListData =
       <TaskEmployeeListModelValues>[].obs;
+  String maxPlannerDate = '';
+  RxList<CreatedTaskListModelValues> createdTaskList =
+      <CreatedTaskListModelValues>[].obs;
+  void getTaskList(List<CreatedTaskListModelValues> createdTask) {
+    if (createdTaskList.isNotEmpty) {
+      createdTaskList.clear();
+    }
+    for (int i = 0; i < createdTask.length; i++) {
+      createdTaskList.add(createdTask.elementAt(i));
+    }
+  }
 }
