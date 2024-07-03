@@ -22,29 +22,35 @@ class ExtensionAPI {
     var dio = Dio();
     var api = base + URLS.extensionLoad;
     try {
-      // controller.employeeLoading(true);
       var response = await dio.post(api,
           options: Options(headers: getSession()),
           data: {"MI_Id": miId, "UserId": userId, "IVRMRT_Id": roleId});
       if (response.statusCode == 200) {
-        ExtensionEmployeeModel extensionEmployeeModel =
-            ExtensionEmployeeModel.fromJson(response.data['get_Emplist']);
-        controller.employeeList.clear();
-        controller.employeeList.addAll(extensionEmployeeModel.values!);
-        ExtensionMonthModel extensionMonthModel =
-            ExtensionMonthModel.fromJson(response.data['get_month']);
-        controller.monthsList.clear();
-        controller.monthsList.addAll(extensionMonthModel.values!);
-        ExtensionPlannerModel extensionPlannerModel =
-            ExtensionPlannerModel.fromJson(
-                response.data['get_PlannerExtension']);
-        controller.extensionPlannerList.clear();
-        controller.extensionPlannerList.addAll(extensionPlannerModel.values!);
-        ExtensionDailyModel extensionDailyModel =
-            ExtensionDailyModel.fromJson(response.data['get_DailyExtension']);
-        controller.extensionDrList.clear();
-        controller.extensionDrList.addAll(extensionDailyModel.values!);
-        // controller.employeeLoading(false);
+        if (response.data['get_Emplist'] != null) {
+          ExtensionEmployeeModel extensionEmployeeModel =
+              ExtensionEmployeeModel.fromJson(response.data['get_Emplist']);
+          controller.employeeList.clear();
+          controller.employeeList.addAll(extensionEmployeeModel.values!);
+        }
+        if (response.data['get_month'] != null) {
+          ExtensionMonthModel extensionMonthModel =
+              ExtensionMonthModel.fromJson(response.data['get_month']);
+          controller.monthsList.clear();
+          controller.monthsList.addAll(extensionMonthModel.values!);
+        }
+        if (response.data['get_PlannerExtension'] != null) {
+          ExtensionPlannerModel extensionPlannerModel =
+              ExtensionPlannerModel.fromJson(
+                  response.data['get_PlannerExtension']);
+          controller.extensionPlannerList.clear();
+          controller.extensionPlannerList.addAll(extensionPlannerModel.values!);
+        }
+        if (response.data['get_DailyExtension'] != null) {
+          ExtensionDailyModel extensionDailyModel =
+              ExtensionDailyModel.fromJson(response.data['get_DailyExtension']);
+          controller.extensionDrList.clear();
+          controller.extensionDrList.addAll(extensionDailyModel.values!);
+        }
       }
     } on DioError catch (e) {
       logger.e(e.message);

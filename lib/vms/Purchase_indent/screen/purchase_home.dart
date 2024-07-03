@@ -215,11 +215,19 @@ class _PurchaseIndentHomeState extends State<PurchaseIndentHome> {
                                       )),
                                       DataCell(Align(
                                         alignment: Alignment.center,
-                                        child: Text(controller
-                                                .purchaseIndentList
-                                                .elementAt(index)
-                                                .iNVMPIPIDate ??
-                                            ''),
+                                        child: Text((controller
+                                                    .purchaseIndentList
+                                                    .elementAt(index)
+                                                    .iNVMPIPIDate !=
+                                                null)
+                                            ? dateFormat1(DateTime.parse(
+                                                controller.purchaseIndentList
+                                                    .elementAt(index)
+                                                    .iNVMPIPIDate!))
+                                            : controller.purchaseIndentList
+                                                    .elementAt(index)
+                                                    .iNVMPIPIDate ??
+                                                ''),
                                       )),
                                       DataCell(Align(
                                         alignment: Alignment.center,
