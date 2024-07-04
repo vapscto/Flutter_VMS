@@ -5,6 +5,9 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/created_task_list_model.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_departments.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/get_emp_details.dart';
+import 'package:m_skool_flutter/vms/task%20creation/model/get_project_category.dart';
+import 'package:m_skool_flutter/vms/task%20creation/model/get_tsk_client.dart';
+import 'package:m_skool_flutter/vms/task%20creation/model/get_tsk_module.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/priority_model.dart';
 import 'package:m_skool_flutter/vms/task%20creation/model/task_employee_list.dart';
 import 'package:m_skool_flutter/vms/task_creation_md_sir/controller/task_controller.dart';
@@ -80,5 +83,130 @@ class TaskCreateNewAPI {
       logger.e(e);
     }
     return false;
+  }
+
+  Future<int> getTskPrjtCatgryList(
+      {required String base,
+      required TaskCreationController controller,
+      required int userId,
+      required int ivrmrtId,
+      required int miId,
+      required int hRMEId,
+      required int hRMDId}) async {
+    final Dio ins = getGlobalDio();
+
+    final String apiUrl = base + URLS.taskGetProjects;
+    logger.d(base + URLS.taskGetDetails);
+    logger.v({
+      "IVRMRT_Id": ivrmrtId,
+      "UserId": userId,
+      "MI_Id": miId,
+      "HRME_Id": hRMEId,
+      "HRMD_Id": hRMDId
+    });
+    try {
+      final Response response = await ins
+          .post(apiUrl, options: Options(headers: getSession()), data: {
+        "IVRMRT_Id": ivrmrtId,
+        "UserId": userId,
+        "MI_Id": miId,
+        "HRME_Id": hRMEId,
+        "HRMD_Id": hRMDId
+      });
+      GetEmployeeId getEmployeeId = GetEmployeeId.fromJson(response.data);
+      logInBox!.put("HRMDID", getEmployeeId.hrmDId);
+      logger.v(response.data['get_project']);
+      GeTskProjects project =
+          GeTskProjects.fromJson(response.data['get_project']);
+      controller.projectList.value = project.values!;
+      for (var i in controller.projectList) {
+        if (i.ismmpRProjectName!.contains("VAPS - GENERAL")) {
+          controller.projectId = controller.projectList.first.ismmpRId ?? 0;
+        }
+      }
+      logger.i(controller.projectId);
+      GeTskCategory category =
+          GeTskCategory.fromJson(response.data['get_category']);
+      controller.categoryList.value = category.values!;
+      for (var i in controller.categoryList) {
+        if (i.ismmtcaTTaskCategoryName!.contains("General")) {
+          controller.categoryId = controller.categoryList.first.ismmtcaTId ?? 0;
+        }
+      }
+      return response.statusCode!;
+    } on DioError catch (e) {
+      logger.e(e.message);
+      return 0;
+    } on Exception catch (e) {
+      logger.e(e.toString());
+
+      return 0;
+    }
+  }
+
+  Future<bool> geTskClientApi({
+    required String base,
+    required TaskCreationController controller,
+    required int userId,
+    required int ivrmrtId,
+    required int miId,
+    required int hRMEId,
+    required int hRMDId,
+    required String roleflag,
+    required int iSMMPRId,
+  }) async {
+    final Dio ins = getGlobalDio();
+
+    final String apiUrl = base + URLS.getTskClinet;
+    logger.e(apiUrl);
+    logger.e({
+      "IVRMRT_Id": ivrmrtId,
+      "UserId": userId,
+      "MI_Id": miId,
+      "HRME_Id": hRMEId,
+      "HRMD_Id": hRMDId,
+      "roletype": roleflag,
+      "ISMMPR_Id": iSMMPRId
+    });
+    try {
+      final Response response = await ins
+          .post(apiUrl, options: Options(headers: getSession()), data: {
+        "IVRMRT_Id": ivrmrtId,
+        "UserId": userId,
+        "MI_Id": miId,
+        "HRME_Id": hRMEId,
+        "HRMD_Id": hRMDId,
+        "roletype": roleflag,
+        "ISMMPR_Id": iSMMPRId
+      });
+      logger.v(response.data['get_client']);
+      logger.i(response.data['get_module']);
+      GeTskClient geTskClient =
+          GeTskClient.fromJson(response.data['get_client']);
+      Getmodule getmoduleList = Getmodule.fromJson(response.data['get_module']);
+
+      controller.clientList.value = geTskClient.values!;
+      for (var i in controller.clientList) {
+        if (i.ismmclTClientName!.contains("HO")) {
+          controller.clientId = controller.clientList.first.ismmclTId ?? 0;
+          logger.v(controller.clientId);
+        }
+      }
+      controller.moduleList.value = getmoduleList.values!;
+      for (var i in controller.moduleList) {
+        if (i.ivrmMModuleName!.contains("All")) {
+          controller.moduleId = controller.moduleList.first.ivrmMId ?? 0;
+          logger.v(controller.moduleId);
+        }
+      }
+      return true;
+    } on DioError catch (e) {
+      logger.e(e.message);
+      return false;
+    } on Exception catch (e) {
+      logger.e(e.toString());
+
+      return false;
+    }
   }
 }

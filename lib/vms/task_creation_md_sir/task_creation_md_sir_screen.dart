@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -19,7 +18,6 @@ import 'package:m_skool_flutter/vms/task_creation_md_sir/controller/task_control
 import 'package:m_skool_flutter/vms/utils/save_btn.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
-import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/drop_down_level.dart';
 
 class TaskCreationNewScreen extends StatefulWidget {
@@ -183,19 +181,18 @@ class _TaskCreationNewScreenState extends State<TaskCreationNewScreen> {
                       "HRME_Id": logInBox!.get("EmpId"),
                       "ASMAY_Id": widget.loginSuccessModel.asmaYId,
                       "HRMD_Id": depId,
-                      "HRMDC_ID": null,
-                      "ISMMPR_Id": 0,
-                      "IVRMM_Id": 0,
+                      "ISMMPR_Id": controller.projectId,
+                      "IVRMM_Id": controller.moduleId,
                       "ISMTCR_BugOREnhancementFlg": "O",
                       "assignto": "Y",
                       "ISMTCR_CreationDate": DateTime.now().toIso8601String(),
                       "ISMTCR_Title": titleController.text,
                       "HRMPR_Id": priorityId,
-                      "ISMMTCAT_Id": 0,
+                      "ISMMTCAT_Id": controller.categoryId,
                       "ISMTCR_Desc": descriptionController.text,
                       "ISMTCR_Status": "Open",
                       "ISMTCRCL_Id": 0,
-                      "ISMMCLT_Id": 0, //iSMMCLTId
+                      "ISMMCLT_Id": controller.clientId, //iSMMCLTId
                       "TimeRequiredFlg": "HOURS",
                       // "attachmentArray": att,
                       "effortinhrs": count,
@@ -314,17 +311,53 @@ class _TaskCreationNewScreenState extends State<TaskCreationNewScreen> {
                           },
                           itemBuilder: (context, suggestion) {
                             return ListTile(
-                              onTap: () {
+                              onTap: () async {
                                 setState(() {
                                   depController.text =
                                       suggestion.hrmDDepartmentName!;
-                                  depId = suggestion.hrmdCID!;
+                                  depId = suggestion.hrmDId!;
                                   depController.text =
                                       suggestion.hrmDDepartmentName!;
                                   _suggestionsBoxController.close();
 
                                   filterEmployees(
                                       suggestion.hrmDDepartmentName!);
+                                });
+                                await TaskCreateNewAPI.instance
+                                    .getTskPrjtCatgryList(
+                                        base: baseUrlFromInsCode(
+                                          'issuemanager',
+                                          widget.mskoolController,
+                                        ),
+                                        controller: controller,
+                                        userId:
+                                            widget.loginSuccessModel.userId!,
+                                        ivrmrtId:
+                                            widget.loginSuccessModel.roleId!,
+                                        miId: widget.loginSuccessModel.mIID!,
+                                        hRMEId: logInBox!.get("EmpId"),
+                                        hRMDId: suggestion.hrmDId!)
+                                    .then((value) async {
+                                  if (value == 200) {
+                                    await TaskCreateNewAPI.instance
+                                        .geTskClientApi(
+                                            base: baseUrlFromInsCode(
+                                              "issuemanager",
+                                              widget.mskoolController,
+                                            ),
+                                            controller: controller,
+                                            userId: widget
+                                                .loginSuccessModel.userId!,
+                                            ivrmrtId: widget
+                                                .loginSuccessModel.roleId!,
+                                            miId:
+                                                widget.loginSuccessModel.mIID!,
+                                            hRMEId: logInBox!.get("EmpId"),
+                                            hRMDId: logInBox!.get("HRMDID"),
+                                            roleflag: widget.loginSuccessModel
+                                                .roleforlogin!,
+                                            iSMMPRId: controller.projectId);
+                                  }
                                 });
                               },
                               title: Text(
@@ -587,7 +620,6 @@ class _TaskCreationNewScreenState extends State<TaskCreationNewScreen> {
                                                     }
                                                   },
                                                   decoration: InputDecoration(
-                                                    isDense: true,
                                                     suffixIcon: Icon(
                                                       Icons.calendar_month,
                                                       color: Theme.of(context)
