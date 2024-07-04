@@ -380,21 +380,21 @@ void openMappedPages(
     return;
   }
   if (pageName == "Task Creation") {
-    // if (loginSuccessModel.roleforlogin!.toLowerCase() == 'admin') {
-    //   Get.to(() => TaskCreationNewScreen(
-    //         loginSuccessModel: loginSuccessModel,
-    //         mskoolController: mskoolController,
-    //         title: pageName,
-    //       ));
-    //   return;
-    // } else {
-    Get.to(() => TaskCreationHome(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
-          previousScreen: pageName,
-        ));
-    return;
-    // }
+    if (loginSuccessModel.roleforlogin!.toLowerCase() == 'admin') {
+      Get.to(() => TaskCreationNewScreen(
+            loginSuccessModel: loginSuccessModel,
+            mskoolController: mskoolController,
+            title: pageName,
+          ));
+      return;
+    } else {
+      Get.to(() => TaskCreationHome(
+            loginSuccessModel: loginSuccessModel,
+            mskoolController: mskoolController,
+            previousScreen: pageName,
+          ));
+      return;
+    }
   }
   if (pageName == 'Deviation Report') {
     Get.to(() => PlannerDeviationScreen(

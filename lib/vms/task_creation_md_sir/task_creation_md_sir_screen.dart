@@ -61,8 +61,8 @@ class _TaskCreationNewScreenState extends State<TaskCreationNewScreen> {
           "MI_Id": widget.loginSuccessModel.mIID,
           "PageFlag": "app.ISM_TaskCreation"
         });
+    taskEmployeeList.assignAll(controller.employeeListData);
     controller.department(false);
-    // taskEmployeeList.assignAll(controller.employeeListData);
   }
 
   GetPriorityModelValues? selectPriority;
@@ -70,6 +70,7 @@ class _TaskCreationNewScreenState extends State<TaskCreationNewScreen> {
   void initState() {
     hrController.text = '0';
     minController.text = '0';
+    isLoading = false;
     _onload();
     VmsTransationAPI.init().getTransation(
         base: baseUrlFromInsCode("login", widget.mskoolController),
@@ -84,136 +85,151 @@ class _TaskCreationNewScreenState extends State<TaskCreationNewScreen> {
   final hrController = TextEditingController();
   final minController = TextEditingController();
   int priorityId = 0;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: widget.title, action: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-          child: BtnSave(
-            title: "Save",
-            onPress: () async {
-              if (depController.text.isEmpty) {
-                Fluttertoast.showToast(
-                    msg: "Select Department",
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white);
-                return;
-              } else if (priorityId == 0) {
-                Fluttertoast.showToast(
-                    msg: "Select Priority",
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white);
-                return;
-                // } else if (employeesID.isEmpty) {
-                //   Fluttertoast.showToast(
-                //       msg: "Select Employee",
-                //       backgroundColor: Colors.red,
-                //       textColor: Colors.white);
-                //   return;
-              } else if (fromDateController.text.isEmpty) {
-                Fluttertoast.showToast(
-                    msg: "Enter Date",
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white);
-                return;
-              } else if (titleController.text.isEmpty) {
-                Fluttertoast.showToast(
-                    msg: "Enter Title",
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white);
-                return;
-              } else if (descriptionController.text.isEmpty) {
-                Fluttertoast.showToast(
-                    msg: "Enter Description",
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white);
-                return;
-              } else {
-                String countHr = (double.parse(minController.text) * 0.0166667)
-                    .toStringAsFixed(2);
-                double count =
-                    double.parse(hrController.text) + double.parse(countHr);
-                transnumbconfiguration.clear();
-                for (int i = 0;
-                    i < _vmsTransationController.transationConfigmodel.length;
-                    i++) {
-                  transnumbconfiguration.addAll({
-                    "IMN_Id":
-                        _vmsTransationController.transationConfigmodel[i].imNId,
-                    "MI_Id":
-                        _vmsTransationController.transationConfigmodel[i].mIId,
-                    "IMN_AutoManualFlag": _vmsTransationController
-                        .transationConfigmodel[i].imNAutoManualFlag,
-                    "IMN_StartingNo": _vmsTransationController
-                        .transationConfigmodel[i].imNStartingNo,
-                    "IMN_WidthNumeric": _vmsTransationController
-                        .transationConfigmodel[i].imNWidthNumeric,
-                    "IMN_ZeroPrefixFlag": _vmsTransationController
-                        .transationConfigmodel[i].imNZeroPrefixFlag,
-                    "IMN_PrefixAcadYearCode": _vmsTransationController
-                        .transationConfigmodel[i].imNPrefixAcadYearCode,
-                    "IMN_PrefixParticular": _vmsTransationController
-                        .transationConfigmodel[i].imNPrefixParticular,
-                    "IMN_SuffixAcadYearCode": _vmsTransationController
-                        .transationConfigmodel[i].imNSuffixAcadYearCode,
-                    "IMN_SuffixParticular": "",
-                    "IMN_RestartNumFlag": _vmsTransationController
-                        .transationConfigmodel[i].imNRestartNumFlag,
-                    "IMN_Flag": _vmsTransationController
-                        .transationConfigmodel[i].imNFlag,
-                    "ASMAY_Id": 0
-                  });
-                }
-                await TaskCreateNewAPI.instance.taskSave(
-                    base: baseUrlFromInsCode(
-                        "issuemanager", widget.mskoolController),
-                    body: {
-                      "transnumbconfigurationsettingsss":
-                          transnumbconfiguration,
-                      "UserId": widget.loginSuccessModel.userId,
-                      "Role_flag": "S",
-                      "roletype": widget.loginSuccessModel.roleforlogin,
-                      "IVRMRT_Id": widget.loginSuccessModel.roleId,
-                      "plannerextapproval": false,
-                      "plannerMaxdate": "0001-01-01T00:00:00",
-                      "MI_Id": widget.loginSuccessModel.mIID,
-                      "HRME_Id": logInBox!.get("EmpId"),
-                      "ASMAY_Id": widget.loginSuccessModel.asmaYId,
-                      "HRMD_Id": depId,
-                      "ISMMPR_Id": controller.projectId,
-                      "IVRMM_Id": controller.moduleId,
-                      "ISMTCR_BugOREnhancementFlg": "O",
-                      "assignto": "Y",
-                      "ISMTCR_CreationDate": DateTime.now().toIso8601String(),
-                      "ISMTCR_Title": titleController.text,
-                      "HRMPR_Id": priorityId,
-                      "ISMMTCAT_Id": controller.categoryId,
-                      "ISMTCR_Desc": descriptionController.text,
-                      "ISMTCR_Status": "Open",
-                      "ISMTCRCL_Id": 0,
-                      "ISMMCLT_Id": controller.clientId, //iSMMCLTId
-                      "TimeRequiredFlg": "HOURS",
-                      // "attachmentArray": att,
-                      "effortinhrs": count,
-                      "enddate": toDt!.toIso8601String(),
-                      "periodicity": "",
-                      "remarks": "",
-                      "startdate": fdt!.toIso8601String(),
-                      "taskEmpArray": [
-                        {"HRME_Id": empId}
-                      ],
-                      "ISMTCR_Hours": 0,
-                      "ISMTCR_Days": 0,
-                      // "ISMTCR_MainGroupTaskFlg": ismtcrMainGroupTask
-                    }).then((value) {
-                  if (value == true) {
-                    Fluttertoast.showToast(msg: "Success");
-                  }
-                });
-              }
-            },
-          ),
+          child: (isLoading)
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                )
+              : BtnSave(
+                  title: "Save",
+                  onPress: () async {
+                    if (depController.text.isEmpty) {
+                      Fluttertoast.showToast(
+                          msg: "Select Department",
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white);
+                      return;
+                    } else if (priorityId == 0) {
+                      Fluttertoast.showToast(
+                          msg: "Select Priority",
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white);
+                      return;
+                    } else if (employeeNameController.text.isEmpty) {
+                      Fluttertoast.showToast(
+                          msg: "Select Employee",
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white);
+                      return;
+                    } else if (fromDateController.text.isEmpty) {
+                      Fluttertoast.showToast(
+                          msg: "Enter Date",
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white);
+                      return;
+                    } else if (titleController.text.isEmpty) {
+                      Fluttertoast.showToast(
+                          msg: "Enter Title",
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white);
+                      return;
+                    } else if (descriptionController.text.isEmpty) {
+                      Fluttertoast.showToast(
+                          msg: "Enter Description",
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white);
+                      return;
+                    } else {
+                      setState(() {
+                        isLoading = true;
+                      });
+                      String countHr =
+                          (double.parse(minController.text) * 0.0166667)
+                              .toStringAsFixed(2);
+                      double count = double.parse(hrController.text) +
+                          double.parse(countHr);
+                      transnumbconfiguration.clear();
+                      for (int i = 0;
+                          i <
+                              _vmsTransationController
+                                  .transationConfigmodel.length;
+                          i++) {
+                        transnumbconfiguration.addAll({
+                          "IMN_Id": _vmsTransationController
+                              .transationConfigmodel[i].imNId,
+                          "MI_Id": _vmsTransationController
+                              .transationConfigmodel[i].mIId,
+                          "IMN_AutoManualFlag": _vmsTransationController
+                              .transationConfigmodel[i].imNAutoManualFlag,
+                          "IMN_StartingNo": _vmsTransationController
+                              .transationConfigmodel[i].imNStartingNo,
+                          "IMN_WidthNumeric": _vmsTransationController
+                              .transationConfigmodel[i].imNWidthNumeric,
+                          "IMN_ZeroPrefixFlag": _vmsTransationController
+                              .transationConfigmodel[i].imNZeroPrefixFlag,
+                          "IMN_PrefixAcadYearCode": _vmsTransationController
+                              .transationConfigmodel[i].imNPrefixAcadYearCode,
+                          "IMN_PrefixParticular": _vmsTransationController
+                              .transationConfigmodel[i].imNPrefixParticular,
+                          "IMN_SuffixAcadYearCode": _vmsTransationController
+                              .transationConfigmodel[i].imNSuffixAcadYearCode,
+                          "IMN_SuffixParticular": "",
+                          "IMN_RestartNumFlag": _vmsTransationController
+                              .transationConfigmodel[i].imNRestartNumFlag,
+                          "IMN_Flag": _vmsTransationController
+                              .transationConfigmodel[i].imNFlag,
+                          "ASMAY_Id": 0
+                        });
+                      }
+                      await TaskCreateNewAPI.instance.taskSave(
+                          base: baseUrlFromInsCode(
+                              "issuemanager", widget.mskoolController),
+                          body: {
+                            "transnumbconfigurationsettingsss":
+                                transnumbconfiguration,
+                            "UserId": widget.loginSuccessModel.userId,
+                            "Role_flag": "S",
+                            "roletype": widget.loginSuccessModel.roleforlogin,
+                            "IVRMRT_Id": widget.loginSuccessModel.roleId,
+                            "plannerextapproval": false,
+                            "plannerMaxdate": "0001-01-01T00:00:00",
+                            "MI_Id": widget.loginSuccessModel.mIID,
+                            "HRME_Id": logInBox!.get("EmpId"),
+                            "ASMAY_Id": widget.loginSuccessModel.asmaYId,
+                            "HRMD_Id": depId,
+                            "ISMMPR_Id": controller.projectId,
+                            "IVRMM_Id": controller.moduleId,
+                            "ISMTCR_BugOREnhancementFlg": "O",
+                            "assignto": "Y",
+                            "ISMTCR_CreationDate":
+                                DateTime.now().toIso8601String(),
+                            "ISMTCR_Title": titleController.text,
+                            "HRMPR_Id": priorityId,
+                            "ISMMTCAT_Id": controller.categoryId,
+                            "ISMTCR_Desc": descriptionController.text,
+                            "ISMTCR_Status": "Open",
+                            // "ISMTCRCL_Id": 0,
+                            "ISMMCLT_Id": controller.clientId, //iSMMCLTId
+                            "TimeRequiredFlg": "HOURS",
+                            "attachmentArray": [],
+                            "effortinhrs": count,
+                            "enddate": toDt!.toIso8601String(),
+                            "periodicity": "",
+                            "remarks": "",
+                            "startdate": fdt!.toIso8601String(),
+                            "taskEmpArray": [
+                              {"HRME_Id": empId}
+                            ],
+                            // "ISMTCR_Hours": 0,
+                            // "ISMTCR_Days": 0,
+                            // "ISMTCR_MainGroupTaskFlg": ismtcrMainGroupTask
+                          }).then((value) {
+                        if (value == true) {}
+                      });
+                      setState(() {
+                        isLoading = false;
+                      });
+                    }
+                  },
+                ),
         )
       ]).getAppBar(),
       body: Obx(() {
@@ -320,8 +336,8 @@ class _TaskCreationNewScreenState extends State<TaskCreationNewScreen> {
                                       suggestion.hrmDDepartmentName!;
                                   _suggestionsBoxController.close();
 
-                                  filterEmployees(
-                                      suggestion.hrmDDepartmentName!);
+                                  // filterEmployees(
+                                  //     suggestion.hrmDDepartmentName!);
                                 });
                                 await TaskCreateNewAPI.instance
                                     .getTskPrjtCatgryList(
@@ -1341,11 +1357,11 @@ class _TaskCreationNewScreenState extends State<TaskCreationNewScreen> {
   void filterEmployees(String query) {
     taskEmployeeList.value = controller.employeeListData
         .where((employee) =>
-            employee.employeeName!
-                .toLowerCase()
-                .contains(query.toLowerCase()) ||
+            // employee.employeeName!
+            //     .toLowerCase()
+            //     .contains(query.toLowerCase()) ||
             employee.hRMDDepartmentName!.toLowerCase().trim() ==
-                query.toLowerCase().trim())
+            query.toLowerCase().trim())
         .toList();
 
     setState(() {});

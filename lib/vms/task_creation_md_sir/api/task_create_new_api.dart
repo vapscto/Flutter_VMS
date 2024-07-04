@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -78,6 +80,12 @@ class TaskCreateNewAPI {
       var response = await dio.post(apiUrl,
           data: body, options: Options(headers: getSession()));
       logger.d(response.data);
+      if (response.data['returnval'] == true) {
+        Fluttertoast.showToast(msg: "Task Created Successfully");
+        Get.back();
+      } else {
+        Fluttertoast.showToast(msg: "Task is not created");
+      }
       return true;
     } catch (e) {
       logger.e(e);
@@ -105,7 +113,7 @@ class TaskCreateNewAPI {
       "HRMD_Id": hRMDId
     });
     try {
-      final Response response = await ins
+      var response = await ins
           .post(apiUrl, options: Options(headers: getSession()), data: {
         "IVRMRT_Id": ivrmrtId,
         "UserId": userId,
@@ -120,8 +128,8 @@ class TaskCreateNewAPI {
           GeTskProjects.fromJson(response.data['get_project']);
       controller.projectList.value = project.values!;
       for (var i in controller.projectList) {
-        if (i.ismmpRProjectName!.contains("VAPS - GENERAL")) {
-          controller.projectId = controller.projectList.first.ismmpRId ?? 0;
+        if (i.ismmpRProjectName!.toLowerCase().contains("vaps - general")) {
+          controller.projectId = i.ismmpRId ?? 0;
         }
       }
       logger.i(controller.projectId);
@@ -129,9 +137,10 @@ class TaskCreateNewAPI {
           GeTskCategory.fromJson(response.data['get_category']);
       controller.categoryList.value = category.values!;
       for (var i in controller.categoryList) {
-        if (i.ismmtcaTTaskCategoryName!.contains("General")) {
-          controller.categoryId = controller.categoryList.first.ismmtcaTId ?? 0;
+        if (i.ismmtcaTTaskCategoryName!.toLowerCase().contains("general")) {
+          controller.categoryId = i.ismmtcaTId ?? 0;
         }
+        logger.w(controller.categoryId);
       }
       return response.statusCode!;
     } on DioError catch (e) {
@@ -169,7 +178,7 @@ class TaskCreateNewAPI {
       "ISMMPR_Id": iSMMPRId
     });
     try {
-      final Response response = await ins
+      var response = await ins
           .post(apiUrl, options: Options(headers: getSession()), data: {
         "IVRMRT_Id": ivrmrtId,
         "UserId": userId,
@@ -187,15 +196,15 @@ class TaskCreateNewAPI {
 
       controller.clientList.value = geTskClient.values!;
       for (var i in controller.clientList) {
-        if (i.ismmclTClientName!.contains("HO")) {
-          controller.clientId = controller.clientList.first.ismmclTId ?? 0;
-          logger.v(controller.clientId);
+        if (i.ismmclTClientName == "HO") {
+          controller.clientId = i.ismmclTId ?? 0;
+          logger.v('Client Id=== ${controller.clientId}');
         }
       }
       controller.moduleList.value = getmoduleList.values!;
       for (var i in controller.moduleList) {
-        if (i.ivrmMModuleName!.contains("All")) {
-          controller.moduleId = controller.moduleList.first.ivrmMId ?? 0;
+        if (i.ivrmMModuleName!.toLowerCase() == "all") {
+          controller.moduleId = i.ivrmMId ?? 0;
           logger.v(controller.moduleId);
         }
       }

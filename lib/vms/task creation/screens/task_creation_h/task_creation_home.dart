@@ -574,6 +574,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                           ),
                           child: DropdownButtonFormField<GetDeptsValues>(
                             // value: _taskDepartController.getDeptsList.first,
+                            isExpanded: true,
                             validator: (value) {
                               if (value == null) {
                                 return "";
@@ -630,7 +631,7 @@ class _TaskCreationHomeState extends State<TaskCreationHome> {
                                     _taskDepartController.getDeptsList[index],
                                 child: Padding(
                                   padding:
-                                      const EdgeInsets.only(top: 13, left: 5),
+                                      const EdgeInsets.only(top: 13, left: 1),
                                   child: Text(
                                     overflow: TextOverflow.clip,
                                     _taskDepartController.getDeptsList[index]
