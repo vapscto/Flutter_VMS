@@ -1322,6 +1322,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                   onChanged: (s) {
                     setState(() {
                       elSelected = s!;
+                      logger.i(elSelected);
                     });
 
                     // selectedEmployee = s;
@@ -1425,7 +1426,7 @@ class _ApplyLeaveWidgetState extends State<ApplyLeaveWidget> {
                                       int.parse(numberController.text),
                                   leaveReason:
                                       (widget.values.hrmLLeaveCode == "EL")
-                                          ? elSelected
+                                          ? "$elSelected ${reason.text}"
                                           : reason.text,
                                   reportingDate:
                                       reportingDT.toLocal().toString(),
@@ -1535,7 +1536,7 @@ bool isSameDay(DateTime a, DateTime b) {
   return a.year == b.year && a.month == b.month && a.day == b.day;
 }
 
-List elReason = [
+List<String> elReason = [
   'SERIOUS ACCIDENT',
   'BE BEREAVEMENT OR FUNERAL',
   'MEDICAL EMERGENCY'
