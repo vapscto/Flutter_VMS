@@ -28,12 +28,14 @@ class PurchaseDetails extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final PurchaseIndentModelValues values;
+  final int miId;
   const PurchaseDetails({
     super.key,
     required this.loginSuccessModel,
     required this.invmpiId,
     required this.mskoolController,
     required this.values,
+    required this.miId,
   });
   @override
   // ignore: library_private_types_in_public_api
@@ -90,7 +92,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
         totalAppxAmount: controller.amount.toInt(),
         arrayList: transRowEdit,
         invmpiId: widget.values.iNVMPIId!,
-        miId: widget.loginSuccessModel.mIID!,
+        miId: widget.miId,
         userId: widget.loginSuccessModel.userId!,
         approvecent: 1,
         controller: controller);

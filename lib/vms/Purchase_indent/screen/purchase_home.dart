@@ -275,6 +275,10 @@ class _PurchaseIndentHomeState extends State<PurchaseIndentHome> {
                                                 values: controller
                                                     .purchaseIndentList
                                                     .elementAt(index),
+                                                miId: controller
+                                                    .purchaseIndentList
+                                                    .elementAt(index)
+                                                    .mIId!,
                                               ));
                                         },
                                         icon: const Icon(Icons.visibility),
