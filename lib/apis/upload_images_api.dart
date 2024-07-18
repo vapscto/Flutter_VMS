@@ -23,7 +23,6 @@ Future<String> uploadFiles({
       UploadFilesModel uploadFilesModel =
           UploadFilesModel.fromJson(response.data);
       if (uploadFilesModel.data!.responseCode == 109) {
-        //print(uploadFilesModel.data!.attachmentUrl!.first);
         return uploadFilesModel.data!.attachmentUrl!.first;
       } else {
         return '';

@@ -41,44 +41,6 @@ class AuthenticateUserApi {
 
     if (response.data['message'] != null) {
       if (response.data['message'] == "expired") {
-        // gT.Get.dialog(
-        //   Dialog(
-        // child: Padding(
-        //   padding: const EdgeInsets.all(16.0),
-        //   child: Column(
-        //     children: [
-        //       const Text(
-        //         "Remainder",
-        //         style: TextStyle(
-        //           color: Colors.black,
-        //           fontSize: 20.0,
-        //         ),
-        //       ),
-        //       SvgPicture.asset(
-        //         "assets/svg/remainder.svg",
-        //         height: 100,
-        //       ),
-        //       const Text("Your password is expired!\nReset password now "),
-        //       const SizedBox(
-        //         height: 12.0,
-        //       ),
-        //       MSkollBtn(
-        //         onPress: () {
-        //           final MskoolController mskoolController =
-        //               gT.Get.find<MskoolController>();
-        //           gT.Get.offAll(ResetPassword(
-        //             mskoolController: mskoolController,
-        //             loginSuccessModel:
-        //                 mskoolController.loginSuccessModel!.value,
-        //           ));
-        //         },
-        //         title: 'Update Password',
-        //       ),
-        //     ],
-        //   ),
-        //     ),
-        //   ),
-        // );
         logInBox!.put("isLoggedIn", false);
         return Future.error({
           "errorTitle": "Password Expired",

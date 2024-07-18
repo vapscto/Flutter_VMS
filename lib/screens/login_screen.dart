@@ -52,23 +52,15 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
     return Scaffold(
-      // extendBodyBehindAppBar: true,
-      // extendBody: true,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-
-      // ),
       body: SingleChildScrollView(
         child: Stack(
           children: [
             Container(
-                //padding: const EdgeInsets.only(bottom: 128.0),
                 height: Get.height * 0.39,
                 width: double.infinity,
                 color: Theme.of(context).primaryColor,
                 child: Image.asset(
                   "assets/images/stars.png",
-                  //height: Get.width * 0.2,
                   fit: BoxFit.cover,
                 )),
             Container(
@@ -307,22 +299,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 .copyWith(),
                           ),
                         )
-
-                        // RichText(
-                        //     text: TextSpan(
-                        //         text: 'I agree to all your ',
-                        //         style: Theme.of(context).textTheme.titleSmall,
-                        //         children: [
-                        //       TextSpan(
-                        //           text: "T&C",
-                        //           style:
-                        //               Theme.of(context).textTheme.titleMedium),
-                        //       const TextSpan(text: " and "),
-                        //       TextSpan(
-                        //           text: "Privacy Policy",
-                        //           style:
-                        //               Theme.of(context).textTheme.titleMedium)
-                        //     ]))
                       ],
                     ),
                     const SizedBox(

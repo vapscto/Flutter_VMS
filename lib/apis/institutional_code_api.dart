@@ -12,7 +12,6 @@ class InstitutionalCodeApi {
   Future<InstitutionalCodeModel> loginWithInsCode(
       String insCode, bool isInsCodePresent) async {
     final Dio ins = getGlobalDio();
-    // institutionalCode!.delete("institutionalCode");
     try {
       Response response = await ins.post(
         insApiUrl,
@@ -20,9 +19,6 @@ class InstitutionalCodeApi {
           "INSTITUTECODE": insCode.trim(),
         },
       );
-
-      // debugPrint("${response.runtimeType}");
-      // debugPrint("${response.data['apiarray']}");
 
       if (response.data['apiarray'] == null) {
         return Future.error({
@@ -54,7 +50,7 @@ class InstitutionalCodeApi {
       logger.e(e.message);
       return Future.error({
         "errorTitle": "Kindly check your Internet Connection",
-        "errorMsg":"",
+        "errorMsg": "",
       });
     } on Exception catch (e) {
       debugPrint(e.toString());
@@ -64,7 +60,5 @@ class InstitutionalCodeApi {
             "Sorry! but we are unable to process right now due to internal error",
       });
     }
-
-    // debugPrint(institutionalCodeModel.toString());
   }
 }

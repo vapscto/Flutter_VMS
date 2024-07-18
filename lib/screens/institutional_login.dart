@@ -58,22 +58,13 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
               ),
               margin: EdgeInsets.only(top: Get.height * 0.39),
               child: Column(
-                // mainAxisSize: MainAxisSize.min,
-                // mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Image.asset(
-                      //   "assets/images/vpslogo.png",
-                      //   height: 40,
-                      // ),
-                      // const SizedBox(
-                      //   width: 12.0,
-                      // ),
                       Text(
-                        "Vaps Management System", //I Vidyalaya Resource Management
+                        "Vaps Management System",
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ],
@@ -243,10 +234,6 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
                                                   await importantIds!.put(
                                                       URLS.amstId,
                                                       snapshot.data!.amstId);
-                                                  // await importantIds!.put(URLS.hrmeId, snapshot.data)
-
-                                                  // await importantIds!
-                                                  //     .put(URLS.ivrmrtRole, "N/A");
 
                                                   institutionalCode!
                                                       .put(
@@ -271,11 +258,6 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
                                                       );
                                                     },
                                                   );
-
-                                                  // Navigator.pop(context);
-
-                                                  // debugPrint(
-                                                  //     snapshot.data!.institutecode);
                                                 },
                                                 child: Text(
                                                   "Continue",

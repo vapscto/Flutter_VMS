@@ -109,8 +109,6 @@ class DashboardTab extends StatelessWidget {
                       ),
                       itemBuilder: (_, index) {
                         return SizedBox(
-                          // width: 100,
-                          // height: 100,
                           child: InkWell(
                             onTap: () {
                               openMappedPages(
@@ -161,8 +159,6 @@ class DashboardTab extends StatelessWidget {
                                         textAlign: TextAlign.center,
                                         maxLines: 2,
                                       ),
-
-                                // )
                               ],
                             ),
                           ),

@@ -90,26 +90,6 @@ class LoginServices {
     return logInData;
   }
 
-  // static Future<LoginVerificationModel?> loginVerification() async {
-  //   var dio = Dio();
-  //   LoginVerificationModel logInData = LoginVerificationModel();
-  //   var url = URLS.base + URLS.userPath + URLS.loginVerification;
-  //   try {
-  //     final response = await dio.get(
-  //       url,
-  //       options: Options(
-  //         headers: getSession(),
-  //       ),
-  //     );
-  //     if (response.statusCode == 200) {
-  //       logInData = LoginVerificationModel.fromJson(response.data);
-  //     }
-  //   } catch (e) {
-  //     logger.e(e);
-  //   }
-  //   return logInData;
-  // }
-
   static Future<SuccessWithMessageModel?> logout() async {
     var dio = Dio();
     SuccessWithMessageModel logoutSuccessData = SuccessWithMessageModel();

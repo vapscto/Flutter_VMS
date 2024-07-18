@@ -86,26 +86,6 @@ class AuthenticationController extends GetxController {
     }
   }
 
-  // Future<bool> loginVerification() async {
-  //   if (await checkConnectivity()) {
-  //     var value = await LoginServices.loginVerification();
-  //     if (value!.data!.responseCode == 108) {
-  //       logInBox!.put("isLoggedIn", false);
-  //       Get.offAll(() => const AuthenticationScreen());
-  //       Fluttertoast.showToast(msg: "Session Expired".tr);
-  //       return false;
-  //     } else if (value.data!.responseCode == 109) {
-  //       logInBox!.put("userData", value.data!.user!.toJson());
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   } else {
-  //     Fluttertoast.showToast(msg: "Not connected to internet".tr);
-  //     return false;
-  //   }
-  // }
-
   Future<bool> logout() async {
     if (await checkConnectivity()) {
       var value = await LoginServices.logout();

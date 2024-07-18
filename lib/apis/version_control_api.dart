@@ -15,11 +15,7 @@ class VersionControlApi {
   }) async {
     final Dio ins = getGlobalDio();
     String api = base + URLS.versionControl;
-    // logger.d(api);
-    // logger.d({
-    //   "MI_Id": miId,
-    //   "version": version,
-    // });
+
     try {
       final Response response =
           await ins.post(api, options: Options(headers: getSession()), data: {
