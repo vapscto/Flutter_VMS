@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/api/planner_save_api.dart';
 import 'package:m_skool_flutter/vms/issue_manager/planner_creation/api/planner_status_api.dart';
@@ -114,6 +115,12 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
   double eCount3 = 0;
   double eCount4 = 0;
   double effort1 = 0;
+  int currentEffort1 = 0;
+  int currentEffort2 = 0;
+  double currentEffort3 = 0.0;
+  double currentEffort4 = 0.0;
+  double currentEffort = 0.0;
+
   String convertToDecimal(int totalMinutes) {
     int hours = totalMinutes ~/ 60;
     int remainingMinutes = totalMinutes % 60;
@@ -141,6 +148,13 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
     categoryList.clear();
     effort = 0.0;
     effort1 = 0;
+    //
+    currentEffort1 = 0;
+    currentEffort2 = 0;
+    currentEffort3 = 0.0;
+    currentEffort = 0.0;
+    currentEffort4 = 0.0;
+    //
     widget.plannerCreationController.taskLoading(true);
     await TaskListAPI.instance.getList(
         base: baseUrlFromInsCode("issuemanager", widget.mskoolController),
@@ -252,14 +266,23 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             j.iSMMTCATId) {
           if (j.iSMTPLTAId == 0) {
             effort1 += j.iSMTCRASTOEffortInHrs!;
-            widget.plannerCreationController.categoryWisePlan[i]
-                .ismtcrastOEffortInHrs = effort1;
+            String k = j.iSMTCRASTOEffortInHrs!.toStringAsFixed(2);
+            List<String> parts = k.split('.');
+            currentEffort1 += int.parse(parts[0]);
+            currentEffort2 += int.parse(parts[1]);
+            currentEffort3 = double.parse(convertToDecimal(currentEffort2));
+            currentEffort4 = currentEffort1 + currentEffort3;
+            String data1 = formatDecimal(currentEffort4);
+            currentEffort = double.parse(data1);
           }
         }
       }
+      widget.plannerCreationController.categoryWisePlan[i]
+          .ismtcrastOEffortInHrs = currentEffort;
+      String formattedEffort1Time =
+          widget.plannerCreationController.convertDecimalToTime(currentEffort);
       requiredEff = double.parse(newdt) -
-          widget.plannerCreationController.categoryWisePlan[i]
-              .ismtcrastOEffortInHrs!;
+          double.parse(formattedEffort1Time.replaceAll(":", "."));
       for (int index = 0;
           index < widget.plannerCreationController.categoryWisePlan.length;
           index++) {
@@ -268,7 +291,6 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
               .elementAt(index)
               .ismmtcaTId,
         });
-        // newCategoryArray.addAll(categoryArray);
       }
       //Add in list
       if (widget.plannerCreationController.categoryWisePlan[i]
@@ -278,7 +300,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskCategoryName}',
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskPercentage} %',
             "$formattedTime Hr",
-            "${widget.plannerCreationController.categoryWisePlan[i].ismtcrastOEffortInHrs} Hr",
+            "${widget.plannerCreationController.convertDecimalToTime(widget.plannerCreationController.categoryWisePlan[i].ismtcrastOEffortInHrs!)} Hr",
             "${widget.plannerCreationController.convertDecimalToTime(requiredEff)} Hr",
             widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId!));
       } else {
@@ -286,7 +308,7 @@ class _PlannerCreateWidgetState extends State<PlannerCreateWidget> {
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskCategoryName}',
             '${widget.plannerCreationController.categoryWisePlan[i].ismmtcaTTaskPercentage} %',
             "$formattedTime Hr",
-            "${widget.plannerCreationController.categoryWisePlan[i].ismtcrastOEffortInHrs} Hr",
+            "${widget.plannerCreationController.convertDecimalToTime(widget.plannerCreationController.categoryWisePlan[i].ismtcrastOEffortInHrs!)} Hr",
             "${widget.plannerCreationController.convertDecimalToTime(requiredEff)} Hr",
             widget.plannerCreationController.categoryWisePlan[i].ismmtcaTId!));
       }
