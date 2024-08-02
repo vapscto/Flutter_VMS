@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/screens/attachment_viewer.dart';
@@ -159,11 +160,16 @@ class _ViewAllHCState extends State<ViewAllHC> {
                                           .hrmEEmployeeFirstName!))),
                                   DataCell(Align(
                                       alignment: Alignment.center,
-                                      child: Text(healthCheckUpController
-                                              .getHCData
-                                              .elementAt(index)
-                                              .visitedDate ??
-                                          ''))),
+                                      child: Text((healthCheckUpController
+                                                  .getHCData
+                                                  .elementAt(index)
+                                                  .visitedDate !=
+                                              null)
+                                          ? getDate(DateTime.parse(
+                                              healthCheckUpController.getHCData
+                                                  .elementAt(index)
+                                                  .visitedDate!))
+                                          : ""))),
                                   DataCell(Align(
                                       alignment: Alignment.center,
                                       child: SizedBox(
