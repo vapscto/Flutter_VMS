@@ -9,6 +9,10 @@ class SalarySlipController extends GetxController {
   List<YearDropdownValue> yearList = <YearDropdownValue>[].obs;
   List<MonthDropdownValue> monthList = <MonthDropdownValue>[].obs;
   List<MainListValue> salarySlipDetail = <MainListValue>[].obs;
+  List<EmployeeSalaryslipDetailsValue> salarySlipDeduction =
+      <EmployeeSalaryslipDetailsValue>[].obs;
+  List<EmployeeSalaryslipDetailsValue> salarySlipEarning =
+      <EmployeeSalaryslipDetailsValue>[].obs;
   RxBool showGenerate = RxBool(false);
 
   void showgenerateloading(bool loading) {
@@ -77,13 +81,44 @@ class SalarySlipController extends GetxController {
       if (salarySlipDetailModel!.mainList != null ||
           salarySlipDetailModel.mainList!.values != null) {
         salarySlipDetail.clear();
+        salarySlipDeduction.clear();
+        salarySlipEarning.clear();
         for (var i = 0;
             i < salarySlipDetailModel.mainList!.values!.length;
             i++) {
           salarySlipDetail
               .add(salarySlipDetailModel.mainList!.values!.elementAt(i)!);
         }
-        logger.d(salarySlipDetail.first.toString());
+        for (int i = 0;
+            i <
+                salarySlipDetail
+                    .first.employeeSalaryslipDetails!.values!.length;
+            i++) {
+          if (salarySlipDetail.first.employeeSalaryslipDetails!.values![i]!
+                  .hrmedEarnDedFlag!
+                  .toLowerCase() ==
+              "deduction") {
+            salarySlipDeduction.add(
+                salarySlipDetail.first.employeeSalaryslipDetails!.values![i]!);
+          } else {
+            salarySlipEarning.add(
+                salarySlipDetail.first.employeeSalaryslipDetails!.values![i]!);
+          }
+        }
+        salarySlipDeduction.insert(
+          salarySlipDeduction.length,
+          EmployeeSalaryslipDetailsValue(
+            hrmedName: "",
+            amount: int.parse(""),
+          ),
+        );
+        salarySlipDeduction.insert(
+          salarySlipDeduction.length,
+          EmployeeSalaryslipDetailsValue(
+            hrmedName: "",
+            amount: int.parse(""),
+          ),
+        );
         return true;
       } else {
         Fluttertoast.showToast(msg: 'Something went wrong..');

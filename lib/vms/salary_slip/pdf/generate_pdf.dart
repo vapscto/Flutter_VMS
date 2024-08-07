@@ -14,9 +14,6 @@ class GenerateSalarySlip {
   generateNow({
     required SalarySlipController controller,
   }) async {
-    // final Response response = await getGlobalDio()
-    //     .get(controller.salarySlipDetail.first.institutionDetails!.mILogo!);
-    // logger.d(response.data.runtimeType);
     double netSalary = 0.0;
     double earning = 0.0;
     double deduction = 0.0;
@@ -54,7 +51,6 @@ class GenerateSalarySlip {
     }
     netSalary = earning - deduction;
     final Document document = Document();
-    int i = 0;
     gross = controller.salarySlipDetail.first.employeeSalaryslipDetails!.values!
         .elementAt(controller
             .salarySlipDetail.first.employeeSalaryslipDetails!.values!
@@ -140,68 +136,91 @@ class GenerateSalarySlip {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("S No."),
+                        child: Text("Earnings"),
                       ),
                       Container(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Name"),
+                        child: Text("Amount"),
                       ),
                       Container(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Type"),
+                        child: Text("Deductions"),
                       ),
                       Container(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text("Amount")),
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Amount"),
+                      ),
                     ],
                   ),
                   ...List.generate(
-                    controller.salarySlipDetail.first.employeeSalaryslipDetails!
-                        .values!.length,
+                    controller.salarySlipEarning.length,
                     (index) => TableRow(
                       children: [
                         Container(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text("${++i}"),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(controller.salarySlipDetail.first
-                              .employeeSalaryslipDetails!.values!
-                              .elementAt(index)!
+                          child: Text(controller.salarySlipEarning
+                              .elementAt(index)
                               .hrmedName!),
                         ),
                         Container(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(controller.salarySlipDetail.first
-                              .employeeSalaryslipDetails!.values!
-                              .elementAt(index)!
-                              .hrmedEarnDedFlag!),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            controller.salarySlipDetail.first
-                                .employeeSalaryslipDetails!.values!
-                                .elementAt(index)!
+                            controller.salarySlipEarning
+                                .elementAt(index)
                                 .amount
                                 .toString(),
                           ),
                         ),
+                        Container(
+                          padding: const EdgeInsets.all(8.0),
+                          child: index < controller.salarySlipDeduction.length
+                              ? Text(
+                                  controller.salarySlipDeduction
+                                          .elementAt(index)
+                                          .hrmedName ??
+                                      "",
+                                )
+                              : Text(""),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8.0),
+                          child: index < controller.salarySlipDeduction.length
+                              ? Text(
+                                  controller.salarySlipDeduction
+                                      .elementAt(index)
+                                      .amount
+                                      .toString(),
+                                )
+                              : Text(""),
+                        ),
                       ],
                     ),
+                  ),
+                  TableRow(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Total"),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("$earning"),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Total"),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("$deduction"),
+                      ),
+                    ],
                   ),
                 ],
               ),
               SizedBox(height: 16.0),
-              Text("Total Earning : $earning"),
-              SizedBox(height: 8.0),
-              Text("Total Deduction : $deduction"),
-              SizedBox(height: 8.0),
               Text("Net Salary : $netSalary"),
               SizedBox(height: 8.0),
-              // Text("Gross : $gross"),
-              // SizedBox(height: 8.0),
               RichText(
                   text: TextSpan(children: [
                 const TextSpan(text: "Salary In Words : "),
@@ -223,34 +242,5 @@ class GenerateSalarySlip {
           loadFromRawData: true,
           rawData: rawData,
         ));
-    // try {
-    //   if (Platform.isIOS) {
-    //     PermissionStatus permissionStatus = await Permission.storage.request();
-    //     Directory? directory = await getApplicationDocumentsDirectory();
-    //     String savePath =
-    //         "${directory.path}${Platform.pathSeparator}/Media/Salary-Slip-${DateTime.now().millisecondsSinceEpoch}.pdf";
-    //     File file = await File(savePath).writeAsBytes(await document.save());
-
-    //     Fluttertoast.showToast(
-    //         msg: "File downloaded successfully in your device");
-    //   } else {
-    //     await DocumentFileSavePlus.saveFile(
-    //       await document.save(),
-    //       "Salary-Slip-${DateTime.now().millisecondsSinceEpoch}",
-    //       "application/pdf",
-    //     );
-    //     String filepath = await SaveServiceNotification.getStoragePathAndSave(
-    //         await document.save(), "Salary-Slip-");
-    //     SaveServiceNotification.initializeNotification();
-    //     SaveServiceNotification.showSaveNotification(
-    //         filepath,
-    //         "Salary Slip Saved",
-    //         "We have save salary slip to your download folder, tap to view");
-    //     Fluttertoast.showToast(msg: "Salary slip saved to download folder.");
-    //   }
-    // } catch (e) {
-    //   logger.e(e.toString());
-    //   Fluttertoast.showToast(msg: "Failed to generate Pdf.. Try again later");
-    // }
   }
 }

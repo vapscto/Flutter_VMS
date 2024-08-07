@@ -3,13 +3,11 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/gps/model/clients_model.dart';
 import 'package:m_skool_flutter/vms/gps/model/sales_list_model.dart';
-
 import '../../rating_report/screen/report_data_screen.dart';
 
 class GetEmpDetailsController extends GetxController {
   RxList<GetGpsClientDetailsValues> gpsClientList =
       <GetGpsClientDetailsValues>[].obs;
-  // RxList<GetGpsEmployeeDetailsValues>gpsEmpList = <GetGpsEmployeeDetailsValues>[].obs;
   RxList<GetGpsSalesDetailsValues> gpsSalesList =
       <GetGpsSalesDetailsValues>[].obs;
   RxString getGpsLocation = "".obs;
@@ -37,7 +35,6 @@ class GetEmpDetailsController extends GetxController {
     if (status1 == LocationPermission.denied) {
       Fluttertoast.showToast(msg: "Location Permission is denied");
     } else {
-      // LocationPermission permission = await Geolocator.checkPermission();
       _getLocation();
       return true;
     }

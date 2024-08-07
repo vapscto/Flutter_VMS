@@ -19,7 +19,6 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
   List<Map<String, dynamic>> onBoardItem = [
     {
       "anim": "assets/json/1.json",
-      // "title": "Manage everthing at a single place with ",
       "desc":
           "Manage everthing at a single place with a simplified and comprehensive system"
     },
@@ -27,7 +26,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
       "anim": "assets/json/2.json",
       "title": "Easy Information Access",
       "desc":
-          "Easy Information Access to data , reports, access domain specific modules",
+          "Easy Information Access to data , reports, access domain specific modules",
     },
     {
       "anim": "assets/json/3.json",
@@ -58,20 +57,6 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                 OnBoardItem3(desc: "desc"),
               ],
             ),
-            // child: PageView.builder(
-            //   controller: controller,
-            //   onPageChanged: (i) {
-            //     currentPage = i;
-            //     setState(() {});
-            //   },
-            //   itemBuilder: (_, index) {
-            //     return OnBoardItem(
-            //         lottieAnim: onBoardItem.elementAt(index)['anim'],
-            //         //title: onBoardItem.elementAt(index)['title'],
-            //         desc: onBoardItem.elementAt(index)['desc']);
-            //   },
-            //   itemCount: 3,
-            // ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -99,7 +84,6 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 24.0,
               ),
-              //height: 55,
               child: ElevatedButton.icon(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) {

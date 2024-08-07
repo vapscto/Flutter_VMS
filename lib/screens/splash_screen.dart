@@ -21,6 +21,7 @@ import 'package:m_skool_flutter/screens/on_board.dart';
 import 'package:m_skool_flutter/vms/gps/controller/get_gps_controller.dart';
 import 'package:m_skool_flutter/vms/profile/api/profile_api.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class SplashScreen extends StatefulWidget {
   final int miIdNew;
@@ -41,15 +42,25 @@ class _SplashScreenState extends State<SplashScreen> {
     await firebaseMessage.getToken().then((value) {
       (value == null) ? "" : deviceToken = value;
       deviceid = deviceToken;
-      logger.i('Deviceid:- $deviceid');
     });
     return deviceToken;
   }
+
+  // Future<void> requestLocationPermission() async {
+  //   final status = await Permission.location.request();
+  //   if (status.isGranted) {
+  //   } else if (status.isDenied) {
+  //     await Permission.location.request();
+  //   } else if (status.isPermanentlyDenied) {
+  //     openAppSettings();
+  //   }
+  // }
 
   @override
   void initState() {
     messaging = FirebaseMessaging.instance;
     initializeFCMNotification();
+    // requestLocationPermission();
     getDeviceToken();
     controller.getLocation();
     super.initState();
@@ -60,11 +71,6 @@ class _SplashScreenState extends State<SplashScreen> {
       required MskoolController mskoolController}) async {
     FirebaseMessaging.onMessage.listen(
       (RemoteMessage message) async {
-        logger.d(message.data);
-        logger.d(message.notification);
-        logger.d(message.notification!.body);
-        logger.d(message.notification!.title);
-
         FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
             FlutterLocalNotificationsPlugin();
         var initializationSettingsAndroid =
@@ -143,87 +149,7 @@ class _SplashScreenState extends State<SplashScreen> {
               if (snapshot.hasData) {
                 return snapshot.data!;
               }
-              if (snapshot.hasError) {
-                // dynamic err = snapshot.error;
-/* 
-                if (err['type'] != null &&
-                    err['type'] == "exp" &&
-                    err['userName'] != null) {
-                  return Center(
-                    child: Container(
-                        margin: const EdgeInsets.all(24.0),
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.0),
-                          color: Colors.white,
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              "Remainder",
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 20.0,
-                              ),
-                            ),
-                            SvgPicture.asset(
-                              "assets/svg/remainder.svg",
-                              height: 100,
-                            ),
-                            const Text(
-                                "Your password is expired!\nReset password now "),
-                            const SizedBox(
-                              height: 12.0,
-                            ),
-                            MSkollBtn(
-                              onPress: () {
-                                final MskoolController mskoolController =
-                                    Get.find<MskoolController>();
-                                Get.offAll(ResetExpiredPassword(
-                                  fromSplash: "yes",
-                                  base: baseUrlFromInsCode(
-                                      "login", mskoolController),
-                                  userName: err['userName'],
-                                  mskoolController: mskoolController,
-                                ));
-                              },
-                              title: 'Update Password',
-                            ),
-                          ],
-                        )),
-                  );
-                } */
-/*                 return Center(
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          err['errorTitle'],
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.titleMedium!.merge(
-                                const TextStyle(
-                                    fontSize: 20.0, color: Colors.white),
-                              ),
-                        ),
-                        const SizedBox(
-                          height: 12.0,
-                        ),
-                        Text(
-                          err['errorMsg'],
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.labelMedium!.merge(
-                                const TextStyle(color: Colors.white),
-                              ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ); */
-              }
+              if (snapshot.hasError) {}
 
               return Center(
                 child: Column(
