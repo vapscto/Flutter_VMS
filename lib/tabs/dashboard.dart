@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/screens/assets_screen.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
 import 'package:m_skool_flutter/vms/utils/birthday_slider.dart';
 import 'package:m_skool_flutter/vms/utils/periodicity_widget.dart';
@@ -82,6 +83,46 @@ class DashboardTab extends StatelessWidget {
                     ],
                   );
           }),
+          InkWell(
+            onTap: () {
+              Get.to(() => AssetsList(
+                    loginSuccessModel: loginSuccessModel,
+                    mskoolController: mskoolController,
+                  ));
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Theme.of(context).primaryColor,
+                  boxShadow: const [
+                    BoxShadow(
+                      offset: Offset(2, 2.1),
+                      blurRadius: 0,
+                      spreadRadius: 0,
+                      color: Colors.black12,
+                    ),
+                  ]),
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Asset Dashboard",
+                    style: Get.textTheme.titleSmall!.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontSize: 15),
+                  ),
+                  const Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.white,
+                    size: 35,
+                  )
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
           loginSuccessModel.staffmobileappprivileges == null ||
                   loginSuccessModel.staffmobileappprivileges!.values!.isEmpty
               ? const SizedBox()

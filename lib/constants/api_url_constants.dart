@@ -281,6 +281,8 @@ class URLS {
   static String plannerSave =
       "api/ISM_PlannerApprovalFacade/updateplannerStatus";
   static String profileData = 'api/ISMDashboardFacade/getdetails/';
+  static String assetsList =
+      'api/INV_LocationDashboardFacade/getemployeedetail/';
   static String visitorapprovalapi =
       'api/V_AppointmentApprovalStatusFacade/getDetails/';
   static String leaveCountList =

@@ -86,6 +86,7 @@ TabController? newController;
 List<int> checkedIndex = [];
 String latestVersion = '';
 TextEditingController numberController = TextEditingController();
+double totalAmount = 0.0;
 
 Dio getGlobalDio() {
   dio ??= Dio();

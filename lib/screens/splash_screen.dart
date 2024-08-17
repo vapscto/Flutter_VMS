@@ -21,7 +21,6 @@ import 'package:m_skool_flutter/screens/on_board.dart';
 import 'package:m_skool_flutter/vms/gps/controller/get_gps_controller.dart';
 import 'package:m_skool_flutter/vms/profile/api/profile_api.dart';
 import 'package:m_skool_flutter/vms/profile/controller/profile_controller.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class SplashScreen extends StatefulWidget {
   final int miIdNew;
