@@ -34,106 +34,108 @@ class _SplashScreenState extends State<SplashScreen> {
   final MskoolController mskoolController = Get.put(MskoolController());
   final GetEmpDetailsController controller = Get.put(GetEmpDetailsController());
   late FirebaseMessaging messaging;
-  late FirebaseMessaging firebaseMessage;
-  Future getDeviceToken() async {
-    String deviceToken = '';
-    firebaseMessage = FirebaseMessaging.instance;
-    await firebaseMessage.getToken().then((value) {
-      (value == null) ? "" : deviceToken = value;
-      deviceid = deviceToken;
-    });
-    return deviceToken;
-  }
-
-  // Future<void> requestLocationPermission() async {
-  //   final status = await Permission.location.request();
-  //   if (status.isGranted) {
-  //   } else if (status.isDenied) {
-  //     await Permission.location.request();
-  //   } else if (status.isPermanentlyDenied) {
-  //     openAppSettings();
-  //   }
-  // }
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
   @override
   void initState() {
-    messaging = FirebaseMessaging.instance;
+    super.initState();
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     initializeFCMNotification();
-    // requestLocationPermission();
+    initializeLocalNotifications();
+
+    messaging = FirebaseMessaging.instance;
     getDeviceToken();
     controller.getLocation();
-    super.initState();
   }
 
-  getDeviceTokenForFCM(
-      {required LoginSuccessModel loginSuccessModel,
-      required MskoolController mskoolController}) async {
-    FirebaseMessaging.onMessage.listen(
-      (RemoteMessage message) async {
-        FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-            FlutterLocalNotificationsPlugin();
-        var initializationSettingsAndroid =
-            const AndroidInitializationSettings('@mipmap/launcher_icon');
-        var initializationSettingsIOS = const DarwinInitializationSettings();
-        var initializationSettings = InitializationSettings(
-            android: initializationSettingsAndroid,
-            iOS: initializationSettingsIOS);
-        flutterLocalNotificationsPlugin.initialize(
-          initializationSettings,
-          onDidReceiveBackgroundNotificationResponse: notificationCallback,
-          onDidReceiveNotificationResponse: notificationCallback,
-        );
-        RemoteNotification? notification = message.notification;
-        AndroidNotificationChannel channel = const AndroidNotificationChannel(
-          'high_importance_channel', // id
-          'High Importance Notifications', // title
-          importance: Importance.high,
-        );
-        var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-          channel.id,
-          channel.name,
-          channelDescription: channel.description,
-          styleInformation: const BigTextStyleInformation(''),
-          icon: "@mipmap/launcher_icon",
-        );
-        var iOSPlatformChannelSpecifics =
-            const DarwinNotificationDetails(sound: "slow_spring_board.aiff");
-        var platformChannelSpecifics = NotificationDetails(
-            android: androidPlatformChannelSpecifics,
-            iOS: iOSPlatformChannelSpecifics);
+  Future<void> initializeLocalNotifications() async {
+    var initializationSettingsAndroid =
+        const AndroidInitializationSettings('@mipmap/launcher_icon');
+    var initializationSettingsIOS = const DarwinInitializationSettings();
+    var initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS,
+    );
+
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveBackgroundNotificationResponse: notificationCallback,
+      onDidReceiveNotificationResponse: notificationCallback,
+    );
+
+    // Create notification channel
+    var androidNotificationChannel = const AndroidNotificationChannel(
+      'high_importance_channel', // id
+      'High Importance Notifications', // title
+      importance: Importance.high,
+    );
+
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(androidNotificationChannel);
+  }
+
+  Future<void> getDeviceToken() async {
+    String deviceToken = '';
+    await messaging.getToken().then((value) {
+      if (value != null) {
+        deviceToken = value;
+        deviceid = deviceToken;
+      }
+    });
+    logger.e('Device Token: $deviceToken');
+  }
+
+  Future<void> getDeviceTokenForFCM({
+    required LoginSuccessModel loginSuccessModel,
+    required MskoolController mskoolController,
+  }) async {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      RemoteNotification? notification = message.notification;
+
+      AndroidNotificationChannel channel = const AndroidNotificationChannel(
+        'high_importance_channel', // id
+        'High Importance Notifications', // title
+        importance: Importance.high,
+      );
+
+      var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        channel.id,
+        channel.name,
+        channelDescription: channel.description,
+        styleInformation: const BigTextStyleInformation(''),
+        icon: '@mipmap/launcher_icon',
+        importance: Importance.max,
+        priority: Priority.high,
+      );
+
+      var iOSPlatformChannelSpecifics = const DarwinNotificationDetails(
+        sound: 'slow_spring_board.aiff',
+      );
+
+      var platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics,
+      );
+
+      if (notification != null) {
         await flutterLocalNotificationsPlugin.show(
           notification.hashCode,
-          notification!.title,
+          notification.title,
           notification.body,
           platformChannelSpecifics,
           payload: jsonEncode(message.data),
         );
-      },
-    );
-    messaging.getToken().then((token) async {
-      messaging.getInitialMessage().then((message) async {
-        if (message != null) {
-          pushNotificationNavigator(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController);
-          logger.d(message.data);
-        }
-      });
-      initializeFCMNotification().then((value) => null);
-      FirebaseMessaging.onBackgroundMessage(
-          _firebaseMessagingBackgroundHandler);
-      FirebaseMessaging.onMessageOpenedApp.listen(
-        (message) {
-          messaging = FirebaseMessaging.instance;
-          pushNotificationNavigator(
-              loginSuccessModel: loginSuccessModel,
-              mskoolController: mskoolController);
-        },
+      }
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      pushNotificationNavigator(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
       );
     });
   }
-
-  Future _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
 
   @override
   Widget build(BuildContext context) {
@@ -143,38 +145,38 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
         child: FutureBuilder<Widget>(
-            future: handleAuth(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return snapshot.data!;
-              }
-              if (snapshot.hasError) {}
-
-              return Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 36,
-                      child: Icon(
-                        Icons.school_outlined,
-                        size: 46,
-                        color: Theme.of(context).primaryColor,
-                      ),
+          future: handleAuth(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return snapshot.data!;
+            }
+            if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+            return Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 36,
+                    child: Icon(
+                      Icons.school_outlined,
+                      size: 46,
+                      color: Theme.of(context).primaryColor,
                     ),
-                    const SizedBox(
-                      height: 12.0,
-                    ),
-                    Text(
-                      "Vaps Management System",
-                      style: Theme.of(context).textTheme.titleMedium!.merge(
-                          const TextStyle(fontSize: 30.0, color: Colors.white)),
-                    ),
-                  ],
-                ),
-              );
-            }),
+                  ),
+                  const SizedBox(height: 12.0),
+                  Text(
+                    "Vaps Management System",
+                    style: Theme.of(context).textTheme.titleMedium!.merge(
+                        const TextStyle(fontSize: 30.0, color: Colors.white)),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -189,10 +191,8 @@ class _SplashScreenState extends State<SplashScreen> {
         );
       }
       if (institutionalCode!.get("institutionalCode") == null) {
-        return Future.value(
-          InstitutionalLogin(
-            mskoolController: mskoolController,
-          ),
+        return InstitutionalLogin(
+          mskoolController: mskoolController,
         );
       }
       final InstitutionalCodeModel codeModel = await InstitutionalCodeApi
@@ -200,15 +200,15 @@ class _SplashScreenState extends State<SplashScreen> {
           .loginWithInsCode(institutionalCode!.get("institutionalCode"), true);
       mskoolController.updateUniversalInsCodeModel(codeModel);
       if (logInBox!.get("isLoggedIn") == null || !logInBox!.get("isLoggedIn")) {
-        return Future.value(LoginScreen(
+        return LoginScreen(
           mskoolController: mskoolController,
-        ));
+        );
       }
       String userName = logInBox!.get("userName");
       String password = logInBox!.get("password");
       int miId = importantIds!.get(URLS.miId);
       logger.v(miId);
-      // ignore: unused_local_variable
+
       String loginBaseUrl = "";
       for (int i = 0; i < codeModel.apiarray.values.length; i++) {
         final CategoriesApiItem apiItem =
@@ -219,35 +219,37 @@ class _SplashScreenState extends State<SplashScreen> {
       }
       final LoginSuccessModel loginSuccessModel =
           await AuthenticateUserApi.instance.authenticateNow(
-              userName,
-              password,
-              (widget.miIdNew == 0) ? miId : widget.miIdNew,
-              loginBaseUrl,
-              deviceid);
+        userName,
+        password,
+        (widget.miIdNew == 0) ? miId : widget.miIdNew,
+        loginBaseUrl,
+        deviceid,
+      );
 
       mskoolController.updateLoginSuccessModel(loginSuccessModel);
       ProfileController profileController = Get.put(ProfileController());
       await lateIn(
-          base: baseUrlFromInsCode("issuemanager", mskoolController),
-          miId: loginSuccessModel.mIID!,
-          roleId: loginSuccessModel.roleId!,
-          controller: profileController,
-          userId: loginSuccessModel.userId!);
-      getDeviceTokenForFCM(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController);
-      return Future.value(CommonHomeScreen(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController));
-    } on Exception catch (e) {
-      debugPrint(e.toString());
-      return Future.error(
-        {
-          "errorTitle": "Something went wrong",
-          "errorMsg":
-              "An error occured in server side, may be currently it is down or page is not available."
-        },
+        base: baseUrlFromInsCode("issuemanager", mskoolController),
+        miId: loginSuccessModel.mIID!,
+        roleId: loginSuccessModel.roleId!,
+        controller: profileController,
+        userId: loginSuccessModel.userId!,
       );
+      await getDeviceTokenForFCM(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+      return CommonHomeScreen(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      );
+    } on Exception catch (e) {
+      logger.e(e.toString());
+      return Future.error({
+        "errorTitle": "Something went wrong",
+        "errorMsg":
+            "An error occurred on the server side. It might be down or the page might not be available."
+      });
     }
   }
 }

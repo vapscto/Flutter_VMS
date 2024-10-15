@@ -35,9 +35,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-  // debugPaintSizeEnabled = true;
-  // SystemChrome.setPreferredOrientations(
-  //     [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   var dir = await getApplicationSupportDirectory();
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   Hive.init(dir.path);

@@ -248,7 +248,7 @@ class _LeadSelectState extends State<LeadSelect> {
                             child: Scrollbar(
                               controller: ScrollController(),
                               // ignore: deprecated_member_use
-                              isAlwaysShown: true,
+                              thumbVisibility: true,
                               radius: const Radius.circular(20),
                               trackVisibility: true,
                               thickness: 5.0,

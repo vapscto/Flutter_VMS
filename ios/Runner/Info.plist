@@ -40,6 +40,10 @@
     </dict>
     <key>NSCameraUsageDescription</key>
     <string>Mskoll uses camera permission in order to capture photo for assignments</string>
+    <key>io.flutter.embedded_views_preview</key>
+<true/>
+<key>NSCameraUsageDescription</key>
+<string>This app needs camera access to scan QR codes</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>This app needs access to location when open.</string>
     <key>NSMicrophoneUsageDescription</key>

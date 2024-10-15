@@ -274,7 +274,8 @@ class _SalarySlipHomeState extends State<SalarySlipHome> {
                                 return;
                               }
                               GenerateSalarySlip.instance.generateNow(
-                                  controller: salarySlipController);
+                                  controller: salarySlipController,
+                                  loginSuccessModel: widget.loginSuccessModel);
                             },
                             size: const Size.fromWidth(300)),
                     const SizedBox(height: 50),

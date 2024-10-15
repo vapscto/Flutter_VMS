@@ -67,8 +67,8 @@ class _AssetsListState extends State<AssetsList> {
                 return Center(
                   child: Text(
                     'Error: ${snapshot.error}',
-                    style: Get.textTheme.titleSmall!
-                        .copyWith(color: const Color.fromARGB(255, 33, 6, 184)),
+                    style:
+                        Get.textTheme.titleSmall!.copyWith(color: Colors.red),
                   ),
                 );
               } else if (snapshot.hasData) {

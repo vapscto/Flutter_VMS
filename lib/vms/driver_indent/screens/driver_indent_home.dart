@@ -6,7 +6,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/vms/driver_indent/api/driver_ind_api.dart';
 import 'package:m_skool_flutter/vms/driver_indent/controller/driver_intent_controller.dart';
-import 'package:m_skool_flutter/vms/driver_indent/driver_ind_approval_list.dart';
+import 'package:m_skool_flutter/vms/driver_indent/screens/driver_ind_approval_list.dart';
 import 'package:m_skool_flutter/vms/driver_indent/widgets/indent_approve_popup.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';

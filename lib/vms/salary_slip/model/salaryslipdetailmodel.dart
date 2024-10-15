@@ -680,7 +680,7 @@ class EmployeeSalaryslipDetailsValue {
   String? hrmedAmountPercentFlag;
   String? hrmedEdTypeFlag;
   String? hrmedName;
-  num? amount;
+  double? amount;
   num? hrmedOrder;
 
   factory EmployeeSalaryslipDetailsValue.fromJson(Map<String, dynamic> json) =>

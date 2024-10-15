@@ -3,12 +3,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/vms/punch_report/controller/punch_filter_controller.dart';
-import 'package:m_skool_flutter/vms/punch_report/model/att_leave_details_model.dart';
-import 'package:m_skool_flutter/vms/punch_report/model/att_staff_details_model.dart';
-import 'package:m_skool_flutter/vms/punch_report/model/att_working_hr_model.dart';
 import 'package:m_skool_flutter/vms/punch_report/model/current_punch_details.dart';
-import 'package:m_skool_flutter/vms/punch_report/model/leave_name_model.dart';
-import 'package:m_skool_flutter/vms/punch_report/model/selected_staff_data_model.dart';
 
 class PunchApi {
   PunchApi.init();
@@ -72,98 +67,105 @@ Future<void> attendance({
     if (response.statusCode == 200) {
       List<dynamic> selectedActivityDetails1Stf =
           response.data['selectedActivityDetails1_stf'];
-      ctn.staffDetails.add(SelectedActivityDetails1Stf(
-        fomSId: selectedActivityDetails1Stf.first['fomS_Id'],
-        hrmEId: selectedActivityDetails1Stf.first['hrmE_Id'],
-        mIId: selectedActivityDetails1Stf.first['mI_Id'],
-        ivrmrTId: selectedActivityDetails1Stf.first['ivrmrT_Id'],
-        vmscrTId: selectedActivityDetails1Stf.first['vmscrT_Id'],
-        hrmEEmployeeFirstName:
-            selectedActivityDetails1Stf.first['hrmE_EmployeeFirstName'],
-        hrmEEmployeeCode:
-            selectedActivityDetails1Stf.first['hrmE_EmployeeCode'],
-        hrmEPerStreet: selectedActivityDetails1Stf.first['hrmE_PerStreet'],
-        hrmEDOJ: selectedActivityDetails1Stf.first['hrmE_DOJ'],
-        hrmERelaxtime: selectedActivityDetails1Stf.first['hrmE_Relaxtime'],
-        hrmELeftFlag: selectedActivityDetails1Stf.first['hrmE_LeftFlag'],
-        hrmEExcDR: selectedActivityDetails1Stf.first['hrmE_ExcDR'],
-        hrmEExcPunch: selectedActivityDetails1Stf.first['hrmE_ExcPunch'],
-        ivrmuLId: selectedActivityDetails1Stf.first['ivrmuL_Id'],
-        logInUserId: selectedActivityDetails1Stf.first['logInUserId'],
-        fomsTId: selectedActivityDetails1Stf.first['fomsT_Id'],
-        fohwdTId: selectedActivityDetails1Stf.first['fohwdT_Id'],
-      ));
-
-      AttStaffDetailsModel attStaffDetailsModel =
-          AttStaffDetailsModel.fromJson(response.data['staffDetails']);
-      ctn.staffDetailsModel.clear();
-      ctn.staffDetailsModel.addAll(attStaffDetailsModel.values!);
-      AttWorkingHrModel attWorkingHrModel =
-          AttWorkingHrModel.fromJson(response.data['workinghourDetails']);
-      for (int i = 0; i < attWorkingHrModel.values!.length; i++) {
-        if (attWorkingHrModel.values![i].hRMEId ==
-            selectedActivityDetails1Stf.first['hrmE_Id']) {
-          if (selectedActivityDetails1Stf.first['hrmE_ExcPunch'] == false) {
-            ctn.workingDays.value = attWorkingHrModel.values!.length;
-          }
-          logger.i("Working Days:-${ctn.workingDays.value}");
-        }
-      }
-      AttLeaveDetailsModel attLeaveDetailsModel =
-          AttLeaveDetailsModel.fromJson(response.data['staffleaveDetails']);
-      ctn.unAuthorizedLeave.value = 0;
-      for (int i = 0; i < attLeaveDetailsModel.values!.length; i++) {
-        if (attLeaveDetailsModel.values![i].hRMEId ==
-            selectedActivityDetails1Stf.first['hrmE_Id']) {
-          if (attLeaveDetailsModel.values![i].absentday! > 0) {
-            ctn.unAuthorizedLeave.value +=
-                attLeaveDetailsModel.values![i].absentday!;
-          }
+      if (selectedActivityDetails1Stf.isNotEmpty) {
+        if (selectedActivityDetails1Stf.first['hrmE_Relaxtime'] != null) {
+          ctn.relaxsationTime.value =
+              selectedActivityDetails1Stf.first['hrmE_Relaxtime'];
         }
       }
 
-      AttLeaveNameModel attLeaveNameModel =
-          AttLeaveNameModel.fromJson(response.data['leaveDetails']);
-      for (int i = 0; i < attLeaveNameModel.values!.length; i++) {
-        if (attLeaveDetailsModel.values![i].hRMEId ==
-            selectedActivityDetails1Stf.first['hrmE_Id']) {
-          if (ctn.unauthleavedates == "") {
-            ctn.unauthleavedates =
-                DateTime.parse(attLeaveDetailsModel.values![i].drNotSentDates!)
-                    .day
-                    .toString();
-            if (attLeaveDetailsModel.values![i].approvedday == 0) {
-              ctn.unauthleavedatesdisplay =
-                  "${DateTime.parse(attLeaveDetailsModel.values![i].drNotSentDates!).day}(F)";
-              ctn.unauthleavedatestemp = DateTime.parse(
-                      attLeaveDetailsModel.values![i].drNotSentDates!)
-                  .day
-                  .toString();
-            }
-          } else {
-            ctn.unauthleavedates +=
-                ", ${DateTime.parse(attLeaveDetailsModel.values![i].drNotSentDates!).day}";
-            if (attLeaveDetailsModel.values![i].approvedday == 0 &&
-                ctn.unauthleavedatesdisplay != "") {
-              ctn.unauthleavedatesdisplay +=
-                  ", ${DateTime.parse(attLeaveDetailsModel.values![i].drNotSentDates!).day}(F)";
-              ctn.unauthleavedatestemp +=
-                  ", ${DateTime.parse(attLeaveDetailsModel.values![i].drNotSentDates!).day}";
-            } else if (attLeaveDetailsModel.values![i].approvedday == 0 &&
-                ctn.unauthleavedatesdisplay == "") {
-              ctn.unauthleavedatesdisplay =
-                  "${DateTime.parse(attLeaveDetailsModel.values![i].drNotSentDates!).day}(F)";
-              ctn.unauthleavedatestemp = DateTime.parse(
-                      attLeaveDetailsModel.values![i].drNotSentDates!)
-                  .day
-                  .toString();
-            }
-          }
-          logger.v(ctn.unauthleavedatesdisplay);
-        }
-        ctn.leaveListName.clear();
-        ctn.leaveListName.addAll(attLeaveNameModel.values!);
-      }
+      // ctn.staffDetails.add(SelectedActivityDetails1Stf(
+      //   fomSId: selectedActivityDetails1Stf.first['fomS_Id'],
+      //   hrmEId: selectedActivityDetails1Stf.first['hrmE_Id'],
+      //   mIId: selectedActivityDetails1Stf.first['mI_Id'],
+      //   ivrmrTId: selectedActivityDetails1Stf.first['ivrmrT_Id'],
+      //   vmscrTId: selectedActivityDetails1Stf.first['vmscrT_Id'],
+      //   hrmEEmployeeFirstName:
+      //       selectedActivityDetails1Stf.first['hrmE_EmployeeFirstName'],
+      //   hrmEEmployeeCode:
+      //       selectedActivityDetails1Stf.first['hrmE_EmployeeCode'],
+      //   hrmEPerStreet: selectedActivityDetails1Stf.first['hrmE_PerStreet'],
+      //   hrmEDOJ: selectedActivityDetails1Stf.first['hrmE_DOJ'],
+      //   hrmERelaxtime: selectedActivityDetails1Stf.first['hrmE_Relaxtime'],
+      //   hrmELeftFlag: selectedActivityDetails1Stf.first['hrmE_LeftFlag'],
+      //   hrmEExcDR: selectedActivityDetails1Stf.first['hrmE_ExcDR'],
+      //   hrmEExcPunch: selectedActivityDetails1Stf.first['hrmE_ExcPunch'],
+      //   ivrmuLId: selectedActivityDetails1Stf.first['ivrmuL_Id'],
+      //   logInUserId: selectedActivityDetails1Stf.first['logInUserId'],
+      //   fomsTId: selectedActivityDetails1Stf.first['fomsT_Id'],
+      //   fohwdTId: selectedActivityDetails1Stf.first['fohwdT_Id'],
+      // ));
+
+      // AttStaffDetailsModel attStaffDetailsModel =
+      //     AttStaffDetailsModel.fromJson(response.data['staffDetails']);
+      // ctn.staffDetailsModel.clear();
+      // ctn.staffDetailsModel.addAll(attStaffDetailsModel.values!);
+      // AttWorkingHrModel attWorkingHrModel =
+      //     AttWorkingHrModel.fromJson(response.data['workinghourDetails']);
+      // for (int i = 0; i < attWorkingHrModel.values!.length; i++) {
+      //   if (attWorkingHrModel.values![i].hRMEId ==
+      //       selectedActivityDetails1Stf.first['hrmE_Id']) {
+      //     if (selectedActivityDetails1Stf.first['hrmE_ExcPunch'] == false) {
+      //       ctn.workingDays.value = attWorkingHrModel.values!.length;
+      //     }
+      //   }
+      // }
+      // AttLeaveDetailsModel attLeaveDetailsModel =
+      //     AttLeaveDetailsModel.fromJson(response.data['staffleaveDetails']);
+      // ctn.unAuthorizedLeave.value = 0;
+      // for (int i = 0; i < attLeaveDetailsModel.values!.length; i++) {
+      //   if (attLeaveDetailsModel.values![i].hRMEId ==
+      //       selectedActivityDetails1Stf.first['hrmE_Id']) {
+      //     if (attLeaveDetailsModel.values![i].absentday! > 0) {
+      //       ctn.unAuthorizedLeave.value +=
+      //           attLeaveDetailsModel.values![i].absentday!;
+      //     }
+      //   }
+      // }
+      // if (response.data['leaveDetails'] != null) {
+      //   AttLeaveNameModel attLeaveNameModel =
+      //       AttLeaveNameModel.fromJson(response.data['leaveDetails']);
+      //   for (int i = 0; i < attLeaveNameModel.values!.length; i++) {
+      //     if (attLeaveDetailsModel.values![i].hRMEId ==
+      //         selectedActivityDetails1Stf.first['hrmE_Id']) {
+      //       if (ctn.unauthleavedates == "") {
+      //         ctn.unauthleavedates = DateTime.parse(
+      //                 attLeaveDetailsModel.values![i].drNotSentDates!)
+      //             .day
+      //             .toString();
+      //         if (attLeaveDetailsModel.values![i].approvedday == 0) {
+      //           ctn.unauthleavedatesdisplay =
+      //               "${DateTime.parse(attLeaveDetailsModel.values![i].drNotSentDates!).day}(F)";
+      //           ctn.unauthleavedatestemp = DateTime.parse(
+      //                   attLeaveDetailsModel.values![i].drNotSentDates!)
+      //               .day
+      //               .toString();
+      //         }
+      //       } else {
+      //         ctn.unauthleavedates +=
+      //             ", ${DateTime.parse(attLeaveDetailsModel.values![i].drNotSentDates!).day}";
+      //         if (attLeaveDetailsModel.values![i].approvedday == 0 &&
+      //             ctn.unauthleavedatesdisplay != "") {
+      //           ctn.unauthleavedatesdisplay +=
+      //               ", ${DateTime.parse(attLeaveDetailsModel.values![i].drNotSentDates!).day}(F)";
+      //           ctn.unauthleavedatestemp +=
+      //               ", ${DateTime.parse(attLeaveDetailsModel.values![i].drNotSentDates!).day}";
+      //         } else if (attLeaveDetailsModel.values![i].approvedday == 0 &&
+      //             ctn.unauthleavedatesdisplay == "") {
+      //           ctn.unauthleavedatesdisplay =
+      //               "${DateTime.parse(attLeaveDetailsModel.values![i].drNotSentDates!).day}(F)";
+      //           ctn.unauthleavedatestemp = DateTime.parse(
+      //                   attLeaveDetailsModel.values![i].drNotSentDates!)
+      //               .day
+      //               .toString();
+      //         }
+      //       }
+      //       logger.v(ctn.unauthleavedatesdisplay);
+      //     }
+      //     ctn.leaveListName.clear();
+      //     ctn.leaveListName.addAll(attLeaveNameModel.values!);
+      //   }
+      // }
     }
   } on DioError catch (e) {
     logger.e(e.message);

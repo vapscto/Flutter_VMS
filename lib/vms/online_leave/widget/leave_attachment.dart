@@ -325,7 +325,7 @@ class _LeaveAttachmentScreenState extends State<LeaveAttachmentScreen> {
                                                         leaveApplyController
                                                             .attFiles
                                                             .elementAt(index)
-                                                            .path);
+                                                            .path!);
                                                   },
                                                   dense: true,
                                                   minLeadingWidth: 10,
@@ -362,7 +362,7 @@ class _LeaveAttachmentScreenState extends State<LeaveAttachmentScreen> {
                                                       leaveApplyController
                                                           .attFiles
                                                           .elementAt(index)
-                                                          .path);
+                                                          .path!);
                                                 },
                                                 icon: const Icon(
                                                     Icons.remove_red_eye)),

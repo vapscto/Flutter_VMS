@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/model/employee_model.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/model/gridoption_model.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/model/insituional_model.dart';
+import 'package:m_skool_flutter/vms/visitor%20managements/model/visitor_details.dart';
 import 'package:m_skool_flutter/vms/visitor%20managements/model/visitor_model.dart';
 
 class VisitorManagementsController extends GetxController {
@@ -143,4 +144,9 @@ class VisitorManagementsController extends GetxController {
   void updateIsErrorOccuredsave(bool error) {
     isErrorOccuredsave.value = error;
   }
+
+  // QR Loading
+  RxBool isQrLoading = RxBool(false);
+  RxList<VisitorDetailsModelValues> visitorData =
+      <VisitorDetailsModelValues>[].obs;
 }

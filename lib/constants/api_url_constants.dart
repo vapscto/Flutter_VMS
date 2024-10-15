@@ -26,16 +26,7 @@ class URLS {
   static String hrmeId = "hrme_Id";
 
   // Endpoints for different Categories
-
   static String login = "api/LoginFacade";
-
-  // profile
-  // static String profile = "api/StudentDashboardFacade/Getdetails";
-
-  //feedback
-  // static String saveFeedBack = "api/StudentFeedbackFormFacade/savefeedback/";
-  // static String getFeedBack = "api/StudentFeedbackFormFacade/getloaddata/";
-
   //Information
   static String uploadHomeWorkBase = "https://bdcampus.azurewebsites.net/";
   static String uploadHomeWorkEnd = "api/LoginFacade/HomeworkUpload";
@@ -434,4 +425,21 @@ class URLS {
   static String devEmpList = 'api/ISM_PlannerDeviationReportFacade/getdetails/';
   static String devReport =
       'api/ISM_PlannerDeviationReportFacade/getdeviationReport';
+  // Driver Indent Apply
+  static String driverIndentApplyOnLoad = 'api/DriverIndent/loaddata/';
+  static String vehicleDetails = "api/DriverIndent/checkedVehicleno/";
+  static String saveDriverIndent = "api/DriverIndent/save";
+  // Health Check up Approval
+  static String healthCheckupApprovalOnload =
+      'api/HW_HeathCheckUpFacade/LoadHWHealthCheckUpdataApproval/';
+  static String healthCheckupComments =
+      'api/HW_HeathCheckUpFacade/ViewHealthCheckUpComments';
+  static String healthCheckUpFiles =
+      "api/HW_HeathCheckUpFacade/ViewHealthCheckUpFiles";
+  static String healthCheckUpApprove =
+      "api/HW_HeathCheckUpFacade/SaveHWHealthChekUpApproval";
+
+  //RTO Violation
+  static String rtoOnLoad = "api/RTOViolationFacade/loaddata";
+  static String rtoSaveData = "api/RTOViolationFacade/savedata";
 }

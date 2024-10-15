@@ -22,13 +22,7 @@ class PunchReportApi {
     if (controller.isErrorOccured.value) {
       controller.isErrorOccured.value = false;
     }
-    logger.d(apiUrl);
-    logger.d({
-      "MI_Id": miId,
-      "UserId": userId,
-      "fromdate": fromDate,
-      "todate": endDate
-    });
+
     controller.updateStartFilteration(true);
     try {
       final Response response = await ins.post(apiUrl,
@@ -45,16 +39,10 @@ class PunchReportApi {
         controller.message.value =
             "Sorry! but we are unable to find any data, it may happens that data list is deleted";
         controller.updateStartFilteration(false);
-        // return Future.error({
-        //   "errorTitle": "Data Unavailable",
-        //   "errorMsg":
-        //       ,
-        // });
       }
 
       final PunchReportModel prModel =
           PunchReportModel.fromJson(response.data['emp_punchDetails']);
-      logger.d(prModel.toJson());
       controller.updateIsErrorOccured(false);
       controller.updatePunchReports(prModel.values!);
       controller.updateStartFilteration(false);
@@ -71,11 +59,6 @@ class PunchReportApi {
       logger.e(e.toString());
       controller.message.value =
           "While Creating your view, we encountered an error.. Try again later";
-      // return Future.error({
-      //   "errorTitle": "An Internal Error Occured",
-      //   "errorMsg":
-      //       "",
-      // });
     }
   }
 }

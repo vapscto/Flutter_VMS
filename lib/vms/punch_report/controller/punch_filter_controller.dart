@@ -83,6 +83,7 @@ class PunchFilterController extends GetxController {
   }
 
   RxList<dynamic> staffDetails = <dynamic>[].obs;
+  RxInt relaxsationTime = 0.obs;
   RxBool isAtt = RxBool(false);
   void attendance(bool i) {
     isAtt.value = i;

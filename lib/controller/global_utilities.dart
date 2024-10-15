@@ -27,11 +27,13 @@ import 'package:m_skool_flutter/vms/candidate_interview_list/screen/canidate_hom
 import 'package:m_skool_flutter/vms/certificate_approval/certificate_approval.dart';
 import 'package:m_skool_flutter/vms/checkbook_approval/screen/cheque_approval.dart';
 import 'package:m_skool_flutter/vms/dr_genration/screens/dailyrpt_home.dart';
-import 'package:m_skool_flutter/vms/driver_indent/driver_indent_home.dart';
+import 'package:m_skool_flutter/vms/driver_indent/indent_apply/screens/driver_indent_apply_screen.dart';
+import 'package:m_skool_flutter/vms/driver_indent/screens/driver_indent_home.dart';
 import 'package:m_skool_flutter/vms/employee_punch/screen/employee_sal_home.dart';
 import 'package:m_skool_flutter/vms/extension/extension_home_screen.dart';
 import 'package:m_skool_flutter/vms/final_tour_approval/screens/final_approval_list.dart';
 import 'package:m_skool_flutter/vms/gps/screen/gps_home.dart';
+import 'package:m_skool_flutter/vms/health_check_up_approve/screens/health_check_up_approval_home.dart';
 import 'package:m_skool_flutter/vms/health_chequeup/screens/healtha_check_up.dart';
 import 'package:m_skool_flutter/vms/hr_modules/interview_report/int_report_home.dart';
 import 'package:m_skool_flutter/vms/hr_modules/interview_schdule/interview_schdule.dart';
@@ -46,6 +48,7 @@ import 'package:m_skool_flutter/vms/online_leave/screen/apply_leave_home.dart';
 import 'package:m_skool_flutter/vms/petty_indent_approval/screen/pc_indent_approval_home.dart';
 import 'package:m_skool_flutter/vms/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/vms/rating_report/screen/rating_report_home.dart';
+import 'package:m_skool_flutter/vms/rto/rto_violstion_home_screen.dart';
 import 'package:m_skool_flutter/vms/salary_details/screen/salary_home_screen.dart';
 import 'package:m_skool_flutter/vms/salary_slip/screen/salary_slip_home.dart';
 import 'package:m_skool_flutter/vms/staff_gate_pass/staff_get_pass_home.dart';
@@ -56,7 +59,7 @@ import 'package:m_skool_flutter/vms/tada_tour_approval/screens/tada_tour_view.da
 import 'package:m_skool_flutter/vms/task_creation_md_sir/task_creation_md_sir_screen.dart';
 import 'package:m_skool_flutter/vms/tour_mapping/screen/tour_maping_list.dart';
 import 'package:m_skool_flutter/vms/utils/video_screen.dart';
-import 'package:m_skool_flutter/vms/visitor%20managements/Screen/visitor_screen.dart';
+import 'package:m_skool_flutter/vms/visitor%20managements/Screen/qr_scanner_screen.dart';
 import 'package:m_skool_flutter/vms/maker%20and%20checker/screen/home_screen.dart';
 import 'package:m_skool_flutter/vms/petty_cash_approval/screen/pc_approval_home.dart';
 import 'package:m_skool_flutter/vms/petty_cash_requisition/screen/pc_requisition_home.dart';
@@ -272,7 +275,7 @@ String getDashboardIcon(String pageName) {
 }
 
 Future<void> initializeFCMNotification() async {
-  var messaging = FirebaseMessaging.instance;
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
   NotificationSettings settings = await messaging.requestPermission(
     alert: true,
     badge: true,
@@ -297,7 +300,9 @@ pushNotificationNavigator({
 notificationCallback(
   NotificationResponse details,
 ) async {
-  Map<String, dynamic> subject = jsonDecode(details.payload!);
+  logger.v(details.payload);
+  String filePath = details.payload!;
+  Map<String, dynamic> subject = jsonDecode(filePath);
   logger.d(subject);
   MskoolController mskoolController = Get.find<MskoolController>();
   logger.d('notificationcall back');
@@ -598,10 +603,13 @@ void openMappedPages(
   }
 
   if (pageName == "Visitor management") {
-    Get.to(() => VisitorManagementHome(
-          loginSuccessModel: loginSuccessModel,
+    Get.to(() => QrScannerScreen(
           mskoolController: mskoolController,
         ));
+    // Get.to(() => VisitorManagementHome(
+    //       loginSuccessModel: loginSuccessModel,
+    //       mskoolController: mskoolController,
+    //     ));
     return;
   }
 
@@ -697,6 +705,16 @@ void openMappedPages(
     }));
     return;
   }
+  if (pageName == "Driver Ind. Apply") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return DriverIndentApplyHomeScreen(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        title: pageName,
+      );
+    }));
+    return;
+  }
   if (pageName == "Employee Ratings") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return AllEmpReviewHome(
@@ -788,6 +806,26 @@ void openMappedPages(
   if (pageName == "Call Letter") {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return CallLetterHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        title: pageName,
+      );
+    }));
+    return;
+  }
+  if (pageName == "Health check up") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return HealthCheckUpApprovalHome(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        // title: pageName,
+      );
+    }));
+    return;
+  }
+  if (pageName == "RTO Violation") {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return RTOViolationScreen(
         loginSuccessModel: loginSuccessModel,
         mskoolController: mskoolController,
         title: pageName,

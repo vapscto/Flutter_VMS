@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/vms/punch_report/api/punch_api.dart';
 import 'package:m_skool_flutter/vms/punch_report/api/punch_report_api.dart';
 import 'package:m_skool_flutter/vms/punch_report/controller/punch_filter_controller.dart';
 import 'package:m_skool_flutter/vms/punch_report/widget/punch_report_item.dart';
@@ -59,16 +60,40 @@ class _PunchReportState extends State<PunchReport> {
         endDate: punchFilterController.endTo.value.toLocal().toString(),
         base: baseUrlFromInsCode("portal", widget.mskoolController),
         controller: punchFilterController);
+    await attendance(
+        ctn: punchFilterController,
+        base: baseUrlFromInsCode('frontoffice', widget.mskoolController),
+        body: {
+          "MI_Id": widget.loginSuccessModel.mIID,
+          "roleId": widget.loginSuccessModel.roleId,
+          "Id": widget.loginSuccessModel.userId,
+          "flag": "Single",
+          "rdbbutton": "Day",
+          "Fromdate": firstDate!.toIso8601String(),
+          "Todate": lastDt!.toIso8601String()
+        });
   }
 
+  DateTime? firstDate;
+  DateTime? lastDt;
+  int totalDay = 0;
   @override
   void initState() {
+    firstDate = DateTime(dt.year, dt.month - 1, 1);
+    lastDt = DateTime(dt.year, dt.month, 1).subtract(const Duration(days: 1));
+    totalDay = lastDt!.day;
     _getData();
     super.initState();
   }
 
   DateTime dt = DateTime.now();
-  List<String> attendance = ["Current Month", "Previous Month"];
+  int relaxsation = 0;
+  List<String> attendance1 = ["Current Month", "Previous Month"];
+  String? convertMinutesToHoursAndMinutes(int totalMinutes) {
+    int hours = totalMinutes ~/ 60;
+    int minutes = totalMinutes % 60;
+    return '$hours Hr $minutes Min';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -218,49 +243,12 @@ class _PunchReportState extends State<PunchReport> {
             // ),
             Column(
               children: [
-                // Text(
-                //   "Attendance",
-                //   style: Get.textTheme.titleMedium!
-                //       .copyWith(color: Theme.of(context).primaryColor),
-                // ),
-                // const SizedBox(height: 6),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //   children: List.generate(attendance.length, (index) {
-                //     return Row(
-                //       children: [
-                //         InkWell(
-                //           onTap: () {
-                //             if (index == 1) {
-                //               Get.to(() => PreviousMonthAttendanceScreen(
-                //                     mskoolController: widget.mskoolController,
-                //                     loginSuccessModel: widget.loginSuccessModel,
-                //                     controller: punchFilterController,
-                //                   ));
-                //             } else if (index == 0) {
-                //               Get.to(() => CurrentMonthAttendanceScreen(
-                //                     mskoolController: widget.mskoolController,
-                //                     loginSuccessModel: widget.loginSuccessModel,
-                //                   ));
-                //             }
-                //           },
-                //           child: Card(
-                //               shape: RoundedRectangleBorder(
-                //                   borderRadius: BorderRadius.circular(10)),
-                //               color: Theme.of(context).primaryColor,
-                //               child: Padding(
-                //                 padding: const EdgeInsets.all(8.0),
-                //                 child: Text(
-                //                   attendance[index],
-                //                   style: Get.textTheme.titleSmall!
-                //                       .copyWith(color: Colors.white, fontSize: 15),
-                //                 ),
-                //               )),
-                //         )
-                //       ],
-                //     );
-                //   }),
-                // ),
+                Text(
+                  "Total Relaxation :- ${convertMinutesToHoursAndMinutes(punchFilterController.relaxsationTime.value)}",
+                  style: Get.textTheme.titleMedium!
+                      .copyWith(color: Theme.of(context).primaryColor),
+                ),
+                const SizedBox(height: 6),
                 punchFilterController.start.value == 0
                     ? const Center(
                         child: AnimatedProgressWidget(

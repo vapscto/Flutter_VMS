@@ -390,12 +390,12 @@ class _AttachmentFileWidgetState extends State<AttachmentFileWidget> {
                                                             .studentInteractionComposeController!
                                                             .attFiles
                                                             .elementAt(index)
-                                                            .path)
+                                                            .path!)
                                                         : OpenFilex.open(widget
                                                             .staffInteractionComposeController!
                                                             .attFiles
                                                             .elementAt(index)
-                                                            .path);
+                                                            .path!);
                                                   },
                                                   dense: true,
                                                   minLeadingWidth: 10,
@@ -440,12 +440,12 @@ class _AttachmentFileWidgetState extends State<AttachmentFileWidget> {
                                                           .studentInteractionComposeController!
                                                           .attFiles
                                                           .elementAt(index)
-                                                          .path)
+                                                          .path!)
                                                       : OpenFilex.open(widget
                                                           .staffInteractionComposeController!
                                                           .attFiles
                                                           .elementAt(index)
-                                                          .path);
+                                                          .path!);
                                                 },
                                                 icon: const Icon(
                                                     Icons.remove_red_eye)),

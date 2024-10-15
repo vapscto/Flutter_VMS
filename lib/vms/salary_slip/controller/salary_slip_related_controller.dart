@@ -105,20 +105,29 @@ class SalarySlipController extends GetxController {
                 salarySlipDetail.first.employeeSalaryslipDetails!.values![i]!);
           }
         }
-        salarySlipDeduction.insert(
-          salarySlipDeduction.length,
-          EmployeeSalaryslipDetailsValue(
-            hrmedName: "",
-            amount: int.parse(""),
-          ),
-        );
-        salarySlipDeduction.insert(
-          salarySlipDeduction.length,
-          EmployeeSalaryslipDetailsValue(
-            hrmedName: "",
-            amount: int.parse(""),
-          ),
-        );
+        while (salarySlipDeduction.length < salarySlipEarning.length) {
+          salarySlipDeduction.insert(
+            salarySlipDeduction.length,
+            EmployeeSalaryslipDetailsValue(
+              hrmedName: "",
+              amount: 0.0,
+            ),
+          );
+        }
+        // salarySlipDeduction.insert(
+        //   salarySlipDeduction.length,
+        //   EmployeeSalaryslipDetailsValue(
+        //     hrmedName: "",
+        //     amount: double.parse(""),
+        //   ),
+        // );
+        // salarySlipDeduction.insert(
+        //   salarySlipDeduction.length,
+        //   EmployeeSalaryslipDetailsValue(
+        //     hrmedName: "",
+        //     amount: double.parse(""),
+        //   ),
+        // );
         return true;
       } else {
         Fluttertoast.showToast(msg: 'Something went wrong..');
